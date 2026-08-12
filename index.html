@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>arch1cat — Персональное портфолио & Labs</title>
-    <meta name="description" content="Личный сайт arch1cat — разработчик, AI-инженер и контент-креатор. Проекты Yotei, World Monitor, WiFi Scanner и 3D WebGL.">
+    <title>arch1cat — Персональное портфолио | Cyber Matrix</title>
+    <meta name="description" content="Личный сайт arch1cat — разработчик, AI-инженер и контент-креатор. Проекты Yotei (yotei.com.ua), World Monitor, WiFi Scanner и 3D WebGL.">
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -15,14 +15,13 @@
                 extend: {
                     colors: {
                         cyber: {
-                            bg: '#030408',
-                            card: '#080A14',
-                            border: '#1E2235',
+                            bg: '#020904',
+                            card: 'rgba(4, 20, 10, 0.75)',
+                            border: 'rgba(0, 255, 102, 0.2)',
+                            green: '#00FF66',
                             cyan: '#00F2FE',
-                            purple: '#9D50BB',
-                            violet: '#7F00FF',
-                            accent: '#00FF88',
-                            matrix: '#00ff66'
+                            emerald: '#00FF9D',
+                            purple: '#9D50BB'
                         }
                     },
                     fontFamily: {
@@ -45,15 +44,10 @@
 
     <style>
         body {
-            background-color: #030408;
+            background-color: #020904;
             color: #E2E8F0;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
-            transition: background-color 0.5s ease;
-        }
-
-        body.matrix-mode {
-            background-color: #020a04;
         }
 
         #webgl-container {
@@ -66,74 +60,51 @@
             pointer-events: none;
         }
 
-        /* Glowing Gradients */
-        .text-gradient {
-            background: linear-gradient(135deg, #00F2FE 0%, #4FACFE 50%, #00FF88 100%);
+        /* Cyber Matrix Scanline Overlay */
+        .matrix-overlay {
+            background: linear-gradient(rgba(0, 255, 102, 0.03) 50%, rgba(0, 0, 0, 0.3) 50%), linear-gradient(90deg, rgba(0, 255, 102, 0.02), rgba(0, 242, 254, 0.01), rgba(0, 255, 102, 0.02));
+            background-size: 100% 3px, 6px 100%;
+            pointer-events: none;
+        }
+
+        /* Glowing Text Effects */
+        .text-gradient-matrix {
+            background: linear-gradient(135deg, #00FF66 0%, #00FF9D 50%, #00F2FE 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(0, 255, 102, 0.3);
         }
         
-        .text-gradient-purple {
-            background: linear-gradient(135deg, #9D50BB 0%, #6E0DD0 50%, #00F2FE 100%);
+        .text-gradient-cyan {
+            background: linear-gradient(135deg, #00F2FE 0%, #4FACFE 50%, #00FF66 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .matrix-mode .text-gradient {
-            background: linear-gradient(135deg, #00ff66 0%, #00ffaa 50%, #adff2f 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* Glassmorphic Cards */
-        .glass-card {
-            background: rgba(8, 10, 20, 0.7);
+        /* Glassmorphic Cyber Cards */
+        .glass-card-matrix {
+            background: rgba(4, 20, 10, 0.75);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(0, 255, 102, 0.2);
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .matrix-mode .glass-card {
-            background: rgba(4, 18, 8, 0.75);
-            border-color: rgba(0, 255, 102, 0.2);
-        }
-
-        .glass-card:hover {
-            border-color: rgba(0, 242, 254, 0.4);
-            box-shadow: 0 0 35px rgba(0, 242, 254, 0.18);
+        .glass-card-matrix:hover {
+            border-color: rgba(0, 255, 102, 0.6);
+            box-shadow: 0 0 35px rgba(0, 255, 102, 0.25);
             transform: translateY(-2px);
         }
 
-        .matrix-mode .glass-card:hover {
-            border-color: rgba(0, 255, 102, 0.5);
-            box-shadow: 0 0 35px rgba(0, 255, 102, 0.25);
-        }
-
         /* Pulse Dot */
-        .pulse-dot {
-            box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7);
-            animation: pulse 2s infinite;
+        .pulse-dot-matrix {
+            box-shadow: 0 0 0 0 rgba(0, 255, 102, 0.7);
+            animation: pulse-matrix 2s infinite;
         }
-        @keyframes pulse {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(0, 255, 136, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 255, 136, 0); }
-        }
-
-        /* Active Theme Button Styles */
-        .theme-btn-active-cosmos {
-            background: rgba(0, 242, 254, 0.15);
-            border-color: rgba(0, 242, 254, 0.6);
-            color: #00F2FE;
-            box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
-        }
-
-        .theme-btn-active-matrix {
-            background: rgba(0, 255, 102, 0.15);
-            border-color: rgba(0, 255, 102, 0.6);
-            color: #00ff66;
-            box-shadow: 0 0 15px rgba(0, 255, 102, 0.3);
+        @keyframes pulse-matrix {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 255, 102, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(0, 255, 102, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 255, 102, 0); }
         }
 
         /* Custom Scrollbar */
@@ -141,68 +112,63 @@
             width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #030408;
+            background: #020904;
         }
         ::-webkit-scrollbar-thumb {
-            background: #1E2235;
+            background: #0A3315;
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #00F2FE;
+            background: #00FF66;
         }
     </style>
 </head>
-<body class="selection:bg-cyan-500 selection:text-black">
+<body class="selection:bg-emerald-500 selection:text-black">
 
     <!-- 3D WebGL Canvas Layer -->
     <div id="webgl-container"></div>
+    <div class="fixed inset-0 pointer-events-none z-10 matrix-overlay opacity-80"></div>
 
     <!-- Navigation Header -->
-    <header class="fixed top-0 left-0 w-full z-50 glass-card border-b border-white/5">
+    <header class="fixed top-0 left-0 w-full z-50 glass-card-matrix border-b border-cyber-green/20">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
             <a href="#" class="flex items-center gap-3 group">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 via-purple-600 to-emerald-400 flex items-center justify-center text-black font-bold text-lg shadow-lg group-hover:scale-105 transition-transform duration-300">
-                    <i class="fa-solid fa-cat text-white"></i>
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-green-500 via-emerald-400 to-cyan-400 flex items-center justify-center text-black font-bold text-lg shadow-lg group-hover:scale-105 transition-transform duration-300">
+                    <i class="fa-solid fa-cat text-black"></i>
                 </div>
                 <div class="flex flex-col">
-                    <span class="font-bold text-lg tracking-wider text-white group-hover:text-cyan-400 transition-colors">ARCH1CAT</span>
-                    <span class="text-xs text-gray-400 font-mono tracking-widest">PERSONAL PORTFOLIO</span>
+                    <span class="font-bold text-lg tracking-wider text-white group-hover:text-cyber-green transition-colors">ARCH1CAT</span>
+                    <span class="text-xs text-cyber-green font-mono tracking-widest">CYBER MATRIX PORTFOLIO</span>
                 </div>
             </a>
 
-            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
-                <a href="#about" class="hover:text-cyan-400 transition-colors">Обо мне</a>
-                <a href="#yotei" class="hover:text-cyan-400 transition-colors">Проект Yotei</a>
-                <a href="#projects" class="hover:text-cyan-400 transition-colors">Проекты</a>
-                <a href="#terminal" class="hover:text-cyan-400 transition-colors">Консоль</a>
+            <nav class="hidden md:flex items-center gap-8 text-sm font-mono text-gray-300">
+                <a href="#about" class="hover:text-cyber-green transition-colors">Обо мне</a>
+                <a href="#yotei" class="hover:text-cyber-green transition-colors">Проект YOTEI</a>
+                <a href="#projects" class="hover:text-cyber-green transition-colors">Проекты</a>
+                <a href="#terminal" class="hover:text-cyber-green transition-colors">Консоль</a>
             </nav>
 
             <div class="flex items-center gap-3">
-                <!-- Theme Switcher Controls -->
-                <div class="flex items-center gap-1 p-1 bg-black/60 rounded-xl border border-white/10">
-                    <button onclick="setThemeMode('cosmos')" id="btn-cosmos" class="px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-all theme-btn-active-cosmos flex items-center gap-1.5">
-                        <i class="fa-solid fa-planet-ringed"></i>
-                        <span>Neural Cosmos</span>
-                    </button>
-                    <button onclick="setThemeMode('matrix')" id="btn-matrix" class="px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-all text-gray-400 hover:text-green-400 flex items-center gap-1.5">
-                        <i class="fa-solid fa-terminal"></i>
-                        <span>Cyber Matrix</span>
-                    </button>
-                </div>
-
                 <!-- Audio Toggle Button -->
-                <button id="audio-toggle-btn" onclick="toggleAudio()" class="w-10 h-10 rounded-xl bg-cyber-card border border-cyber-border text-gray-400 hover:text-cyan-400 hover:border-cyan-400/50 transition-all flex items-center justify-center" title="Звук">
+                <button id="audio-toggle-btn" onclick="toggleAudio()" class="w-10 h-10 rounded-xl bg-black/60 border border-cyber-green/30 text-gray-400 hover:text-cyber-green hover:border-cyber-green/60 transition-all flex items-center justify-center" title="Звук">
                     <i class="fa-solid fa-volume-xmark text-sm" id="audio-icon"></i>
                 </button>
 
+                <!-- YOTEI Link Header -->
+                <a href="https://yotei.com.ua/" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-xl bg-purple-950/60 border border-purple-500/40 text-purple-300 hover:text-white hover:border-purple-400 transition-all flex items-center gap-2 text-xs font-mono">
+                    <i class="fa-solid fa-globe text-purple-400"></i>
+                    <span>yotei.com.ua ↗</span>
+                </a>
+
                 <!-- Twitter / X Button -->
-                <a href="https://x.com/Archi_____cat" target="_blank" rel="noopener noreferrer" class="px-3 py-2 rounded-xl bg-cyber-card border border-cyber-border text-gray-300 hover:text-cyan-400 hover:border-cyan-400/50 transition-all flex items-center gap-2 text-xs font-mono" title="Twitter / X Profile">
-                    <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-cyan-400"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                <a href="https://x.com/Archi_____cat" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-xl bg-black/60 border border-cyber-green/30 text-gray-300 hover:text-cyber-green hover:border-cyber-green/60 transition-all flex items-center gap-2 text-xs font-mono" title="Twitter / X Profile">
+                    <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-cyber-green"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                     <span class="hidden lg:inline">@Archi_____cat</span>
                 </a>
 
                 <!-- GitHub Profile -->
-                <a href="https://github.com/l2bote4game" target="_blank" rel="noopener noreferrer" class="px-3 py-2 rounded-xl bg-cyber-card border border-cyber-border text-gray-300 hover:text-white hover:border-cyan-400/50 transition-all flex items-center gap-2 text-xs font-mono">
+                <a href="https://github.com/l2bote4game" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-xl bg-black/60 border border-cyber-green/30 text-gray-300 hover:text-white hover:border-cyber-green/60 transition-all flex items-center gap-2 text-xs font-mono">
                     <i class="fa-brands fa-github text-base"></i>
                     <span class="hidden sm:inline">GitHub</span>
                 </a>
@@ -211,43 +177,43 @@
     </header>
 
     <!-- Main Content Container -->
-    <main class="relative z-10 pt-28">
+    <main class="relative z-20 pt-28">
 
-        <!-- Hero Section (Personal & Human Tone) -->
+        <!-- Hero Section -->
         <section id="about" class="max-w-7xl mx-auto px-6 pt-16 pb-20">
             <div class="max-w-3xl">
                 
                 <!-- Live Status Badge -->
-                <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full glass-card border border-cyan-500/30 text-xs font-mono text-cyan-300 mb-8" id="badge-status">
-                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 pulse-dot"></span>
-                    <span id="status-text">NEURAL COSMOS 3D ACTIVE</span>
+                <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full glass-card-matrix border border-cyber-green/40 text-xs font-mono text-cyber-green mb-8">
+                    <span class="w-2.5 h-2.5 rounded-full bg-cyber-green pulse-dot-matrix"></span>
+                    <span>CYBER MATRIX 3D WORLD ACTIVE</span>
                 </div>
 
                 <!-- Main Heading -->
-                <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-tight mb-8">
-                    Привет, я <span class="text-gradient">arch1cat</span>.<br>
+                <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-tight mb-8 text-white">
+                    Привет, я <span class="text-gradient-matrix">arch1cat</span>.<br>
                     Разработчик, AI-инженер<br>
-                    и <span class="text-gradient-purple">контент-креатор</span>.
+                    и <span class="text-gradient-cyan">контент-креатор</span>.
                 </h1>
 
                 <!-- Subtitle -->
-                <p class="text-lg sm:text-xl text-gray-300 max-w-2xl leading-relaxed mb-10">
-                    Добро пожаловать в моё личное портфолио! Здесь я делаю 3D WebGL штуки, мобильные приложения под Android, разрабатываю проект <strong class="text-cyan-400">YOTEI</strong> и делаю крутой контент.
+                <p class="text-lg sm:text-xl text-gray-300 max-w-2xl leading-relaxed mb-10 font-light">
+                    Разрабатываю интерактивные 3D WebGL миры, мобильные приложения под Android на Kotlin, строю проект <a href="https://yotei.com.ua/" target="_blank" rel="noopener noreferrer" class="text-cyber-green font-semibold hover:underline">YOTEI</a> и создаю уникальный контент.
                 </p>
 
                 <!-- Action Buttons -->
-                <div class="flex flex-wrap items-center gap-4 mb-16">
-                    <a href="#projects" class="px-8 py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-bold text-sm tracking-wide shadow-lg hover:shadow-cyan-500/30 hover:scale-105 transition-all duration-300 inline-flex items-center gap-3">
-                        <i class="fa-solid fa-rocket"></i>
+                <div class="flex flex-wrap items-center gap-4 mb-16 font-mono">
+                    <a href="https://yotei.com.ua/" target="_blank" rel="noopener noreferrer" class="px-8 py-4 rounded-xl bg-gradient-to-r from-green-500 to-emerald-400 hover:from-green-400 hover:to-emerald-300 text-black font-extrabold text-sm tracking-wide shadow-lg shadow-green-500/20 hover:scale-105 transition-all duration-300 inline-flex items-center gap-3">
+                        <i class="fa-solid fa-globe"></i>
+                        <span>ПРОЕКТ YOTEI.COM.UA ↗</span>
+                    </a>
+                    <a href="#projects" class="px-8 py-4 rounded-xl glass-card-matrix text-white font-bold text-sm hover:border-cyber-green hover:bg-green-950/30 transition-all duration-300 inline-flex items-center gap-2">
+                        <i class="fa-solid fa-code text-cyber-green"></i>
                         <span>МОИ ПРОЕКТЫ</span>
                     </a>
-                    <a href="https://yotei.app" target="_blank" rel="noopener noreferrer" class="px-8 py-4 rounded-xl glass-card border border-purple-500/40 text-purple-300 font-bold text-sm hover:border-purple-400 hover:bg-purple-950/30 transition-all duration-300 inline-flex items-center gap-2">
-                        <i class="fa-solid fa-globe text-purple-400"></i>
-                        <span>YOTEI.APP ↗</span>
-                    </a>
-                    <a href="https://x.com/Archi_____cat" target="_blank" rel="noopener noreferrer" class="px-8 py-4 rounded-xl glass-card border border-cyan-500/30 text-white font-medium text-sm hover:border-cyan-400/50 hover:bg-white/5 transition-all duration-300 inline-flex items-center gap-2">
-                        <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-cyan-400"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                        <span>TWITTER / X</span>
+                    <a href="https://x.com/Archi_____cat" target="_blank" rel="noopener noreferrer" class="px-8 py-4 rounded-xl glass-card-matrix text-gray-200 font-medium text-sm hover:border-cyber-green hover:bg-white/5 transition-all duration-300 inline-flex items-center gap-2">
+                        <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 text-cyber-green"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        <span>TWITTER @Archi_____cat</span>
                     </a>
                 </div>
             </div>
@@ -255,30 +221,30 @@
 
         <!-- Project YOTEI Showcase Section -->
         <section id="yotei" class="max-w-7xl mx-auto px-6 py-12">
-            <div class="glass-card p-10 rounded-3xl border border-purple-500/40 relative overflow-hidden group">
+            <div class="glass-card-matrix p-10 rounded-3xl border border-purple-500/40 relative overflow-hidden group">
                 <div class="absolute -right-20 -top-20 w-80 h-80 bg-purple-600/15 rounded-full blur-3xl group-hover:bg-purple-600/25 transition-all duration-500 pointer-events-none"></div>
 
                 <div class="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
                     <div class="space-y-4 max-w-2xl">
                         <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-950/80 border border-purple-500/40 text-purple-300 font-mono text-xs">
                             <i class="fa-solid fa-sparkles text-amber-400"></i>
-                            <span>FLAGSHIP PROJECT IN ACTIVE DEVELOPMENT</span>
+                            <span>ОСНОВНОЙ ПРОЕКТ В АКТИВНОЙ РАЗРАБОТКЕ</span>
                         </div>
                         <h3 class="text-3xl sm:text-4xl font-extrabold text-white">Проект YOTEI</h3>
                         <p class="text-gray-300 text-base leading-relaxed">
-                            Сейчас я активно работаю над проектом <strong>YOTEI</strong>. Полноценная платформа и экосистема для структурирования информации, автоматизации и умной работы с данными.
+                            Сейчас я активно работаю над проектом <strong>YOTEI</strong>. Полноценная платформа и экосистема для структурирования информации, автоматизации и работы с данными.
                         </p>
                         <div class="flex flex-wrap gap-2 pt-2 font-mono text-xs">
-                            <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-cyan-300">Yotei System</span>
+                            <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-cyber-green">yotei.com.ua</span>
                             <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-purple-300">AI Integration</span>
-                            <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-emerald-300">Live Service</span>
+                            <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-cyan-300">Live Web App</span>
                         </div>
                     </div>
 
                     <div class="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto">
-                        <a href="https://yotei.app" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-base shadow-xl hover:shadow-purple-500/30 transition-all text-center inline-flex items-center justify-center gap-3">
+                        <a href="https://yotei.com.ua/" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-extrabold text-base shadow-xl hover:shadow-purple-500/30 transition-all text-center inline-flex items-center justify-center gap-3 font-mono">
                             <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                            <span>Перейти на YOTEI.APP</span>
+                            <span>ПЕРЕЙТИ НА YOTEI.COM.UA ↗</span>
                         </a>
                     </div>
                 </div>
@@ -288,14 +254,14 @@
         <!-- Featured Projects Grid -->
         <section id="projects" class="max-w-7xl mx-auto px-6 py-16">
             <div class="text-center mb-16">
-                <h2 class="text-xs font-mono text-cyan-400 uppercase tracking-widest mb-3">// Мой код и репозитории</h2>
+                <h2 class="text-xs font-mono text-cyber-green uppercase tracking-widest mb-3">// Мой код и репозитории</h2>
                 <h3 class="text-3xl sm:text-4xl font-bold text-white">Открытые проекты & Приложения</h3>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
 
                 <!-- World Monitor Card -->
-                <div class="glass-card p-8 rounded-3xl border border-blue-500/30 relative overflow-hidden group flex flex-col justify-between">
+                <div class="glass-card-matrix p-8 rounded-3xl border border-blue-500/30 relative overflow-hidden group flex flex-col justify-between">
                     <div class="absolute -right-16 -bottom-16 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl group-hover:bg-blue-500/20 transition-all duration-500 pointer-events-none"></div>
 
                     <div>
@@ -316,15 +282,15 @@
                     </div>
 
                     <div>
-                        <a href="https://github.com/l2bote4game/world-monitor" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm inline-flex items-center gap-2 transition-colors">
+                        <a href="https://github.com/l2bote4game/world-monitor" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm inline-flex items-center gap-2 transition-colors font-mono">
                             <i class="fa-brands fa-github text-base"></i>
-                            <span>Открыть Исходный Код</span>
+                            <span>Открыть Код</span>
                         </a>
                     </div>
                 </div>
 
                 <!-- Wi-Fi Analyzer Card -->
-                <div class="glass-card p-8 rounded-3xl border border-cyan-500/30 relative overflow-hidden group flex flex-col justify-between">
+                <div class="glass-card-matrix p-8 rounded-3xl border border-cyan-500/30 relative overflow-hidden group flex flex-col justify-between">
                     <div class="absolute -right-16 -bottom-16 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl group-hover:bg-cyan-500/20 transition-all duration-500 pointer-events-none"></div>
 
                     <div>
@@ -332,9 +298,9 @@
                             <i class="fa-solid fa-wifi"></i>
                             <span>ANDROID APP • KOTLIN</span>
                         </div>
-                        <h4 class="text-2xl font-bold text-white mb-3">WiFi Analyzer & Network Scanner</h4>
+                        <h4 class="text-2xl font-bold text-white mb-3">WiFi Analyzer & Scanner</h4>
                         <p class="text-gray-300 text-sm leading-relaxed mb-6">
-                            Приложение под Android на Kotlin & Jetpack Compose для графиков Wi-Fi каналов, подсети, сканирования IP и устройств.
+                            Приложение под Android на Kotlin & Jetpack Compose для графиков Wi-Fi каналов, сканирования IP и устройств.
                         </p>
                         
                         <div class="flex flex-wrap gap-2 mb-8 font-mono text-xs">
@@ -345,15 +311,15 @@
                     </div>
 
                     <div>
-                        <a href="https://github.com/l2bote4game/wifiscaner" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-sm inline-flex items-center gap-2 transition-colors">
+                        <a href="https://github.com/l2bote4game/wifiscaner" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-sm inline-flex items-center gap-2 transition-colors font-mono">
                             <i class="fa-brands fa-github text-base"></i>
-                            <span>Открыть Исходный Код</span>
+                            <span>Открыть Код</span>
                         </a>
                     </div>
                 </div>
 
                 <!-- Cats Match-3 Game Card -->
-                <div class="glass-card p-8 rounded-3xl border border-purple-500/30 relative overflow-hidden group flex flex-col justify-between">
+                <div class="glass-card-matrix p-8 rounded-3xl border border-purple-500/30 relative overflow-hidden group flex flex-col justify-between">
                     <div class="absolute -right-16 -bottom-16 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl group-hover:bg-purple-500/20 transition-all duration-500 pointer-events-none"></div>
 
                     <div>
@@ -361,22 +327,22 @@
                             <i class="fa-solid fa-cat"></i>
                             <span>ANDROID GAME • 3 В РЯД</span>
                         </div>
-                        <h4 class="text-2xl font-bold text-white mb-3">Cats Match-3 Quest (3MeowQuest)</h4>
+                        <h4 class="text-2xl font-bold text-white mb-3">Cats Match-3 Quest</h4>
                         <p class="text-gray-300 text-sm leading-relaxed mb-6">
                             Игра под Android 3 в ряд с котиками, постройкой приюта, бустерами, кошачьей мятой и украшением комнат.
                         </p>
                         
                         <div class="flex flex-wrap gap-2 mb-8 font-mono text-xs">
                             <span class="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-purple-300">Kotlin</span>
-                            <span class="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-cyan-300">Canvas Engine</span>
+                            <span class="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-cyber-green">Canvas Engine</span>
                             <span class="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-pink-300">Cat Shelter</span>
                         </div>
                     </div>
 
                     <div>
-                        <a href="https://github.com/l2bote4game/cats-match3-game" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-sm inline-flex items-center gap-2 transition-colors">
+                        <a href="https://github.com/l2bote4game/cats-match3-game" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-sm inline-flex items-center gap-2 transition-colors font-mono">
                             <i class="fa-brands fa-github text-base"></i>
-                            <span>Открыть Исходный Код</span>
+                            <span>Открыть Код</span>
                         </a>
                     </div>
                 </div>
@@ -387,44 +353,43 @@
         <!-- Interactive Terminal CLI Section -->
         <section id="terminal" class="max-w-5xl mx-auto px-6 py-16">
             <div class="text-center mb-10">
-                <h2 class="text-xs font-mono text-cyan-400 uppercase tracking-widest mb-3">// Интерактивная консоль</h2>
+                <h2 class="text-xs font-mono text-cyber-green uppercase tracking-widest mb-3">// Интерактивная консоль</h2>
                 <h3 class="text-3xl font-bold text-white">arch1cat CLI Shell</h3>
             </div>
 
             <!-- Terminal Component -->
-            <div class="glass-card rounded-2xl overflow-hidden border border-cyber-border shadow-2xl font-mono text-sm">
+            <div class="glass-card-matrix rounded-2xl overflow-hidden border border-cyber-green/30 shadow-2xl font-mono text-sm">
                 <!-- Terminal Header -->
-                <div class="bg-black/70 px-4 py-3 flex items-center justify-between border-b border-white/5">
+                <div class="bg-black/80 px-4 py-3 flex items-center justify-between border-b border-cyber-green/20">
                     <div class="flex items-center gap-2">
                         <span class="w-3 h-3 rounded-full bg-red-500/80 inline-block"></span>
                         <span class="w-3 h-3 rounded-full bg-yellow-500/80 inline-block"></span>
                         <span class="w-3 h-3 rounded-full bg-green-500/80 inline-block"></span>
                     </div>
-                    <span class="text-xs text-gray-400">arch1cat@portfolio:~</span>
-                    <span class="text-xs text-cyan-400" id="terminal-mode-indicator">MODE: NEURAL COSMOS</span>
+                    <span class="text-xs text-gray-400">arch1cat@matrix-node:~</span>
+                    <span class="text-xs text-cyber-green font-bold">CYBER MATRIX 3D</span>
                 </div>
 
                 <!-- Terminal Body -->
-                <div id="terminal-body" class="p-6 h-64 overflow-y-auto space-y-3 bg-black/60 text-gray-300">
-                    <div>Добро пожаловать в консоль <span class="text-cyan-400 font-bold">arch1cat</span>.</div>
+                <div id="terminal-body" class="p-6 h-64 overflow-y-auto space-y-3 bg-black/80 text-gray-300">
+                    <div>Добро пожаловать в консоль <span class="text-cyber-green font-bold">arch1cat</span>.</div>
                     <div>Введите <span class="text-yellow-400">help</span> для списка доступных команд.</div>
                     <div class="text-gray-500">----------------------------------------------------</div>
                 </div>
 
                 <!-- Terminal Input Form -->
-                <form id="terminal-form" class="bg-black/80 px-6 py-3 border-t border-white/5 flex items-center gap-3">
-                    <span class="text-cyan-400 font-bold">visitor@arch1cat:~$</span>
-                    <input type="text" id="terminal-input" autocomplete="off" placeholder="команды: help, whoami, yotei, projects, theme, clear..." class="bg-transparent border-none outline-none text-white w-full font-mono focus:ring-0">
-                    <button type="submit" class="text-xs px-3 py-1 bg-cyan-500/20 text-cyan-300 rounded border border-cyan-500/40 hover:bg-cyan-500/40">RUN</button>
+                <form id="terminal-form" class="bg-black/90 px-6 py-3 border-t border-cyber-green/20 flex items-center gap-3">
+                    <span class="text-cyber-green font-bold">visitor@arch1cat:~$</span>
+                    <input type="text" id="terminal-input" autocomplete="off" placeholder="команды: help, whoami, yotei, projects, clear..." class="bg-transparent border-none outline-none text-white w-full font-mono focus:ring-0">
+                    <button type="submit" class="text-xs px-4 py-1.5 bg-cyber-green/20 text-cyber-green hover:bg-cyber-green/30 rounded border border-cyber-green/40 font-mono font-bold">RUN</button>
                 </form>
             </div>
 
             <!-- Quick Trigger Buttons -->
             <div class="flex flex-wrap items-center justify-center gap-3 mt-4">
                 <span class="text-xs font-mono text-gray-500">Быстрый запуск:</span>
-                <button onclick="runCommand('whoami')" class="px-3 py-1 rounded bg-white/5 border border-white/10 text-xs font-mono text-gray-300 hover:border-cyan-400 hover:text-cyan-400">whoami</button>
-                <button onclick="runCommand('yotei')" class="px-3 py-1 rounded bg-white/5 border border-purple-400/40 text-xs font-mono text-purple-300 hover:bg-purple-500/20">yotei.app</button>
-                <button onclick="runCommand('theme')" class="px-3 py-1 rounded bg-white/5 border border-cyan-400/40 text-xs font-mono text-cyan-300 hover:bg-cyan-500/20">сменить тему 3D</button>
+                <button onclick="runCommand('whoami')" class="px-3 py-1 rounded bg-white/5 border border-white/10 text-xs font-mono text-gray-300 hover:border-cyber-green hover:text-cyber-green">whoami</button>
+                <button onclick="runCommand('yotei')" class="px-3 py-1 rounded bg-white/5 border border-purple-400/40 text-xs font-mono text-purple-300 hover:bg-purple-500/20">yotei.com.ua</button>
                 <button onclick="runCommand('projects')" class="px-3 py-1 rounded bg-white/5 border border-white/10 text-xs font-mono text-gray-300 hover:border-blue-400 hover:text-blue-400">проекты</button>
                 <button onclick="runCommand('clear')" class="px-3 py-1 rounded bg-white/5 border border-white/10 text-xs font-mono text-gray-300 hover:border-red-400 hover:text-red-400">clear</button>
             </div>
@@ -433,23 +398,23 @@
     </main>
 
     <!-- Footer -->
-    <footer class="relative z-10 border-t border-white/5 py-12 bg-black/60">
+    <footer class="relative z-20 border-t border-cyber-green/20 py-12 bg-black/80">
         <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
             <div class="flex items-center gap-3">
-                <span class="w-2.5 h-2.5 rounded-full bg-cyan-400 pulse-dot"></span>
-                <span class="text-sm font-mono text-gray-400">© 2026 arch1cat. Личный сайт-портфолио.</span>
+                <span class="w-2.5 h-2.5 rounded-full bg-cyber-green pulse-dot-matrix"></span>
+                <span class="text-sm font-mono text-gray-400">© 2026 arch1cat. Cyber Matrix Portfolio.</span>
             </div>
             <div class="flex items-center gap-6 text-gray-400">
-                <a href="https://x.com/Archi_____cat" target="_blank" rel="noopener noreferrer" class="hover:text-cyan-400 text-lg transition-colors" title="Twitter / X">
+                <a href="https://x.com/Archi_____cat" target="_blank" rel="noopener noreferrer" class="hover:text-cyber-green text-lg transition-colors" title="Twitter / X">
                     <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                 </a>
-                <a href="https://github.com/l2bote4game" target="_blank" class="hover:text-cyan-400 text-lg transition-colors" title="GitHub"><i class="fa-brands fa-github"></i></a>
-                <a href="https://yotei.app" target="_blank" class="hover:text-purple-400 text-lg transition-colors" title="Yotei App"><i class="fa-solid fa-globe"></i></a>
+                <a href="https://github.com/l2bote4game" target="_blank" class="hover:text-cyber-green text-lg transition-colors" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                <a href="https://yotei.com.ua/" target="_blank" class="hover:text-purple-400 text-lg transition-colors" title="Yotei App"><i class="fa-solid fa-globe"></i></a>
             </div>
         </div>
     </footer>
 
-    <!-- Three.js Volumetric 3D Engine & Web Audio Script -->
+    <!-- Three.js Cyber Matrix 3D World Engine & Web Audio Script -->
     <script>
         // ----------------------------------------------------
         // WEB AUDIO SYNTH ENGINE
@@ -484,7 +449,7 @@
             if (!isSoundOn) return;
             initAudio();
             [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
-                setTimeout(() => playBeep(freq, 'triangle', 0.25), idx * 70);
+                setTimeout(() => playBeep(freq, 'square', 0.2), idx * 60);
             });
         }
 
@@ -496,22 +461,21 @@
 
             if (isSoundOn) {
                 if (audioCtx.state === 'suspended') audioCtx.resume();
-                icon.className = 'fa-solid fa-volume-high text-cyan-400';
-                btn.className = 'w-10 h-10 rounded-xl bg-cyan-950/80 border border-cyan-400 text-cyan-400 flex items-center justify-center';
+                icon.className = 'fa-solid fa-volume-high text-cyber-green';
+                btn.className = 'w-10 h-10 rounded-xl bg-green-950/80 border border-cyber-green text-cyber-green flex items-center justify-center';
                 playChime();
             } else {
                 icon.className = 'fa-solid fa-volume-xmark text-gray-400';
-                btn.className = 'w-10 h-10 rounded-xl bg-cyber-card border border-cyber-border text-gray-400 hover:text-cyan-400 flex items-center justify-center';
+                btn.className = 'w-10 h-10 rounded-xl bg-black/60 border border-cyber-green/30 text-gray-400 hover:text-cyber-green flex items-center justify-center';
             }
         }
 
         // ----------------------------------------------------
-        // DUAL THREE.JS 3D ENGINE (Neural Cosmos & Cyber Matrix)
+        // THREE.JS CYBER MATRIX 3D WORLD ENGINE
         // ----------------------------------------------------
-        let currentMode = 'cosmos';
         const container = document.getElementById('webgl-container');
         const scene = new THREE.Scene();
-        scene.fog = new THREE.FogExp2(0x030408, 0.018);
+        scene.fog = new THREE.FogExp2(0x020904, 0.022);
 
         const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
         camera.position.set(0, 0, 10);
@@ -521,167 +485,77 @@
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         container.appendChild(renderer.domElement);
 
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+        const ambientLight = new THREE.AmbientLight(0x00ff66, 0.5);
         scene.add(ambientLight);
 
-        const coreLight = new THREE.PointLight(0x00F2FE, 4, 60);
-        coreLight.position.set(0, 0, 0);
-        scene.add(coreLight);
+        const pointLight = new THREE.PointLight(0x00ff66, 4, 50);
+        pointLight.position.set(0, 5, 5);
+        scene.add(pointLight);
 
-        const orbitLight = new THREE.PointLight(0x9D50BB, 4, 60);
-        orbitLight.position.set(8, 8, 8);
-        scene.add(orbitLight);
+        // 1. Infinite Cyber Grid Floor
+        const gridHelper = new THREE.GridHelper(80, 50, 0x00ff66, 0x004411);
+        gridHelper.position.y = -6;
+        scene.add(gridHelper);
 
-        // --- Cosmos Objects ---
-        const coreGeo = new THREE.IcosahedronGeometry(3.2, 4);
+        // 2. Central Cybernetic Octahedron Core
+        const coreGeo = new THREE.OctahedronGeometry(3.2, 2);
         const originalPositions = new Float32Array(coreGeo.attributes.position.array);
 
         const coreMat = new THREE.MeshStandardMaterial({
-            color: 0x00F2FE,
+            color: 0x00ff66,
             wireframe: true,
             roughness: 0.1,
             metalness: 0.9,
-            emissive: 0x003344
+            emissive: 0x003311
         });
         const cyberCore = new THREE.Mesh(coreGeo, coreMat);
         scene.add(cyberCore);
 
-        const innerGeo = new THREE.SphereGeometry(1.8, 32, 32);
+        // Inner Pulsing Matrix Sphere
+        const innerGeo = new THREE.SphereGeometry(1.8, 24, 24);
         const innerMat = new THREE.MeshBasicMaterial({
-            color: 0x7F00FF,
+            color: 0x00ffaa,
             wireframe: true,
             transparent: true,
-            opacity: 0.7
+            opacity: 0.6
         });
         const innerSphere = new THREE.Mesh(innerGeo, innerMat);
         scene.add(innerSphere);
 
-        const torusGeo1 = new THREE.TorusGeometry(5.2, 0.05, 16, 120);
-        const torusMat1 = new THREE.MeshBasicMaterial({ color: 0x00F2FE, wireframe: true });
+        // Orbiting Cyber Rings
+        const torusGeo1 = new THREE.TorusGeometry(5.0, 0.04, 16, 100);
+        const torusMat1 = new THREE.MeshBasicMaterial({ color: 0x00ff66, wireframe: true });
         const ring1 = new THREE.Mesh(torusGeo1, torusMat1);
         ring1.rotation.x = Math.PI / 3;
         scene.add(ring1);
 
-        const torusGeo2 = new THREE.TorusGeometry(6.2, 0.04, 16, 120);
-        const torusMat2 = new THREE.MeshBasicMaterial({ color: 0x00FF88, wireframe: true });
+        const torusGeo2 = new THREE.TorusGeometry(6.0, 0.03, 16, 100);
+        const torusMat2 = new THREE.MeshBasicMaterial({ color: 0x00f2fe, wireframe: true });
         const ring2 = new THREE.Mesh(torusGeo2, torusMat2);
         ring2.rotation.y = Math.PI / 4;
         scene.add(ring2);
 
-        const ringParticleCount = 500;
-        const ringParticlePos = new Float32Array(ringParticleCount * 3);
-        for (let i = 0; i < ringParticleCount; i++) {
-            const angle = (i / ringParticleCount) * Math.PI * 2;
-            const radius = 5.8 + (Math.random() - 0.5) * 0.8;
-            ringParticlePos[i * 3] = Math.cos(angle) * radius;
-            ringParticlePos[i * 3 + 1] = (Math.random() - 0.5) * 0.5;
-            ringParticlePos[i * 3 + 2] = Math.sin(angle) * radius;
+        // 3. 3D Digital Rain Stream (1,200 Particles Falling in Z/Y Space)
+        const rainCount = 1200;
+        const rainPos = new Float32Array(rainCount * 3);
+        for (let i = 0; i < rainCount * 3; i += 3) {
+            rainPos[i] = (Math.random() - 0.5) * 60;
+            rainPos[i + 1] = (Math.random() - 0.5) * 60;
+            rainPos[i + 2] = (Math.random() - 0.5) * 40;
         }
-        const ringParticleGeo = new THREE.BufferGeometry();
-        ringParticleGeo.setAttribute('position', new THREE.BufferAttribute(ringParticlePos, 3));
-        const ringParticleMat = new THREE.PointsMaterial({ size: 0.06, color: 0x00FF88, transparent: true, opacity: 0.8 });
-        const ringParticleSystem = new THREE.Points(ringParticleGeo, ringParticleMat);
-        ringParticleSystem.rotation.x = Math.PI / 6;
-        scene.add(ringParticleSystem);
+        const rainGeo = new THREE.BufferGeometry();
+        rainGeo.setAttribute('position', new THREE.BufferAttribute(rainPos, 3));
 
-        const nebulaCount = 2000;
-        const nebulaPos = new Float32Array(nebulaCount * 3);
-        for (let i = 0; i < nebulaCount * 3; i += 3) {
-            nebulaPos[i] = (Math.random() - 0.5) * 50;
-            nebulaPos[i + 1] = (Math.random() - 0.5) * 50;
-            nebulaPos[i + 2] = (Math.random() - 0.5) * 50;
-        }
-        const nebulaGeo = new THREE.BufferGeometry();
-        nebulaGeo.setAttribute('position', new THREE.BufferAttribute(nebulaPos, 3));
-
-        const canvasSprite = document.createElement('canvas');
-        canvasSprite.width = 64;
-        canvasSprite.height = 64;
-        const spriteCtx = canvasSprite.getContext('2d');
-        const grad = spriteCtx.createRadialGradient(32, 32, 0, 32, 32, 32);
-        grad.addColorStop(0, 'rgba(0, 242, 254, 1)');
-        grad.addColorStop(0.4, 'rgba(127, 0, 255, 0.6)');
-        grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-        spriteCtx.fillStyle = grad;
-        spriteCtx.fillRect(0, 0, 64, 64);
-
-        const spriteTexture = new THREE.CanvasTexture(canvasSprite);
-
-        const nebulaMat = new THREE.PointsMaterial({
-            size: 0.25,
-            map: spriteTexture,
+        const rainMat = new THREE.PointsMaterial({
+            size: 0.18,
+            color: 0x00ff66,
             transparent: true,
-            opacity: 0.75,
-            blending: THREE.AdditiveBlending,
-            depthWrite: false
+            opacity: 0.85
         });
-        const nebulaSystem = new THREE.Points(nebulaGeo, nebulaMat);
-        scene.add(nebulaSystem);
+        const rainSystem = new THREE.Points(rainGeo, rainMat);
+        scene.add(rainSystem);
 
-        // --- Matrix Grid Helper ---
-        const gridHelper = new THREE.GridHelper(60, 40, 0x00ff66, 0x004411);
-        gridHelper.position.y = -8;
-        gridHelper.visible = false;
-        scene.add(gridHelper);
-
-        // --- Theme Switcher Function ---
-        function setThemeMode(mode) {
-            if (mode === currentMode) return;
-            currentMode = mode;
-            playChime();
-
-            const body = document.body;
-            const btnCosmos = document.getElementById('btn-cosmos');
-            const btnMatrix = document.getElementById('btn-matrix');
-            const statusText = document.getElementById('status-text');
-            const termIndicator = document.getElementById('terminal-mode-indicator');
-
-            if (mode === 'matrix') {
-                body.classList.add('matrix-mode');
-
-                btnMatrix.className = 'px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-all theme-btn-active-matrix flex items-center gap-1.5';
-                btnCosmos.className = 'px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-all text-gray-400 hover:text-cyan-400 flex items-center gap-1.5';
-
-                statusText.innerText = 'CYBER MATRIX 3D ACTIVE';
-                statusText.className = 'text-green-400 font-bold';
-                if (termIndicator) termIndicator.innerText = 'MODE: CYBER MATRIX';
-
-                // Change 3D colors & visibility for Matrix Mode
-                scene.fog.color.setHex(0x020a04);
-                coreMat.color.setHex(0x00ff66);
-                coreMat.emissive.setHex(0x003311);
-                innerMat.color.setHex(0x00ffaa);
-                torusMat1.color.setHex(0x00ff66);
-                torusMat2.color.setHex(0x00ffaa);
-                ringParticleMat.color.setHex(0x00ff66);
-                gridHelper.visible = true;
-
-                appendLine("Тема 3D переключена на: <span class='text-green-400 font-bold'>CYBER MATRIX</span>");
-            } else {
-                body.classList.remove('matrix-mode');
-
-                btnCosmos.className = 'px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-all theme-btn-active-cosmos flex items-center gap-1.5';
-                btnMatrix.className = 'px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-all text-gray-400 hover:text-green-400 flex items-center gap-1.5';
-
-                statusText.innerText = 'NEURAL COSMOS 3D ACTIVE';
-                statusText.className = 'text-cyan-300 font-bold';
-                if (termIndicator) termIndicator.innerText = 'MODE: NEURAL COSMOS';
-
-                // Restore Cosmos 3D colors
-                scene.fog.color.setHex(0x030408);
-                coreMat.color.setHex(0x00F2FE);
-                coreMat.emissive.setHex(0x003344);
-                innerMat.color.setHex(0x7F00FF);
-                torusMat1.color.setHex(0x00F2FE);
-                torusMat2.color.setHex(0x00FF88);
-                ringParticleMat.color.setHex(0x00FF88);
-                gridHelper.visible = false;
-
-                appendLine("Тема 3D переключена на: <span class='text-cyan-400 font-bold'>NEURAL COSMOS</span>");
-            }
-        }
-
-        // Animation Controls
+        // Animation Loop & Camera Flight
         let mouseX = 0;
         let mouseY = 0;
         let targetScrollY = 0;
@@ -706,42 +580,40 @@
             requestAnimationFrame(animate3D);
             const time = clock.getElapsedTime();
 
+            // Pulse wave deformation on core
             const posAttr = coreGeo.attributes.position;
             for (let i = 0; i < posAttr.count; i++) {
                 const vx = originalPositions[i * 3];
                 const vy = originalPositions[i * 3 + 1];
                 const vz = originalPositions[i * 3 + 2];
-                const wave = Math.sin(time * 2.5 + vx * 2.0 + vy * 1.5) * 0.18;
+                const wave = Math.sin(time * 3.0 + vx * 2.0 + vy * 1.5) * 0.15;
                 posAttr.setXYZ(i, vx + vx * wave, vy + vy * wave, vz + vz * wave);
             }
             posAttr.needsUpdate = true;
 
             cyberCore.rotation.x = time * 0.2;
-            cyberCore.rotation.y = time * 0.3;
+            cyberCore.rotation.y = time * 0.35;
             innerSphere.rotation.y = -time * 0.4;
             ring1.rotation.z = time * 0.25;
             ring2.rotation.x = time * 0.35;
-            ringParticleSystem.rotation.y = time * 0.15;
-            nebulaSystem.rotation.y = time * 0.02;
 
-            if (currentMode === 'matrix') {
-                const positions = nebulaGeo.attributes.position.array;
-                for (let i = 1; i < positions.length; i += 3) {
-                    positions[i] -= 0.2;
-                    if (positions[i] < -25) positions[i] = 25;
-                }
-                nebulaGeo.attributes.position.needsUpdate = true;
+            // Falling 3D Digital Rain
+            const positions = rainGeo.attributes.position.array;
+            for (let i = 1; i < positions.length; i += 3) {
+                positions[i] -= 0.25;
+                if (positions[i] < -30) positions[i] = 30;
             }
+            rainGeo.attributes.position.needsUpdate = true;
 
-            orbitLight.position.x = Math.sin(time) * 9;
-            orbitLight.position.z = Math.cos(time) * 9;
+            pointLight.position.x = Math.sin(time) * 8;
+            pointLight.position.z = Math.cos(time) * 8;
 
             const maxScroll = document.body.scrollHeight - window.innerHeight || 1;
             const scrollRatio = targetScrollY / maxScroll;
 
-            const targetCamX = Math.sin(scrollRatio * Math.PI * 1.5) * 6 + mouseX * 1.2;
+            const targetCamX = Math.sin(scrollRatio * Math.PI * 1.5) * 5 + mouseX * 1.2;
             const targetCamY = -scrollRatio * 8 - mouseY * 1.2;
-            const targetCamZ = 10 + Math.cos(scrollRatio * Math.PI) * 4;
+            const targetCamZ = 10 + Math.cos(scrollRatio * Math.PI) * 3;
 
             camera.position.x += (targetCamX - camera.position.x) * 0.05;
             camera.position.y += (targetCamY - camera.position.y) * 0.05;
@@ -770,15 +642,14 @@
 
         function runCommand(cmd) {
             cmd = cmd.trim().toLowerCase();
-            playBeep(650, 'sine', 0.05);
-            appendLine(`<span class="text-cyan-400 font-bold">visitor@arch1cat:~$</span> ${cmd}`);
+            playBeep(650, 'square', 0.05);
+            appendLine(`<span class="text-cyber-green font-bold">visitor@arch1cat:~$</span> ${cmd}`);
 
             switch(cmd) {
                 case 'help':
                     appendLine(`Доступные команды:<br>
                     <span class="text-yellow-400">whoami</span> - Обо мне<br>
-                    <span class="text-yellow-400">yotei</span> - Переход на yotei.app<br>
-                    <span class="text-yellow-400">theme</span> - Сменить тему (cosmos/matrix)<br>
+                    <span class="text-yellow-400">yotei</span> - Переход на yotei.com.ua<br>
                     <span class="text-yellow-400">projects</span> - Список репозиториев<br>
                     <span class="text-yellow-400">clear</span> - Очистить консоль`);
                     break;
@@ -786,17 +657,13 @@
                     appendLine(`arch1cat — разработчик, AI-инженер и контент-креатор. Пилю Yotei, 3D WebGL и мобильные приложения.`);
                     break;
                 case 'yotei':
-                    appendLine(`Открываю проект Yotei: <a href="https://yotei.app" target="_blank" class="underline text-purple-400">yotei.app</a>`);
-                    break;
-                case 'theme':
-                    const next = currentMode === 'cosmos' ? 'matrix' : 'cosmos';
-                    setThemeMode(next);
+                    appendLine(`Открываю проект Yotei: <a href="https://yotei.com.ua/" target="_blank" class="underline text-cyber-green">yotei.com.ua</a>`);
                     break;
                 case 'projects':
-                    appendLine(`<span class="text-purple-400">Yotei</span> - <a href="https://yotei.app" target="_blank" class="underline">yotei.app</a><br>
+                    appendLine(`<span class="text-purple-400">Yotei</span> - <a href="https://yotei.com.ua/" target="_blank" class="underline">yotei.com.ua</a><br>
                     <span class="text-blue-400">World Monitor</span> - <a href="https://github.com/l2bote4game/world-monitor" target="_blank" class="underline">l2bote4game/world-monitor</a><br>
                     <span class="text-cyan-400">WiFi Scanner</span> - <a href="https://github.com/l2bote4game/wifiscaner" target="_blank" class="underline">l2bote4game/wifiscaner</a><br>
-                    <span class="text-emerald-400">Cats Match-3</span> - <a href="https://github.com/l2bote4game/cats-match3-game" target="_blank" class="underline">l2bote4game/cats-match3-game</a>`);
+                    <span class="text-cyber-green">Cats Match-3</span> - <a href="https://github.com/l2bote4game/cats-match3-game" target="_blank" class="underline">l2bote4game/cats-match3-game</a>`);
                     break;
                 case 'clear':
                     terminalBody.innerHTML = '';
