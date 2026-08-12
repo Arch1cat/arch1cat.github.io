@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ARCH1CAT | 3D Neural Cosmos Portal</title>
-    <meta name="description" content="Official portal for ARCH1CAT — Autonomous AI Agents, Web3 Systems, 3D Spatial WebGL Environments, and Mobile Engineering.">
+    <title>arch1cat — Portfolio</title>
+    <meta name="description" content="Personal portfolio of arch1cat — developer, AI engineer, and creator.">
     
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -21,7 +20,8 @@
                             cyan: '#00F2FE',
                             purple: '#9D50BB',
                             violet: '#7F00FF',
-                            accent: '#00FF88'
+                            accent: '#00FF88',
+                            matrix: '#00ff66'
                         }
                     },
                     fontFamily: {
@@ -33,10 +33,7 @@
         }
     </script>
 
-    <!-- Three.js CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
-    <!-- Google Fonts & FontAwesome Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -60,7 +57,6 @@
             pointer-events: none;
         }
 
-        /* Glowing Gradients */
         .text-gradient {
             background: linear-gradient(135deg, #00F2FE 0%, #4FACFE 50%, #00FF88 100%);
             -webkit-background-clip: text;
@@ -73,7 +69,6 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* Glassmorphic Cards */
         .glass-card {
             background: rgba(8, 10, 20, 0.65);
             backdrop-filter: blur(20px);
@@ -88,7 +83,6 @@
             transform: translateY(-2px);
         }
 
-        /* Pulse Dot */
         .pulse-dot {
             box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7);
             animation: pulse 2s infinite;
@@ -99,7 +93,6 @@
             100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 255, 136, 0); }
         }
 
-        /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -117,10 +110,8 @@
 </head>
 <body class="selection:bg-cyan-500 selection:text-black">
 
-    <!-- 3D WebGL Canvas Layer -->
     <div id="webgl-container"></div>
 
-    <!-- Navigation Header -->
     <header class="fixed top-0 left-0 w-full z-50 glass-card border-b border-white/5">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
             <a href="#" class="flex items-center gap-3 group">
@@ -128,27 +119,30 @@
                     <i class="fa-solid fa-cat text-white"></i>
                 </div>
                 <div class="flex flex-col">
-                    <span class="font-bold text-lg tracking-wider text-white group-hover:text-cyan-400 transition-colors">ARCH1CAT<span class="text-cyan-400">.</span>STUDIO</span>
-                    <span class="text-xs text-gray-400 font-mono tracking-widest">3D NEURAL COSMOS LABS</span>
+                    <span class="font-bold text-lg tracking-wider text-white group-hover:text-cyan-400 transition-colors">ARCH1CAT</span>
+                    <span class="text-xs text-gray-400 font-mono tracking-widest">PORTFOLIO</span>
                 </div>
             </a>
 
             <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
                 <a href="#about" class="hover:text-cyan-400 transition-colors">About</a>
-                <a href="#projects" class="hover:text-cyan-400 transition-colors">Featured Builds</a>
-                <a href="#architecture" class="hover:text-cyan-400 transition-colors">3D Architecture</a>
-                <a href="#terminal" class="hover:text-cyan-400 transition-colors">Terminal CLI</a>
+                <a href="#projects" class="hover:text-cyan-400 transition-colors">Projects</a>
+                <a href="https://yotei.app" target="_blank" rel="noopener noreferrer" class="hover:text-cyan-400 transition-colors">Yotei</a>
+                <a href="https://x.com/Archi_____cat" target="_blank" rel="noopener noreferrer" class="hover:text-cyan-400 transition-colors">Twitter</a>
             </nav>
 
             <div class="flex items-center gap-3">
-                <!-- Audio Toggle Button -->
-                <button id="audio-toggle-btn" onclick="toggleAudio()" class="w-10 h-10 rounded-xl bg-cyber-card border border-cyber-border text-gray-400 hover:text-cyan-400 hover:border-cyan-400/50 transition-all flex items-center justify-center">
+                <button id="audio-toggle-btn" onclick="toggleAudio()" class="w-10 h-10 rounded-xl bg-cyber-card border border-cyber-border text-gray-400 hover:text-cyan-400 hover:border-cyan-400/50 transition-all flex items-center justify-center" title="Sound">
                     <i class="fa-solid fa-volume-xmark text-sm" id="audio-icon"></i>
                 </button>
 
-                <a href="https://x.com/Archi_____cat" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-xl bg-cyber-card border border-cyber-border text-gray-300 hover:text-cyan-400 hover:border-cyan-400/50 transition-all flex items-center justify-center font-mono">
-                    <i class="fa-brands fa-x-twitter text-base"></i>
+                <button onclick="setThemeMode('cosmos')" id="btn-cosmos" class="px-3 py-1.5 rounded-lg text-xs font-mono font-medium border border-cyan-400/60 text-cyan-400 bg-cyan-500/10 shadow-[0_0_15px_rgba(0,242,254,0.3)] transition-all">Neural Cosmos</button>
+                <button onclick="setThemeMode('matrix')" id="btn-matrix" class="px-3 py-1.5 rounded-lg text-xs font-mono font-medium border border-cyber-border text-gray-400 hover:text-cyber-matrix hover:border-cyber-matrix/60 transition-all">Cyber Matrix</button>
+
+                <a href="https://x.com/Archi_____cat" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-xl bg-cyber-card border border-cyber-border text-gray-300 hover:text-cyan-400 hover:border-cyan-400/50 transition-all flex items-center justify-center" title="Twitter / X">
+                    <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                 </a>
+
                 <a href="https://github.com/l2bote4game" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl bg-cyber-card border border-cyber-border text-gray-300 hover:text-white hover:border-cyan-400/50 transition-all flex items-center gap-2 text-sm font-mono">
                     <i class="fa-brands fa-github text-base"></i>
                     <span class="hidden sm:inline">GitHub</span>
@@ -157,284 +151,171 @@
         </div>
     </header>
 
-    <!-- Main Content Container -->
     <main class="relative z-10 pt-28">
-
-        <!-- Hero Section -->
-        <section id="about" class="max-w-7xl mx-auto px-6 pt-16 pb-24 flex flex-col items-center text-center">
-            
-            <!-- Live Status Badge -->
-            <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full glass-card border border-cyan-500/30 text-xs font-mono text-cyan-300 mb-8">
-                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 pulse-dot"></span>
-                <span>VOLUMETRIC 3D NEURAL COSMOS • FLIGHT ENGINE ACTIVE</span>
-            </div>
-
-            <!-- Main Heading -->
-            <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight max-w-5xl leading-tight mb-8">
-                Architecting <span class="text-gradient">Autonomous AI</span> & <br>
-                Interactive <span class="text-gradient-purple">3D Neural Ecosystems</span>
-            </h1>
-
-            <!-- Subtitle -->
-            <p class="text-lg sm:text-xl text-gray-400 max-w-3xl font-normal leading-relaxed mb-10">
-                Immersive 3D spatial WebGL fly-throughs, multi-agent intelligence, global telemetry dashboards, and high-frequency Solana Web3 architecture.
-            </p>
-
-            <!-- Action Buttons -->
-            <div class="flex flex-wrap justify-center items-center gap-4 mb-16">
-                <a href="#projects" class="px-8 py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-bold text-sm tracking-wide shadow-lg hover:shadow-cyan-500/30 hover:scale-105 transition-all duration-300 flex items-center gap-3">
-                    <i class="fa-solid fa-rocket"></i>
-                    <span>EXPLORE 3D PROJECTS</span>
-                </a>
-                <a href="#terminal" class="px-8 py-4 rounded-xl glass-card border border-cyan-500/30 text-white font-medium text-sm hover:border-cyan-400/50 hover:bg-white/5 transition-all duration-300 flex items-center gap-2">
-                    <i class="fa-solid fa-terminal text-cyan-400"></i>
-                    <span>LAUNCH CLI TERMINAL</span>
-                </a>
-            </div>
-
-            <!-- Quick Metrics Grid -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-4xl">
-                <div class="glass-card p-5 rounded-2xl flex flex-col items-center">
-                    <span class="text-3xl font-extrabold font-mono text-cyan-400">Plasma 3D</span>
-                    <span class="text-xs text-gray-400 mt-1 uppercase tracking-wider font-mono">Dynamic Core Engine</span>
+        <section id="about" class="max-w-7xl mx-auto px-6 pt-16 pb-24">
+            <div class="max-w-3xl">
+                <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full glass-card border border-cyan-500/30 text-xs font-mono text-cyan-300 mb-8">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 pulse-dot"></span>
+                    <span id="status-badge">NEURAL COSMOS ACTIVE</span>
                 </div>
-                <div class="glass-card p-5 rounded-2xl flex flex-col items-center">
-                    <span class="text-3xl font-extrabold font-mono text-purple-400">AI Agents</span>
-                    <span class="text-xs text-gray-400 mt-1 uppercase tracking-wider font-mono">Multi-Agent Systems</span>
-                </div>
-                <div class="glass-card p-5 rounded-2xl flex flex-col items-center">
-                    <span class="text-3xl font-extrabold font-mono text-emerald-400">Android</span>
-                    <span class="text-xs text-gray-400 mt-1 uppercase tracking-wider font-mono">Kotlin / Compose</span>
-                </div>
-                <div class="glass-card p-5 rounded-2xl flex flex-col items-center">
-                    <span class="text-3xl font-extrabold font-mono text-pink-400">Solana</span>
-                    <span class="text-xs text-gray-400 mt-1 uppercase tracking-wider font-mono">Anchor / Rust</span>
+
+                <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-tight mb-8">
+                    Hi, I’m <span class="text-gradient">arch1cat</span>.<br>
+                    I build <span class="text-gradient-purple">3D web experiences</span>,<br>
+                    AI tools, and mobile apps.
+                </h1>
+
+                <p class="text-lg sm:text-xl text-gray-400 max-w-2xl leading-relaxed mb-10">
+                    Developer portfolio and creative lab. Right now I’m shipping projects in 3D WebGL, Android, and building out <a href="https://yotei.app" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:underline">Yotei</a>.
+                </p>
+
+                <div class="flex flex-wrap gap-4 mb-16">
+                    <a href="#projects" class="px-8 py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-bold text-sm tracking-wide shadow-lg hover:shadow-cyan-500/30 hover:scale-105 transition-all duration-300 inline-flex items-center gap-3">
+                        <i class="fa-solid fa-rocket"></i>
+                        <span>VIEW PROJECTS</span>
+                    </a>
+                    <a href="https://x.com/Archi_____cat" target="_blank" rel="noopener noreferrer" class="px-8 py-4 rounded-xl glass-card border border-cyan-500/30 text-white font-medium text-sm hover:border-cyan-400/50 hover:bg-white/5 transition-all duration-300 inline-flex items-center gap-2">
+                        <i class="fa-brands fa-x-twitter text-cyan-400"></i>
+                        <span>@Archi_____cat</span>
+                    </a>
                 </div>
             </div>
         </section>
 
-        <!-- Featured Projects Showcase Section -->
         <section id="projects" class="max-w-7xl mx-auto px-6 py-20">
             <div class="text-center mb-16">
-                <h2 class="text-xs font-mono text-cyan-400 uppercase tracking-widest mb-3">// 3D Constellation Nodes</h2>
-                <h3 class="text-3xl sm:text-4xl font-bold text-white">Live Open Source Ecosystem</h3>
+                <h2 class="text-xs font-mono text-cyan-400 uppercase tracking-widest mb-3">// Selected Work</h2>
+                <h3 class="text-3xl sm:text-4xl font-bold text-white">Open Source & Experiments</h3>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-
-                <!-- World Monitor Card -->
                 <div class="glass-card p-8 rounded-3xl border border-blue-500/30 relative overflow-hidden group flex flex-col justify-between">
                     <div class="absolute -right-16 -bottom-16 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl group-hover:bg-blue-500/20 transition-all duration-500 pointer-events-none"></div>
-
                     <div>
                         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-blue-950/80 border border-blue-700/50 text-blue-300 font-mono text-xs mb-4">
                             <i class="fa-solid fa-earth-americas"></i>
-                            <span>REALTIME OSINT & INTEL</span>
+                            <span>OSINT & INTEL</span>
                         </div>
                         <h4 class="text-2xl font-bold text-white mb-3">World Monitor</h4>
-                        <p class="text-gray-300 text-sm leading-relaxed mb-6">
-                            Real-time global geopolitical & infrastructure intelligence dashboard featuring AI-powered event tagging, subsea cable tracking, and custom alerts.
-                        </p>
-                        
+                        <p class="text-gray-300 text-sm leading-relaxed mb-6">Global telemetry and OSINT dashboard for real-time geopolitical and infrastructure monitoring.</p>
                         <div class="flex flex-wrap gap-2 mb-8 font-mono text-xs">
                             <span class="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-cyan-300">TypeScript</span>
                             <span class="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-purple-300">Cloudflare Workers</span>
-                            <span class="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-emerald-300">Tauri App</span>
                         </div>
                     </div>
-
                     <div>
                         <a href="https://github.com/l2bote4game/world-monitor" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm inline-flex items-center gap-2 transition-colors">
                             <i class="fa-brands fa-github text-base"></i>
-                            <span>View Source Code</span>
+                            <span>View Source</span>
                         </a>
                     </div>
                 </div>
 
-                <!-- Wi-Fi Analyzer Card -->
                 <div class="glass-card p-8 rounded-3xl border border-cyan-500/30 relative overflow-hidden group flex flex-col justify-between">
                     <div class="absolute -right-16 -bottom-16 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl group-hover:bg-cyan-500/20 transition-all duration-500 pointer-events-none"></div>
-
                     <div>
                         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-cyan-950/80 border border-cyan-700/50 text-cyan-300 font-mono text-xs mb-4">
                             <i class="fa-solid fa-wifi"></i>
-                            <span>ANDROID APP • ANTIGRAVITY</span>
+                            <span>ANDROID APP</span>
                         </div>
                         <h4 class="text-2xl font-bold text-white mb-3">WiFi Analyzer & Network Scanner</h4>
-                        <p class="text-gray-300 text-sm leading-relaxed mb-6">
-                            Native Android app in Kotlin & Jetpack Compose for real-time Wi-Fi spectrum graphing, subnet IP discovery, UPnP/mDNS device mapping, and ping diagnostics.
-                        </p>
-                        
+                        <p class="text-gray-300 text-sm leading-relaxed mb-6">Kotlin & Jetpack Compose app for Wi-Fi spectrum graphing, subnet discovery, and network diagnostics.</p>
                         <div class="flex flex-wrap gap-2 mb-8 font-mono text-xs">
                             <span class="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-cyan-300">Kotlin</span>
-                            <span class="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-purple-300">Jetpack Compose</span>
+                            <span class="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-purple-300">Compose</span>
                             <span class="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-yellow-300">mDNS / UPnP</span>
                         </div>
                     </div>
-
                     <div>
                         <a href="https://github.com/l2bote4game/wifiscaner" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-sm inline-flex items-center gap-2 transition-colors">
                             <i class="fa-brands fa-github text-base"></i>
-                            <span>View Source Code</span>
+                            <span>View Source</span>
                         </a>
                     </div>
                 </div>
 
-                <!-- Cats Match-3 Game Card -->
                 <div class="glass-card p-8 rounded-3xl border border-purple-500/30 relative overflow-hidden group flex flex-col justify-between">
                     <div class="absolute -right-16 -bottom-16 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl group-hover:bg-purple-500/20 transition-all duration-500 pointer-events-none"></div>
-
                     <div>
                         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-purple-950/80 border border-purple-700/50 text-purple-300 font-mono text-xs mb-4">
                             <i class="fa-solid fa-cat"></i>
-                            <span>ANDROID GAME • MATCH-3 QUEST</span>
+                            <span>ANDROID GAME</span>
                         </div>
-                        <h4 class="text-2xl font-bold text-white mb-3">Cats Match-3 Quest (3MeowQuest)</h4>
-                        <p class="text-gray-300 text-sm leading-relaxed mb-6">
-                            Feature-packed Android puzzle & cat shelter builder game with custom match engine, boosters, catnip powerups, room decorations, and cozy lofi music.
-                        </p>
-                        
+                        <h4 class="text-2xl font-bold text-white mb-3">Cats Match-3 Quest</h4>
+                        <p class="text-gray-300 text-sm leading-relaxed mb-6">Cyberpunk feline puzzle game with custom match engine, boosters, catnip powerups, and shelter building.</p>
                         <div class="flex flex-wrap gap-2 mb-8 font-mono text-xs">
                             <span class="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-purple-300">Kotlin</span>
                             <span class="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-cyan-300">Canvas Engine</span>
-                            <span class="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-pink-300">Shelter System</span>
                         </div>
                     </div>
-
                     <div>
                         <a href="https://github.com/l2bote4game/cats-match3-game" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-sm inline-flex items-center gap-2 transition-colors">
                             <i class="fa-brands fa-github text-base"></i>
-                            <span>View Source Code</span>
+                            <span>View Source</span>
                         </a>
                     </div>
                 </div>
-
             </div>
         </section>
 
-        <!-- 3D Architecture Section -->
-        <section id="architecture" class="max-w-7xl mx-auto px-6 py-20">
-            <div class="text-center mb-16">
-                <h2 class="text-xs font-mono text-cyan-400 uppercase tracking-widest mb-3">// Volumetric Mechanics</h2>
-                <h3 class="text-3xl sm:text-4xl font-bold text-white">Advanced 3D Spatial Engine</h3>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="glass-card p-8 rounded-3xl">
-                    <div class="w-14 h-14 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 text-2xl mb-6">
-                        <i class="fa-solid fa-atom"></i>
-                    </div>
-                    <h4 class="text-xl font-bold text-white mb-3">Dynamic Plasma Core</h4>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-6">
-                        Procedural geodesic 3D sphere with realtime vertex wave displacement, dual wireframe shells, and orbiting energy torii.
-                    </p>
-                    <div class="flex flex-wrap gap-2 font-mono text-xs text-cyan-300">
-                        <span class="px-2.5 py-1 rounded-md bg-cyan-950/50 border border-cyan-800/40">Geodesic Mesh</span>
-                        <span class="px-2.5 py-1 rounded-md bg-cyan-950/50 border border-cyan-800/40">Vertex Wave</span>
-                    </div>
-                </div>
-
-                <div class="glass-card p-8 rounded-3xl">
-                    <div class="w-14 h-14 rounded-2xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 text-2xl mb-6">
-                        <i class="fa-solid fa-diagram-project"></i>
-                    </div>
-                    <h4 class="text-xl font-bold text-white mb-3">Spatial Neural Links</h4>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-6">
-                        3D octahedron project nodes floating in space, connected by dynamic proximity line segments that illuminate on scroll flight.
-                    </p>
-                    <div class="flex flex-wrap gap-2 font-mono text-xs text-purple-300">
-                        <span class="px-2.5 py-1 rounded-md bg-purple-950/50 border border-purple-800/40">Dynamic Lines</span>
-                        <span class="px-2.5 py-1 rounded-md bg-purple-950/50 border border-purple-800/40">Octahedron Nodes</span>
-                    </div>
-                </div>
-
-                <div class="glass-card p-8 rounded-3xl">
-                    <div class="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-2xl mb-6">
-                        <i class="fa-solid fa-plane-departure"></i>
-                    </div>
-                    <h4 class="text-xl font-bold text-white mb-3">Scroll Fly-Through Rig</h4>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-6">
-                        Camera orientation lerp engine linking scroll position to 3D spatial orbit coordinates, giving Apple-level product depth.
-                    </p>
-                    <div class="flex flex-wrap gap-2 font-mono text-xs text-emerald-300">
-                        <span class="px-2.5 py-1 rounded-md bg-emerald-950/50 border border-emerald-800/40">Camera Lerp</span>
-                        <span class="px-2.5 py-1 rounded-md bg-emerald-950/50 border border-emerald-800/40">Orbit Controls</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Interactive Terminal CLI Section -->
         <section id="terminal" class="max-w-5xl mx-auto px-6 py-20">
             <div class="text-center mb-10">
-                <h2 class="text-xs font-mono text-cyan-400 uppercase tracking-widest mb-3">// Interactive Console</h2>
-                <h3 class="text-3xl font-bold text-white">ARCH1CAT Terminal Shell</h3>
+                <h2 class="text-xs font-mono text-cyan-400 uppercase tracking-widest mb-3">// Terminal</h2>
+                <h3 class="text-3xl font-bold text-white">Quick Look</h3>
             </div>
 
-            <!-- Terminal Component -->
             <div class="glass-card rounded-2xl overflow-hidden border border-cyber-border shadow-2xl font-mono text-sm">
-                <!-- Terminal Header -->
                 <div class="bg-black/70 px-4 py-3 flex items-center justify-between border-b border-white/5">
                     <div class="flex items-center gap-2">
                         <span class="w-3 h-3 rounded-full bg-red-500/80 inline-block"></span>
                         <span class="w-3 h-3 rounded-full bg-yellow-500/80 inline-block"></span>
                         <span class="w-3 h-3 rounded-full bg-green-500/80 inline-block"></span>
                     </div>
-                    <span class="text-xs text-gray-400">arch1cat@neural-cosmos:~</span>
-                    <span class="text-xs text-cyan-400">bash / 3d-flythrough</span>
+                    <span class="text-xs text-gray-400">arch1cat@portfolio:~</span>
                 </div>
 
-                <!-- Terminal Body -->
-                <div id="terminal-body" class="p-6 h-72 overflow-y-auto space-y-3 bg-black/60 text-gray-300">
-                    <div>Welcome to <span class="text-cyan-400 font-bold">ARCH1CAT Neural Cosmos Shell v4.0</span></div>
-                    <div>Type <span class="text-yellow-400">help</span> to explore available system commands.</div>
+                <div id="terminal-body" class="p-6 h-64 overflow-y-auto space-y-3 bg-black/60 text-gray-300">
+                    <div>Welcome to <span class="text-cyan-400 font-bold">arch1cat</span> terminal preview.</div>
+                    <div>Theme: <span id="terminal-theme" class="text-cyan-400">Neural Cosmos</span></div>
                     <div class="text-gray-500">----------------------------------------------------</div>
                 </div>
 
-                <!-- Terminal Input Form -->
                 <form id="terminal-form" class="bg-black/80 px-6 py-3 border-t border-white/5 flex items-center gap-3">
                     <span class="text-cyan-400 font-bold">visitor@arch1cat:~$</span>
-                    <input type="text" id="terminal-input" autocomplete="off" placeholder="type command (e.g. help, whoami, world, cats, wifi, core, pulse, clear)..." class="bg-transparent border-none outline-none text-white w-full font-mono focus:ring-0">
-                    <button type="submit" class="text-xs px-3 py-1 bg-cyan-500/20 text-cyan-300 rounded border border-cyan-500/40 hover:bg-cyan-500/40">EXEC</button>
+                    <input type="text" id="terminal-input" autocomplete="off" placeholder="help, whoami, projects, theme, clear..." class="bg-transparent border-none outline-none text-white w-full font-mono focus:ring-0">
+                    <button type="submit" class="text-xs px-3 py-1 bg-cyan-500/20 text-cyan-300 rounded border border-cyan-500/40 hover:bg-cyan-500/40">RUN</button>
                 </form>
             </div>
 
-            <!-- Quick Trigger Buttons -->
             <div class="flex flex-wrap items-center justify-center gap-3 mt-4">
-                <span class="text-xs font-mono text-gray-500">Quick triggers:</span>
+                <span class="text-xs font-mono text-gray-500">Quick:</span>
                 <button onclick="runCommand('whoami')" class="px-3 py-1 rounded bg-white/5 border border-white/10 text-xs font-mono text-gray-300 hover:border-cyan-400 hover:text-cyan-400">whoami</button>
-                <button onclick="runCommand('pulse')" class="px-3 py-1 rounded bg-white/5 border border-cyan-400/40 text-xs font-mono text-cyan-300 hover:bg-cyan-500/20">pulse core</button>
-                <button onclick="runCommand('world')" class="px-3 py-1 rounded bg-white/5 border border-white/10 text-xs font-mono text-gray-300 hover:border-blue-400 hover:text-blue-400">world-monitor</button>
-                <button onclick="runCommand('cats')" class="px-3 py-1 rounded bg-white/5 border border-white/10 text-xs font-mono text-gray-300 hover:border-purple-400 hover:text-purple-400">cats-game</button>
-                <button onclick="runCommand('wifi')" class="px-3 py-1 rounded bg-white/5 border border-white/10 text-xs font-mono text-gray-300 hover:border-cyan-400 hover:text-cyan-400">wifi-app</button>
+                <button onclick="runCommand('projects')" class="px-3 py-1 rounded bg-white/5 border border-white/10 text-xs font-mono text-gray-300 hover:border-cyan-400 hover:text-cyan-400">projects</button>
+                <button onclick="runCommand('theme')" class="px-3 py-1 rounded bg-white/5 border border-white/10 text-xs font-mono text-gray-300 hover:border-cyan-400 hover:text-cyan-400">theme</button>
+                <button onclick="runCommand('yotei')" class="px-3 py-1 rounded bg-white/5 border border-white/10 text-xs font-mono text-gray-300 hover:border-cyan-400 hover:text-cyan-400">yotei</button>
                 <button onclick="runCommand('clear')" class="px-3 py-1 rounded bg-white/5 border border-white/10 text-xs font-mono text-gray-300 hover:border-red-400 hover:text-red-400">clear</button>
             </div>
         </section>
-
     </main>
 
-    <!-- Footer -->
     <footer class="relative z-10 border-t border-white/5 py-12 bg-black/60">
         <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
             <div class="flex items-center gap-3">
                 <span class="w-2.5 h-2.5 rounded-full bg-cyan-400 pulse-dot"></span>
-                <span class="text-sm font-mono text-gray-400">© 2026 ARCH1CAT (Archicat Labs). Powered by Three.js Volumetric WebGL.</span>
+                <span class="text-sm font-mono text-gray-400">© 2026 arch1cat. Built as a personal portfolio.</span>
             </div>
             <div class="flex items-center gap-6 text-gray-400">
                 <a href="https://x.com/Archi_____cat" target="_blank" class="hover:text-cyan-400 text-lg transition-colors"><i class="fa-brands fa-x-twitter"></i></a>
                 <a href="https://github.com/l2bote4game" target="_blank" class="hover:text-cyan-400 text-lg transition-colors"><i class="fa-brands fa-github"></i></a>
-                <a href="https://github.com/Arch1cat" target="_blank" class="hover:text-cyan-400 text-lg transition-colors"><i class="fa-solid fa-users text-base"></i></a>
+                <a href="https://yotei.app" target="_blank" class="hover:text-cyan-400 text-lg transition-colors"><i class="fa-solid fa-globe"></i></a>
             </div>
         </div>
     </footer>
 
-    <!-- Three.js Volumetric 3D Engine & Web Audio Script -->
     <script>
-        // ----------------------------------------------------
-        // WEB AUDIO PROCEDURAL SYNTH ENGINE
-        // ----------------------------------------------------
         let audioCtx = null;
         let isSoundOn = false;
+        let currentMode = 'cosmos';
 
         function initAudio() {
             if (!audioCtx) {
@@ -484,9 +365,6 @@
             }
         }
 
-        // ----------------------------------------------------
-        // ADVANCED THREE.JS VOLUMETRIC NEURAL COSMOS ENGINE
-        // ----------------------------------------------------
         const container = document.getElementById('webgl-container');
         const scene = new THREE.Scene();
         scene.fog = new THREE.FogExp2(0x030408, 0.018);
@@ -499,7 +377,6 @@
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         container.appendChild(renderer.domElement);
 
-        // Lighting System
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
         scene.add(ambientLight);
 
@@ -511,9 +388,7 @@
         orbitLight.position.set(8, 8, 8);
         scene.add(orbitLight);
 
-        // 1. PROCEDURAL PLASMA CORE (Icosahedron with dynamic vertex wave deformation)
         const coreGeo = new THREE.IcosahedronGeometry(3.2, 4);
-        // Store original vertex positions for wave deformation
         const originalPositions = new Float32Array(coreGeo.attributes.position.array);
 
         const coreMat = new THREE.MeshStandardMaterial({
@@ -526,7 +401,6 @@
         const cyberCore = new THREE.Mesh(coreGeo, coreMat);
         scene.add(cyberCore);
 
-        // Inner Glowing Core Sphere
         const innerGeo = new THREE.SphereGeometry(1.8, 32, 32);
         const innerMat = new THREE.MeshBasicMaterial({
             color: 0x7F00FF,
@@ -537,7 +411,6 @@
         const innerSphere = new THREE.Mesh(innerGeo, innerMat);
         scene.add(innerSphere);
 
-        // 2. ORBITAL ACCRETION RINGS
         const torusGeo1 = new THREE.TorusGeometry(5.2, 0.05, 16, 120);
         const torusMat1 = new THREE.MeshBasicMaterial({ color: 0x00F2FE, wireframe: true });
         const ring1 = new THREE.Mesh(torusGeo1, torusMat1);
@@ -550,7 +423,6 @@
         ring2.rotation.y = Math.PI / 4;
         scene.add(ring2);
 
-        // Particle Ring Accretion Stream (500 orbiting particles)
         const ringParticleCount = 500;
         const ringParticlePos = new Float32Array(ringParticleCount * 3);
         for (let i = 0; i < ringParticleCount; i++) {
@@ -567,7 +439,6 @@
         ringParticleSystem.rotation.x = Math.PI / 6;
         scene.add(ringParticleSystem);
 
-        // 3. DEEP NEBULA STARFIELD (2,000 Particles with Glow)
         const nebulaCount = 2000;
         const nebulaPos = new Float32Array(nebulaCount * 3);
         for (let i = 0; i < nebulaCount * 3; i += 3) {
@@ -578,7 +449,6 @@
         const nebulaGeo = new THREE.BufferGeometry();
         nebulaGeo.setAttribute('position', new THREE.BufferAttribute(nebulaPos, 3));
 
-        // Procedural Glow Canvas Sprite Texture
         const canvasSprite = document.createElement('canvas');
         canvasSprite.width = 64;
         canvasSprite.height = 64;
@@ -603,7 +473,6 @@
         const nebulaSystem = new THREE.Points(nebulaGeo, nebulaMat);
         scene.add(nebulaSystem);
 
-        // 4. INTERACTIVE 3D CONSTELLATION NODES & CONNECTION LINES
         const nodeCoords = [
             new THREE.Vector3(-6, 3, -2),
             new THREE.Vector3(6, 2, -4),
@@ -622,7 +491,6 @@
         });
         scene.add(nodeGroup);
 
-        // Dynamic Connection Lines between Nodes
         const linePositions = [];
         for (let i = 0; i < nodeCoords.length; i++) {
             for (let j = i + 1; j < nodeCoords.length; j++) {
@@ -636,7 +504,6 @@
         const constellationLines = new THREE.LineSegments(lineGeo, lineMat);
         scene.add(constellationLines);
 
-        // Mouse Parallax & Scroll Camera Control
         let mouseX = 0;
         let mouseY = 0;
         let targetScrollY = 0;
@@ -657,12 +524,38 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
-        // RENDER LOOP & VERTEX PLASMA ANIMATION
+        function setThemeMode(mode) {
+            if (mode === currentMode) return;
+            currentMode = mode;
+
+            const btnCosmos = document.getElementById('btn-cosmos');
+            const btnMatrix = document.getElementById('btn-matrix');
+            const statusBadge = document.getElementById('status-badge');
+            const terminalTheme = document.getElementById('terminal-theme');
+
+            if (mode === 'matrix') {
+                btnMatrix.classList.add('bg-green-500/10', 'border-green-400/60', 'text-green-400', 'shadow-[0_0_15px_rgba(0,255,102,0.3)]');
+                btnMatrix.classList.remove('text-gray-400');
+                btnCosmos.classList.remove('bg-cyan-500/10', 'border-cyan-400/60', 'text-cyan-400', 'shadow-[0_0_15px_rgba(0,242,254,0.3)]');
+                btnCosmos.classList.add('text-gray-400');
+                statusBadge.innerText = 'CYBER MATRIX ACTIVE';
+                statusBadge.className = 'text-xs font-mono text-green-400';
+                if (terminalTheme) { terminalTheme.innerText = 'Cyber Matrix'; terminalTheme.className = 'text-green-400'; }
+            } else {
+                btnCosmos.classList.add('bg-cyan-500/10', 'border-cyan-400/60', 'text-cyan-400', 'shadow-[0_0_15px_rgba(0,242,254,0.3)]');
+                btnCosmos.classList.remove('text-gray-400');
+                btnMatrix.classList.remove('bg-green-500/10', 'border-green-400/60', 'text-green-400', 'shadow-[0_0_15px_rgba(0,255,102,0.3)]');
+                btnMatrix.classList.add('text-gray-400');
+                statusBadge.innerText = 'NEURAL COSMOS ACTIVE';
+                statusBadge.className = 'text-xs font-mono text-cyan-400';
+                if (terminalTheme) { terminalTheme.innerText = 'Neural Cosmos'; terminalTheme.className = 'text-cyan-400'; }
+            }
+        }
+
         function animate3D() {
             requestAnimationFrame(animate3D);
             const time = clock.getElapsedTime();
 
-            // Dynamic Plasma Vertex Wave Deformation on CyberCore
             const posAttr = coreGeo.attributes.position;
             for (let i = 0; i < posAttr.count; i++) {
                 const vx = originalPositions[i * 3];
@@ -673,7 +566,6 @@
             }
             posAttr.needsUpdate = true;
 
-            // Core & Ring Rotations
             cyberCore.rotation.x = time * 0.2;
             cyberCore.rotation.y = time * 0.3;
             innerSphere.rotation.y = -time * 0.4;
@@ -684,15 +576,12 @@
             nodeGroup.rotation.y = time * 0.1;
             constellationLines.rotation.y = time * 0.1;
 
-            // Orbiting Point Lights
             orbitLight.position.x = Math.sin(time) * 9;
             orbitLight.position.z = Math.cos(time) * 9;
 
-            // Scroll Flight Camera Interpolation
             const maxScroll = document.body.scrollHeight - window.innerHeight || 1;
             const scrollRatio = targetScrollY / maxScroll;
 
-            // Camera spatial orbit keyframe path
             const targetCamX = Math.sin(scrollRatio * Math.PI * 1.5) * 6 + mouseX * 1.2;
             const targetCamY = -scrollRatio * 8 - mouseY * 1.2;
             const targetCamZ = 10 + Math.cos(scrollRatio * Math.PI) * 4;
@@ -707,9 +596,6 @@
         }
         animate3D();
 
-        // ----------------------------------------------------
-        // TERMINAL CLI MECHANICS
-        // ----------------------------------------------------
         const terminalBody = document.getElementById('terminal-body');
         const terminalForm = document.getElementById('terminal-form');
         const terminalInput = document.getElementById('terminal-input');
@@ -729,43 +615,35 @@
 
             switch(cmd) {
                 case 'help':
-                    appendLine(`Available commands:<br>
-                    <span class="text-yellow-400">pulse</span>     - Trigger 3D plasma core energy surge<br>
-                    <span class="text-yellow-400">whoami</span>    - About ARCH1CAT & Architect<br>
-                    <span class="text-yellow-400">world</span>     - World Monitor real-time intel repo<br>
-                    <span class="text-yellow-400">cats</span>      - Cats Match-3 game source link<br>
-                    <span class="text-yellow-400">wifi</span>      - WiFi Scanner Android app details<br>
-                    <span class="text-yellow-400">clear</span>     - Clear shell window`);
-                    break;
-                case 'pulse':
-                    cyberCore.scale.set(1.5, 1.5, 1.5);
-                    playChime();
-                    setTimeout(() => cyberCore.scale.set(1, 1, 1), 700);
-                    appendLine(`<span class="text-purple-400 font-bold">[PLASMA SURGE] Geodesic core expanded.</span>`);
+                    appendLine(`Commands:<br>
+                    <span class="text-yellow-400">whoami</span> - About arch1cat<br>
+                    <span class="text-yellow-400">projects</span> - Featured projects<br>
+                    <span class="text-yellow-400">theme</span> - Switch 3D theme<br>
+                    <span class="text-yellow-400">yotei</span> - Open Yotei<br>
+                    <span class="text-yellow-400">clear</span> - Clear terminal`);
                     break;
                 case 'whoami':
-                    appendLine(`[SYSTEM INFO] ARCH1CAT / Archicat Labs<br>
-                    Focus: Volumetric 3D WebGL, Autonomous AI Agents, Global Intel, Android Apps.<br>
-                    Status: Active & Realtime.`);
+                    appendLine(`Developer & creator. Current focus: 3D WebGL, AI tooling, Android apps, and Yotei.`);
                     break;
-                case 'world':
-                    appendLine(`<span class="text-blue-400">[WORLD MONITOR]</span><br>
-                    GitHub: <a href="https://github.com/l2bote4game/world-monitor" target="_blank" class="underline text-blue-400">l2bote4game/world-monitor</a>`);
+                case 'projects':
+                    appendLine(`<span class="text-blue-400">World Monitor</span><br><a href="https://github.com/l2bote4game/world-monitor" target="_blank" class="underline text-blue-400">l2bote4game/world-monitor</a><br>
+                    <span class="text-cyan-400">WiFi Scanner</span><br><a href="https://github.com/l2bote4game/wifiscaner" target="_blank" class="underline text-cyan-400">l2bote4game/wifiscaner</a><br>
+                    <span class="text-purple-400">Cats Match-3</span><br><a href="https://github.com/l2bote4game/cats-match3-game" target="_blank" class="underline text-purple-400">l2bote4game/cats-match3-game</a>`);
                     break;
-                case 'cats':
-                    appendLine(`<span class="text-purple-400">[CATS MATCH-3 GAME]</span><br>
-                    GitHub: <a href="https://github.com/l2bote4game/cats-match3-game" target="_blank" class="underline text-purple-400">l2bote4game/cats-match3-game</a>`);
+                case 'theme':
+                    const next = currentMode === 'cosmos' ? 'matrix' : 'cosmos';
+                    setThemeMode(next);
+                    appendLine(`Theme switched to: <span class="text-cyan-400 font-bold">${next.toUpperCase()}</span>`);
                     break;
-                case 'wifi':
-                    appendLine(`<span class="text-cyan-400">[WIFI SCANNER APP]</span><br>
-                    GitHub: <a href="https://github.com/l2bote4game/wifiscaner" target="_blank" class="underline text-cyan-400">l2bote4game/wifiscaner</a>`);
+                case 'yotei':
+                    appendLine(`Opening <a href="https://yotei.app" target="_blank" class="underline text-cyan-400">yotei.app</a>...`);
                     break;
                 case 'clear':
                     terminalBody.innerHTML = '';
                     break;
                 default:
                     if(cmd !== '') {
-                        appendLine(`command not found: ${cmd}. Type <span class="text-yellow-400">help</span> for assistance.`, 'text-red-400');
+                        appendLine(`command not found: ${cmd}. Type <span class="text-yellow-400">help</span>.`, 'text-red-400');
                     }
             }
         }
