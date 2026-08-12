@@ -60,7 +60,7 @@
             pointer-events: none;
         }
 
-        /* Matrix Scanline Overlay */
+        /* Cyber Matrix Scanline Overlay */
         .matrix-overlay {
             background: linear-gradient(rgba(0, 255, 102, 0.03) 50%, rgba(0, 0, 0, 0.3) 50%), linear-gradient(90deg, rgba(0, 255, 102, 0.02), rgba(0, 242, 254, 0.01), rgba(0, 255, 102, 0.02));
             background-size: 100% 3px, 6px 100%;
@@ -145,7 +145,7 @@
             <nav class="hidden md:flex items-center gap-8 text-sm font-mono text-gray-300">
                 <a href="#about" class="hover:text-cyber-green transition-colors">About</a>
                 <a href="#projects" class="hover:text-cyber-green transition-colors">Projects</a>
-                <a href="#terminal" class="hover:text-cyber-green transition-colors">Console</a>
+                <a href="#activity" class="hover:text-cyber-green transition-colors">Activity</a>
             </nav>
 
             <div class="flex items-center gap-3">
@@ -213,20 +213,6 @@
             <div class="text-center mb-16">
                 <h2 class="text-xs font-mono text-cyber-green uppercase tracking-widest mb-3">// PORTFOLIO & WORK</h2>
                 <h3 class="text-3xl sm:text-4xl font-bold text-white">Featured Projects</h3>
-            </div>
-
-            <!-- GitHub Contribution Snake Activity Section -->
-            <div class="mb-16 glass-card-matrix p-8 rounded-3xl border border-cyber-green/30 relative overflow-hidden">
-                <div class="flex items-center justify-between border-b border-cyber-green/20 pb-4 mb-6">
-                    <h4 class="text-lg font-bold text-white font-mono flex items-center gap-2">
-                        <i class="fa-solid fa-gamepad text-cyber-green"></i>
-                        <span>GitHub Contribution Snake</span>
-                    </h4>
-                    <a href="https://github.com/l2bote4game" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-cyber-green hover:underline">@l2bote4game ↗</a>
-                </div>
-                <div class="flex justify-center items-center overflow-x-auto py-2">
-                    <img src="https://raw.githubusercontent.com/l2bote4game/l2bote4game/output/github-contribution-grid-snake-dark.svg" alt="GitHub Contribution Grid Snake" class="w-full max-w-4xl min-w-[550px] h-auto rounded-xl">
-                </div>
             </div>
 
             <!-- Subsection 1: Open Source Projects -->
@@ -347,9 +333,9 @@
                         </div>
 
                         <div>
-                            <a href="https://github.com/l2bote4game/cats-match3-game" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-sm inline-flex items-center gap-2 transition-colors font-mono">
-                                <i class="fa-brands fa-github text-base"></i>
-                                <span>View Source Code</span>
+                            <a href="https://github.com/l2bote4game/cats-match3-game" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs inline-flex items-center justify-center gap-2 transition-colors font-mono">
+                                <i class="fa-brands fa-github text-sm"></i>
+                                <span>View Source</span>
                             </a>
                         </div>
                     </div>
@@ -398,48 +384,19 @@
 
         </section>
 
-        <!-- Interactive Terminal CLI Section -->
-        <section id="terminal" class="max-w-5xl mx-auto px-6 py-16">
-            <div class="text-center mb-10">
-                <h2 class="text-xs font-mono text-cyber-green uppercase tracking-widest mb-3">// CONSOLE</h2>
-                <h3 class="text-3xl font-bold text-white">arch1cat Shell</h3>
-            </div>
-
-            <!-- Terminal Component -->
-            <div class="glass-card-matrix rounded-2xl overflow-hidden border border-cyber-green/30 shadow-2xl font-mono text-sm">
-                <!-- Terminal Header -->
-                <div class="bg-black/80 px-4 py-3 flex items-center justify-between border-b border-cyber-green/20">
-                    <div class="flex items-center gap-2">
-                        <span class="w-3 h-3 rounded-full bg-red-500/80 inline-block"></span>
-                        <span class="w-3 h-3 rounded-full bg-yellow-500/80 inline-block"></span>
-                        <span class="w-3 h-3 rounded-full bg-green-500/80 inline-block"></span>
-                    </div>
-                    <span class="text-xs text-gray-400">arch1cat@node:~</span>
-                    <span class="text-xs text-cyber-green font-bold">INTERACTIVE SHELL</span>
+        <!-- GitHub Contribution Snake Activity Section (Positioned Lower) -->
+        <section id="activity" class="max-w-7xl mx-auto px-6 py-12">
+            <div class="glass-card-matrix p-8 rounded-3xl border border-cyber-green/30 relative overflow-hidden">
+                <div class="flex items-center justify-between border-b border-cyber-green/20 pb-4 mb-6">
+                    <h4 class="text-lg font-bold text-white font-mono flex items-center gap-2">
+                        <i class="fa-solid fa-gamepad text-cyber-green"></i>
+                        <span>GitHub Contribution Snake Activity</span>
+                    </h4>
+                    <a href="https://github.com/l2bote4game" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-cyber-green hover:underline">@l2bote4game ↗</a>
                 </div>
-
-                <!-- Terminal Body -->
-                <div id="terminal-body" class="p-6 h-64 overflow-y-auto space-y-3 bg-black/80 text-gray-300">
-                    <div>Welcome to <span class="text-cyber-green font-bold">arch1cat</span> terminal shell.</div>
-                    <div>Type <span class="text-yellow-400">help</span> to explore available commands.</div>
-                    <div class="text-gray-500">----------------------------------------------------</div>
+                <div class="flex justify-center items-center overflow-x-auto py-2">
+                    <img src="https://raw.githubusercontent.com/l2bote4game/l2bote4game/output/github-contribution-grid-snake-dark.svg" alt="GitHub Contribution Grid Snake" class="w-full max-w-4xl min-w-[550px] h-auto rounded-xl">
                 </div>
-
-                <!-- Terminal Input Form -->
-                <form id="terminal-form" class="bg-black/90 px-6 py-3 border-t border-cyber-green/20 flex items-center gap-3">
-                    <span class="text-cyber-green font-bold">visitor@arch1cat:~$</span>
-                    <input type="text" id="terminal-input" autocomplete="off" placeholder="commands: help, whoami, yotei, projects, clear..." class="bg-transparent border-none outline-none text-white w-full font-mono focus:ring-0">
-                    <button type="submit" class="text-xs px-4 py-1.5 bg-cyber-green/20 text-cyber-green hover:bg-cyber-green/30 rounded border border-cyber-green/40 font-mono font-bold">RUN</button>
-                </form>
-            </div>
-
-            <!-- Quick Trigger Buttons -->
-            <div class="flex flex-wrap items-center justify-center gap-3 mt-4">
-                <span class="text-xs font-mono text-gray-500">Quick launch:</span>
-                <button onclick="runCommand('whoami')" class="px-3 py-1 rounded bg-white/5 border border-white/10 text-xs font-mono text-gray-300 hover:border-cyber-green hover:text-cyber-green">whoami</button>
-                <button onclick="runCommand('yotei')" class="px-3 py-1 rounded bg-white/5 border border-purple-400/40 text-xs font-mono text-purple-300 hover:bg-purple-500/20">yotei.com.ua</button>
-                <button onclick="runCommand('projects')" class="px-3 py-1 rounded bg-white/5 border border-white/10 text-xs font-mono text-gray-300 hover:border-blue-400 hover:text-blue-400">projects</button>
-                <button onclick="runCommand('clear')" class="px-3 py-1 rounded bg-white/5 border border-white/10 text-xs font-mono text-gray-300 hover:border-red-400 hover:text-red-400">clear</button>
             </div>
         </section>
 
@@ -457,12 +414,12 @@
                     <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                 </a>
                 <a href="https://github.com/l2bote4game" target="_blank" class="hover:text-cyber-green text-lg transition-colors" title="GitHub"><i class="fa-brands fa-github"></i></a>
-                <a href="https://yotei.com.ua/" target="_blank" class="hover:text-purple-400 text-lg transition-colors" title="Yotei Real Estate Platform"><i class="fa-solid fa-globe"></i></a>
+                <a href="https://yotei.com.ua/" target="_blank" class="hover:text-purple-400 text-lg transition-colors" title="Yotei Real Estate Platform & CRM"><i class="fa-solid fa-globe"></i></a>
             </div>
         </div>
     </footer>
 
-    <!-- Three.js Cyber Matrix 3D World Engine & Web Audio Script -->
+    <!-- Advanced Interactive Three.js Cyber Matrix 3D World Engine & Web Audio Script -->
     <script>
         // ----------------------------------------------------
         // WEB AUDIO SYNTH ENGINE
@@ -519,11 +476,11 @@
         }
 
         // ----------------------------------------------------
-        // THREE.JS CYBER MATRIX 3D WORLD ENGINE
+        // INTERACTIVE THREE.JS CYBER MATRIX 3D WORLD ENGINE
         // ----------------------------------------------------
         const container = document.getElementById('webgl-container');
         const scene = new THREE.Scene();
-        scene.fog = new THREE.FogExp2(0x020904, 0.022);
+        scene.fog = new THREE.FogExp2(0x020904, 0.02);
 
         const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
         camera.position.set(0, 0, 10);
@@ -533,20 +490,23 @@
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         container.appendChild(renderer.domElement);
 
-        const ambientLight = new THREE.AmbientLight(0x00ff66, 0.5);
+        const ambientLight = new THREE.AmbientLight(0x00ff66, 0.6);
         scene.add(ambientLight);
 
-        const pointLight = new THREE.PointLight(0x00ff66, 4, 50);
-        pointLight.position.set(0, 5, 5);
-        scene.add(pointLight);
+        const mouseLight = new THREE.PointLight(0x00ff66, 5, 40);
+        scene.add(mouseLight);
+
+        const cyanLight = new THREE.PointLight(0x00f2fe, 4, 50);
+        cyanLight.position.set(-10, 10, -5);
+        scene.add(cyanLight);
 
         // 1. Infinite Cyber Grid Floor
-        const gridHelper = new THREE.GridHelper(80, 50, 0x00ff66, 0x004411);
+        const gridHelper = new THREE.GridHelper(90, 60, 0x00ff66, 0x004411);
         gridHelper.position.y = -6;
         scene.add(gridHelper);
 
-        // 2. Central Cybernetic Octahedron Core
-        const coreGeo = new THREE.OctahedronGeometry(3.2, 2);
+        // 2. Central Cybernetic Geodesic Core Mesh
+        const coreGeo = new THREE.IcosahedronGeometry(3.4, 4);
         const originalPositions = new Float32Array(coreGeo.attributes.position.array);
 
         const coreMat = new THREE.MeshStandardMaterial({
@@ -560,7 +520,7 @@
         scene.add(cyberCore);
 
         // Inner Pulsing Matrix Sphere
-        const innerGeo = new THREE.SphereGeometry(1.8, 24, 24);
+        const innerGeo = new THREE.SphereGeometry(1.9, 28, 28);
         const innerMat = new THREE.MeshBasicMaterial({
             color: 0x00ffaa,
             wireframe: true,
@@ -571,47 +531,60 @@
         scene.add(innerSphere);
 
         // Orbiting Cyber Rings
-        const torusGeo1 = new THREE.TorusGeometry(5.0, 0.04, 16, 100);
+        const torusGeo1 = new THREE.TorusGeometry(5.2, 0.05, 16, 120);
         const torusMat1 = new THREE.MeshBasicMaterial({ color: 0x00ff66, wireframe: true });
         const ring1 = new THREE.Mesh(torusGeo1, torusMat1);
         ring1.rotation.x = Math.PI / 3;
         scene.add(ring1);
 
-        const torusGeo2 = new THREE.TorusGeometry(6.0, 0.03, 16, 100);
+        const torusGeo2 = new THREE.TorusGeometry(6.2, 0.04, 16, 120);
         const torusMat2 = new THREE.MeshBasicMaterial({ color: 0x00f2fe, wireframe: true });
         const ring2 = new THREE.Mesh(torusGeo2, torusMat2);
         ring2.rotation.y = Math.PI / 4;
         scene.add(ring2);
 
-        // 3. 3D Digital Rain Stream (1,200 Particles Falling in Z/Y Space)
-        const rainCount = 1200;
-        const rainPos = new Float32Array(rainCount * 3);
-        for (let i = 0; i < rainCount * 3; i += 3) {
-            rainPos[i] = (Math.random() - 0.5) * 60;
-            rainPos[i + 1] = (Math.random() - 0.5) * 60;
-            rainPos[i + 2] = (Math.random() - 0.5) * 40;
-        }
-        const rainGeo = new THREE.BufferGeometry();
-        rainGeo.setAttribute('position', new THREE.BufferAttribute(rainPos, 3));
+        // 3. Dynamic Interactive 3D Particle Cloud (2,000 Particles Reacting to Mouse)
+        const particleCount = 2000;
+        const particlePositions = new Float32Array(particleCount * 3);
+        const originalParticlePositions = new Float32Array(particleCount * 3);
 
-        const rainMat = new THREE.PointsMaterial({
-            size: 0.18,
+        for (let i = 0; i < particleCount * 3; i += 3) {
+            const x = (Math.random() - 0.5) * 60;
+            const y = (Math.random() - 0.5) * 60;
+            const z = (Math.random() - 0.5) * 40;
+            particlePositions[i] = x;
+            particlePositions[i + 1] = y;
+            particlePositions[i + 2] = z;
+            originalParticlePositions[i] = x;
+            originalParticlePositions[i + 1] = y;
+            originalParticlePositions[i + 2] = z;
+        }
+
+        const particleGeo = new THREE.BufferGeometry();
+        particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
+
+        const particleMat = new THREE.PointsMaterial({
+            size: 0.2,
             color: 0x00ff66,
             transparent: true,
             opacity: 0.85
         });
-        const rainSystem = new THREE.Points(rainGeo, rainMat);
-        scene.add(rainSystem);
+        const particleSystem = new THREE.Points(particleGeo, particleMat);
+        scene.add(particleSystem);
 
-        // Animation Loop & Camera Flight
+        // Mouse Interactivity & Cursor Parallax Engine
         let mouseX = 0;
         let mouseY = 0;
         let targetScrollY = 0;
+        let mouse3D = new THREE.Vector3();
         let clock = new THREE.Clock();
 
         window.addEventListener('mousemove', (e) => {
             mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
             mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+
+            mouse3D.set(mouseX * 12, -mouseY * 12, 0);
+            mouseLight.position.set(mouseX * 10, -mouseY * 10, 4);
         });
 
         window.addEventListener('scroll', () => {
@@ -624,44 +597,59 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
+        // 3D Animation Render Loop
         function animate3D() {
             requestAnimationFrame(animate3D);
             const time = clock.getElapsedTime();
 
-            // Pulse wave deformation on core
+            // Real-time Vertex Wave Deformation on Cyber Core
             const posAttr = coreGeo.attributes.position;
             for (let i = 0; i < posAttr.count; i++) {
                 const vx = originalPositions[i * 3];
                 const vy = originalPositions[i * 3 + 1];
                 const vz = originalPositions[i * 3 + 2];
-                const wave = Math.sin(time * 3.0 + vx * 2.0 + vy * 1.5) * 0.15;
+                const wave = Math.sin(time * 3.2 + vx * 2.0 + vy * 1.5) * 0.18 + Math.sin(time * 2.0 + mouseX * 3.0) * 0.08;
                 posAttr.setXYZ(i, vx + vx * wave, vy + vy * wave, vz + vz * wave);
             }
             posAttr.needsUpdate = true;
 
-            cyberCore.rotation.x = time * 0.2;
-            cyberCore.rotation.y = time * 0.35;
+            // Core & Ring Rotations with Smooth Mouse Interaction
+            cyberCore.rotation.x = time * 0.2 + mouseY * 0.5;
+            cyberCore.rotation.y = time * 0.35 + mouseX * 0.5;
             innerSphere.rotation.y = -time * 0.4;
             ring1.rotation.z = time * 0.25;
             ring2.rotation.x = time * 0.35;
 
-            // Falling 3D Digital Rain
-            const positions = rainGeo.attributes.position.array;
-            for (let i = 1; i < positions.length; i += 3) {
-                positions[i] -= 0.25;
-                if (positions[i] < -30) positions[i] = 30;
+            // Interactive 3D Digital Rain & Particle Repulsion Field
+            const pPositions = particleGeo.attributes.position.array;
+            for (let i = 0; i < particleCount * 3; i += 3) {
+                // Rain falling
+                pPositions[i + 1] -= 0.22;
+                if (pPositions[i + 1] < -30) pPositions[i + 1] = 30;
+
+                // Mouse Repulsion Effect in 3D
+                const dx = pPositions[i] - mouse3D.x;
+                const dy = pPositions[i + 1] - mouse3D.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 4.5) {
+                    const force = (4.5 - dist) * 0.15;
+                    pPositions[i] += (dx / dist) * force;
+                    pPositions[i + 1] += (dy / dist) * force;
+                }
             }
-            rainGeo.attributes.position.needsUpdate = true;
+            particleGeo.attributes.position.needsUpdate = true;
 
-            pointLight.position.x = Math.sin(time) * 8;
-            pointLight.position.z = Math.cos(time) * 8;
+            // Dynamic Point Light Orbit
+            cyanLight.position.x = Math.sin(time * 1.2) * 12;
+            cyanLight.position.z = Math.cos(time * 1.2) * 12;
 
+            // Smooth Scroll Flight Camera Interpolation
             const maxScroll = document.body.scrollHeight - window.innerHeight || 1;
             const scrollRatio = targetScrollY / maxScroll;
 
-            const targetCamX = Math.sin(scrollRatio * Math.PI * 1.5) * 5 + mouseX * 1.2;
-            const targetCamY = -scrollRatio * 8 - mouseY * 1.2;
-            const targetCamZ = 10 + Math.cos(scrollRatio * Math.PI) * 3;
+            const targetCamX = Math.sin(scrollRatio * Math.PI * 1.5) * 6 + mouseX * 1.5;
+            const targetCamY = -scrollRatio * 8 - mouseY * 1.5;
+            const targetCamZ = 10 + Math.cos(scrollRatio * Math.PI) * 4;
 
             camera.position.x += (targetCamX - camera.position.x) * 0.05;
             camera.position.y += (targetCamY - camera.position.y) * 0.05;
@@ -672,63 +660,6 @@
             renderer.render(scene, camera);
         }
         animate3D();
-
-        // ----------------------------------------------------
-        // TERMINAL MECHANICS
-        // ----------------------------------------------------
-        const terminalBody = document.getElementById('terminal-body');
-        const terminalForm = document.getElementById('terminal-form');
-        const terminalInput = document.getElementById('terminal-input');
-
-        function appendLine(text, colorClass = 'text-gray-300') {
-            const div = document.createElement('div');
-            div.className = colorClass;
-            div.innerHTML = text;
-            terminalBody.appendChild(div);
-            terminalBody.scrollTop = terminalBody.scrollHeight;
-        }
-
-        function runCommand(cmd) {
-            cmd = cmd.trim().toLowerCase();
-            playBeep(650, 'square', 0.05);
-            appendLine(`<span class="text-cyber-green font-bold">visitor@arch1cat:~$</span> ${cmd}`);
-
-            switch(cmd) {
-                case 'help':
-                    appendLine(`Available commands:<br>
-                    <span class="text-yellow-400">whoami</span> - About arch1cat<br>
-                    <span class="text-yellow-400">yotei</span> - Open yotei.com.ua real estate platform<br>
-                    <span class="text-yellow-400">projects</span> - View all projects<br>
-                    <span class="text-yellow-400">clear</span> - Clear console window`);
-                    break;
-                case 'whoami':
-                    appendLine(`arch1cat — Software engineer, AI developer, and content creator. Building Yotei real estate marketplace & CRM, 3D WebGL apps, and Android software.`);
-                    break;
-                case 'yotei':
-                    appendLine(`Opening Yotei real estate platform & CRM: <a href="https://yotei.com.ua/" target="_blank" class="underline text-cyber-green">yotei.com.ua</a>`);
-                    break;
-                case 'projects':
-                    appendLine(`<span class="text-purple-400">Yotei (Real Estate Platform & CRM)</span> - <a href="https://yotei.com.ua/" target="_blank" class="underline">yotei.com.ua</a><br>
-                    <span class="text-blue-400">World Monitor</span> - <a href="https://github.com/l2bote4game/world-monitor" target="_blank" class="underline">l2bote4game/world-monitor</a><br>
-                    <span class="text-cyan-400">WiFi Scanner</span> - <a href="https://github.com/l2bote4game/wifiscaner" target="_blank" class="underline">l2bote4game/wifiscaner</a><br>
-                    <span class="text-cyber-green">Cats Match-3</span> - <a href="https://github.com/l2bote4game/cats-match3-game" target="_blank" class="underline">l2bote4game/cats-match3-game</a>`);
-                    break;
-                case 'clear':
-                    terminalBody.innerHTML = '';
-                    break;
-                default:
-                    if(cmd !== '') {
-                        appendLine(`command not found: ${cmd}. Type <span class="text-yellow-400">help</span>`, 'text-red-400');
-                    }
-            }
-        }
-
-        terminalForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const val = terminalInput.value;
-            runCommand(val);
-            terminalInput.value = '';
-        });
     </script>
 </body>
 </html>
