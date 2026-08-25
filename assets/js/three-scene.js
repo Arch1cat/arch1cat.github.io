@@ -175,6 +175,137 @@ const dust = new THREE.Points(dustGeo, dustMat);
 scene.add(dust);
 
 /* ------------------------------------------------------------
+   THE DECK — 3D vinyl player (chapter 04)
+   ------------------------------------------------------------ */
+const playerGroup = new THREE.Group();
+playerGroup.position.set(0.15, -0.55, 0);
+scene.add(playerGroup);
+
+const playerMats = [];
+function pmat(opts) {
+    const { opacity, ...rest } = opts;
+    const m = new THREE.MeshStandardMaterial({ transparent: true, opacity: 0, ...rest });
+    m.userData.baseO = opacity ?? 0.96;
+    playerMats.push(m);
+    return m;
+}
+const pbasic = [];
+function pbasicMat(color, opacity = 1) {
+    const m = new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0 });
+    m.userData.baseOp = opacity;
+    pbasic.push(m);
+    return m;
+}
+
+/* platter + disc */
+const disc = new THREE.Group();
+disc.rotation.x = 0;
+const lamel = new THREE.Mesh(
+    new THREE.CylinderGeometry(1.5, 1.5, 0.12, 48),
+    pmat({ color: 0x14161f, metalness: .9, roughness: .32 })
+);
+disc.add(lamel);
+const labelDisc = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.46, 0.46, 0.145, 32),
+    pmat({ color: 0xFF4D00, metalness: .4, roughness: .5, emissive: 0xFF4D00, emissiveIntensity: .35 })
+);
+disc.add(labelDisc);
+const accentColor = labelDisc.material.emissive; // shared, theme-lerped
+
+[1.02, 1.22, 1.4].forEach((r) => {
+    const groove = new THREE.Mesh(new THREE.TorusGeometry(r, 0.01, 6, 96), pbasicMat(BONE, .3));
+    groove.rotation.x = Math.PI / 2;
+    groove.position.y = 0.075;
+    disc.add(groove);
+});
+disc.children.forEach((c) => { c.position.y -= 0.06; });
+playerGroup.add(disc);
+
+/* tone arm */
+const armPivot = new THREE.Group();
+armPivot.position.set(2.55, 0.15, -1.15);
+const armMat = pmat({ color: 0xb9bcc9, metalness: .85, roughness: .35 });
+const armCurve = new THREE.CatmullRomCurve3([
+    new THREE.Vector3(0, 0, 0),
+    new THREE.Vector3(-1.5, 0.08, 0.25),
+    new THREE.Vector3(-2.35, 0.14, 0.72),
+]);
+const armTube = new THREE.Mesh(new THREE.TubeGeometry(armCurve, 24, 0.035, 8), armMat);
+armPivot.add(armTube);
+const counterweight = new THREE.Mesh(new THREE.SphereGeometry(0.11, 16, 16), armMat);
+counterweight.position.set(0.28, 0, -0.1);
+armPivot.add(counterweight);
+armPivot.rotation.y = -0.55; // rest position
+playerGroup.add(armPivot);
+
+/* spectrum ring — 64 reactive bars */
+const BAR_COUNT = MOBILE ? 32 : 64;
+const barGeo = new THREE.BoxGeometry(0.09, 1, 0.09);
+barGeo.translate(0, 0.5, 0);
+const barMat = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, toneMapped: false });
+pbasic.push(barMat);
+barMat.userData.baseOp = .92;
+const bars = new THREE.InstancedMesh(barGeo, barMat, BAR_COUNT);
+bars.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+const cLow = new THREE.Color(0x7C5CFF), cHigh = new THREE.Color(0xFFB454), cTmp = new THREE.Color();
+for (let i = 0; i < BAR_COUNT; i++) {
+    cTmp.copy(cLow).lerp(cHigh, i / (BAR_COUNT - 1));
+    bars.setColorAt(i, cTmp);
+}
+playerGroup.add(bars);
+
+const barHeights = new Float32Array(BAR_COUNT);
+const freqData = new Uint8Array(128);
+const dummy = new THREE.Object3D();
+
+/* deck light pulses with RMS */
+const deckLight = new THREE.PointLight(accentColor.getHex(), 0, 10);
+deckLight.position.set(0, 2.2, 0);
+playerGroup.add(deckLight);
+const deckBaseIntensity = 2.2;
+
+/* player visibility by chapter */
+let deckVisT = 0;
+
+/* drag-to-spin (inertia) */
+let spinVel = 0;
+let dragging = false, lastDragX = 0;
+addEventListener('pointerdown', (e) => {
+    if (e.target.closest('a, button, input, .plate, .player-console')) return;
+    dragging = true; lastDragX = e.clientX;
+});
+addEventListener('pointermove', (e) => {
+    if (!dragging || RM || COARSE) return;
+    const dx = e.clientX - lastDragX;
+    lastDragX = e.clientX;
+    spinVel += dx * 0.00045;
+});
+addEventListener('pointerup', () => { dragging = false; });
+
+/* click-the-disc test exposed for ui.js ripple handler */
+window.__archiveDiscClick = (nx, ny) => {
+    if (deckVisT < 0.5) return false;
+    raycaster.setFromCamera(new THREE.Vector2(nx, ny), camera);
+    return raycaster.intersectObjects([lamel, labelDisc], false).length > 0;
+};
+
+/* ------------------------------------------------------------
+   Theme palettes — scene recolors on themechange
+   ------------------------------------------------------------ */
+const SCENE_PALETTES = {
+    archive: { fog: new THREE.Color(0x0B0B0C), key: new THREE.Color(0xF4F1EB), glow: new THREE.Color(0xFF4D00), cursor: new THREE.Color(0xF4F1EB), body: new THREE.Color(0x151517), floorC: new THREE.Color(0x0e0e10) },
+    deck: { fog: new THREE.Color(0x080B14), key: new THREE.Color(0x9BE8FF), glow: new THREE.Color(0x7C5CFF), cursor: new THREE.Color(0x9BE8FF), body: new THREE.Color(0x11162A), floorC: new THREE.Color(0x0b101d) },
+};
+let palMix = document.documentElement.getAttribute('data-theme') === 'deck' ? 1 : 0;
+let palTarget = palMix;
+const fogWarm = new THREE.Color(0x100c0a), fogDeckWarm = new THREE.Color(0x0d1024);
+addEventListener('themechange', (e) => {
+    palTarget = e.detail?.theme === 'deck' ? 1 : 0;
+});
+let discSpin = 0;
+let artFade = 1;
+
+/* ------------------------------------------------------------
    Materialization (archive:ready event or timeout fallback)
    ------------------------------------------------------------ */
 let materialized = false;
@@ -246,6 +377,13 @@ function triggerWave(strength = 1) {
 
 window.__archive = {
     scene, camera, composer, bloomPass,
+    forceChapter(name) {
+        if (!CHAPTERS[name]) return;
+        currentChapter = name;
+        camTarget.set(...CHAPTERS[name].pos);
+        lookTarget.set(...CHAPTERS[name].look);
+        emberChapter = CHAPTERS[name].ember;
+    },
     surge() {
         triggerWave(2);
         emberFlash = 1.5; // +150% decaying to 0 over 900ms
@@ -273,6 +411,7 @@ const CHAPTERS = {
     prologue: { pos: [2.2, 0.4, 9.5], look: [1.2, 0, 0], ember: 6 },
     works: { pos: [-2, -0.6, 10.5], look: [0, -0.4, 0], ember: 7 },
     flagship: { pos: [3, 1.2, 8], look: [0, 0.2, 0], ember: 4 },
+    'deck-transmission': { pos: [0.05, 0.9, 7.2], look: [0, -0.35, 0], ember: 7 },
     signal: { pos: [0, -2.4, 11], look: [0, -1, 0], ember: 8 },
 };
 let camTarget = new THREE.Vector3(...CHAPTERS.prologue.pos);
@@ -425,11 +564,84 @@ function animate() {
     /* ember flash decay */
     if (emberFlash > 0) emberFlash = Math.max(0, emberFlash - dt * (emberFlash / 0.9 + 0.2));
 
-    /* fog tint per chapter */
-    const warmFog = new THREE.Color(0x100c0a);
-    const coldFog = new THREE.Color(INK);
+    /* fog tint per chapter (theme-aware warm variants) */
+    const warmFog = palMix > 0.5 ? fogDeckWarm : fogWarm;
+    const coldFog = SCENE_PALETTES.archive.fog.clone().lerp(SCENE_PALETTES.deck.fog, palMix);
     const targetFog = currentChapter === 'flagship' ? warmFog : coldFog;
     scene.fog.color.lerp(targetFog, 0.04);
+
+    /* theme palette lerp — colors glide between archive & deck */
+    if ((palTarget === 1 && palMix < 1) || (palTarget === 0 && palMix > 0)) {
+        palMix = Math.max(0, Math.min(1, palMix + (palTarget === 1 ? dt : -dt) * 1.4));
+        const A = SCENE_PALETTES.archive, D = SCENE_PALETTES.deck;
+        keyLight.color.copy(A.key).lerp(D.key, palMix);
+        cursorLight.color.copy(A.cursor).lerp(D.cursor, palMix);
+        emberLight.color.copy(A.glow).lerp(D.glow, palMix);
+        bodyMat.color.copy(A.body).lerp(D.body, palMix);
+        floor.material.color.copy(A.floorC).lerp(D.floorC, palMix);
+        accentColor.setHex(0xFF4D00).lerp(new THREE.Color(0x7C5CFF), palMix);
+        deckLight.color.copy(accentColor);
+        scene.fog.color.copy(A.fog).lerp(D.fog, palMix);
+    }
+
+    /* ---- THE DECK: visibility, spin, spectrum ---- */
+    const deckVisTarget = currentChapter === 'deck-transmission' ? 1 : 0;
+    deckVisT += (deckVisTarget - deckVisT) * 0.06;
+    /* artifact yields the stage to the deck during chapter 04 */
+    const artFadeTarget = currentChapter === 'deck-transmission' ? 0.18 : 1;
+    artFade += (artFadeTarget - artFade) * 0.05;
+    bodyMat.opacity = materialized ? 0.96 * artFade : 0;
+    wireMat.opacity = materialized ? (0.08 + focusT * .08) * Math.max(artFade, .35) : 0;
+    const artScale = (MOBILE ? .75 : 1) * (0.82 + 0.18 * artFade);
+    artifact.scale.setScalar(artScale);
+    playerGroup.visible = deckVisT > 0.01;
+    if (playerGroup.visible) {
+        playerMats.forEach((m) => { m.opacity = m.userData.baseO * deckVisT; });
+        pbasic.forEach((m) => { m.opacity = m.userData.baseOp * deckVisT; });
+
+        // inertia spin of whole group
+        if (!RM) {
+            playerGroup.rotation.y += spinVel * 8;
+            spinVel *= 0.94;
+            // vinyl rotation while playing
+            const analyserNow = window.__deckAudio?.getAnalyser?.();
+            const isPlaying = window.__deckAudio?.isPlaying?.() || false;
+            discSpin += isPlaying ? dt * 2.2 : (discSpin % (Math.PI * 2)) > 0.01 ? -Math.min(dt * 3, discSpin % (Math.PI * 2)) : 0;
+            disc.rotation.y = discSpin;
+            armPivot.rotation.y += (((isPlaying ? 0.12 : -0.55)) - armPivot.rotation.y) * 0.08;
+
+            // spectrum
+            let rms = 0;
+            if (analyserNow && isPlaying) {
+                analyserNow.getByteFrequencyData(freqData);
+            }
+            for (let i = 0; i < BAR_COUNT; i++) {
+                const bin = Math.floor(Math.pow(i / BAR_COUNT, 1.6) * 100) + 1;
+                const v = isPlaying && analyserNow ? freqData[bin] / 255 : 0;
+                barHeights[i] += ((0.05 + v * 1.5) - barHeights[i]) * 0.25;
+                rms += v;
+                dummy.position.set(
+                    Math.cos((i / BAR_COUNT) * Math.PI * 2) * 3.1,
+                    0,
+                    Math.sin((i / BAR_COUNT) * Math.PI * 2) * 3.1
+                );
+                dummy.rotation.y = -(i / BAR_COUNT) * Math.PI * 2;
+                dummy.scale.set(1, Math.max(barHeights[i], .02), 1);
+                dummy.updateMatrix();
+                bars.setMatrixAt(i, dummy.matrix);
+            }
+            bars.instanceMatrix.needsUpdate = true;
+            const rmsAvg = rms / BAR_COUNT;
+            deckLight.intensity = deckBaseIntensity * deckVisT * (0.5 + rmsAvg * 2.4);
+
+            // gentle idle bob for the whole deck
+            playerGroup.position.y = -0.5 + Math.sin(t * .7) * .12;
+        } else {
+            playerMats.forEach((m) => { m.opacity = m.userData.baseO; });
+            pbasic.forEach((m) => { m.opacity = m.userData.baseOp; });
+            deckLight.intensity = deckBaseIntensity;
+        }
+    }
 
     /* camera choreography */
     if (!RM) {

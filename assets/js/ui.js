@@ -131,9 +131,15 @@ document.querySelectorAll('[data-scramble]').forEach((el) => scrambleObserver.ob
         ring.classList.toggle('grow', !!e.target.closest(HOVER_SEL));
     });
 
-    // unified click ripple (mirrors the WebGL wave)
+    // unified click ripple (mirrors the WebGL wave); disc click toggles playback
     addEventListener('pointerdown', (e) => {
-        if (e.target.closest('a, button')) return; // links handle their own feedback
+        if (e.target.closest('a, button')) return;
+        const nx = (e.clientX / innerWidth) * 2 - 1;
+        const ny = -(e.clientY / innerHeight) * 2 + 1;
+        if (window.__archiveDiscClick?.(nx, ny)) {
+            window.__deckAudio?.toggle();
+            showToast(window.__deckAudio.isPlaying() ? '▶ ' + window.__deckAudio.trackInfo().name : '❚❚ PAUSED');
+        }
         spawnRipple(e.clientX, e.clientY);
     });
 })();
@@ -144,6 +150,165 @@ function spawnRipple(x, y) {
     document.body.appendChild(r);
     setTimeout(() => r.remove(), 520);
 }
+function showToast(text, ms = 2200) {
+    const toast = document.getElementById('toast');
+    if (!toast) return;
+    toast.textContent = text;
+    toast.classList.add('show');
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(() => toast.classList.remove('show'), ms);
+}
+
+/* ------------------------------------------------------------
+   5b. THEME SWITCHER (archive <-> signal deck)
+   ------------------------------------------------------------ */
+(function themeSwitch() {
+    const btn = document.getElementById('theme-toggle-btn');
+    const iconDeck = document.getElementById('theme-icon-deck');
+    const iconArch = document.getElementById('theme-icon-archive');
+    const meta = document.querySelector('meta[name="theme-color"]');
+    function paint(theme) {
+        iconDeck?.classList.toggle('hidden', theme === 'deck');
+        iconArch?.classList.toggle('hidden', theme !== 'deck');
+        meta?.setAttribute('content', theme === 'deck' ? '#080B14' : '#0B0B0C');
+    }
+    paint(document.documentElement.getAttribute('data-theme') || 'archive');
+    btn?.addEventListener('click', () => {
+        const cur = document.documentElement.getAttribute('data-theme');
+        const next = cur === 'deck' ? 'archive' : 'deck';
+        try { localStorage.setItem('arch_theme', next); } catch (_) {}
+        document.documentElement.setAttribute('data-theme', next);
+        paint(next);
+        window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        showToast(next === 'deck' ? '📡 SIGNAL DECK ENGAGED' : '📼 ARCHIVE//01 RESTORED');
+    });
+})();
+
+/* ------------------------------------------------------------
+   5c. STATION PANEL (deck density): kyiv clock · fps · cursor
+   ------------------------------------------------------------ */
+(function stationPanel() {
+    const clock = document.getElementById('sp-clock');
+    const fpsEl = document.getElementById('sp-fps');
+    const cxEI = document.getElementById('sp-cx');
+    if (clock) {
+        const tick = () => {
+            try { clock.textContent = new Date().toLocaleTimeString('uk-UA', { hour12: false, timeZone: 'Europe/Kyiv' }); }
+            catch (_) { clock.textContent = new Date().toLocaleTimeString('uk-UA', { hour12: false }); }
+        };
+        tick();
+        setInterval(tick, 1000);
+    }
+    if (fpsEl) {
+        let last = performance.now(), frames = 0, acc = 0;
+        (function fLoop(now) {
+            frames++; acc += now - last; last = now;
+            if (acc >= 500) {
+                fpsEl.textContent = Math.round(frames / (acc / 1000));
+                frames = 0; acc = 0;
+            }
+            requestAnimationFrame(fLoop);
+        })(performance.now());
+    }
+    if (cxEI) {
+        addEventListener('pointermove', (e) => {
+            cxEI.textContent = String(Math.round(e.clientX)).padStart(4, '0');
+        }, { passive: true });
+    }
+})();
+
+/* ------------------------------------------------------------
+   5d. DECK PLAYER CONSOLE (controls · vu · generative cover)
+   ------------------------------------------------------------ */
+(function deckConsole() {
+    const playBtn = document.getElementById('pc-play');
+    const prevBtn = document.getElementById('pc-prev');
+    const nextBtn = document.getElementById('pc-next');
+    const iconPlay = document.getElementById('pc-icon-play');
+    const iconPause = document.getElementById('pc-icon-pause');
+    const led = document.getElementById('pc-play-led');
+    const trackEl = document.getElementById('pc-track');
+    const bpmEl = document.getElementById('pc-bpm');
+    const volInput = document.getElementById('pc-volume');
+    const vu = document.getElementById('pc-vu');
+    const cover = document.getElementById('pc-cover');
+
+    if (!playBtn || !window.__deckAudio) return;
+
+    for (let i = 0; i < 12; i++) {
+        const b = document.createElement('span');
+        b.className = 'vu-bar';
+        b.innerHTML = '<i></i>';
+        vu?.appendChild(b);
+    }
+    const fills = [...(vu?.querySelectorAll('.vu-bar i') || [])];
+
+    let trackIdx = 0;
+    function syncState(e) {
+        const d = e.detail || {};
+        playing_now = !!d.playing;
+        trackIdx = d.trackIdx ?? trackIdx;
+        iconPlay?.classList.toggle('hidden', playing_now);
+        iconPause?.classList.toggle('hidden', !playing_now);
+        led?.classList.toggle('on', playing_now);
+        if (trackEl) trackEl.textContent = d.name || trackEl.textContent;
+        if (bpmEl) bpmEl.textContent = (d.bpm || '') + ' BPM';
+    }
+    let playing_now = false;
+    window.addEventListener('deckaudostate', syncState);
+
+    playBtn.addEventListener('click', () => window.__deckAudio.toggle());
+    prevBtn?.addEventListener('click', () => window.__deckAudio.next(-1));
+    nextBtn?.addEventListener('click', () => window.__deckAudio.next(1));
+    if (volInput) {
+        volInput.value = String(Math.round(window.__deckAudio.getVolume() * 100));
+        volInput.addEventListener('input', (e) => window.__deckAudio.setVolume(e.target.value / 100));
+    }
+
+    /* generative pixel cover — deterministic per track, alive with level */
+    let coverT = 0;
+    function drawCover(level) {
+        if (!cover) return;
+        const g = cover.getContext('2d');
+        g.fillStyle = '#0a0d16';
+        g.fillRect(0, 0, 96, 96);
+        const seed = trackIdx * 7 + 3;
+        for (let y = 0; y < 12; y++) {
+            for (let x = 0; x < 12; x++) {
+                const h = Math.abs(Math.sin(x * 12.9898 + y * 78.233 + seed * 37.1)) % 1;
+                if (h > 0.52) {
+                    const flick = (Math.sin(coverT * .06 + x * 2 + y * 3) * .5 + .5) * (level * 5 + .18);
+                    const b = Math.min(255, Math.floor(70 + flick * 185));
+                    g.fillStyle = `rgb(${b},${Math.floor(b * .82)},${Math.floor(b * .55)})`;
+                    g.fillRect(x * 8, y * 8, 7, 7);
+                }
+            }
+        }
+    }
+
+    const freq = new Uint8Array(128);
+    let rmsSmooth = 0;
+    (function vuLoop() {
+        const an = window.__deckAudio.getAnalyser();
+        const isPlaying = window.__deckAudio.isPlaying();
+        if (isPlaying && an) {
+            an.getByteFrequencyData(freq);
+            let sum = 0;
+            for (let i = 0; i < fills.length; i++) {
+                const bin = Math.floor(Math.pow(i / fills.length, 1.5) * 90) + 1;
+                const v = freq[bin] / 255;
+                sum += v;
+                if (fills[i]) fills[i].style.height = Math.max(4, v * 100) + '%';
+            }
+            rmsSmooth += (sum / fills.length - rmsSmooth) * .2;
+        } else if (rmsSmooth > 0.001) {
+            rmsSmooth *= .9;
+            fills.forEach((f) => { if (f) f.style.height = Math.max(4, parseFloat(f.style.height) * .9) + '%'; });
+        }
+        drawCover(rmsSmooth);
+        requestAnimationFrame(vuLoop);
+    })();
+})();
 
 /* ------------------------------------------------------------
    6. MAGNETIC BUTTONS + PLATE TILT + SPOTLIGHT VARS

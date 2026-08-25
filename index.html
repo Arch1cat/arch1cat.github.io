@@ -32,6 +32,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@300..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <!-- Theme -->
+    <script>
+    /* theme boot BEFORE css to avoid flash */
+    try {
+        var t = localStorage.getItem('arch_theme');
+        var p = new URLSearchParams(location.search).get('theme');
+        if (p === 'deck' || p === 'archive') t = p;
+        if (t === 'deck' || t === 'archive') document.documentElement.setAttribute('data-theme', t);
+        else document.documentElement.setAttribute('data-theme', 'archive');
+    } catch (e) { document.documentElement.setAttribute('data-theme', 'archive'); }
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="assets/css/style.css">
 
@@ -78,10 +88,21 @@
                 <a href="#about">Prologue</a>
                 <a href="#projects">Works</a>
                 <a href="#flagship">Flagship</a>
+                <a href="#transmission">Transmission</a>
                 <a href="#activity">Signal</a>
             </nav>
 
             <div class="flex items-center gap-2.5">
+                <div class="station-panel" aria-hidden="true">
+                    <span class="sp-item"><b class="sp-led"></b>LIVE</span>
+                    <span class="sp-item" id="sp-clock">--:--:--</span>
+                    <span class="sp-item"><span id="sp-fps">60</span> FPS</span>
+                    <span class="sp-item">X<span id="sp-cx">0</span></span>
+                </div>
+                <button id="theme-toggle-btn" class="icon-btn" title="Switch theme" aria-label="Switch theme">
+                    <svg id="theme-icon-deck" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M19.1 4.9l-2.8 2.8M7.7 16.3l-2.8 2.8"/></svg>
+                    <svg id="theme-icon-archive" class="hidden" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+                </button>
                 <button id="audio-toggle-btn" class="icon-btn" title="Sound toggle" aria-label="Toggle sound">
                     <svg id="audio-icon-off" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
                     <svg id="audio-icon-on" class="hidden" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
@@ -95,6 +116,13 @@
             </div>
         </div>
     </header>
+
+    <!-- Transmission ticker (SIGNAL DECK density) -->
+    <div class="ticker" aria-hidden="true">
+        <div class="ticker-track">
+            <span>TRANSMISSION 001&nbsp;//&nbsp;KYIV STATION&nbsp;//&nbsp;SIGNAL STRONG&nbsp;//&nbsp;OBSIDIAN HARDWARE REV 2.1&nbsp;//&nbsp;CAT ON BOARD&nbsp;//&nbsp;</span><span>TRANSMISSION 001&nbsp;//&nbsp;KYIV STATION&nbsp;//&nbsp;SIGNAL STRONG&nbsp;//&nbsp;OBSIDIAN HARDWARE REV 2.1&nbsp;//&nbsp;CAT ON BOARD&nbsp;//&nbsp;</span>
+        </div>
+    </div>
 
     <main class="relative z-20">
 
@@ -232,6 +260,50 @@
             </div>
         </section>
 
+        <!-- 04 TRANSMISSION (3D player) -->
+        <section id="transmission" data-chapter="deck-transmission" class="relative section-pad">
+            <span class="ghost-num" aria-hidden="true">04</span>
+            <div class="wrap py-24">
+                <p class="mono-label mb-5 reveal">// 04 — TRANSMISSION</p>
+                <h2 class="display-serif text-[clamp(2.6rem,6vw,4.5rem)] leading-none mb-14 reveal" data-scramble>Signal deck.</h2>
+
+                <div class="transmission-grid">
+                    <div class="player-console reveal hud-corners" style="--d:.1s">
+                        <span class="hud-b" aria-hidden="true"></span>
+                        <div class="pc-head">
+                            <span class="pc-led" id="pc-play-led"></span>
+                            <span class="pc-title" id="pc-track">KYIV NIGHTBUS</span>
+                            <span class="pc-bpm" id="pc-bpm">84 BPM</span>
+                        </div>
+                        <canvas id="pc-cover" width="96" height="96" aria-hidden="true"></canvas>
+                        <div class="pc-body">
+                            <p class="pc-sub">GENERATIVE SIGNAL — SYNTHESIZED LIVE IN YOUR BROWSER</p>
+                            <div class="pc-vu" id="pc-vu" aria-hidden="true"></div>
+                            <div class="pc-controls">
+                                <button id="pc-prev" class="icon-btn" title="Previous track" aria-label="Previous track"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h2v16H6zM20 4L8 12l12 8z"/></svg></button>
+                                <button id="pc-play" class="icon-btn pc-play-main" title="Play / pause" aria-label="Play or pause">
+                                    <svg id="pc-icon-play" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l13 8-13 8z"/></svg>
+                                    <svg id="pc-icon-pause" class="hidden" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
+                                </button>
+                                <button id="pc-next" class="icon-btn" title="Next track" aria-label="Next track"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M16 4h2v16h-2zM4 4l12 8-12 8z"/></svg></button>
+                            </div>
+                            <label class="pc-vol">
+                                <span class="mono-label" style="font-size:9px">VOL</span>
+                                <input type="range" id="pc-volume" min="0" max="100" value="60" aria-label="Player volume">
+                            </label>
+                            <p class="fig-caption mt-3">DRAG THE DECK TO SPIN · CLICK THE DISC TO PLAY</p>
+                        </div>
+                    </div>
+                    <div class="reveal" style="--d:.2s">
+                        <div class="hud-corners transmission-stage">
+                            <p class="stage-hint mono-label">STAGE 04 — THE DECK IS IN THE SCENE BEHIND</p>
+                            <p class="stage-copy">The turntable lives in the shared WebGL world — scroll to align it, click the disc, drag to spin. Spectrum bars read the live analyser: what you see is what you hear.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- 03 SIGNAL -->
         <section id="activity" data-chapter="signal" class="relative section-pad">
             <span class="ghost-num" aria-hidden="true">03</span>
@@ -312,14 +384,19 @@
         <button class="rail-item" data-target="#about"><span>00</span><span class="tick"></span></button>
         <button class="rail-item" data-target="#projects"><span>01</span><span class="tick"></span></button>
         <button class="rail-item" data-target="#flagship"><span>02</span><span class="tick"></span></button>
+        <button class="rail-item" data-target="#transmission"><span>04</span><span class="tick"></span></button>
         <button class="rail-item" data-target="#activity"><span>03</span><span class="tick"></span></button>
     </nav>
+
+    <!-- Scanlines (deck only) -->
+    <div class="scanlines" aria-hidden="true"></div>
 
     <!-- Cursor & toast -->
     <div id="cursor-dot" aria-hidden="true"></div>
     <div id="cursor-ring" aria-hidden="true"></div>
     <div id="toast" role="status"></div>
 
+    <script type="module" src="assets/js/audio-engine.js"></script>
     <script type="module" src="assets/js/three-scene.js"></script>
     <script type="module" src="assets/js/ui.js"></script>
 </body>
