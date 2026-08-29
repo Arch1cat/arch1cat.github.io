@@ -295,15 +295,269 @@ window.__archiveDiscClick = (nx, ny) => {
 const SCENE_PALETTES = {
     archive: { fog: new THREE.Color(0x0B0B0C), key: new THREE.Color(0xF4F1EB), glow: new THREE.Color(0xFF4D00), cursor: new THREE.Color(0xF4F1EB), body: new THREE.Color(0x151517), floorC: new THREE.Color(0x0e0e10) },
     deck: { fog: new THREE.Color(0x080B14), key: new THREE.Color(0x9BE8FF), glow: new THREE.Color(0x7C5CFF), cursor: new THREE.Color(0x9BE8FF), body: new THREE.Color(0x11162A), floorC: new THREE.Color(0x0b101d) },
+    workstation: { fog: new THREE.Color(0x07090E), key: new THREE.Color(0x00F0FF), glow: new THREE.Color(0xFF2E93), cursor: new THREE.Color(0x00FF9D), body: new THREE.Color(0x0E1320), floorC: new THREE.Color(0x05070C) },
 };
-let palMix = document.documentElement.getAttribute('data-theme') === 'deck' ? 1 : 0;
+
+let currentTheme = document.documentElement.getAttribute('data-theme') || 'archive';
+let palMix = currentTheme === 'workstation' ? 2 : currentTheme === 'deck' ? 1 : 0;
 let palTarget = palMix;
-const fogWarm = new THREE.Color(0x100c0a), fogDeckWarm = new THREE.Color(0x0d1024);
+const fogWarm = new THREE.Color(0x100c0a), fogDeckWarm = new THREE.Color(0x0d1024), fogWorkstationWarm = new THREE.Color(0x0a1020);
+
 addEventListener('themechange', (e) => {
-    palTarget = e.detail?.theme === 'deck' ? 1 : 0;
+    currentTheme = e.detail?.theme || 'archive';
+    palTarget = currentTheme === 'workstation' ? 2 : currentTheme === 'deck' ? 1 : 0;
 });
 let discSpin = 0;
 let artFade = 1;
+
+/* ------------------------------------------------------------
+   CYBER WORKSTATION 3D (Theme 3: Ultrawide Monitor, Keyboard, Mascot, Holo-Tablets)
+   ------------------------------------------------------------ */
+const wsGroup = new THREE.Group();
+wsGroup.position.set(MOBILE ? 0 : 2.2, -0.6, -1);
+scene.add(wsGroup);
+
+const wsMats = [];
+function wsMat(opts) {
+    const { opacity, ...rest } = opts;
+    const m = new THREE.MeshStandardMaterial({ transparent: true, opacity: 0, ...rest });
+    m.userData.baseO = opacity ?? 0.96;
+    wsMats.push(m);
+    return m;
+}
+
+/* 1. Desk Surface */
+const deskMesh = new THREE.Mesh(
+    new THREE.BoxGeometry(8.5, 0.15, 3.4),
+    wsMat({ color: 0x0a0d18, roughness: 0.25, metalness: 0.85 })
+);
+deskMesh.position.set(0, -2.1, 0);
+wsGroup.add(deskMesh);
+
+/* 2. 3D Ultrawide Monitor & Screen Canvas */
+const monitorGroup = new THREE.Group();
+monitorGroup.position.set(0, 0.2, -0.8);
+
+const monStand = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.12, 0.18, 1.8, 16),
+    wsMat({ color: 0x181e30, metalness: 0.9, roughness: 0.2 })
+);
+monStand.position.set(0, -0.9, -0.2);
+monitorGroup.add(monStand);
+
+const monBody = new THREE.Mesh(
+    new THREE.BoxGeometry(4.8, 2.2, 0.22),
+    wsMat({ color: 0x0d1222, metalness: 0.8, roughness: 0.3 })
+);
+monitorGroup.add(monBody);
+
+/* Screen Canvas & Texture */
+const screenCanvas = document.createElement('canvas');
+screenCanvas.width = 512; screenCanvas.height = 256;
+const screenCtx = screenCanvas.getContext('2d');
+const screenTex = new THREE.CanvasTexture(screenCanvas);
+
+const screenMesh = new THREE.Mesh(
+    new THREE.PlaneGeometry(4.65, 2.05),
+    new THREE.MeshBasicMaterial({ map: screenTex, transparent: true, opacity: 0 })
+);
+screenMesh.position.z = 0.12;
+monitorGroup.add(screenMesh);
+wsMats.push(screenMesh.material);
+screenMesh.material.userData.baseO = 1.0;
+
+wsGroup.add(monitorGroup);
+
+/* Live Monitor Drawing Function */
+const codeSnippets = [
+    "// ARCH1CAT CYBER OS v3.8 — SYSTEM ONLINE",
+    "> agent.init({ provider: 'antigravity', model: 'gemini-3.7' })",
+    "> webgl.render(3D_WORKSTATION_DEMO, { fps: 60 })",
+    "> audio.stream('KYIV_NIGHTBUS', { bpm: 84 })",
+    "> neural.query('build autonomous AI agent workflows')",
+    "> status: ALL SYSTEMS OPERATIONAL [OK]",
+];
+function drawMonitorScreen(t) {
+    screenCtx.fillStyle = "#060913";
+    screenCtx.fillRect(0, 0, 512, 256);
+    
+    // Header Bar
+    screenCtx.fillStyle = "#0e162a";
+    screenCtx.fillRect(0, 0, 512, 28);
+    screenCtx.fillStyle = "#00F0FF";
+    screenCtx.font = "11px monospace";
+    screenCtx.fillText("ARCH1CAT // CYBER WORKSTATION OS v3.8", 12, 18);
+    
+    screenCtx.fillStyle = "#FF2E93";
+    screenCtx.beginPath();
+    screenCtx.arc(492, 14, 4, 0, Math.PI * 2);
+    screenCtx.fill();
+
+    // Code Stream Lines
+    screenCtx.fillStyle = "#8AA2D6";
+    screenCtx.font = "10px monospace";
+    for (let i = 0; i < 6; i++) {
+        const line = codeSnippets[i];
+        const y = 54 + i * 22;
+        screenCtx.fillText(line, 14, y);
+    }
+
+    // Waveform Graphic at bottom of monitor
+    screenCtx.strokeStyle = "#00FF9D";
+    screenCtx.lineWidth = 2;
+    screenCtx.beginPath();
+    for (let x = 0; x < 484; x += 6) {
+        const vy = 205 + Math.sin(t * 4 + x * 0.05) * 14 + Math.cos(t * 8 + x * 0.02) * 8;
+        if (x === 0) screenCtx.moveTo(14 + x, vy);
+        else screenCtx.lineTo(14 + x, vy);
+    }
+    screenCtx.stroke();
+    screenTex.needsUpdate = true;
+}
+
+/* 3. 3D Mechanical Keyboard */
+const kbGroup = new THREE.Group();
+kbGroup.position.set(-0.2, -1.98, 0.6);
+kbGroup.rotation.x = -0.08;
+
+const kbBase = new THREE.Mesh(
+    new THREE.BoxGeometry(2.6, 0.08, 0.95),
+    wsMat({ color: 0x101626, metalness: 0.7, roughness: 0.4 })
+);
+kbGroup.add(kbBase);
+
+/* 3D Keycaps */
+const keyMeshes = [];
+const KEY_ROWS = 5, KEY_COLS = 12;
+for (let r = 0; r < KEY_ROWS; r++) {
+    for (let c = 0; c < KEY_COLS; c++) {
+        const isAccent = (r === 2 && c === 11) || (r === 4 && c >= 4 && c <= 7);
+        const col = isAccent ? 0xFF2E93 : (r === 0 ? 0x00F0FF : 0x222b42);
+        const kMat = wsMat({ color: col, metalness: 0.5, roughness: 0.4, emissive: col, emissiveIntensity: 0.1 });
+        const kw = (r === 4 && c >= 4 && c <= 7) ? 0.6 : 0.16;
+        if (r === 4 && c > 4 && c <= 7) continue;
+        
+        const kMesh = new THREE.Mesh(new THREE.BoxGeometry(kw, 0.06, 0.14), kMat);
+        const kx = -1.1 + c * 0.2 + (kw > 0.2 ? 0.2 : 0);
+        const kz = -0.36 + r * 0.18;
+        kMesh.position.set(kx, 0.06, kz);
+        kMesh.userData = { homeY: 0.06, pressT: 0 };
+        kbGroup.add(kMesh);
+        keyMeshes.push(kMesh);
+    }
+}
+wsGroup.add(kbGroup);
+
+/* Keyboard Sparkles */
+const sparkGeo = new THREE.BufferGeometry();
+const SPARK_COUNT = 40;
+const sparkPos = new Float32Array(SPARK_COUNT * 3);
+const sparkVel = new Float32Array(SPARK_COUNT * 3);
+sparkGeo.setAttribute('position', new THREE.BufferAttribute(sparkPos, 3));
+for (let i = 0; i < SPARK_COUNT * 3; i++) sparkPos[i] = 0;
+const sparkMat = new THREE.PointsMaterial({ color: 0x00F0FF, size: 0.12, transparent: true, opacity: 0 });
+const sparkSystem = new THREE.Points(sparkGeo, sparkMat);
+kbGroup.add(sparkSystem);
+
+function emitKeyboardSparks(originPos) {
+    const p = sparkGeo.attributes.position.array;
+    for (let i = 0; i < SPARK_COUNT; i++) {
+        p[i * 3] = originPos.x + (Math.random() - 0.5) * 0.2;
+        p[i * 3 + 1] = originPos.y + 0.1;
+        p[i * 3 + 2] = originPos.z + (Math.random() - 0.5) * 0.2;
+        sparkVel[i * 3] = (Math.random() - 0.5) * 0.08;
+        sparkVel[i * 3 + 1] = 0.08 + Math.random() * 0.12;
+        sparkVel[i * 3 + 2] = (Math.random() - 0.5) * 0.08;
+    }
+    sparkGeo.attributes.position.needsUpdate = true;
+    sparkMat.opacity = 1.0;
+}
+
+window.addEventListener('keydown', (e) => {
+    if (document.documentElement.getAttribute('data-theme') !== 'workstation') return;
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    const randIdx = Math.floor(Math.random() * keyMeshes.length);
+    const k = keyMeshes[randIdx];
+    if (k) {
+        k.userData.pressT = 1.0;
+        emitKeyboardSparks(k.position);
+    }
+});
+
+/* 4. 3D Cyber Cat Mascot on Monitor */
+const catGroup = new THREE.Group();
+catGroup.position.set(1.1, 1.42, -0.75);
+
+const catHead = new THREE.Mesh(
+    new THREE.BoxGeometry(0.42, 0.36, 0.38),
+    wsMat({ color: 0x121726, metalness: 0.8, roughness: 0.3 })
+);
+catGroup.add(catHead);
+
+const ear1 = new THREE.Mesh(new THREE.ConeGeometry(0.1, 0.22, 4), wsMat({ color: 0xFF2E93, emissive: 0xFF2E93, emissiveIntensity: 0.4 }));
+ear1.position.set(-0.14, 0.26, 0);
+const ear2 = ear1.clone(); ear2.position.x = 0.14;
+catGroup.add(ear1, ear2);
+
+const eyeMat = new THREE.MeshBasicMaterial({ color: 0x00FF9D, transparent: true, opacity: 0 });
+wsMats.push(eyeMat); eyeMat.userData.baseO = 1.0;
+const eye1 = new THREE.Mesh(new THREE.SphereGeometry(0.06, 12, 12), eyeMat);
+eye1.position.set(-0.11, 0.04, 0.2);
+const eye2 = eye1.clone(); eye2.position.x = 0.11;
+catGroup.add(eye1, eye2);
+
+const tailCurve = new THREE.CatmullRomCurve3([
+    new THREE.Vector3(0.18, -0.1, -0.1),
+    new THREE.Vector3(0.35, -0.05, -0.3),
+    new THREE.Vector3(0.45, 0.18, -0.45),
+]);
+const catTail = new THREE.Mesh(new THREE.TubeGeometry(tailCurve, 16, 0.03, 8), wsMat({ color: 0x00F0FF, emissive: 0x00F0FF, emissiveIntensity: 0.3 }));
+catGroup.add(catTail);
+
+let catPurrT = 0;
+catGroup.userData.click = () => {
+    catPurrT = 1.0;
+    eyeMat.color.setHex(0xFF2E93);
+    setTimeout(() => eyeMat.color.setHex(0x00FF9D), 1200);
+};
+wsGroup.add(catGroup);
+
+/* 5. 3D Project Holo-Tablets */
+const holoGroup = new THREE.Group();
+const HOLO_PROJECTS = [
+    { title: 'World Monitor', tag: 'OSINT', stars: '★ 00', url: 'https://github.com/l2bote4game/world-monitor' },
+    { title: 'WiFi Scanner', tag: 'KOTLIN', stars: '★ 00', url: 'https://github.com/l2bote4game/wifiscaner' },
+    { title: 'Metadata Cleaner', tag: 'PYTHON', stars: '★ 00', url: 'https://github.com/l2bote4game/media-meta-cleaner' },
+    { title: 'Cats Match-3', tag: 'GAME', stars: '★ 00', url: 'https://github.com/l2bote4game/cats-match3-game' },
+    { title: 'openGym v1.2', tag: 'APK', stars: '★ 00', url: 'https://github.com/l2bote4game/openGym' },
+];
+
+const holoPlates = [];
+HOLO_PROJECTS.forEach((proj, idx) => {
+    const canvas = document.createElement('canvas');
+    canvas.width = 256; canvas.height = 128;
+    const ctx2 = canvas.getContext('2d');
+    ctx2.fillStyle = '#0a1020'; ctx2.fillRect(0, 0, 256, 128);
+    ctx2.strokeStyle = '#00F0FF'; ctx2.lineWidth = 3; ctx2.strokeRect(2, 2, 252, 124);
+    ctx2.fillStyle = '#00FF9D'; ctx2.font = 'bold 11px monospace'; ctx2.fillText(`// 00${idx + 1} — ${proj.tag}`, 12, 24);
+    ctx2.fillStyle = '#E4EBFF'; ctx2.font = 'bold 16px sans-serif'; ctx2.fillText(proj.title, 12, 54);
+    ctx2.fillStyle = '#FF2E93'; ctx2.font = '12px monospace'; ctx2.fillText(proj.stars, 12, 90);
+
+    const tex = new THREE.CanvasTexture(canvas);
+    const pMat = new THREE.MeshBasicMaterial({ map: tex, transparent: true, opacity: 0 });
+    wsMats.push(pMat); pMat.userData.baseO = 0.9;
+    
+    const plateMesh = new THREE.Mesh(new THREE.PlaneGeometry(1.6, 0.8), pMat);
+    const ang = (idx / 5) * Math.PI - Math.PI / 2;
+    const rx = Math.sin(ang) * 3.8;
+    const rz = -Math.cos(ang) * 1.5 - 1.2;
+    plateMesh.position.set(rx, 0.4 + (idx % 2) * 0.6, rz);
+    plateMesh.rotation.y = -ang * 0.6;
+    plateMesh.userData = { homePos: plateMesh.position.clone(), projUrl: proj.url };
+    holoGroup.add(plateMesh);
+    holoPlates.push(plateMesh);
+});
+wsGroup.add(holoGroup);
 
 /* ------------------------------------------------------------
    Materialization (archive:ready event or timeout fallback)
@@ -565,23 +819,90 @@ function animate() {
     if (emberFlash > 0) emberFlash = Math.max(0, emberFlash - dt * (emberFlash / 0.9 + 0.2));
 
     /* fog tint per chapter (theme-aware warm variants) */
-    const warmFog = palMix > 0.5 ? fogDeckWarm : fogWarm;
-    const coldFog = SCENE_PALETTES.archive.fog.clone().lerp(SCENE_PALETTES.deck.fog, palMix);
+    const warmFog = palMix > 1.5 ? fogWorkstationWarm : (palMix > 0.5 ? fogDeckWarm : fogWarm);
+    const coldFog = palMix > 1.5 
+        ? SCENE_PALETTES.deck.fog.clone().lerp(SCENE_PALETTES.workstation.fog, palMix - 1)
+        : SCENE_PALETTES.archive.fog.clone().lerp(SCENE_PALETTES.deck.fog, palMix);
     const targetFog = currentChapter === 'flagship' ? warmFog : coldFog;
     scene.fog.color.lerp(targetFog, 0.04);
 
-    /* theme palette lerp — colors glide between archive & deck */
-    if ((palTarget === 1 && palMix < 1) || (palTarget === 0 && palMix > 0)) {
-        palMix = Math.max(0, Math.min(1, palMix + (palTarget === 1 ? dt : -dt) * 1.4));
-        const A = SCENE_PALETTES.archive, D = SCENE_PALETTES.deck;
-        keyLight.color.copy(A.key).lerp(D.key, palMix);
-        cursorLight.color.copy(A.cursor).lerp(D.cursor, palMix);
-        emberLight.color.copy(A.glow).lerp(D.glow, palMix);
-        bodyMat.color.copy(A.body).lerp(D.body, palMix);
-        floor.material.color.copy(A.floorC).lerp(D.floorC, palMix);
-        accentColor.setHex(0xFF4D00).lerp(new THREE.Color(0x7C5CFF), palMix);
+    /* theme palette lerp — colors glide between archive (0), deck (1), workstation (2) */
+    if (Math.abs(palMix - palTarget) > 0.01) {
+        palMix += (palTarget - palMix) * 0.08;
+        const A = SCENE_PALETTES.archive, D = SCENE_PALETTES.deck, W = SCENE_PALETTES.workstation;
+        let cKey, cGlow, cBody, cFloor, cCur;
+        if (palMix <= 1) {
+            cKey = A.key.clone().lerp(D.key, palMix);
+            cGlow = A.glow.clone().lerp(D.glow, palMix);
+            cBody = A.body.clone().lerp(D.body, palMix);
+            cFloor = A.floorC.clone().lerp(D.floorC, palMix);
+            cCur = A.cursor.clone().lerp(D.cursor, palMix);
+        } else {
+            const p2 = palMix - 1;
+            cKey = D.key.clone().lerp(W.key, p2);
+            cGlow = D.glow.clone().lerp(W.glow, p2);
+            cBody = D.body.clone().lerp(W.body, p2);
+            cFloor = D.floorC.clone().lerp(W.floorC, p2);
+            cCur = D.cursor.clone().lerp(W.cursor, p2);
+        }
+        keyLight.color.copy(cKey);
+        cursorLight.color.copy(cCur);
+        emberLight.color.copy(cGlow);
+        bodyMat.color.copy(cBody);
+        floor.material.color.copy(cFloor);
+        accentColor.copy(cGlow);
         deckLight.color.copy(accentColor);
-        scene.fog.color.copy(A.fog).lerp(D.fog, palMix);
+    }
+
+    /* ---- CYBER WORKSTATION 3D ANIMATIONS & VISIBILITY ---- */
+    const wsVisTarget = (currentTheme === 'workstation') ? 1 : 0;
+    wsGroup.visible = wsVisTarget > 0.01 || (palMix > 1.05);
+    if (wsGroup.visible) {
+        const wsOpacity = Math.max(0, Math.min(1, palMix > 1 ? palMix - 1 : wsVisTarget));
+        wsMats.forEach((m) => { m.opacity = (m.userData.baseO ?? 0.96) * wsOpacity; });
+        
+        if (!RM) {
+            drawMonitorScreen(t);
+            // Cat Mascot tail & head purr
+            catTail.rotation.z = Math.sin(t * 2.2) * 0.25;
+            if (catPurrT > 0) {
+                catPurrT = Math.max(0, catPurrT - dt);
+                catHead.rotation.x = Math.sin(t * 12) * 0.08;
+            } else {
+                catHead.rotation.x = 0;
+            }
+            // Cat eye blink
+            const blink = Math.sin(t * 0.8) > 0.95 ? 0.1 : 1.0;
+            eye1.scale.y = eye2.scale.y = blink;
+
+            // Keyboard keys animation
+            keyMeshes.forEach((k) => {
+                if (k.userData.pressT > 0) {
+                    k.userData.pressT = Math.max(0, k.userData.pressT - dt * 4);
+                    k.position.y = k.userData.homeY - 0.035 * k.userData.pressT;
+                } else {
+                    k.position.y = k.userData.homeY;
+                }
+            });
+
+            // Keyboard Sparks physics
+            if (sparkMat.opacity > 0) {
+                sparkMat.opacity = Math.max(0, sparkMat.opacity - dt * 2.5);
+                const sp = sparkGeo.attributes.position.array;
+                for (let i = 0; i < SPARK_COUNT; i++) {
+                    sp[i * 3] += sparkVel[i * 3];
+                    sp[i * 3 + 1] += sparkVel[i * 3 + 1];
+                    sp[i * 3 + 2] += sparkVel[i * 3 + 2];
+                    sparkVel[i * 3 + 1] -= 0.005; // gravity
+                }
+                sparkGeo.attributes.position.needsUpdate = true;
+            }
+
+            // Holo-Plates floating bob
+            holoPlates.forEach((p, idx) => {
+                p.position.y = p.userData.homePos.y + Math.sin(t * 1.2 + idx) * 0.08;
+            });
+        }
     }
 
     /* ---- THE DECK: visibility, spin, spectrum ---- */

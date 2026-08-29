@@ -160,27 +160,38 @@ function showToast(text, ms = 2200) {
 }
 
 /* ------------------------------------------------------------
-   5b. THEME SWITCHER (archive <-> signal deck)
+   5b. THEME SWITCHER (archive <-> signal deck <-> workstation)
    ------------------------------------------------------------ */
 (function themeSwitch() {
     const btn = document.getElementById('theme-toggle-btn');
     const iconDeck = document.getElementById('theme-icon-deck');
     const iconArch = document.getElementById('theme-icon-archive');
     const meta = document.querySelector('meta[name="theme-color"]');
+    
+    const METAS = { archive: '#0B0B0C', deck: '#080B14', workstation: '#07090E' };
+    const TOASTS = {
+        archive: '📼 ARCHIVE//01 RESTORED',
+        deck: '📡 SIGNAL DECK ENGAGED',
+        workstation: '🖥 CYBER WORKSTATION ONLINE',
+    };
+
     function paint(theme) {
         iconDeck?.classList.toggle('hidden', theme === 'deck');
         iconArch?.classList.toggle('hidden', theme !== 'deck');
-        meta?.setAttribute('content', theme === 'deck' ? '#080B14' : '#0B0B0C');
+        meta?.setAttribute('content', METAS[theme] || '#0B0B0C');
     }
-    paint(document.documentElement.getAttribute('data-theme') || 'archive');
+
+    const cur = document.documentElement.getAttribute('data-theme') || 'archive';
+    paint(cur);
+
     btn?.addEventListener('click', () => {
-        const cur = document.documentElement.getAttribute('data-theme');
-        const next = cur === 'deck' ? 'archive' : 'deck';
+        const t = document.documentElement.getAttribute('data-theme') || 'archive';
+        const next = t === 'archive' ? 'deck' : t === 'deck' ? 'workstation' : 'archive';
         try { localStorage.setItem('arch_theme', next); } catch (_) {}
         document.documentElement.setAttribute('data-theme', next);
         paint(next);
         window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
-        showToast(next === 'deck' ? '📡 SIGNAL DECK ENGAGED' : '📼 ARCHIVE//01 RESTORED');
+        showToast(TOASTS[next] || TOASTS.archive);
     });
 })();
 

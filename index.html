@@ -37,8 +37,8 @@
     try {
         var t = localStorage.getItem('arch_theme');
         var p = new URLSearchParams(location.search).get('theme');
-        if (p === 'deck' || p === 'archive') t = p;
-        if (t === 'deck' || t === 'archive') document.documentElement.setAttribute('data-theme', t);
+        if (p === 'deck' || p === 'archive' || p === 'workstation') t = p;
+        if (t === 'deck' || t === 'archive' || t === 'workstation') document.documentElement.setAttribute('data-theme', t);
         else document.documentElement.setAttribute('data-theme', 'archive');
     } catch (e) { document.documentElement.setAttribute('data-theme', 'archive'); }
     </script>

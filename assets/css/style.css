@@ -926,6 +926,38 @@ html[data-theme="deck"] .ghost-num { opacity: .05; color: var(--ice); }
     max-width: 30rem;
 }
 
+/* ============================================================
+   THEME 3 — CYBER WORKSTATION
+   neon-cyan · hot-pink · emerald · deep midnight cockpit
+   ============================================================ */
+
+html[data-theme="workstation"] {
+    --ink: #07090E;
+    --surface: #0E1320;
+    --plate: #0B101D;
+    --bone: #E4EBFF;
+    --muted: #6B7B9E;
+    --ember: #00F0FF;
+    --ember-2: #FF2E93;
+    --ice: #00FF9D;
+    --line: rgba(0, 240, 255, 0.12);
+}
+
+html[data-theme="workstation"] ::selection { background: var(--ember); color: var(--ink); }
+html[data-theme="workstation"] ::-webkit-scrollbar-thumb:hover { background: var(--ember-2); }
+
+/* workstation shows ticker + station like deck */
+html[data-theme="workstation"] .ticker { display: block; }
+html[data-theme="workstation"] .station-panel { display: flex; }
+html[data-theme="workstation"] .scanlines { display: block; }
+html[data-theme="workstation"] .ghost-num { opacity: .06; color: var(--ember); }
+
+/* workstation-specific glow on buttons/cards */
+html[data-theme="workstation"] .btn-primary { background: var(--ember); color: var(--ink); border-color: var(--ember); }
+html[data-theme="workstation"] .btn-primary::before { background: var(--ember-2); }
+html[data-theme="workstation"] .btn-primary:hover { color: #fff; }
+html[data-theme="workstation"] .pulse-dot { background: var(--ember); box-shadow: 0 0 8px var(--ember); }
+
 @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     *, *::before, *::after {
