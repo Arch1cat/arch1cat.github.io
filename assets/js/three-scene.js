@@ -314,7 +314,8 @@ let artFade = 1;
    CYBER WORKSTATION 3D (Theme 3: Ultrawide Monitor, Keyboard, Mascot, Holo-Tablets)
    ------------------------------------------------------------ */
 const wsGroup = new THREE.Group();
-wsGroup.position.set(MOBILE ? 0 : 2.2, -0.6, -1);
+wsGroup.position.set(MOBILE ? 0 : 3.8, -0.5, -1.2);
+wsGroup.scale.setScalar(0.88);
 scene.add(wsGroup);
 
 const wsMats = [];
@@ -596,7 +597,8 @@ function startMaterialize() {
     })(t0);
 }
 window.addEventListener('archive:ready', startMaterialize);
-setTimeout(startMaterialize, RM ? 50 : 2200);
+setTimeout(startMaterialize, RM ? 50 : 1200);
+if (currentTheme === 'workstation') startMaterialize();
 
 /* ------------------------------------------------------------
    Cursor → 3D
@@ -855,10 +857,16 @@ function animate() {
     }
 
     /* ---- CYBER WORKSTATION 3D ANIMATIONS & VISIBILITY ---- */
-    const wsVisTarget = (currentTheme === 'workstation') ? 1 : 0;
+    const isWorkstation = (currentTheme === 'workstation');
+    const wsVisTarget = isWorkstation ? 1 : 0;
     wsGroup.visible = wsVisTarget > 0.01 || (palMix > 1.05);
+
+    /* Abstract artifact torus knot & shards hide in workstation theme to give full stage to 3D workstation */
+    artifact.visible = !isWorkstation;
+    shards.forEach((s) => { s.mesh.visible = !isWorkstation; });
+
     if (wsGroup.visible) {
-        const wsOpacity = Math.max(0, Math.min(1, palMix > 1 ? palMix - 1 : wsVisTarget));
+        const wsOpacity = Math.max(0, Math.min(1, palMix > 1 ? (palMix - 1) : wsVisTarget));
         wsMats.forEach((m) => { m.opacity = (m.userData.baseO ?? 0.96) * wsOpacity; });
         
         if (!RM) {
@@ -906,15 +914,17 @@ function animate() {
     }
 
     /* ---- THE DECK: visibility, spin, spectrum ---- */
-    const deckVisTarget = currentChapter === 'deck-transmission' ? 1 : 0;
+    const deckVisTarget = (currentChapter === 'deck-transmission' || currentTheme === 'deck') ? 1 : 0;
     deckVisT += (deckVisTarget - deckVisT) * 0.06;
-    /* artifact yields the stage to the deck during chapter 04 */
-    const artFadeTarget = currentChapter === 'deck-transmission' ? 0.18 : 1;
+    /* artifact yields the stage to the deck during chapter 04 or workstation theme */
+    const artFadeTarget = (currentChapter === 'deck-transmission' || isWorkstation) ? 0.0 : 1;
     artFade += (artFadeTarget - artFade) * 0.05;
-    bodyMat.opacity = materialized ? 0.96 * artFade : 0;
-    wireMat.opacity = materialized ? (0.08 + focusT * .08) * Math.max(artFade, .35) : 0;
-    const artScale = (MOBILE ? .75 : 1) * (0.82 + 0.18 * artFade);
-    artifact.scale.setScalar(artScale);
+    if (!isWorkstation) {
+        bodyMat.opacity = materialized ? 0.96 * artFade : 0;
+        wireMat.opacity = materialized ? (0.08 + focusT * .08) * Math.max(artFade, .35) : 0;
+        const artScale = (MOBILE ? .75 : 1) * (0.82 + 0.18 * artFade);
+        artifact.scale.setScalar(artScale);
+    }
     playerGroup.visible = deckVisT > 0.01;
     if (playerGroup.visible) {
         playerMats.forEach((m) => { m.opacity = m.userData.baseO * deckVisT; });
