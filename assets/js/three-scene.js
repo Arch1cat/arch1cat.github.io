@@ -446,14 +446,34 @@ screenGlow.material.userData.baseO = 0.55;
 wsGroup.add(monitorGroup);
 
 /* Live Monitor Drawing Function */
-const codeSnippets = [
-    "// ARCH1CAT CYBER OS v3.8 — SYSTEM ONLINE",
-    "> agent.init({ provider: 'antigravity', model: 'gemini-3.7' })",
-    "> webgl.render(3D_WORKSTATION_DEMO, { fps: 60 })",
-    "> audio.stream('KYIV_NIGHTBUS', { bpm: 84 })",
-    "> neural.query('build autonomous AI agent workflows')",
-    "> status: ALL SYSTEMS OPERATIONAL [OK]",
+let monitorTabIdx = 0;
+const codeSnippetsSet = [
+    [
+        "// ARCH1CAT CYBER OS v3.8 — SYSTEM ONLINE",
+        "> agent.init({ provider: 'antigravity', model: 'gemini-3.7' })",
+        "> webgl.render(3D_WORKSTATION_DEMO, { fps: 60 })",
+        "> audio.stream('KYIV_NIGHTBUS', { bpm: 84 })",
+        "> neural.query('build autonomous AI agent workflows')",
+        "> status: ALL SYSTEMS OPERATIONAL [OK]",
+    ],
+    [
+        "// TAB 2: AI AGENT WORKFLOWS & ENGINE",
+        "> hermes.agent.loadSkill('subagent-driven-development')",
+        "> deepmind.orchestrate({ concurrency: 8, model: 'flash' })",
+        "> tdd.verify({ status: 'RED-GREEN-REFACTOR' })",
+        "> deployment: VERCEL & GITHUB PAGES [SYNCED]",
+        "> status: 100% SPEC COMPLIANT",
+    ],
+    [
+        "// TAB 3: ANDROID & NATIVE APPS",
+        "> kotlin.build('cats-match3-game', { apk: true })",
+        "> capacitor.sync('openGym-v1.2.4', { passkey: true })",
+        "> mdns.discover({ subnet: '192.168.1.0/24' })",
+        "> status: PASSKEY AUTH VERIFIED [OK]",
+        "> petdex.mascot({ state: 'PURRING' })",
+    ]
 ];
+
 function drawMonitorScreen(t) {
     screenCtx.fillStyle = "#060913";
     screenCtx.fillRect(0, 0, 512, 256);
@@ -463,7 +483,7 @@ function drawMonitorScreen(t) {
     screenCtx.fillRect(0, 0, 512, 28);
     screenCtx.fillStyle = "#00F0FF";
     screenCtx.font = "11px monospace";
-    screenCtx.fillText("ARCH1CAT // CYBER WORKSTATION OS v3.8", 12, 18);
+    screenCtx.fillText(`ARCH1CAT // CYBER OS — TAB ${monitorTabIdx + 1}/3 (CLICK TO SWITCH)`, 12, 18);
     
     screenCtx.fillStyle = "#FF2E93";
     screenCtx.beginPath();
@@ -471,10 +491,11 @@ function drawMonitorScreen(t) {
     screenCtx.fill();
 
     // Code Stream Lines
+    const lines = codeSnippetsSet[monitorTabIdx];
     screenCtx.fillStyle = "#8AA2D6";
     screenCtx.font = "10px monospace";
-    for (let i = 0; i < 6; i++) {
-        const line = codeSnippets[i];
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
         const y = 54 + i * 22;
         screenCtx.fillText(line, 14, y);
     }
@@ -790,8 +811,29 @@ window.__archive = {
 
 addEventListener('pointerdown', (e) => {
     if (!materialized) return;
-    // update cursor3 for this click even before a move happens nearby
     raycaster.setFromCamera(ndc, camera);
+    
+    // Interactive 3D Workstation Raycast hits (Holo-Plates, Monitor Screen, Cat Mascot)
+    if (currentTheme === 'workstation') {
+        const hits = raycaster.intersectObjects([...holoPlates, screenMesh, catHead, ear1, ear2], true);
+        if (hits.length > 0) {
+            const hitObj = hits[0].object;
+            if (holoPlates.includes(hitObj) && hitObj.userData.projUrl) {
+                window.open(hitObj.userData.projUrl, '_blank');
+                triggerWave(1.5);
+                return;
+            } else if (hitObj === screenMesh) {
+                monitorTabIdx = (monitorTabIdx + 1) % codeSnippetsSet.length;
+                triggerWave(1.2);
+                return;
+            } else if (hitObj === catHead || hitObj === ear1 || hitObj === ear2) {
+                catGroup.userData.click();
+                triggerWave(1.4);
+                return;
+            }
+        }
+    }
+
     raycaster.ray.intersectPlane(planeZ0, tmpV);
     cursor3.copy(tmpV);
     triggerWave(1);
@@ -1051,9 +1093,19 @@ function animate() {
                 sparkGeo.attributes.position.needsUpdate = true;
             }
 
-            // Holo-Plates floating bob
+            // Holo-Plates 3D raycast hover & floating bob
+            raycaster.setFromCamera(ndc, camera);
+            const hHits = raycaster.intersectObjects(holoPlates, false);
+            const hovObj = hHits.length > 0 ? hHits[0].object : null;
+
             holoPlates.forEach((p, idx) => {
-                p.position.y = p.userData.homePos.y + Math.sin(t * 1.2 + idx) * 0.08;
+                const isHov = p === hovObj;
+                const targetZ = p.userData.homePos.z + (isHov ? 0.45 : 0);
+                const targetY = p.userData.homePos.y + (isHov ? 0.12 : 0) + Math.sin(t * 1.2 + idx) * 0.08;
+                p.position.z += (targetZ - p.position.z) * 0.15;
+                p.position.y += (targetY - p.position.y) * 0.15;
+                const s = isHov ? 1.15 : 1.0;
+                p.scale.set(s, s, s);
             });
 
             // Constellation Lines update
