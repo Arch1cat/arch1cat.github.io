@@ -11,12 +11,29 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
 const RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const MOBILE = window.innerWidth < 768;
+const isMobile = () => window.innerWidth < 768;
+const MOBILE = isMobile();
 const COARSE = window.matchMedia('(pointer: coarse)').matches;
 
 const INK = 0x0B0B0C;
 const BONE = 0xF4F1EB;
 const EMBER = 0xFF4D00;
+
+/* Helper: procedural radial glow dot texture */
+let _dotTexCache = null;
+function dotTexture() {
+    if (_dotTexCache) return _dotTexCache;
+    const c = document.createElement('canvas');
+    c.width = c.height = 64;
+    const g = c.getContext('2d');
+    const grad = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+    grad.addColorStop(0, 'rgba(255,255,255,1)');
+    grad.addColorStop(1, 'rgba(255,255,255,0)');
+    g.fillStyle = grad;
+    g.fillRect(0, 0, 64, 64);
+    _dotTexCache = new THREE.CanvasTexture(c);
+    return _dotTexCache;
+}
 
 /* ------------------------------------------------------------
    Renderer / scene / camera / composer
@@ -35,7 +52,7 @@ container.appendChild(renderer.domElement);
 
 const composer = new EffectComposer(renderer);
 composer.addPass(new RenderPass(scene, camera));
-const bloomPass = new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), 0.45, 0.8, 0.8);
+const bloomPass = new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), 0.4, 0.6, 0.15);
 composer.addPass(bloomPass);
 
 /* ------------------------------------------------------------
@@ -303,9 +320,23 @@ let palMix = currentTheme === 'workstation' ? 2 : currentTheme === 'deck' ? 1 : 
 let palTarget = palMix;
 const fogWarm = new THREE.Color(0x100c0a), fogDeckWarm = new THREE.Color(0x0d1024), fogWorkstationWarm = new THREE.Color(0x0a1020);
 
+function applyThemeColors(tName) {
+    const pal = SCENE_PALETTES[tName] || SCENE_PALETTES.archive;
+    keyLight.color.copy(pal.key);
+    cursorLight.color.copy(pal.cursor);
+    emberLight.color.copy(pal.glow);
+    bodyMat.color.copy(pal.body);
+    floor.material.color.copy(pal.floorC);
+    accentColor.copy(pal.glow);
+    deckLight.color.copy(accentColor);
+    scene.fog.color.copy(pal.fog);
+}
+applyThemeColors(currentTheme);
+
 addEventListener('themechange', (e) => {
     currentTheme = e.detail?.theme || 'archive';
     palTarget = currentTheme === 'workstation' ? 2 : currentTheme === 'deck' ? 1 : 0;
+    applyThemeColors(currentTheme);
 });
 let discSpin = 0;
 let artFade = 1;
@@ -314,43 +345,73 @@ let artFade = 1;
    CYBER WORKSTATION 3D (Theme 3: Ultrawide Monitor, Keyboard, Mascot, Holo-Tablets)
    ------------------------------------------------------------ */
 const wsGroup = new THREE.Group();
-wsGroup.position.set(MOBILE ? 0 : 3.8, -0.5, -1.2);
-wsGroup.scale.setScalar(0.88);
+wsGroup.position.set(MOBILE ? 0 : 3.8, -0.3, -0.2);
+wsGroup.scale.setScalar(MOBILE ? 0.65 : 0.88);
 scene.add(wsGroup);
+
+/* Workstation Lights & Ambient */
+const wsAmbient = new THREE.AmbientLight(0x4488ff, 1.2);
+wsGroup.add(wsAmbient);
+
+const wsLight1 = new THREE.PointLight(0x00F0FF, 25, 30);
+wsLight1.position.set(0, 3.0, 2.5);
+wsGroup.add(wsLight1);
+
+const wsLight2 = new THREE.PointLight(0xFF2E93, 18, 25);
+wsLight2.position.set(0, 0.5, -1.5);
+wsGroup.add(wsLight2);
 
 const wsMats = [];
 function wsMat(opts) {
     const { opacity, ...rest } = opts;
-    const m = new THREE.MeshStandardMaterial({ transparent: true, opacity: 0, ...rest });
-    m.userData.baseO = opacity ?? 0.96;
+    const baseO = opacity ?? 0.98;
+    const m = new THREE.MeshStandardMaterial({ transparent: true, opacity: baseO, ...rest });
+    m.userData.baseO = baseO;
     wsMats.push(m);
     return m;
 }
 
-/* 1. Desk Surface */
+/* 1. Desk Surface with Neon Edge */
 const deskMesh = new THREE.Mesh(
-    new THREE.BoxGeometry(8.5, 0.15, 3.4),
-    wsMat({ color: 0x0a0d18, roughness: 0.25, metalness: 0.85 })
+    new THREE.BoxGeometry(4.8, 0.16, 2.4),
+    wsMat({ color: 0x2d4470, roughness: 0.2, metalness: 0.5, emissive: 0x14254a, emissiveIntensity: 0.8 })
 );
-deskMesh.position.set(0, -2.1, 0);
+deskMesh.position.set(0, -1.5, 0);
 wsGroup.add(deskMesh);
+
+const deskWire = new THREE.Mesh(
+    new THREE.BoxGeometry(4.82, 0.17, 2.42),
+    new THREE.MeshBasicMaterial({ color: 0x00F0FF, wireframe: true, transparent: true, opacity: 0.4 })
+);
+deskWire.position.copy(deskMesh.position);
+wsGroup.add(deskWire);
+wsMats.push(deskWire.material);
+deskWire.material.userData.baseO = 0.4;
 
 /* 2. 3D Ultrawide Monitor & Screen Canvas */
 const monitorGroup = new THREE.Group();
-monitorGroup.position.set(0, 0.2, -0.8);
+monitorGroup.position.set(0, 0.5, -0.4);
 
 const monStand = new THREE.Mesh(
-    new THREE.CylinderGeometry(0.12, 0.18, 1.8, 16),
-    wsMat({ color: 0x181e30, metalness: 0.9, roughness: 0.2 })
+    new THREE.CylinderGeometry(0.12, 0.18, 1.4, 16),
+    wsMat({ color: 0x00F0FF, metalness: 0.9, roughness: 0.1, emissive: 0x00F0FF, emissiveIntensity: 0.9 })
 );
-monStand.position.set(0, -0.9, -0.2);
+monStand.position.set(0, -0.7, -0.1);
 monitorGroup.add(monStand);
 
 const monBody = new THREE.Mesh(
-    new THREE.BoxGeometry(4.8, 2.2, 0.22),
-    wsMat({ color: 0x0d1222, metalness: 0.8, roughness: 0.3 })
+    new THREE.BoxGeometry(3.8, 1.9, 0.18),
+    wsMat({ color: 0x2b3e66, metalness: 0.6, roughness: 0.2, emissive: 0x00F0FF, emissiveIntensity: 0.4 })
 );
 monitorGroup.add(monBody);
+
+const monWire = new THREE.Mesh(
+    new THREE.BoxGeometry(3.84, 1.94, 0.2),
+    new THREE.MeshBasicMaterial({ color: 0x00F0FF, wireframe: true, transparent: true, opacity: 0.4 })
+);
+monitorGroup.add(monWire);
+wsMats.push(monWire.material);
+monWire.material.userData.baseO = 0.4;
 
 /* Screen Canvas & Texture */
 const screenCanvas = document.createElement('canvas');
@@ -359,13 +420,28 @@ const screenCtx = screenCanvas.getContext('2d');
 const screenTex = new THREE.CanvasTexture(screenCanvas);
 
 const screenMesh = new THREE.Mesh(
-    new THREE.PlaneGeometry(4.65, 2.05),
-    new THREE.MeshBasicMaterial({ map: screenTex, transparent: true, opacity: 0 })
+    new THREE.PlaneGeometry(3.68, 1.78),
+    new THREE.MeshBasicMaterial({ map: screenTex, transparent: true, opacity: 1.0, toneMapped: false })
 );
-screenMesh.position.z = 0.12;
+screenMesh.position.z = 0.1;
 monitorGroup.add(screenMesh);
 wsMats.push(screenMesh.material);
 screenMesh.material.userData.baseO = 1.0;
+
+/* Soft Volumetric Glow Sprite behind Monitor */
+const screenGlow = new THREE.Sprite(new THREE.SpriteMaterial({
+    map: dotTexture(),
+    color: 0x00F0FF,
+    blending: THREE.AdditiveBlending,
+    transparent: true,
+    opacity: 0.55,
+    depthWrite: false,
+}));
+screenGlow.scale.set(6.2, 3.6, 1);
+screenGlow.position.set(0, 0, -0.15);
+monitorGroup.add(screenGlow);
+wsMats.push(screenGlow.material);
+screenGlow.material.userData.baseO = 0.55;
 
 wsGroup.add(monitorGroup);
 
@@ -418,7 +494,7 @@ function drawMonitorScreen(t) {
 
 /* 3. 3D Mechanical Keyboard */
 const kbGroup = new THREE.Group();
-kbGroup.position.set(-0.2, -1.98, 0.6);
+kbGroup.position.set(0, -1.38, 0.5);
 kbGroup.rotation.x = -0.08;
 
 const kbBase = new THREE.Mesh(
@@ -487,7 +563,7 @@ window.addEventListener('keydown', (e) => {
 
 /* 4. 3D Cyber Cat Mascot on Monitor */
 const catGroup = new THREE.Group();
-catGroup.position.set(1.1, 1.42, -0.75);
+catGroup.position.set(0.9, 1.55, -0.35);
 
 const catHead = new THREE.Mesh(
     new THREE.BoxGeometry(0.42, 0.36, 0.38),
@@ -500,7 +576,7 @@ ear1.position.set(-0.14, 0.26, 0);
 const ear2 = ear1.clone(); ear2.position.x = 0.14;
 catGroup.add(ear1, ear2);
 
-const eyeMat = new THREE.MeshBasicMaterial({ color: 0x00FF9D, transparent: true, opacity: 0 });
+const eyeMat = new THREE.MeshBasicMaterial({ color: 0x00FF9D, transparent: true, opacity: 1.0 });
 wsMats.push(eyeMat); eyeMat.userData.baseO = 1.0;
 const eye1 = new THREE.Mesh(new THREE.SphereGeometry(0.06, 12, 12), eyeMat);
 eye1.position.set(-0.11, 0.04, 0.2);
@@ -545,7 +621,7 @@ HOLO_PROJECTS.forEach((proj, idx) => {
     ctx2.fillStyle = '#FF2E93'; ctx2.font = '12px monospace'; ctx2.fillText(proj.stars, 12, 90);
 
     const tex = new THREE.CanvasTexture(canvas);
-    const pMat = new THREE.MeshBasicMaterial({ map: tex, transparent: true, opacity: 0 });
+    const pMat = new THREE.MeshBasicMaterial({ map: tex, transparent: true, opacity: 0.9 });
     wsMats.push(pMat); pMat.userData.baseO = 0.9;
     
     const plateMesh = new THREE.Mesh(new THREE.PlaneGeometry(1.6, 0.8), pMat);
@@ -559,6 +635,72 @@ HOLO_PROJECTS.forEach((proj, idx) => {
     holoPlates.push(plateMesh);
 });
 wsGroup.add(holoGroup);
+
+/* 6. Dynamic Constellation Node Graph around Workstation */
+const NODE_COUNT = 14;
+const nodeGeo = new THREE.SphereGeometry(0.06, 8, 8);
+const nodeMat = wsMat({ color: 0x00F0FF, emissive: 0x00F0FF, emissiveIntensity: 0.8 });
+const nodeMeshes = [];
+const nodePositions = [];
+const nodeVelocities = [];
+
+for (let i = 0; i < NODE_COUNT; i++) {
+    const m = new THREE.Mesh(nodeGeo, nodeMat);
+    const pos = new THREE.Vector3(
+        (Math.random() - 0.5) * 7.5,
+        -1.0 + Math.random() * 3.2,
+        -1.5 + (Math.random() - 0.5) * 2.5
+    );
+    m.position.copy(pos);
+    wsGroup.add(m);
+    nodeMeshes.push(m);
+    nodePositions.push(pos.clone());
+    nodeVelocities.push(new THREE.Vector3(
+        (Math.random() - 0.5) * 0.006,
+        (Math.random() - 0.5) * 0.006,
+        (Math.random() - 0.5) * 0.006
+    ));
+}
+
+/* Constellation Lines Geometry */
+const MAX_LINES = NODE_COUNT * (NODE_COUNT - 1);
+const constLineGeo = new THREE.BufferGeometry();
+const constLinePos = new Float32Array(MAX_LINES * 6);
+constLineGeo.setAttribute('position', new THREE.BufferAttribute(constLinePos, 3));
+const constLineMat = new THREE.LineBasicMaterial({
+    color: 0x7C5CFF,
+    transparent: true,
+    opacity: 0,
+});
+wsMats.push(constLineMat);
+constLineMat.userData.baseO = 0.35;
+const constLineSegments = new THREE.LineSegments(constLineGeo, constLineMat);
+wsGroup.add(constLineSegments);
+
+function updateConstellation(t) {
+    let lineIdx = 0;
+    const posArr = constLineGeo.attributes.position.array;
+    for (let i = 0; i < NODE_COUNT; i++) {
+        const p1 = nodeMeshes[i].position;
+        const v = nodeVelocities[i];
+        p1.x += v.x; p1.y += v.y; p1.z += v.z;
+        if (Math.abs(p1.x - nodePositions[i].x) > 0.8) v.x *= -1;
+        if (Math.abs(p1.y - nodePositions[i].y) > 0.8) v.y *= -1;
+        if (Math.abs(p1.z - nodePositions[i].z) > 0.8) v.z *= -1;
+
+        for (let j = i + 1; j < NODE_COUNT; j++) {
+            const p2 = nodeMeshes[j].position;
+            const dist = p1.distanceTo(p2);
+            if (dist < 2.3) {
+                posArr[lineIdx * 6] = p1.x; posArr[lineIdx * 6 + 1] = p1.y; posArr[lineIdx * 6 + 2] = p1.z;
+                posArr[lineIdx * 6 + 3] = p2.x; posArr[lineIdx * 6 + 4] = p2.y; posArr[lineIdx * 6 + 5] = p2.z;
+                lineIdx++;
+            }
+        }
+    }
+    constLineGeo.setDrawRange(0, lineIdx * 2);
+    constLineGeo.attributes.position.needsUpdate = true;
+}
 
 /* ------------------------------------------------------------
    Materialization (archive:ready event or timeout fallback)
@@ -858,6 +1000,9 @@ function animate() {
 
     /* ---- CYBER WORKSTATION 3D ANIMATIONS & VISIBILITY ---- */
     const isWorkstation = (currentTheme === 'workstation');
+    const mob = isMobile();
+    wsGroup.position.set(mob ? 0 : 3.8, -0.3, mob ? -2.0 : -0.2);
+    wsGroup.scale.setScalar(mob ? 0.65 : 0.88);
     const wsVisTarget = isWorkstation ? 1 : 0;
     wsGroup.visible = wsVisTarget > 0.01 || (palMix > 1.05);
 
@@ -910,6 +1055,9 @@ function animate() {
             holoPlates.forEach((p, idx) => {
                 p.position.y = p.userData.homePos.y + Math.sin(t * 1.2 + idx) * 0.08;
             });
+
+            // Constellation Lines update
+            updateConstellation(t);
         }
     }
 
@@ -993,7 +1141,6 @@ function animate() {
     }
     camera.lookAt(lookAtVec);
 
-    renderer.render(scene, camera);
     composer.render();
 }
 animate();
