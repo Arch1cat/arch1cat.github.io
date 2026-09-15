@@ -1,18 +1,17 @@
 /* ============================================================
    ARCH1CAT — ui.js
-   Lusion-Grade UI Controller & Micro-Interactions
+   "СІЧ-01" Cybernetics UI Controller & Micro-Interactions
    Features:
-   - Boot Title Card with elegant reveal
-   - Letter Scramble Decode on scroll
-   - Scroll-driven reveals with staggered delays
-   - Precision Dual Cursor with magnetic hover states
-   - Dual-Theme Switcher (Lusion Void <-> Super Chrome)
-   - Station Telemetry: Kyiv time, FPS counter, cursor coordinates
-   - Magnetic Buttons & 3D Glass Plate Tilt with Specular Sheen
-   - GitHub live telemetry fetch & animated count-up
-   - Web Audio SFX integration & Ambient Synth Toggle
-   - 3D Kinetic Energy Pulse Trigger
-   - Cat Easter Egg ("meow")
+   - 3D Rig Viewport Controls (Assembled / Deconstruct / X-Ray)
+   - Projected 3D Hotspot Interactivity
+   - Boot Title Card with fast fade
+   - Scramble Decode on scroll & reveal
+   - Precision Dual Cursor with magnetic pull
+   - Dual-Theme Switcher (СІЧ Cyber-Cobalt <-> Chrome Void)
+   - Live Kyiv Station Telemetry: Clock, FPS, Pointer Coordinates
+   - Magnetic Buttons & 3D Glass Card Tilt with Specular Sheen
+   - GitHub Live Telemetry with animated counters
+   - Web Audio SFX integration
    ============================================================ */
 
 const RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -30,7 +29,7 @@ const lerp = (a, b, t) => a + (b - a) * t;
         if (document.body.style.overflow === 'hidden') document.body.style.overflow = '';
         window.dispatchEvent(new CustomEvent('site:ready'));
     };
-    if (RM || sessionStorage.getItem('arch1catTitleDone')) {
+    if (RM || sessionStorage.getItem('arch1catSichDone')) {
         overlay.remove();
         done();
         return;
@@ -38,7 +37,7 @@ const lerp = (a, b, t) => a + (b - a) * t;
     document.body.style.overflow = 'hidden';
     setTimeout(() => {
         overlay.classList.add('boot-hide');
-        sessionStorage.setItem('arch1catTitleDone', '1');
+        sessionStorage.setItem('arch1catSichDone', '1');
         setTimeout(() => {
             overlay.remove();
             done();
@@ -181,7 +180,7 @@ function showToast(text, ms = 2200) {
         requestAnimationFrame(loop);
     })();
 
-    const HOVER_SEL = 'a, button, .plate, .btn-archive, .stage-3d-badge, .icon-btn';
+    const HOVER_SEL = 'a, button, .plate, .btn-archive, .rig-mode-btn, .hotspot-badge, .icon-btn';
     document.addEventListener('mouseover', (e) => {
         const hit = !!e.target.closest(HOVER_SEL);
         ring.classList.toggle('grow', hit);
@@ -192,53 +191,45 @@ function showToast(text, ms = 2200) {
 
     window.addEventListener('pointerdown', (e) => {
         spawnRipple(e.clientX, e.clientY);
-        if (window.__playSfx && e.target.closest('a, button, .btn-archive, .icon-btn')) {
+        if (window.__playSfx && e.target.closest('a, button, .btn-archive, .icon-btn, .rig-mode-btn')) {
             window.__playSfx('click');
         }
     });
 })();
 
 /* ------------------------------------------------------------
-   6. 3-Theme Switcher (Lusion Void -> Super Chrome -> Cyber Volya)
+   6. Dual-Theme Switcher (СІЧ Cyber-Cobalt <-> Chrome Void)
    ------------------------------------------------------------ */
 (function themeSwitch() {
     const btn = document.getElementById('theme-toggle-btn');
-    const iconVoid = document.getElementById('theme-icon-void');
+    const iconSich = document.getElementById('theme-icon-sich');
     const iconChrome = document.getElementById('theme-icon-chrome');
-    const iconVolya = document.getElementById('theme-icon-volya');
     const meta = document.querySelector('meta[name="theme-color"]');
 
-    const THEME_CYCLE = ['lusion-void', 'super-chrome', 'cyber-volya'];
-
     const METAS = {
-        'lusion-void': '#05070B',
-        'super-chrome': '#08080A',
-        'cyber-volya': '#020612'
+        'cyber-sich': '#02050D',
+        'chrome-void': '#050608'
     };
 
     const TOASTS = {
-        'lusion-void': '💎 LUSION VOID ENGAGED',
-        'super-chrome': '⚡ SUPER CHROME ENGAGED',
-        'cyber-volya': '🇺🇦 ВОЛЯ // CYBER-UKRAINE ENGAGED'
+        'cyber-sich': '🇺🇦 СІЧ-01 CYBER-COBALT ONLINE',
+        'chrome-void': '⚡ CHROME VOID PROTOCOL ONLINE'
     };
 
     function paint(theme) {
-        iconVoid?.classList.toggle('hidden', theme !== 'lusion-void');
-        iconChrome?.classList.toggle('hidden', theme !== 'super-chrome');
-        iconVolya?.classList.toggle('hidden', theme !== 'cyber-volya');
-        meta?.setAttribute('content', METAS[theme] || '#05070B');
+        iconSich?.classList.toggle('hidden', theme !== 'cyber-sich');
+        iconChrome?.classList.toggle('hidden', theme === 'cyber-sich');
+        meta?.setAttribute('content', METAS[theme] || '#02050D');
     }
 
-    let cur = document.documentElement.getAttribute('data-theme') || 'lusion-void';
-    if (!THEME_CYCLE.includes(cur)) cur = 'lusion-void';
+    let cur = document.documentElement.getAttribute('data-theme') || 'cyber-sich';
+    if (cur !== 'cyber-sich' && cur !== 'chrome-void') cur = 'cyber-sich';
     document.documentElement.setAttribute('data-theme', cur);
     paint(cur);
 
     btn?.addEventListener('click', () => {
-        const current = document.documentElement.getAttribute('data-theme') || 'lusion-void';
-        const currentIndex = THEME_CYCLE.indexOf(current);
-        const nextIndex = (currentIndex + 1) % THEME_CYCLE.length;
-        const next = THEME_CYCLE[nextIndex];
+        const current = document.documentElement.getAttribute('data-theme') || 'cyber-sich';
+        const next = current === 'cyber-sich' ? 'chrome-void' : 'cyber-sich';
 
         try { localStorage.setItem('arch_theme', next); } catch (_) {}
         document.documentElement.setAttribute('data-theme', next);
@@ -246,12 +237,57 @@ function showToast(text, ms = 2200) {
 
         if (window.__playSfx) window.__playSfx('theme');
         window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
-        showToast(TOASTS[next] || TOASTS['lusion-void']);
+        showToast(TOASTS[next] || TOASTS['cyber-sich']);
     });
 })();
 
 /* ------------------------------------------------------------
-   7. Station Telemetry Panel: Kyiv Clock · FPS · Pointer Coordinates
+   7. 3D Viewport Controls Dock & Deconstruct Physics
+   ------------------------------------------------------------ */
+(function rigControls() {
+    const dockButtons = document.querySelectorAll('.rig-mode-btn[data-mode]');
+    const pulseTrigger = document.getElementById('rig-pulse-trigger');
+    const heroDeconstructBtn = document.getElementById('hero-deconstruct-btn');
+
+    dockButtons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+            const mode = btn.dataset.mode;
+            dockButtons.forEach((b) => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            if (window.__setRigMode) {
+                window.__setRigMode(mode);
+            }
+        });
+    });
+
+    pulseTrigger?.addEventListener('click', () => {
+        if (window.__triggerEnergyPulse) {
+            window.__triggerEnergyPulse();
+        }
+    });
+
+    heroDeconstructBtn?.addEventListener('click', () => {
+        const explodeBtn = document.querySelector('.rig-mode-btn[data-mode="exploded"]');
+        if (explodeBtn) {
+            explodeBtn.click();
+        } else if (window.__setRigMode) {
+            window.__setRigMode('exploded');
+        }
+    });
+
+    // Inspect in 3D buttons inside cards
+    document.querySelectorAll('.inspect-3d-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (window.__triggerEnergyPulse) window.__triggerEnergyPulse();
+            showToast('⌖ TARGETING 3D MODULE ON СІЧ-01');
+        });
+    });
+})();
+
+/* ------------------------------------------------------------
+   8. Station Telemetry Panel: Kyiv Clock · FPS · Pointer Coordinates
    ------------------------------------------------------------ */
 (function stationPanel() {
     const clock = document.getElementById('sp-clock');
@@ -299,7 +335,7 @@ function showToast(text, ms = 2200) {
 })();
 
 /* ------------------------------------------------------------
-   8. Magnetic Elements & 3D Glass Plates Tilt with Specular Sheen
+   9. Magnetic Elements & 3D Glass Plates Tilt with Specular Sheen
    ------------------------------------------------------------ */
 (function interactives() {
     if (!FINE || RM) return;
@@ -345,7 +381,6 @@ function showToast(text, ms = 2200) {
             t.crx = (py - 0.5) * -7;
             t.cry = (px - 0.5) * 7;
 
-            // Update mouse coordinates for specular sheen highlight
             t.el.style.setProperty('--mouse-x', `${(e.clientX - r.left).toFixed(1)}px`);
             t.el.style.setProperty('--mouse-y', `${(e.clientY - r.top).toFixed(1)}px`);
         }
@@ -376,10 +411,10 @@ function showToast(text, ms = 2200) {
 })();
 
 /* ------------------------------------------------------------
-   9. GitHub Live Telemetry
+   10. GitHub Live Telemetry
    ------------------------------------------------------------ */
 (function telemetry() {
-    const KEY = 'arch1cat_gh_v2';
+    const KEY = 'arch1cat_gh_v3';
     const TTL = 60 * 60 * 1000;
     const FALLBACK = { repos: 8, stars: 0, followers: 0 };
     const starEls = {};
@@ -455,23 +490,9 @@ function showToast(text, ms = 2200) {
 })();
 
 /* ------------------------------------------------------------
-   10. Interactive 3D Orbit Pulse & Header Audio Button
+   11. Ambient Audio Toggle Button
    ------------------------------------------------------------ */
-(function controls() {
-    // 3D Pulse Buttons
-    const pulseBtn = document.getElementById('hero-pulse-btn');
-    const stageBadge = document.getElementById('stage-3d-prompt');
-
-    pulseBtn?.addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (window.__triggerEnergyPulse) window.__triggerEnergyPulse();
-    });
-
-    stageBadge?.addEventListener('click', () => {
-        if (window.__triggerEnergyPulse) window.__triggerEnergyPulse();
-    });
-
-    // Audio Ambient Toggle Button in Header
+(function audioControls() {
     const audioBtn = document.getElementById('audio-toggle-btn');
     audioBtn?.addEventListener('click', () => {
         if (!window.__deckAudio) return;
@@ -479,18 +500,6 @@ function showToast(text, ms = 2200) {
         const playing = window.__deckAudio.isPlaying();
         audioBtn.classList.toggle('active', playing);
         if (window.__playSfx) window.__playSfx(playing ? 'theme' : 'click');
-        showToast(playing ? '▶ AMBIENT SYNTH ONLINE' : '❚❚ AMBIENT SYNTH PAUSED');
-    });
-
-    // Meow easter egg
-    let buffer = '';
-    window.addEventListener('keydown', (e) => {
-        if (e.key.length !== 1) return;
-        buffer = (buffer + e.key.toLowerCase()).slice(-8);
-        if (buffer.endsWith('meow')) {
-            buffer = '';
-            if (window.__triggerEnergyPulse) window.__triggerEnergyPulse();
-            showToast('🐱 CYBER CAT OVERDRIVE ACTIVATED');
-        }
+        showToast(playing ? '▶ KYIV CARILLON ONLINE' : '❚❚ AMBIENT SYNTH PAUSED');
     });
 })();
