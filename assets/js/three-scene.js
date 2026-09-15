@@ -1,15 +1,16 @@
 /* ============================================================
    ARCH1CAT — three-scene.js
-   "СІЧ-01" // KYIV CYBERNETICS & AEROSPACE ENGINEERING RIG
-   Inspired by Glushkov's Cybernetics, Antonov Aerospace & Lusion WebXR.
-   Features:
-   - Modular Aerospace Rig: Octagonal Hull, Solar Wings, Radar, Ion Engines
-   - Exploded View (Deconstruct Physics): Modules separate along XYZ axes
-   - X-Ray / Holographic Matrix Shader Mode
-   - Interactive 3D Hotspots projected onto 2D screen coordinates
-   - Full 360° Orbit Drag with smooth inertial damping
-   - Sub-bass energy shockwave & thruster bursts
-   - Camera focus choreography for each engineering module
+   "CYBER-SICH OS" // 3D SPATIAL HOLO-DECK ENGINE
+   Full-Viewport Interactive 3D Stages (Zero generic vertical scroll)
+   8 Distinct 3D Procedural Installations:
+   - Stage 0: Prologue // СІЧ-01 Quantum Reactor & Tryzub Core
+   - Stage 1: World Monitor // 3D Holographic Globe & Recon Satellite
+   - Stage 2: WiFi Scanner // 3D RF Spectrum Bars & Antenna Mast
+   - Stage 3: Metadata Cleaner // Encrypted Cube & Privacy Particle Dissolver
+   - Stage 4: Cats Match-3 // Kinetic Gem Cascades & Cyber-Cat Mascot
+   - Stage 5: openGym // Titanium Mobile Slate & Hydraulic Pistons
+   - Stage 6: Yotei CRM // 3D Isometric Architectural Skyscraper Matrix
+   - Stage 7: Telemetry // Planetary Signal Nebula & Audio Reactivity
    ============================================================ */
 
 import * as THREE from 'three';
@@ -22,7 +23,7 @@ const isMobile = () => window.innerWidth < 768;
 const MOBILE = isMobile();
 
 /* ------------------------------------------------------------
-   Procedural Dot Texture for Ion Plumes & Dust
+   Procedural Glow Dot Texture
    ------------------------------------------------------------ */
 let _dotTex = null;
 function getDotTexture() {
@@ -32,8 +33,8 @@ function getDotTexture() {
     const g = c.getContext('2d');
     const grad = g.createRadialGradient(64, 64, 0, 64, 64, 64);
     grad.addColorStop(0, 'rgba(255, 255, 255, 1)');
-    grad.addColorStop(0.25, 'rgba(255, 255, 255, 0.8)');
-    grad.addColorStop(0.6, 'rgba(255, 255, 255, 0.2)');
+    grad.addColorStop(0.2, 'rgba(255, 255, 255, 0.85)');
+    grad.addColorStop(0.55, 'rgba(255, 255, 255, 0.2)');
     grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
     g.fillStyle = grad;
     g.fillRect(0, 0, 128, 128);
@@ -48,22 +49,26 @@ const THEMES = {
     'cyber-sich': {
         fog: new THREE.Color(0x02050D),
         keyLight: new THREE.Color(0xFFE885),
-        accentAzure: new THREE.Color(0x0072FF),
-        accentGold: new THREE.Color(0xFFB800),
-        hullMetal: new THREE.Color(0x0B1220),
-        bloom: 0.65,
-        particlesA: new THREE.Color(0x0072FF),
-        particlesB: new THREE.Color(0xFFB800)
+        accent1: new THREE.Color(0x0072FF), // Azure
+        accent2: new THREE.Color(0xFFB800), // Wheat Gold
+        baseMetal: new THREE.Color(0x091224),
+        bloom: 0.65
     },
-    'chrome-void': {
-        fog: new THREE.Color(0x050608),
+    'chrome-titanium': {
+        fog: new THREE.Color(0x060709),
         keyLight: new THREE.Color(0xFFFFFF),
-        accentAzure: new THREE.Color(0x00F2FE),
-        accentGold: new THREE.Color(0xFF4D00),
-        hullMetal: new THREE.Color(0x121418),
-        bloom: 0.58,
-        particlesA: new THREE.Color(0x00F2FE),
-        particlesB: new THREE.Color(0x8A2387)
+        accent1: new THREE.Color(0xFF4D00), // Solar Orange
+        accent2: new THREE.Color(0xFFB800), // Amber
+        baseMetal: new THREE.Color(0x15161A),
+        bloom: 0.62
+    },
+    'void-matrix': {
+        fog: new THREE.Color(0x04060A),
+        keyLight: new THREE.Color(0xD8F5FF),
+        accent1: new THREE.Color(0x00F2FE), // Cyan
+        accent2: new THREE.Color(0x7C3AED), // Violet
+        baseMetal: new THREE.Color(0x08101E),
+        bloom: 0.58
     }
 };
 
@@ -71,14 +76,14 @@ let currentTheme = document.documentElement.getAttribute('data-theme') || 'cyber
 if (!THEMES[currentTheme]) currentTheme = 'cyber-sich';
 
 /* ------------------------------------------------------------
-   Renderer / Camera / Scene Setup
+   Renderer / Scene / Camera Setup
    ------------------------------------------------------------ */
 const container = document.getElementById('webgl-container');
 const scene = new THREE.Scene();
-scene.fog = new THREE.FogExp2(THEMES[currentTheme].fog, 0.022);
+scene.fog = new THREE.FogExp2(THEMES[currentTheme].fog, 0.02);
 
-const camera = new THREE.PerspectiveCamera(48, window.innerWidth / window.innerHeight, 0.1, 400);
-camera.position.set(0, 0.5, 9.2);
+const camera = new THREE.PerspectiveCamera(46, window.innerWidth / window.innerHeight, 0.1, 400);
+camera.position.set(0, 0.4, 8.8);
 
 const renderer = new THREE.WebGLRenderer({
     antialias: !MOBILE,
@@ -88,7 +93,7 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, MOBILE ? 1.5 : 2));
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.2;
+renderer.toneMappingExposure = 1.25;
 container.appendChild(renderer.domElement);
 
 const composer = new EffectComposer(renderer);
@@ -104,354 +109,383 @@ composer.addPass(bloomPass);
 const pmrem = new THREE.PMREMGenerator(renderer);
 scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
 
-/* ------------------------------------------------------------
-   Lighting Rig
-   ------------------------------------------------------------ */
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.65);
+/* Lights */
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
 scene.add(ambientLight);
 
-const mainKeyLight = new THREE.DirectionalLight(THEMES[currentTheme].keyLight, 2.5);
-mainKeyLight.position.set(6, 10, 8);
-scene.add(mainKeyLight);
+const keyLight = new THREE.DirectionalLight(THEMES[currentTheme].keyLight, 2.5);
+keyLight.position.set(6, 9, 7);
+scene.add(keyLight);
 
-const blueRimLight = new THREE.DirectionalLight(THEMES[currentTheme].accentAzure, 2.2);
-blueRimLight.position.set(-8, -6, -6);
-scene.add(blueRimLight);
+const rimLight = new THREE.DirectionalLight(THEMES[currentTheme].accent1, 2.2);
+rimLight.position.set(-7, -5, -6);
+scene.add(rimLight);
 
-const cursorSpotLight = new THREE.PointLight(0xffffff, 3.0, 15);
+const cursorSpotLight = new THREE.PointLight(0xffffff, 3.5, 14);
 cursorSpotLight.position.set(0, 0, 5);
 scene.add(cursorSpotLight);
 
-/* Reflective Grid Base Plane */
-const gridHelper = new THREE.GridHelper(40, 40, THEMES[currentTheme].accentAzure, 0x111c30);
-gridHelper.position.y = -4.5;
-gridHelper.material.opacity = 0.25;
-gridHelper.material.transparent = true;
-scene.add(gridHelper);
-
-/* ------------------------------------------------------------
-   "СІЧ-01" Cybernetic Rig Root Group & Modules
-   ------------------------------------------------------------ */
-const rigRoot = new THREE.Group();
-rigRoot.position.set(MOBILE ? 0 : 2.2, 0, 0);
-scene.add(rigRoot);
-
-/* Rig Materials */
-const hullMat = new THREE.MeshStandardMaterial({
-    color: THEMES[currentTheme].hullMetal,
+/* Shared Materials */
+const metalMat = new THREE.MeshStandardMaterial({
+    color: THEMES[currentTheme].baseMetal,
     metalness: 0.94,
     roughness: 0.18,
     envMapIntensity: 1.2
 });
 
-const goldSolarMat = new THREE.MeshStandardMaterial({
+const accent1Mat = new THREE.MeshStandardMaterial({
+    color: 0x021124,
+    emissive: THEMES[currentTheme].accent1,
+    emissiveIntensity: 1.4,
+    metalness: 0.9,
+    roughness: 0.15
+});
+
+const accent2Mat = new THREE.MeshStandardMaterial({
     color: 0x1a1200,
-    emissive: THEMES[currentTheme].accentGold,
-    emissiveIntensity: 0.95,
-    metalness: 0.96,
+    emissive: THEMES[currentTheme].accent2,
+    emissiveIntensity: 1.2,
+    metalness: 0.95,
     roughness: 0.12
 });
 
-const azureGlowMat = new THREE.MeshStandardMaterial({
-    color: 0x03122b,
-    emissive: THEMES[currentTheme].accentAzure,
-    emissiveIntensity: 1.4,
-    metalness: 0.85,
-    roughness: 0.2
-});
-
-const wireframeMat = new THREE.MeshBasicMaterial({
-    color: THEMES[currentTheme].accentAzure,
+const wireMat = new THREE.MeshBasicMaterial({
+    color: THEMES[currentTheme].accent1,
     wireframe: true,
     transparent: true,
-    opacity: 0.25
+    opacity: 0.35
 });
 
-/* List of all rig modules for Exploded View interpolation */
-const rigModules = [];
-
-function registerModule(name, group, restPos, explodedPos, restRot = [0, 0, 0]) {
-    group.position.set(...restPos);
-    group.rotation.set(...restRot);
-    group.userData = {
-        name,
-        restPos: new THREE.Vector3(...restPos),
-        explodedPos: new THREE.Vector3(...explodedPos),
-        currentOffset: 0 // 0 = assembled, 1 = exploded
-    };
-    rigModules.push(group);
-    rigRoot.add(group);
-    return group;
-}
+/* Stage Master Root */
+const stageMaster = new THREE.Group();
+stageMaster.position.set(MOBILE ? 0 : 1.8, 0, 0);
+scene.add(stageMaster);
 
 /* ============================================================
-   MODULE 01: Central Octagonal Fusion Reactor (Hull)
+   STAGE 0: PROLOGUE // СІЧ-01 Quantum Reactor & Tryzub Core
    ============================================================ */
-const coreChassisGroup = new THREE.Group();
-const octoHullGeo = new THREE.CylinderGeometry(1.3, 1.45, 2.4, 8);
-const octoHullMesh = new THREE.Mesh(octoHullGeo, hullMat);
-coreChassisGroup.add(octoHullMesh);
+const stage0 = new THREE.Group();
+stageMaster.add(stage0);
 
-const octoWire = new THREE.Mesh(octoHullGeo, wireframeMat);
-octoWire.scale.setScalar(1.01);
-coreChassisGroup.add(octoWire);
+// Octagonal reactor chassis
+const s0Chassis = new THREE.Mesh(new THREE.CylinderGeometry(1.2, 1.4, 2.3, 8), metalMat);
+stage0.add(s0Chassis);
+
+const s0Wire = new THREE.Mesh(new THREE.CylinderGeometry(1.22, 1.42, 2.32, 8), wireMat);
+stage0.add(s0Wire);
 
 // Inner pulsing fusion orb
-const reactorOrbGeo = new THREE.IcosahedronGeometry(0.75, 4);
-const reactorOrbMat = new THREE.MeshStandardMaterial({
-    color: 0x001122,
-    emissive: THEMES[currentTheme].accentAzure,
-    emissiveIntensity: 1.8,
-    metalness: 0.95,
-    roughness: 0.1
-});
-const reactorOrbMesh = new THREE.Mesh(reactorOrbGeo, reactorOrbMat);
-coreChassisGroup.add(reactorOrbMesh);
+const s0Orb = new THREE.Mesh(new THREE.IcosahedronGeometry(0.75, 4), accent1Mat);
+stage0.add(s0Orb);
 
-// Internal Reactor Point Light
-const reactorLight = new THREE.PointLight(THEMES[currentTheme].accentAzure, 25, 20);
-coreChassisGroup.add(reactorLight);
+// Holographic Golden Tryzub
+const s0Tryzub = new THREE.Group();
+stage0.add(s0Tryzub);
 
-// Reactor cooling rings
-for (let i = -1; i <= 1; i++) {
-    const ring = new THREE.Mesh(
-        new THREE.TorusGeometry(1.48, 0.035, 12, 48),
-        azureGlowMat
-    );
-    ring.rotation.x = Math.PI / 2;
-    ring.position.y = i * 0.7;
-    coreChassisGroup.add(ring);
+const tStem = new THREE.Mesh(new THREE.BoxGeometry(0.18, 1.7, 0.12), accent2Mat);
+tStem.position.y = 0.1;
+s0Tryzub.add(tStem);
+
+const tTip = new THREE.Mesh(new THREE.ConeGeometry(0.2, 0.55, 4), accent2Mat);
+tTip.position.y = 1.15;
+tTip.rotation.y = Math.PI / 4;
+s0Tryzub.add(tTip);
+
+// Tryzub Wings
+for (let dir = -1; dir <= 1; dir += 2) {
+    const bar = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.12, 0.1), accent2Mat);
+    bar.position.set(dir * 0.45, -0.3, 0);
+    bar.rotation.z = dir * -0.25;
+    s0Tryzub.add(bar);
+
+    const blade = new THREE.Mesh(new THREE.BoxGeometry(0.14, 1.25, 0.1), accent2Mat);
+    blade.position.set(dir * 0.72, 0.35, 0);
+    s0Tryzub.add(blade);
+
+    const tip = new THREE.Mesh(new THREE.ConeGeometry(0.15, 0.45, 4), accent2Mat);
+    tip.position.set(dir * 0.72, 1.1, 0);
+    tip.rotation.y = Math.PI / 4;
+    s0Tryzub.add(tip);
 }
 
-registerModule('CORE_CHASSIS', coreChassisGroup, [0, 0, 0], [0, 0, 0]);
+// Gimbal Ring
+const s0Ring = new THREE.Mesh(new THREE.TorusGeometry(2.4, 0.035, 12, 64), accent1Mat);
+s0Ring.rotation.x = Math.PI / 2.5;
+stage0.add(s0Ring);
 
 /* ============================================================
-   MODULE 02: Avionics & OSINT Radar Dish (World Monitor)
+   STAGE 1: WORLD MONITOR // 3D Holographic Globe & Recon Satellite
    ============================================================ */
-const radarGroup = new THREE.Group();
-const dishGeo = new THREE.SphereGeometry(0.75, 24, 16, 0, Math.PI * 2, 0, Math.PI / 2.8);
-const dishMesh = new THREE.Mesh(dishGeo, hullMat);
-dishMesh.rotation.x = Math.PI;
-radarGroup.add(dishMesh);
+const stage1 = new THREE.Group();
+stageMaster.add(stage1);
 
-const dishRim = new THREE.Mesh(new THREE.TorusGeometry(0.72, 0.03, 12, 36), goldSolarMat);
-dishRim.rotation.x = Math.PI / 2;
-dishRim.position.y = -0.32;
-radarGroup.add(dishRim);
+const globeGeo = new THREE.SphereGeometry(1.8, 32, 24);
+const globeMesh = new THREE.Mesh(globeGeo, wireMat);
+stage1.add(globeMesh);
 
-// Feed horn
-const feedMast = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.75, 8), azureGlowMat);
-feedMast.position.y = -0.38;
-radarGroup.add(feedMast);
+const globeInner = new THREE.Mesh(
+    new THREE.SphereGeometry(1.75, 24, 18),
+    new THREE.MeshStandardMaterial({
+        color: 0x020818,
+        roughness: 0.7,
+        metalness: 0.3,
+        transparent: true,
+        opacity: 0.85
+    })
+);
+stage1.add(globeInner);
 
-const hornTip = new THREE.Mesh(new THREE.OctahedronGeometry(0.12, 0), goldSolarMat);
-hornTip.position.y = -0.76;
-radarGroup.add(hornTip);
+// Equator & Latitude Data Rings
+const eqRing = new THREE.Mesh(new THREE.TorusGeometry(2.2, 0.02, 8, 80), accent2Mat);
+eqRing.rotation.x = Math.PI / 2;
+stage1.add(eqRing);
 
-registerModule('OSINT_RADAR', radarGroup, [0, 1.8, 0], [0, 3.4, 0], [0.3, 0, 0]);
+// Orbiting Recon Satellite
+const satGroup = new THREE.Group();
+const satBody = new THREE.Mesh(new THREE.BoxGeometry(0.35, 0.25, 0.25), metalMat);
+satGroup.add(satBody);
+
+const satWingL = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.02, 0.28), accent2Mat);
+satWingL.position.x = -0.45;
+satGroup.add(satWingL);
+
+const satWingR = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.02, 0.28), accent2Mat);
+satWingR.position.x = 0.45;
+satGroup.add(satWingR);
+
+satGroup.position.set(2.4, 0.8, 0);
+stage1.add(satGroup);
 
 /* ============================================================
-   MODULE 03: Left & Right Deployable Solar Array Wings (Yotei Grid)
+   STAGE 2: WIFI SCANNER // 3D RF Spectrum Bars & Antenna Mast
    ============================================================ */
-function createSolarWing(isLeft = true) {
-    const wingGroup = new THREE.Group();
-    const wingX = isLeft ? -1.8 : 1.8;
+const stage2 = new THREE.Group();
+stageMaster.add(stage2);
 
-    // Carbon fiber main spar
-    const spar = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.08, 0.12), hullMat);
-    spar.position.x = isLeft ? -1.2 : 1.2;
-    wingGroup.add(spar);
+// Central Antenna Tower
+const towerMast = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.16, 3.2, 8), metalMat);
+towerMast.position.y = 0.2;
+stage2.add(towerMast);
 
-    // Solar panels (3 segments per wing)
-    for (let s = 0; s < 3; s++) {
-        const panel = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.03, 1.35), goldSolarMat);
-        panel.position.set(isLeft ? -(0.5 + s * 0.75) : (0.5 + s * 0.75), 0, 0);
-        wingGroup.add(panel);
+const towerBeacon = new THREE.Mesh(new THREE.SphereGeometry(0.18, 16, 16), accent1Mat);
+towerBeacon.position.y = 1.85;
+stage2.add(towerBeacon);
 
-        const panelBorder = new THREE.Mesh(
-            new THREE.BoxGeometry(0.72, 0.04, 1.37),
-            wireframeMat
-        );
-        panelBorder.position.copy(panel.position);
-        wingGroup.add(panelBorder);
-    }
+// 20 Spectrum Waveform Bars
+const BAR_COUNT = 20;
+const spectrumBars = [];
+const barGeo = new THREE.BoxGeometry(0.12, 1.0, 0.12);
 
-    // Wingtip Telemetry Beacon
-    const beacon = new THREE.Mesh(
-        new THREE.SphereGeometry(0.08, 12, 12),
-        new THREE.MeshBasicMaterial({ color: isLeft ? 0x00FF88 : 0xFF0055 })
-    );
-    beacon.position.set(isLeft ? -2.8 : 2.8, 0, 0);
-    wingGroup.add(beacon);
-
-    return wingGroup;
+for (let i = 0; i < BAR_COUNT; i++) {
+    const angle = ((i - BAR_COUNT / 2) / BAR_COUNT) * Math.PI * 0.9;
+    const radius = 2.0;
+    const bar = new THREE.Mesh(barGeo, i % 2 === 0 ? accent1Mat : accent2Mat);
+    bar.position.set(Math.sin(angle) * radius, -0.6, Math.cos(angle) * radius - 0.5);
+    bar.userData = { basePhase: i * 0.4, speed: 2.2 + (i % 4) * 0.5 };
+    stage2.add(bar);
+    spectrumBars.push(bar);
 }
 
-const leftWing = createSolarWing(true);
-const rightWing = createSolarWing(false);
-
-registerModule('SOLAR_WING_L', leftWing, [-1.4, 0.2, 0], [-3.8, 0.2, 0], [0, 0.2, 0.1]);
-registerModule('SOLAR_WING_R', rightWing, [1.4, 0.2, 0], [3.8, 0.2, 0], [0, -0.2, -0.1]);
-
 /* ============================================================
-   MODULE 04: Lower Propulsion & Ion Thrusters (openGym)
+   STAGE 3: METADATA CLEANER // Encrypted Cube & Privacy Matrix
    ============================================================ */
-const thrusterGroup = new THREE.Group();
-const nozzleGeo = new THREE.CylinderGeometry(0.32, 0.55, 0.75, 16);
+const stage3 = new THREE.Group();
+stageMaster.add(stage3);
 
-for (let x = -1; x <= 1; x += 2) {
-    for (let z = -1; z <= 1; z += 2) {
-        const nozzle = new THREE.Mesh(nozzleGeo, hullMat);
-        nozzle.position.set(x * 0.55, -0.4, z * 0.55);
-        thrusterGroup.add(nozzle);
+const cubeMesh = new THREE.Mesh(new THREE.BoxGeometry(1.6, 1.6, 1.6), metalMat);
+stage3.add(cubeMesh);
 
-        const glowRing = new THREE.Mesh(new THREE.TorusGeometry(0.38, 0.04, 8, 24), azureGlowMat);
-        glowRing.rotation.x = Math.PI / 2;
-        glowRing.position.set(x * 0.55, -0.75, z * 0.55);
-        thrusterGroup.add(glowRing);
-    }
-}
+const cubeWire = new THREE.Mesh(new THREE.BoxGeometry(1.68, 1.68, 1.68), wireMat);
+stage3.add(cubeWire);
 
-registerModule('ION_PROPULSION', thrusterGroup, [0, -1.5, 0], [0, -3.2, 0]);
+const cubeCore = new THREE.Mesh(new THREE.OctahedronGeometry(0.8, 0), accent2Mat);
+stage3.add(cubeCore);
 
-/* ============================================================
-   MODULE 05: Cryptographic Purge Core (Metadata Cleaner)
-   ============================================================ */
-const cryptoGroup = new THREE.Group();
-const cryptoCubeGeo = new THREE.BoxGeometry(0.65, 0.65, 0.65);
-const cryptoCube = new THREE.Mesh(cryptoCubeGeo, goldSolarMat);
-cryptoGroup.add(cryptoCube);
+// Disintegrating Privacy Particle Cloud
+const PURGE_COUNT = 400;
+const purgeGeo = new THREE.BufferGeometry();
+const purgePos = new Float32Array(PURGE_COUNT * 3);
+const purgeOrigPos = new Float32Array(PURGE_COUNT * 3);
 
-const cryptoCage = new THREE.Mesh(new THREE.BoxGeometry(0.72, 0.72, 0.72), wireframeMat);
-cryptoGroup.add(cryptoCage);
-
-registerModule('CRYPTO_PURGE', cryptoGroup, [0, 0, 1.4], [0, 0, 2.8], [0.4, 0.4, 0]);
-
-/* ============================================================
-   MODULE 06: RF Scanner & Antennas (WiFi Scanner)
-   ============================================================ */
-const rfGroup = new THREE.Group();
-for (let a = -1; a <= 1; a += 2) {
-    const mast = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.06, 1.6, 8), hullMat);
-    mast.position.set(a * 0.6, 0.8, -1.2);
-    mast.rotation.x = -0.3;
-    rfGroup.add(mast);
-
-    const tip = new THREE.Mesh(new THREE.SphereGeometry(0.08, 12, 12), azureGlowMat);
-    tip.position.set(a * 0.6, 1.6, -1.4);
-    rfGroup.add(tip);
-}
-registerModule('RF_SCANNER', rfGroup, [0, 0, -1.3], [0, 0, -2.6]);
-
-/* ============================================================
-   Volumetric Cosmic Dust & Ion Plume Particles
-   ============================================================ */
-const PARTICLE_COUNT = MOBILE ? 1200 : 2800;
-const particleGeo = new THREE.BufferGeometry();
-const particlePos = new Float32Array(PARTICLE_COUNT * 3);
-const particleOrigPos = new Float32Array(PARTICLE_COUNT * 3);
-const particleVel = new Float32Array(PARTICLE_COUNT * 3);
-const particleColors = new Float32Array(PARTICLE_COUNT * 3);
-
-const pColA = THEMES[currentTheme].particlesA;
-const pColB = THEMES[currentTheme].particlesB;
-
-for (let i = 0; i < PARTICLE_COUNT; i++) {
+for (let i = 0; i < PURGE_COUNT; i++) {
     const i3 = i * 3;
-    const isPlume = i < 300;
+    const r = 1.8 + Math.random() * 2.2;
+    const theta = Math.random() * Math.PI * 2;
+    const phi = Math.acos(Math.random() * 2 - 1);
+    purgePos[i3] = purgeOrigPos[i3] = r * Math.sin(phi) * Math.cos(theta);
+    purgePos[i3 + 1] = purgeOrigPos[i3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+    purgePos[i3 + 2] = purgeOrigPos[i3 + 2] = r * Math.cos(phi);
+}
+purgeGeo.setAttribute('position', new THREE.BufferAttribute(purgePos, 3));
+const purgeMat = new THREE.PointsMaterial({
+    size: 0.1,
+    map: getDotTexture(),
+    color: THEMES[currentTheme].accent1,
+    transparent: true,
+    opacity: 0.9,
+    blending: THREE.AdditiveBlending
+});
+const purgeParticles = new THREE.Points(purgeGeo, purgeMat);
+stage3.add(purgeParticles);
 
-    let x, y, z;
-    if (isPlume) {
-        // Ion exhaust stream below thrusters
-        x = (Math.random() - 0.5) * 1.2;
-        z = (Math.random() - 0.5) * 1.2;
-        y = -2.0 - Math.random() * 4.5;
-    } else {
-        // Broad cosmic sphere
-        const r = 2.5 + Math.random() * 7.5;
-        const theta = Math.random() * Math.PI * 2;
-        const phi = Math.acos(Math.random() * 2 - 1);
-        x = r * Math.sin(phi) * Math.cos(theta);
-        y = r * Math.sin(phi) * Math.sin(theta);
-        z = r * Math.cos(phi);
-    }
+/* ============================================================
+   STAGE 4: CATS MATCH-3 // Kinetic Gem Cascades & Cyber-Cat Mascot
+   ============================================================ */
+const stage4 = new THREE.Group();
+stageMaster.add(stage4);
 
-    particlePos[i3] = particleOrigPos[i3] = x;
-    particlePos[i3 + 1] = particleOrigPos[i3 + 1] = y;
-    particlePos[i3 + 2] = particleOrigPos[i3 + 2] = z;
+// Central Cyber Cat Silhouette Prism
+const catPrism = new THREE.Mesh(new THREE.IcosahedronGeometry(1.2, 1), accent2Mat);
+stage4.add(catPrism);
 
-    const mix = Math.random();
-    const c = new THREE.Color().copy(pColA).lerp(pColB, mix);
-    particleColors[i3] = c.r;
-    particleColors[i3 + 1] = c.g;
-    particleColors[i3 + 2] = c.b;
+const catWire = new THREE.Mesh(new THREE.IcosahedronGeometry(1.25, 1), wireMat);
+stage4.add(catWire);
+
+// 3 Orbiting Gem Crystals
+const gems = [];
+const gemGeos = [new THREE.OctahedronGeometry(0.35), new THREE.DodecahedronGeometry(0.3), new THREE.TetrahedronGeometry(0.4)];
+for (let g = 0; g < 3; g++) {
+    const gem = new THREE.Mesh(gemGeos[g], g === 1 ? accent1Mat : accent2Mat);
+    gem.userData = { angle: (g * Math.PI * 2) / 3, radius: 2.2, speed: 1.2 + g * 0.3 };
+    stage4.add(gem);
+    gems.push(gem);
 }
 
-particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePos, 3));
-particleGeo.setAttribute('color', new THREE.BufferAttribute(particleColors, 3));
+/* ============================================================
+   STAGE 5: OPENGYM // Titanium Mobile Slate & Hydraulic Pistons
+   ============================================================ */
+const stage5 = new THREE.Group();
+stageMaster.add(stage5);
 
-const particleMat = new THREE.PointsMaterial({
-    size: MOBILE ? 0.11 : 0.08,
+// Mobile Device Frame
+const phoneFrame = new THREE.Mesh(new THREE.BoxGeometry(1.4, 2.5, 0.14), metalMat);
+stage5.add(phoneFrame);
+
+const phoneScreen = new THREE.Mesh(new THREE.BoxGeometry(1.24, 2.34, 0.15), accent1Mat);
+stage5.add(phoneScreen);
+
+// Dual Hydraulic Pistons
+for (let s = -1; s <= 1; s += 2) {
+    const pistonCylinder = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 2.0, 12), metalMat);
+    pistonCylinder.position.set(s * 1.3, 0, 0);
+    stage5.add(pistonCylinder);
+
+    const pistonRod = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 2.2, 8), accent2Mat);
+    pistonRod.position.set(s * 1.3, 0.2, 0);
+    stage5.add(pistonRod);
+}
+
+/* ============================================================
+   STAGE 6: YOTEI CRM // 3D Isometric Architectural Skyscraper Matrix
+   ============================================================ */
+const stage6 = new THREE.Group();
+stageMaster.add(stage6);
+stage6.rotation.x = 0.45;
+
+const cityGrid = new THREE.GridHelper(6, 12, THEMES[currentTheme].accent2, 0x162440);
+cityGrid.position.y = -1.2;
+stage6.add(cityGrid);
+
+// 9 Skyscraper Towers
+const towers = [];
+for (let x = -1; x <= 1; x++) {
+    for (let z = -1; z <= 1; z++) {
+        const height = (x === 0 && z === 0) ? 2.8 : 1.2 + Math.abs(x + z * 2) * 0.5;
+        const tower = new THREE.Mesh(
+            new THREE.BoxGeometry(0.55, height, 0.55),
+            (x === 0 && z === 0) ? accent2Mat : metalMat
+        );
+        tower.position.set(x * 1.1, -1.2 + height / 2, z * 1.1);
+        stage6.add(tower);
+
+        const wire = new THREE.Mesh(new THREE.BoxGeometry(0.56, height + 0.01, 0.56), wireMat);
+        wire.position.copy(tower.position);
+        stage6.add(wire);
+        towers.push(tower);
+    }
+}
+
+/* ============================================================
+   STAGE 7: TELEMETRY // Planetary Signal Nebula & Audio Visualizer
+   ============================================================ */
+const stage7 = new THREE.Group();
+stageMaster.add(stage7);
+
+const nebGeo = new THREE.IcosahedronGeometry(1.6, 2);
+const nebMesh = new THREE.Mesh(nebGeo, wireMat);
+stage7.add(nebMesh);
+
+const nebCore = new THREE.Mesh(new THREE.IcosahedronGeometry(1.0, 3), accent1Mat);
+stage7.add(nebCore);
+
+/* Shared Cosmic Dust Nebula in Background */
+const COSMIC_COUNT = MOBILE ? 1200 : 2500;
+const cosmicGeo = new THREE.BufferGeometry();
+const cosmicPos = new Float32Array(COSMIC_COUNT * 3);
+const cosmicColors = new Float32Array(COSMIC_COUNT * 3);
+
+for (let i = 0; i < COSMIC_COUNT; i++) {
+    const i3 = i * 3;
+    const r = 3.0 + Math.random() * 8.5;
+    const theta = Math.random() * Math.PI * 2;
+    const phi = Math.acos(Math.random() * 2 - 1);
+    cosmicPos[i3] = r * Math.sin(phi) * Math.cos(theta);
+    cosmicPos[i3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+    cosmicPos[i3 + 2] = r * Math.cos(phi);
+
+    const c = (i % 2 === 0) ? THEMES[currentTheme].accent1 : THEMES[currentTheme].accent2;
+    cosmicColors[i3] = c.r;
+    cosmicColors[i3 + 1] = c.g;
+    cosmicColors[i3 + 2] = c.b;
+}
+
+cosmicGeo.setAttribute('position', new THREE.BufferAttribute(cosmicPos, 3));
+cosmicGeo.setAttribute('color', new THREE.BufferAttribute(cosmicColors, 3));
+const cosmicMat = new THREE.PointsMaterial({
+    size: 0.08,
     map: getDotTexture(),
     vertexColors: true,
     transparent: true,
-    opacity: 0.85,
+    opacity: 0.75,
     blending: THREE.AdditiveBlending,
     depthWrite: false
 });
-
-const cosmicParticles = new THREE.Points(particleGeo, particleMat);
-rigRoot.add(cosmicParticles);
+const cosmicSystem = new THREE.Points(cosmicGeo, cosmicMat);
+scene.add(cosmicSystem);
 
 /* ============================================================
-   Interactive Modes: Assembled / Exploded (Deconstruct) / X-Ray
+   Stage Controller & Transitions
    ============================================================ */
-let rigMode = 'assembled'; // 'assembled' | 'exploded' | 'xray'
-let targetExplodedFactor = 0.0;
-let currentExplodedFactor = 0.0;
+const STAGES = [stage0, stage1, stage2, stage3, stage4, stage5, stage6, stage7];
+let currentStageIndex = 0;
+let targetStageIndex = 0;
 let pulseIntensity = 0.0;
 
-window.__setRigMode = function (mode) {
-    rigMode = mode;
-    targetExplodedFactor = (mode === 'exploded') ? 1.0 : 0.0;
+// Initialize stages (only stage 0 visible initially)
+STAGES.forEach((stg, idx) => {
+    stg.scale.setScalar(idx === 0 ? 1.0 : 0.001);
+    stg.visible = (idx === 0);
+});
 
-    const isXray = (mode === 'xray');
-    hullMat.wireframe = isXray;
-    hullMat.opacity = isXray ? 0.35 : 1.0;
-    hullMat.transparent = isXray;
+window.__goToStage = function (index) {
+    if (index < 0 || index >= STAGES.length) return;
+    targetStageIndex = index;
+    currentStageIndex = index;
 
-    if (window.__playSfx) {
-        window.__playSfx(mode === 'exploded' ? 'pulse' : 'click');
-    }
-
-    // Toast readout
-    const toast = document.getElementById('toast');
-    if (toast) {
-        const labels = {
-            assembled: '⚙ RIG STATUS: FULLY ASSEMBLED',
-            exploded: '💥 DECONSTRUCT: EXPLODED VIEW ONLINE',
-            xray: '👁 OPTICAL MATRIX: X-RAY WIREFRAME ENGAGED'
-        };
-        toast.textContent = labels[mode] || labels.assembled;
-        toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 2000);
-    }
+    if (window.__playSfx) window.__playSfx('theme');
 };
 
-window.__triggerEnergyPulse = function () {
+window.__getStageCount = function () {
+    return STAGES.length;
+};
+
+window.__triggerStagePulse = function () {
     pulseIntensity = 1.0;
     if (window.__playSfx) window.__playSfx('pulse');
-
-    const toast = document.getElementById('toast');
-    if (toast) {
-        toast.textContent = '⚡ PLASMA SURGE INITIATED';
-        toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 1800);
-    }
 };
 
 /* ============================================================
-   360° Orbit Drag Interaction with Inertial Damping
+   360° Drag Orbit Interaction with Inertia
    ============================================================ */
 let isDragging = false;
 let previousPointerX = 0;
@@ -473,8 +507,8 @@ window.addEventListener('pointermove', (e) => {
     if (isDragging) {
         const deltaX = e.clientX - previousPointerX;
         const deltaY = e.clientY - previousPointerY;
-        orbitVelY = deltaX * 0.0055;
-        orbitVelX = deltaY * 0.0055;
+        orbitVelY = deltaX * 0.006;
+        orbitVelX = deltaY * 0.006;
         targetOrbitY += orbitVelY;
         targetOrbitX += orbitVelX;
         previousPointerX = e.clientX;
@@ -483,7 +517,7 @@ window.addEventListener('pointermove', (e) => {
 }, { passive: true });
 
 window.addEventListener('pointerdown', (e) => {
-    if (e.target.closest('a, button, input, .hotspot-badge, header, nav, .dossier-card')) return;
+    if (e.target.closest('a, button, input, .dossier-card, .dock-container, header, nav')) return;
     isDragging = true;
     previousPointerX = e.clientX;
     previousPointerY = e.clientY;
@@ -494,132 +528,33 @@ window.addEventListener('pointerup', () => {
 });
 
 /* ============================================================
-   3D-to-2D Projected Interactive Hotspots
-   ============================================================ */
-const HOTSPOT_ANCHORS = {
-    'hotspot-radar': new THREE.Vector3(0, 2.3, 0),
-    'hotspot-solar': new THREE.Vector3(2.5, 0.4, 0),
-    'hotspot-crypto': new THREE.Vector3(0, 0, 1.8),
-    'hotspot-rf': new THREE.Vector3(0.6, 1.4, -1.3),
-    'hotspot-thruster': new THREE.Vector3(0, -1.8, 0)
-};
-
-function updateProjectedHotspots() {
-    for (const [id, localVec] of Object.entries(HOTSPOT_ANCHORS)) {
-        const el = document.getElementById(id);
-        if (!el) continue;
-
-        // Transform local rig coordinate to world space
-        const worldPos = localVec.clone().applyMatrix4(rigRoot.matrixWorld);
-        const screenPos = worldPos.project(camera);
-
-        // Check if behind camera
-        if (screenPos.z > 1.0) {
-            el.style.opacity = '0';
-            el.style.pointerEvents = 'none';
-            continue;
-        }
-
-        const x = (screenPos.x * 0.5 + 0.5) * window.innerWidth;
-        const y = (-screenPos.y * 0.5 + 0.5) * window.innerHeight;
-
-        el.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px) translate(-50%, -50%)`;
-        el.style.opacity = '1';
-        el.style.pointerEvents = 'auto';
-    }
-}
-
-/* ============================================================
-   Scroll Choreography Across Chapters
-   ============================================================ */
-const CHAPTER_RIG_SETTINGS = {
-    prologue: {
-        camPos: new THREE.Vector3(0, 0.5, 9.2),
-        rigPos: new THREE.Vector3(MOBILE ? 0 : 2.2, 0, 0),
-        rigScale: MOBILE ? 0.7 : 1.0
-    },
-    works: {
-        camPos: new THREE.Vector3(-1.2, 0.8, 9.6),
-        rigPos: new THREE.Vector3(MOBILE ? 0 : 3.0, 0.3, -0.6),
-        rigScale: MOBILE ? 0.65 : 0.88
-    },
-    flagship: {
-        camPos: new THREE.Vector3(0, -1.0, 8.4),
-        rigPos: new THREE.Vector3(MOBILE ? 0 : 2.4, 0.6, -0.4),
-        rigScale: MOBILE ? 0.65 : 0.95
-    },
-    signal: {
-        camPos: new THREE.Vector3(1.5, 0.6, 9.4),
-        rigPos: new THREE.Vector3(MOBILE ? 0 : -2.5, 0.2, -0.2),
-        rigScale: MOBILE ? 0.65 : 0.9
-    }
-};
-
-let activeChapter = 'prologue';
-let camTargetPos = CHAPTER_RIG_SETTINGS.prologue.camPos.clone();
-let rigTargetPos = CHAPTER_RIG_SETTINGS.prologue.rigPos.clone();
-let rigTargetScale = CHAPTER_RIG_SETTINGS.prologue.rigScale;
-
-function updateChapter() {
-    const chapters = ['prologue', 'works', 'flagship', 'signal'];
-    const sections = [
-        document.getElementById('about'),
-        document.getElementById('projects'),
-        document.getElementById('flagship'),
-        document.getElementById('activity')
-    ];
-
-    const scrollMid = window.scrollY + window.innerHeight * 0.45;
-
-    for (let i = sections.length - 1; i >= 0; i--) {
-        const sec = sections[i];
-        if (sec && sec.offsetTop <= scrollMid) {
-            const chName = chapters[i];
-            if (chName !== activeChapter) {
-                activeChapter = chName;
-                const cfg = CHAPTER_RIG_SETTINGS[activeChapter] || CHAPTER_RIG_SETTINGS.prologue;
-                camTargetPos.copy(cfg.camPos);
-                rigTargetPos.copy(cfg.rigPos);
-                rigTargetScale = cfg.rigScale;
-                window.dispatchEvent(new CustomEvent('chapterchange', { detail: { name: activeChapter } }));
-            }
-            break;
-        }
-    }
-}
-window.addEventListener('scroll', updateChapter, { passive: true });
-updateChapter();
-
-/* ============================================================
-   Theme Transition Engine
+   Theme Switcher Handler
    ============================================================ */
 function applyTheme(themeName) {
     const pal = THEMES[themeName] || THEMES['cyber-sich'];
     currentTheme = themeName;
 
     scene.fog.color.copy(pal.fog);
-    mainKeyLight.color.copy(pal.keyLight);
-    blueRimLight.color.copy(pal.accentAzure);
-    reactorLight.color.copy(pal.accentAzure);
+    keyLight.color.copy(pal.keyLight);
+    rimLight.color.copy(pal.accent1);
 
-    hullMat.color.copy(pal.hullMetal);
-    goldSolarMat.emissive.copy(pal.accentGold);
-    azureGlowMat.emissive.copy(pal.accentAzure);
-    wireframeMat.color.copy(pal.accentAzure);
+    metalMat.color.copy(pal.baseMetal);
+    accent1Mat.emissive.copy(pal.accent1);
+    accent2Mat.emissive.copy(pal.accent2);
+    wireMat.color.copy(pal.accent1);
 
     bloomPass.strength = pal.bloom;
 
-    // Particle colors
-    const colors = particleGeo.attributes.color.array;
-    for (let i = 0; i < PARTICLE_COUNT; i++) {
+    // Recoloring particles
+    const colors = cosmicGeo.attributes.color.array;
+    for (let i = 0; i < COSMIC_COUNT; i++) {
         const i3 = i * 3;
-        const mix = Math.random();
-        const c = new THREE.Color().copy(pal.particlesA).lerp(pal.particlesB, mix);
+        const c = (i % 2 === 0) ? pal.accent1 : pal.accent2;
         colors[i3] = c.r;
         colors[i3 + 1] = c.g;
         colors[i3 + 2] = c.b;
     }
-    particleGeo.attributes.color.needsUpdate = true;
+    cosmicGeo.attributes.color.needsUpdate = true;
 }
 
 window.addEventListener('themechange', (e) => {
@@ -628,7 +563,7 @@ window.addEventListener('themechange', (e) => {
 });
 
 /* ============================================================
-   Main Animation & Physics Loop
+   Render Loop
    ============================================================ */
 const clock = new THREE.Clock();
 
@@ -638,7 +573,7 @@ function animate() {
     const delta = clock.getDelta();
     const elapsedTime = clock.getElapsedTime();
 
-    // 1. Inertial Orbit Drag
+    // 1. Inertia & Parallax
     pointerNDC.lerp(targetPointerNDC, 0.08);
 
     if (!isDragging) {
@@ -650,66 +585,96 @@ function animate() {
     orbitRotationY += (targetOrbitY - orbitRotationY) * 0.12;
     orbitRotationX += (targetOrbitX - orbitRotationX) * 0.12;
 
-    // 2. Camera & Rig Transform
-    camera.position.lerp(camTargetPos, 0.05);
-    camera.position.x += pointerNDC.x * 0.35;
-    camera.position.y += pointerNDC.y * 0.25;
+    camera.position.x = pointerNDC.x * 0.35;
+    camera.position.y = 0.4 + pointerNDC.y * 0.25;
     camera.lookAt(0, 0, 0);
 
-    rigRoot.position.lerp(rigTargetPos, 0.06);
-    const curScale = rigRoot.scale.x;
-    const targetScale = rigTargetScale * (1 + pulseIntensity * 0.12);
-    rigRoot.scale.setScalar(curScale + (targetScale - curScale) * 0.08);
+    cursorSpotLight.position.set(pointerNDC.x * 6, pointerNDC.y * 4, 4.5);
 
-    // Idle rotation + drag rotation
-    rigRoot.rotation.y = orbitRotationY + elapsedTime * 0.12;
-    rigRoot.rotation.x = orbitRotationX + Math.sin(elapsedTime * 0.6) * 0.06;
+    // 2. Stage Scale & Visibility Transitions
+    STAGES.forEach((stg, idx) => {
+        const isTarget = (idx === targetStageIndex);
+        const curScale = stg.scale.x;
+        const targetScale = isTarget ? 1.0 : 0.001;
+        const nextScale = curScale + (targetScale - curScale) * 0.1;
+        stg.scale.setScalar(nextScale);
+        stg.visible = nextScale > 0.01;
+    });
 
-    // 3. Exploded View (Deconstruct Physics)
-    currentExplodedFactor += (targetExplodedFactor - currentExplodedFactor) * 0.08;
+    // 3. Stage Master Rotation
+    stageMaster.rotation.y = orbitRotationY + elapsedTime * 0.15;
+    stageMaster.rotation.x = orbitRotationX + Math.sin(elapsedTime * 0.5) * 0.05;
 
-    for (const mod of rigModules) {
-        const u = mod.userData;
-        mod.position.lerpVectors(u.restPos, u.explodedPos, currentExplodedFactor);
+    // 4. Kinetic Sub-Module Animations
+    // Stage 0: Tryzub floating & Ring spin
+    s0Tryzub.rotation.y = elapsedTime * 0.5;
+    s0Tryzub.position.y = Math.sin(elapsedTime * 1.8) * 0.1;
+    s0Ring.rotation.z += delta * 0.4;
+    s0Orb.rotation.y = elapsedTime * 1.2;
+
+    // Stage 1: Globe & Orbiting satellite
+    if (stage1.visible) {
+        globeMesh.rotation.y = elapsedTime * 0.25;
+        satGroup.rotation.y = elapsedTime * 0.8;
+        satGroup.position.x = Math.cos(elapsedTime * 0.8) * 2.5;
+        satGroup.position.z = Math.sin(elapsedTime * 0.8) * 2.5;
     }
 
-    // 4. Kinetic Sub-Module Rotations
-    radarGroup.rotation.y = elapsedTime * 0.8;
-    cryptoGroup.rotation.x = elapsedTime * 0.6;
-    cryptoGroup.rotation.y = elapsedTime * 0.9;
-    reactorOrbMesh.rotation.y = elapsedTime * 1.4;
-
-    // 5. Particle Dynamics (Cosmic & Exhaust)
-    const pos = particleGeo.attributes.position.array;
-    for (let i = 0; i < 300; i++) {
-        const i3 = i * 3;
-        // Ion thruster plume accelerates downward
-        pos[i3 + 1] -= delta * (3.5 + Math.random() * 4.0);
-        if (pos[i3 + 1] < -6.5) {
-            pos[i3 + 1] = -1.8;
-            pos[i3] = (Math.random() - 0.5) * 1.2;
-            pos[i3 + 2] = (Math.random() - 0.5) * 1.2;
-        }
+    // Stage 2: Spectrum bars oscillation
+    if (stage2.visible) {
+        spectrumBars.forEach((bar) => {
+            const h = 0.3 + Math.abs(Math.sin(elapsedTime * bar.userData.speed + bar.userData.basePhase)) * 1.8;
+            bar.scale.y = h;
+        });
     }
-    particleGeo.attributes.position.needsUpdate = true;
 
-    // 6. Pulse Decay
+    // Stage 3: Crypto Cube rotation & particle pulse
+    if (stage3.visible) {
+        cubeMesh.rotation.x = elapsedTime * 0.5;
+        cubeMesh.rotation.y = elapsedTime * 0.7;
+        cubeCore.rotation.y = -elapsedTime * 0.9;
+    }
+
+    // Stage 4: Cats match gems
+    if (stage4.visible) {
+        catPrism.rotation.y = elapsedTime * 0.6;
+        gems.forEach((gem) => {
+            const u = gem.userData;
+            const a = elapsedTime * u.speed + u.angle;
+            gem.position.set(Math.cos(a) * u.radius, Math.sin(a * 2) * 0.4, Math.sin(a) * u.radius);
+            gem.rotation.x += delta;
+            gem.rotation.y += delta;
+        });
+    }
+
+    // Stage 5: Pistons
+    if (stage5.visible) {
+        phoneFrame.rotation.y = Math.sin(elapsedTime * 0.8) * 0.2;
+    }
+
+    // Stage 6: Yotei City
+    if (stage6.visible) {
+        stage6.rotation.y = elapsedTime * 0.2;
+    }
+
+    // Stage 7: Telemetry
+    if (stage7.visible) {
+        nebMesh.rotation.y = elapsedTime * 0.3;
+        nebCore.rotation.x = elapsedTime * 0.5;
+    }
+
+    // 5. Energy Pulse Decay
     if (pulseIntensity > 0) {
         pulseIntensity = Math.max(0, pulseIntensity - delta * 1.8);
-        reactorLight.intensity = 25 + pulseIntensity * 60;
-        bloomPass.strength = THEMES[currentTheme].bloom + pulseIntensity * 0.6;
+        bloomPass.strength = THEMES[currentTheme].bloom + pulseIntensity * 0.7;
     }
 
-    // 7. Update 3D-to-2D Screen Hotspots
-    updateProjectedHotspots();
-
-    // 8. Render
     composer.render();
 }
 
 animate();
 
-/* Resize Handler */
+/* Resize */
 window.addEventListener('resize', () => {
     const width = window.innerWidth;
     const height = window.innerHeight;

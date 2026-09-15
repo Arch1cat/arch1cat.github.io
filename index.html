@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>arch1cat — СІЧ-01 Kyiv Cybernetics &amp; Aerospace Rig</title>
-    <meta name="description" content="Portfolio of arch1cat — Ukrainian cybernetics, 3D WebGL engineering rig, autonomous AI agent architectures, and native Android software.">
+    <title>arch1cat — СІЧ-OS // 3D Spatial Holo-Deck</title>
+    <meta name="description" content="Portfolio of arch1cat — Ukrainian cybernetics, interactive 3D spatial holo-deck, autonomous AI agent architectures, and native Android software.">
     <meta name="theme-color" content="#02050D">
 
     <!-- Open Graph / Twitter -->
-    <meta property="og:title" content="arch1cat — СІЧ-01 Kyiv Cybernetics &amp; Aerospace Rig">
-    <meta property="og:description" content="Ukrainian cybernetics, 3D WebGL engineering rig, autonomous AI agent workflows, and native Android software.">
+    <meta property="og:title" content="arch1cat — СІЧ-OS // 3D Spatial Holo-Deck">
+    <meta property="og:description" content="Ukrainian cybernetics, interactive 3D spatial holo-deck, autonomous AI agent architectures, and native Android software.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://arch1cat.github.io/">
     <meta property="og:image" content="/og.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="arch1cat — СІЧ-01 Kyiv Cybernetics &amp; Aerospace Rig">
-    <meta name="twitter:description" content="Ukrainian cybernetics, 3D WebGL engineering rig, autonomous AI agent workflows, and native Android software.">
+    <meta name="twitter:title" content="arch1cat — СІЧ-OS // 3D Spatial Holo-Deck">
+    <meta name="twitter:description" content="Ukrainian cybernetics, interactive 3D spatial holo-deck, autonomous AI agent architectures, and native Android software.">
     <meta name="twitter:image" content="/og.png">
 
     <!-- Favicon: ember cat silhouette -->
@@ -23,7 +23,7 @@
 
     <!-- JSON-LD -->
     <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"Person","name":"arch1cat","url":"https://arch1cat.github.io/","sameAs":["https://x.com/Archi_____cat","https://github.com/l2bote4game"],"jobTitle":"Cybernetics & Fullstack Architect"}
+    {"@context":"https://schema.org","@type":"Person","name":"arch1cat","url":"https://arch1cat.github.io/","sameAs":["https://x.com/Archi_____cat","https://github.com/l2bote4game"],"jobTitle":"Cybernetics & 3D Spatial Architect"}
     </script>
 
     <!-- Fonts -->
@@ -36,8 +36,8 @@
     try {
         var t = localStorage.getItem('arch_theme');
         var p = new URLSearchParams(location.search).get('theme');
-        if (p === 'chrome-void' || p === 'cyber-sich') t = p;
-        if (t === 'chrome-void' || t === 'cyber-sich') {
+        if (p === 'chrome-titanium' || p === 'void-matrix' || p === 'cyber-sich') t = p;
+        if (t === 'chrome-titanium' || t === 'void-matrix' || t === 'cyber-sich') {
             document.documentElement.setAttribute('data-theme', t);
         } else {
             document.documentElement.setAttribute('data-theme', 'cyber-sich');
@@ -61,385 +61,164 @@
 </head>
 <body>
 
-    <!-- WebGL interactive canvas -->
-    <div id="webgl-container" aria-label="СІЧ-01 3D Aerospace Engineering Rig"></div>
+    <!-- 3D WebGL Canvas Stage -->
+    <div id="webgl-container" aria-label="СІЧ-OS 3D Spatial Stage"></div>
     <div class="grain" aria-hidden="true"></div>
     <div class="vignette" aria-hidden="true"></div>
     <div class="scanlines" aria-hidden="true"></div>
 
-    <!-- Projected 3D-to-2D Interactive Hotspots -->
-    <a href="#projects" class="hotspot-badge" id="hotspot-radar" title="Inspect Module 01: OSINT Radar">
-        <span class="hotspot-pulse"></span><span>01 · OSINT RADAR</span>
-    </a>
-    <a href="#projects" class="hotspot-badge" id="hotspot-solar" title="Inspect Module 02: Solar Enterprise Arrays">
-        <span class="hotspot-pulse"></span><span>02 · SOLAR ENTERPRISE</span>
-    </a>
-    <a href="#projects" class="hotspot-badge" id="hotspot-crypto" title="Inspect Module 03: Crypto Sanitizer">
-        <span class="hotspot-pulse"></span><span>03 · CRYPTO PURGE</span>
-    </a>
-    <a href="#projects" class="hotspot-badge" id="hotspot-rf" title="Inspect Module 04: RF Telemetry Mast">
-        <span class="hotspot-pulse"></span><span>04 · RF TELEMETRY</span>
-    </a>
-    <a href="#projects" class="hotspot-badge" id="hotspot-thruster" title="Inspect Module 05: Ion Propulsion">
-        <span class="hotspot-pulse"></span><span>05 · ION PROPULSION</span>
-    </a>
-
-    <!-- 3D Viewport Controls Dock -->
-    <div class="rig-controls-dock" role="toolbar" aria-label="3D Rig Viewport Controls">
-        <button class="rig-mode-btn active" data-mode="assembled" title="Assembled aerospace cruising configuration">
-            <span>⊙</span> ASSEMBLED
-        </button>
-        <button class="rig-mode-btn" data-mode="exploded" title="Deconstruct rig: separate modules along XYZ axes">
-            <span>💥</span> DECONSTRUCT / РОЗБІР
-        </button>
-        <button class="rig-mode-btn" data-mode="xray" title="Optical matrix: volumetric wireframe blueprint view">
-            <span>👁</span> X-RAY
-        </button>
-        <button class="rig-mode-btn" id="rig-pulse-trigger" title="Fire fusion plasma surge">
-            <span>⚡</span> SURGE
-        </button>
+    <!-- 3D Viewport Hint -->
+    <div class="viewport-hint">
+        <span class="sp-led"></span>
+        <span>360° DRAG TO ORBIT 3D STAGE</span>
     </div>
 
-    <!-- Boot Title Card -->
+    <!-- Title Card Boot Sequence -->
     <div id="boot-overlay" aria-hidden="true">
         <div class="boot-inner">
-            <div class="boot-label">// KYIV CYBERNETICS LAB — СІЧ-01 // 2026</div>
+            <div class="boot-label">// СІЧ-OS // SPATIAL HOLO-DECK 2026</div>
             <div class="boot-name">ARCH1CAT</div>
             <div class="boot-line"></div>
         </div>
     </div>
 
-    <!-- Floating Cockpit Header -->
+    <!-- Cockpit Header Bar -->
     <header class="site-header">
-        <div class="wrap header-inner">
-            <a href="#about" class="brand group">
-                <span class="brand-mark" aria-hidden="true">
-                    <svg width="22" height="22" viewBox="0 0 64 64"><path d="M18 44 V22 L26 30 H38 L46 22 V44 Q46 50 40 50 H24 Q18 50 18 44 Z M27 38 h3 v3 h-3 z M34 38 h3 v3 h-3 z" fill="var(--accent)"/></svg>
-                </span>
-                <span class="flex flex-col leading-none">
-                    <span class="brand-name">ARCH1CAT</span>
-                    <span class="brand-sub">СІЧ-01 KYIV CYBERNETICS</span>
-                </span>
-            </a>
+        <a href="#prologue" class="brand group" id="brand-home-btn">
+            <span class="brand-mark" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 64 64"><path d="M18 44 V22 L26 30 H38 L46 22 V44 Q46 50 40 50 H24 Q18 50 18 44 Z M27 38 h3 v3 h-3 z M34 38 h3 v3 h-3 z" fill="var(--accent)"/></svg>
+            </span>
+            <span class="flex flex-col leading-none">
+                <span class="brand-name">ARCH1CAT</span>
+                <span class="brand-sub">СІЧ-OS SPATIAL WORKSTATION</span>
+            </span>
+        </a>
 
-            <nav class="nav-links hidden md:flex items-center gap-2" aria-label="Acts">
-                <a href="#about">Prologue</a>
-                <a href="#projects">Dossiers</a>
-                <a href="#flagship">Flagship</a>
-                <a href="#activity">Signal</a>
-            </nav>
+        <div class="station-panel hidden md:flex" aria-hidden="true">
+            <span class="sp-item"><b class="sp-led"></b>KYIV 50.45°N 30.52°E</span>
+            <span class="sp-item" id="sp-clock">--:--:--</span>
+            <span class="sp-item"><span id="sp-fps">60</span> FPS</span>
+            <span class="sp-item hidden lg:inline-flex">STAGE <span id="sp-stage-badge" class="text-[color:var(--accent)] font-bold">00</span></span>
+        </div>
 
-            <div class="flex items-center gap-2.5">
-                <div class="station-panel hidden sm:flex" aria-hidden="true">
-                    <span class="sp-item"><b class="sp-led"></b>KYIV 50.45°N 30.52°E</span>
-                    <span class="sp-item" id="sp-clock">--:--:--</span>
-                    <span class="sp-item"><span id="sp-fps">60</span> FPS</span>
-                    <span class="sp-item hidden lg:inline-flex">X<span id="sp-cx">0000</span></span>
+        <div class="flex items-center gap-2.5">
+            <!-- Ambient Audio Synth Toggle -->
+            <button id="audio-toggle-btn" class="icon-btn" title="Toggle Kyiv Carillon audio" aria-label="Toggle ambient sound">
+                <div class="audio-bars">
+                    <span></span><span></span><span></span>
                 </div>
+            </button>
 
-                <!-- Ambient Audio Synth Toggle -->
-                <button id="audio-toggle-btn" class="icon-btn" title="Toggle Kyiv Carillon ambient audio" aria-label="Toggle ambient sound">
-                    <div class="audio-bars">
-                        <span></span><span></span><span></span>
-                    </div>
-                </button>
+            <!-- 3-Theme Switcher (Cyber-Sich -> Chrome-Titanium -> Void-Matrix) -->
+            <button id="theme-toggle-btn" class="icon-btn" title="Switch Theme" aria-label="Switch theme">
+                <!-- Trident Icon (Cyber Sich) -->
+                <svg id="theme-icon-sich" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2v20M5 5v7a7 7 0 0 0 14 0V5M8 12a4 4 0 0 0 8 0"/>
+                </svg>
+                <!-- Sun Icon (Chrome Titanium) -->
+                <svg id="theme-icon-chrome" class="hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="4"></circle>
+                    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+                </svg>
+                <!-- Crystal Icon (Void Matrix) -->
+                <svg id="theme-icon-void" class="hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                    <polyline points="2 17 12 22 22 17"></polyline>
+                    <polyline points="2 12 12 17 22 12"></polyline>
+                </svg>
+            </button>
 
-                <!-- Dual Theme Switcher (СІЧ Cyber-Cobalt <-> Chrome Void) -->
-                <button id="theme-toggle-btn" class="icon-btn" title="Toggle Theme (СІЧ Cyber-Cobalt / Chrome Void)" aria-label="Switch theme">
-                    <!-- Trident / Falcon Icon (Cyber Sich) -->
-                    <svg id="theme-icon-sich" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 2v20M5 5v7a7 7 0 0 0 14 0V5M8 12a4 4 0 0 0 8 0"/>
-                    </svg>
-                    <!-- Sun Icon (Chrome Void) -->
-                    <svg id="theme-icon-chrome" class="hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="4"></circle>
-                        <path d="M12 2v2"></path><path d="M12 20v2"></path>
-                        <path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path>
-                        <path d="M2 12h2"></path><path d="M20 12h2"></path>
-                        <path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path>
-                    </svg>
-                </button>
-
-                <a href="https://x.com/Archi_____cat" target="_blank" rel="noopener noreferrer" class="icon-btn" title="X / Twitter" aria-label="X Twitter profile">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                </a>
-                <a href="https://github.com/l2bote4game" target="_blank" rel="noopener noreferrer" class="icon-btn" title="GitHub" aria-label="GitHub profile">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-                </a>
-            </div>
+            <a href="https://x.com/Archi_____cat" target="_blank" rel="noopener noreferrer" class="icon-btn" title="X / Twitter" aria-label="X Twitter profile">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+            <a href="https://github.com/l2bote4game" target="_blank" rel="noopener noreferrer" class="icon-btn" title="GitHub" aria-label="GitHub profile">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            </a>
         </div>
     </header>
 
-    <!-- Tactical Ticker -->
-    <div class="ticker" aria-hidden="true">
-        <div class="ticker-track">
-            <span>// СІЧ-01 KYIV AEROSPACE LAB // 50.4501°N 30.5234°E // FUSION CORE ONLINE // GLUSHKOV CYBERNETICS // VOLYA PROTOCOL // DECONSTRUCT MODE READY //&nbsp;</span>
-            <span>// СІЧ-01 KYIV AEROSPACE LAB // 50.4501°N 30.5234°E // FUSION CORE ONLINE // GLUSHKOV CYBERNETICS // VOLYA PROTOCOL // DECONSTRUCT MODE READY //&nbsp;</span>
-        </div>
-    </div>
+    <!-- Floating Holographic Dossier Drawer (Left Stage) -->
+    <aside class="dossier-wrapper" aria-label="Selected Engineering Dossier">
+        <div class="dossier-card" id="dossier-card">
+            <div class="dossier-header">
+                <span class="dossier-id" id="dossier-id">MOD-00 // FUSION CORE</span>
+                <span class="dossier-status" id="dossier-status">ONLINE · READY</span>
+            </div>
+            <h1 class="dossier-title" id="dossier-title">Cybernetic craft &amp; play.</h1>
+            <p class="dossier-desc" id="dossier-desc">
+                Ukrainian cybernetic aerospace rig and autonomous AI agent workstation. Select any module below or swipe to inspect the 3D installations.
+            </p>
 
-    <!-- Main Flight Deck Content -->
-    <main class="relative z-20">
-
-        <!-- 00 PROLOGUE / HERO COCKPIT -->
-        <section id="about" data-chapter="prologue" class="relative section-pad min-h-screen flex items-center">
-            <span class="ghost-num" aria-hidden="true">СІЧ</span>
-            <div class="wrap pt-20">
-                <p class="mono-label mb-6 reveal">// UKRAINIAN AEROSPACE &amp; AUTONOMOUS AGENT ARCHITECTURE</p>
-                <h1 class="hero-title mb-8">
-                    <span class="block" data-scramble>Cybernetic</span>
-                    <span class="block"><span data-scramble>craft&nbsp;</span><em class="display-serif text-[color:var(--accent)]" data-scramble>&amp;&nbsp;play.</em></span>
-                </h1>
-
-                <div class="flex flex-wrap items-center gap-4 mb-8">
-                    <div class="status-chip reveal" style="--d:.1s">
-                        <span class="pulse-dot"></span>
-                        <span>СІЧ-01 RIG OPERATIONAL · 360° DRAG TO ORBIT</span>
-                    </div>
-                    <div class="status-chip reveal" style="--d:.15s; background: rgba(0, 114, 255, 0.12); border-color: rgba(0, 114, 255, 0.35); color: #60A5FA;">
-                        <span class="pulse-dot" style="background: #0072FF; box-shadow: 0 0 8px #0072FF;"></span>
-                        <span>AVAILABLE FOR HIGH-END 3D &amp; AI AGENTS</span>
-                    </div>
+            <!-- Technical Specification Metrics -->
+            <div class="spec-grid" id="dossier-specs">
+                <div class="spec-item">
+                    <span class="spec-key">ARCHITECTURE</span>
+                    <span class="spec-val" id="spec-arch">Three.js / WebGL</span>
                 </div>
-
-                <p class="hero-sub mb-10 reveal" style="--d:.2s">
-                    Engineering autonomous AI agent workflows, modular 3D WebGL aerospace architectures, native Android Kotlin software, and real-time telemetry systems.
-                </p>
-
-                <div class="cta-row reveal" style="--d:.25s">
-                    <a href="#projects" class="btn-archive btn-primary magnetic">
-                        <span>EXPLORE DOSSIERS ↳</span>
-                    </a>
-                    <button class="btn-archive magnetic" id="hero-deconstruct-btn" type="button">
-                        <span>💥 DECONSTRUCT 3D RIG</span>
-                    </button>
-                    <a href="https://yotei.com.ua/" target="_blank" rel="noopener noreferrer" class="btn-archive magnetic">
-                        <span>YOTEI CRM ↗</span>
-                    </a>
-                    <a href="https://x.com/Archi_____cat" target="_blank" rel="noopener noreferrer" class="btn-archive magnetic">
-                        <span>X — @ARCHI_____CAT</span>
-                    </a>
+                <div class="spec-item">
+                    <span class="spec-key">ORIGIN</span>
+                    <span class="spec-val" id="spec-origin">Kyiv 50.45°N</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-key">TELEMETRY</span>
+                    <span class="spec-val" id="spec-telemetry">Real-time Sensor</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-key">STATUS</span>
+                    <span class="spec-val" id="spec-status">60 FPS Locked</span>
                 </div>
             </div>
-        </section>
 
-        <!-- 01 TACTICAL ENGINEERING DOSSIERS (SELECTED WORKS) -->
-        <section id="projects" data-chapter="works" class="relative section-pad">
-            <span class="ghost-num" aria-hidden="true">01</span>
-            <div class="wrap py-12">
-                <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
-                    <div>
-                        <p class="mono-label mb-4 reveal">// 01 — TACTICAL SPECIFICATION DOSSIERS</p>
-                        <h2 class="display-serif text-[clamp(2.8rem,6vw,4.8rem)] leading-none reveal" data-scramble>Selected works.</h2>
-                    </div>
-                    <div class="font-mono text-xs text-[color:var(--muted)] flex items-center gap-4">
-                        <span>CLICK CARDS TO INSPECT IN 3D</span>
-                        <span class="pulse-dot"></span>
-                    </div>
-                </div>
-
-                <div class="grid-plates">
-                    <!-- MOD-001: World Monitor -->
-                    <article class="plate reveal tilt-plate" data-module-id="OSINT_RADAR" style="--d:.05s">
-                        <span class="star-badge hidden" data-star-repo="world-monitor"></span>
-                        <div>
-                            <span class="plate-index">MOD-001 // OSINT TELEMETRY DISH</span>
-                            <h3 class="plate-title">World Monitor</h3>
-                            <p class="plate-desc">Global geopolitical, cyber defense, and network infrastructure telemetry dashboard with real-time geospatial node mapping and event stream aggregation.</p>
-                        </div>
-                        <div>
-                            <div class="tag-row mb-4">
-                                <span class="tag">TypeScript</span><span class="tag">Cloudflare</span><span class="tag">Tauri</span><span class="tag">Mapbox</span>
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <a href="https://github.com/l2bote4game/world-monitor" target="_blank" rel="noopener noreferrer" class="source-link">SOURCE ↗</a>
-                                <button class="source-link inspect-3d-btn" data-hotspot="hotspot-radar" type="button">INSPECT 3D ⌖</button>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- MOD-002: WiFi Scanner -->
-                    <article class="plate reveal tilt-plate" data-module-id="RF_SCANNER" style="--d:.12s">
-                        <span class="star-badge hidden" data-star-repo="wifiscaner"></span>
-                        <div>
-                            <span class="plate-index">MOD-002 // RF SPECTRUM MAST</span>
-                            <h3 class="plate-title">WiFi Scanner</h3>
-                            <p class="plate-desc">High-speed native Android telemetry application for 2.4/5GHz Wi-Fi channel graphing, subnet IP discovery, and network latency diagnostics.</p>
-                        </div>
-                        <div>
-                            <div class="tag-row mb-4">
-                                <span class="tag">Kotlin</span><span class="tag">Jetpack Compose</span><span class="tag">mDNS</span><span class="tag">Coroutines</span>
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <a href="https://github.com/l2bote4game/wifiscaner" target="_blank" rel="noopener noreferrer" class="source-link">SOURCE ↗</a>
-                                <button class="source-link inspect-3d-btn" data-hotspot="hotspot-rf" type="button">INSPECT 3D ⌖</button>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- MOD-003: Metadata Cleaner -->
-                    <article class="plate reveal tilt-plate" data-module-id="CRYPTO_PURGE" style="--d:.19s">
-                        <span class="star-badge hidden" data-star-repo="media-meta-cleaner"></span>
-                        <div>
-                            <span class="plate-index">MOD-003 // CRYPTOGRAPHIC SANITIZER</span>
-                            <h3 class="plate-title">Metadata Cleaner</h3>
-                            <p class="plate-desc">Multi-threaded Python security suite to sanitize EXIF tags, GPS coordinates, serial footprints, and embedded telemetry from images and media streams.</p>
-                        </div>
-                        <div>
-                            <div class="tag-row mb-4">
-                                <span class="tag">Python 3</span><span class="tag">Pillow</span><span class="tag">FFmpeg</span><span class="tag">Security</span>
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <a href="https://github.com/l2bote4game/media-meta-cleaner" target="_blank" rel="noopener noreferrer" class="source-link">SOURCE ↗</a>
-                                <button class="source-link inspect-3d-btn" data-hotspot="hotspot-crypto" type="button">INSPECT 3D ⌖</button>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- MOD-004: Cats Match-3 -->
-                    <article class="plate reveal tilt-plate" data-module-id="CORE_CHASSIS" style="--d:.26s">
-                        <span class="star-badge hidden" data-star-repo="cats-match3-game"></span>
-                        <div>
-                            <span class="plate-index">MOD-004 // NEURAL GAME ENGINE</span>
-                            <h3 class="plate-title">Cats Match-3 Quest</h3>
-                            <p class="plate-desc">Mobile casual game architecture featuring custom cascade match algorithms, feline shelter building dynamics, and physics particle systems.</p>
-                        </div>
-                        <div>
-                            <div class="tag-row mb-4">
-                                <span class="tag">Kotlin</span><span class="tag">Canvas</span><span class="tag">Game Loop</span><span class="tag">Physics</span>
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <a href="https://github.com/l2bote4game/cats-match3-game" target="_blank" rel="noopener noreferrer" class="source-link">SOURCE ↗</a>
-                                <button class="source-link inspect-3d-btn" data-hotspot="hotspot-radar" type="button">INSPECT 3D ⌖</button>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- MOD-005: openGym -->
-                    <article class="plate reveal tilt-plate" data-module-id="ION_PROPULSION" style="--d:.33s">
-                        <span class="star-badge hidden" data-star-repo="openGym"></span>
-                        <div>
-                            <span class="plate-index">MOD-005 // PRODUCTION SUITE · v1.2.4</span>
-                            <h3 class="plate-title">openGym</h3>
-                            <p class="plate-desc">Self-hosted fitness ecosystem. Production Android APK, WebAuthn passkey authentication, guided progressive overload algorithms, and offline state sync.</p>
-                        </div>
-                        <div>
-                            <div class="tag-row mb-4">
-                                <span class="tag">React 19</span><span class="tag">Capacitor 7</span><span class="tag">Android APK</span><span class="tag">Passkeys</span>
-                            </div>
-                            <div class="flex flex-wrap gap-2">
-                                <a href="https://github.com/l2bote4game/openGym" target="_blank" rel="noopener noreferrer" class="source-link">SOURCE ↗</a>
-                                <a href="https://github.com/l2bote4game/openGym/releases/tag/v1.2.4-android" target="_blank" rel="noopener noreferrer" class="source-link">APK v1.2.4 ↗</a>
-                                <button class="source-link inspect-3d-btn" data-hotspot="hotspot-thruster" type="button">INSPECT 3D ⌖</button>
-                            </div>
-                        </div>
-                    </article>
-                </div>
+            <!-- Tags -->
+            <div class="tag-row" id="dossier-tags">
+                <span class="tag">AI Workflows</span>
+                <span class="tag">3D WebGL</span>
+                <span class="tag">Android Kotlin</span>
+                <span class="tag">Spatial Audio</span>
             </div>
-        </section>
 
-        <!-- 02 FLAGSHIP ENTERPRISE GRID (YOTEI) -->
-        <section id="flagship" data-chapter="flagship" class="relative section-pad">
-            <span class="ghost-num" aria-hidden="true">Y—01</span>
-            <div class="wrap py-12">
-                <p class="mono-label mb-5 reveal">// 02 — FLAGSHIP ENTERPRISE INFRASTRUCTURE</p>
-                <h2 class="display-serif text-[clamp(2.8rem,6vw,4.8rem)] leading-none mb-14 reveal" data-scramble>The long build.</h2>
-
-                <div class="flagship-plate reveal">
-                    <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-10">
-                        <div class="max-w-2xl space-y-5">
-                            <span class="plate-index">Y—01 // SOLAR ENTERPRISE PLATFORM &amp; CRM</span>
-                            <h3 class="flagship-title">Yotei<span class="text-[color:var(--accent)]">.</span></h3>
-                            <p class="plate-desc" style="font-size: 1.05rem;">
-                                Next-generation real estate intelligence platform and enterprise CRM engine. Engineered with a strict 3-level domain taxonomy, real-time bidirectionally synchronized lead pipelines, Mapbox GL geospatial clusters, and automated Vitest QA verification gates.
-                            </p>
-                            <div class="tag-row">
-                                <span class="tag">yotei.com.ua</span>
-                                <span class="tag">Next.js Turborepo</span>
-                                <span class="tag">Supabase &amp; Prisma</span>
-                                <span class="tag">Real-Time CRM</span>
-                                <span class="tag">High Load</span>
-                            </div>
-                        </div>
-                        <div class="shrink-0 flex flex-col sm:flex-row gap-3">
-                            <button class="btn-archive inspect-3d-btn" data-hotspot="hotspot-solar" type="button">
-                                <span>INSPECT SOLAR ARRAY ⌖</span>
-                            </button>
-                            <a href="https://yotei.com.ua/" target="_blank" rel="noopener noreferrer" class="btn-archive btn-primary magnetic">
-                                <span>VISIT YOTEI.COM.UA ↗</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 03 SIGNAL & TELEMETRY COCKPIT -->
-        <section id="activity" data-chapter="signal" class="relative section-pad">
-            <span class="ghost-num" aria-hidden="true">03</span>
-            <div class="wrap py-12">
-                <p class="mono-label mb-5 reveal">// 03 — TELEMETRY COCKPIT</p>
-                <h2 class="display-serif text-[clamp(2.8rem,6vw,4.8rem)] leading-none mb-14 reveal" data-scramble>Signal from the desk.</h2>
-
-                <div class="signal-grid">
-                    <div class="reveal" style="--d:.1s">
-                        <div class="stats-grid">
-                            <div class="stat-block">
-                                <div class="stat-num" id="stat-repos">08</div>
-                                <div class="stat-label">PUBLIC REPOSITORIES</div>
-                            </div>
-                            <div class="stat-block">
-                                <div class="stat-num" id="stat-stars">★★ 00</div>
-                                <div class="stat-label">TOTAL STARS EARNED</div>
-                            </div>
-                            <div class="stat-block">
-                                <div class="stat-num" id="stat-followers">00</div>
-                                <div class="stat-label">COMMUNITY FOLLOWERS</div>
-                            </div>
-                            <div class="stat-block">
-                                <div class="stat-num">∞</div>
-                                <div class="stat-label">CYBERNETIC CRAFT</div>
-                            </div>
-                        </div>
-                        <p class="fig-caption mt-5">LIVE TELEMETRY STREAM // GITHUB / L2BOTE4GAME</p>
-                    </div>
-
-                    <div class="reveal" style="--d:.2s">
-                        <div class="fig-frame overflow-x-auto">
-                            <img src="https://raw.githubusercontent.com/l2bote4game/l2bote4game/output/github-contribution-grid-snake-dark.svg"
-                                 alt="GitHub contribution grid snake" loading="lazy">
-                        </div>
-                        <p class="fig-caption mt-3">FIG. 03 — RADAR CONTINUOUS CONTRIBUTION FIELD</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Colophon / Footer -->
-    <footer class="relative z-20 border-t border-[color:var(--line)] py-12">
-        <div class="wrap flex flex-col sm:flex-row items-center justify-between gap-6">
-            <div class="flex items-center gap-3">
-                <span class="pulse-dot"></span>
-                <span class="text-xs font-mono text-gray-400">© 2026 arch1cat. Built with Three.js r170, WebGL 2.0 &amp; Web Audio API.</span>
-            </div>
-            <div class="flex items-center gap-6 text-xs font-mono text-gray-400">
-                <a href="https://x.com/Archi_____cat" target="_blank" rel="noopener noreferrer" class="hover:text-[color:var(--accent)] transition-colors">X — @Archi_____cat</a>
-                <a href="https://github.com/l2bote4game" target="_blank" rel="noopener noreferrer" class="hover:text-[color:var(--accent)] transition-colors">GitHub — l2bote4game</a>
-                <a href="https://yotei.com.ua/" target="_blank" rel="noopener noreferrer" class="hover:text-[color:var(--accent)] transition-colors">Yotei.com.ua ↗</a>
+            <!-- Action Buttons -->
+            <div class="dossier-actions">
+                <a href="#launch" class="btn-primary" id="dossier-action-btn" target="_blank" rel="noopener noreferrer">
+                    <span id="dossier-action-text">EXPLORE DOSSIERS ↳</span>
+                </a>
+                <a href="#" class="btn-ghost hidden" id="dossier-sub-btn" target="_blank" rel="noopener noreferrer">
+                    <span id="dossier-sub-text">DOWNLOAD APK ↗</span>
+                </a>
+                <button class="btn-ghost" id="dossier-pulse-btn" type="button" title="Trigger 3D plasma shockwave">
+                    <span>⚡ SURGE</span>
+                </button>
             </div>
         </div>
-    </footer>
+    </aside>
 
-    <!-- Chapter Rail -->
-    <nav id="chapter-rail" aria-label="Chapter navigation">
-        <button class="rail-item" data-target="#about"><span>00</span><span class="tick"></span></button>
-        <button class="rail-item" data-target="#projects"><span>01</span><span class="tick"></span></button>
-        <button class="rail-item" data-target="#flagship"><span>02</span><span class="tick"></span></button>
-        <button class="rail-item" data-target="#activity"><span>03</span><span class="tick"></span></button>
+    <!-- Interactive Bottom Cyber-Dock (Stage Carousel) -->
+    <nav class="dock-container" role="navigation" aria-label="3D Stages Carousel">
+        <button class="dock-arrow-btn" id="dock-prev-btn" title="Previous 3D Module (← Arrow Key)">
+            <span>‹</span>
+        </button>
+
+        <div class="dock-items" id="dock-items">
+            <button class="dock-tab active" data-stage="0"><span>00</span> CORE</button>
+            <button class="dock-tab" data-stage="1"><span>01</span> OSINT</button>
+            <button class="dock-tab" data-stage="2"><span>02</span> RF SCAN</button>
+            <button class="dock-tab" data-stage="3"><span>03</span> CRYPTO</button>
+            <button class="dock-tab" data-stage="4"><span>04</span> MATCH-3</button>
+            <button class="dock-tab" data-stage="5"><span>05</span> OPENGYM</button>
+            <button class="dock-tab" data-stage="6"><span>06</span> YOTEI</button>
+            <button class="dock-tab" data-stage="7"><span>07</span> SIGNAL</button>
+        </div>
+
+        <button class="dock-arrow-btn" id="dock-next-btn" title="Next 3D Module (→ Arrow Key)">
+            <span>›</span>
+        </button>
+
+        <div class="dock-counter">
+            <span id="dock-current-idx">00</span> / 07
+        </div>
     </nav>
 
-    <!-- Custom Cursor & Toast -->
+    <!-- Custom Cursor & Toast Notification -->
     <div id="cursor-dot" aria-hidden="true"></div>
     <div id="cursor-ring" aria-hidden="true"></div>
     <div id="toast" role="status"></div>
@@ -447,18 +226,5 @@
     <script type="module" src="assets/js/audio-engine.js"></script>
     <script type="module" src="assets/js/three-scene.js"></script>
     <script type="module" src="assets/js/ui.js"></script>
-    <script>
-    window.addEventListener('load', () => {
-        const mode = new URLSearchParams(location.search).get('mode');
-        if (mode && window.__setRigMode) {
-            setTimeout(() => {
-                window.__setRigMode(mode);
-                document.querySelectorAll('.rig-mode-btn').forEach(b => {
-                    b.classList.toggle('active', b.dataset.mode === mode);
-                });
-            }, 500);
-        }
-    });
-    </script>
 </body>
 </html>

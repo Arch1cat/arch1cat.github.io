@@ -1,17 +1,14 @@
 /* ============================================================
    ARCH1CAT — ui.js
-   "СІЧ-01" Cybernetics UI Controller & Micro-Interactions
+   "CYBER-SICH OS" // 3D SPATIAL HOLO-DECK CONTROLLER
+   Full-Viewport Experiential Navigation Engine
    Features:
-   - 3D Rig Viewport Controls (Assembled / Deconstruct / X-Ray)
-   - Projected 3D Hotspot Interactivity
-   - Boot Title Card with fast fade
-   - Scramble Decode on scroll & reveal
-   - Precision Dual Cursor with magnetic pull
-   - Dual-Theme Switcher (СІЧ Cyber-Cobalt <-> Chrome Void)
-   - Live Kyiv Station Telemetry: Clock, FPS, Pointer Coordinates
-   - Magnetic Buttons & 3D Glass Card Tilt with Specular Sheen
-   - GitHub Live Telemetry with animated counters
-   - Web Audio SFX integration
+   - Dynamic 8-Stage Dossier Data Controller
+   - Multi-input Navigation: Dock, Arrow Keys, Wheel, Touch Swipe
+   - 3-Theme Switcher (Cyber-Sich <-> Chrome-Titanium <-> Void-Matrix)
+   - Procedural Web Audio Engine triggers
+   - Kyiv Station Telemetry: Clock, FPS, Coordinates
+   - Precision Cursor
    ============================================================ */
 
 const RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -20,7 +17,111 @@ const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 const lerp = (a, b, t) => a + (b - a) * t;
 
 /* ------------------------------------------------------------
-   1. Title Card / Boot Sequence
+   1. Dynamic Stage Dossier Dataset
+   ------------------------------------------------------------ */
+const DOSSIERS = [
+    {
+        id: 'MOD-00 // FUSION CORE',
+        status: 'ONLINE · NOMINAL',
+        title: 'Cybernetic craft & play.',
+        desc: 'Ukrainian cybernetic aerospace rig and autonomous AI agent workstation. Select any module in the dock or swipe to inspect the 3D installations.',
+        specs: { arch: 'Three.js / WebGL 2', origin: 'Kyiv 50.45°N', telemetry: 'Sensor Rig', status: '60 FPS Locked' },
+        tags: ['AI Workflows', '3D WebGL', 'Android Kotlin', 'Spatial Audio'],
+        primaryText: 'VIEW GITHUB ↗',
+        primaryUrl: 'https://github.com/l2bote4game',
+        subText: null,
+        subUrl: null
+    },
+    {
+        id: 'MOD-01 // OSINT TELEMETRY GLOBE',
+        status: 'DEPLOYED · LIVE',
+        title: 'World Monitor',
+        desc: 'Real-time global geopolitical, cyber defense, and network infrastructure telemetry dashboard with live geospatial node mapping and event stream aggregation.',
+        specs: { arch: 'Tauri / Cloudflare', origin: 'TypeScript', telemetry: 'Geospatial WebGL', status: 'Live Edge' },
+        tags: ['TypeScript', 'Cloudflare Workers', 'Tauri Desktop', 'Mapbox GL'],
+        primaryText: 'VIEW SOURCE ↗',
+        primaryUrl: 'https://github.com/l2bote4game/world-monitor',
+        subText: null,
+        subUrl: null
+    },
+    {
+        id: 'MOD-02 // RF SPECTRUM MAST',
+        status: 'ACTIVE · 2.4/5GHz',
+        title: 'WiFi Scanner',
+        desc: 'High-speed native Android telemetry application for 2.4/5GHz Wi-Fi channel graphing, subnet IP discovery, and network latency diagnostics.',
+        specs: { arch: 'Kotlin Native', origin: 'Jetpack Compose', telemetry: 'mDNS & ICMP', status: 'Google Play Ready' },
+        tags: ['Kotlin', 'Jetpack Compose', 'mDNS Discovery', 'Coroutines'],
+        primaryText: 'VIEW SOURCE ↗',
+        primaryUrl: 'https://github.com/l2bote4game/wifiscaner',
+        subText: null,
+        subUrl: null
+    },
+    {
+        id: 'MOD-03 // CRYPTOGRAPHIC SANITIZER',
+        status: 'SECURITY AUDITED',
+        title: 'Metadata Cleaner',
+        desc: 'Multi-threaded Python security suite to sanitize EXIF tags, GPS coordinates, camera serial footprints, and embedded telemetry from images and media streams.',
+        specs: { arch: 'Python 3 / Pillow', origin: 'FFmpeg CLI', telemetry: 'Zero Footprint', status: 'Local Only' },
+        tags: ['Python 3', 'Pillow', 'FFmpeg', 'Privacy Security'],
+        primaryText: 'VIEW SOURCE ↗',
+        primaryUrl: 'https://github.com/l2bote4game/media-meta-cleaner',
+        subText: null,
+        subUrl: null
+    },
+    {
+        id: 'MOD-04 // NEURAL GAME ENGINE',
+        status: 'KINETIC PHYSICS',
+        title: 'Cats Match-3 Quest',
+        desc: 'Mobile casual game architecture featuring custom cascade match algorithms, feline shelter building dynamics, and physics particle systems.',
+        specs: { arch: 'Kotlin Canvas', origin: 'Custom Engine', telemetry: '60 FPS Loop', status: 'Offline First' },
+        tags: ['Kotlin', 'Canvas Engine', 'Particle FX', 'Game Architecture'],
+        primaryText: 'VIEW SOURCE ↗',
+        primaryUrl: 'https://github.com/l2bote4game/cats-match3-game',
+        subText: null,
+        subUrl: null
+    },
+    {
+        id: 'MOD-05 // PRODUCTION APP · v1.2.4',
+        status: 'APK RELEASE READY',
+        title: 'openGym',
+        desc: 'Self-hosted fitness ecosystem. Production Android APK, WebAuthn passkey authentication, guided progressive overload algorithms, and offline state sync.',
+        specs: { arch: 'React 19 / Cap 7', origin: 'Android APK v1.2.4', telemetry: 'WebAuthn Passkey', status: 'Audited' },
+        tags: ['React 19', 'Capacitor 7', 'Android APK', 'Passkeys'],
+        primaryText: 'VIEW SOURCE ↗',
+        primaryUrl: 'https://github.com/l2bote4game/openGym',
+        subText: 'DOWNLOAD APK ↗',
+        subUrl: 'https://github.com/l2bote4game/openGym/releases/tag/v1.2.4-android'
+    },
+    {
+        id: 'MOD-06 // SOLAR ENTERPRISE PLATFORM',
+        status: 'ENTERPRISE PRODUCTION',
+        title: 'Yotei CRM',
+        desc: 'Next-generation real estate intelligence platform and enterprise CRM engine. Engineered with a strict 3-level domain taxonomy, real-time synchronized lead pipelines, and automated Vitest QA.',
+        specs: { arch: 'Next.js Turborepo', origin: 'yotei.com.ua', telemetry: 'Real-Time CRM', status: 'High Load Live' },
+        tags: ['Next.js 16', 'Supabase & Prisma', 'Mapbox GL', 'Vitest QA'],
+        primaryText: 'VISIT YOTEI.COM.UA ↗',
+        primaryUrl: 'https://yotei.com.ua/',
+        subText: null,
+        subUrl: null
+    },
+    {
+        id: 'MOD-07 // TELEMETRY & SIGNAL',
+        status: 'STREAMING ONLINE',
+        title: 'Signal & Telemetry',
+        desc: 'Continuous real-time telemetry from the Kyiv engineering desk. Public GitHub repositories, verified community contributions, and active cybernetic craft.',
+        specs: { arch: 'GitHub API v3', origin: 'Kyiv UTC+3', telemetry: 'Continuous Commit', status: '100% Uptime' },
+        tags: ['GitHub Telemetry', 'Autonomous Agents', 'Three.js WebGL', 'AI Systems'],
+        primaryText: 'GITHUB PROFILE ↗',
+        primaryUrl: 'https://github.com/l2bote4game',
+        subText: 'X / TWITTER ↗',
+        subUrl: 'https://x.com/Archi_____cat'
+    }
+];
+
+let activeStageIndex = 0;
+
+/* ------------------------------------------------------------
+   2. Title Card Boot Sequence
    ------------------------------------------------------------ */
 (function titleCard() {
     const overlay = document.getElementById('boot-overlay');
@@ -46,190 +147,209 @@ const lerp = (a, b, t) => a + (b - a) * t;
 })();
 
 /* ------------------------------------------------------------
-   2. Letter Scramble Decode
+   3. Stage Navigation & Dossier Update Controller
    ------------------------------------------------------------ */
-const GLYPHS = '—/\\|▪▸<>_#01XYZ';
-function scramble(el) {
-    if (el.dataset.scrambled) return;
-    el.dataset.scrambled = '1';
-    if (RM) return;
-    const original = el.textContent;
-    const len = original.length;
-    const start = performance.now();
-    const DUR = 750;
+function renderStage(idx) {
+    if (idx < 0 || idx >= DOSSIERS.length) return;
+    activeStageIndex = idx;
 
-    (function frame(now) {
-        const p = clamp((now - start) / DUR, 0, 1);
-        const solidCount = Math.floor(p * len);
-        let out = original.slice(0, solidCount);
-        for (let i = solidCount; i < len; i++) {
-            out += original[i] === ' ' ? ' ' : GLYPHS[(Math.random() * GLYPHS.length) | 0];
-        }
-        el.textContent = out;
-        if (p < 1) requestAnimationFrame(frame);
-        else el.textContent = original;
-    })(start);
-}
+    const data = DOSSIERS[idx];
+    const card = document.getElementById('dossier-card');
 
-const scrambleObserver = new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-        if (e.isIntersecting) {
-            scramble(e.target);
-            scrambleObserver.unobserve(e.target);
-        }
-    });
-}, { threshold: 0.35 });
+    if (card) {
+        card.style.opacity = '0.4';
+        card.style.transform = 'translateY(10px) scale(0.98)';
+        setTimeout(() => {
+            document.getElementById('dossier-id').textContent = data.id;
+            document.getElementById('dossier-status').textContent = data.status;
+            document.getElementById('dossier-title').textContent = data.title;
+            document.getElementById('dossier-desc').textContent = data.desc;
 
-document.querySelectorAll('[data-scramble]').forEach((el) => scrambleObserver.observe(el));
+            // Specs
+            document.getElementById('spec-arch').textContent = data.specs.arch;
+            document.getElementById('spec-origin').textContent = data.specs.origin;
+            document.getElementById('spec-telemetry').textContent = data.specs.telemetry;
+            document.getElementById('spec-status').textContent = data.specs.status;
 
-/* ------------------------------------------------------------
-   3. Reveal on Scroll
-   ------------------------------------------------------------ */
-(function reveals() {
-    const els = document.querySelectorAll('.reveal');
-    if (RM) {
-        els.forEach((el) => el.classList.add('in'));
-        return;
-    }
-    const io = new IntersectionObserver((entries) => {
-        entries.forEach((e) => {
-            if (e.isIntersecting) {
-                e.target.classList.add('in');
-                io.unobserve(e.target);
-            }
-        });
-    }, { threshold: 0.12 });
-    els.forEach((el) => io.observe(el));
-})();
-
-/* ------------------------------------------------------------
-   4. Chapter Rail Navigation
-   ------------------------------------------------------------ */
-(function rail() {
-    const buttons = [...document.querySelectorAll('.rail-item')];
-    const MAP = { prologue: '#about', works: '#projects', flagship: '#flagship', signal: '#activity' };
-
-    buttons.forEach((b) => b.addEventListener('click', () => {
-        if (window.__playSfx) window.__playSfx('click');
-        const target = document.querySelector(b.dataset.target);
-        if (target) target.scrollIntoView({ behavior: RM ? 'auto' : 'smooth' });
-    }));
-
-    window.addEventListener('chapterchange', (e) => {
-        const sel = MAP[e.detail?.name];
-        buttons.forEach((b) => b.classList.toggle('active', !!sel && b.dataset.target === sel));
-    });
-
-    const first = document.querySelector('[data-chapter="prologue"]');
-    if (first) {
-        const io = new IntersectionObserver((entries) => {
-            entries.forEach((e) => {
-                if (e.isIntersecting) {
-                    buttons.forEach((b) => b.classList.toggle('active', b.dataset.target === '#about'));
-                    io.disconnect();
-                }
+            // Tags
+            const tagContainer = document.getElementById('dossier-tags');
+            tagContainer.innerHTML = '';
+            data.tags.forEach((t) => {
+                const span = document.createElement('span');
+                span.className = 'tag';
+                span.textContent = t;
+                tagContainer.appendChild(span);
             });
-        }, { rootMargin: '-45% 0px -45% 0px' });
-        io.observe(first);
+
+            // Action Buttons
+            const actionBtn = document.getElementById('dossier-action-btn');
+            document.getElementById('dossier-action-text').textContent = data.primaryText;
+            actionBtn.setAttribute('href', data.primaryUrl);
+
+            const subBtn = document.getElementById('dossier-sub-btn');
+            if (data.subText && data.subUrl) {
+                document.getElementById('dossier-sub-text').textContent = data.subText;
+                subBtn.setAttribute('href', data.subUrl);
+                subBtn.classList.remove('hidden');
+            } else {
+                subBtn.classList.add('hidden');
+            }
+
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0) scale(1)';
+        }, 120);
     }
-})();
+
+    // Update Dock active state
+    const dockTabs = document.querySelectorAll('.dock-tab');
+    dockTabs.forEach((tab, i) => {
+        tab.classList.toggle('active', i === idx);
+    });
+
+    const counter = document.getElementById('dock-current-idx');
+    if (counter) counter.textContent = String(idx).padStart(2, '0');
+
+    const badge = document.getElementById('sp-stage-badge');
+    if (badge) badge.textContent = String(idx).padStart(2, '0');
+
+    // Notify Three.js scene
+    if (window.__goToStage) {
+        window.__goToStage(idx);
+    }
+}
+
+// Support ?stage=N on initial load
+window.addEventListener('load', () => {
+    const p = new URLSearchParams(location.search).get('stage');
+    if (p !== null) {
+        const s = parseInt(p, 10);
+        if (!isNaN(s) && s >= 0 && s < DOSSIERS.length) {
+            setTimeout(() => renderStage(s), 250);
+        }
+    }
+});
+
+// Dock Button clicks
+document.querySelectorAll('.dock-tab').forEach((tab) => {
+    tab.addEventListener('click', () => {
+        const target = parseInt(tab.dataset.stage, 10);
+        renderStage(target);
+    });
+});
+
+document.getElementById('dock-prev-btn')?.addEventListener('click', () => {
+    const prev = (activeStageIndex - 1 + DOSSIERS.length) % DOSSIERS.length;
+    renderStage(prev);
+});
+
+document.getElementById('dock-next-btn')?.addEventListener('click', () => {
+    const next = (activeStageIndex + 1) % DOSSIERS.length;
+    renderStage(next);
+});
+
+document.getElementById('brand-home-btn')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    renderStage(0);
+});
+
+// Pulse trigger
+document.getElementById('dossier-pulse-btn')?.addEventListener('click', () => {
+    if (window.__triggerStagePulse) {
+        window.__triggerStagePulse();
+    }
+    showToast('⚡ PLASMA SURGE INITIATED');
+});
 
 /* ------------------------------------------------------------
-   5. Precision Cursor & Click Ripple
+   4. Keyboard & Mouse Wheel Navigation
    ------------------------------------------------------------ */
-function spawnRipple(x, y) {
-    const r = document.createElement('div');
-    r.className = 'click-ripple';
-    r.style.left = x + 'px';
-    r.style.top = y + 'px';
-    document.body.appendChild(r);
-    setTimeout(() => r.remove(), 550);
-}
+window.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        const next = (activeStageIndex + 1) % DOSSIERS.length;
+        renderStage(next);
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        const prev = (activeStageIndex - 1 + DOSSIERS.length) % DOSSIERS.length;
+        renderStage(prev);
+    } else if (e.key === ' ') {
+        if (window.__triggerStagePulse) window.__triggerStagePulse();
+    }
+});
 
-function showToast(text, ms = 2200) {
-    const toast = document.getElementById('toast');
-    if (!toast) return;
-    toast.textContent = text;
-    toast.classList.add('show');
-    clearTimeout(showToast._t);
-    showToast._t = setTimeout(() => toast.classList.remove('show'), ms);
-}
-
-(function cursor() {
-    if (!FINE || RM) return;
-    document.documentElement.classList.add('cursor-on');
-    const dot = document.getElementById('cursor-dot');
-    const ring = document.getElementById('cursor-ring');
-    if (!dot || !ring) return;
-
-    let mx = window.innerWidth / 2;
-    let my = window.innerHeight / 2;
-    let rx = mx;
-    let ry = my;
-
-    window.addEventListener('pointermove', (e) => {
-        mx = e.clientX;
-        my = e.clientY;
-    }, { passive: true });
-
-    (function loop() {
-        rx = lerp(rx, mx, 0.2);
-        ry = lerp(ry, my, 0.2);
-        dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%, -50%)`;
-        ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
-        requestAnimationFrame(loop);
-    })();
-
-    const HOVER_SEL = 'a, button, .plate, .btn-archive, .rig-mode-btn, .hotspot-badge, .icon-btn';
-    document.addEventListener('mouseover', (e) => {
-        const hit = !!e.target.closest(HOVER_SEL);
-        ring.classList.toggle('grow', hit);
-        if (hit && window.__playSfx) {
-            window.__playSfx('hover');
+let wheelTimeout = null;
+window.addEventListener('wheel', (e) => {
+    if (wheelTimeout) return;
+    if (Math.abs(e.deltaY) > 25) {
+        if (e.deltaY > 0) {
+            const next = (activeStageIndex + 1) % DOSSIERS.length;
+            renderStage(next);
+        } else {
+            const prev = (activeStageIndex - 1 + DOSSIERS.length) % DOSSIERS.length;
+            renderStage(prev);
         }
-    });
+        wheelTimeout = setTimeout(() => { wheelTimeout = null; }, 400);
+    }
+}, { passive: true });
 
-    window.addEventListener('pointerdown', (e) => {
-        spawnRipple(e.clientX, e.clientY);
-        if (window.__playSfx && e.target.closest('a, button, .btn-archive, .icon-btn, .rig-mode-btn')) {
-            window.__playSfx('click');
+// Mobile Touch Swipe Navigation
+let touchStartX = 0;
+window.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+}, { passive: true });
+
+window.addEventListener('touchend', (e) => {
+    const deltaX = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(deltaX) > 50) {
+        if (deltaX < 0) {
+            const next = (activeStageIndex + 1) % DOSSIERS.length;
+            renderStage(next);
+        } else {
+            const prev = (activeStageIndex - 1 + DOSSIERS.length) % DOSSIERS.length;
+            renderStage(prev);
         }
-    });
-})();
+    }
+}, { passive: true });
 
 /* ------------------------------------------------------------
-   6. Dual-Theme Switcher (СІЧ Cyber-Cobalt <-> Chrome Void)
+   5. 3-Theme Switcher (Cyber-Sich -> Chrome-Titanium -> Void-Matrix)
    ------------------------------------------------------------ */
 (function themeSwitch() {
     const btn = document.getElementById('theme-toggle-btn');
     const iconSich = document.getElementById('theme-icon-sich');
     const iconChrome = document.getElementById('theme-icon-chrome');
+    const iconVoid = document.getElementById('theme-icon-void');
     const meta = document.querySelector('meta[name="theme-color"]');
+
+    const THEME_CYCLE = ['cyber-sich', 'chrome-titanium', 'void-matrix'];
 
     const METAS = {
         'cyber-sich': '#02050D',
-        'chrome-void': '#050608'
+        'chrome-titanium': '#060709',
+        'void-matrix': '#04060A'
     };
 
     const TOASTS = {
-        'cyber-sich': '🇺🇦 СІЧ-01 CYBER-COBALT ONLINE',
-        'chrome-void': '⚡ CHROME VOID PROTOCOL ONLINE'
+        'cyber-sich': '🇺🇦 СІЧ-OS // CYBER VOLYA ACTIVE',
+        'chrome-titanium': '⚡ TITANIUM CHROME ACTIVE',
+        'void-matrix': '🔮 VOID MATRIX ACTIVE'
     };
 
     function paint(theme) {
         iconSich?.classList.toggle('hidden', theme !== 'cyber-sich');
-        iconChrome?.classList.toggle('hidden', theme === 'cyber-sich');
+        iconChrome?.classList.toggle('hidden', theme !== 'chrome-titanium');
+        iconVoid?.classList.toggle('hidden', theme !== 'void-matrix');
         meta?.setAttribute('content', METAS[theme] || '#02050D');
     }
 
     let cur = document.documentElement.getAttribute('data-theme') || 'cyber-sich';
-    if (cur !== 'cyber-sich' && cur !== 'chrome-void') cur = 'cyber-sich';
+    if (!THEME_CYCLE.includes(cur)) cur = 'cyber-sich';
     document.documentElement.setAttribute('data-theme', cur);
     paint(cur);
 
     btn?.addEventListener('click', () => {
         const current = document.documentElement.getAttribute('data-theme') || 'cyber-sich';
-        const next = current === 'cyber-sich' ? 'chrome-void' : 'cyber-sich';
+        const currentIndex = THEME_CYCLE.indexOf(current);
+        const nextIndex = (currentIndex + 1) % THEME_CYCLE.length;
+        const next = THEME_CYCLE[nextIndex];
 
         try { localStorage.setItem('arch_theme', next); } catch (_) {}
         document.documentElement.setAttribute('data-theme', next);
@@ -242,57 +362,11 @@ function showToast(text, ms = 2200) {
 })();
 
 /* ------------------------------------------------------------
-   7. 3D Viewport Controls Dock & Deconstruct Physics
-   ------------------------------------------------------------ */
-(function rigControls() {
-    const dockButtons = document.querySelectorAll('.rig-mode-btn[data-mode]');
-    const pulseTrigger = document.getElementById('rig-pulse-trigger');
-    const heroDeconstructBtn = document.getElementById('hero-deconstruct-btn');
-
-    dockButtons.forEach((btn) => {
-        btn.addEventListener('click', () => {
-            const mode = btn.dataset.mode;
-            dockButtons.forEach((b) => b.classList.remove('active'));
-            btn.classList.add('active');
-
-            if (window.__setRigMode) {
-                window.__setRigMode(mode);
-            }
-        });
-    });
-
-    pulseTrigger?.addEventListener('click', () => {
-        if (window.__triggerEnergyPulse) {
-            window.__triggerEnergyPulse();
-        }
-    });
-
-    heroDeconstructBtn?.addEventListener('click', () => {
-        const explodeBtn = document.querySelector('.rig-mode-btn[data-mode="exploded"]');
-        if (explodeBtn) {
-            explodeBtn.click();
-        } else if (window.__setRigMode) {
-            window.__setRigMode('exploded');
-        }
-    });
-
-    // Inspect in 3D buttons inside cards
-    document.querySelectorAll('.inspect-3d-btn').forEach((btn) => {
-        btn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            if (window.__triggerEnergyPulse) window.__triggerEnergyPulse();
-            showToast('⌖ TARGETING 3D MODULE ON СІЧ-01');
-        });
-    });
-})();
-
-/* ------------------------------------------------------------
-   8. Station Telemetry Panel: Kyiv Clock · FPS · Pointer Coordinates
+   6. Kyiv Clock & Station Telemetry Panel
    ------------------------------------------------------------ */
 (function stationPanel() {
     const clock = document.getElementById('sp-clock');
     const fpsEl = document.getElementById('sp-fps');
-    const cxEl = document.getElementById('sp-cx');
 
     if (clock) {
         const tick = () => {
@@ -326,171 +400,63 @@ function showToast(text, ms = 2200) {
             requestAnimationFrame(fLoop);
         })(performance.now());
     }
-
-    if (cxEl) {
-        window.addEventListener('pointermove', (e) => {
-            cxEl.textContent = String(Math.round(e.clientX)).padStart(4, '0');
-        }, { passive: true });
-    }
 })();
 
 /* ------------------------------------------------------------
-   9. Magnetic Elements & 3D Glass Plates Tilt with Specular Sheen
+   7. Precision Cursor & Toast
    ------------------------------------------------------------ */
-(function interactives() {
+function showToast(text, ms = 2000) {
+    const toast = document.getElementById('toast');
+    if (!toast) return;
+    toast.textContent = text;
+    toast.classList.add('show');
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(() => toast.classList.remove('show'), ms);
+}
+
+(function cursor() {
     if (!FINE || RM) return;
+    document.documentElement.classList.add('cursor-on');
+    const dot = document.getElementById('cursor-dot');
+    const ring = document.getElementById('cursor-ring');
+    if (!dot || !ring) return;
 
-    const magnets = [...document.querySelectorAll('.magnetic')].map((el) => ({
-        el, tx: 0, ty: 0, cx: 0, cy: 0, hover: false
-    }));
-
-    const tilts = [...document.querySelectorAll('.tilt-plate')].map((el) => ({
-        el, rx: 0, ry: 0, crx: 0, cry: 0
-    }));
-
-    magnets.forEach((m) => {
-        m.el.addEventListener('pointerenter', () => { m.hover = true; });
-        m.el.addEventListener('pointerleave', () => { m.hover = false; });
-    });
+    let mx = window.innerWidth / 2;
+    let my = window.innerHeight / 2;
+    let rx = mx;
+    let ry = my;
 
     window.addEventListener('pointermove', (e) => {
-        // Magnets
-        for (const m of magnets) {
-            const r = m.el.getBoundingClientRect();
-            const dx = e.clientX - (r.left + r.width / 2);
-            const dy = e.clientY - (r.top + r.height / 2);
-            const inside = e.target.closest && e.target.closest('.magnetic') === m.el;
-            const pull = inside ? 9 : 3;
-            m.tx = m.hover ? clamp(dx * 0.2, -pull, pull) : 0;
-            m.ty = m.hover ? clamp(dy * 0.2, -pull, pull) : 0;
-        }
-
-        // Tilt Plates & Specular Sheen
-        for (const t of tilts) {
-            const r = t.el.getBoundingClientRect();
-            if (e.clientX < r.left - 60 || e.clientX > r.right + 60 ||
-                e.clientY < r.top - 60 || e.clientY > r.bottom + 60) {
-                t.crx = 0;
-                t.cry = 0;
-                continue;
-            }
-
-            const px = (e.clientX - r.left) / r.width;
-            const py = (e.clientY - r.top) / r.height;
-
-            t.crx = (py - 0.5) * -7;
-            t.cry = (px - 0.5) * 7;
-
-            t.el.style.setProperty('--mouse-x', `${(e.clientX - r.left).toFixed(1)}px`);
-            t.el.style.setProperty('--mouse-y', `${(e.clientY - r.top).toFixed(1)}px`);
-        }
+        mx = e.clientX;
+        my = e.clientY;
     }, { passive: true });
 
     (function loop() {
-        for (const m of magnets) {
-            m.cx = lerp(m.cx, m.tx, 0.16);
-            m.cy = lerp(m.cy, m.ty, 0.16);
-            if (Math.abs(m.cx) > 0.05 || Math.abs(m.cy) > 0.05 || m.hover) {
-                m.el.style.transform = `perspective(600px) translate(${m.cx.toFixed(2)}px, ${m.cy.toFixed(2)}px)`;
-            } else if (m.el.style.transform) {
-                m.el.style.transform = '';
-            }
-        }
-
-        for (const t of tilts) {
-            t.rx = lerp(t.rx, t.crx, 0.12);
-            t.ry = lerp(t.ry, t.cry, 0.12);
-            if (Math.abs(t.rx) > 0.06 || Math.abs(t.ry) > 0.06) {
-                t.el.style.transform = `perspective(1000px) rotateX(${t.rx.toFixed(2)}deg) rotateY(${t.ry.toFixed(2)}deg)`;
-            } else if (t.el.style.transform && !t.el.matches(':hover')) {
-                t.el.style.transform = '';
-            }
-        }
+        rx = lerp(rx, mx, 0.2);
+        ry = lerp(ry, my, 0.2);
+        dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%, -50%)`;
+        ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
         requestAnimationFrame(loop);
     })();
-})();
 
-/* ------------------------------------------------------------
-   10. GitHub Live Telemetry
-   ------------------------------------------------------------ */
-(function telemetry() {
-    const KEY = 'arch1cat_gh_v3';
-    const TTL = 60 * 60 * 1000;
-    const FALLBACK = { repos: 8, stars: 0, followers: 0 };
-    const starEls = {};
-    document.querySelectorAll('[data-star-repo]').forEach((el) => {
-        starEls[el.dataset.starRepo] = el;
+    const HOVER_SEL = 'a, button, .dock-tab, .icon-btn, .btn-primary, .btn-ghost';
+    document.addEventListener('mouseover', (e) => {
+        const hit = !!e.target.closest(HOVER_SEL);
+        ring.classList.toggle('grow', hit);
+        if (hit && window.__playSfx) {
+            window.__playSfx('hover');
+        }
     });
 
-    function render(d, animate) {
-        setCounter('#stat-repos', d.repos, animate, (v) => String(v).padStart(2, '0'));
-        setCounter('#stat-stars', d.stars, animate, (v) => '★★ ' + String(v).padStart(2, '0'));
-        setCounter('#stat-followers', d.followers, animate, (v) => String(v).padStart(2, '0'));
-        Object.entries(starEls).forEach(([repo, el]) => {
-            if (d.perRepo && d.perRepo[repo] > 0) {
-                el.textContent = `★ ${d.perRepo[repo]}`;
-                el.classList.remove('hidden');
-            }
-        });
-    }
-
-    function setCounter(sel, target, animate, fmt) {
-        const el = document.querySelector(sel);
-        if (!el) return;
-        if (!animate || RM) { el.textContent = fmt(target); return; }
-        const start = performance.now();
-        const DUR = 1200;
-
-        (function tick(now) {
-            const p = clamp((now - start) / DUR, 0, 1);
-            const eased = 1 - Math.pow(1 - p, 3);
-            el.textContent = fmt(Math.round(target * eased));
-            if (p < 1) requestAnimationFrame(tick);
-        })(start);
-    }
-
-    async function fetchLive() {
-        const base = 'https://api.github.com';
-        const [user, ...repos] = await Promise.all([
-            fetch(base + '/users/l2bote4game').then((r) => r.json()),
-            ...['world-monitor', 'wifiscaner', 'media-meta-cleaner', 'cats-match3-game', 'openGym']
-                .map((n) => fetch(`${base}/repos/l2bote4game/${n}`).then((r) => r.json())),
-        ]);
-
-        const perRepo = {};
-        let stars = 0;
-        const NAMES = ['world-monitor', 'wifiscaner', 'media-meta-cleaner', 'cats-match3-game', 'openGym'];
-        repos.forEach((r, i) => {
-            const name = NAMES[i];
-            perRepo[name] = typeof r.stargazers_count === 'number' ? r.stargazers_count : 0;
-            stars += perRepo[name];
-        });
-        return {
-            repos: user.public_repos ?? FALLBACK.repos,
-            stars,
-            followers: user.followers ?? FALLBACK.followers,
-            perRepo
-        };
-    }
-
-    try {
-        const cached = JSON.parse(localStorage.getItem(KEY) || 'null');
-        if (cached && Date.now() - cached.t < TTL) {
-            render(cached.data, true);
-            return;
+    window.addEventListener('pointerdown', (e) => {
+        if (window.__playSfx && e.target.closest(HOVER_SEL)) {
+            window.__playSfx('click');
         }
-    } catch (_) {}
-
-    fetchLive()
-        .then((data) => {
-            render(data, true);
-            try { localStorage.setItem(KEY, JSON.stringify({ t: Date.now(), data })); } catch (_) {}
-        })
-        .catch(() => render(FALLBACK, true));
+    });
 })();
 
 /* ------------------------------------------------------------
-   11. Ambient Audio Toggle Button
+   8. Ambient Audio Engine Controller
    ------------------------------------------------------------ */
 (function audioControls() {
     const audioBtn = document.getElementById('audio-toggle-btn');
