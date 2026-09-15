@@ -29,6 +29,13 @@ const TRACKS = [
         root: 82.41,
         padType: 'sine', arpType: 'triangle', bassType: 'sine',
     },
+    {
+        name: 'KYIV VOLYA // CARILLON 30.52E',
+        bpm: 90,
+        scale: [220, 246.94, 261.63, 293.66, 329.63, 349.23, 392], // Ukrainian Dorian
+        root: 110,
+        padType: 'triangle', arpType: 'square', bassType: 'sawtooth',
+    },
 ];
 
 let ctx = null;

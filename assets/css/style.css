@@ -62,6 +62,31 @@ html[data-theme="super-chrome"] {
     --cursor-glow: rgba(255, 77, 0, 0.45);
 }
 
+/* Theme 3: Cyber Volya (Ukrainian Azure & Radiant Solar Gold) */
+html[data-theme="cyber-volya"] {
+    --ink: #020612;
+    --ink-trans: rgba(2, 6, 18, 0.82);
+    --surface: #060F26;
+    --plate: rgba(8, 20, 48, 0.72);
+    --plate-hover: rgba(14, 32, 74, 0.88);
+    --bone: #F8FAFC;
+    --muted: #8496BA;
+    --accent: #FFD700;
+    --accent-secondary: #0077FE;
+    --accent-glow: rgba(255, 215, 0, 0.42);
+    --line: rgba(0, 119, 254, 0.28);
+    --line-active: rgba(255, 215, 0, 0.6);
+    --selection-bg: #FFD700;
+    --selection-text: #020612;
+    --tag-bg: rgba(0, 119, 254, 0.14);
+    --tag-border: rgba(0, 119, 254, 0.38);
+    --tag-text: #60A5FA;
+    --badge-bg: rgba(255, 215, 0, 0.14);
+    --badge-border: rgba(255, 215, 0, 0.4);
+    --badge-text: #FDE047;
+    --cursor-glow: rgba(255, 215, 0, 0.45);
+}
+
 * {
     box-sizing: border-box;
     margin: 0;

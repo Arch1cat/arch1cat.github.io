@@ -36,8 +36,8 @@
     try {
         var t = localStorage.getItem('arch_theme');
         var p = new URLSearchParams(location.search).get('theme');
-        if (p === 'super-chrome' || p === 'lusion-void') t = p;
-        if (t === 'super-chrome' || t === 'lusion-void') {
+        if (p === 'super-chrome' || p === 'lusion-void' || p === 'cyber-volya') t = p;
+        if (t === 'super-chrome' || t === 'lusion-void' || t === 'cyber-volya') {
             document.documentElement.setAttribute('data-theme', t);
         } else {
             document.documentElement.setAttribute('data-theme', 'lusion-void');
@@ -120,8 +120,8 @@
                     </div>
                 </button>
 
-                <!-- Dual-Theme Switcher (Lusion Void <-> Super Chrome) -->
-                <button id="theme-toggle-btn" class="icon-btn" title="Toggle Theme (Lusion Void / Super Chrome)" aria-label="Switch theme">
+                <!-- 3-Theme Switcher (Lusion Void -> Super Chrome -> Cyber Volya) -->
+                <button id="theme-toggle-btn" class="icon-btn" title="Toggle Theme (Lusion Void / Super Chrome / Cyber Volya)" aria-label="Switch theme">
                     <!-- Void Crystal Icon -->
                     <svg id="theme-icon-void" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
@@ -135,6 +135,10 @@
                         <path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path>
                         <path d="M2 12h2"></path><path d="M20 12h2"></path>
                         <path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path>
+                    </svg>
+                    <!-- Volya Trident / Falcon Icon -->
+                    <svg id="theme-icon-volya" class="hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2v20M5 5v7a7 7 0 0 0 14 0V5M8 12a4 4 0 0 0 8 0"/>
                     </svg>
                 </button>
 

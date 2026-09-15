@@ -199,38 +199,46 @@ function showToast(text, ms = 2200) {
 })();
 
 /* ------------------------------------------------------------
-   6. Dual-Theme Switcher (Lusion Void <-> Super Chrome)
+   6. 3-Theme Switcher (Lusion Void -> Super Chrome -> Cyber Volya)
    ------------------------------------------------------------ */
 (function themeSwitch() {
     const btn = document.getElementById('theme-toggle-btn');
     const iconVoid = document.getElementById('theme-icon-void');
     const iconChrome = document.getElementById('theme-icon-chrome');
+    const iconVolya = document.getElementById('theme-icon-volya');
     const meta = document.querySelector('meta[name="theme-color"]');
+
+    const THEME_CYCLE = ['lusion-void', 'super-chrome', 'cyber-volya'];
 
     const METAS = {
         'lusion-void': '#05070B',
-        'super-chrome': '#08080A'
+        'super-chrome': '#08080A',
+        'cyber-volya': '#020612'
     };
 
     const TOASTS = {
         'lusion-void': '💎 LUSION VOID ENGAGED',
-        'super-chrome': '⚡ SUPER CHROME ENGAGED'
+        'super-chrome': '⚡ SUPER CHROME ENGAGED',
+        'cyber-volya': '🇺🇦 ВОЛЯ // CYBER-UKRAINE ENGAGED'
     };
 
     function paint(theme) {
-        iconVoid?.classList.toggle('hidden', theme === 'super-chrome');
+        iconVoid?.classList.toggle('hidden', theme !== 'lusion-void');
         iconChrome?.classList.toggle('hidden', theme !== 'super-chrome');
+        iconVolya?.classList.toggle('hidden', theme !== 'cyber-volya');
         meta?.setAttribute('content', METAS[theme] || '#05070B');
     }
 
     let cur = document.documentElement.getAttribute('data-theme') || 'lusion-void';
-    if (cur !== 'lusion-void' && cur !== 'super-chrome') cur = 'lusion-void';
+    if (!THEME_CYCLE.includes(cur)) cur = 'lusion-void';
     document.documentElement.setAttribute('data-theme', cur);
     paint(cur);
 
     btn?.addEventListener('click', () => {
         const current = document.documentElement.getAttribute('data-theme') || 'lusion-void';
-        const next = current === 'lusion-void' ? 'super-chrome' : 'lusion-void';
+        const currentIndex = THEME_CYCLE.indexOf(current);
+        const nextIndex = (currentIndex + 1) % THEME_CYCLE.length;
+        const next = THEME_CYCLE[nextIndex];
 
         try { localStorage.setItem('arch_theme', next); } catch (_) {}
         document.documentElement.setAttribute('data-theme', next);

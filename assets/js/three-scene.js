@@ -73,6 +73,18 @@ const THEME_PALETTES = {
         particlesA: new THREE.Color(0xFF4D00),
         particlesB: new THREE.Color(0xFFB800),
         bloom: 0.65
+    },
+    'cyber-volya': {
+        fog: new THREE.Color(0x020612),
+        keyLight: new THREE.Color(0xFFE885),
+        coreEmissive: new THREE.Color(0xFFD700),
+        coreBody: new THREE.Color(0x040D24),
+        ring1: new THREE.Color(0x0077FE),
+        ring2: new THREE.Color(0xFFD700),
+        satellites: new THREE.Color(0xFFEA79),
+        particlesA: new THREE.Color(0x0077FE),
+        particlesB: new THREE.Color(0xFFD700),
+        bloom: 0.72
     }
 };
 
@@ -180,6 +192,82 @@ const coreWireMat = new THREE.MeshBasicMaterial({
 });
 const coreWireMesh = new THREE.Mesh(coreGeo, coreWireMat);
 sculptureGroup.add(coreWireMesh);
+
+/* 1b. 3D Procedural Holographic Tryzub (Active in cyber-volya theme) */
+const tryzubGroup = new THREE.Group();
+let tryzubScale = currentTheme === 'cyber-volya' ? 1.0 : 0.0;
+let tryzubTargetScale = tryzubScale;
+tryzubGroup.scale.setScalar(tryzubScale);
+tryzubGroup.visible = tryzubScale > 0.01;
+sculptureGroup.add(tryzubGroup);
+
+const tryzubMat = new THREE.MeshStandardMaterial({
+    color: 0x221800,
+    emissive: 0xFFD700,
+    emissiveIntensity: 1.25,
+    metalness: 0.95,
+    roughness: 0.15
+});
+
+const tryzubWireMat = new THREE.MeshBasicMaterial({
+    color: 0x0077FE,
+    wireframe: true,
+    transparent: true,
+    opacity: 0.65
+});
+
+function addTryzubPart(geo, pos, rot, scale) {
+    const mesh = new THREE.Mesh(geo, tryzubMat);
+    const wire = new THREE.Mesh(geo, tryzubWireMat);
+    if (pos) { mesh.position.set(...pos); wire.position.set(...pos); }
+    if (rot) { mesh.rotation.set(...rot); wire.rotation.set(...rot); }
+    if (scale) { mesh.scale.set(...scale); wire.scale.set(...scale); }
+    tryzubGroup.add(mesh);
+    tryzubGroup.add(wire);
+    return mesh;
+}
+
+// Central stem & diamond spire
+addTryzubPart(new THREE.BoxGeometry(0.22, 1.85, 0.14), [0, 0.15, 0]);
+addTryzubPart(new THREE.ConeGeometry(0.24, 0.65, 4), [0, 1.35, 0], [0, Math.PI / 4, 0]);
+addTryzubPart(new THREE.OctahedronGeometry(0.22, 0), [0, 0, 0.08]);
+
+// Base arch & anchor
+addTryzubPart(new THREE.BoxGeometry(1.4, 0.16, 0.14), [0, -0.65, 0]);
+addTryzubPart(new THREE.ConeGeometry(0.2, 0.45, 4), [0, -0.88, 0], [Math.PI, Math.PI / 4, 0]);
+
+// Left wing: lower bar + vertical blade + tip + fang
+const wingBarGeo = new THREE.BoxGeometry(0.55, 0.14, 0.12);
+const wingBladeGeo = new THREE.BoxGeometry(0.16, 1.35, 0.12);
+const wingTipGeo = new THREE.ConeGeometry(0.18, 0.5, 4);
+const wingFangGeo = new THREE.BoxGeometry(0.28, 0.12, 0.1);
+
+addTryzubPart(wingBarGeo, [-0.55, -0.35, 0], [0, 0, 0.3]);
+addTryzubPart(wingBladeGeo, [-0.78, 0.42, 0]);
+addTryzubPart(wingTipGeo, [-0.78, 1.25, 0], [0, Math.PI / 4, 0]);
+addTryzubPart(wingFangGeo, [-0.68, 0.78, 0], [0, 0, -0.55]);
+
+// Right wing (mirror symmetric)
+addTryzubPart(wingBarGeo, [0.55, -0.35, 0], [0, 0, -0.3]);
+addTryzubPart(wingBladeGeo, [0.78, 0.42, 0]);
+addTryzubPart(wingTipGeo, [0.78, 1.25, 0], [0, Math.PI / 4, 0]);
+addTryzubPart(wingFangGeo, [0.68, 0.78, 0], [0, 0, 0.55]);
+
+// Glowing Azure Tip Beacons
+const tipBeaconGeo = new THREE.SphereGeometry(0.09, 16, 16);
+const tipBeaconMat = new THREE.MeshBasicMaterial({ color: 0x00D0FF });
+
+const bCentral = new THREE.Mesh(tipBeaconGeo, tipBeaconMat);
+bCentral.position.set(0, 1.7, 0);
+tryzubGroup.add(bCentral);
+
+const bLeft = new THREE.Mesh(tipBeaconGeo, tipBeaconMat);
+bLeft.position.set(-0.78, 1.52, 0);
+tryzubGroup.add(bLeft);
+
+const bRight = new THREE.Mesh(tipBeaconGeo, tipBeaconMat);
+bRight.position.set(0.78, 1.52, 0);
+tryzubGroup.add(bRight);
 
 /* 2. Gyroscopic Gimbal Rings */
 function createGyroRing(radius, tube, color, rotSpeedX, rotSpeedY) {
@@ -473,6 +561,18 @@ function applyTheme(themeName) {
 
     bloomPass.strength = pal.bloom;
 
+    // Tryzub manifestation
+    tryzubTargetScale = themeName === 'cyber-volya' ? 1.0 : 0.0;
+    if (themeName === 'cyber-volya') {
+        coreMat.wireframe = true;
+        coreMat.transparent = true;
+        coreMat.opacity = 0.35;
+    } else {
+        coreMat.wireframe = false;
+        coreMat.transparent = false;
+        coreMat.opacity = 1.0;
+    }
+
     // Update particle colors
     const colors = particleGeo.attributes.color.array;
     for (let i = 0; i < PARTICLE_COUNT; i++) {
@@ -529,6 +629,15 @@ function animate() {
     // Sculpture manual orbit + base idle rotation
     sculptureGroup.rotation.y = orbitRotationY + elapsedTime * 0.15;
     sculptureGroup.rotation.x = orbitRotationX + Math.sin(elapsedTime * 0.5) * 0.08;
+
+    // Tryzub animation
+    tryzubScale += (tryzubTargetScale - tryzubScale) * 0.08;
+    tryzubGroup.scale.setScalar(tryzubScale);
+    tryzubGroup.visible = tryzubScale > 0.005;
+    if (tryzubGroup.visible) {
+        tryzubGroup.rotation.y = elapsedTime * 0.5;
+        tryzubGroup.position.y = Math.sin(elapsedTime * 1.8) * 0.1;
+    }
 
     // Move cursor light
     cursorLight.position.set(pointerNDC.x * 6, pointerNDC.y * 4, 4.5);
