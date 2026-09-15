@@ -1,7 +1,18 @@
 /* ============================================================
-   ARCHIVE//01 — ui.js
-   Title card · scramble · reveal · rail · cursor · magnets ·
-   tilt · telemetry · audio v3 · meow easter egg
+   ARCH1CAT — ui.js
+   Lusion-Grade UI Controller & Micro-Interactions
+   Features:
+   - Boot Title Card with elegant reveal
+   - Letter Scramble Decode on scroll
+   - Scroll-driven reveals with staggered delays
+   - Precision Dual Cursor with magnetic hover states
+   - Dual-Theme Switcher (Lusion Void <-> Super Chrome)
+   - Station Telemetry: Kyiv time, FPS counter, cursor coordinates
+   - Magnetic Buttons & 3D Glass Plate Tilt with Specular Sheen
+   - GitHub live telemetry fetch & animated count-up
+   - Web Audio SFX integration & Ambient Synth Toggle
+   - 3D Kinetic Energy Pulse Trigger
+   - Cat Easter Egg ("meow")
    ============================================================ */
 
 const RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -10,16 +21,16 @@ const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 const lerp = (a, b, t) => a + (b - a) * t;
 
 /* ------------------------------------------------------------
-   1. TITLE CARD
+   1. Title Card / Boot Sequence
    ------------------------------------------------------------ */
 (function titleCard() {
     const overlay = document.getElementById('boot-overlay');
     if (!overlay) return;
     const done = () => {
         if (document.body.style.overflow === 'hidden') document.body.style.overflow = '';
-        window.dispatchEvent(new CustomEvent('archive:ready'));
+        window.dispatchEvent(new CustomEvent('site:ready'));
     };
-    if (RM || sessionStorage.getItem('archiveTitleDone')) {
+    if (RM || sessionStorage.getItem('arch1catTitleDone')) {
         overlay.remove();
         done();
         return;
@@ -27,15 +38,18 @@ const lerp = (a, b, t) => a + (b - a) * t;
     document.body.style.overflow = 'hidden';
     setTimeout(() => {
         overlay.classList.add('boot-hide');
-        sessionStorage.setItem('archiveTitleDone', '1');
-        setTimeout(() => { overlay.remove(); done(); }, 550);
-    }, 1600);
+        sessionStorage.setItem('arch1catTitleDone', '1');
+        setTimeout(() => {
+            overlay.remove();
+            done();
+        }, 350);
+    }, 400);
 })();
 
 /* ------------------------------------------------------------
-   2. SCRAMBLE DECODE
+   2. Letter Scramble Decode
    ------------------------------------------------------------ */
-const GLYPHS = '—/\\|▪▸<>_#01';
+const GLYPHS = '—/\\|▪▸<>_#01XYZ';
 function scramble(el) {
     if (el.dataset.scrambled) return;
     el.dataset.scrambled = '1';
@@ -43,7 +57,8 @@ function scramble(el) {
     const original = el.textContent;
     const len = original.length;
     const start = performance.now();
-    const DUR = 700;
+    const DUR = 750;
+
     (function frame(now) {
         const p = clamp((now - start) / DUR, 0, 1);
         const solidCount = Math.floor(p * len);
@@ -56,46 +71,60 @@ function scramble(el) {
         else el.textContent = original;
     })(start);
 }
-var scrambleObserver = new IntersectionObserver((entries) => {
+
+const scrambleObserver = new IntersectionObserver((entries) => {
     entries.forEach((e) => {
-        if (e.isIntersecting) { scramble(e.target); scrambleObserver.unobserve(e.target); }
+        if (e.isIntersecting) {
+            scramble(e.target);
+            scrambleObserver.unobserve(e.target);
+        }
     });
-}, { threshold: 0.4 });
+}, { threshold: 0.35 });
+
 document.querySelectorAll('[data-scramble]').forEach((el) => scrambleObserver.observe(el));
 
 /* ------------------------------------------------------------
-   3. REVEAL ON SCROLL
+   3. Reveal on Scroll
    ------------------------------------------------------------ */
 (function reveals() {
     const els = document.querySelectorAll('.reveal');
-    if (RM) { els.forEach((el) => el.classList.add('in')); return; }
+    if (RM) {
+        els.forEach((el) => el.classList.add('in'));
+        return;
+    }
     const io = new IntersectionObserver((entries) => {
         entries.forEach((e) => {
-            if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+            if (e.isIntersecting) {
+                e.target.classList.add('in');
+                io.unobserve(e.target);
+            }
         });
-    }, { threshold: 0.15 });
+    }, { threshold: 0.12 });
     els.forEach((el) => io.observe(el));
 })();
 
 /* ------------------------------------------------------------
-   4. CHAPTER RAIL (sync with three-scene via chapterchange)
+   4. Chapter Rail Navigation
    ------------------------------------------------------------ */
 (function rail() {
     const buttons = [...document.querySelectorAll('.rail-item')];
     const MAP = { prologue: '#about', works: '#projects', flagship: '#flagship', signal: '#activity' };
+
     buttons.forEach((b) => b.addEventListener('click', () => {
+        if (window.__playSfx) window.__playSfx('click');
         const target = document.querySelector(b.dataset.target);
         if (target) target.scrollIntoView({ behavior: RM ? 'auto' : 'smooth' });
     }));
+
     window.addEventListener('chapterchange', (e) => {
         const sel = MAP[e.detail?.name];
         buttons.forEach((b) => b.classList.toggle('active', !!sel && b.dataset.target === sel));
     });
-    // initial state without waiting for scene
+
     const first = document.querySelector('[data-chapter="prologue"]');
     if (first) {
-        const io = new IntersectionObserver((es) => {
-            es.forEach((e) => {
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach((e) => {
                 if (e.isIntersecting) {
                     buttons.forEach((b) => b.classList.toggle('active', b.dataset.target === '#about'));
                     io.disconnect();
@@ -107,49 +136,17 @@ document.querySelectorAll('[data-scramble]').forEach((el) => scrambleObserver.ob
 })();
 
 /* ------------------------------------------------------------
-   5. PRECISION CURSOR + CLICK RIPPLE
+   5. Precision Cursor & Click Ripple
    ------------------------------------------------------------ */
-(function cursor() {
-    if (!FINE || RM) return;
-    document.documentElement.classList.add('cursor-on');
-    const dot = document.getElementById('cursor-dot');
-    const ring = document.getElementById('cursor-ring');
-    if (!dot || !ring) return;
-
-    let mx = innerWidth / 2, my = innerHeight / 2, rx = mx, ry = my;
-    addEventListener('pointermove', (e) => { mx = e.clientX; my = e.clientY; }, { passive: true });
-
-    (function loop() {
-        rx = lerp(rx, mx, 0.18); ry = lerp(ry, my, 0.18);
-        dot.style.transform = `translate(${mx}px,${my}px) translate(-50%,-50%)`;
-        ring.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%)`;
-        requestAnimationFrame(loop);
-    })();
-
-    const HOVER_SEL = 'a, button, .plate, .btn-archive';
-    document.addEventListener('mouseover', (e) => {
-        ring.classList.toggle('grow', !!e.target.closest(HOVER_SEL));
-    });
-
-    // unified click ripple (mirrors the WebGL wave); disc click toggles playback
-    addEventListener('pointerdown', (e) => {
-        if (e.target.closest('a, button')) return;
-        const nx = (e.clientX / innerWidth) * 2 - 1;
-        const ny = -(e.clientY / innerHeight) * 2 + 1;
-        if (window.__archiveDiscClick?.(nx, ny)) {
-            window.__deckAudio?.toggle();
-            showToast(window.__deckAudio.isPlaying() ? '▶ ' + window.__deckAudio.trackInfo().name : '❚❚ PAUSED');
-        }
-        spawnRipple(e.clientX, e.clientY);
-    });
-})();
 function spawnRipple(x, y) {
     const r = document.createElement('div');
     r.className = 'click-ripple';
-    r.style.left = x + 'px'; r.style.top = y + 'px';
+    r.style.left = x + 'px';
+    r.style.top = y + 'px';
     document.body.appendChild(r);
-    setTimeout(() => r.remove(), 520);
+    setTimeout(() => r.remove(), 550);
 }
+
 function showToast(text, ms = 2200) {
     const toast = document.getElementById('toast');
     if (!toast) return;
@@ -159,85 +156,152 @@ function showToast(text, ms = 2200) {
     showToast._t = setTimeout(() => toast.classList.remove('show'), ms);
 }
 
-/* ------------------------------------------------------------
-   5b. THEME SWITCHER (workstation <-> archive)
-   ------------------------------------------------------------ */
-(function themeSwitch() {
-    const btn = document.getElementById('theme-toggle-btn');
-    const iconDeck = document.getElementById('theme-icon-deck');
-    const iconArch = document.getElementById('theme-icon-archive');
-    const meta = document.querySelector('meta[name="theme-color"]');
-    
-    const METAS = { archive: '#0B0B0C', workstation: '#07090E' };
-    const TOASTS = {
-        archive: '📼 ARCHIVE//01 RESTORED',
-        workstation: '🖥 CYBER WORKSTATION ONLINE',
-    };
+(function cursor() {
+    if (!FINE || RM) return;
+    document.documentElement.classList.add('cursor-on');
+    const dot = document.getElementById('cursor-dot');
+    const ring = document.getElementById('cursor-ring');
+    if (!dot || !ring) return;
 
-    function paint(theme) {
-        iconDeck?.classList.toggle('hidden', theme === 'workstation');
-        iconArch?.classList.toggle('hidden', theme !== 'workstation');
-        meta?.setAttribute('content', METAS[theme] || '#07090E');
-    }
+    let mx = window.innerWidth / 2;
+    let my = window.innerHeight / 2;
+    let rx = mx;
+    let ry = my;
 
-    const cur = document.documentElement.getAttribute('data-theme') || 'workstation';
-    paint(cur);
+    window.addEventListener('pointermove', (e) => {
+        mx = e.clientX;
+        my = e.clientY;
+    }, { passive: true });
 
-    btn?.addEventListener('click', () => {
-        const t = document.documentElement.getAttribute('data-theme') || 'workstation';
-        const next = t === 'workstation' ? 'archive' : 'workstation';
-        try { localStorage.setItem('arch_theme', next); } catch (_) {}
-        document.documentElement.setAttribute('data-theme', next);
-        paint(next);
-        window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
-        showToast(TOASTS[next] || TOASTS.workstation);
+    (function loop() {
+        rx = lerp(rx, mx, 0.2);
+        ry = lerp(ry, my, 0.2);
+        dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%, -50%)`;
+        ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
+        requestAnimationFrame(loop);
+    })();
+
+    const HOVER_SEL = 'a, button, .plate, .btn-archive, .stage-3d-badge, .icon-btn';
+    document.addEventListener('mouseover', (e) => {
+        const hit = !!e.target.closest(HOVER_SEL);
+        ring.classList.toggle('grow', hit);
+        if (hit && window.__playSfx) {
+            window.__playSfx('hover');
+        }
+    });
+
+    window.addEventListener('pointerdown', (e) => {
+        spawnRipple(e.clientX, e.clientY);
+        if (window.__playSfx && e.target.closest('a, button, .btn-archive, .icon-btn')) {
+            window.__playSfx('click');
+        }
     });
 })();
 
 /* ------------------------------------------------------------
-   5c. STATION PANEL (deck density): kyiv clock · fps · cursor
+   6. Dual-Theme Switcher (Lusion Void <-> Super Chrome)
+   ------------------------------------------------------------ */
+(function themeSwitch() {
+    const btn = document.getElementById('theme-toggle-btn');
+    const iconVoid = document.getElementById('theme-icon-void');
+    const iconChrome = document.getElementById('theme-icon-chrome');
+    const meta = document.querySelector('meta[name="theme-color"]');
+
+    const METAS = {
+        'lusion-void': '#05070B',
+        'super-chrome': '#08080A'
+    };
+
+    const TOASTS = {
+        'lusion-void': '💎 LUSION VOID ENGAGED',
+        'super-chrome': '⚡ SUPER CHROME ENGAGED'
+    };
+
+    function paint(theme) {
+        iconVoid?.classList.toggle('hidden', theme === 'super-chrome');
+        iconChrome?.classList.toggle('hidden', theme !== 'super-chrome');
+        meta?.setAttribute('content', METAS[theme] || '#05070B');
+    }
+
+    let cur = document.documentElement.getAttribute('data-theme') || 'lusion-void';
+    if (cur !== 'lusion-void' && cur !== 'super-chrome') cur = 'lusion-void';
+    document.documentElement.setAttribute('data-theme', cur);
+    paint(cur);
+
+    btn?.addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme') || 'lusion-void';
+        const next = current === 'lusion-void' ? 'super-chrome' : 'lusion-void';
+
+        try { localStorage.setItem('arch_theme', next); } catch (_) {}
+        document.documentElement.setAttribute('data-theme', next);
+        paint(next);
+
+        if (window.__playSfx) window.__playSfx('theme');
+        window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        showToast(TOASTS[next] || TOASTS['lusion-void']);
+    });
+})();
+
+/* ------------------------------------------------------------
+   7. Station Telemetry Panel: Kyiv Clock · FPS · Pointer Coordinates
    ------------------------------------------------------------ */
 (function stationPanel() {
     const clock = document.getElementById('sp-clock');
     const fpsEl = document.getElementById('sp-fps');
-    const cxEI = document.getElementById('sp-cx');
+    const cxEl = document.getElementById('sp-cx');
+
     if (clock) {
         const tick = () => {
-            try { clock.textContent = new Date().toLocaleTimeString('uk-UA', { hour12: false, timeZone: 'Europe/Kyiv' }); }
-            catch (_) { clock.textContent = new Date().toLocaleTimeString('uk-UA', { hour12: false }); }
+            try {
+                clock.textContent = new Date().toLocaleTimeString('uk-UA', {
+                    hour12: false,
+                    timeZone: 'Europe/Kyiv'
+                });
+            } catch (_) {
+                clock.textContent = new Date().toLocaleTimeString('uk-UA', { hour12: false });
+            }
         };
         tick();
         setInterval(tick, 1000);
     }
+
     if (fpsEl) {
-        let last = performance.now(), frames = 0, acc = 0;
+        let last = performance.now();
+        let frames = 0;
+        let acc = 0;
+
         (function fLoop(now) {
-            frames++; acc += now - last; last = now;
+            frames++;
+            acc += now - last;
+            last = now;
             if (acc >= 500) {
                 fpsEl.textContent = Math.round(frames / (acc / 1000));
-                frames = 0; acc = 0;
+                frames = 0;
+                acc = 0;
             }
             requestAnimationFrame(fLoop);
         })(performance.now());
     }
-    if (cxEI) {
-        addEventListener('pointermove', (e) => {
-            cxEI.textContent = String(Math.round(e.clientX)).padStart(4, '0');
+
+    if (cxEl) {
+        window.addEventListener('pointermove', (e) => {
+            cxEl.textContent = String(Math.round(e.clientX)).padStart(4, '0');
         }, { passive: true });
     }
 })();
 
 /* ------------------------------------------------------------
-   6. MAGNETIC BUTTONS + PLATE TILT + SPOTLIGHT VARS
-   (single shared rAF manager)
+   8. Magnetic Elements & 3D Glass Plates Tilt with Specular Sheen
    ------------------------------------------------------------ */
 (function interactives() {
     if (!FINE || RM) return;
+
     const magnets = [...document.querySelectorAll('.magnetic')].map((el) => ({
-        el, tx: 0, ty: 0, cx: 0, cy: 0, hover: false,
+        el, tx: 0, ty: 0, cx: 0, cy: 0, hover: false
     }));
+
     const tilts = [...document.querySelectorAll('.tilt-plate')].map((el) => ({
-        el, rx: 0, ry: 0, crx: 0, cry: 0,
+        el, rx: 0, ry: 0, crx: 0, cry: 0
     }));
 
     magnets.forEach((m) => {
@@ -245,44 +309,56 @@ function showToast(text, ms = 2200) {
         m.el.addEventListener('pointerleave', () => { m.hover = false; });
     });
 
-    document.addEventListener('pointermove', (e) => {
+    window.addEventListener('pointermove', (e) => {
+        // Magnets
         for (const m of magnets) {
             const r = m.el.getBoundingClientRect();
             const dx = e.clientX - (r.left + r.width / 2);
             const dy = e.clientY - (r.top + r.height / 2);
             const inside = e.target.closest && e.target.closest('.magnetic') === m.el;
-            const pull = inside ? 8 : 3;
-            m.tx = m.hover ? clamp(dx * 0.18, -pull, pull) : 0;
-            m.ty = m.hover ? clamp(dy * 0.18, -pull, pull) : 0;
+            const pull = inside ? 9 : 3;
+            m.tx = m.hover ? clamp(dx * 0.2, -pull, pull) : 0;
+            m.ty = m.hover ? clamp(dy * 0.2, -pull, pull) : 0;
         }
+
+        // Tilt Plates & Specular Sheen
         for (const t of tilts) {
             const r = t.el.getBoundingClientRect();
-            if (e.clientX < r.left - 80 || e.clientX > r.right + 80 ||
-                e.clientY < r.top - 80 || e.clientY > r.bottom + 80) continue;
+            if (e.clientX < r.left - 60 || e.clientX > r.right + 60 ||
+                e.clientY < r.top - 60 || e.clientY > r.bottom + 60) {
+                t.crx = 0;
+                t.cry = 0;
+                continue;
+            }
+
             const px = (e.clientX - r.left) / r.width;
             const py = (e.clientY - r.top) / r.height;
-            t.crx = (py - 0.5) * -5;
-            t.cry = (px - 0.5) * 5;
-            t.el.style.setProperty('--mx', `${px * 100}%`);
-            t.el.style.setProperty('--my', `${py * 100}%`);
+
+            t.crx = (py - 0.5) * -7;
+            t.cry = (px - 0.5) * 7;
+
+            // Update mouse coordinates for specular sheen highlight
+            t.el.style.setProperty('--mouse-x', `${(e.clientX - r.left).toFixed(1)}px`);
+            t.el.style.setProperty('--mouse-y', `${(e.clientY - r.top).toFixed(1)}px`);
         }
     }, { passive: true });
 
     (function loop() {
         for (const m of magnets) {
-            m.cx = lerp(m.cx, m.tx, 0.15);
-            m.cy = lerp(m.cy, m.ty, 0.15);
+            m.cx = lerp(m.cx, m.tx, 0.16);
+            m.cy = lerp(m.cy, m.ty, 0.16);
             if (Math.abs(m.cx) > 0.05 || Math.abs(m.cy) > 0.05 || m.hover) {
                 m.el.style.transform = `perspective(600px) translate(${m.cx.toFixed(2)}px, ${m.cy.toFixed(2)}px)`;
             } else if (m.el.style.transform) {
                 m.el.style.transform = '';
             }
         }
+
         for (const t of tilts) {
             t.rx = lerp(t.rx, t.crx, 0.12);
             t.ry = lerp(t.ry, t.cry, 0.12);
-            if (Math.abs(t.rx) > 0.08 || Math.abs(t.ry) > 0.08) {
-                t.el.style.transform = `perspective(900px) rotateX(${t.rx.toFixed(2)}deg) rotateY(${t.ry.toFixed(2)}deg)`;
+            if (Math.abs(t.rx) > 0.06 || Math.abs(t.ry) > 0.06) {
+                t.el.style.transform = `perspective(1000px) rotateX(${t.rx.toFixed(2)}deg) rotateY(${t.ry.toFixed(2)}deg)`;
             } else if (t.el.style.transform && !t.el.matches(':hover')) {
                 t.el.style.transform = '';
             }
@@ -292,16 +368,16 @@ function showToast(text, ms = 2200) {
 })();
 
 /* ------------------------------------------------------------
-   7. GITHUB TELEMETRY (cache TTL 60min + fallbacks)
-   Fallback snapshot taken live on 2026-08-24:
-   repos=8 stars(sum of 4)=0 followers=0
+   9. GitHub Live Telemetry
    ------------------------------------------------------------ */
 (function telemetry() {
-    const KEY = 'archive_gh_v1';
+    const KEY = 'arch1cat_gh_v2';
     const TTL = 60 * 60 * 1000;
     const FALLBACK = { repos: 8, stars: 0, followers: 0 };
     const starEls = {};
-    document.querySelectorAll('[data-star-repo]').forEach((el) => { starEls[el.dataset.starRepo] = el; });
+    document.querySelectorAll('[data-star-repo]').forEach((el) => {
+        starEls[el.dataset.starRepo] = el;
+    });
 
     function render(d, animate) {
         setCounter('#stat-repos', d.repos, animate, (v) => String(v).padStart(2, '0'));
@@ -320,7 +396,8 @@ function showToast(text, ms = 2200) {
         if (!el) return;
         if (!animate || RM) { el.textContent = fmt(target); return; }
         const start = performance.now();
-        const DUR = 1400;
+        const DUR = 1200;
+
         (function tick(now) {
             const p = clamp((now - start) / DUR, 0, 1);
             const eased = 1 - Math.pow(1 - p, 3);
@@ -336,6 +413,7 @@ function showToast(text, ms = 2200) {
             ...['world-monitor', 'wifiscaner', 'media-meta-cleaner', 'cats-match3-game', 'openGym']
                 .map((n) => fetch(`${base}/repos/l2bote4game/${n}`).then((r) => r.json())),
         ]);
+
         const perRepo = {};
         let stars = 0;
         const NAMES = ['world-monitor', 'wifiscaner', 'media-meta-cleaner', 'cats-match3-game', 'openGym'];
@@ -344,7 +422,12 @@ function showToast(text, ms = 2200) {
             perRepo[name] = typeof r.stargazers_count === 'number' ? r.stargazers_count : 0;
             stars += perRepo[name];
         });
-        return { repos: user.public_repos ?? FALLBACK.repos, stars, followers: user.followers ?? FALLBACK.followers, perRepo };
+        return {
+            repos: user.public_repos ?? FALLBACK.repos,
+            stars,
+            followers: user.followers ?? FALLBACK.followers,
+            perRepo
+        };
     }
 
     try {
@@ -353,7 +436,7 @@ function showToast(text, ms = 2200) {
             render(cached.data, true);
             return;
         }
-    } catch (_) { /* ignore corrupt cache */ }
+    } catch (_) {}
 
     fetchLive()
         .then((data) => {
@@ -364,89 +447,42 @@ function showToast(text, ms = 2200) {
 })();
 
 /* ------------------------------------------------------------
-   8. AUDIO v3 (soft sine ticks) + MEOW EASTER EGG
+   10. Interactive 3D Orbit Pulse & Header Audio Button
    ------------------------------------------------------------ */
-(function audio() {
-    let ctx = null;
-    let on = localStorage.getItem('archive_sound') === '1';
-    let lastHover = 0;
+(function controls() {
+    // 3D Pulse Buttons
+    const pulseBtn = document.getElementById('hero-pulse-btn');
+    const stageBadge = document.getElementById('stage-3d-prompt');
 
-    const btn = document.getElementById('audio-toggle-btn');
-    const iconOn = document.getElementById('audio-icon-on');
-    const iconOff = document.getElementById('audio-icon-off');
-
-    function ensureCtx() { ctx = ctx || new (window.AudioContext || window.webkitAudioContext)(); }
-    function blip(freq, dur = 0.05, vol = 0.04, type = 'sine') {
-        if (!on) return;
-        try {
-            ensureCtx();
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.type = type;
-            osc.frequency.setValueAtTime(freq, ctx.currentTime);
-            gain.gain.setValueAtTime(vol, ctx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + dur);
-            osc.connect(gain); gain.connect(ctx.destination);
-            osc.start(); osc.stop(ctx.currentTime + dur);
-        } catch (_) {}
-    }
-
-    function paintState() {
-        iconOn?.classList.toggle('hidden', !on);
-        iconOff?.classList.toggle('hidden', on);
-        btn?.classList.toggle('text-[color:var(--ember)]', on);
-    }
-    btn?.addEventListener('click', () => {
-        on = !on;
-        localStorage.setItem('archive_sound', on ? '1' : '0');
-        ensureCtx();
-        if (ctx.state === 'suspended') ctx.resume();
-        paintState();
-        if (on) [520, 660, 780].forEach((f, i) => setTimeout(() => blip(f, 0.12, 0.05), i * 70));
-    });
-    paintState();
-
-    document.addEventListener('mouseover', (e) => {
-        if (!e.target.closest('a, button')) return;
-        const now = performance.now();
-        if (now - lastHover < 120) return;
-        lastHover = now;
-        blip(520, 0.03, 0.02);
-    });
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('a, button')) return;
-        blip(320, 0.06, 0.035);
+    pulseBtn?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (window.__triggerEnergyPulse) window.__triggerEnergyPulse();
     });
 
-    // meow → ember surge
+    stageBadge?.addEventListener('click', () => {
+        if (window.__triggerEnergyPulse) window.__triggerEnergyPulse();
+    });
+
+    // Audio Ambient Toggle Button in Header
+    const audioBtn = document.getElementById('audio-toggle-btn');
+    audioBtn?.addEventListener('click', () => {
+        if (!window.__deckAudio) return;
+        window.__deckAudio.toggle();
+        const playing = window.__deckAudio.isPlaying();
+        audioBtn.classList.toggle('active', playing);
+        if (window.__playSfx) window.__playSfx(playing ? 'theme' : 'click');
+        showToast(playing ? '▶ AMBIENT SYNTH ONLINE' : '❚❚ AMBIENT SYNTH PAUSED');
+    });
+
+    // Meow easter egg
     let buffer = '';
-    addEventListener('keydown', (e) => {
+    window.addEventListener('keydown', (e) => {
         if (e.key.length !== 1) return;
         buffer = (buffer + e.key.toLowerCase()).slice(-8);
-        if (!buffer.endsWith('meow')) return;
-        buffer = '';
-        const scene = window.__archive;
-        if (scene?.surge) scene.surge();
-        spawnRipple(innerWidth / 2, innerHeight / 2);
-        const toast = document.getElementById('toast');
-        if (toast) {
-            toast.textContent = '🐱 EMBER SURGE — MEOW MODE';
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 2200);
-        }
-        if (on) {
-            ensureCtx();
-            try {
-                const o = ctx.createOscillator();
-                const g = ctx.createGain();
-                o.type = 'sawtooth';
-                o.frequency.setValueAtTime(600, ctx.currentTime);
-                o.frequency.exponentialRampToValueAtTime(350, ctx.currentTime + 0.45);
-                g.gain.setValueAtTime(0.05, ctx.currentTime);
-                g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.5);
-                o.connect(g); g.connect(ctx.destination);
-                o.start(); o.stop(ctx.currentTime + 0.5);
-            } catch (_) {}
+        if (buffer.endsWith('meow')) {
+            buffer = '';
+            if (window.__triggerEnergyPulse) window.__triggerEnergyPulse();
+            showToast('🐱 CYBER CAT OVERDRIVE ACTIVATED');
         }
     });
 })();

@@ -1,46 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="lusion-void">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>arch1cat — software engineer & creator</title>
-    <meta name="description" content="Portfolio of arch1cat — fullstack engineer building AI agent workflows, 3D WebGL experiences, native Android software, Telegram bots and SEO systems. An interactive archive.">
-    <meta name="theme-color" content="#0B0B0C">
+    <title>arch1cat — 3D WebGL & Fullstack Creative Engineer</title>
+    <meta name="description" content="Portfolio of arch1cat — high-end 3D WebGL experiences, autonomous AI agent architectures, native Android Kotlin software, and real-time systems.">
+    <meta name="theme-color" content="#05070B">
 
     <!-- Open Graph / Twitter -->
-    <meta property="og:title" content="arch1cat — software engineer & creator">
-    <meta property="og:description" content="AI agents, 3D WebGL, Android Kotlin, Telegram bots & SEO. An interactive archive of selected works.">
+    <meta property="og:title" content="arch1cat — 3D WebGL & Fullstack Creative Engineer">
+    <meta property="og:description" content="Award-winning 3D WebGL, AI agents, Android Kotlin, and real-time systems. An interactive 3D showcase.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://arch1cat.github.io/">
     <meta property="og:image" content="/og.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="arch1cat — software engineer & creator">
-    <meta name="twitter:description" content="AI agents, 3D WebGL, Android Kotlin, Telegram bots & SEO. An interactive archive of selected works.">
+    <meta name="twitter:title" content="arch1cat — 3D WebGL & Fullstack Creative Engineer">
+    <meta name="twitter:description" content="Award-winning 3D WebGL, AI agents, Android Kotlin, and real-time systems. An interactive 3D showcase.">
     <meta name="twitter:image" content="/og.png">
 
     <!-- Favicon: ember cat silhouette -->
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230B0B0C'/%3E%3Cpath d='M18 44 V22 L26 30 H38 L46 22 V44 Q46 50 40 50 H24 Q18 50 18 44 Z M27 38 h3 v3 h-3 z M34 38 h3 v3 h-3 z' fill='%23FF4D00'/%3E%3C/svg%3E">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2305070B'/%3E%3Cpath d='M18 44 V22 L26 30 H38 L46 22 V44 Q46 50 40 50 H24 Q18 50 18 44 Z M27 38 h3 v3 h-3 z M34 38 h3 v3 h-3 z' fill='%2300F2FE'/%3E%3C/svg%3E">
 
     <!-- JSON-LD -->
     <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"Person","name":"arch1cat","url":"https://arch1cat.github.io/","sameAs":["https://x.com/Archi_____cat","https://github.com/l2bote4game"],"jobTitle":"Software Engineer & Creator"}
+    {"@context":"https://schema.org","@type":"Person","name":"arch1cat","url":"https://arch1cat.github.io/","sameAs":["https://x.com/Archi_____cat","https://github.com/l2bote4game"],"jobTitle":"Fullstack Creative Engineer"}
     </script>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@300..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@300..700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
-    <!-- Theme -->
+    <!-- Theme initialization -->
     <script>
-    /* theme boot BEFORE css to avoid flash */
     try {
         var t = localStorage.getItem('arch_theme');
         var p = new URLSearchParams(location.search).get('theme');
-        if (p === 'archive' || p === 'workstation') t = p;
-        if (t === 'archive' || t === 'workstation') document.documentElement.setAttribute('data-theme', t);
-        else document.documentElement.setAttribute('data-theme', 'workstation'); // workstation default!
-    } catch (e) { document.documentElement.setAttribute('data-theme', 'workstation'); }
+        if (p === 'super-chrome' || p === 'lusion-void') t = p;
+        if (t === 'super-chrome' || t === 'lusion-void') {
+            document.documentElement.setAttribute('data-theme', t);
+        } else {
+            document.documentElement.setAttribute('data-theme', 'lusion-void');
+        }
+    } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'lusion-void');
+    }
+    </script>
+    <script>
+    window.__logs = [];
+    window.onerror = function(msg, url, line, col, err) {
+        window.__logs.push({ type: 'error', msg, url, line, col, stack: err?.stack });
+    };
+    window.onunhandledrejection = function(e) {
+        window.__logs.push({ type: 'rejection', reason: e.reason?.toString(), stack: e.reason?.stack });
+    };
     </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="assets/css/style.css">
@@ -57,34 +70,35 @@
 </head>
 <body>
 
-    <!-- WebGL world -->
-    <div id="webgl-container" aria-hidden="true"></div>
+    <!-- WebGL interactive canvas -->
+    <div id="webgl-container" aria-label="Interactive 3D Stage"></div>
     <div class="grain" aria-hidden="true"></div>
     <div class="vignette" aria-hidden="true"></div>
+    <div class="scanlines" aria-hidden="true"></div>
 
-    <!-- Title card -->
+    <!-- Title card boot sequence -->
     <div id="boot-overlay" aria-hidden="true">
         <div class="boot-inner">
-            <div class="boot-label">// PORTFOLIO — 2026</div>
+            <div class="boot-label">// 3D WEBGL SHOWCASE — 2026</div>
             <div class="boot-name">ARCH1CAT</div>
             <div class="boot-line"></div>
         </div>
     </div>
 
-    <!-- Header -->
+    <!-- Floating Header -->
     <header class="site-header">
         <div class="wrap header-inner">
-            <a href="#about" class="brand flex items-center gap-3 group">
+            <a href="#about" class="brand group">
                 <span class="brand-mark" aria-hidden="true">
-                    <svg width="30" height="30" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#131315"/><path d="M18 44 V22 L26 30 H38 L46 22 V44 Q46 50 40 50 H24 Q18 50 18 44 Z M27 38 h3 v3 h-3 z M34 38 h3 v3 h-3 z" fill="#FF4D00"/></svg>
+                    <svg width="22" height="22" viewBox="0 0 64 64"><path d="M18 44 V22 L26 30 H38 L46 22 V44 Q46 50 40 50 H24 Q18 50 18 44 Z M27 38 h3 v3 h-3 z M34 38 h3 v3 h-3 z" fill="var(--accent)"/></svg>
                 </span>
                 <span class="flex flex-col leading-none">
                     <span class="brand-name">ARCH1CAT</span>
-                    <span class="brand-sub">SOFTWARE ENGINEER & CREATOR</span>
+                    <span class="brand-sub">3D WEBGL &amp; AI ARCHITECT</span>
                 </span>
             </a>
 
-            <nav class="nav-links hidden md:flex items-center gap-9" aria-label="Chapters">
+            <nav class="nav-links hidden md:flex items-center gap-2" aria-label="Acts">
                 <a href="#about">Prologue</a>
                 <a href="#projects">Works</a>
                 <a href="#flagship">Flagship</a>
@@ -92,16 +106,38 @@
             </nav>
 
             <div class="flex items-center gap-2.5">
-                <div class="station-panel" aria-hidden="true">
-                    <span class="sp-item"><b class="sp-led"></b>LIVE</span>
+                <div class="station-panel hidden sm:flex" aria-hidden="true">
+                    <span class="sp-item"><b class="sp-led"></b>KYIV</span>
                     <span class="sp-item" id="sp-clock">--:--:--</span>
                     <span class="sp-item"><span id="sp-fps">60</span> FPS</span>
-                    <span class="sp-item">X<span id="sp-cx">0</span></span>
+                    <span class="sp-item hidden lg:inline-flex">X<span id="sp-cx">0000</span></span>
                 </div>
-                <button id="theme-toggle-btn" class="icon-btn" title="Switch theme" aria-label="Switch theme">
-                    <svg id="theme-icon-deck" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M19.1 4.9l-2.8 2.8M7.7 16.3l-2.8 2.8"/></svg>
-                    <svg id="theme-icon-archive" class="hidden" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+
+                <!-- Ambient Audio Synth Toggle -->
+                <button id="audio-toggle-btn" class="icon-btn" title="Toggle ambient sound synth" aria-label="Toggle ambient sound">
+                    <div class="audio-bars">
+                        <span></span><span></span><span></span>
+                    </div>
                 </button>
+
+                <!-- Dual-Theme Switcher (Lusion Void <-> Super Chrome) -->
+                <button id="theme-toggle-btn" class="icon-btn" title="Toggle Theme (Lusion Void / Super Chrome)" aria-label="Switch theme">
+                    <!-- Void Crystal Icon -->
+                    <svg id="theme-icon-void" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                        <polyline points="2 17 12 22 22 17"></polyline>
+                        <polyline points="2 12 12 17 22 12"></polyline>
+                    </svg>
+                    <!-- Chrome Sun Icon -->
+                    <svg id="theme-icon-chrome" class="hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="4"></circle>
+                        <path d="M12 2v2"></path><path d="M12 20v2"></path>
+                        <path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path>
+                        <path d="M2 12h2"></path><path d="M20 12h2"></path>
+                        <path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path>
+                    </svg>
+                </button>
+
                 <a href="https://x.com/Archi_____cat" target="_blank" rel="noopener noreferrer" class="icon-btn" title="X / Twitter" aria-label="X Twitter profile">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                 </a>
@@ -112,36 +148,51 @@
         </div>
     </header>
 
-    <!-- Transmission ticker (SIGNAL DECK density) -->
+    <!-- Transmission Ticker -->
     <div class="ticker" aria-hidden="true">
         <div class="ticker-track">
-            <span>TRANSMISSION 001&nbsp;//&nbsp;KYIV STATION&nbsp;//&nbsp;SIGNAL STRONG&nbsp;//&nbsp;OBSIDIAN HARDWARE REV 2.1&nbsp;//&nbsp;CAT ON BOARD&nbsp;//&nbsp;</span><span>TRANSMISSION 001&nbsp;//&nbsp;KYIV STATION&nbsp;//&nbsp;SIGNAL STRONG&nbsp;//&nbsp;OBSIDIAN HARDWARE REV 2.1&nbsp;//&nbsp;CAT ON BOARD&nbsp;//&nbsp;</span>
+            <span>// LUSION VOID PROTOCOL // KYIV QUANTUM LAB // 3D STAGE ACTIVE // REVOLUTIONARY THREE.JS R170 ENGINE // CAT DYNAMICS ENGAGED //&nbsp;</span>
+            <span>// LUSION VOID PROTOCOL // KYIV QUANTUM LAB // 3D STAGE ACTIVE // REVOLUTIONARY THREE.JS R170 ENGINE // CAT DYNAMICS ENGAGED //&nbsp;</span>
         </div>
     </div>
 
+    <!-- Main Content -->
     <main class="relative z-20">
 
-        <!-- 00 PROLOGUE -->
-        <section id="about" data-chapter="prologue" class="relative section-pad">
+        <!-- 00 PROLOGUE / HERO -->
+        <section id="about" data-chapter="prologue" class="relative section-pad min-h-screen flex items-center">
             <span class="ghost-num" aria-hidden="true">00</span>
-            <div class="wrap pt-36 pb-24 md:pt-44">
-                <p class="mono-label mb-6 reveal">// FULLSTACK ENGINEER & CREATOR</p>
-                <h1 class="hero-title mb-10">
+            <div class="wrap pt-20">
+                <p class="mono-label mb-6 reveal">// CREATIVE TECHNOLOGIST &amp; FULLSTACK ARCHITECT</p>
+                <h1 class="hero-title mb-8">
                     <span class="block" data-scramble>Software</span>
-                    <span class="block"><span data-scramble>as&nbsp;</span><em class="ember-italic" data-scramble>craft</em></span>
+                    <span class="block"><span data-scramble>as&nbsp;</span><em class="display-serif text-[color:var(--accent)]" data-scramble>craft</em></span>
                     <span class="block" data-scramble>&amp;&nbsp;play.</span>
                 </h1>
-                <div class="status-chip mb-10 reveal" style="--d:.1s">
-                    <span class="pulse-dot"></span>
-                    <span>AVAILABLE FOR NEW PROJECTS</span>
+
+                <!-- 3D Interactive Stage Hint & Pulse Trigger -->
+                <div class="flex flex-wrap items-center gap-4 mb-8">
+                    <div class="stage-3d-badge reveal" id="stage-3d-prompt" title="Click to trigger energy pulse">
+                        <span class="pulse-dot"></span>
+                        <span>3D STAGE ACTIVE · DRAG TO ORBIT</span>
+                        <button class="pulse-action-btn" id="hero-pulse-btn" type="button">⚡ PULSE</button>
+                    </div>
+                    <div class="status-chip reveal" style="--d:.1s">
+                        <span class="pulse-dot"></span>
+                        <span>AVAILABLE FOR HIGH-END 3D &amp; AI SYSTEMS</span>
+                    </div>
                 </div>
-                <p class="hero-sub mb-12 reveal" style="--d:.15s">
-                    Building autonomous AI agent workflows, 3D WebGL experiences, native Android Kotlin
-                    software, Telegram bots, SEO systems &amp; high-impact digital media.
+
+                <p class="hero-sub mb-10 reveal" style="--d:.15s">
+                    Engineering high-end 3D WebGL experiences, autonomous AI agent architectures, native Android Kotlin software, and real-time telemetry systems.
                 </p>
+
                 <div class="cta-row reveal" style="--d:.2s">
                     <a href="#projects" class="btn-archive btn-primary magnetic">
-                        <span>VIEW WORKS ↳</span>
+                        <span>EXPLORE WORKS ↳</span>
+                    </a>
+                    <a href="https://yotei.com.ua/" target="_blank" rel="noopener noreferrer" class="btn-archive magnetic">
+                        <span>YOTEI CRM ↗</span>
                     </a>
                     <a href="https://x.com/Archi_____cat" target="_blank" rel="noopener noreferrer" class="btn-archive magnetic">
                         <span>X — @ARCHI_____CAT</span>
@@ -153,71 +204,91 @@
         <!-- 01 SELECTED WORKS -->
         <section id="projects" data-chapter="works" class="relative section-pad">
             <span class="ghost-num" aria-hidden="true">01</span>
-            <div class="wrap py-24">
+            <div class="wrap py-12">
                 <p class="mono-label mb-5 reveal">// 01 — SELECTED WORKS</p>
-                <h2 class="display-serif text-[clamp(2.6rem,6vw,4.5rem)] leading-none mb-14 reveal" data-scramble>Selected works.</h2>
+                <h2 class="display-serif text-[clamp(2.8rem,6vw,4.8rem)] leading-none mb-14 reveal" data-scramble>Selected works.</h2>
 
                 <div class="grid-plates">
                     <!-- 001 World Monitor -->
                     <article class="plate reveal tilt-plate" style="--d:.05s">
                         <span class="star-badge hidden" data-star-repo="world-monitor"></span>
-                        <span class="plate-index">001 — OSINT DASHBOARD</span>
-                        <h3 class="plate-title">World Monitor</h3>
-                        <p class="plate-desc">Real-time global geopolitical and network infrastructure telemetry dashboard.</p>
-                        <div class="tag-row">
-                            <span class="tag">TypeScript</span><span class="tag">Cloudflare</span><span class="tag">Tauri</span>
+                        <div>
+                            <span class="plate-index">001 — OSINT TELEMETRY</span>
+                            <h3 class="plate-title">World Monitor</h3>
+                            <p class="plate-desc">Real-time global geopolitical, cyber defense, and network infrastructure telemetry dashboard with live geospatial node mapping.</p>
                         </div>
-                        <a href="https://github.com/l2bote4game/world-monitor" target="_blank" rel="noopener noreferrer" class="source-link mt-2">VIEW SOURCE ↗</a>
+                        <div>
+                            <div class="tag-row mb-4">
+                                <span class="tag">TypeScript</span><span class="tag">Cloudflare</span><span class="tag">Tauri</span><span class="tag">Mapbox</span>
+                            </div>
+                            <a href="https://github.com/l2bote4game/world-monitor" target="_blank" rel="noopener noreferrer" class="source-link">VIEW SOURCE ↗</a>
+                        </div>
                     </article>
 
                     <!-- 002 WiFi Scanner -->
-                    <article class="plate reveal tilt-plate" style="--d:.13s">
+                    <article class="plate reveal tilt-plate" style="--d:.12s">
                         <span class="star-badge hidden" data-star-repo="wifiscaner"></span>
-                        <span class="plate-index">002 — ANDROID KOTLIN</span>
-                        <h3 class="plate-title">WiFi Scanner</h3>
-                        <p class="plate-desc">Native Android app for Wi-Fi channel graphing, subnet IP discovery, and network diagnostics.</p>
-                        <div class="tag-row">
-                            <span class="tag">Kotlin</span><span class="tag">Compose</span><span class="tag">mDNS</span>
+                        <div>
+                            <span class="plate-index">002 — ANDROID KOTLIN</span>
+                            <h3 class="plate-title">WiFi Scanner</h3>
+                            <p class="plate-desc">High-performance native Android application for 2.4/5GHz Wi-Fi channel graphing, subnet IP discovery, and network latency diagnostics.</p>
                         </div>
-                        <a href="https://github.com/l2bote4game/wifiscaner" target="_blank" rel="noopener noreferrer" class="source-link mt-2">VIEW SOURCE ↗</a>
+                        <div>
+                            <div class="tag-row mb-4">
+                                <span class="tag">Kotlin</span><span class="tag">Jetpack Compose</span><span class="tag">mDNS</span><span class="tag">Coroutines</span>
+                            </div>
+                            <a href="https://github.com/l2bote4game/wifiscaner" target="_blank" rel="noopener noreferrer" class="source-link">VIEW SOURCE ↗</a>
+                        </div>
                     </article>
 
                     <!-- 003 Metadata Cleaner -->
-                    <article class="plate reveal tilt-plate" style="--d:.21s">
+                    <article class="plate reveal tilt-plate" style="--d:.19s">
                         <span class="star-badge hidden" data-star-repo="media-meta-cleaner"></span>
-                        <span class="plate-index">003 — PRIVACY TOOL</span>
-                        <h3 class="plate-title">Metadata Cleaner</h3>
-                        <p class="plate-desc">Fast Python CLI tool to strip EXIF, GPS location, and tags from photos and videos.</p>
-                        <div class="tag-row">
-                            <span class="tag">Python 3</span><span class="tag">Pillow</span><span class="tag">FFmpeg</span>
+                        <div>
+                            <span class="plate-index">003 — PRIVACY ENGINE</span>
+                            <h3 class="plate-title">Metadata Cleaner</h3>
+                            <p class="plate-desc">Ultra-fast multi-threaded Python CLI & GUI suite to sanitize EXIF data, GPS coordinates, camera signatures, and audio streams.</p>
                         </div>
-                        <a href="https://github.com/l2bote4game/media-meta-cleaner" target="_blank" rel="noopener noreferrer" class="source-link mt-2">VIEW SOURCE ↗</a>
+                        <div>
+                            <div class="tag-row mb-4">
+                                <span class="tag">Python 3</span><span class="tag">Pillow</span><span class="tag">FFmpeg</span><span class="tag">Security</span>
+                            </div>
+                            <a href="https://github.com/l2bote4game/media-meta-cleaner" target="_blank" rel="noopener noreferrer" class="source-link">VIEW SOURCE ↗</a>
+                        </div>
                     </article>
 
                     <!-- 004 Cats Match-3 -->
-                    <article class="plate reveal tilt-plate" style="--d:.29s">
+                    <article class="plate reveal tilt-plate" style="--d:.26s">
                         <span class="star-badge hidden" data-star-repo="cats-match3-game"></span>
-                        <span class="plate-index">004 — ANDROID GAME</span>
-                        <h3 class="plate-title">Cats Match-3 Quest</h3>
-                        <p class="plate-desc">Android match-3 feline puzzle & cat shelter builder game with custom match engine.</p>
-                        <div class="tag-row">
-                            <span class="tag">Kotlin</span><span class="tag">Canvas</span><span class="tag">Shelter</span>
+                        <div>
+                            <span class="plate-index">004 — ANDROID GAME DEV</span>
+                            <h3 class="plate-title">Cats Match-3 Quest</h3>
+                            <p class="plate-desc">Mobile casual puzzle game featuring a custom cascade match engine, shelter builder mechanics, and physics-driven particle animations.</p>
                         </div>
-                        <a href="https://github.com/l2bote4game/cats-match3-game" target="_blank" rel="noopener noreferrer" class="source-link mt-2">VIEW SOURCE ↗</a>
+                        <div>
+                            <div class="tag-row mb-4">
+                                <span class="tag">Kotlin</span><span class="tag">Canvas</span><span class="tag">Particle FX</span><span class="tag">Game Architecture</span>
+                            </div>
+                            <a href="https://github.com/l2bote4game/cats-match3-game" target="_blank" rel="noopener noreferrer" class="source-link">VIEW SOURCE ↗</a>
+                        </div>
                     </article>
 
                     <!-- 005 openGym -->
-                    <article class="plate reveal tilt-plate" style="--d:.37s">
+                    <article class="plate reveal tilt-plate" style="--d:.33s">
                         <span class="star-badge hidden" data-star-repo="openGym"></span>
-                        <span class="plate-index">005 — FITNESS & ANDROID APP · v1.2.4</span>
-                        <h3 class="plate-title">openGym</h3>
-                        <p class="plate-desc">Self-hosted gym & body-weight tracker. Native Android app (APK), passkey auth, guided workouts, and progression rules. Security audited.</p>
-                        <div class="tag-row">
-                            <span class="tag">React 19</span><span class="tag">Capacitor 7</span><span class="tag">Android APK</span><span class="tag">Node.js</span>
+                        <div>
+                            <span class="plate-index">005 — PRODUCTION SUITE · v1.2.4</span>
+                            <h3 class="plate-title">openGym</h3>
+                            <p class="plate-desc">Self-hosted fitness & body progression ecosystem. Production Android APK, WebAuthn passkey authentication, offline sync, and exercise telemetry.</p>
                         </div>
-                        <div class="cta-row" style="gap:10px">
-                            <a href="https://github.com/l2bote4game/openGym" target="_blank" rel="noopener noreferrer" class="source-link">VIEW SOURCE ↗</a>
-                            <a href="https://github.com/l2bote4game/openGym/releases/tag/v1.2.4-android" target="_blank" rel="noopener noreferrer" class="source-link">DOWNLOAD APK ↗</a>
+                        <div>
+                            <div class="tag-row mb-4">
+                                <span class="tag">React 19</span><span class="tag">Capacitor 7</span><span class="tag">Android APK</span><span class="tag">Passkeys</span>
+                            </div>
+                            <div class="flex flex-wrap gap-2">
+                                <a href="https://github.com/l2bote4game/openGym" target="_blank" rel="noopener noreferrer" class="source-link">VIEW SOURCE ↗</a>
+                                <a href="https://github.com/l2bote4game/openGym/releases/tag/v1.2.4-android" target="_blank" rel="noopener noreferrer" class="source-link">DOWNLOAD APK ↗</a>
+                            </div>
                         </div>
                     </article>
                 </div>
@@ -227,22 +298,24 @@
         <!-- 02 FLAGSHIP -->
         <section id="flagship" data-chapter="flagship" class="relative section-pad">
             <span class="ghost-num" aria-hidden="true">02</span>
-            <div class="wrap py-24">
-                <p class="mono-label mb-5 reveal">// 02 — FLAGSHIP</p>
-                <h2 class="display-serif text-[clamp(2.6rem,6vw,4.5rem)] leading-none mb-14 reveal" data-scramble>The long build.</h2>
+            <div class="wrap py-12">
+                <p class="mono-label mb-5 reveal">// 02 — FLAGSHIP ARCHITECTURE</p>
+                <h2 class="display-serif text-[clamp(2.8rem,6vw,4.8rem)] leading-none mb-14 reveal" data-scramble>The long build.</h2>
 
-                <div class="plate flagship-plate reveal">
+                <div class="flagship-plate reveal">
                     <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-10">
                         <div class="max-w-2xl space-y-5">
-                            <span class="plate-index">Y—01 — REAL ESTATE PLATFORM & CRM</span>
-                            <h3 class="flagship-title">Yotei<span class="ember">.</span></h3>
-                            <p class="plate-desc" style="font-size:.95rem">
-                                Next-generation real estate search platform, property marketplace, and CRM system —
-                                engineered for property cataloging, lead management, dynamic filtering and seamless
-                                real estate operations.
+                            <span class="plate-index">Y—01 — REAL ESTATE MARKETPLACE &amp; CRM</span>
+                            <h3 class="flagship-title">Yotei<span class="text-[color:var(--accent)]">.</span></h3>
+                            <p class="plate-desc" style="font-size: 1.05rem;">
+                                Next-generation real estate intelligence platform, high-speed property search engine, and CRM enterprise system. Engineered with a 3-level domain taxonomy, real-time lead pipeline synchronization, Mapbox GL geospatial clusters, and automated Vitest QA gates.
                             </p>
                             <div class="tag-row">
-                                <span class="tag">yotei.com.ua</span><span class="tag">Marketplace</span><span class="tag">CRM</span><span class="tag">Next.js</span>
+                                <span class="tag">yotei.com.ua</span>
+                                <span class="tag">Next.js Turborepo</span>
+                                <span class="tag">Supabase &amp; Prisma</span>
+                                <span class="tag">Real-Time CRM</span>
+                                <span class="tag">High Load</span>
                             </div>
                         </div>
                         <div class="shrink-0">
@@ -255,74 +328,72 @@
             </div>
         </section>
 
-        <!-- 03 SIGNAL -->
+        <!-- 03 SIGNAL & TELEMETRY -->
         <section id="activity" data-chapter="signal" class="relative section-pad">
             <span class="ghost-num" aria-hidden="true">03</span>
-            <div class="wrap py-24">
-                <p class="mono-label mb-5 reveal">// 03 — SIGNAL</p>
-                <h2 class="display-serif text-[clamp(2.6rem,6vw,4.5rem)] leading-none mb-14 reveal" data-scramble>Signal from the desk.</h2>
+            <div class="wrap py-12">
+                <p class="mono-label mb-5 reveal">// 03 — TELEMETRY &amp; SIGNAL</p>
+                <h2 class="display-serif text-[clamp(2.8rem,6vw,4.8rem)] leading-none mb-14 reveal" data-scramble>Signal from the desk.</h2>
 
                 <div class="signal-grid">
                     <div class="reveal" style="--d:.1s">
                         <div class="stats-grid">
                             <div class="stat-block">
                                 <div class="stat-num" id="stat-repos">08</div>
-                                <div class="stat-label">REPOSITORIES</div>
+                                <div class="stat-label">PUBLIC REPOSITORIES</div>
                             </div>
                             <div class="stat-block">
                                 <div class="stat-num" id="stat-stars">★★ 00</div>
-                                <div class="stat-label">STARS EARNED</div>
+                                <div class="stat-label">TOTAL STARS EARNED</div>
                             </div>
                             <div class="stat-block">
                                 <div class="stat-num" id="stat-followers">00</div>
-                                <div class="stat-label">FOLLOWERS</div>
+                                <div class="stat-label">COMMUNITY FOLLOWERS</div>
                             </div>
                             <div class="stat-block">
                                 <div class="stat-num">∞</div>
-                                <div class="stat-label">CURIOSITY</div>
+                                <div class="stat-label">CURIOSITY &amp; CRAFT</div>
                             </div>
                         </div>
-                        <p class="fig-caption mt-5">LIVE TELEMETRY — GITHUB / L2BOTE4GAME</p>
+                        <p class="fig-caption mt-5">LIVE TELEMETRY STREAM — GITHUB / L2BOTE4GAME</p>
                     </div>
+
                     <div class="reveal" style="--d:.2s">
                         <div class="fig-frame overflow-x-auto">
                             <img src="https://raw.githubusercontent.com/l2bote4game/l2bote4game/output/github-contribution-grid-snake-dark.svg"
                                  alt="GitHub contribution grid snake" loading="lazy">
                         </div>
-                        <p class="fig-caption">FIG. 03 — CONTRIBUTION FIELD</p>
+                        <p class="fig-caption mt-3">FIG. 03 — CONTINUOUS CONTRIBUTION FIELD</p>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- COLOPHON / FOOTER -->
+    <!-- Colophon / Footer -->
     <footer class="relative z-20 border-t border-[color:var(--line)] py-12">
         <div class="wrap flex flex-col sm:flex-row items-center justify-between gap-6">
             <div class="flex items-center gap-3">
                 <span class="pulse-dot"></span>
-                <span class="text-xs font-mono text-gray-400">© 2026 arch1cat. Built with Three.js & WebGL.</span>
+                <span class="text-xs font-mono text-gray-400">© 2026 arch1cat. Built with Three.js r170, WebGL 2.0 &amp; Web Audio API.</span>
             </div>
             <div class="flex items-center gap-6 text-xs font-mono text-gray-400">
-                <a href="https://x.com/Archi_____cat" target="_blank" rel="noopener noreferrer" class="hover:text-amber transition-colors">X — @Archi_____cat</a>
-                <a href="https://github.com/l2bote4game" target="_blank" rel="noopener noreferrer" class="hover:text-amber transition-colors">GitHub — l2bote4game</a>
-                <a href="https://yotei.com.ua/" target="_blank" rel="noopener noreferrer" class="hover:text-amber transition-colors">Yotei.com.ua ↗</a>
+                <a href="https://x.com/Archi_____cat" target="_blank" rel="noopener noreferrer" class="hover:text-[color:var(--accent)] transition-colors">X — @Archi_____cat</a>
+                <a href="https://github.com/l2bote4game" target="_blank" rel="noopener noreferrer" class="hover:text-[color:var(--accent)] transition-colors">GitHub — l2bote4game</a>
+                <a href="https://yotei.com.ua/" target="_blank" rel="noopener noreferrer" class="hover:text-[color:var(--accent)] transition-colors">Yotei.com.ua ↗</a>
             </div>
         </div>
     </footer>
 
-    <!-- Chapter rail -->
-    <nav id="chapter-rail" aria-label="Chapter progress">
+    <!-- Chapter Rail -->
+    <nav id="chapter-rail" aria-label="Chapter navigation">
         <button class="rail-item" data-target="#about"><span>00</span><span class="tick"></span></button>
         <button class="rail-item" data-target="#projects"><span>01</span><span class="tick"></span></button>
         <button class="rail-item" data-target="#flagship"><span>02</span><span class="tick"></span></button>
         <button class="rail-item" data-target="#activity"><span>03</span><span class="tick"></span></button>
     </nav>
 
-    <!-- Scanlines (deck only) -->
-    <div class="scanlines" aria-hidden="true"></div>
-
-    <!-- Cursor & toast -->
+    <!-- Custom Cursor & Toast -->
     <div id="cursor-dot" aria-hidden="true"></div>
     <div id="cursor-ring" aria-hidden="true"></div>
     <div id="toast" role="status"></div>
