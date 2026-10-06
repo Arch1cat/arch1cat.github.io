@@ -88,7 +88,7 @@
       <div class="flex items-center gap-2.5">
         <span class="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center text-white font-black text-lg shadow-sm">Y</span>
         <h1 class="font-extrabold text-base tracking-tight text-gray-900 dark:text-white">Робоче місце CRM</h1>
-        <span class="ml-2 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700">Multi-Line 4-Series v6.0 Active</span>
+        <span class="ml-2 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-blue-100 dark:bg-blue-950/80 text-blue-800 dark:text-blue-300 border border-blue-300 dark:border-blue-700">Multi-Line & Dual-Series v6.5 Active</span>
       </div>
 
       <!-- Clean Theme Toggle -->
@@ -504,9 +504,16 @@
                 <i data-lucide="shopping-cart" class="w-4 h-4 text-[#38A3C8]"></i>
                 <h3 class="font-black text-xs tracking-wider uppercase text-[#38A3C8]">МОЇ ЗАЯВКИ</h3>
               </div>
-              <div class="flex items-center gap-1.5 bg-gray-50 dark:bg-gray-800 px-2.5 py-1 rounded-lg border border-gray-200 dark:border-gray-700 text-xs font-semibold text-gray-700 dark:text-gray-300">
-                <span id="labelPeriodLeadsSpline">23.09.2026 - 06.10.2026</span>
-                <i data-lucide="calendar" class="w-3.5 h-3.5 text-gray-400"></i>
+              <div class="flex items-center gap-2">
+                <div class="flex items-center bg-white/80 dark:bg-gray-800 p-0.5 rounded-lg border border-gray-200 dark:border-gray-700 text-[10px]">
+                  <button type="button" onclick="setStatsWidgetMode('myLeads', 'charts')" id="btn_stats_myleads_charts" title="Графік сплайн" class="px-1.5 py-0.5 rounded font-bold bg-[#38A3C8] text-white">📈</button>
+                  <button type="button" onclick="setStatsWidgetMode('myLeads', 'bars')" id="btn_stats_myleads_bars" title="Стовпчики (Bar chart)" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">📊</button>
+                  <button type="button" onclick="setStatsWidgetMode('myLeads', 'pie')" id="btn_stats_myleads_pie" title="Кругова (Джерела)" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">🥧</button>
+                </div>
+                <div class="flex items-center gap-1.5 bg-gray-50 dark:bg-gray-800 px-2.5 py-1 rounded-lg border border-gray-200 dark:border-gray-700 text-xs font-semibold text-gray-700 dark:text-gray-300">
+                  <span id="labelPeriodLeadsSpline">23.09.2026 - 06.10.2026</span>
+                  <i data-lucide="calendar" class="w-3.5 h-3.5 text-gray-400"></i>
+                </div>
               </div>
             </div>
             <!-- Canvas container for smooth cubic spline -->
@@ -523,6 +530,11 @@
                 <h3 class="font-black text-xs tracking-wider uppercase text-[#38A3C8]">СТАДІЇ ЗАЯВОК</h3>
               </div>
               <div class="flex items-center gap-2">
+                <div class="flex items-center bg-white/80 dark:bg-gray-800 p-0.5 rounded-lg border border-gray-200 dark:border-gray-700 text-[10px]">
+                  <button type="button" onclick="setStatsWidgetMode('leadStages', 'donut')" id="btn_stats_stages_donut" title="Кільцева Donut" class="px-1.5 py-0.5 rounded font-bold bg-[#38A3C8] text-white">⭕</button>
+                  <button type="button" onclick="setStatsWidgetMode('leadStages', 'bars')" id="btn_stats_stages_bars" title="Воронка / Стовпчики" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">📊</button>
+                  <button type="button" onclick="setStatsWidgetMode('leadStages', 'table')" id="btn_stats_stages_table" title="Таблиця конверсій" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">📋</button>
+                </div>
                 <div class="bg-gray-50 dark:bg-gray-800 px-2 py-1 rounded-lg border border-gray-200 dark:border-gray-700 text-[11px] font-medium text-gray-600 dark:text-gray-400 flex items-center gap-1 cursor-pointer">
                   <span>Не вибрано</span>
                   <i data-lucide="chevron-down" class="w-3 h-3"></i>
@@ -569,6 +581,23 @@
                 <i data-lucide="calendar" class="w-3.5 h-3.5 text-gray-400"></i>
               </div>
             </div>
+          </div>
+
+          <!-- Dual Lines Interactive Legend (Showings vs Meetings) -->
+          <div class="flex flex-wrap items-center justify-between gap-3 p-2.5 rounded-xl bg-gray-50/90 dark:bg-gray-800/80 border border-gray-200/80 dark:border-gray-700/80 text-xs">
+            <div class="flex items-center gap-4 flex-wrap">
+              <div class="flex items-center gap-2 font-bold text-blue-600 dark:text-blue-400">
+                <span class="w-3.5 h-3.5 rounded-full bg-[#2563EB] shadow-2xs"></span>
+                <span>🔵 Покази обʼєктів клієнтам:</span>
+                <span class="font-mono text-gray-900 dark:text-white font-extrabold" id="weeklyShowingsTotal">100 показів</span>
+              </div>
+              <div class="flex items-center gap-2 font-bold text-rose-600 dark:text-rose-400">
+                <span class="w-3.5 h-3.5 rounded-full bg-[#EF4444] shadow-2xs"></span>
+                <span>🔴 Зустрічі з власниками:</span>
+                <span class="font-mono text-gray-900 dark:text-white font-extrabold" id="weeklyMeetingsTotal">58 зустрічей</span>
+              </div>
+            </div>
+            <span class="text-[11px] text-gray-500 font-mono font-bold">Разом: 158 активностей • 2 окремі лінії</span>
           </div>
 
           <div class="relative w-full h-64 select-none" id="containerWeeklySpline">
@@ -4388,10 +4417,47 @@
       if (tt) tt.classList.add('hidden');
     }
 
-    // 1. Render МОЇ ЗАЯВКИ (Spline Area)
+    // State for Statistics Widgets
+    if (!state.statsWidgetModes) {
+      state.statsWidgetModes = {
+        myLeads: 'charts',
+        leadStages: 'donut'
+      };
+    }
+
+    function setStatsWidgetMode(widget, mode) {
+      if (!state.statsWidgetModes) state.statsWidgetModes = {};
+      state.statsWidgetModes[widget] = mode;
+
+      if (widget === 'myLeads') {
+        ['charts', 'bars', 'pie'].forEach(m => {
+          const btn = document.getElementById(`btn_stats_myleads_${m}`);
+          if (btn) {
+            btn.className = m === mode
+              ? "px-1.5 py-0.5 rounded font-bold bg-[#38A3C8] text-white"
+              : "px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700";
+          }
+        });
+        renderMyLeadsSpline();
+      } else if (widget === 'leadStages') {
+        ['donut', 'bars', 'table'].forEach(m => {
+          const btn = document.getElementById(`btn_stats_stages_${m}`);
+          if (btn) {
+            btn.className = m === mode
+              ? "px-1.5 py-0.5 rounded font-bold bg-[#38A3C8] text-white"
+              : "px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700";
+          }
+        });
+        renderLeadStagesDonut();
+      }
+      showToast(`Вид віджета оновлено: ${mode}`);
+    }
+
+    // 1. Render МОЇ ЗАЯВКИ (Spline Area / Bar / Pie Breakdown)
     function renderMyLeadsSpline() {
-      const svg = document.getElementById('svgMyLeadsChart');
-      if (!svg) return;
+      const container = document.getElementById('containerMyLeads');
+      if (!container) return;
+      const mode = (state.statsWidgetModes && state.statsWidgetModes.myLeads) || 'charts';
 
       const data = [
         { date: '23 вер.', val: 0.0 },
@@ -4410,22 +4476,81 @@
         { date: '06 жов.', val: 2.0 }
       ];
 
-      const w = 540;
-      const h = 220;
-      const padLeft = 45;
-      const padRight = 15;
-      const padTop = 20;
-      const padBottom = 35;
+      if (mode === 'bars') {
+        const maxVal = 2.0;
+        container.innerHTML = `
+          <div class="h-full flex items-end justify-between gap-1.5 pt-4 pb-2 px-2">
+            ${data.map(d => {
+              const hPct = Math.max(8, Math.round((d.val / maxVal) * 85));
+              return `
+                <div class="flex-1 flex flex-col items-center gap-1 group cursor-pointer"
+                     onmousemove="showChartTooltip(event, '${d.date}', '${d.val} нових заявок', 'Денний факт')"
+                     onmouseleave="hideChartTooltip()">
+                  <span class="text-[9px] font-mono font-bold text-sky-600 opacity-0 group-hover:opacity-100 transition">${d.val}</span>
+                  <div class="w-full bg-sky-100 dark:bg-sky-950/60 rounded-t-lg group-hover:bg-sky-500 transition-all duration-300" style="height: ${hPct}%;"></div>
+                  <span class="text-[8px] text-gray-400 font-medium truncate w-full text-center">${d.date.split(' ')[0]}</span>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        `;
+        return;
+      }
 
+      if (mode === 'pie') {
+        const sources = [
+          { name: 'Портали нерухомості (OLX, DOM.RIA)', count: 12, color: '#38A3C8', pct: 50 },
+          { name: 'Соціальні мережі (Instagram, TikTok)', count: 6, color: '#10B981', pct: 25 },
+          { name: 'Рекомендації та постійні клієнти', count: 4, color: '#8B5CF6', pct: 17 },
+          { name: 'Холодний трафік / сайт', count: 2, color: '#F59E0B', pct: 8 }
+        ];
+        const total = 24;
+        let curA = 0;
+        const paths = sources.map((s, idx) => {
+          const sliceA = (s.count / total) * 360;
+          const p = describeDonutArc(100, 100, 52, 85, curA, curA + sliceA);
+          curA += sliceA;
+          return `<path id="src_pie_${idx}" d="${p}" fill="${s.color}" stroke="#FFFFFF" stroke-width="1.5" class="hover:opacity-85 cursor-pointer" onmousemove="showChartTooltip(event, '${s.name}', '${s.count} заявок (${s.pct}%)', 'Джерело ліда')" onmouseleave="hideChartTooltip()" />`;
+        }).join('');
+
+        container.innerHTML = `
+          <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center h-full p-2">
+            <div class="sm:col-span-5 flex justify-center items-center">
+              <div class="relative w-40 h-40">
+                <svg class="w-40 h-40" viewBox="0 0 200 200">${paths}</svg>
+                <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                  <span class="text-xl font-black text-gray-900 dark:text-white font-mono">${total}</span>
+                  <span class="text-[9px] uppercase font-bold text-gray-400">Заявок</span>
+                </div>
+              </div>
+            </div>
+            <div class="sm:col-span-7 space-y-1.5 text-xs">
+              ${sources.map(s => `
+                <div class="flex items-center justify-between p-1.5 rounded-lg bg-gray-50 dark:bg-gray-800/40 border border-gray-200/50 dark:border-gray-700/50">
+                  <div class="flex items-center gap-1.5 truncate">
+                    <span class="w-3 h-3 rounded-xs shrink-0" style="background-color: ${s.color};"></span>
+                    <span class="font-medium text-[11px] text-gray-800 dark:text-gray-200 truncate">${s.name}</span>
+                  </div>
+                  <strong class="font-mono text-[11px] text-gray-900 dark:text-white shrink-0">${s.count} (${s.pct}%)</strong>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      // Default: Spline Area Chart
+      const w = 540, h = 220, padLeft = 45, padRight = 15, padTop = 20, padBottom = 35;
       const chartW = w - padLeft - padRight;
       const chartH = h - padTop - padBottom;
       const maxVal = 2.0;
 
-      const points = data.map((d, i) => {
-        const x = padLeft + (i / (data.length - 1)) * chartW;
-        const y = padTop + chartH - (d.val / maxVal) * chartH;
-        return { x, y, raw: d };
-      });
+      const points = data.map((d, i) => ({
+        x: padLeft + (i / (data.length - 1)) * chartW,
+        y: padTop + chartH - (d.val / maxVal) * chartH,
+        raw: d
+      }));
 
       const splinePath = buildCubicSplinePath(points);
       const areaPath = `${splinePath} L ${points[points.length - 1].x.toFixed(1)} ${(padTop + chartH).toFixed(1)} L ${points[0].x.toFixed(1)} ${(padTop + chartH).toFixed(1)} Z`;
@@ -4454,32 +4579,31 @@
         </g>
       `).join('');
 
-      svg.innerHTML = `
-        <defs>
-          <linearGradient id="gradMyLeads" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#3B82F6" stop-opacity="0.32" />
-            <stop offset="100%" stop-color="#3B82F6" stop-opacity="0.0" />
-          </linearGradient>
-        </defs>
-        
-        <text x="-${h / 2}" y="14" transform="rotate(-90)" font-size="10" fill="#94A3B8" text-anchor="middle" font-weight="bold">Кількість</text>
-
-        ${gridSvg}
-
-        <path d="${areaPath}" fill="url(#gradMyLeads)" />
-        <path d="${splinePath}" fill="none" stroke="#3B82F6" stroke-width="2.5" stroke-linecap="round" />
-
-        ${xLabels}
-        ${dotsSvg}
+      container.innerHTML = `
+        <svg id="svgMyLeadsChart" class="w-full h-full overflow-visible" viewBox="0 0 540 220" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="gradMyLeads" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#3B82F6" stop-opacity="0.32" />
+              <stop offset="100%" stop-color="#3B82F6" stop-opacity="0.0" />
+            </linearGradient>
+          </defs>
+          <text x="-${h / 2}" y="14" transform="rotate(-90)" font-size="10" fill="#94A3B8" text-anchor="middle" font-weight="bold">Кількість</text>
+          ${gridSvg}
+          <path d="${areaPath}" fill="url(#gradMyLeads)" />
+          <path d="${splinePath}" fill="none" stroke="#3B82F6" stroke-width="2.5" stroke-linecap="round" />
+          ${xLabels}
+          ${dotsSvg}
+        </svg>
       `;
     }
 
-    // 2. Render СТАДІЇ ЗАЯВОК (Radial Donut + 9 Stages Legend)
+    // 2. Render СТАДІЇ ЗАЯВОК (Radial Donut / Bar Funnel / Table)
     function renderLeadStagesDonut() {
       const svg = document.getElementById('svgLeadStagesDonut');
       const legend = document.getElementById('legendLeadStages');
       const totalCountEl = document.getElementById('donutTotalCount');
       if (!svg || !legend) return;
+      const mode = (state.statsWidgetModes && state.statsWidgetModes.leadStages) || 'donut';
 
       const stages = [
         { name: 'Вхідна заявка', count: 6, color: '#3B82F6' },
@@ -4496,11 +4620,79 @@
       const total = stages.reduce((s, it) => s + it.count, 0);
       if (totalCountEl) totalCountEl.textContent = total;
 
-      const cx = 100;
-      const cy = 100;
-      const rOut = 85;
-      const rIn = 52;
+      if (mode === 'bars') {
+        const maxVal = Math.max(...stages.map(s => s.count));
+        svg.parentElement.parentElement.classList.add('hidden');
+        legend.parentElement.classList.remove('grid-cols-1', 'sm:grid-cols-12');
+        legend.className = "space-y-2 text-xs w-full py-1";
+        legend.innerHTML = stages.map(st => {
+          const pct = ((st.count / total) * 100).toFixed(1);
+          const barW = Math.round((st.count / maxVal) * 100);
+          return `
+            <div class="space-y-1 p-2 rounded-xl bg-gray-50 dark:bg-gray-800/40 border border-gray-200/60 dark:border-gray-700/60">
+              <div class="flex items-center justify-between text-[11px]">
+                <div class="flex items-center gap-2">
+                  <span class="w-3 h-3 rounded-xs shrink-0" style="background-color: ${st.color};"></span>
+                  <span class="font-bold text-gray-800 dark:text-gray-200">${st.name}</span>
+                </div>
+                <div class="flex items-center gap-2 font-mono">
+                  <strong class="text-gray-900 dark:text-white">${st.count}</strong>
+                  <span class="text-sky-600 font-bold">(${pct}%)</span>
+                </div>
+              </div>
+              <div class="w-full bg-gray-200 dark:bg-gray-700 h-2 rounded-full overflow-hidden">
+                <div class="h-full rounded-full transition-all duration-500" style="width: ${barW}%; background-color: ${st.color};"></div>
+              </div>
+            </div>
+          `;
+        }).join('');
+        return;
+      }
 
+      if (mode === 'table') {
+        svg.parentElement.parentElement.classList.add('hidden');
+        legend.parentElement.classList.remove('grid-cols-1', 'sm:grid-cols-12');
+        legend.className = "w-full text-xs py-1";
+        legend.innerHTML = `
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-gray-50 dark:bg-gray-800 text-gray-500 text-[10px] uppercase font-bold">
+                <tr>
+                  <th class="p-2">Стадія воронки</th>
+                  <th class="p-2 text-center">Кількість</th>
+                  <th class="p-2 text-center">Частка %</th>
+                  <th class="p-2 text-right">Конверсія</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100 dark:divide-gray-800 font-medium">
+                ${stages.map((st, i) => {
+                  const pct = ((st.count / total) * 100).toFixed(1);
+                  const conv = i === 0 ? '100%' : `${Math.round((st.count / stages[i-1].count) * 100)}%`;
+                  return `
+                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50">
+                      <td class="p-2 flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: ${st.color};"></span>
+                        <span class="font-bold text-gray-800 dark:text-gray-200">${st.name}</span>
+                      </td>
+                      <td class="p-2 text-center font-mono font-bold">${st.count}</td>
+                      <td class="p-2 text-center font-mono text-sky-600 font-bold">${pct}%</td>
+                      <td class="p-2 text-right font-mono text-gray-500">${conv}</td>
+                    </tr>
+                  `;
+                }).join('')}
+              </tbody>
+            </table>
+          </div>
+        `;
+        return;
+      }
+
+      // Default: Radial Donut Chart
+      svg.parentElement.parentElement.classList.remove('hidden');
+      legend.parentElement.className = "grid grid-cols-1 sm:grid-cols-12 gap-3 items-center py-1";
+      legend.className = "sm:col-span-7 space-y-1 text-xs max-h-56 overflow-y-auto pr-1";
+
+      const cx = 100, cy = 100, rOut = 85, rIn = 52;
       let currentAngle = 0;
       const pathsSvg = stages.map((st, idx) => {
         const sliceAngle = (st.count / total) * 360;
@@ -4544,103 +4736,118 @@
       }).join('');
     }
 
-    function highlightDonutSlice(idx) {
-      for (let i = 0; i < 9; i++) {
-        const el = document.getElementById(`donut_slice_${i}`);
-        if (el) el.style.opacity = i === idx ? '1' : '0.35';
-      }
-    }
-
-    function unhighlightDonutSlices() {
-      for (let i = 0; i < 9; i++) {
-        const el = document.getElementById(`donut_slice_${i}`);
-        if (el) el.style.opacity = '1';
-      }
-    }
-
-    // 3. Render ДИНАМІКА ПОКАЗІВ ТА ЗУСТРІЧЕЙ (Wide Coral Spline Area Chart, 14 weeks)
+    // 3. Render ДИНАМІКА ПОКАЗІВ ТА ЗУСТРІЧЕЙ (ДВІ ОКРЕМІ ЛІНІЇ: ПОКАЗИ ТА ЗУСТРІЧІ)
     function renderWeeklySpline() {
       const svg = document.getElementById('svgWeeklySplineChart');
       if (!svg) return;
 
-      const data = [
-        { date: '7 лип.', val: 4 },
-        { date: '14 лип.', val: 6 },
-        { date: '21 лип.', val: 5 },
-        { date: '28 лип.', val: 9 },
-        { date: '4 серп.', val: 7 },
-        { date: '11 серп.', val: 12 },
-        { date: '18 серп.', val: 8 },
-        { date: '25 серп.', val: 14 },
-        { date: '1 вер.', val: 11 },
-        { date: '8 вер.', val: 16 },
-        { date: '15 вер.', val: 13 },
-        { date: '22 вер.', val: 18 },
-        { date: '29 вер.', val: 15 },
-        { date: '6 жовт.', val: 20 }
-      ];
+      const dates = ['7 лип.', '14 лип.', '21 лип.', '28 лип.', '4 серп.', '11 серп.', '18 серп.', '25 серп.', '1 вер.', '8 вер.', '15 вер.', '22 вер.', '29 вер.', '6 жовт.'];
+      
+      // Line 1: Покази обʼєктів клієнтам (100 всього)
+      const showingsData = [3, 4, 3, 6, 5, 8, 5, 9, 7, 10, 8, 11, 9, 12];
+      // Line 2: Зустрічі з власниками (58 всього)
+      const meetingsData = [1, 2, 2, 3, 2, 4, 3, 5, 4, 6, 5, 7, 6, 8];
 
-      const w = 900;
-      const h = 220;
-      const padLeft = 50;
-      const padRight = 20;
+      const showingsTot = showingsData.reduce((a, b) => a + b, 0);
+      const meetingsTot = meetingsData.reduce((a, b) => a + b, 0);
+
+      const elShow = document.getElementById('weeklyShowingsTotal');
+      if (elShow) elShow.textContent = `${showingsTot} показів`;
+      const elMeet = document.getElementById('weeklyMeetingsTotal');
+      if (elMeet) elMeet.textContent = `${meetingsTot} зустрічей`;
+
+      const w = 920;
+      const h = 230;
+      const padLeft = 45;
+      const padRight = 70;
       const padTop = 20;
-      const padBottom = 35;
+      const padBottom = 32;
 
       const chartW = w - padLeft - padRight;
-      const chartH = h - padTop - padBottom;
-      const maxVal = 20;
+      const chartH = h - padTop - padBottom - 6;
+      const maxVal = 14;
 
-      const points = data.map((d, i) => {
-        const x = padLeft + (i / (data.length - 1)) * chartW;
-        const y = padTop + chartH - (d.val / maxVal) * chartH;
-        return { x, y, raw: d };
-      });
+      const pointsShowings = showingsData.map((val, i) => ({
+        x: padLeft + (i / (dates.length - 1)) * chartW,
+        y: padTop + chartH + 3 - (val / maxVal) * chartH,
+        val,
+        date: dates[i]
+      }));
 
-      const splinePath = buildCubicSplinePath(points);
-      const areaPath = `${splinePath} L ${points[points.length - 1].x.toFixed(1)} ${(padTop + chartH).toFixed(1)} L ${points[0].x.toFixed(1)} ${(padTop + chartH).toFixed(1)} Z`;
+      const pointsMeetings = meetingsData.map((val, i) => ({
+        x: padLeft + (i / (dates.length - 1)) * chartW,
+        y: padTop + chartH + 3 - (val / maxVal) * chartH,
+        val,
+        date: dates[i]
+      }));
 
-      const gridLevels = [0, 5, 10, 15, 20];
+      const pathShowings = buildCubicSplinePath(pointsShowings);
+      const pathMeetings = buildCubicSplinePath(pointsMeetings);
+
+      const areaShowings = `${pathShowings} L ${pointsShowings[pointsShowings.length - 1].x.toFixed(1)} ${(padTop + chartH + 3).toFixed(1)} L ${pointsShowings[0].x.toFixed(1)} ${(padTop + chartH + 3).toFixed(1)} Z`;
+
+      const gridLevels = [0, 4, 8, 12, 14];
       const gridSvg = gridLevels.map(lvl => {
-        const yPos = padTop + chartH - (lvl / maxVal) * chartH;
+        const yPos = padTop + chartH + 3 - (lvl / maxVal) * chartH;
         return `
           <g>
-            <line x1="${padLeft}" y1="${yPos}" x2="${w - padRight}" y2="${yPos}" stroke="#E2E8F0" stroke-dasharray="3,3" stroke-width="1" />
-            <text x="${padLeft - 8}" y="${yPos + 3}" font-size="10" fill="#94A3B8" text-anchor="end" font-family="monospace">${lvl}</text>
+            <line x1="${padLeft}" y1="${yPos.toFixed(1)}" x2="${(w - padRight + 15).toFixed(1)}" y2="${yPos.toFixed(1)}" stroke="#E2E8F0" stroke-dasharray="3,3" stroke-width="1" />
+            <text x="${padLeft - 8}" y="${(yPos + 3).toFixed(1)}" font-size="10" fill="#94A3B8" text-anchor="end" font-family="monospace">${lvl}</text>
           </g>
         `;
       }).join('');
 
-      const xLabels = points.map(p => `
-        <text x="${p.x}" y="${h - 10}" font-size="9.5" fill="#94A3B8" text-anchor="middle" font-weight="500">${p.raw.date}</text>
-      `).join('');
+      const xLabels = dates.map((d, i) => {
+        const x = padLeft + (i / (dates.length - 1)) * chartW;
+        return `<text x="${x.toFixed(1)}" y="${h - 8}" font-size="9" fill="#94A3B8" text-anchor="middle" font-weight="500">${d}</text>`;
+      }).join('');
 
-      const dotsSvg = points.map(p => `
+      // Dots for Showings (Blue)
+      const dotsShowings = pointsShowings.map((p, i) => `
         <g class="cursor-pointer group"
-           onmousemove="showChartTooltip(event, '${p.raw.date}', '${p.raw.val} показів / зустрічей', 'Тижнева активність')"
+           onmousemove="showChartTooltip(event, 'Покази • ${p.date}', '${p.val} показів (Зустрічей: ${meetingsData[i]})', 'Разом: ${p.val + meetingsData[i]} дій')"
            onmouseleave="hideChartTooltip()">
-          <circle cx="${p.x}" cy="${p.y}" r="8" fill="transparent" />
-          <circle cx="${p.x}" cy="${p.y}" r="3.5" fill="#E26A6A" stroke="#FFFFFF" stroke-width="2" class="transition-all duration-150 group-hover:r-5 group-hover:fill-rose-500" />
+          <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="8" fill="transparent" />
+          <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="3.5" fill="#2563EB" stroke="#FFFFFF" stroke-width="2" class="group-hover:r-5 transition" />
         </g>
       `).join('');
 
+      // Dots for Meetings (Red/Coral)
+      const dotsMeetings = pointsMeetings.map((p, i) => `
+        <g class="cursor-pointer group"
+           onmousemove="showChartTooltip(event, 'Зустрічі • ${p.date}', '${p.val} зустрічей (Показів: ${showingsData[i]})', 'Разом: ${p.val + showingsData[i]} дій')"
+           onmouseleave="hideChartTooltip()">
+          <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="8" fill="transparent" />
+          <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="3.5" fill="#EF4444" stroke="#FFFFFF" stroke-width="2" class="group-hover:r-5 transition" />
+        </g>
+      `).join('');
+
+      const lastShow = pointsShowings[pointsShowings.length - 1];
+      const lastMeet = pointsMeetings[pointsMeetings.length - 1];
+
       svg.innerHTML = `
         <defs>
-          <linearGradient id="gradWeeklySpline" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#F1978E" stop-opacity="0.38" />
-            <stop offset="100%" stop-color="#F1978E" stop-opacity="0.0" />
+          <linearGradient id="gradWeeklyShowings" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#2563EB" stop-opacity="0.25" />
+            <stop offset="100%" stop-color="#2563EB" stop-opacity="0.0" />
           </linearGradient>
         </defs>
 
-        <text x="-${h / 2}" y="14" transform="rotate(-90)" font-size="10" fill="#94A3B8" text-anchor="middle" font-weight="bold">Кількість</text>
-
+        <text x="-${h / 2}" y="13" transform="rotate(-90)" font-size="9" fill="#94A3B8" text-anchor="middle" font-weight="bold">Дій / тиждень</text>
         ${gridSvg}
 
-        <path d="${areaPath}" fill="url(#gradWeeklySpline)" />
-        <path d="${splinePath}" fill="none" stroke="#E26A6A" stroke-width="2.5" stroke-linecap="round" />
+        <!-- Showings Area & Curve (Blue) -->
+        <path d="${areaShowings}" fill="url(#gradWeeklyShowings)" />
+        <path d="${pathShowings}" fill="none" stroke="#2563EB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+        ${dotsShowings}
+        <text x="${(lastShow.x + 8).toFixed(1)}" y="${(lastShow.y + 3.5).toFixed(1)}" font-size="10" font-weight="800" fill="#2563EB">🔵 Покази</text>
+
+        <!-- Meetings Curve (Coral / Red) -->
+        <path d="${pathMeetings}" fill="none" stroke="#EF4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+        ${dotsMeetings}
+        <text x="${(lastMeet.x + 8).toFixed(1)}" y="${(lastMeet.y + 3.5).toFixed(1)}" font-size="10" font-weight="800" fill="#EF4444">🔴 Зустрічі</text>
 
         ${xLabels}
-        ${dotsSvg}
       `;
     }
 
