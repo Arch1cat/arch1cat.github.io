@@ -869,139 +869,123 @@
 
     </div>
 
-    <!-- TAB 3: ВОРОНКА ПРОДАЖ (INTERACTIVE DEALS PIPELINE) -->
+    <!-- TAB 3: ВОРОНКА ПРОДАЖ (INTERACTIVE DEALS PIPELINE & KANBAN) -->
     <div id="content_funnel_sales" class="hidden space-y-4">
-      <div class="bg-white dark:bg-[#1A1D24] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm flex items-center justify-between">
+      
+      <!-- Top Control Bar -->
+      <div class="bg-white dark:bg-[#1A1D24] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h2 class="font-extrabold text-base text-gray-900 dark:text-white flex items-center gap-2">
-            <span class="w-3 h-3 rounded-full bg-emerald-600"></span>
-            Воронка продажів (Угоди та етапи проходження)
-          </h2>
-          <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">7 стадій угоди від холодного дзвінка до закриття з конверсією кожного вузла.</p>
+          <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-emerald-600 animate-pulse"></span>
+            <h2 class="font-extrabold text-base text-gray-900 dark:text-white">Воронка продажів (Угоди та Канбан пайплайн)</h2>
+            <span class="text-[10px] bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 font-bold px-2 py-0.5 rounded-full border border-emerald-200">7 стадій</span>
+          </div>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Керування угодами: перетягуйте картки між стадіями (Drag & Drop), відкривайте деталі та фіксуйте комісію.</p>
         </div>
-        <div class="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-3 py-1.5 rounded-xl border border-emerald-200 dark:border-emerald-800">
-          Пайплайн у роботі: $148,000
+
+        <div class="flex items-center gap-2.5 flex-wrap">
+          <!-- Funnel View Toggle: Kanban Cards vs Summary Numbers -->
+          <div class="flex items-center bg-gray-100 dark:bg-gray-800 p-0.5 rounded-xl border border-gray-200 dark:border-gray-700 text-xs">
+            <button type="button" onclick="setSalesFunnelView('kanban')" id="btn_sales_view_kanban" class="px-2.5 py-1 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-xs transition cursor-pointer">🗂️ Канбан картки</button>
+            <button type="button" onclick="setSalesFunnelView('summary')" id="btn_sales_view_summary" class="px-2.5 py-1 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 transition cursor-pointer">📊 Конверсії %</button>
+          </div>
+
+          <!-- Total Volume Badge -->
+          <div class="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-3 py-1.5 rounded-xl border border-emerald-200 dark:border-emerald-800">
+            Пайплайн у роботі: <strong id="salesPipelineTotal">$148,000</strong>
+          </div>
+
+          <!-- Add Deal Button -->
+          <button type="button" onclick="openModal('addDealModal')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm transition cursor-pointer">
+            <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+            <span>+ Додати угоду</span>
+          </button>
         </div>
       </div>
 
-      <!-- Funnel stages cards -->
-      <div class="grid grid-cols-1 md:grid-cols-7 gap-2.5">
-        
-        <!-- Stage 1 -->
-        <div class="bg-white dark:bg-[#1A1D24] p-3 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm">
-          <div class="flex items-center justify-between text-xs font-bold text-gray-500 mb-2">
-            <span>1. Дзвінки</span>
-            <span class="text-emerald-600">100%</span>
-          </div>
-          <div class="text-xl font-black text-gray-900 dark:text-white">100</div>
-          <p class="text-[10px] text-gray-400 mt-1">Первинні контакти</p>
+      <!-- VIEW A: KANBAN BOARD (CANONICAL INTERACTIVE WORKSPACE) -->
+      <div id="salesFunnel_kanban" class="overflow-x-auto pb-4">
+        <div id="salesKanbanContainer" class="flex gap-3 min-w-[1300px]">
+          <!-- Rendered via renderSalesKanban() -->
         </div>
-
-        <!-- Stage 2 -->
-        <div class="bg-white dark:bg-[#1A1D24] p-3 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm">
-          <div class="flex items-center justify-between text-xs font-bold text-gray-500 mb-2">
-            <span>2. Зустрічі</span>
-            <span class="text-emerald-600">18%</span>
-          </div>
-          <div class="text-xl font-black text-gray-900 dark:text-white">18</div>
-          <p class="text-[10px] text-gray-400 mt-1">З власниками</p>
-        </div>
-
-        <!-- Stage 3 -->
-        <div class="bg-white dark:bg-[#1A1D24] p-3 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm">
-          <div class="flex items-center justify-between text-xs font-bold text-gray-500 mb-2">
-            <span>3. Договори</span>
-            <span class="text-amber-600">27%</span>
-          </div>
-          <div class="text-xl font-black text-gray-900 dark:text-white">5</div>
-          <p class="text-[10px] text-gray-400 mt-1">Ексклюзивні угоди</p>
-        </div>
-
-        <!-- Stage 4 -->
-        <div class="bg-white dark:bg-[#1A1D24] p-3 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm">
-          <div class="flex items-center justify-between text-xs font-bold text-gray-500 mb-2">
-            <span>4. Покази</span>
-            <span class="text-blue-600">72%</span>
-          </div>
-          <div class="text-xl font-black text-gray-900 dark:text-white">36</div>
-          <p class="text-[10px] text-gray-400 mt-1">Презентації покупцям</p>
-        </div>
-
-        <!-- Stage 5 -->
-        <div class="bg-white dark:bg-[#1A1D24] p-3 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm">
-          <div class="flex items-center justify-between text-xs font-bold text-gray-500 mb-2">
-            <span>5. Оффери</span>
-            <span class="text-indigo-600">22%</span>
-          </div>
-          <div class="text-xl font-black text-gray-900 dark:text-white">8</div>
-          <p class="text-[10px] text-gray-400 mt-1">Цінові пропозиції</p>
-        </div>
-
-        <!-- Stage 6 -->
-        <div class="bg-white dark:bg-[#1A1D24] p-3 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm bg-amber-50/50 dark:bg-amber-950/20">
-          <div class="flex items-center justify-between text-xs font-bold text-amber-700 dark:text-amber-400 mb-2">
-            <span>6. Завдатки</span>
-            <span class="text-amber-600">37%</span>
-          </div>
-          <div class="text-xl font-black text-amber-600 dark:text-amber-400">3</div>
-          <p class="text-[10px] text-gray-400 mt-1">Фіксація броні</p>
-        </div>
-
-        <!-- Stage 7 -->
-        <div class="bg-white dark:bg-[#1A1D24] p-3 rounded-xl border border-emerald-300 dark:border-emerald-700 shadow-sm bg-emerald-50 dark:bg-emerald-950/40">
-          <div class="flex items-center justify-between text-xs font-bold text-emerald-800 dark:text-emerald-300 mb-2">
-            <span>7. Закрито</span>
-            <span class="text-emerald-600 font-extrabold">66%</span>
-          </div>
-          <div class="text-xl font-black text-emerald-600 dark:text-emerald-400">2</div>
-          <p class="text-[10px] text-gray-500 mt-1">1 Продаж + 1 Оренда</p>
-        </div>
-
       </div>
+
+      <!-- VIEW B: CONVERSION STEP SUMMARY (NUMERICAL SUMMARY WITH DROP-OFFS) -->
+      <div id="salesFunnel_summary" class="hidden space-y-3">
+        <div class="grid grid-cols-1 md:grid-cols-7 gap-2.5" id="salesSummaryCards">
+          <!-- Rendered via renderSalesSummary() -->
+        </div>
+      </div>
+
     </div>
 
-    <!-- TAB 4: ВОРОНКА ЗАЯВОК (LEADS INTAKE & CHANNELS) -->
+    <!-- TAB 4: ВОРОНКА ЗАЯВОК (LEADS INTAKE & CANONICAL 8-STAGE KANBAN) -->
     <div id="content_funnel_leads" class="hidden space-y-4">
-      <div class="bg-white dark:bg-[#1A1D24] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm flex items-center justify-between">
+      
+      <!-- Top Control Bar -->
+      <div class="bg-white dark:bg-[#1A1D24] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h2 class="font-extrabold text-base text-gray-900 dark:text-white flex items-center gap-2">
-            <span class="w-3 h-3 rounded-full bg-blue-600"></span>
-            Воронка заявок (Аналітика вхідного трафіку лідів)
-          </h2>
-          <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Джерела надходження, SLA першого дзвінка та конверсія у підбір об'єктів.</p>
+          <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-blue-600 animate-pulse"></span>
+            <h2 class="font-extrabold text-base text-gray-900 dark:text-white">Воронка заявок (Канбан лідів та попиту)</h2>
+            <span class="text-[10px] bg-blue-100 dark:bg-blue-950/60 text-blue-800 dark:text-blue-300 font-bold px-2 py-0.5 rounded-full border border-blue-200">8 етапів</span>
+          </div>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Обробка звернень покупців та орендарів: кваліфікація, підбір об'єктів, покази та SLA відповіді.</p>
         </div>
-        <div class="text-xs font-semibold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 px-3 py-1.5 rounded-xl border border-blue-200 dark:border-blue-800">
-          Середній SLA відповіді: <strong>8.4 хв</strong>
+
+        <div class="flex items-center gap-2.5 flex-wrap">
+          <!-- Leads View Toggle -->
+          <div class="flex items-center bg-gray-100 dark:bg-gray-800 p-0.5 rounded-xl border border-gray-200 dark:border-gray-700 text-xs">
+            <button type="button" onclick="setLeadsFunnelView('kanban')" id="btn_leads_view_kanban" class="px-2.5 py-1 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-xs transition cursor-pointer">🗂️ Канбан заявок</button>
+            <button type="button" onclick="setLeadsFunnelView('summary')" id="btn_leads_view_summary" class="px-2.5 py-1 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 transition cursor-pointer">📊 SLA & Джерела</button>
+          </div>
+
+          <!-- Average SLA Badge -->
+          <div class="text-xs font-semibold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 px-3 py-1.5 rounded-xl border border-blue-200 dark:border-blue-800">
+            Середній SLA відповіді: <strong>8.4 хв</strong>
+          </div>
+
+          <!-- Add Lead Button -->
+          <button type="button" onclick="openModal('addLeadModal')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition cursor-pointer">
+            <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+            <span>+ Додати заявку</span>
+          </button>
         </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-        
-        <div class="bg-white dark:bg-[#1A1D24] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm">
-          <span class="text-xs font-bold text-gray-400 uppercase">Нові (Без дзвінка)</span>
-          <div class="text-2xl font-black text-sky-600 mt-1">4</div>
-          <p class="text-xs text-gray-500 mt-1">Потребують швидкого дзвінка (&lt;15 хв)</p>
+      <!-- VIEW A: LEADS KANBAN BOARD -->
+      <div id="leadsFunnel_kanban" class="overflow-x-auto pb-4">
+        <div id="leadsKanbanContainer" class="flex gap-3 min-w-[1400px]">
+          <!-- Rendered via renderLeadsKanban() -->
         </div>
-
-        <div class="bg-white dark:bg-[#1A1D24] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm">
-          <span class="text-xs font-bold text-gray-400 uppercase">Кваліфіковані</span>
-          <div class="text-2xl font-black text-indigo-600 mt-1">18</div>
-          <p class="text-xs text-gray-500 mt-1">Бюджет і критерії зафіксовано</p>
-        </div>
-
-        <div class="bg-white dark:bg-[#1A1D24] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm">
-          <span class="text-xs font-bold text-gray-400 uppercase">У процесі підбору</span>
-          <div class="text-2xl font-black text-purple-600 mt-1">12</div>
-          <p class="text-xs text-gray-500 mt-1">Надіслано 3+ презентацій</p>
-        </div>
-
-        <div class="bg-white dark:bg-[#1A1D24] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm">
-          <span class="text-xs font-bold text-gray-400 uppercase">На показах</span>
-          <div class="text-2xl font-black text-emerald-600 mt-1">6</div>
-          <p class="text-xs text-gray-500 mt-1">Заплановано перегляди</p>
-        </div>
-
       </div>
+
+      <!-- VIEW B: LEADS SLA & SOURCES SUMMARY -->
+      <div id="leadsFunnel_summary" class="hidden space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div class="bg-white dark:bg-[#1A1D24] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm">
+            <span class="text-xs font-bold text-gray-400 uppercase">Нові (Без дзвінка)</span>
+            <div class="text-2xl font-black text-sky-600 mt-1" id="lead_stat_new">4</div>
+            <p class="text-xs text-gray-500 mt-1">Потребують термінового дзвінка (&lt;15 хв)</p>
+          </div>
+          <div class="bg-white dark:bg-[#1A1D24] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm">
+            <span class="text-xs font-bold text-gray-400 uppercase">Кваліфіковані</span>
+            <div class="text-2xl font-black text-indigo-600 mt-1" id="lead_stat_qual">18</div>
+            <p class="text-xs text-gray-500 mt-1">Бюджет і критерії зафіксовано</p>
+          </div>
+          <div class="bg-white dark:bg-[#1A1D24] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm">
+            <span class="text-xs font-bold text-gray-400 uppercase">У процесі підбору</span>
+            <div class="text-2xl font-black text-purple-600 mt-1" id="lead_stat_match">12</div>
+            <p class="text-xs text-gray-500 mt-1">Надіслано 3+ презентацій</p>
+          </div>
+          <div class="bg-white dark:bg-[#1A1D24] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm">
+            <span class="text-xs font-bold text-gray-400 uppercase">На показах</span>
+            <div class="text-2xl font-black text-emerald-600 mt-1" id="lead_stat_show">6</div>
+            <p class="text-xs text-gray-500 mt-1">Заплановано виїзні перегляди</p>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <!-- SUB-TABS: KPI КОМАНДИ / ВІДДІЛУ / КОМПАНІЇ -->
@@ -1081,6 +1065,267 @@
       </div>
     </div>
   </footer>
+
+  <!-- MODAL: ADD DEAL MODAL (НОВА УГОДА У ВОРОНКУ) -->
+  <div id="addDealModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-[#1A1D24] w-full max-w-md rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+      <div class="px-5 py-4 bg-emerald-600 text-white flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i data-lucide="plus-circle" class="w-5 h-5"></i>
+          <h3 class="font-bold text-sm">Додати нову угоду в пайплайн</h3>
+        </div>
+        <button onclick="closeModal('addDealModal')" class="text-white/80 hover:text-white transition cursor-pointer">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <form onsubmit="handleCreateDeal(event)" class="p-5 space-y-3.5 text-xs">
+        <div>
+          <label class="block font-semibold text-gray-700 dark:text-gray-300 mb-1">Назва / Об'єкт нерухомості</label>
+          <input type="text" id="dealInputTitle" required placeholder="напр. 2-к квартира, вул. Сумська, 45" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-emerald-500">
+        </div>
+        <div class="grid grid-cols-2 gap-2.5">
+          <div>
+            <label class="block font-semibold text-gray-700 dark:text-gray-300 mb-1">Тип операції</label>
+            <select id="dealInputType" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl px-2.5 py-2 text-xs font-semibold focus:outline-none focus:border-emerald-500">
+              <option value="SALE">Продаж</option>
+              <option value="RENT">Оренда</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-semibold text-gray-700 dark:text-gray-300 mb-1">Категорія</label>
+            <select id="dealInputCategory" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl px-2.5 py-2 text-xs font-semibold focus:outline-none focus:border-emerald-500">
+              <option value="Вторинне">🏠 Вторинне</option>
+              <option value="Новобудова">🏢 Новобудова</option>
+              <option value="Комерція">🏬 Комерція</option>
+              <option value="Земля">🌱 Земля</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-2.5">
+          <div>
+            <label class="block font-semibold text-gray-700 dark:text-gray-300 mb-1">Бюджет / Сума ($)</label>
+            <input type="number" id="dealInputPrice" required placeholder="50000" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl px-3 py-2 text-xs font-mono font-bold focus:outline-none focus:border-emerald-500">
+          </div>
+          <div>
+            <label class="block font-semibold text-gray-700 dark:text-gray-300 mb-1">Стадія воронки</label>
+            <select id="dealInputStage" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl px-2.5 py-2 text-xs font-semibold focus:outline-none focus:border-emerald-500">
+              <option value="CALLS">1. Дзвінки</option>
+              <option value="MEETINGS">2. Зустрічі</option>
+              <option value="CONTRACTS">3. Договори</option>
+              <option value="SHOWINGS" selected>4. Покази</option>
+              <option value="OFFERS">5. Оффери</option>
+              <option value="DEPOSITS">6. Завдатки</option>
+              <option value="CLOSED">7. Закрито ✅</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-2.5">
+          <div>
+            <label class="block font-semibold text-gray-700 dark:text-gray-300 mb-1">Клієнт (Покупець)</label>
+            <input type="text" id="dealInputClient" placeholder="Іван Ткаченко" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-emerald-500">
+          </div>
+          <div>
+            <label class="block font-semibold text-gray-700 dark:text-gray-300 mb-1">Телефон клієнта</label>
+            <input type="text" id="dealInputPhone" placeholder="+380 97 123 4567" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-emerald-500">
+          </div>
+        </div>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closeModal('addDealModal')" class="px-4 py-2 rounded-xl border border-gray-300 dark:border-gray-700 font-semibold text-gray-600 dark:text-gray-300 hover:bg-gray-100 transition cursor-pointer">Скасувати</button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold transition shadow-sm cursor-pointer">Створити угоду</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD LEAD MODAL (НОВА ЗАЯВКА У ВОРОНКУ) -->
+  <div id="addLeadModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-[#1A1D24] w-full max-w-md rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+      <div class="px-5 py-4 bg-blue-600 text-white flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i data-lucide="user-plus" class="w-5 h-5"></i>
+          <h3 class="font-bold text-sm">Додати нову заявку клієнта</h3>
+        </div>
+        <button onclick="closeModal('addLeadModal')" class="text-white/80 hover:text-white transition cursor-pointer">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <form onsubmit="handleCreateLead(event)" class="p-5 space-y-3.5 text-xs">
+        <div>
+          <label class="block font-semibold text-gray-700 dark:text-gray-300 mb-1">Ім'я клієнта</label>
+          <input type="text" id="leadInputName" required placeholder="напр. Наталія Григоренко" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-blue-500">
+        </div>
+        <div class="grid grid-cols-2 gap-2.5">
+          <div>
+            <label class="block font-semibold text-gray-700 dark:text-gray-300 mb-1">Телефон</label>
+            <input type="text" id="leadInputPhone" required placeholder="+380 50 987 6543" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-blue-500">
+          </div>
+          <div>
+            <label class="block font-semibold text-gray-700 dark:text-gray-300 mb-1">Бюджет ($)</label>
+            <input type="number" id="leadInputBudget" placeholder="45000" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl px-3 py-2 text-xs font-mono font-bold focus:outline-none focus:border-blue-500">
+          </div>
+        </div>
+        <div>
+          <label class="block font-semibold text-gray-700 dark:text-gray-300 mb-1">Запит / Параметри пошуку</label>
+          <input type="text" id="leadInputQuery" placeholder="напр. 2-к Павлове Поле, біля метро, до $50k" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-blue-500">
+        </div>
+        <div class="grid grid-cols-2 gap-2.5">
+          <div>
+            <label class="block font-semibold text-gray-700 dark:text-gray-300 mb-1">Джерело ліда</label>
+            <select id="leadInputSource" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl px-2.5 py-2 text-xs font-semibold focus:outline-none focus:border-blue-500">
+              <option value="Сайт Yotei">🌐 Сайт Yotei</option>
+              <option value="OLX">📢 OLX</option>
+              <option value="DOM.RIA">🏠 DOM.RIA</option>
+              <option value="Instagram">📸 Instagram</option>
+              <option value="Дзвінок">📞 Вхідний дзвінок</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-semibold text-gray-700 dark:text-gray-300 mb-1">Початковий статус</label>
+            <select id="leadInputStage" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl px-2.5 py-2 text-xs font-semibold focus:outline-none focus:border-blue-500">
+              <option value="NEW" selected>Вхідна заявка</option>
+              <option value="INFO_REQUEST">Запит інформації</option>
+              <option value="NEEDS_DISCOVERY">Виявлення потреби</option>
+              <option value="PROPERTY_SELECTION">Підбір об'єктів</option>
+              <option value="SHOWING">Показ</option>
+            </select>
+          </div>
+        </div>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closeModal('addLeadModal')" class="px-4 py-2 rounded-xl border border-gray-300 dark:border-gray-700 font-semibold text-gray-600 dark:text-gray-300 hover:bg-gray-100 transition cursor-pointer">Скасувати</button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold transition shadow-sm cursor-pointer">Створити заявку</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: DEAL DETAILS DRAWER / INSPECTION -->
+  <div id="dealDetailModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-[#1A1D24] w-full max-w-lg rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+      <div class="px-5 py-4 bg-emerald-700 text-white flex items-center justify-between">
+        <div>
+          <span id="dtlDealId" class="text-[10px] uppercase font-mono font-bold bg-white/20 px-2 py-0.5 rounded">#1042</span>
+          <h3 id="dtlDealTitle" class="font-extrabold text-sm mt-1">2-к квартира, вул. Сумська, 45</h3>
+        </div>
+        <button onclick="closeModal('dealDetailModal')" class="text-white/80 hover:text-white transition cursor-pointer">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div class="p-5 space-y-4 text-xs">
+        <div class="grid grid-cols-2 gap-3 bg-gray-50 dark:bg-gray-800 p-3 rounded-xl border border-gray-200 dark:border-gray-700">
+          <div>
+            <span class="text-gray-400 block text-[10px]">Бюджет угоди:</span>
+            <strong id="dtlDealPrice" class="text-base font-black text-emerald-600 font-mono">$52,000</strong>
+          </div>
+          <div>
+            <span class="text-gray-400 block text-[10px]">Комісія агентства (5%):</span>
+            <strong id="dtlDealCommission" class="text-base font-black text-blue-600 font-mono">$2,600</strong>
+          </div>
+          <div>
+            <span class="text-gray-400 block text-[10px]">Поточна стадія:</span>
+            <span id="dtlDealStageBadge" class="inline-block mt-0.5 px-2 py-0.5 rounded-full text-[10px] font-bold bg-cyan-100 text-cyan-800">4. Покази</span>
+          </div>
+          <div>
+            <span class="text-gray-400 block text-[10px]">Відповідальний агент:</span>
+            <strong id="dtlDealAgent" class="text-gray-800 dark:text-gray-200">Олександр Мельник</strong>
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <div class="p-2.5 rounded-xl border border-gray-200 dark:border-gray-700 flex justify-between items-center">
+            <div>
+              <span class="text-gray-400 block text-[10px]">Клієнт (Покупець):</span>
+              <strong id="dtlDealClientName" class="text-gray-900 dark:text-white">Андрій Коваленко</strong>
+              <span id="dtlDealClientPhone" class="block text-gray-500 font-mono text-[11px]">+380 97 555 4433</span>
+            </div>
+            <a id="dtlDealCallClient" href="tel:+380975554433" class="px-2.5 py-1.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 border border-emerald-300 font-bold flex items-center gap-1">
+              <i data-lucide="phone" class="w-3.5 h-3.5"></i>
+              <span>Дзвінок</span>
+            </a>
+          </div>
+
+          <div class="p-2.5 rounded-xl border border-gray-200 dark:border-gray-700 flex justify-between items-center">
+            <div>
+              <span class="text-gray-400 block text-[10px]">Власник об'єкта:</span>
+              <strong id="dtlDealOwnerName" class="text-gray-900 dark:text-white">Олена Вікторівна</strong>
+              <span id="dtlDealOwnerPhone" class="block text-gray-500 font-mono text-[11px]">+380 67 222 1100</span>
+            </div>
+            <a id="dtlDealCallOwner" href="tel:+380672221100" class="px-2.5 py-1.5 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-700 border border-blue-300 font-bold flex items-center gap-1">
+              <i data-lucide="phone" class="w-3.5 h-3.5"></i>
+              <span>Дзвінок</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="flex justify-between items-center pt-3 border-t border-gray-200 dark:border-gray-700">
+          <button type="button" onclick="handleDeleteDealCurrent()" class="text-red-600 hover:text-red-700 font-bold flex items-center gap-1 cursor-pointer">
+            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+            <span>Видалити угоду</span>
+          </button>
+          <div class="flex items-center gap-2">
+            <button type="button" onclick="closeModal('dealDetailModal')" class="px-3.5 py-2 rounded-xl border border-gray-300 dark:border-gray-700 font-semibold text-gray-600 dark:text-gray-300 hover:bg-gray-100 transition cursor-pointer">Закрити</button>
+            <button type="button" onclick="handleAdvanceDealCurrent()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold transition shadow-sm cursor-pointer flex items-center gap-1.5">
+              <span>→ Наступна стадія</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: LEAD DETAILS DRAWER / INSPECTION -->
+  <div id="leadDetailModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-[#1A1D24] w-full max-w-lg rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+      <div class="px-5 py-4 bg-blue-700 text-white flex items-center justify-between">
+        <div>
+          <span id="dtlLeadId" class="text-[10px] uppercase font-mono font-bold bg-white/20 px-2 py-0.5 rounded">#L-301</span>
+          <h3 id="dtlLeadName" class="font-extrabold text-sm mt-1">Дмитро Кравченко</h3>
+        </div>
+        <button onclick="closeModal('leadDetailModal')" class="text-white/80 hover:text-white transition cursor-pointer">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div class="p-5 space-y-4 text-xs">
+        <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-xl border border-gray-200 dark:border-gray-700 space-y-2">
+          <div class="flex justify-between items-center">
+            <span class="text-gray-400 text-[10px]">Бюджет клієнта:</span>
+            <strong id="dtlLeadBudget" class="text-base font-black text-blue-600 font-mono">$45,000 - $55,000</strong>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-gray-400 text-[10px]">Джерело звернення:</span>
+            <span id="dtlLeadSourceBadge" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-800">📢 OLX</span>
+          </div>
+          <div>
+            <span class="text-gray-400 block text-[10px] mb-0.5">Критерії запиту:</span>
+            <p id="dtlLeadQuery" class="text-gray-800 dark:text-gray-200 font-medium bg-white dark:bg-gray-900 p-2 rounded-lg border border-gray-200/80">2-к Павлове Поле або Олексіївка, біля метро, до $55k</p>
+          </div>
+        </div>
+
+        <div class="p-2.5 rounded-xl border border-gray-200 dark:border-gray-700 flex justify-between items-center">
+          <div>
+            <span class="text-gray-400 block text-[10px]">Номер телефону:</span>
+            <span id="dtlLeadPhone" class="block text-gray-900 dark:text-white font-mono font-bold text-sm">+380 97 111 2233</span>
+          </div>
+          <a id="dtlLeadCallBtn" href="tel:+380971112233" class="px-3 py-1.5 rounded-lg bg-emerald-600 text-white font-bold flex items-center gap-1 shadow-xs hover:bg-emerald-700">
+            <i data-lucide="phone" class="w-3.5 h-3.5"></i>
+            <span>Зателефонувати</span>
+          </a>
+        </div>
+
+        <div class="flex justify-between items-center pt-3 border-t border-gray-200 dark:border-gray-700">
+          <button type="button" onclick="handleDeleteLeadCurrent()" class="text-red-600 hover:text-red-700 font-bold flex items-center gap-1 cursor-pointer">
+            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+            <span>Відхилити / Архів</span>
+          </button>
+          <div class="flex items-center gap-2">
+            <button type="button" onclick="closeModal('leadDetailModal')" class="px-3.5 py-2 rounded-xl border border-gray-300 dark:border-gray-700 font-semibold text-gray-600 dark:text-gray-300 hover:bg-gray-100 transition cursor-pointer">Закрити</button>
+            <button type="button" onclick="handleAdvanceLeadCurrent()" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold transition shadow-sm cursor-pointer flex items-center gap-1.5">
+              <span>→ Наступний етап</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- MODAL 4: КЕРУВАННЯ ВИДИМІСТЮ БЛОКІВ ДАШБОРДУ -->
   <div id="visibilityModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
@@ -1297,6 +1542,10 @@
       currentPeriod: '1m',
       currentFactor: 1.0,
       visualMode: 'bars', // 'bars' | 'circles' | 'charts' | 'cards'
+      salesFunnelView: 'kanban', // 'kanban' | 'summary'
+      leadsFunnelView: 'kanban',  // 'kanban' | 'summary'
+      activeDealId: null,
+      activeLeadId: null,
       blockModes: {
         objects: 'bars',
         clients: 'bars',
@@ -1310,6 +1559,27 @@
         marketing: true,
         deals: true
       },
+      deals: [
+        { id: 'D-1042', title: '2-к квартира, вул. Сумська, 45', type: 'SALE', category: 'Вторинне', price: 52000, commission: 2600, stage: 'SHOWINGS', clientName: 'Андрій Коваленко', clientPhone: '+380 97 555 4433', ownerName: 'Олена Вікторівна', ownerPhone: '+380 67 222 1100', agent: 'Олександр Мельник', date: 'Сьогодні, 15:30' },
+        { id: 'D-1048', title: 'ЖК Воробйові Гори, пров. Шевченківський', type: 'SALE', category: 'Новобудова', price: 24000, commission: 1200, stage: 'DEPOSITS', clientName: 'Юрій Сидоренко', clientPhone: '+380 50 333 9988', ownerName: 'Віктор Павлович', ownerPhone: '+380 66 111 2233', agent: 'Ірина Ковальчук', date: 'Вчора' },
+        { id: 'D-1055', title: 'Офісне приміщення 85 м², вул. Пушкінська', type: 'RENT', category: 'Комерція', price: 1100, commission: 550, stage: 'CLOSED', clientName: 'ТОВ \"Айті-Хаб\"', clientPhone: '+380 63 777 8899', ownerName: 'Михайло Д.', ownerPhone: '+380 99 444 5566', agent: 'Дмитро Шевченко', date: '04.10.2026' },
+        { id: 'D-1061', title: 'Ділянка 12 сот, смт Покотилівка', type: 'SALE', category: 'Земля', price: 18000, commission: 900, stage: 'CONTRACTS', clientName: 'Олександр Г.', clientPhone: '+380 98 444 1122', ownerName: 'Тетяна Іванівна', ownerPhone: '+380 95 888 7766', agent: 'Олександр Мельник', date: '02.10.2026' },
+        { id: 'D-1069', title: '1-к новобуд ЖК Левада, вул. Єлизаветинська', type: 'SALE', category: 'Новобудова', price: 38500, commission: 1925, stage: 'OFFERS', clientName: 'Марина Кравчук', clientPhone: '+380 66 555 1234', ownerName: 'Максим Романович', ownerPhone: '+380 97 321 6549', agent: 'Ірина Ковальчук', date: 'Сьогодні, 11:00' },
+        { id: 'D-1074', title: '3-к сталінка, пл. Конституції, 12', type: 'SALE', category: 'Вторинне', price: 85000, commission: 4250, stage: 'MEETINGS', clientName: 'Валерій Бойко', clientPhone: '+380 93 888 4455', ownerName: 'Григорій Степанович', ownerPhone: '+380 67 999 0011', agent: 'Олександр Мельник', date: 'Завтра, 14:00' },
+        { id: 'D-1082', title: 'Приміщення під аптеку, пр. Науки, 38', type: 'RENT', category: 'Комерція', price: 1800, commission: 900, stage: 'CALLS', clientName: 'Мережа \"Фарма\"', clientPhone: '+380 50 111 4455', ownerName: 'Кирило В.', ownerPhone: '+380 68 333 2211', agent: 'Дмитро Шевченко', date: 'Сьогодні' },
+        { id: 'D-1090', title: '2-к ЖК Казка, вул. Полтавський Шлях', type: 'SALE', category: 'Новобудова', price: 41000, commission: 2050, stage: 'CLOSED', clientName: 'Світлана Білик', clientPhone: '+380 99 222 3344', ownerName: 'Володимир Ю.', ownerPhone: '+380 97 444 8822', agent: 'Ірина Ковальчук', date: '05.10.2026' },
+        { id: 'D-1094', title: 'Оренда 2-к, вул. Бакуліна, 3', type: 'RENT', category: 'Вторинне', price: 450, commission: 225, stage: 'DEPOSITS', clientName: 'Євгеній П.', clientPhone: '+380 63 999 1122', ownerName: 'Ольга Миколаївна', ownerPhone: '+380 50 777 4411', agent: 'Олександр Мельник', date: 'Сьогодні, 18:00' }
+      ],
+      leads: [
+        { id: 'L-301', name: 'Дмитро Кравченко', phone: '+380 97 111 2233', budget: 52000, query: '2-к Павлове Поле або Олексіївка, біля метро, до $55k', source: 'OLX', stage: 'PROPERTY_SELECTION', agent: 'Олександр Мельник', date: 'Сьогодні, 10:15' },
+        { id: 'L-302', name: 'Олена Васильєва', phone: '+380 50 222 3344', budget: 32000, query: '1-к новобудова для оренди, під здачу в оренду', source: 'Сайт Yotei', stage: 'SHOWING', agent: 'Ірина Ковальчук', date: 'Сьогодні, 11:30' },
+        { id: 'L-303', name: 'Сергій Бондар', phone: '+380 67 333 4455', budget: 1000, query: 'Оренда офісу 50-80 м², 1-й поверх, окремий вхід', source: 'DOM.RIA', stage: 'NEGOTIATION', agent: 'Дмитро Шевченко', date: 'Вчора' },
+        { id: 'L-304', name: 'Анастасія Мельник', phone: '+380 63 444 5566', budget: 65000, query: '3-к Центр з ремонтом та підземним паркінгом', source: 'Instagram', stage: 'NEEDS_DISCOVERY', agent: 'Олександр Мельник', date: 'Сьогодні' },
+        { id: 'L-305', name: 'Максим Гриценко', phone: '+380 95 555 6677', budget: 20000, query: 'Гостинка або невелика 1-к на Салтівці', source: 'Дзвінок', stage: 'INFO_REQUEST', agent: 'Ірина Ковальчук', date: 'Вчора' },
+        { id: 'L-306', name: 'Віктор Романенко', phone: '+380 98 666 7788', budget: 40000, query: 'ЖК Миру або Рогатинський, чорновий ремонт', source: 'OLX', stage: 'NEW', agent: 'Ірина Ковальчук', date: 'Сьогодні, 09:20' },
+        { id: 'L-307', name: 'Ігор Поляков', phone: '+380 66 777 8899', budget: 48000, query: '2-к новобуд, поверх 3-7, зданий будинок', source: 'DOM.RIA', stage: 'DEPOSIT', agent: 'Олександр Мельник', date: '04.10.2026' },
+        { id: 'L-308', name: 'Марина Ткач', phone: '+380 93 888 9900', budget: 350, query: 'Оренда 1-к студії у центрі для студентки', source: 'Сайт Yotei', stage: 'DEAL', agent: 'Олександр Мельник', date: '05.10.2026' }
+      ],
       kpi: {
         calls: 68,
         objects: 19,
@@ -1796,6 +2066,12 @@
         subnav.classList.add('hidden');
       }
 
+      if (tab === 'funnel_sales') {
+        renderSalesKanban();
+      } else if (tab === 'funnel_leads') {
+        renderLeadsKanban();
+      }
+
       showToast(`Розділ перемкнуто: ${tab.toUpperCase()}`);
     }
 
@@ -1829,6 +2105,514 @@
       }
 
       showToast(`KPI підрівень: ${sub}`);
+    }
+
+    // ═════════════════════════════════════════════════════════════════════════
+    // PIPELINE & KANBAN FUNNEL SYSTEM (SALES DEALS & CLIENT LEADS)
+    // ═════════════════════════════════════════════════════════════════════════
+
+    const SALES_STAGES = [
+      { id: 'CALLS', label: '1. Дзвінки', color: '#10B981', border: 'border-emerald-500', badgeBg: 'bg-emerald-100 text-emerald-800' },
+      { id: 'MEETINGS', label: '2. Зустрічі', color: '#3B82F6', border: 'border-blue-500', badgeBg: 'bg-blue-100 text-blue-800' },
+      { id: 'CONTRACTS', label: '3. Договори', color: '#8B5CF6', border: 'border-purple-500', badgeBg: 'bg-purple-100 text-purple-800' },
+      { id: 'SHOWINGS', label: '4. Покази', color: '#06B6D4', border: 'border-cyan-500', badgeBg: 'bg-cyan-100 text-cyan-800' },
+      { id: 'OFFERS', label: '5. Оффери', color: '#F59E0B', border: 'border-amber-500', badgeBg: 'bg-amber-100 text-amber-800' },
+      { id: 'DEPOSITS', label: '6. Завдатки', color: '#E11D48', border: 'border-rose-500', badgeBg: 'bg-rose-100 text-rose-800' },
+      { id: 'CLOSED', label: '7. Закрито ✅', color: '#059669', border: 'border-emerald-600', badgeBg: 'bg-emerald-600 text-white' }
+    ];
+
+    const LEADS_STAGES = [
+      { id: 'NEW', label: 'Вхідна заявка', color: '#1D4ED8', badgeBg: 'bg-blue-100 text-blue-800' },
+      { id: 'INFO_REQUEST', label: 'Запит інформації', color: '#0284C7', badgeBg: 'bg-sky-100 text-sky-800' },
+      { id: 'NEEDS_DISCOVERY', label: 'Виявлення потреби', color: '#0EA5E9', badgeBg: 'bg-cyan-100 text-cyan-800' },
+      { id: 'PROPERTY_SELECTION', label: 'Підбір нерухомості', color: '#6366F1', badgeBg: 'bg-indigo-100 text-indigo-800' },
+      { id: 'SHOWING', label: 'Показ', color: '#D97706', badgeBg: 'bg-amber-100 text-amber-800' },
+      { id: 'NEGOTIATION', label: 'Переговори', color: '#7C3AED', badgeBg: 'bg-purple-100 text-purple-800' },
+      { id: 'DEPOSIT', label: 'Завдаток', color: '#CA8A04', badgeBg: 'bg-yellow-100 text-yellow-800' },
+      { id: 'DEAL', label: 'Угода ✅', color: '#059669', badgeBg: 'bg-emerald-600 text-white' }
+    ];
+
+    let draggedItemType = null;
+    let draggedItemId = null;
+
+    // Drag and drop for Deals
+    function onDealDragStart(e, id) {
+      draggedItemType = 'deal';
+      draggedItemId = id;
+      e.dataTransfer.setData('text/plain', id);
+      e.dataTransfer.effectAllowed = 'move';
+    }
+
+    function onDealDragOver(e) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+    }
+
+    function onDealDrop(e, targetStageId) {
+      e.preventDefault();
+      if (draggedItemType === 'deal' && draggedItemId) {
+        moveDealStage(draggedItemId, targetStageId);
+        draggedItemId = null;
+        draggedItemType = null;
+      }
+    }
+
+    function moveDealStage(dealId, newStageId) {
+      const deal = state.deals.find(d => d.id === dealId);
+      if (!deal) return;
+      deal.stage = newStageId;
+      const stageObj = SALES_STAGES.find(s => s.id === newStageId);
+      renderSalesKanban();
+      showToast(`Угоду ${deal.id} переведено на стадію: ${stageObj ? stageObj.label : newStageId}`);
+    }
+
+    // Drag and drop for Leads
+    function onLeadDragStart(e, id) {
+      draggedItemType = 'lead';
+      draggedItemId = id;
+      e.dataTransfer.setData('text/plain', id);
+      e.dataTransfer.effectAllowed = 'move';
+    }
+
+    function onLeadDragOver(e) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+    }
+
+    function onLeadDrop(e, targetStageId) {
+      e.preventDefault();
+      if (draggedItemType === 'lead' && draggedItemId) {
+        moveLeadStage(draggedItemId, targetStageId);
+        draggedItemId = null;
+        draggedItemType = null;
+      }
+    }
+
+    function moveLeadStage(leadId, newStageId) {
+      const lead = state.leads.find(l => l.id === leadId);
+      if (!lead) return;
+      lead.stage = newStageId;
+      const stageObj = LEADS_STAGES.find(s => s.id === newStageId);
+      renderLeadsKanban();
+      showToast(`Заявку ${lead.name} переведено на стадію: ${stageObj ? stageObj.label : newStageId}`);
+    }
+
+    // Advance to next stage in 1 click
+    function advanceDeal(dealId) {
+      const deal = state.deals.find(d => d.id === dealId);
+      if (!deal) return;
+      const idx = SALES_STAGES.findIndex(s => s.id === deal.stage);
+      if (idx !== -1 && idx < SALES_STAGES.length - 1) {
+        moveDealStage(dealId, SALES_STAGES[idx + 1].id);
+      } else {
+        showToast('Угода вже на фінальній стадії ✅');
+      }
+    }
+
+    function advanceLead(leadId) {
+      const lead = state.leads.find(l => l.id === leadId);
+      if (!lead) return;
+      const idx = LEADS_STAGES.findIndex(s => s.id === lead.stage);
+      if (idx !== -1 && idx < LEADS_STAGES.length - 1) {
+        moveLeadStage(leadId, LEADS_STAGES[idx + 1].id);
+      } else {
+        showToast('Заявка вже на фінальному етапі ✅');
+      }
+    }
+
+    // View switchers
+    function setSalesFunnelView(view) {
+      state.salesFunnelView = view;
+      document.getElementById('salesFunnel_kanban').classList.toggle('hidden', view !== 'kanban');
+      document.getElementById('salesFunnel_summary').classList.toggle('hidden', view !== 'summary');
+      
+      const bK = document.getElementById('btn_sales_view_kanban');
+      const bS = document.getElementById('btn_sales_view_summary');
+      if (bK) bK.className = view === 'kanban' ? "px-2.5 py-1 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-xs transition cursor-pointer" : "px-2.5 py-1 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 transition cursor-pointer";
+      if (bS) bS.className = view === 'summary' ? "px-2.5 py-1 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-xs transition cursor-pointer" : "px-2.5 py-1 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 transition cursor-pointer";
+
+      if (view === 'summary') renderSalesSummary();
+      else renderSalesKanban();
+    }
+
+    function setLeadsFunnelView(view) {
+      state.leadsFunnelView = view;
+      document.getElementById('leadsFunnel_kanban').classList.toggle('hidden', view !== 'kanban');
+      document.getElementById('leadsFunnel_summary').classList.toggle('hidden', view !== 'summary');
+
+      const bK = document.getElementById('btn_leads_view_kanban');
+      const bS = document.getElementById('btn_leads_view_summary');
+      if (bK) bK.className = view === 'kanban' ? "px-2.5 py-1 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-xs transition cursor-pointer" : "px-2.5 py-1 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 transition cursor-pointer";
+      if (bS) bS.className = view === 'summary' ? "px-2.5 py-1 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-xs transition cursor-pointer" : "px-2.5 py-1 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 transition cursor-pointer";
+
+      if (view === 'summary') renderLeadsSummary();
+      else renderLeadsKanban();
+    }
+
+    // Render Sales Kanban
+    function renderSalesKanban() {
+      const container = document.getElementById('salesKanbanContainer');
+      if (!container) return;
+
+      let grandTotalVolume = 0;
+      state.deals.forEach(d => grandTotalVolume += (d.price || 0));
+      const totBadge = document.getElementById('salesPipelineTotal');
+      if (totBadge) totBadge.textContent = `$${grandTotalVolume.toLocaleString('uk-UA')}`;
+
+      container.innerHTML = SALES_STAGES.map(stage => {
+        const stageDeals = state.deals.filter(d => d.stage === stage.id);
+        const stageVolume = stageDeals.reduce((sum, d) => sum + (d.price || 0), 0);
+
+        return `
+          <div class="w-80 shrink-0 bg-gray-50/80 dark:bg-gray-800/40 rounded-2xl border border-gray-200 dark:border-gray-700/80 flex flex-col max-h-[720px] shadow-xs"
+               ondragover="onDealDragOver(event)"
+               ondrop="onDealDrop(event, '${stage.id}')">
+            
+            <!-- Column Header -->
+            <div class="p-3 border-b border-gray-200/70 dark:border-gray-700/70 flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full" style="background-color: ${stage.color};"></span>
+                <span class="font-extrabold text-xs text-gray-900 dark:text-white">${stage.label}</span>
+                <span class="px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300">${stageDeals.length}</span>
+              </div>
+              <span class="text-[11px] font-mono font-bold text-gray-500 dark:text-gray-400">$${stageVolume.toLocaleString('uk-UA')}</span>
+            </div>
+
+            <!-- Cards Container -->
+            <div class="p-2 space-y-2.5 overflow-y-auto flex-1 min-h-[140px]">
+              ${stageDeals.length === 0 ? `
+                <div class="h-28 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-xl flex items-center justify-center text-[11px] text-gray-400 select-none">
+                  Перетягніть угоду сюди
+                </div>
+              ` : stageDeals.map(d => `
+                <div draggable="true"
+                     ondragstart="onDealDragStart(event, '${d.id}')"
+                     class="bg-white dark:bg-[#1A1D24] p-3 rounded-xl border border-gray-200 dark:border-gray-700 shadow-xs hover:shadow-md hover:border-emerald-400 transition cursor-grab active:cursor-grabbing group">
+                  
+                  <!-- Top Badges -->
+                  <div class="flex items-center justify-between gap-1 mb-1.5">
+                    <span class="text-[10px] font-mono font-bold text-gray-400">${d.id}</span>
+                    <div class="flex items-center gap-1">
+                      <span class="px-1.5 py-0.2 rounded text-[9px] font-bold ${d.type === 'RENT' ? 'bg-blue-100 text-blue-800' : 'bg-emerald-100 text-emerald-800'}">${d.type === 'RENT' ? 'Оренда' : 'Продаж'}</span>
+                      <span class="px-1.5 py-0.2 rounded text-[9px] font-bold bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700">${d.category}</span>
+                    </div>
+                  </div>
+
+                  <!-- Title -->
+                  <h4 class="font-bold text-xs text-gray-900 dark:text-white line-clamp-2 mb-2 group-hover:text-emerald-600 transition">${d.title}</h4>
+
+                  <!-- Price & Commission -->
+                  <div class="flex items-baseline justify-between mb-2 pb-2 border-b border-gray-100 dark:border-gray-800">
+                    <span class="text-sm font-black text-gray-900 dark:text-white font-mono">$${d.price.toLocaleString('uk-UA')}</span>
+                    <span class="text-[10px] font-mono font-bold text-emerald-600 dark:text-emerald-400">Ком: $${d.commission.toLocaleString('uk-UA')}</span>
+                  </div>
+
+                  <!-- Client Info & Agent -->
+                  <div class="space-y-1 text-[11px] text-gray-500 mb-2.5">
+                    <div class="flex items-center justify-between">
+                      <span class="truncate">👤 ${d.clientName}</span>
+                      <span class="font-mono text-[10px]">${d.clientPhone}</span>
+                    </div>
+                    <div class="flex items-center justify-between text-[10px] text-gray-400">
+                      <span>Агент: <strong class="text-gray-700 dark:text-gray-300">${d.agent.split(' ')[0]}</strong></span>
+                      <span>${d.date}</span>
+                    </div>
+                  </div>
+
+                  <!-- Card Action Footer -->
+                  <div class="flex items-center justify-between pt-1 text-xs">
+                    <button type="button" onclick="openDealDetail('${d.id}')" class="px-2 py-1 rounded-lg text-[10px] font-bold bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 transition cursor-pointer flex items-center gap-1">
+                      <i data-lucide="eye" class="w-3 h-3"></i>
+                      <span>Деталі</span>
+                    </button>
+                    ${stage.id !== 'CLOSED' ? `
+                      <button type="button" onclick="advanceDeal('${d.id}')" title="Перевести на наступну стадію" class="px-2 py-1 rounded-lg text-[10px] font-bold bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 border border-emerald-300 transition cursor-pointer flex items-center gap-0.5">
+                        <span>Наступний</span>
+                        <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                      </button>
+                    ` : '<span class="text-[10px] text-emerald-600 font-bold">Угода закрита ✅</span>'}
+                  </div>
+
+                </div>
+              `).join('')}
+            </div>
+
+            <!-- Column Footer Quick Add -->
+            <div class="p-2 border-t border-gray-200/70 dark:border-gray-700/70">
+              <button type="button" onclick="openModal('addDealModal')" class="w-full py-1.5 rounded-xl border border-dashed border-gray-300 dark:border-gray-600 hover:border-emerald-500 text-[11px] font-bold text-gray-500 hover:text-emerald-600 transition flex items-center justify-center gap-1 cursor-pointer">
+                <i data-lucide="plus" class="w-3 h-3"></i>
+                <span>Додати сюди</span>
+              </button>
+            </div>
+
+          </div>
+        `;
+      }).join('');
+
+      renderIcons();
+    }
+
+    // Render Leads Kanban
+    function renderLeadsKanban() {
+      const container = document.getElementById('leadsKanbanContainer');
+      if (!container) return;
+
+      container.innerHTML = LEADS_STAGES.map(stage => {
+        const stageLeads = state.leads.filter(l => l.stage === stage.id);
+
+        return `
+          <div class="w-72 shrink-0 bg-gray-50/80 dark:bg-gray-800/40 rounded-2xl border border-gray-200 dark:border-gray-700/80 flex flex-col max-h-[720px] shadow-xs"
+               ondragover="onLeadDragOver(event)"
+               ondrop="onLeadDrop(event, '${stage.id}')">
+            
+            <!-- Column Header -->
+            <div class="p-3 border-b border-gray-200/70 dark:border-gray-700/70 flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full" style="background-color: ${stage.color};"></span>
+                <span class="font-extrabold text-xs text-gray-900 dark:text-white">${stage.label}</span>
+              </div>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-800">${stageLeads.length}</span>
+            </div>
+
+            <!-- Cards Container -->
+            <div class="p-2 space-y-2.5 overflow-y-auto flex-1 min-h-[140px]">
+              ${stageLeads.length === 0 ? `
+                <div class="h-28 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-xl flex items-center justify-center text-[11px] text-gray-400 select-none">
+                  Немає заявок
+                </div>
+              ` : stageLeads.map(l => `
+                <div draggable="true"
+                     ondragstart="onLeadDragStart(event, '${l.id}')"
+                     class="bg-white dark:bg-[#1A1D24] p-3 rounded-xl border border-gray-200 dark:border-gray-700 shadow-xs hover:shadow-md hover:border-blue-400 transition cursor-grab active:cursor-grabbing group">
+                  
+                  <div class="flex items-center justify-between mb-1.5">
+                    <span class="text-[10px] font-mono font-bold text-gray-400">${l.id}</span>
+                    <span class="px-1.5 py-0.2 rounded text-[9px] font-bold bg-blue-50 text-blue-700 border border-blue-200">${l.source}</span>
+                  </div>
+
+                  <h4 class="font-extrabold text-xs text-gray-900 dark:text-white mb-1 group-hover:text-blue-600 transition">${l.name}</h4>
+                  
+                  <div class="text-[11px] font-mono font-bold text-blue-600 dark:text-blue-400 mb-1.5">
+                    Бюджет: $${(l.budget || 0).toLocaleString('uk-UA')}
+                  </div>
+
+                  <p class="text-[11px] text-gray-600 dark:text-gray-300 line-clamp-2 bg-gray-50 dark:bg-gray-800/80 p-1.5 rounded-lg border border-gray-100 dark:border-gray-700 mb-2">
+                    ${l.query || 'Запит уточнюється'}
+                  </p>
+
+                  <div class="flex items-center justify-between text-[10px] text-gray-400 pb-2 mb-2 border-b border-gray-100 dark:border-gray-800">
+                    <span>${l.phone}</span>
+                    <span>${l.date}</span>
+                  </div>
+
+                  <div class="flex items-center justify-between text-xs">
+                    <button type="button" onclick="openLeadDetail('${l.id}')" class="px-2 py-1 rounded-lg text-[10px] font-bold bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 transition cursor-pointer flex items-center gap-1">
+                      <i data-lucide="eye" class="w-3 h-3"></i>
+                      <span>Картка</span>
+                    </button>
+                    ${stage.id !== 'DEAL' ? `
+                      <button type="button" onclick="advanceLead('${l.id}')" class="px-2 py-1 text-[10px] font-bold bg-blue-50 hover:bg-blue-100 dark:bg-blue-950/60 text-blue-700 border border-blue-300 transition cursor-pointer flex items-center gap-0.5">
+                        <span>Далі</span>
+                        <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                      </button>
+                    ` : '<span class="text-[10px] text-emerald-600 font-bold">Закрито ✅</span>'}
+                  </div>
+
+                </div>
+              `).join('')}
+            </div>
+
+            <!-- Column Footer Quick Add -->
+            <div class="p-2 border-t border-gray-200/70 dark:border-gray-700/70">
+              <button type="button" onclick="openModal('addLeadModal')" class="w-full py-1.5 rounded-xl border border-dashed border-gray-300 dark:border-gray-600 hover:border-blue-500 text-[11px] font-bold text-gray-500 hover:text-blue-600 transition flex items-center justify-center gap-1 cursor-pointer">
+                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                <span>Додати заявку</span>
+              </button>
+            </div>
+
+          </div>
+        `;
+      }).join('');
+
+      renderIcons();
+    }
+
+    // Modal Deal Details
+    function openDealDetail(dealId) {
+      const deal = state.deals.find(d => d.id === dealId);
+      if (!deal) return;
+      state.activeDealId = dealId;
+
+      document.getElementById('dtlDealId').textContent = deal.id;
+      document.getElementById('dtlDealTitle').textContent = deal.title;
+      document.getElementById('dtlDealPrice').textContent = `$${deal.price.toLocaleString('uk-UA')}`;
+      document.getElementById('dtlDealCommission').textContent = `$${deal.commission.toLocaleString('uk-UA')}`;
+      
+      const st = SALES_STAGES.find(s => s.id === deal.stage);
+      document.getElementById('dtlDealStageBadge').textContent = st ? st.label : deal.stage;
+      document.getElementById('dtlDealAgent').textContent = deal.agent;
+
+      document.getElementById('dtlDealClientName').textContent = deal.clientName;
+      document.getElementById('dtlDealClientPhone').textContent = deal.clientPhone;
+      document.getElementById('dtlDealCallClient').href = `tel:${deal.clientPhone}`;
+
+      document.getElementById('dtlDealOwnerName').textContent = deal.ownerName || 'Власник не вказаний';
+      document.getElementById('dtlDealOwnerPhone').textContent = deal.ownerPhone || '—';
+      document.getElementById('dtlDealCallOwner').href = `tel:${deal.ownerPhone || ''}`;
+
+      openModal('dealDetailModal');
+    }
+
+    function handleAdvanceDealCurrent() {
+      if (state.activeDealId) {
+        advanceDeal(state.activeDealId);
+        closeModal('dealDetailModal');
+      }
+    }
+
+    function handleDeleteDealCurrent() {
+      if (state.activeDealId) {
+        state.deals = state.deals.filter(d => d.id !== state.activeDealId);
+        renderSalesKanban();
+        closeModal('dealDetailModal');
+        showToast('Угоду видалено з пайплайну');
+      }
+    }
+
+    // Modal Lead Details
+    function openLeadDetail(leadId) {
+      const lead = state.leads.find(l => l.id === leadId);
+      if (!lead) return;
+      state.activeLeadId = leadId;
+
+      document.getElementById('dtlLeadId').textContent = lead.id;
+      document.getElementById('dtlLeadName').textContent = lead.name;
+      document.getElementById('dtlLeadBudget').textContent = `$${(lead.budget || 0).toLocaleString('uk-UA')}`;
+      document.getElementById('dtlLeadSourceBadge').textContent = lead.source;
+      document.getElementById('dtlLeadQuery').textContent = lead.query || 'Вимоги уточнюються';
+      document.getElementById('dtlLeadPhone').textContent = lead.phone;
+      document.getElementById('dtlLeadCallBtn').href = `tel:${lead.phone}`;
+
+      openModal('leadDetailModal');
+    }
+
+    function handleAdvanceLeadCurrent() {
+      if (state.activeLeadId) {
+        advanceLead(state.activeLeadId);
+        closeModal('leadDetailModal');
+      }
+    }
+
+    function handleDeleteLeadCurrent() {
+      if (state.activeLeadId) {
+        state.leads = state.leads.filter(l => l.id !== state.activeLeadId);
+        renderLeadsKanban();
+        closeModal('leadDetailModal');
+        showToast('Заявку відправлено в архів');
+      }
+    }
+
+    // Create New Deal Form Submission
+    function handleCreateDeal(e) {
+      e.preventDefault();
+      const title = document.getElementById('dealInputTitle').value;
+      const type = document.getElementById('dealInputType').value;
+      const category = document.getElementById('dealInputCategory').value;
+      const price = parseFloat(document.getElementById('dealInputPrice').value) || 0;
+      const stage = document.getElementById('dealInputStage').value;
+      const clientName = document.getElementById('dealInputClient').value || 'Клієнт';
+      const clientPhone = document.getElementById('dealInputPhone').value || '+380...';
+
+      const newId = `D-${1000 + state.deals.length + 1}`;
+      const commission = Math.round(price * 0.05);
+
+      state.deals.unshift({
+        id: newId,
+        title,
+        type,
+        category,
+        price,
+        commission,
+        stage,
+        clientName,
+        clientPhone,
+        ownerName: 'Власник',
+        ownerPhone: '+380...',
+        agent: 'Олександр Мельник',
+        date: 'Сьогодні'
+      });
+
+      closeModal('addDealModal');
+      renderSalesKanban();
+      showToast(`Угоду ${newId} успішно додано в пайплайн! 🚀`);
+      e.target.reset();
+    }
+
+    // Create New Lead Form Submission
+    function handleCreateLead(e) {
+      e.preventDefault();
+      const name = document.getElementById('leadInputName').value;
+      const phone = document.getElementById('leadInputPhone').value;
+      const budget = parseFloat(document.getElementById('leadInputBudget').value) || 0;
+      const query = document.getElementById('leadInputQuery').value || 'Запит';
+      const source = document.getElementById('leadInputSource').value;
+      const stage = document.getElementById('leadInputStage').value;
+
+      const newId = `L-${300 + state.leads.length + 1}`;
+
+      state.leads.unshift({
+        id: newId,
+        name,
+        phone,
+        budget,
+        query,
+        source,
+        stage,
+        agent: 'Олександр Мельник',
+        date: 'Сьогодні'
+      });
+
+      closeModal('addLeadModal');
+      renderLeadsKanban();
+      showToast(`Заявку ${newId} створено успішно! 📋`);
+      e.target.reset();
+    }
+
+    // Render Sales Summary View (Step-by-step conversion summary)
+    function renderSalesSummary() {
+      const c = document.getElementById('salesSummaryCards');
+      if (!c) return;
+      c.innerHTML = SALES_STAGES.map((s, idx) => {
+        const count = state.deals.filter(d => d.stage === s.id).length;
+        const pct = idx === 0 ? 100 : Math.round((count / Math.max(1, state.deals.length)) * 100);
+        return `
+          <div class="bg-white dark:bg-[#1A1D24] p-3 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm">
+            <div class="flex items-center justify-between text-xs font-bold text-gray-500 mb-2">
+              <span>${s.label}</span>
+              <span class="text-emerald-600">${pct}%</span>
+            </div>
+            <div class="text-xl font-black text-gray-900 dark:text-white">${count}</div>
+            <p class="text-[10px] text-gray-400 mt-1">Угод на стадії</p>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderLeadsSummary() {
+      // Sync counts
+      const nNew = state.leads.filter(l => l.stage === 'NEW' || l.stage === 'INFO_REQUEST').length;
+      const nQual = state.leads.filter(l => l.stage === 'NEEDS_DISCOVERY').length;
+      const nMatch = state.leads.filter(l => l.stage === 'PROPERTY_SELECTION').length;
+      const nShow = state.leads.filter(l => l.stage === 'SHOWING' || l.stage === 'NEGOTIATION').length;
+
+      const elNew = document.getElementById('lead_stat_new');
+      if (elNew) elNew.textContent = nNew;
+      const elQual = document.getElementById('lead_stat_qual');
+      if (elQual) elQual.textContent = nQual;
+      const elMatch = document.getElementById('lead_stat_match');
+      if (elMatch) elMatch.textContent = nMatch;
+      const elShow = document.getElementById('lead_stat_show');
+      if (elShow) elShow.textContent = nShow;
     }
 
     // Increment single KPI metric (+1 button)
@@ -2792,6 +3576,8 @@
     document.addEventListener('DOMContentLoaded', () => {
       setVisualMode('bars');
       setQuickPeriod('1m');
+      renderSalesKanban();
+      renderLeadsKanban();
       renderIcons();
     });
   </script>
