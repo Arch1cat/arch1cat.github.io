@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Робоче місце CRM | Yotei Analytics Sandbox</title>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <meta name="description" content="Тестовий інтерактивний дашборд 'Робоче місце CRM' для тестування віджетів, KPI нормативів та статистики агентів нерухомості.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2327AE60'/%3E%3Cpath d='M20 44 L32 20 L44 44 Z' fill='%23F1C40F'/%3E%3C/svg%3E">
   
@@ -200,22 +203,24 @@
             <i data-lucide="layout" class="w-3.5 h-3.5 text-blue-500"></i>
             Візуалізація:
           </span>
-          <button type="button" onclick="setVisualMode('bars')" id="viewMode_bars" class="px-2.5 py-1 rounded-xl text-xs font-bold bg-blue-600 text-white shadow-sm transition cursor-pointer flex items-center gap-1.5">
-            <i data-lucide="bar-chart-horizontal" class="w-3.5 h-3.5"></i>
-            <span>📊 Смуги</span>
-          </button>
-          <button type="button" onclick="setVisualMode('circles')" id="viewMode_circles" class="px-2.5 py-1 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer flex items-center gap-1.5">
-            <i data-lucide="pie-chart" class="w-3.5 h-3.5"></i>
-            <span>⭕ Donut кільце</span>
-          </button>
-          <button type="button" onclick="setVisualMode('pie')" id="viewMode_pie" class="px-2.5 py-1 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer flex items-center gap-1.5">
-            <i data-lucide="pie-chart" class="w-3.5 h-3.5"></i>
-            <span>🥧 Pie сектори</span>
-          </button>
-          <button type="button" onclick="setVisualMode('charts')" id="viewMode_charts" class="px-2.5 py-1 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer flex items-center gap-1.5">
+          <button type="button" onclick="setVisualMode('charts')" id="viewMode_charts" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-blue-600 text-white shadow-sm transition cursor-pointer flex items-center gap-1.5">
             <i data-lucide="trending-up" class="w-3.5 h-3.5"></i>
-            <span>📈 Графік сплайн</span>
+            <span>📈 Графіки RealSoft (Сплайн)</span>
           </button>
+          <button type="button" onclick="setVisualMode('circles')" id="viewMode_circles" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer flex items-center gap-1.5">
+            <i data-lucide="pie-chart" class="w-3.5 h-3.5"></i>
+            <span>⭕ Кругова Donut (Стадії %)</span>
+          </button>
+          <button type="button" onclick="setVisualMode('pie')" id="viewMode_pie" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer flex items-center gap-1.5">
+            <i data-lucide="pie-chart" class="w-3.5 h-3.5"></i>
+            <span>🥧 Кругова Pie (Частки %)</span>
+          </button>
+          <button type="button" onclick="setVisualMode('bars')" id="viewMode_bars" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer flex items-center gap-1.5">
+            <i data-lucide="bar-chart-horizontal" class="w-3.5 h-3.5"></i>
+            <span>📊 Смуги нормативів</span>
+          </button>
+          <!-- Hidden fallback for old cached browser click on viewMode_cards -->
+          <button type="button" onclick="setVisualMode('bars')" id="viewMode_cards" class="hidden"></button>
         </div>
 
         <!-- Block Visibility Management Button -->
@@ -1802,16 +1807,16 @@
       activeKpiSubTab: 'agent',
       currentPeriod: '1m',
       currentFactor: 1.0,
-      visualMode: 'bars', // 'bars' | 'circles' | 'charts' | 'cards'
+      visualMode: 'charts', // 'charts' (RealSoft Splines) | 'circles' (Donut) | 'pie' | 'bars'
       salesFunnelView: 'kanban', // 'kanban' | 'summary'
       leadsFunnelView: 'kanban',  // 'kanban' | 'summary'
       activeDealId: null,
       activeLeadId: null,
       blockModes: {
-        objects: 'bars',
-        clients: 'bars',
-        marketing: 'bars',
-        deals: 'bars'
+        objects: 'charts',
+        clients: 'charts',
+        marketing: 'charts',
+        deals: 'charts'
       },
       visibility: {
         summary: true,
@@ -3317,27 +3322,27 @@
         }).join('');
 
         c.innerHTML = `
-          <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
+          <div class="grid grid-cols-1 sm:grid-cols-12 gap-5 items-center">
             <div class="sm:col-span-5 flex justify-center py-2">
-              <div class="relative w-44 h-44 flex items-center justify-center">
-                <svg class="w-44 h-44 overflow-visible" viewBox="0 0 180 180">${paths}</svg>
+              <div class="relative w-48 h-48 flex items-center justify-center">
+                <svg class="w-48 h-48 overflow-visible" viewBox="0 0 180 180">${paths}</svg>
                 <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                  <span class="text-xl font-black text-gray-900 dark:text-white font-mono">${totVal}</span>
-                  <span class="text-[9px] uppercase font-bold text-gray-400">з ${totTgt} дій (${grandPct}%)</span>
+                  <span class="text-2xl font-black text-gray-900 dark:text-white font-mono">${totVal}</span>
+                  <span class="text-[10px] uppercase font-bold text-gray-400">з ${totTgt} дій (${grandPct}%)</span>
                 </div>
               </div>
             </div>
             <div class="sm:col-span-7 space-y-2 text-xs">
               ${items.map((it, idx) => `
-                <div class="flex items-center justify-between p-2 rounded-xl bg-gray-50/80 dark:bg-gray-800/40 border border-gray-200/60 dark:border-gray-700/60 hover:border-emerald-300 transition group">
+                <div class="flex items-center justify-between p-2.5 rounded-xl bg-gray-50/80 dark:bg-gray-800/40 border border-gray-200/60 dark:border-gray-700/60 hover:border-emerald-300 transition group">
                   <div class="flex items-center gap-2 truncate">
-                    <span class="w-3.5 h-3 rounded-xs shrink-0" style="background-color: ${it.color};"></span>
+                    <span class="w-3.5 h-3.5 rounded-xs shrink-0" style="background-color: ${it.color};"></span>
                     <span class="font-bold text-gray-800 dark:text-gray-200 truncate group-hover:text-emerald-600 transition text-[11px]">${it.title}</span>
                   </div>
                   <div class="flex items-center gap-2 font-mono text-[11px] shrink-0">
                     <span class="font-bold text-gray-900 dark:text-white">${it.val} / ${it.tgt}</span>
-                    <span class="font-bold text-emerald-600">(${it.pct}%)</span>
-                    <button onclick="incrementKpi('${it.id}')" class="px-2 py-0.5 text-[10px] font-bold bg-emerald-100 hover:bg-emerald-200 text-emerald-800 rounded transition cursor-pointer">+1</button>
+                    <span class="px-2 py-0.5 rounded-full font-bold text-[11px] bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">${it.pct}%</span>
+                    <button onclick="incrementKpi('${it.id}')" class="px-2 py-0.5 text-[10px] font-bold bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition cursor-pointer">+1</button>
                   </div>
                 </div>
               `).join('')}
@@ -3541,13 +3546,13 @@
         }).join('');
 
         c.innerHTML = `
-          <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
+          <div class="grid grid-cols-1 sm:grid-cols-12 gap-5 items-center">
             <div class="sm:col-span-5 flex justify-center py-2">
-              <div class="relative w-44 h-44 flex items-center justify-center">
-                <svg class="w-44 h-44 overflow-visible" viewBox="0 0 180 180">${paths}</svg>
+              <div class="relative w-48 h-48 flex items-center justify-center">
+                <svg class="w-48 h-48 overflow-visible" viewBox="0 0 180 180">${paths}</svg>
                 <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                  <span class="text-xl font-black text-gray-900 dark:text-white font-mono">${totVal}</span>
-                  <span class="text-[9px] uppercase font-bold text-gray-400">з ${totTgt} дій (${grandPct}%)</span>
+                  <span class="text-2xl font-black text-gray-900 dark:text-white font-mono">${totVal}</span>
+                  <span class="text-[10px] uppercase font-bold text-gray-400">з ${totTgt} дій (${grandPct}%)</span>
                 </div>
               </div>
             </div>
@@ -3555,13 +3560,13 @@
               ${items.map((it, idx) => `
                 <div class="flex items-center justify-between p-2.5 rounded-xl bg-gray-50/80 dark:bg-gray-800/40 border border-gray-200/60 dark:border-gray-700/60 hover:border-blue-300 transition group">
                   <div class="flex items-center gap-2 truncate">
-                    <span class="w-3.5 h-3 rounded-xs shrink-0" style="background-color: ${it.color};"></span>
+                    <span class="w-3.5 h-3.5 rounded-xs shrink-0" style="background-color: ${it.color};"></span>
                     <span class="font-bold text-gray-800 dark:text-gray-200 truncate group-hover:text-blue-600 transition text-[11px]">${it.title}</span>
                   </div>
                   <div class="flex items-center gap-2 font-mono text-[11px] shrink-0">
                     <span class="font-bold text-gray-900 dark:text-white">${it.val} / ${it.tgt}</span>
-                    <span class="font-bold text-blue-600">(${it.pct}%)</span>
-                    <button onclick="incrementKpi('${it.id}')" class="px-2 py-0.5 text-[10px] font-bold bg-blue-100 hover:bg-blue-200 text-blue-800 rounded transition cursor-pointer">+1</button>
+                    <span class="px-2 py-0.5 rounded-full font-bold text-[11px] bg-blue-100 dark:bg-blue-950/80 text-blue-800 dark:text-blue-300 border border-blue-200 dark:border-blue-800">${it.pct}%</span>
+                    <button onclick="incrementKpi('${it.id}')" class="px-2 py-0.5 text-[10px] font-bold bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition cursor-pointer">+1</button>
                   </div>
                 </div>
               `).join('')}
@@ -4402,13 +4407,13 @@
         }).join('');
 
         c.innerHTML = `
-          <div class="col-span-full grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
+          <div class="col-span-full grid grid-cols-1 sm:grid-cols-12 gap-5 items-center">
             <div class="sm:col-span-5 flex justify-center py-2">
-              <div class="relative w-44 h-44 flex items-center justify-center">
-                <svg class="w-44 h-44 overflow-visible" viewBox="0 0 180 180">${paths}</svg>
+              <div class="relative w-48 h-48 flex items-center justify-center">
+                <svg class="w-48 h-48 overflow-visible" viewBox="0 0 180 180">${paths}</svg>
                 <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                  <span class="text-xl font-black text-gray-900 dark:text-white font-mono">${totVal}</span>
-                  <span class="text-[9px] uppercase font-bold text-gray-400">з ${totTgt} угод (${grandPct}%)</span>
+                  <span class="text-2xl font-black text-gray-900 dark:text-white font-mono">${totVal}</span>
+                  <span class="text-[10px] uppercase font-bold text-gray-400">з ${totTgt} угод (${grandPct}%)</span>
                 </div>
               </div>
             </div>
@@ -4416,13 +4421,13 @@
               ${items.map((it, idx) => `
                 <div class="flex items-center justify-between p-2.5 rounded-xl bg-gray-50/80 dark:bg-gray-800/40 border border-gray-200/60 dark:border-gray-700/60 hover:border-amber-300 transition group">
                   <div class="flex items-center gap-2 truncate">
-                    <span class="w-3.5 h-3 rounded-xs shrink-0" style="background-color: ${it.color};"></span>
+                    <span class="w-3.5 h-3.5 rounded-xs shrink-0" style="background-color: ${it.color};"></span>
                     <span class="font-bold text-gray-800 dark:text-gray-200 truncate group-hover:text-amber-600 transition text-[11px]">${it.title}</span>
                   </div>
                   <div class="flex items-center gap-2 font-mono text-[11px] shrink-0">
                     <span class="font-bold text-gray-900 dark:text-white">${it.val} / ${it.tgt}</span>
-                    <span class="font-bold text-amber-600">(${it.pct}%)</span>
-                    <button onclick="incrementKpi('${it.id}')" class="px-2 py-0.5 text-[10px] font-bold bg-amber-100 hover:bg-amber-200 text-amber-800 rounded transition cursor-pointer">+1</button>
+                    <span class="px-2 py-0.5 rounded-full font-bold text-[11px] bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800">${it.pct}%</span>
+                    <button onclick="incrementKpi('${it.id}')" class="px-2 py-0.5 text-[10px] font-bold bg-amber-600 hover:bg-amber-700 text-white rounded-lg transition cursor-pointer">+1</button>
                   </div>
                 </div>
               `).join('')}
@@ -5286,8 +5291,8 @@
 
     // On Load Initializer
     document.addEventListener('DOMContentLoaded', () => {
-      setVisualMode('charts');
       setQuickPeriod('1m');
+      setVisualMode('charts');
       renderSalesKanban();
       renderLeadsKanban();
       setStatsViewMode('pro');
