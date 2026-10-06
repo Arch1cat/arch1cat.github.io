@@ -155,38 +155,77 @@
 
     </div>
 
-    <!-- GLOBAL PERIOD FILTER BAR (ДЛЯ РОЗДІЛІВ KPI ТА СТАТИСТИКА) -->
-    <div id="periodFilterBar" class="bg-white dark:bg-[#1A1D24] p-3 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
+    <!-- GLOBAL PERIOD & VISUALIZATION TOOLBAR (ДЛЯ РОЗДІЛІВ KPI ТА СТАТИСТИКА) -->
+    <div id="periodFilterBar" class="bg-white dark:bg-[#1A1D24] p-3.5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm flex flex-col gap-3">
       
-      <!-- Quick Filter Buttons -->
-      <div class="flex items-center gap-1.5 overflow-x-auto scrollbar-none py-0.5">
-        <span class="text-[11px] font-bold text-gray-400 uppercase tracking-wider shrink-0 mr-1 flex items-center gap-1">
-          <i data-lucide="clock" class="w-3.5 h-3.5 text-emerald-600"></i>
-          Період:
-        </span>
-        <button type="button" onclick="setQuickPeriod('1d')" id="btn_period_1d" class="period-btn px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer shrink-0">1 день</button>
-        <button type="button" onclick="setQuickPeriod('1w')" id="btn_period_1w" class="period-btn px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer shrink-0">тиждень</button>
-        <button type="button" onclick="setQuickPeriod('2w')" id="btn_period_2w" class="period-btn px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer shrink-0">2 тижні</button>
-        <button type="button" onclick="setQuickPeriod('1m')" id="btn_period_1m" class="period-btn px-2.5 py-1.5 rounded-xl text-xs font-bold bg-emerald-600 text-white shadow-sm transition cursor-pointer shrink-0">місяць тому</button>
-        <button type="button" onclick="setQuickPeriod('3m')" id="btn_period_3m" class="period-btn px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer shrink-0">3 місяці</button>
-        <button type="button" onclick="setQuickPeriod('6m')" id="btn_period_6m" class="period-btn px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer shrink-0">пів року</button>
-        <button type="button" onclick="setQuickPeriod('1y')" id="btn_period_1y" class="period-btn px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer shrink-0">рік тому</button>
+      <!-- Top Row: Quick Filter Buttons & Custom Dates -->
+      <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
+        <div class="flex items-center gap-1.5 overflow-x-auto scrollbar-none py-0.5">
+          <span class="text-[11px] font-bold text-gray-400 uppercase tracking-wider shrink-0 mr-1 flex items-center gap-1">
+            <i data-lucide="clock" class="w-3.5 h-3.5 text-emerald-600"></i>
+            Період:
+          </span>
+          <button type="button" onclick="setQuickPeriod('1d')" id="btn_period_1d" class="period-btn px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer shrink-0">1 день</button>
+          <button type="button" onclick="setQuickPeriod('1w')" id="btn_period_1w" class="period-btn px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer shrink-0">тиждень</button>
+          <button type="button" onclick="setQuickPeriod('2w')" id="btn_period_2w" class="period-btn px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer shrink-0">2 тижні</button>
+          <button type="button" onclick="setQuickPeriod('1m')" id="btn_period_1m" class="period-btn px-2.5 py-1.5 rounded-xl text-xs font-bold bg-emerald-600 text-white shadow-sm transition cursor-pointer shrink-0">місяць тому</button>
+          <button type="button" onclick="setQuickPeriod('3m')" id="btn_period_3m" class="period-btn px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer shrink-0">3 місяці</button>
+          <button type="button" onclick="setQuickPeriod('6m')" id="btn_period_6m" class="period-btn px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer shrink-0">пів року</button>
+          <button type="button" onclick="setQuickPeriod('1y')" id="btn_period_1y" class="period-btn px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer shrink-0">рік тому</button>
+        </div>
+
+        <!-- Custom Date Range Picker (від / до) -->
+        <div class="flex items-center gap-2 flex-wrap shrink-0">
+          <div class="flex items-center gap-1.5 bg-gray-50 dark:bg-gray-800/80 px-2.5 py-1 rounded-xl border border-gray-200 dark:border-gray-700 text-xs">
+            <span class="text-gray-400 font-medium">від:</span>
+            <input type="date" id="dateFromInput" onchange="onCustomDateChange()" class="bg-transparent font-bold text-gray-800 dark:text-gray-200 focus:outline-none cursor-pointer text-xs">
+          </div>
+          <div class="flex items-center gap-1.5 bg-gray-50 dark:bg-gray-800/80 px-2.5 py-1 rounded-xl border border-gray-200 dark:border-gray-700 text-xs">
+            <span class="text-gray-400 font-medium">до:</span>
+            <input type="date" id="dateToInput" onchange="onCustomDateChange()" class="bg-transparent font-bold text-gray-800 dark:text-gray-200 focus:outline-none cursor-pointer text-xs">
+          </div>
+          <button type="button" onclick="applyCustomRange()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition shadow-sm cursor-pointer flex items-center gap-1">
+            <i data-lucide="check" class="w-3.5 h-3.5"></i>
+            <span>Застосувати</span>
+          </button>
+        </div>
       </div>
 
-      <!-- Custom Date Range Picker (від / до) -->
-      <div class="flex items-center gap-2 flex-wrap shrink-0">
-        <div class="flex items-center gap-1.5 bg-gray-50 dark:bg-gray-800/80 px-2.5 py-1 rounded-xl border border-gray-200 dark:border-gray-700 text-xs">
-          <span class="text-gray-400 font-medium">від:</span>
-          <input type="date" id="dateFromInput" onchange="onCustomDateChange()" class="bg-transparent font-bold text-gray-800 dark:text-gray-200 focus:outline-none cursor-pointer text-xs">
+      <!-- Bottom Row: Visualization View Mode & Block Visibility Controls -->
+      <div class="pt-2.5 border-t border-gray-100 dark:border-gray-800/80 flex flex-wrap items-center justify-between gap-2.5">
+        
+        <!-- View Mode Segmented Controls -->
+        <div class="flex items-center gap-1.5 flex-wrap">
+          <span class="text-[11px] font-bold text-gray-400 uppercase tracking-wider flex items-center gap-1 mr-1">
+            <i data-lucide="layout" class="w-3.5 h-3.5 text-blue-500"></i>
+            Візуалізація:
+          </span>
+          <button type="button" onclick="setVisualMode('bars')" id="viewMode_bars" class="px-2.5 py-1 rounded-xl text-xs font-bold bg-blue-600 text-white shadow-sm transition cursor-pointer flex items-center gap-1.5">
+            <i data-lucide="bar-chart-horizontal" class="w-3.5 h-3.5"></i>
+            <span>📊 Смуги</span>
+          </button>
+          <button type="button" onclick="setVisualMode('circles')" id="viewMode_circles" class="px-2.5 py-1 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer flex items-center gap-1.5">
+            <i data-lucide="pie-chart" class="w-3.5 h-3.5"></i>
+            <span>⭕ Кружечки %</span>
+          </button>
+          <button type="button" onclick="setVisualMode('charts')" id="viewMode_charts" class="px-2.5 py-1 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer flex items-center gap-1.5">
+            <i data-lucide="trending-up" class="w-3.5 h-3.5"></i>
+            <span>📈 Графіки</span>
+          </button>
+          <button type="button" onclick="setVisualMode('cards')" id="viewMode_cards" class="px-2.5 py-1 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer flex items-center gap-1.5">
+            <i data-lucide="grid" class="w-3.5 h-3.5"></i>
+            <span>📋 Картки</span>
+          </button>
         </div>
-        <div class="flex items-center gap-1.5 bg-gray-50 dark:bg-gray-800/80 px-2.5 py-1 rounded-xl border border-gray-200 dark:border-gray-700 text-xs">
-          <span class="text-gray-400 font-medium">до:</span>
-          <input type="date" id="dateToInput" onchange="onCustomDateChange()" class="bg-transparent font-bold text-gray-800 dark:text-gray-200 focus:outline-none cursor-pointer text-xs">
+
+        <!-- Block Visibility Management Button -->
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="openModal('visibilityModal')" class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl text-xs font-bold border border-gray-200 dark:border-gray-700 transition cursor-pointer flex items-center gap-1.5">
+            <i data-lucide="eye" class="w-3.5 h-3.5 text-emerald-600"></i>
+            <span>👁️ Видимість блоків</span>
+          </button>
         </div>
-        <button type="button" onclick="applyCustomRange()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition shadow-sm cursor-pointer flex items-center gap-1">
-          <i data-lucide="check" class="w-3.5 h-3.5"></i>
-          <span>Застосувати</span>
-        </button>
+
       </div>
 
     </div>
@@ -195,7 +234,7 @@
     <div id="content_kpi_agent" class="space-y-4">
       
       <!-- Top Run-Rate Banner & Radial Overview -->
-      <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
+      <div id="card_summary" class="grid grid-cols-1 lg:grid-cols-4 gap-4 transition-all duration-300">
         
         <!-- Scorecard Card 1: Radial Progress -->
         <div class="bg-white dark:bg-[#1A1D24] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm flex items-center gap-4">
@@ -273,7 +312,7 @@
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
         <!-- 1. РОБОТА З ОБʼЄКТОМ -->
-        <div class="bg-white dark:bg-[#1A1D24] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden flex flex-col">
+        <div id="card_obj" class="bg-white dark:bg-[#1A1D24] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden flex flex-col transition-all duration-300">
           <div class="px-4 py-3 bg-gradient-to-r from-emerald-50 to-emerald-100/40 dark:from-emerald-950/40 dark:to-transparent border-b border-gray-200 dark:border-gray-800 flex items-center justify-between">
             <div class="flex items-center gap-2">
               <div class="w-7 h-7 rounded-lg bg-emerald-600 text-white flex items-center justify-center">
@@ -281,105 +320,32 @@
               </div>
               <h3 class="font-extrabold text-sm text-gray-900 dark:text-white">1. Робота з обʼєктом</h3>
             </div>
-            <span class="text-[11px] font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-900/50 px-2 py-0.5 rounded-full">4 показники</span>
+            <div class="flex items-center gap-1.5">
+              <span class="text-[11px] font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-900/50 px-2 py-0.5 rounded-full mr-1">4 показники</span>
+              <!-- Local Card View Mode Switcher -->
+              <div class="flex items-center bg-white/80 dark:bg-gray-800 p-0.5 rounded-lg border border-gray-200 dark:border-gray-700 text-[10px]">
+                <button type="button" onclick="setBlockMode('objects', 'bars')" id="btn_mode_objects_bars" title="Смуги" class="px-1.5 py-0.5 rounded font-bold bg-emerald-600 text-white">📊</button>
+                <button type="button" onclick="setBlockMode('objects', 'circles')" id="btn_mode_objects_circles" title="Кружечки %" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">⭕</button>
+                <button type="button" onclick="setBlockMode('objects', 'charts')" id="btn_mode_objects_charts" title="Графіки" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">📈</button>
+              </div>
+              <!-- Collapse Button -->
+              <button type="button" onclick="toggleCardCollapse('card_obj_body', 'chevron_obj')" title="Згорнути / розгорнути" class="p-1 rounded-lg text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+                <i data-lucide="chevron-down" id="chevron_obj" class="w-4 h-4"></i>
+              </button>
+              <!-- Eye Hide Button -->
+              <button type="button" onclick="toggleBlockVisibility('objects')" title="Сховати блок" class="p-1 rounded-lg text-gray-400 hover:text-emerald-600 hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+                <i data-lucide="eye" class="w-4 h-4"></i>
+              </button>
+            </div>
           </div>
 
-          <div class="p-4 space-y-3.5 flex-1 divide-y divide-gray-100 dark:divide-gray-800/80">
-            
-            <!-- Item 1.1 -->
-            <div class="pt-1 first:pt-0">
-              <div class="flex items-center justify-between text-xs font-semibold mb-1">
-                <span class="text-gray-700 dark:text-gray-300 flex items-center gap-1.5">
-                  <i data-lucide="phone-call" class="w-3.5 h-3.5 text-emerald-600"></i>
-                  Телефонні дзвінки власнику
-                </span>
-                <div class="flex items-center gap-2">
-                  <span class="text-gray-500 font-mono text-[11px]">Норма: <strong>100</strong></span>
-                  <span class="font-extrabold text-emerald-600 dark:text-emerald-400 font-mono" id="kpi_calls_val">68</span>
-                  <button onclick="incrementKpi('calls')" class="px-1.5 py-0.5 text-[10px] font-bold bg-emerald-100 hover:bg-emerald-200 text-emerald-800 rounded transition cursor-pointer" title="Додати 1 дзвінок">+1</button>
-                </div>
-              </div>
-              <div class="w-full bg-gray-100 dark:bg-gray-800 h-2 rounded-full overflow-hidden">
-                <div id="kpi_calls_bar" class="bg-emerald-500 h-full rounded-full transition-all duration-500" style="width: 68%;"></div>
-              </div>
-              <div class="flex justify-between items-center text-[10px] text-gray-400 mt-1">
-                <span>Прогрес: <strong id="kpi_calls_pct" class="text-gray-600 dark:text-gray-300">68%</strong></span>
-                <span class="text-emerald-600 dark:text-emerald-400 font-medium">Темп: ~3.4 дзв/день (норма)</span>
-              </div>
-            </div>
-
-            <!-- Item 1.2 -->
-            <div class="pt-3">
-              <div class="flex items-center justify-between text-xs font-semibold mb-1">
-                <span class="text-gray-700 dark:text-gray-300 flex items-center gap-1.5">
-                  <i data-lucide="plus-square" class="w-3.5 h-3.5 text-emerald-600"></i>
-                  Додавання обʼєктів у СРМ
-                </span>
-                <div class="flex items-center gap-2">
-                  <span class="text-gray-500 font-mono text-[11px]">Норма: <strong>25</strong></span>
-                  <span class="font-extrabold text-emerald-600 dark:text-emerald-400 font-mono" id="kpi_objects_val">19</span>
-                  <button onclick="incrementKpi('objects')" class="px-1.5 py-0.5 text-[10px] font-bold bg-emerald-100 hover:bg-emerald-200 text-emerald-800 rounded transition cursor-pointer" title="Додати об'єкт">+1</button>
-                </div>
-              </div>
-              <div class="w-full bg-gray-100 dark:bg-gray-800 h-2 rounded-full overflow-hidden">
-                <div id="kpi_objects_bar" class="bg-emerald-500 h-full rounded-full transition-all duration-500" style="width: 76%;"></div>
-              </div>
-              <div class="flex justify-between items-center text-[10px] text-gray-400 mt-1">
-                <span>Прогрес: <strong id="kpi_objects_pct" class="text-gray-600 dark:text-gray-300">76%</strong></span>
-                <span class="text-emerald-600 dark:text-emerald-400 font-medium">Залишилось: 6 об'єктів</span>
-              </div>
-            </div>
-
-            <!-- Item 1.3 -->
-            <div class="pt-3">
-              <div class="flex items-center justify-between text-xs font-semibold mb-1">
-                <span class="text-gray-700 dark:text-gray-300 flex items-center gap-1.5">
-                  <i data-lucide="users-2" class="w-3.5 h-3.5 text-emerald-600"></i>
-                  Зустрічі з власниками
-                </span>
-                <div class="flex items-center gap-2">
-                  <span class="text-gray-500 font-mono text-[11px]">Норма: <strong>10</strong></span>
-                  <span class="font-extrabold text-emerald-600 dark:text-emerald-400 font-mono" id="kpi_meetings_val">7</span>
-                  <button onclick="incrementKpi('meetings')" class="px-1.5 py-0.5 text-[10px] font-bold bg-emerald-100 hover:bg-emerald-200 text-emerald-800 rounded transition cursor-pointer" title="Додати зустріч">+1</button>
-                </div>
-              </div>
-              <div class="w-full bg-gray-100 dark:bg-gray-800 h-2 rounded-full overflow-hidden">
-                <div id="kpi_meetings_bar" class="bg-emerald-500 h-full rounded-full transition-all duration-500" style="width: 70%;"></div>
-              </div>
-              <div class="flex justify-between items-center text-[10px] text-gray-400 mt-1">
-                <span>Прогрес: <strong id="kpi_meetings_pct" class="text-gray-600 dark:text-gray-300">70%</strong></span>
-                <span class="text-emerald-600 dark:text-emerald-400 font-medium">Залишилось: 3 зустрічі</span>
-              </div>
-            </div>
-
-            <!-- Item 1.4 -->
-            <div class="pt-3">
-              <div class="flex items-center justify-between text-xs font-semibold mb-1">
-                <span class="text-gray-700 dark:text-gray-300 flex items-center gap-1.5">
-                  <i data-lucide="shield-check" class="w-3.5 h-3.5 text-amber-500"></i>
-                  Договір про надання послуг з продажу нерухомості
-                </span>
-                <div class="flex items-center gap-2">
-                  <span class="text-gray-500 font-mono text-[11px]">Норма: <strong>2</strong></span>
-                  <span class="font-extrabold text-amber-600 dark:text-amber-400 font-mono" id="kpi_contracts_val">2</span>
-                  <span class="text-[10px] bg-amber-100 text-amber-800 px-1.5 py-0.2 rounded font-bold">100% ⭐</span>
-                  <button onclick="incrementKpi('contracts')" class="px-1.5 py-0.5 text-[10px] font-bold bg-amber-100 hover:bg-amber-200 text-amber-800 rounded transition cursor-pointer" title="Додати договір">+1</button>
-                </div>
-              </div>
-              <div class="w-full bg-gray-100 dark:bg-gray-800 h-2 rounded-full overflow-hidden">
-                <div id="kpi_contracts_bar" class="bg-amber-500 h-full rounded-full transition-all duration-500" style="width: 100%;"></div>
-              </div>
-              <div class="flex justify-between items-center text-[10px] text-gray-400 mt-1">
-                <span class="text-emerald-600 dark:text-emerald-400 font-bold">✓ Місячний мінімум повністю закрито!</span>
-                <span class="text-gray-500 font-medium">Ексклюзивні права оформлено</span>
-              </div>
-            </div>
-
+          <div id="card_obj_body" class="p-4 flex-1">
+            <div id="container_objects" class="space-y-3.5"></div>
           </div>
         </div>
 
         <!-- 2. РОБОТА З КЛІЄНТАМИ -->
-        <div class="bg-white dark:bg-[#1A1D24] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden flex flex-col">
+        <div id="card_clients" class="bg-white dark:bg-[#1A1D24] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden flex flex-col transition-all duration-300">
           <div class="px-4 py-3 bg-gradient-to-r from-blue-50 to-blue-100/40 dark:from-blue-950/40 dark:to-transparent border-b border-gray-200 dark:border-gray-800 flex items-center justify-between">
             <div class="flex items-center gap-2">
               <div class="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center">
@@ -387,82 +353,32 @@
               </div>
               <h3 class="font-extrabold text-sm text-gray-900 dark:text-white">2. Робота з клієнтами</h3>
             </div>
-            <span class="text-[11px] font-bold text-blue-700 dark:text-blue-400 bg-blue-100 dark:bg-blue-900/50 px-2 py-0.5 rounded-full">3 показники</span>
+            <div class="flex items-center gap-1.5">
+              <span class="text-[11px] font-bold text-blue-700 dark:text-blue-400 bg-blue-100 dark:bg-blue-900/50 px-2 py-0.5 rounded-full mr-1">3 показники</span>
+              <!-- Local Card View Mode Switcher -->
+              <div class="flex items-center bg-white/80 dark:bg-gray-800 p-0.5 rounded-lg border border-gray-200 dark:border-gray-700 text-[10px]">
+                <button type="button" onclick="setBlockMode('clients', 'bars')" id="btn_mode_clients_bars" title="Смуги" class="px-1.5 py-0.5 rounded font-bold bg-blue-600 text-white">📊</button>
+                <button type="button" onclick="setBlockMode('clients', 'circles')" id="btn_mode_clients_circles" title="Кружечки %" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">⭕</button>
+                <button type="button" onclick="setBlockMode('clients', 'charts')" id="btn_mode_clients_charts" title="Графіки" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">📈</button>
+              </div>
+              <!-- Collapse Button -->
+              <button type="button" onclick="toggleCardCollapse('card_clients_body', 'chevron_clients')" title="Згорнути / розгорнути" class="p-1 rounded-lg text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+                <i data-lucide="chevron-down" id="chevron_clients" class="w-4 h-4"></i>
+              </button>
+              <!-- Eye Hide Button -->
+              <button type="button" onclick="toggleBlockVisibility('clients')" title="Сховати блок" class="p-1 rounded-lg text-gray-400 hover:text-blue-600 hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+                <i data-lucide="eye" class="w-4 h-4"></i>
+              </button>
+            </div>
           </div>
 
-          <div class="p-4 space-y-3.5 flex-1 divide-y divide-gray-100 dark:divide-gray-800/80">
-            
-            <!-- Item 2.1 -->
-            <div class="pt-1 first:pt-0">
-              <div class="flex items-center justify-between text-xs font-semibold mb-1">
-                <span class="text-gray-700 dark:text-gray-300 flex items-center gap-1.5">
-                  <i data-lucide="inbox" class="w-3.5 h-3.5 text-blue-600"></i>
-                  Додавання заявок у СРМ
-                </span>
-                <div class="flex items-center gap-2">
-                  <span class="text-gray-500 font-mono text-[11px]">Норма: <strong>30</strong></span>
-                  <span class="font-extrabold text-blue-600 dark:text-blue-400 font-mono" id="kpi_leads_val">22</span>
-                  <button onclick="incrementKpi('leads')" class="px-1.5 py-0.5 text-[10px] font-bold bg-blue-100 hover:bg-blue-200 text-blue-800 rounded transition cursor-pointer" title="Додати заявку">+1</button>
-                </div>
-              </div>
-              <div class="w-full bg-gray-100 dark:bg-gray-800 h-2 rounded-full overflow-hidden">
-                <div id="kpi_leads_bar" class="bg-blue-500 h-full rounded-full transition-all duration-500" style="width: 73.3%;"></div>
-              </div>
-              <div class="flex justify-between items-center text-[10px] text-gray-400 mt-1">
-                <span>Прогрес: <strong id="kpi_leads_pct" class="text-gray-600 dark:text-gray-300">73%</strong></span>
-                <span class="text-blue-600 dark:text-blue-400 font-medium">Залишилось: 8 заявок</span>
-              </div>
-            </div>
-
-            <!-- Item 2.2 -->
-            <div class="pt-3">
-              <div class="flex items-center justify-between text-xs font-semibold mb-1">
-                <span class="text-gray-700 dark:text-gray-300 flex items-center gap-1.5">
-                  <i data-lucide="search" class="w-3.5 h-3.5 text-blue-600"></i>
-                  Підбір під клієнта
-                </span>
-                <div class="flex items-center gap-2">
-                  <span class="text-gray-500 font-mono text-[11px]">Норма: <strong>15</strong></span>
-                  <span class="font-extrabold text-blue-600 dark:text-blue-400 font-mono" id="kpi_matches_val">12</span>
-                  <button onclick="incrementKpi('matches')" class="px-1.5 py-0.5 text-[10px] font-bold bg-blue-100 hover:bg-blue-200 text-blue-800 rounded transition cursor-pointer" title="Додати підбір">+1</button>
-                </div>
-              </div>
-              <div class="w-full bg-gray-100 dark:bg-gray-800 h-2 rounded-full overflow-hidden">
-                <div id="kpi_matches_bar" class="bg-blue-500 h-full rounded-full transition-all duration-500" style="width: 80%;"></div>
-              </div>
-              <div class="flex justify-between items-center text-[10px] text-gray-400 mt-1">
-                <span>Прогрес: <strong id="kpi_matches_pct" class="text-gray-600 dark:text-gray-300">80%</strong></span>
-                <span class="text-blue-600 dark:text-blue-400 font-medium">Конверсія в перегляди: 50%</span>
-              </div>
-            </div>
-
-            <!-- Item 2.3 -->
-            <div class="pt-3">
-              <div class="flex items-center justify-between text-xs font-semibold mb-1">
-                <span class="text-gray-700 dark:text-gray-300 flex items-center gap-1.5">
-                  <i data-lucide="eye" class="w-3.5 h-3.5 text-blue-600"></i>
-                  Зустріч з клієнтом на перегляді
-                </span>
-                <div class="flex items-center gap-2">
-                  <span class="text-gray-500 font-mono text-[11px]">Норма: <strong>8 зустрічей</strong></span>
-                  <span class="font-extrabold text-blue-600 dark:text-blue-400 font-mono" id="kpi_showings_val">6</span>
-                  <button onclick="incrementKpi('showings')" class="px-1.5 py-0.5 text-[10px] font-bold bg-blue-100 hover:bg-blue-200 text-blue-800 rounded transition cursor-pointer" title="Додати перегляд">+1</button>
-                </div>
-              </div>
-              <div class="w-full bg-gray-100 dark:bg-gray-800 h-2 rounded-full overflow-hidden">
-                <div id="kpi_showings_bar" class="bg-blue-500 h-full rounded-full transition-all duration-500" style="width: 75%;"></div>
-              </div>
-              <div class="flex justify-between items-center text-[10px] text-gray-400 mt-1">
-                <span>Прогрес: <strong id="kpi_showings_pct" class="text-gray-600 dark:text-gray-300">75%</strong></span>
-                <span class="text-blue-600 dark:text-blue-400 font-medium">Залишилось: 2 покази</span>
-              </div>
-            </div>
-
+          <div id="card_clients_body" class="p-4 flex-1">
+            <div id="container_clients" class="space-y-3.5"></div>
           </div>
         </div>
 
         <!-- 3. МАРКЕТИНГ (ПОРТАЛИ ТА СОЦМЕРЕЖІ) -->
-        <div class="bg-white dark:bg-[#1A1D24] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden flex flex-col md:col-span-2">
+        <div id="card_marketing" class="bg-white dark:bg-[#1A1D24] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden flex flex-col md:col-span-2 transition-all duration-300">
           <div class="px-4 py-3 bg-gradient-to-r from-purple-50 to-purple-100/40 dark:from-purple-950/40 dark:to-transparent border-b border-gray-200 dark:border-gray-800 flex items-center justify-between">
             <div class="flex items-center gap-2">
               <div class="w-7 h-7 rounded-lg bg-purple-600 text-white flex items-center justify-center">
@@ -470,189 +386,31 @@
               </div>
               <h3 class="font-extrabold text-sm text-gray-900 dark:text-white">3. Маркетинг та промоція</h3>
             </div>
-            <span class="text-[11px] font-bold text-purple-700 dark:text-purple-400 bg-purple-100 dark:bg-purple-900/50 px-2 py-0.5 rounded-full">Класифайди + 5 медіаплатформ</span>
+            <div class="flex items-center gap-1.5">
+              <span class="text-[11px] font-bold text-purple-700 dark:text-purple-400 bg-purple-100 dark:bg-purple-900/50 px-2 py-0.5 rounded-full mr-1">Класифайди + 5 медіа</span>
+              <!-- Local Card View Mode Switcher -->
+              <div class="flex items-center bg-white/80 dark:bg-gray-800 p-0.5 rounded-lg border border-gray-200 dark:border-gray-700 text-[10px]">
+                <button type="button" onclick="setBlockMode('marketing', 'bars')" id="btn_mode_marketing_bars" title="Смуги" class="px-1.5 py-0.5 rounded font-bold bg-purple-600 text-white">📊</button>
+                <button type="button" onclick="setBlockMode('marketing', 'circles')" id="btn_mode_marketing_circles" title="Кружечки %" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">⭕</button>
+                <button type="button" onclick="setBlockMode('marketing', 'charts')" id="btn_mode_marketing_charts" title="Графіки" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">📈</button>
+              </div>
+              <button type="button" onclick="toggleCardCollapse('card_marketing_body', 'chevron_mkt')" title="Згорнути / розгорнути" class="p-1 rounded-lg text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+                <i data-lucide="chevron-down" id="chevron_mkt" class="w-4 h-4"></i>
+              </button>
+              <button type="button" onclick="toggleBlockVisibility('marketing')" title="Сховати блок" class="p-1 rounded-lg text-gray-400 hover:text-purple-600 hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+                <i data-lucide="eye" class="w-4 h-4"></i>
+              </button>
+            </div>
           </div>
 
-          <div class="p-4 grid grid-cols-1 lg:grid-cols-2 gap-6">
-            
-            <!-- Підблок: Класифайди (Дошки оголошень) -->
-            <div class="space-y-3">
-              <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
-                <i data-lucide="layout-grid" class="w-3.5 h-3.5 text-purple-600"></i>
-                Реклама на порталах (Класифайди)
-              </h4>
-
-              <!-- OLX -->
-              <div class="bg-gray-50 dark:bg-gray-800/60 p-2.5 rounded-xl border border-gray-200 dark:border-gray-700/60">
-                <div class="flex justify-between items-center text-xs font-semibold mb-1">
-                  <span class="flex items-center gap-2 text-gray-800 dark:text-gray-200">
-                    <span class="w-5 h-5 rounded bg-[#002f34] text-[#00f898] font-black text-[10px] flex items-center justify-center">OLX</span>
-                    Реклама ОЛХ
-                  </span>
-                  <div class="flex items-center gap-2">
-                    <span class="text-gray-400 text-[11px]">Норма: 20</span>
-                    <span class="font-extrabold text-purple-600 dark:text-purple-400 font-mono" id="mkt_olx_val">18</span>
-                    <button onclick="incrementMarketing('olx')" class="px-1.5 py-0.5 text-[10px] font-bold bg-purple-100 hover:bg-purple-200 text-purple-800 rounded transition cursor-pointer">+1</button>
-                  </div>
-                </div>
-                <div class="w-full bg-gray-200 dark:bg-gray-700 h-1.5 rounded-full overflow-hidden">
-                  <div id="mkt_olx_bar" class="bg-purple-500 h-full rounded-full" style="width: 90%;"></div>
-                </div>
-              </div>
-
-              <!-- DOM.RIA -->
-              <div class="bg-gray-50 dark:bg-gray-800/60 p-2.5 rounded-xl border border-gray-200 dark:border-gray-700/60">
-                <div class="flex justify-between items-center text-xs font-semibold mb-1">
-                  <span class="flex items-center gap-2 text-gray-800 dark:text-gray-200">
-                    <span class="w-5 h-5 rounded bg-[#eb4d27] text-white font-bold text-[9px] flex items-center justify-center">RIA</span>
-                    Реклама Дом Ріа
-                  </span>
-                  <div class="flex items-center gap-2">
-                    <span class="text-gray-400 text-[11px]">Норма: 20</span>
-                    <span class="font-extrabold text-purple-600 dark:text-purple-400 font-mono" id="mkt_domria_val">16</span>
-                    <button onclick="incrementMarketing('domria')" class="px-1.5 py-0.5 text-[10px] font-bold bg-purple-100 hover:bg-purple-200 text-purple-800 rounded transition cursor-pointer">+1</button>
-                  </div>
-                </div>
-                <div class="w-full bg-gray-200 dark:bg-gray-700 h-1.5 rounded-full overflow-hidden">
-                  <div id="mkt_domria_bar" class="bg-purple-500 h-full rounded-full" style="width: 80%;"></div>
-                </div>
-              </div>
-
-              <!-- Rieltor.ua -->
-              <div class="bg-gray-50 dark:bg-gray-800/60 p-2.5 rounded-xl border border-gray-200 dark:border-gray-700/60">
-                <div class="flex justify-between items-center text-xs font-semibold mb-1">
-                  <span class="flex items-center gap-2 text-gray-800 dark:text-gray-200">
-                    <span class="w-5 h-5 rounded bg-[#0b66c3] text-white font-bold text-[9px] flex items-center justify-center">R.UA</span>
-                    Реклама Рієлтор юа
-                  </span>
-                  <div class="flex items-center gap-2">
-                    <span class="text-gray-400 text-[11px]">Норма: 20</span>
-                    <span class="font-extrabold text-emerald-600 dark:text-emerald-400 font-mono" id="mkt_rieltor_val">20</span>
-                    <span class="text-[10px] bg-emerald-100 text-emerald-800 px-1 py-0.2 rounded font-bold">100% ✓</span>
-                    <button onclick="incrementMarketing('rieltor')" class="px-1.5 py-0.5 text-[10px] font-bold bg-purple-100 hover:bg-purple-200 text-purple-800 rounded transition cursor-pointer">+1</button>
-                  </div>
-                </div>
-                <div class="w-full bg-gray-200 dark:bg-gray-700 h-1.5 rounded-full overflow-hidden">
-                  <div id="mkt_rieltor_bar" class="bg-emerald-500 h-full rounded-full" style="width: 100%;"></div>
-                </div>
-              </div>
-
-            </div>
-
-            <!-- Підблок: Соціальні мережі та Медіа (Instagram, TikTok, FB, YouTube, X) -->
-            <div class="space-y-3">
-              <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
-                <i data-lucide="share-2" class="w-3.5 h-3.5 text-pink-500"></i>
-                Соціальні мережі та SMM
-              </h4>
-
-              <!-- Instagram Grid Card -->
-              <div class="bg-gray-50 dark:bg-gray-800/60 p-2.5 rounded-xl border border-gray-200 dark:border-gray-700/60">
-                <div class="flex items-center justify-between mb-2">
-                  <span class="flex items-center gap-1.5 font-bold text-xs text-pink-600 dark:text-pink-400">
-                    <i data-lucide="instagram" class="w-4 h-4"></i>
-                    Інстаграм
-                  </span>
-                  <span class="text-[10px] text-gray-400">Ціль: 20 постів • 5 відео • 60 сторіз</span>
-                </div>
-                <div class="grid grid-cols-3 gap-2 text-center text-xs">
-                  <div class="bg-white dark:bg-gray-800 p-1.5 rounded-lg border border-gray-200 dark:border-gray-700">
-                    <span class="text-[10px] text-gray-400 block">Пости</span>
-                    <span class="font-black text-gray-900 dark:text-white" id="ig_posts">15</span><span class="text-[10px] text-gray-400">/20</span>
-                    <button onclick="incMedia('ig_posts', 20)" class="text-[10px] text-pink-600 font-bold block mx-auto mt-0.5 hover:underline">+1</button>
-                  </div>
-                  <div class="bg-white dark:bg-gray-800 p-1.5 rounded-lg border border-gray-200 dark:border-gray-700">
-                    <span class="text-[10px] text-gray-400 block">Відео (Reels)</span>
-                    <span class="font-black text-gray-900 dark:text-white" id="ig_video">4</span><span class="text-[10px] text-gray-400">/5</span>
-                    <button onclick="incMedia('ig_video', 5)" class="text-[10px] text-pink-600 font-bold block mx-auto mt-0.5 hover:underline">+1</button>
-                  </div>
-                  <div class="bg-white dark:bg-gray-800 p-1.5 rounded-lg border border-gray-200 dark:border-gray-700">
-                    <span class="text-[10px] text-gray-400 block">Сторіз</span>
-                    <span class="font-black text-gray-900 dark:text-white" id="ig_stories">48</span><span class="text-[10px] text-gray-400">/60</span>
-                    <button onclick="incMedia('ig_stories', 60)" class="text-[10px] text-pink-600 font-bold block mx-auto mt-0.5 hover:underline">+1</button>
-                  </div>
-                </div>
-              </div>
-
-              <!-- TikTok & Facebook Row -->
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                <!-- TikTok -->
-                <div class="bg-gray-50 dark:bg-gray-800/60 p-2.5 rounded-xl border border-gray-200 dark:border-gray-700/60">
-                  <div class="flex items-center justify-between mb-1.5">
-                    <span class="font-bold text-xs flex items-center gap-1 text-gray-900 dark:text-white">
-                      <span class="w-3.5 h-3.5 bg-black text-white rounded-full text-[9px] flex items-center justify-center">♪</span>
-                      Тік ток
-                    </span>
-                    <span class="text-[9px] text-gray-400">20 / 5 / 60</span>
-                  </div>
-                  <div class="flex justify-between items-center text-xs">
-                    <span>П: <strong id="tt_posts">12</strong></span>
-                    <span>В: <strong id="tt_video">3</strong></span>
-                    <span>С: <strong id="tt_stories">35</strong></span>
-                    <button onclick="incMedia('tt_posts', 20)" class="px-1 text-[10px] font-bold bg-gray-200 dark:bg-gray-700 rounded">+1</button>
-                  </div>
-                </div>
-
-                <!-- Facebook -->
-                <div class="bg-gray-50 dark:bg-gray-800/60 p-2.5 rounded-xl border border-gray-200 dark:border-gray-700/60">
-                  <div class="flex items-center justify-between mb-1.5">
-                    <span class="font-bold text-xs flex items-center gap-1 text-blue-600">
-                      <i data-lucide="facebook" class="w-3.5 h-3.5"></i>
-                      Фейсбук
-                    </span>
-                    <span class="text-[9px] text-gray-400">20 / 5 / 60</span>
-                  </div>
-                  <div class="flex justify-between items-center text-xs">
-                    <span>П: <strong id="fb_posts">14</strong></span>
-                    <span>В: <strong id="fb_video">4</strong></span>
-                    <span>С: <strong id="fb_stories">42</strong></span>
-                    <button onclick="incMedia('fb_posts', 20)" class="px-1 text-[10px] font-bold bg-blue-100 text-blue-800 rounded">+1</button>
-                  </div>
-                </div>
-              </div>
-
-              <!-- YouTube & X (Twitter) Row -->
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                <!-- YouTube -->
-                <div class="bg-gray-50 dark:bg-gray-800/60 p-2.5 rounded-xl border border-gray-200 dark:border-gray-700/60 flex items-center justify-between">
-                  <div class="flex items-center gap-2">
-                    <i data-lucide="youtube" class="w-4 h-4 text-red-600"></i>
-                    <div>
-                      <span class="font-bold text-xs block text-gray-900 dark:text-white">Ютуб</span>
-                      <span class="text-[10px] text-gray-400">Відео: 5 план</span>
-                    </div>
-                  </div>
-                  <div class="flex items-center gap-2">
-                    <span class="font-black text-sm text-red-600" id="yt_video">3</span><span class="text-xs text-gray-400">/ 5</span>
-                    <button onclick="incMedia('yt_video', 5)" class="px-1.5 py-0.5 text-[10px] font-bold bg-red-100 text-red-800 rounded">+1</button>
-                  </div>
-                </div>
-
-                <!-- X (Twitter) -->
-                <div class="bg-gray-50 dark:bg-gray-800/60 p-2.5 rounded-xl border border-gray-200 dark:border-gray-700/60">
-                  <div class="flex items-center justify-between mb-1">
-                    <span class="font-bold text-xs flex items-center gap-1 text-gray-900 dark:text-white">
-                      <span class="font-black text-xs">𝕏</span>
-                      X (Twitter)
-                    </span>
-                    <span class="text-[9px] text-gray-400">20 / 5 / 60</span>
-                  </div>
-                  <div class="flex justify-between items-center text-xs">
-                    <span>П: <strong id="x_posts">18</strong></span>
-                    <span>В: <strong id="x_video">2</strong></span>
-                    <span>К: <strong id="x_comments">52</strong></span>
-                    <button onclick="incMedia('x_posts', 20)" class="px-1 text-[10px] font-bold bg-gray-200 dark:bg-gray-700 rounded">+1</button>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-
+          <div id="card_marketing_body" class="p-4 grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div id="container_classifieds" class="space-y-3"></div>
+            <div id="container_social" class="space-y-3"></div>
           </div>
         </div>
 
         <!-- 4. УГОДИ ТА ФІНАЛ ВОРОНКИ -->
-        <div class="bg-white dark:bg-[#1A1D24] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden flex flex-col md:col-span-2">
+        <div id="card_deals" class="bg-white dark:bg-[#1A1D24] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden flex flex-col md:col-span-2 transition-all duration-300">
           <div class="px-4 py-3 bg-gradient-to-r from-amber-50 to-amber-100/40 dark:from-amber-950/40 dark:to-transparent border-b border-gray-200 dark:border-gray-800 flex items-center justify-between">
             <div class="flex items-center gap-2">
               <div class="w-7 h-7 rounded-lg bg-amber-500 text-white flex items-center justify-center">
@@ -660,70 +418,24 @@
               </div>
               <h3 class="font-extrabold text-sm text-gray-900 dark:text-white">4. Угоди (Фінал місячного циклу)</h3>
             </div>
-            <span class="text-[11px] font-bold text-amber-700 dark:text-amber-400 bg-amber-100 dark:bg-amber-900/50 px-2 py-0.5 rounded-full">Ключова конверсія</span>
+            <div class="flex items-center gap-1.5">
+              <span class="text-[11px] font-bold text-amber-700 dark:text-amber-400 bg-amber-100 dark:bg-amber-900/50 px-2 py-0.5 rounded-full mr-1">Ключова конверсія</span>
+              <div class="flex items-center bg-white/80 dark:bg-gray-800 p-0.5 rounded-lg border border-gray-200 dark:border-gray-700 text-[10px]">
+                <button type="button" onclick="setBlockMode('deals', 'bars')" id="btn_mode_deals_bars" title="Смуги" class="px-1.5 py-0.5 rounded font-bold bg-amber-500 text-white">📊</button>
+                <button type="button" onclick="setBlockMode('deals', 'circles')" id="btn_mode_deals_circles" title="Кружечки %" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">⭕</button>
+                <button type="button" onclick="setBlockMode('deals', 'charts')" id="btn_mode_deals_charts" title="Графіки" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">📈</button>
+              </div>
+              <button type="button" onclick="toggleCardCollapse('card_deals_body', 'chevron_deals')" title="Згорнути / розгорнути" class="p-1 rounded-lg text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+                <i data-lucide="chevron-down" id="chevron_deals" class="w-4 h-4"></i>
+              </button>
+              <button type="button" onclick="toggleBlockVisibility('deals')" title="Сховати блок" class="p-1 rounded-lg text-gray-400 hover:text-amber-600 hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+                <i data-lucide="eye" class="w-4 h-4"></i>
+              </button>
+            </div>
           </div>
 
-          <div class="p-4 grid grid-cols-1 md:grid-cols-3 gap-4">
-            
-            <!-- Оренда -->
-            <div class="bg-gradient-to-br from-gray-50 to-emerald-50/30 dark:from-gray-800/60 dark:to-emerald-950/20 p-4 rounded-xl border border-gray-200 dark:border-gray-700 flex flex-col justify-between">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold text-gray-600 dark:text-gray-300 uppercase tracking-wide">Оренда</span>
-                <span class="text-[10px] font-bold px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded-full">План: 5</span>
-              </div>
-              <div class="flex items-baseline gap-2 my-2">
-                <span class="text-3xl font-black text-emerald-600 dark:text-emerald-400" id="kpi_rent_deals">3</span>
-                <span class="text-xs text-gray-400">/ 5 угод</span>
-              </div>
-              <div class="w-full bg-gray-200 dark:bg-gray-700 h-2 rounded-full overflow-hidden mb-2">
-                <div id="kpi_rent_bar" class="bg-emerald-500 h-full rounded-full" style="width: 60%;"></div>
-              </div>
-              <div class="flex justify-between items-center text-xs">
-                <span class="text-gray-500 text-[11px]">Прогрес: <strong>60%</strong></span>
-                <button onclick="incrementKpi('rent_deal')" class="px-2 py-1 text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition cursor-pointer">+1 угода</button>
-              </div>
-            </div>
-
-            <!-- Завдаток -->
-            <div class="bg-gradient-to-br from-gray-50 to-amber-50/30 dark:from-gray-800/60 dark:to-amber-950/20 p-4 rounded-xl border border-gray-200 dark:border-gray-700 flex flex-col justify-between">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold text-gray-600 dark:text-gray-300 uppercase tracking-wide">10. Завдаток</span>
-                <span class="text-[10px] font-bold px-2 py-0.5 bg-amber-100 text-amber-800 rounded-full">План: 2</span>
-              </div>
-              <div class="flex items-baseline gap-2 my-2">
-                <span class="text-3xl font-black text-amber-600 dark:text-amber-400" id="kpi_deposits">2</span>
-                <span class="text-xs text-gray-400">/ 2 внесено</span>
-                <span class="text-xs bg-amber-100 text-amber-800 font-bold px-1.5 py-0.2 rounded ml-auto">100% ✓</span>
-              </div>
-              <div class="w-full bg-gray-200 dark:bg-gray-700 h-2 rounded-full overflow-hidden mb-2">
-                <div id="kpi_deposit_bar" class="bg-amber-500 h-full rounded-full" style="width: 100%;"></div>
-              </div>
-              <div class="flex justify-between items-center text-xs">
-                <span class="text-amber-600 dark:text-amber-400 font-bold text-[11px]">Повний норматив закрито!</span>
-                <button onclick="incrementKpi('deposit')" class="px-2 py-1 text-xs font-bold bg-amber-500 hover:bg-amber-600 text-white rounded-lg transition cursor-pointer">+1 завдаток</button>
-              </div>
-            </div>
-
-            <!-- Угода (Продаж) -->
-            <div class="bg-gradient-to-br from-gray-50 to-purple-50/30 dark:from-gray-800/60 dark:to-purple-950/20 p-4 rounded-xl border border-gray-200 dark:border-gray-700 flex flex-col justify-between">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold text-gray-600 dark:text-gray-300 uppercase tracking-wide">Угода (Продаж)</span>
-                <span class="text-[10px] font-bold px-2 py-0.5 bg-purple-100 text-purple-800 rounded-full">План: 1</span>
-              </div>
-              <div class="flex items-baseline gap-2 my-2">
-                <span class="text-3xl font-black text-purple-600 dark:text-purple-400" id="kpi_sale_deals">1</span>
-                <span class="text-xs text-gray-400">/ 1 успіх</span>
-                <span class="text-xs bg-purple-100 text-purple-800 font-bold px-1.5 py-0.2 rounded ml-auto">100% ⭐</span>
-              </div>
-              <div class="w-full bg-gray-200 dark:bg-gray-700 h-2 rounded-full overflow-hidden mb-2">
-                <div id="kpi_sale_bar" class="bg-purple-600 h-full rounded-full" style="width: 100%;"></div>
-              </div>
-              <div class="flex justify-between items-center text-xs">
-                <span class="text-purple-600 dark:text-purple-400 font-bold text-[11px]">Ціль виконано! Комісія $1,800</span>
-                <button onclick="incrementKpi('sale_deal')" class="px-2 py-1 text-xs font-bold bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition cursor-pointer">+1 угода</button>
-              </div>
-            </div>
-
+          <div id="card_deals_body" class="p-4">
+            <div id="container_deals" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
           </div>
         </div>
 
@@ -744,8 +456,15 @@
           <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Детальний розріз 16 ключових метрик: Новобудови, Вторинне, Комерція, Земля та підсумки.</p>
         </div>
 
-        <!-- Quick Metrics Highlights -->
-        <div class="flex items-center gap-2 text-xs">
+        <!-- Quick Metrics Highlights & View Switcher -->
+        <div class="flex items-center gap-2 text-xs flex-wrap">
+          <!-- View Switcher in Statistics -->
+          <div class="flex items-center bg-gray-100 dark:bg-gray-800 p-0.5 rounded-xl border border-gray-200 dark:border-gray-700 text-xs">
+            <button type="button" onclick="setStatsViewMode('table')" id="btn_stats_table" class="px-2.5 py-1 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm transition cursor-pointer">📋 Таблиця</button>
+            <button type="button" onclick="setStatsViewMode('bars')" id="btn_stats_bars" class="px-2.5 py-1 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 transition cursor-pointer">📊 Стовпчики</button>
+            <button type="button" onclick="setStatsViewMode('donut')" id="btn_stats_donut" class="px-2.5 py-1 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 transition cursor-pointer">⭕ Кругова %</button>
+          </div>
+
           <!-- Currency Switcher ($ / ₴) in Stats -->
           <div class="flex items-center bg-gray-200 dark:bg-gray-800 p-0.5 rounded-xl border border-gray-300 dark:border-gray-700 text-xs mr-1">
             <button type="button" id="currUsdBtn" onclick="setCurrency('USD')" class="px-2.5 py-1 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm transition cursor-pointer">USD ($)</button>
@@ -762,8 +481,8 @@
         </div>
       </div>
 
-      <!-- THE 16-ROW MATRIX TABLE -->
-      <div class="bg-white dark:bg-[#1A1D24] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden">
+      <!-- VIEW 1: 16-ROW MATRIX TABLE -->
+      <div id="statsView_table" class="bg-white dark:bg-[#1A1D24] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden">
         <div class="overflow-x-auto">
           <table class="w-full text-left text-xs border-collapse">
             <thead>
@@ -1013,6 +732,141 @@
         </div>
       </div>
 
+      <!-- VIEW 2: БАР-ЧАРТИ (СТОВПЧИКИ ПО КАТЕГОРІЯХ) -->
+      <div id="statsView_bars" class="hidden grid grid-cols-1 md:grid-cols-2 gap-4">
+        
+        <!-- Bar Chart Card 1: Розподіл об'єктів та заявок -->
+        <div class="bg-white dark:bg-[#1A1D24] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm space-y-3">
+          <h3 class="font-extrabold text-xs uppercase tracking-wider text-gray-500 flex items-center gap-1.5">
+            <i data-lucide="bar-chart-3" class="w-4 h-4 text-emerald-600"></i>
+            Об'єкти у роботі за категоріями
+          </h3>
+          <div class="space-y-2.5 text-xs">
+            <div>
+              <div class="flex justify-between font-semibold mb-1">
+                <span>🏢 Новобудови</span>
+                <span class="font-mono font-bold text-blue-600" id="bar_obj_nov">36 об'єктів (31%)</span>
+              </div>
+              <div class="w-full bg-gray-100 dark:bg-gray-800 h-3 rounded-full overflow-hidden">
+                <div id="bar_obj_nov_w" class="bg-blue-500 h-full rounded-full transition-all duration-700" style="width: 31%;"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between font-semibold mb-1">
+                <span>🏠 Вторинне житло</span>
+                <span class="font-mono font-bold text-emerald-600" id="bar_obj_vtor">59 об'єктів (50%)</span>
+              </div>
+              <div class="w-full bg-gray-100 dark:bg-gray-800 h-3 rounded-full overflow-hidden">
+                <div id="bar_obj_vtor_w" class="bg-emerald-500 h-full rounded-full transition-all duration-700" style="width: 50%;"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between font-semibold mb-1">
+                <span>🏬 Комерційна нерухомість</span>
+                <span class="font-mono font-bold text-purple-600" id="bar_obj_kom">16 об'єктів (14%)</span>
+              </div>
+              <div class="w-full bg-gray-100 dark:bg-gray-800 h-3 rounded-full overflow-hidden">
+                <div id="bar_obj_kom_w" class="bg-purple-500 h-full rounded-full transition-all duration-700" style="width: 14%;"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between font-semibold mb-1">
+                <span>🌱 Земельні ділянки</span>
+                <span class="font-mono font-bold text-amber-600" id="bar_obj_land">7 об'єктів (5%)</span>
+              </div>
+              <div class="w-full bg-gray-100 dark:bg-gray-800 h-3 rounded-full overflow-hidden">
+                <div id="bar_obj_land_w" class="bg-amber-500 h-full rounded-full transition-all duration-700" style="width: 5%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bar Chart Card 2: Прибутковість за напрямками -->
+        <div class="bg-white dark:bg-[#1A1D24] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm space-y-3">
+          <h3 class="font-extrabold text-xs uppercase tracking-wider text-gray-500 flex items-center gap-1.5">
+            <i data-lucide="trending-up" class="w-4 h-4 text-emerald-600"></i>
+            Валовий прибуток ($ / ₴) за категоріями
+          </h3>
+          <div class="space-y-2.5 text-xs">
+            <div>
+              <div class="flex justify-between font-semibold mb-1">
+                <span>🏢 Новобудови (Продаж + Оренда)</span>
+                <span class="font-mono font-bold text-blue-600" id="bar_profit_nov">$3,000 (44%)</span>
+              </div>
+              <div class="w-full bg-gray-100 dark:bg-gray-800 h-3 rounded-full overflow-hidden">
+                <div id="bar_profit_nov_w" class="bg-blue-600 h-full rounded-full transition-all duration-700" style="width: 44%;"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between font-semibold mb-1">
+                <span>🏠 Вторинний ринок</span>
+                <span class="font-mono font-bold text-emerald-600" id="bar_profit_vtor">$3,200 (47%)</span>
+              </div>
+              <div class="w-full bg-gray-100 dark:bg-gray-800 h-3 rounded-full overflow-hidden">
+                <div id="bar_profit_vtor_w" class="bg-emerald-600 h-full rounded-full transition-all duration-700" style="width: 47%;"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between font-semibold mb-1">
+                <span>🏬 Комерція</span>
+                <span class="font-mono font-bold text-purple-600" id="bar_profit_kom">$650 (9%)</span>
+              </div>
+              <div class="w-full bg-gray-100 dark:bg-gray-800 h-3 rounded-full overflow-hidden">
+                <div id="bar_profit_kom_w" class="bg-purple-600 h-full rounded-full transition-all duration-700" style="width: 9%;"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between font-semibold mb-1">
+                <span>🌱 Земля</span>
+                <span class="font-mono text-gray-400" id="bar_profit_land">$0 (0%)</span>
+              </div>
+              <div class="w-full bg-gray-100 dark:bg-gray-800 h-3 rounded-full overflow-hidden">
+                <div id="bar_profit_land_w" class="bg-gray-300 dark:bg-gray-700 h-full rounded-full" style="width: 0%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- VIEW 3: ДОНАТ / КРУГОВІ ДІАГРАМИ (DONUT CHARTS %) -->
+      <div id="statsView_donut" class="hidden grid grid-cols-1 md:grid-cols-3 gap-4">
+        
+        <!-- Donut 1: Об'єкти -->
+        <div class="bg-white dark:bg-[#1A1D24] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm flex flex-col items-center text-center">
+          <span class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Частка об'єктів %</span>
+          ${makeCircleGauge(50, 'text-emerald-500', 90, 4)}
+          <div class="mt-3 space-y-1 text-xs">
+            <div class="flex items-center gap-1.5 justify-center"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> 50% Вторинне</div>
+            <div class="flex items-center gap-1.5 justify-center"><span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span> 31% Новобудови</div>
+            <div class="flex items-center gap-1.5 justify-center"><span class="w-2.5 h-2.5 rounded-full bg-purple-500"></span> 14% Комерція</div>
+            <div class="flex items-center gap-1.5 justify-center"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> 5% Земля</div>
+          </div>
+        </div>
+
+        <!-- Donut 2: Угоди & Завдатки -->
+        <div class="bg-white dark:bg-[#1A1D24] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm flex flex-col items-center text-center">
+          <span class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Конверсія угод %</span>
+          ${makeCircleGauge(67, 'text-amber-500', 90, 4)}
+          <div class="mt-3 space-y-1 text-xs">
+            <div class="flex items-center gap-1.5 justify-center"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> 67% Закриті угоди</div>
+            <div class="flex items-center gap-1.5 justify-center"><span class="w-2.5 h-2.5 rounded-full bg-indigo-500"></span> 33% Завдатки в процесі</div>
+          </div>
+        </div>
+
+        <!-- Donut 3: Дохід за категоріями -->
+        <div class="bg-white dark:bg-[#1A1D24] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm flex flex-col items-center text-center">
+          <span class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Частка виручки %</span>
+          ${makeCircleGauge(47, 'text-blue-500', 90, 4)}
+          <div class="mt-3 space-y-1 text-xs">
+            <div class="flex items-center gap-1.5 justify-center"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> 47% Вторинне</div>
+            <div class="flex items-center gap-1.5 justify-center"><span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span> 44% Новобудови</div>
+            <div class="flex items-center gap-1.5 justify-center"><span class="w-2.5 h-2.5 rounded-full bg-purple-500"></span> 9% Комерція</div>
+          </div>
+        </div>
+
+      </div>
+
     </div>
 
     <!-- TAB 3: ВОРОНКА ПРОДАЖ (INTERACTIVE DEALS PIPELINE) -->
@@ -1228,6 +1082,69 @@
     </div>
   </footer>
 
+  <!-- MODAL 4: КЕРУВАННЯ ВИДИМІСТЮ БЛОКІВ ДАШБОРДУ -->
+  <div id="visibilityModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-[#1A1D24] w-full max-w-md rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+      <div class="px-5 py-4 bg-gray-900 text-white flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i data-lucide="eye" class="w-5 h-5 text-emerald-400"></i>
+          <h3 class="font-bold text-sm">Видимість блоків дашборду</h3>
+        </div>
+        <button onclick="closeModal('visibilityModal')" class="text-white/80 hover:text-white transition cursor-pointer">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div class="p-5 space-y-3 text-xs">
+        <p class="text-gray-500 dark:text-gray-400 text-[11px] mb-2">Увімкніть або вимкніть відображення секцій для персоналізації робочого місця рієлтора:</p>
+        
+        <label class="flex items-center justify-between p-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 cursor-pointer">
+          <span class="flex items-center gap-2 font-bold text-gray-800 dark:text-gray-200">
+            <i data-lucide="target" class="w-4 h-4 text-emerald-600"></i>
+            Верхній зведений блок (Місячний план та 4 картки)
+          </span>
+          <input type="checkbox" id="chk_vis_summary" checked onchange="toggleBlockVisibility('summary')" class="w-4 h-4 text-emerald-600 rounded">
+        </label>
+
+        <label class="flex items-center justify-between p-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 cursor-pointer">
+          <span class="flex items-center gap-2 font-bold text-gray-800 dark:text-gray-200">
+            <i data-lucide="home" class="w-4 h-4 text-emerald-600"></i>
+            1. Робота з обʼєктом (дзвінки, об'єкти, зустрічі, договори)
+          </span>
+          <input type="checkbox" id="chk_vis_objects" checked onchange="toggleBlockVisibility('objects')" class="w-4 h-4 text-emerald-600 rounded">
+        </label>
+
+        <label class="flex items-center justify-between p-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 cursor-pointer">
+          <span class="flex items-center gap-2 font-bold text-gray-800 dark:text-gray-200">
+            <i data-lucide="user-check" class="w-4 h-4 text-blue-600"></i>
+            2. Робота з клієнтами (заявки, підбори, покази)
+          </span>
+          <input type="checkbox" id="chk_vis_clients" checked onchange="toggleBlockVisibility('clients')" class="w-4 h-4 text-blue-600 rounded">
+        </label>
+
+        <label class="flex items-center justify-between p-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 cursor-pointer">
+          <span class="flex items-center gap-2 font-bold text-gray-800 dark:text-gray-200">
+            <i data-lucide="megaphone" class="w-4 h-4 text-purple-600"></i>
+            3. Маркетинг та промоція (OLX, RIA, соцмережі)
+          </span>
+          <input type="checkbox" id="chk_vis_marketing" checked onchange="toggleBlockVisibility('marketing')" class="w-4 h-4 text-purple-600 rounded">
+        </label>
+
+        <label class="flex items-center justify-between p-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 cursor-pointer">
+          <span class="flex items-center gap-2 font-bold text-gray-800 dark:text-gray-200">
+            <i data-lucide="sparkles" class="w-4 h-4 text-amber-500"></i>
+            4. Угоди та завдатки (фінал циклу)
+          </span>
+          <input type="checkbox" id="chk_vis_deals" checked onchange="toggleBlockVisibility('deals')" class="w-4 h-4 text-amber-500 rounded">
+        </label>
+
+        <div class="flex justify-end gap-2 pt-3">
+          <button type="button" onclick="resetAllVisibility()" class="px-3 py-2 rounded-xl text-xs font-semibold text-gray-500 hover:text-gray-800 dark:hover:text-gray-200">Скинути всі</button>
+          <button type="button" onclick="closeModal('visibilityModal')" class="px-4 py-2 rounded-xl bg-gray-900 text-white dark:bg-gray-100 dark:text-gray-900 font-bold hover:opacity-90 transition cursor-pointer">Готово</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- MODAL 1: ШВИДКА ФІКСАЦІЯ АКТИВНОСТІ (+ ФІКСУВАТИ ДІЮ) -->
   <div id="quickActionModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-white dark:bg-[#1A1D24] w-full max-w-md rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden animate-scale-up">
@@ -1377,6 +1294,22 @@
       rateUah: 41.5,
       activeMainTab: 'kpi',
       activeKpiSubTab: 'agent',
+      currentPeriod: '1m',
+      currentFactor: 1.0,
+      visualMode: 'bars', // 'bars' | 'circles' | 'charts' | 'cards'
+      blockModes: {
+        objects: 'bars',
+        clients: 'bars',
+        marketing: 'bars',
+        deals: 'bars'
+      },
+      visibility: {
+        summary: true,
+        objects: true,
+        clients: true,
+        marketing: true,
+        deals: true
+      },
       kpi: {
         calls: 68,
         objects: 19,
@@ -1784,6 +1717,52 @@
         </tr>
       `;
 
+      // Update Bar Charts View (Стовпчики) & Donut View
+      const bObjNov = document.getElementById('bar_obj_nov');
+      if (bObjNov) {
+        const totalObjNov = objSale[0] + objRent[0];
+        const totalObjVtor = objSale[1] + objRent[1];
+        const totalObjKom = objSale[2] + objRent[2];
+        const totalObjLand = objSale[3] + objRent[3];
+        const allObjs = Math.max(1, totalObjs);
+
+        const pctNov = Math.round((totalObjNov / allObjs) * 100);
+        const pctVtor = Math.round((totalObjVtor / allObjs) * 100);
+        const pctKom = Math.round((totalObjKom / allObjs) * 100);
+        const pctLand = Math.round((totalObjLand / allObjs) * 100);
+
+        bObjNov.textContent = `${totalObjNov} об'єктів (${pctNov}%)`;
+        document.getElementById('bar_obj_nov_w').style.width = `${pctNov}%`;
+
+        document.getElementById('bar_obj_vtor').textContent = `${totalObjVtor} об'єктів (${pctVtor}%)`;
+        document.getElementById('bar_obj_vtor_w').style.width = `${pctVtor}%`;
+
+        document.getElementById('bar_obj_kom').textContent = `${totalObjKom} об'єктів (${pctKom}%)`;
+        document.getElementById('bar_obj_kom_w').style.width = `${pctKom}%`;
+
+        document.getElementById('bar_obj_land').textContent = `${totalObjLand} об'єктів (${pctLand}%)`;
+        document.getElementById('bar_obj_land_w').style.width = `${pctLand}%`;
+
+        // Profits
+        const allProf = Math.max(1, grandProfitTotal);
+        const pNov = Math.round((grandProfitNov / allProf) * 100);
+        const pVtor = Math.round((grandProfitVtor / allProf) * 100);
+        const pKom = Math.round((grandProfitKom / allProf) * 100);
+        const pLand = Math.round((grandProfitLand / allProf) * 100);
+
+        document.getElementById('bar_profit_nov').textContent = `${fmtMoney(grandProfitNov)} (${pNov}%)`;
+        document.getElementById('bar_profit_nov_w').style.width = `${pNov}%`;
+
+        document.getElementById('bar_profit_vtor').textContent = `${fmtMoney(grandProfitVtor)} (${pVtor}%)`;
+        document.getElementById('bar_profit_vtor_w').style.width = `${pVtor}%`;
+
+        document.getElementById('bar_profit_kom').textContent = `${fmtMoney(grandProfitKom)} (${pKom}%)`;
+        document.getElementById('bar_profit_kom_w').style.width = `${pKom}%`;
+
+        document.getElementById('bar_profit_land').textContent = `${fmtMoney(grandProfitLand)} (${pLand}%)`;
+        document.getElementById('bar_profit_land_w').style.width = `${pLand}%`;
+      }
+
       renderIcons();
     }
 
@@ -1885,70 +1864,33 @@
       }
     }
 
-    // Refresh KPI DOM elements
+    // Refresh KPI DOM elements & Render Dynamic View Modes
     function updateKpiDisplay() {
-      // Calls
-      const callsEl = document.getElementById('kpi_calls_val');
-      if (callsEl) callsEl.textContent = state.kpi.calls;
+      // 1. Calculations & Percents
       const callsPct = Math.round((state.kpi.calls / state.targets.calls) * 100);
-      document.getElementById('kpi_calls_pct').textContent = `${callsPct}%`;
-      document.getElementById('kpi_calls_bar').style.width = `${Math.min(100, callsPct)}%`;
-
-      // Objects
-      const objEl = document.getElementById('kpi_objects_val');
-      if (objEl) objEl.textContent = state.kpi.objects;
       const objPct = Math.round((state.kpi.objects / state.targets.objects) * 100);
-      document.getElementById('kpi_objects_pct').textContent = `${objPct}%`;
-      document.getElementById('kpi_objects_bar').style.width = `${Math.min(100, objPct)}%`;
-
-      // Meetings
-      const meetEl = document.getElementById('kpi_meetings_val');
-      if (meetEl) meetEl.textContent = state.kpi.meetings;
       const meetPct = Math.round((state.kpi.meetings / state.targets.meetings) * 100);
-      document.getElementById('kpi_meetings_pct').textContent = `${meetPct}%`;
-      document.getElementById('kpi_meetings_bar').style.width = `${Math.min(100, meetPct)}%`;
-      document.getElementById('meetingsHeroCount').textContent = state.kpi.meetings;
-
-      // Contracts
-      const contEl = document.getElementById('kpi_contracts_val');
-      if (contEl) contEl.textContent = state.kpi.contracts;
       const contPct = Math.round((state.kpi.contracts / state.targets.contracts) * 100);
-      document.getElementById('kpi_contracts_bar').style.width = `${Math.min(100, contPct)}%`;
-      document.getElementById('contractsHeroCount').textContent = state.kpi.contracts;
-
-      // Leads
-      const leadsEl = document.getElementById('kpi_leads_val');
-      if (leadsEl) leadsEl.textContent = state.kpi.leads;
       const leadsPct = Math.round((state.kpi.leads / state.targets.leads) * 100);
-      document.getElementById('kpi_leads_pct').textContent = `${leadsPct}%`;
-      document.getElementById('kpi_leads_bar').style.width = `${Math.min(100, leadsPct)}%`;
-
-      // Showings
-      const showEl = document.getElementById('kpi_showings_val');
-      if (showEl) showEl.textContent = state.kpi.showings;
+      const matchPct = Math.round((state.kpi.matches / state.targets.matches) * 100);
       const showPct = Math.round((state.kpi.showings / state.targets.showings) * 100);
-      document.getElementById('kpi_showings_pct').textContent = `${showPct}%`;
-      document.getElementById('kpi_showings_bar').style.width = `${Math.min(100, showPct)}%`;
-
-      // Rent Deals
-      document.getElementById('kpi_rent_deals').textContent = state.kpi.rent_deal;
-      document.getElementById('rentHeroCount').textContent = state.kpi.rent_deal;
       const rentPct = Math.round((state.kpi.rent_deal / state.targets.rent_deal) * 100);
-      document.getElementById('kpi_rent_bar').style.width = `${Math.min(100, rentPct)}%`;
-
-      // Deposits
-      document.getElementById('kpi_deposits').textContent = state.kpi.deposit;
-      document.getElementById('depositsHeroCount').textContent = state.kpi.deposit;
       const depPct = Math.round((state.kpi.deposit / state.targets.deposit) * 100);
-      document.getElementById('kpi_deposit_bar').style.width = `${Math.min(100, depPct)}%`;
-
-      // Sale Deals
-      document.getElementById('kpi_sale_deals').textContent = state.kpi.sale_deal;
-      document.getElementById('dealsHeroCount').textContent = state.kpi.sale_deal;
       const salePct = Math.round((state.kpi.sale_deal / state.targets.sale_deal) * 100);
-      document.getElementById('kpi_sale_bar').style.width = `${Math.min(100, salePct)}%`;
 
-      // Recalculate Radial Gauge
+      // Hero summary sync
+      const dealsHero = document.getElementById('dealsHeroCount');
+      if (dealsHero) dealsHero.textContent = state.kpi.sale_deal;
+      const depHero = document.getElementById('depositsHeroCount');
+      if (depHero) depHero.textContent = state.kpi.deposit;
+      const rentHero = document.getElementById('rentHeroCount');
+      if (rentHero) rentHero.textContent = state.kpi.rent_deal;
+      const meetHero = document.getElementById('meetingsHeroCount');
+      if (meetHero) meetHero.textContent = state.kpi.meetings;
+      const contHero = document.getElementById('contractsHeroCount');
+      if (contHero) contHero.textContent = state.kpi.contracts;
+
+      // Radial Overall Progress
       const totalScore = Math.round(
         (callsPct + objPct + meetPct + contPct + leadsPct + showPct + rentPct + depPct + salePct) / 9
       );
@@ -1958,6 +1900,555 @@
       }
       const scoreTxt = document.getElementById('overallPctText');
       if (scoreTxt) scoreTxt.textContent = `${totalScore}%`;
+
+      // 2. Render Section 1: Робота з обʼєктом
+      renderObjectsSection(state.blockModes.objects, { callsPct, objPct, meetPct, contPct });
+
+      // 3. Render Section 2: Робота з клієнтами
+      renderClientsSection(state.blockModes.clients, { leadsPct, matchPct, showPct });
+
+      // 4. Render Section 3: Маркетинг
+      renderMarketingSection(state.blockModes.marketing);
+
+      // 5. Render Section 4: Угоди
+      renderDealsSection(state.blockModes.deals, { rentPct, depPct, salePct });
+
+      renderIcons();
+    }
+
+    // Helper: SVG Radial Gauge Generator
+    function makeCircleGauge(pct, colorClass, size = 60, stroke = 5) {
+      const p = Math.min(100, Math.max(0, pct));
+      return `
+        <div class="relative flex items-center justify-center shrink-0" style="width: ${size}px; height: ${size}px;">
+          <svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+            <path class="text-gray-200 dark:text-gray-700" stroke-width="${stroke}" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+            <path class="${colorClass} transition-all duration-700 ease-out" stroke-dasharray="${p}, 100" stroke-width="${stroke}" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+          </svg>
+          <div class="absolute inset-0 flex items-center justify-center">
+            <span class="text-xs font-black font-mono leading-none ${colorClass}">${p}%</span>
+          </div>
+        </div>
+      `;
+    }
+
+    // Helper: Mini Trend Sparkline Generator
+    function makeMiniChart(pct, colorHex = '#27AE60') {
+      const p = Math.min(100, Math.max(10, pct));
+      const h1 = Math.round(p * 0.35);
+      const h2 = Math.round(p * 0.55);
+      const h3 = Math.round(p * 0.8);
+      const h4 = Math.round(p * 0.95);
+      const h5 = Math.round(p);
+      return `
+        <div class="flex items-end gap-1 h-7 px-1.5 py-0.5 bg-gray-50 dark:bg-gray-800/80 rounded-lg border border-gray-200/60 dark:border-gray-700/60 shrink-0">
+          <div class="w-1.5 rounded-t bg-gray-300 dark:bg-gray-600" style="height: ${Math.max(4, h1 * 0.25)}px;" title="День 1"></div>
+          <div class="w-1.5 rounded-t bg-gray-300 dark:bg-gray-600" style="height: ${Math.max(5, h2 * 0.25)}px;" title="День 2"></div>
+          <div class="w-1.5 rounded-t bg-emerald-400" style="height: ${Math.max(6, h3 * 0.25)}px;" title="День 3"></div>
+          <div class="w-1.5 rounded-t bg-emerald-500" style="height: ${Math.max(8, h4 * 0.25)}px;" title="День 4"></div>
+          <div class="w-1.5 rounded-t" style="height: ${Math.max(10, h5 * 0.25)}px; background-color: ${colorHex};" title="Поточний день (${pct}%)"></div>
+        </div>
+      `;
+    }
+
+    // ─── 1. RENDER OBJECTS SECTION ──────────────────────────────────────────
+    function renderObjectsSection(mode, { callsPct, objPct, meetPct, contPct }) {
+      const c = document.getElementById('container_objects');
+      if (!c) return;
+
+      const items = [
+        { id: 'calls', title: 'Телефонні дзвінки власнику', val: state.kpi.calls, tgt: state.targets.calls, pct: callsPct, icon: 'phone-call', color: 'emerald', note: 'Темп: ~3.4 дзв/день (норма)' },
+        { id: 'objects', title: 'Додавання обʼєктів у СРМ', val: state.kpi.objects, tgt: state.targets.objects, pct: objPct, icon: 'plus-square', color: 'emerald', note: `Залишилось: ${Math.max(0, state.targets.objects - state.kpi.objects)} об'єктів` },
+        { id: 'meetings', title: 'Зустрічі з власниками', val: state.kpi.meetings, tgt: state.targets.meetings, pct: meetPct, icon: 'users-2', color: 'emerald', note: `Залишилось: ${Math.max(0, state.targets.meetings - state.kpi.meetings)} зустрічі` },
+        { id: 'contracts', title: 'Договір про надання послуг з продажу', val: state.kpi.contracts, tgt: state.targets.contracts, pct: contPct, icon: 'shield-check', color: 'amber', note: '✓ Ексклюзивні права оформлено ⭐' }
+      ];
+
+      c.innerHTML = items.map(it => {
+        if (mode === 'circles') {
+          return `
+            <div class="p-3 bg-gray-50/80 dark:bg-gray-800/40 rounded-xl border border-gray-200/80 dark:border-gray-700/60 flex items-center justify-between gap-3">
+              <div class="flex items-center gap-3">
+                ${makeCircleGauge(it.pct, it.color === 'amber' ? 'text-amber-500' : 'text-emerald-500', 52, 4.5)}
+                <div>
+                  <h4 class="font-bold text-xs text-gray-900 dark:text-white flex items-center gap-1.5">
+                    <i data-lucide="${it.icon}" class="w-3.5 h-3.5 ${it.color === 'amber' ? 'text-amber-500' : 'text-emerald-600'}"></i>
+                    ${it.title}
+                  </h4>
+                  <div class="text-[11px] text-gray-500 mt-0.5">
+                    Факт: <strong class="text-gray-900 dark:text-white font-mono">${it.val}</strong> / ${it.tgt} • ${it.note}
+                  </div>
+                </div>
+              </div>
+              <button onclick="incrementKpi('${it.id}')" class="px-2.5 py-1 text-xs font-bold bg-emerald-100 hover:bg-emerald-200 text-emerald-800 rounded-lg transition shrink-0 cursor-pointer">+1</button>
+            </div>
+          `;
+        }
+
+        if (mode === 'charts') {
+          return `
+            <div class="p-3 bg-gray-50/80 dark:bg-gray-800/40 rounded-xl border border-gray-200/80 dark:border-gray-700/60 flex items-center justify-between gap-3">
+              <div>
+                <h4 class="font-bold text-xs text-gray-900 dark:text-white flex items-center gap-1.5">
+                  <i data-lucide="${it.icon}" class="w-3.5 h-3.5 ${it.color === 'amber' ? 'text-amber-500' : 'text-emerald-600'}"></i>
+                  ${it.title}
+                </h4>
+                <div class="text-[11px] text-gray-500 mt-0.5">
+                  Виконано: <strong class="text-gray-900 dark:text-white font-mono">${it.val}</strong> / ${it.tgt} (<span class="font-bold ${it.color === 'amber' ? 'text-amber-600' : 'text-emerald-600'}">${it.pct}%</span>)
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                ${makeMiniChart(it.pct, it.color === 'amber' ? '#F1C40F' : '#27AE60')}
+                <button onclick="incrementKpi('${it.id}')" class="px-2 py-1 text-xs font-bold bg-emerald-100 hover:bg-emerald-200 text-emerald-800 rounded-lg transition cursor-pointer">+1</button>
+              </div>
+            </div>
+          `;
+        }
+
+        // Default 'bars' or 'cards'
+        return `
+          <div class="pt-2 first:pt-0">
+            <div class="flex items-center justify-between text-xs font-semibold mb-1">
+              <span class="text-gray-700 dark:text-gray-300 flex items-center gap-1.5">
+                <i data-lucide="${it.icon}" class="w-3.5 h-3.5 ${it.color === 'amber' ? 'text-amber-500' : 'text-emerald-600'}"></i>
+                ${it.title}
+              </span>
+              <div class="flex items-center gap-2">
+                <span class="text-gray-500 font-mono text-[11px]">Норма: <strong>${it.tgt}</strong></span>
+                <span class="font-extrabold ${it.color === 'amber' ? 'text-amber-600 dark:text-amber-400' : 'text-emerald-600 dark:text-emerald-400'} font-mono">${it.val}</span>
+                <button onclick="incrementKpi('${it.id}')" class="px-1.5 py-0.5 text-[10px] font-bold ${it.color === 'amber' ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800'} hover:opacity-80 rounded transition cursor-pointer">+1</button>
+              </div>
+            </div>
+            <div class="w-full bg-gray-100 dark:bg-gray-800 h-2 rounded-full overflow-hidden">
+              <div class="${it.color === 'amber' ? 'bg-amber-500' : 'bg-emerald-500'} h-full rounded-full transition-all duration-500" style="width: ${Math.min(100, it.pct)}%;"></div>
+            </div>
+            <div class="flex justify-between items-center text-[10px] text-gray-400 mt-1">
+              <span>Прогрес: <strong class="text-gray-600 dark:text-gray-300">${it.pct}%</strong></span>
+              <span class="${it.color === 'amber' ? 'text-amber-600' : 'text-emerald-600'} font-medium">${it.note}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // ─── 2. RENDER CLIENTS SECTION ──────────────────────────────────────────
+    function renderClientsSection(mode, { leadsPct, matchPct, showPct }) {
+      const c = document.getElementById('container_clients');
+      if (!c) return;
+
+      const items = [
+        { id: 'leads', title: 'Додавання заявок у СРМ', val: state.kpi.leads, tgt: state.targets.leads, pct: leadsPct, icon: 'inbox', color: 'blue', note: `Залишилось: ${Math.max(0, state.targets.leads - state.kpi.leads)} заявок` },
+        { id: 'matches', title: 'Підбір під клієнта', val: state.kpi.matches, tgt: state.targets.matches, pct: matchPct, icon: 'search', color: 'blue', note: 'Конверсія в перегляди: 50%' },
+        { id: 'showings', title: 'Зустріч з клієнтом на перегляді', val: state.kpi.showings, tgt: state.targets.showings, pct: showPct, icon: 'eye', color: 'blue', note: `Залишилось: ${Math.max(0, state.targets.showings - state.kpi.showings)} покази` }
+      ];
+
+      c.innerHTML = items.map(it => {
+        if (mode === 'circles') {
+          return `
+            <div class="p-3 bg-gray-50/80 dark:bg-gray-800/40 rounded-xl border border-gray-200/80 dark:border-gray-700/60 flex items-center justify-between gap-3">
+              <div class="flex items-center gap-3">
+                ${makeCircleGauge(it.pct, 'text-blue-500', 52, 4.5)}
+                <div>
+                  <h4 class="font-bold text-xs text-gray-900 dark:text-white flex items-center gap-1.5">
+                    <i data-lucide="${it.icon}" class="w-3.5 h-3.5 text-blue-600"></i>
+                    ${it.title}
+                  </h4>
+                  <div class="text-[11px] text-gray-500 mt-0.5">
+                    Факт: <strong class="text-gray-900 dark:text-white font-mono">${it.val}</strong> / ${it.tgt} • ${it.note}
+                  </div>
+                </div>
+              </div>
+              <button onclick="incrementKpi('${it.id}')" class="px-2.5 py-1 text-xs font-bold bg-blue-100 hover:bg-blue-200 text-blue-800 rounded-lg transition shrink-0 cursor-pointer">+1</button>
+            </div>
+          `;
+        }
+
+        if (mode === 'charts') {
+          return `
+            <div class="p-3 bg-gray-50/80 dark:bg-gray-800/40 rounded-xl border border-gray-200/80 dark:border-gray-700/60 flex items-center justify-between gap-3">
+              <div>
+                <h4 class="font-bold text-xs text-gray-900 dark:text-white flex items-center gap-1.5">
+                  <i data-lucide="${it.icon}" class="w-3.5 h-3.5 text-blue-600"></i>
+                  ${it.title}
+                </h4>
+                <div class="text-[11px] text-gray-500 mt-0.5">
+                  Виконано: <strong class="text-gray-900 dark:text-white font-mono">${it.val}</strong> / ${it.tgt} (<span class="font-bold text-blue-600">${it.pct}%</span>)
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                ${makeMiniChart(it.pct, '#2563EB')}
+                <button onclick="incrementKpi('${it.id}')" class="px-2 py-1 text-xs font-bold bg-blue-100 hover:bg-blue-200 text-blue-800 rounded-lg transition cursor-pointer">+1</button>
+              </div>
+            </div>
+          `;
+        }
+
+        return `
+          <div class="pt-2 first:pt-0">
+            <div class="flex items-center justify-between text-xs font-semibold mb-1">
+              <span class="text-gray-700 dark:text-gray-300 flex items-center gap-1.5">
+                <i data-lucide="${it.icon}" class="w-3.5 h-3.5 text-blue-600"></i>
+                ${it.title}
+              </span>
+              <div class="flex items-center gap-2">
+                <span class="text-gray-500 font-mono text-[11px]">Норма: <strong>${it.tgt}</strong></span>
+                <span class="font-extrabold text-blue-600 dark:text-blue-400 font-mono">${it.val}</span>
+                <button onclick="incrementKpi('${it.id}')" class="px-1.5 py-0.5 text-[10px] font-bold bg-blue-100 hover:bg-blue-200 text-blue-800 rounded transition cursor-pointer">+1</button>
+              </div>
+            </div>
+            <div class="w-full bg-gray-100 dark:bg-gray-800 h-2 rounded-full overflow-hidden">
+              <div class="bg-blue-500 h-full rounded-full transition-all duration-500" style="width: ${Math.min(100, it.pct)}%;"></div>
+            </div>
+            <div class="flex justify-between items-center text-[10px] text-gray-400 mt-1">
+              <span>Прогрес: <strong class="text-gray-600 dark:text-gray-300">${it.pct}%</strong></span>
+              <span class="text-blue-600 dark:text-blue-400 font-medium">${it.note}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // ─── 3. RENDER MARKETING SECTION ────────────────────────────────────────
+    function renderMarketingSection(mode) {
+      const c1 = document.getElementById('container_classifieds');
+      const c2 = document.getElementById('container_social');
+      if (!c1 || !c2) return;
+
+      const classItems = [
+        { id: 'olx', name: 'Реклама ОЛХ', val: state.marketing.olx, tgt: 20, tag: 'OLX', tagBg: 'bg-[#002f34] text-[#00f898]' },
+        { id: 'domria', name: 'Реклама Дом Ріа', val: state.marketing.domria, tgt: 20, tag: 'RIA', tagBg: 'bg-[#eb4d27] text-white' },
+        { id: 'rieltor', name: 'Реклама Рієлтор юа', val: state.marketing.rieltor, tgt: 20, tag: 'R.UA', tagBg: 'bg-[#0b66c3] text-white' }
+      ];
+
+      c1.innerHTML = `
+        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-1.5 mb-2">
+          <i data-lucide="layout-grid" class="w-3.5 h-3.5 text-purple-600"></i>
+          Реклама на порталах (Класифайди)
+        </h4>
+        ${classItems.map(it => {
+          const pct = Math.round((it.val / it.tgt) * 100);
+          if (mode === 'circles') {
+            return `
+              <div class="p-2.5 bg-gray-50 dark:bg-gray-800/60 rounded-xl border border-gray-200 dark:border-gray-700/60 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  ${makeCircleGauge(pct, 'text-purple-600', 44, 4)}
+                  <div>
+                    <span class="flex items-center gap-1.5 font-bold text-xs text-gray-800 dark:text-gray-200">
+                      <span class="w-4 h-4 rounded ${it.tagBg} font-black text-[8px] flex items-center justify-center">${it.tag}</span>
+                      ${it.name}
+                    </span>
+                    <span class="text-[10px] text-gray-400 font-mono">${it.val} з ${it.tgt} оголошень</span>
+                  </div>
+                </div>
+                <button onclick="incrementMarketing('${it.id}')" class="px-2 py-0.5 text-[10px] font-bold bg-purple-100 hover:bg-purple-200 text-purple-800 rounded transition cursor-pointer">+1</button>
+              </div>
+            `;
+          }
+          if (mode === 'charts') {
+            return `
+              <div class="p-2.5 bg-gray-50 dark:bg-gray-800/60 rounded-xl border border-gray-200 dark:border-gray-700/60 flex items-center justify-between">
+                <div>
+                  <span class="flex items-center gap-1.5 font-bold text-xs text-gray-800 dark:text-gray-200">
+                    <span class="w-4 h-4 rounded ${it.tagBg} font-black text-[8px] flex items-center justify-center">${it.tag}</span>
+                    ${it.name}
+                  </span>
+                  <span class="text-[10px] text-gray-400 font-mono">${it.val} / ${it.tgt} (${pct}%)</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  ${makeMiniChart(pct, '#9333EA')}
+                  <button onclick="incrementMarketing('${it.id}')" class="px-2 py-0.5 text-[10px] font-bold bg-purple-100 text-purple-800 rounded cursor-pointer">+1</button>
+                </div>
+              </div>
+            `;
+          }
+          return `
+            <div class="bg-gray-50 dark:bg-gray-800/60 p-2.5 rounded-xl border border-gray-200 dark:border-gray-700/60">
+              <div class="flex justify-between items-center text-xs font-semibold mb-1">
+                <span class="flex items-center gap-2 text-gray-800 dark:text-gray-200">
+                  <span class="w-5 h-5 rounded ${it.tagBg} font-bold text-[9px] flex items-center justify-center">${it.tag}</span>
+                  ${it.name}
+                </span>
+                <div class="flex items-center gap-2">
+                  <span class="text-gray-400 text-[11px]">Норма: ${it.tgt}</span>
+                  <span class="font-extrabold text-purple-600 dark:text-purple-400 font-mono">${it.val}</span>
+                  ${pct >= 100 ? '<span class="text-[10px] bg-emerald-100 text-emerald-800 px-1 py-0.2 rounded font-bold">100% ✓</span>' : ''}
+                  <button onclick="incrementMarketing('${it.id}')" class="px-1.5 py-0.5 text-[10px] font-bold bg-purple-100 hover:bg-purple-200 text-purple-800 rounded transition cursor-pointer">+1</button>
+                </div>
+              </div>
+              <div class="w-full bg-gray-200 dark:bg-gray-700 h-1.5 rounded-full overflow-hidden">
+                <div class="bg-purple-500 h-full rounded-full" style="width: ${Math.min(100, pct)}%;"></div>
+              </div>
+            </div>
+          `;
+        }).join('')}
+      `;
+
+      // Social Media sub-block
+      c2.innerHTML = `
+        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-1.5 mb-2">
+          <i data-lucide="share-2" class="w-3.5 h-3.5 text-pink-500"></i>
+          Соціальні мережі та SMM
+        </h4>
+        <div class="bg-gray-50 dark:bg-gray-800/60 p-2.5 rounded-xl border border-gray-200 dark:border-gray-700/60">
+          <div class="flex items-center justify-between mb-2">
+            <span class="flex items-center gap-1.5 font-bold text-xs text-pink-600 dark:text-pink-400">
+              <i data-lucide="instagram" class="w-4 h-4"></i>
+              Інстаграм
+            </span>
+            <span class="text-[10px] text-gray-400">20 постів • 5 відео • 60 сторіз</span>
+          </div>
+          <div class="grid grid-cols-3 gap-2 text-center text-xs">
+            <div class="bg-white dark:bg-gray-800 p-1.5 rounded-lg border border-gray-200 dark:border-gray-700">
+              <span class="text-[10px] text-gray-400 block">Пости</span>
+              <span class="font-black text-gray-900 dark:text-white" id="ig_posts">${state.marketing.ig_posts}</span><span class="text-[10px] text-gray-400">/20</span>
+              <button onclick="incMedia('ig_posts', 20)" class="text-[10px] text-pink-600 font-bold block mx-auto mt-0.5 hover:underline">+1</button>
+            </div>
+            <div class="bg-white dark:bg-gray-800 p-1.5 rounded-lg border border-gray-200 dark:border-gray-700">
+              <span class="text-[10px] text-gray-400 block">Відео (Reels)</span>
+              <span class="font-black text-gray-900 dark:text-white" id="ig_video">${state.marketing.ig_video}</span><span class="text-[10px] text-gray-400">/5</span>
+              <button onclick="incMedia('ig_video', 5)" class="text-[10px] text-pink-600 font-bold block mx-auto mt-0.5 hover:underline">+1</button>
+            </div>
+            <div class="bg-white dark:bg-gray-800 p-1.5 rounded-lg border border-gray-200 dark:border-gray-700">
+              <span class="text-[10px] text-gray-400 block">Сторіз</span>
+              <span class="font-black text-gray-900 dark:text-white" id="ig_stories">${state.marketing.ig_stories}</span><span class="text-[10px] text-gray-400">/60</span>
+              <button onclick="incMedia('ig_stories', 60)" class="text-[10px] text-pink-600 font-bold block mx-auto mt-0.5 hover:underline">+1</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
+          <div class="bg-gray-50 dark:bg-gray-800/60 p-2.5 rounded-xl border border-gray-200 dark:border-gray-700/60">
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="font-bold text-xs flex items-center gap-1 text-gray-900 dark:text-white">
+                <span class="w-3.5 h-3.5 bg-black text-white rounded-full text-[9px] flex items-center justify-center">♪</span>
+                Тік ток
+              </span>
+              <span class="text-[9px] text-gray-400">20 / 5 / 60</span>
+            </div>
+            <div class="flex justify-between items-center text-xs">
+              <span>П: <strong>${state.marketing.tt_posts}</strong></span>
+              <span>В: <strong>${state.marketing.tt_video}</strong></span>
+              <span>С: <strong>${state.marketing.tt_stories}</strong></span>
+              <button onclick="incMedia('tt_posts', 20)" class="px-1 text-[10px] font-bold bg-gray-200 dark:bg-gray-700 rounded">+1</button>
+            </div>
+          </div>
+          <div class="bg-gray-50 dark:bg-gray-800/60 p-2.5 rounded-xl border border-gray-200 dark:border-gray-700/60">
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="font-bold text-xs flex items-center gap-1 text-blue-600">
+                <i data-lucide="facebook" class="w-3.5 h-3.5"></i>
+                Фейсбук
+              </span>
+              <span class="text-[9px] text-gray-400">20 / 5 / 60</span>
+            </div>
+            <div class="flex justify-between items-center text-xs">
+              <span>П: <strong>${state.marketing.fb_posts}</strong></span>
+              <span>В: <strong>${state.marketing.fb_video}</strong></span>
+              <span>С: <strong>${state.marketing.fb_stories}</strong></span>
+              <button onclick="incMedia('fb_posts', 20)" class="px-1 text-[10px] font-bold bg-blue-100 text-blue-800 rounded">+1</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // ─── 4. RENDER DEALS SECTION ────────────────────────────────────────────
+    function renderDealsSection(mode, { rentPct, depPct, salePct }) {
+      const c = document.getElementById('container_deals');
+      if (!c) return;
+
+      const items = [
+        { id: 'rent_deal', title: 'Оренда', val: state.kpi.rent_deal, tgt: state.targets.rent_deal, pct: rentPct, color: 'emerald', sub: 'угод закрито', btn: '+1 угода' },
+        { id: 'deposit', title: '10. Завдаток', val: state.kpi.deposit, tgt: state.targets.deposit, pct: depPct, color: 'amber', sub: 'внесено броней', btn: '+1 завдаток' },
+        { id: 'sale_deal', title: 'Угода (Продаж)', val: state.kpi.sale_deal, tgt: state.targets.sale_deal, pct: salePct, color: 'purple', sub: 'успіх (комісія)', btn: '+1 угода' }
+      ];
+
+      c.innerHTML = items.map(it => {
+        if (mode === 'circles') {
+          return `
+            <div class="bg-gradient-to-br from-gray-50 to-${it.color}-50/30 dark:from-gray-800/60 dark:to-${it.color}-950/20 p-4 rounded-xl border border-gray-200 dark:border-gray-700 flex items-center justify-between gap-3">
+              <div class="flex items-center gap-3">
+                ${makeCircleGauge(it.pct, it.color === 'emerald' ? 'text-emerald-500' : it.color === 'amber' ? 'text-amber-500' : 'text-purple-600', 60, 5)}
+                <div>
+                  <span class="text-xs font-bold text-gray-700 dark:text-gray-300 uppercase block">${it.title}</span>
+                  <div class="text-sm font-black text-gray-900 dark:text-white mt-0.5">${it.val} <span class="text-xs text-gray-400">/ ${it.tgt}</span></div>
+                  <span class="text-[10px] text-gray-400 block">${it.sub}</span>
+                </div>
+              </div>
+              <button onclick="incrementKpi('${it.id}')" class="px-2.5 py-1.5 text-xs font-bold bg-${it.color}-600 hover:opacity-90 text-white rounded-lg transition shrink-0 cursor-pointer">${it.btn}</button>
+            </div>
+          `;
+        }
+
+        if (mode === 'charts') {
+          return `
+            <div class="bg-gradient-to-br from-gray-50 to-${it.color}-50/30 dark:from-gray-800/60 dark:to-${it.color}-950/20 p-4 rounded-xl border border-gray-200 dark:border-gray-700 flex items-center justify-between gap-3">
+              <div>
+                <span class="text-xs font-bold text-gray-700 dark:text-gray-300 uppercase block">${it.title}</span>
+                <div class="text-lg font-black text-gray-900 dark:text-white mt-0.5">${it.val} <span class="text-xs text-gray-400">/ ${it.tgt}</span> (${it.pct}%)</div>
+                <span class="text-[10px] text-gray-400 block">${it.sub}</span>
+              </div>
+              <div class="flex flex-col items-end gap-1.5">
+                ${makeMiniChart(it.pct, it.color === 'emerald' ? '#27AE60' : it.color === 'amber' ? '#F1C40F' : '#9333EA')}
+                <button onclick="incrementKpi('${it.id}')" class="px-2 py-1 text-xs font-bold bg-${it.color}-600 hover:opacity-90 text-white rounded-lg transition cursor-pointer">${it.btn}</button>
+              </div>
+            </div>
+          `;
+        }
+
+        return `
+          <div class="bg-gradient-to-br from-gray-50 to-${it.color}-50/30 dark:from-gray-800/60 dark:to-${it.color}-950/20 p-4 rounded-xl border border-gray-200 dark:border-gray-700 flex flex-col justify-between">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-gray-600 dark:text-gray-300 uppercase tracking-wide">${it.title}</span>
+              <span class="text-[10px] font-bold px-2 py-0.5 bg-${it.color}-100 text-${it.color}-800 rounded-full">План: ${it.tgt}</span>
+            </div>
+            <div class="flex items-baseline gap-2 my-2">
+              <span class="text-3xl font-black text-${it.color}-600 dark:text-${it.color}-400">${it.val}</span>
+              <span class="text-xs text-gray-400">/ ${it.tgt}</span>
+              ${it.pct >= 100 ? `<span class="text-xs bg-${it.color}-100 text-${it.color}-800 font-bold px-1.5 py-0.2 rounded ml-auto">100% ⭐</span>` : ''}
+            </div>
+            <div class="w-full bg-gray-200 dark:bg-gray-700 h-2 rounded-full overflow-hidden mb-2">
+              <div class="bg-${it.color}-500 h-full rounded-full" style="width: ${Math.min(100, it.pct)}%;"></div>
+            </div>
+            <div class="flex justify-between items-center text-xs">
+              <span class="text-gray-500 text-[11px]">Прогрес: <strong>${it.pct}%</strong></span>
+              <button onclick="incrementKpi('${it.id}')" class="px-2 py-1 text-xs font-bold bg-${it.color}-600 hover:opacity-90 text-white rounded-lg transition cursor-pointer">${it.btn}</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // ─── VISUALIZATION VIEW MODE CONTROLLERS ────────────────────────────────
+    function setVisualMode(mode) {
+      state.visualMode = mode;
+      state.blockModes.objects = mode;
+      state.blockModes.clients = mode;
+      state.blockModes.marketing = mode;
+      state.blockModes.deals = mode;
+
+      // Update Toolbar Buttons
+      const modes = ['bars', 'circles', 'charts', 'cards'];
+      modes.forEach(m => {
+        const btn = document.getElementById(`viewMode_${m}`);
+        if (!btn) return;
+        if (m === mode) {
+          btn.className = "px-2.5 py-1 rounded-xl text-xs font-bold bg-blue-600 text-white shadow-sm transition cursor-pointer flex items-center gap-1.5";
+        } else {
+          btn.className = "px-2.5 py-1 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer flex items-center gap-1.5";
+        }
+      });
+
+      // Update Individual Card Button states
+      ['objects', 'clients', 'marketing', 'deals'].forEach(block => {
+        ['bars', 'circles', 'charts'].forEach(m => {
+          const b = document.getElementById(`btn_mode_${block}_${m}`);
+          if (b) {
+            b.className = m === mode 
+              ? `px-1.5 py-0.5 rounded font-bold ${block === 'objects' ? 'bg-emerald-600' : block === 'clients' ? 'bg-blue-600' : block === 'marketing' ? 'bg-purple-600' : 'bg-amber-500'} text-white`
+              : "px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700";
+          }
+        });
+      });
+
+      updateKpiDisplay();
+      showToast(`Режим візуалізації: ${mode === 'bars' ? 'Смуги' : mode === 'circles' ? 'Кружечки %' : mode === 'charts' ? 'Графіки' : 'Картки'}`);
+    }
+
+    function setBlockMode(block, mode) {
+      state.blockModes[block] = mode;
+      ['bars', 'circles', 'charts'].forEach(m => {
+        const b = document.getElementById(`btn_mode_${block}_${m}`);
+        if (b) {
+          b.className = m === mode 
+            ? `px-1.5 py-0.5 rounded font-bold ${block === 'objects' ? 'bg-emerald-600' : block === 'clients' ? 'bg-blue-600' : block === 'marketing' ? 'bg-purple-600' : 'bg-amber-500'} text-white`
+            : "px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700";
+        }
+      });
+      updateKpiDisplay();
+      showToast(`Блок ${block}: візуалізація ${mode}`);
+    }
+
+    // ─── CARD COLLAPSE & VISIBILITY CONTROLLERS ─────────────────────────────
+    function toggleCardCollapse(bodyId, iconId) {
+      const b = document.getElementById(bodyId);
+      const icon = document.getElementById(iconId);
+      if (!b) return;
+      const isHidden = b.classList.toggle('hidden');
+      if (icon) {
+        icon.setAttribute('data-lucide', isHidden ? 'chevron-right' : 'chevron-down');
+        renderIcons();
+      }
+    }
+
+    function toggleBlockVisibility(blockKey) {
+      const cardMap = {
+        summary: 'card_summary',
+        objects: 'card_obj',
+        clients: 'card_clients',
+        marketing: 'card_marketing',
+        deals: 'card_deals'
+      };
+
+      const cardId = cardMap[blockKey];
+      const card = document.getElementById(cardId);
+      if (!card) return;
+
+      const isVisible = !card.classList.contains('hidden');
+      state.visibility[blockKey] = !isVisible;
+      card.classList.toggle('hidden', isVisible);
+
+      // Sync checkbox in visibility modal
+      const chk = document.getElementById(`chk_vis_${blockKey}`);
+      if (chk) chk.checked = !isVisible;
+
+      showToast(isVisible ? `Блок приховано` : `Блок показано`);
+    }
+
+    function resetAllVisibility() {
+      ['summary', 'objects', 'clients', 'marketing', 'deals'].forEach(k => {
+        state.visibility[k] = true;
+        const cardMap = { summary: 'card_summary', objects: 'card_obj', clients: 'card_clients', marketing: 'card_marketing', deals: 'card_deals' };
+        const card = document.getElementById(cardMap[k]);
+        if (card) card.classList.remove('hidden');
+        const chk = document.getElementById(`chk_vis_${k}`);
+        if (chk) chk.checked = true;
+      });
+      showToast('Всі блоки відновлено!');
+    }
+
+    // Statistics View Mode Switcher (Таблиця / Стовпчики / Кругова %)
+    function setStatsViewMode(mode) {
+      state.statsViewMode = mode;
+      
+      const vTable = document.getElementById('statsView_table');
+      const vBars = document.getElementById('statsView_bars');
+      const vDonut = document.getElementById('statsView_donut');
+
+      if (vTable) vTable.classList.toggle('hidden', mode !== 'table');
+      if (vBars) vBars.classList.toggle('hidden', mode !== 'bars');
+      if (vDonut) vDonut.classList.toggle('hidden', mode !== 'donut');
+
+      const btnTable = document.getElementById('btn_stats_table');
+      const btnBars = document.getElementById('btn_stats_bars');
+      const btnDonut = document.getElementById('btn_stats_donut');
+
+      if (btnTable) {
+        btnTable.className = mode === 'table' 
+          ? "px-2.5 py-1 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm transition cursor-pointer"
+          : "px-2.5 py-1 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 transition cursor-pointer";
+      }
+      if (btnBars) {
+        btnBars.className = mode === 'bars' 
+          ? "px-2.5 py-1 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm transition cursor-pointer"
+          : "px-2.5 py-1 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 transition cursor-pointer";
+      }
+      if (btnDonut) {
+        btnDonut.className = mode === 'donut' 
+          ? "px-2.5 py-1 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm transition cursor-pointer"
+          : "px-2.5 py-1 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 transition cursor-pointer";
+      }
+
+      renderIcons();
+      showToast(`Вид статистики: ${mode === 'table' ? 'Таблиця' : mode === 'bars' ? 'Стовпчики' : 'Кругова %'}`);
     }
 
     // Currency Switcher
@@ -2125,8 +2616,9 @@
 
     // On Load Initializer
     document.addEventListener('DOMContentLoaded', () => {
-      renderIcons();
+      setVisualMode('bars');
       setQuickPeriod('1m');
+      renderIcons();
     });
   </script>
 
