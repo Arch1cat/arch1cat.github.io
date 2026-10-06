@@ -155,6 +155,42 @@
 
     </div>
 
+    <!-- GLOBAL PERIOD FILTER BAR (ДЛЯ РОЗДІЛІВ KPI ТА СТАТИСТИКА) -->
+    <div id="periodFilterBar" class="bg-white dark:bg-[#1A1D24] p-3 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
+      
+      <!-- Quick Filter Buttons -->
+      <div class="flex items-center gap-1.5 overflow-x-auto scrollbar-none py-0.5">
+        <span class="text-[11px] font-bold text-gray-400 uppercase tracking-wider shrink-0 mr-1 flex items-center gap-1">
+          <i data-lucide="clock" class="w-3.5 h-3.5 text-emerald-600"></i>
+          Період:
+        </span>
+        <button type="button" onclick="setQuickPeriod('1d')" id="btn_period_1d" class="period-btn px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer shrink-0">1 день</button>
+        <button type="button" onclick="setQuickPeriod('1w')" id="btn_period_1w" class="period-btn px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer shrink-0">тиждень</button>
+        <button type="button" onclick="setQuickPeriod('2w')" id="btn_period_2w" class="period-btn px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer shrink-0">2 тижні</button>
+        <button type="button" onclick="setQuickPeriod('1m')" id="btn_period_1m" class="period-btn px-2.5 py-1.5 rounded-xl text-xs font-bold bg-emerald-600 text-white shadow-sm transition cursor-pointer shrink-0">місяць тому</button>
+        <button type="button" onclick="setQuickPeriod('3m')" id="btn_period_3m" class="period-btn px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer shrink-0">3 місяці</button>
+        <button type="button" onclick="setQuickPeriod('6m')" id="btn_period_6m" class="period-btn px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer shrink-0">пів року</button>
+        <button type="button" onclick="setQuickPeriod('1y')" id="btn_period_1y" class="period-btn px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer shrink-0">рік тому</button>
+      </div>
+
+      <!-- Custom Date Range Picker (від / до) -->
+      <div class="flex items-center gap-2 flex-wrap shrink-0">
+        <div class="flex items-center gap-1.5 bg-gray-50 dark:bg-gray-800/80 px-2.5 py-1 rounded-xl border border-gray-200 dark:border-gray-700 text-xs">
+          <span class="text-gray-400 font-medium">від:</span>
+          <input type="date" id="dateFromInput" onchange="onCustomDateChange()" class="bg-transparent font-bold text-gray-800 dark:text-gray-200 focus:outline-none cursor-pointer text-xs">
+        </div>
+        <div class="flex items-center gap-1.5 bg-gray-50 dark:bg-gray-800/80 px-2.5 py-1 rounded-xl border border-gray-200 dark:border-gray-700 text-xs">
+          <span class="text-gray-400 font-medium">до:</span>
+          <input type="date" id="dateToInput" onchange="onCustomDateChange()" class="bg-transparent font-bold text-gray-800 dark:text-gray-200 focus:outline-none cursor-pointer text-xs">
+        </div>
+        <button type="button" onclick="applyCustomRange()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition shadow-sm cursor-pointer flex items-center gap-1">
+          <i data-lucide="check" class="w-3.5 h-3.5"></i>
+          <span>Застосувати</span>
+        </button>
+      </div>
+
+    </div>
+
     <!-- TAB 1: KPI АГЕНТА З НЕРУХОМОСТІ (ACTIVE BY DEFAULT) -->
     <div id="content_kpi_agent" class="space-y-4">
       
@@ -710,6 +746,11 @@
 
         <!-- Quick Metrics Highlights -->
         <div class="flex items-center gap-2 text-xs">
+          <!-- Currency Switcher ($ / ₴) in Stats -->
+          <div class="flex items-center bg-gray-200 dark:bg-gray-800 p-0.5 rounded-xl border border-gray-300 dark:border-gray-700 text-xs mr-1">
+            <button type="button" id="currUsdBtn" onclick="setCurrency('USD')" class="px-2.5 py-1 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm transition cursor-pointer">USD ($)</button>
+            <button type="button" id="currUahBtn" onclick="setCurrency('UAH')" class="px-2.5 py-1 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 transition cursor-pointer">UAH (₴)</button>
+          </div>
           <div class="px-3 py-1.5 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 rounded-xl text-emerald-800 dark:text-emerald-300">
             <span class="font-medium text-[11px] block">Загальний прибуток:</span>
             <strong class="text-sm font-mono font-black" id="matrixTotalProfitHeader">$6,850</strong>
@@ -1387,6 +1428,365 @@
       }
     }
 
+    // Baseline Data Store for Dynamic Scaling across Periods
+    const baseStatsData = {
+      objSale: [28, 42, 9, 6],
+      objRent: [8, 17, 7, 1],
+      meetSale: [3, 5, 1, 1],
+      meetRent: [2, 4, 2, 0],
+      exclusive: [1, 3, 1, 0],
+      adsSale: [16, 24, 5, 3],
+      adsRent: [6, 12, 4, 0],
+      leadsSale: [14, 19, 3, 2],
+      leadsRent: [5, 11, 2, 0],
+      showSale: [8, 12, 2, 1],
+      showRent: [4, 7, 2, 0],
+      deposits: [1, 2, 0, 0],
+      dealsSale: [1, 1, 0, 0],
+      dealsRent: [1, 2, 1, 0],
+      profitSale: [2400, 2100, 0, 0],
+      profitRent: [600, 1100, 650, 0],
+    };
+
+    const baseKpiData = {
+      calls: 68,
+      objects: 19,
+      meetings: 7,
+      contracts: 2,
+      leads: 22,
+      matches: 12,
+      showings: 6,
+      rent_deal: 3,
+      deposit: 2,
+      sale_deal: 1,
+    };
+
+    const baseTargets = {
+      calls: 100,
+      objects: 25,
+      meetings: 10,
+      contracts: 2,
+      leads: 30,
+      matches: 15,
+      showings: 8,
+      rent_deal: 5,
+      deposit: 2,
+      sale_deal: 1,
+    };
+
+    // Period Multiplier Handler & Scale Engine
+    function setQuickPeriod(periodKey) {
+      state.currentPeriod = periodKey;
+
+      // Update button styling
+      const buttons = ['1d', '1w', '2w', '1m', '3m', '6m', '1y'];
+      buttons.forEach(k => {
+        const btn = document.getElementById(`btn_period_${k}`);
+        if (!btn) return;
+        if (k === periodKey) {
+          btn.className = "period-btn px-2.5 py-1.5 rounded-xl text-xs font-bold bg-emerald-600 text-white shadow-sm transition cursor-pointer shrink-0";
+        } else {
+          btn.className = "period-btn px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer shrink-0";
+        }
+      });
+
+      // Calculate Dates for Custom Picker
+      const now = new Date();
+      let fromDate = new Date();
+      let factor = 1.0;
+      let label = "місяць тому";
+
+      switch (periodKey) {
+        case '1d':
+          fromDate.setDate(now.getDate() - 1);
+          factor = 0.04;
+          label = "1 день";
+          break;
+        case '1w':
+          fromDate.setDate(now.getDate() - 7);
+          factor = 0.25;
+          label = "тиждень";
+          break;
+        case '2w':
+          fromDate.setDate(now.getDate() - 14);
+          factor = 0.5;
+          label = "2 тижні";
+          break;
+        case '1m':
+          fromDate.setMonth(now.getMonth() - 1);
+          factor = 1.0;
+          label = "місяць тому";
+          break;
+        case '3m':
+          fromDate.setMonth(now.getMonth() - 3);
+          factor = 2.8;
+          label = "3 місяці";
+          break;
+        case '6m':
+          fromDate.setMonth(now.getMonth() - 6);
+          factor = 5.4;
+          label = "пів року";
+          break;
+        case '1y':
+          fromDate.setFullYear(now.getFullYear() - 1);
+          factor = 10.5;
+          label = "рік тому";
+          break;
+      }
+
+      // Sync Inputs
+      const fmtIso = (d) => d.toISOString().slice(0, 10);
+      document.getElementById('dateFromInput').value = fmtIso(fromDate);
+      document.getElementById('dateToInput').value = fmtIso(now);
+
+      applyPeriodFactor(factor, label);
+    }
+
+    // Apply Custom Date Range
+    function onCustomDateChange() {
+      // Clear quick period highlights
+      const buttons = ['1d', '1w', '2w', '1m', '3m', '6m', '1y'];
+      buttons.forEach(k => {
+        const btn = document.getElementById(`btn_period_${k}`);
+        if (btn) btn.className = "period-btn px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer shrink-0";
+      });
+    }
+
+    function applyCustomRange() {
+      const fromVal = document.getElementById('dateFromInput').value;
+      const toVal = document.getElementById('dateToInput').value;
+      if (!fromVal || !toVal) {
+        showToast('Оберіть обидві дати: від та до!');
+        return;
+      }
+      const d1 = new Date(fromVal);
+      const d2 = new Date(toVal);
+      const diffDays = Math.max(1, Math.round((d2 - d1) / (1000 * 60 * 60 * 24)));
+      const factor = diffDays / 30.0;
+      applyPeriodFactor(factor, `Діапазон (${diffDays} дн.)`);
+    }
+
+    function applyPeriodFactor(factor, label) {
+      // 1. Scale KPI & Targets
+      for (const k in baseKpiData) {
+        state.kpi[k] = Math.max(1, Math.round(baseKpiData[k] * factor));
+      }
+      for (const k in baseTargets) {
+        state.targets[k] = Math.max(1, Math.round(baseTargets[k] * factor));
+      }
+
+      // Update KPI view
+      updateKpiDisplay();
+
+      // 2. Scale 16-Row Matrix Table
+      renderScaledMatrix(factor);
+
+      showToast(`Період оновлено: ${label}`);
+    }
+
+    function renderScaledMatrix(factor) {
+      const scaleArr = (arr) => arr.map(v => Math.max(0, Math.round(v * factor)));
+      const sum = (arr) => arr.reduce((a, b) => a + b, 0);
+
+      // Groups
+      const objSale = scaleArr(baseStatsData.objSale);
+      const objRent = scaleArr(baseStatsData.objRent);
+      const meetSale = scaleArr(baseStatsData.meetSale);
+      const meetRent = scaleArr(baseStatsData.meetRent);
+      const exclusive = scaleArr(baseStatsData.exclusive);
+      const adsSale = scaleArr(baseStatsData.adsSale);
+      const adsRent = scaleArr(baseStatsData.adsRent);
+      const leadsSale = scaleArr(baseStatsData.leadsSale);
+      const leadsRent = scaleArr(baseStatsData.leadsRent);
+      const showSale = scaleArr(baseStatsData.showSale);
+      const showRent = scaleArr(baseStatsData.showRent);
+      const deposits = scaleArr(baseStatsData.deposits);
+      const dealsSale = scaleArr(baseStatsData.dealsSale);
+      const dealsRent = scaleArr(baseStatsData.dealsRent);
+      const profitSale = scaleArr(baseStatsData.profitSale);
+      const profitRent = scaleArr(baseStatsData.profitRent);
+
+      // Re-populate Matrix Rows
+      const tbody = document.querySelector('#content_stats table tbody');
+      if (!tbody) return;
+
+      const sym = state.currency === 'UAH' ? '₴' : '$';
+      const mult = state.currency === 'UAH' ? state.rateUah : 1;
+      const fmtMoney = (v) => `${sym}${Math.round(v * mult).toLocaleString('uk-UA')}`;
+
+      const grandProfitNov = profitSale[0] + profitRent[0];
+      const grandProfitVtor = profitSale[1] + profitRent[1];
+      const grandProfitKom = profitSale[2] + profitRent[2];
+      const grandProfitLand = profitSale[3] + profitRent[3];
+      const grandProfitTotal = grandProfitNov + grandProfitVtor + grandProfitKom + grandProfitLand;
+
+      // Update Header Metrics
+      const totalObjs = sum(objSale) + sum(objRent);
+      document.getElementById('matrixTotalProfitHeader').textContent = fmtMoney(grandProfitTotal);
+      const objCountHeader = document.querySelector('#content_stats .text-blue-800 strong, #content_stats .text-blue-300 strong');
+      if (objCountHeader) objCountHeader.textContent = totalObjs;
+
+      tbody.innerHTML = `
+        <tr class="bg-gray-50/70 dark:bg-gray-800/30">
+          <td colspan="6" class="py-1.5 px-4 font-bold text-[11px] text-gray-400 uppercase tracking-wider">База об'єктів у роботі</td>
+        </tr>
+        <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
+          <td class="py-2 px-4 flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>Кол-во объектов продажа</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Кол-во объектов продажа', 'Новобудови', ${objSale[0]})">${objSale[0]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Кол-во объектов продажа', 'Вторинне', ${objSale[1]})">${objSale[1]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Кол-во объектов продажа', 'Комерція', ${objSale[2]})">${objSale[2]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Кол-во объектов продажа', 'Земля', ${objSale[3]})">${objSale[3]}</td>
+          <td class="py-2 px-4 text-center font-mono font-black text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800/50">${sum(objSale)}</td>
+        </tr>
+        <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
+          <td class="py-2 px-4 flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-sky-500"></span>Кол-во объектов в аренде</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Кол-во объектов в аренде', 'Новобудови', ${objRent[0]})">${objRent[0]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Кол-во объектов в аренде', 'Вторинне', ${objRent[1]})">${objRent[1]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Кол-во объектов в аренде', 'Комерція', ${objRent[2]})">${objRent[2]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Кол-во объектов в аренде', 'Земля', ${objRent[3]})">${objRent[3]}</td>
+          <td class="py-2 px-4 text-center font-mono font-black text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800/50">${sum(objRent)}</td>
+        </tr>
+
+        <tr class="bg-gray-50/70 dark:bg-gray-800/30">
+          <td colspan="6" class="py-1.5 px-4 font-bold text-[11px] text-gray-400 uppercase tracking-wider">Робота з власниками</td>
+        </tr>
+        <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
+          <td class="py-2 px-4 flex items-center gap-2"><i data-lucide="handshake" class="w-3.5 h-3.5 text-indigo-500"></i>Кол-во встреч собственник продажа</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Встречи собственник продажа', 'Новобудови', ${meetSale[0]})">${meetSale[0]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Встречи собственник продажа', 'Вторинне', ${meetSale[1]})">${meetSale[1]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Встречи собственник продажа', 'Комерція', ${meetSale[2]})">${meetSale[2]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Встречи собственник продажа', 'Земля', ${meetSale[3]})">${meetSale[3]}</td>
+          <td class="py-2 px-4 text-center font-mono font-black text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800/50">${sum(meetSale)}</td>
+        </tr>
+        <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
+          <td class="py-2 px-4 flex items-center gap-2"><i data-lucide="calendar" class="w-3.5 h-3.5 text-indigo-500"></i>Кол-во встреч собственник аренда</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Встречи собственник аренда', 'Новобудови', ${meetRent[0]})">${meetRent[0]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Встречи собственник аренда', 'Вторинне', ${meetRent[1]})">${meetRent[1]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Встречи собственник аренда', 'Комерція', ${meetRent[2]})">${meetRent[2]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Встречи собственник аренда', 'Земля', ${meetRent[3]})">${meetRent[3]}</td>
+          <td class="py-2 px-4 text-center font-mono font-black text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800/50">${sum(meetRent)}</td>
+        </tr>
+        <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition bg-amber-50/30 dark:bg-amber-950/10">
+          <td class="py-2 px-4 font-bold text-amber-900 dark:text-amber-300 flex items-center gap-2"><i data-lucide="star" class="w-3.5 h-3.5 text-amber-500 fill-amber-500"></i>Кол-во эксклюзивных договоров</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Эксклюзивные договоры', 'Новобудови', ${exclusive[0]})">${exclusive[0]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Эксклюзивные договоры', 'Вторинне', ${exclusive[1]})">${exclusive[1]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Эксклюзивные договоры', 'Комерція', ${exclusive[2]})">${exclusive[2]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Эксклюзивные договоры', 'Земля', ${exclusive[3]})">${exclusive[3]}</td>
+          <td class="py-2 px-4 text-center font-mono font-black text-amber-600 dark:text-amber-400 bg-amber-100/50 dark:bg-amber-950/40">${sum(exclusive)} ⭐</td>
+        </tr>
+
+        <tr class="bg-gray-50/70 dark:bg-gray-800/30">
+          <td colspan="6" class="py-1.5 px-4 font-bold text-[11px] text-gray-400 uppercase tracking-wider">Маркетинг та реклама</td>
+        </tr>
+        <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
+          <td class="py-2 px-4 flex items-center gap-2"><i data-lucide="megaphone" class="w-3.5 h-3.5 text-purple-500"></i>Кол-во реклам по продаже</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Реклама продажа', 'Новобудови', ${adsSale[0]})">${adsSale[0]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Реклама продажа', 'Вторинне', ${adsSale[1]})">${adsSale[1]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Реклама продажа', 'Комерція', ${adsSale[2]})">${adsSale[2]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Реклама продажа', 'Земля', ${adsSale[3]})">${adsSale[3]}</td>
+          <td class="py-2 px-4 text-center font-mono font-black text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800/50">${sum(adsSale)}</td>
+        </tr>
+        <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
+          <td class="py-2 px-4 flex items-center gap-2"><i data-lucide="share" class="w-3.5 h-3.5 text-purple-500"></i>Кол-во реклам по аренде</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Реклама аренда', 'Новобудови', ${adsRent[0]})">${adsRent[0]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Реклама аренда', 'Вторинне', ${adsRent[1]})">${adsRent[1]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Реклама аренда', 'Комерція', ${adsRent[2]})">${adsRent[2]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Реклама аренда', 'Земля', ${adsRent[3]})">${adsRent[3]}</td>
+          <td class="py-2 px-4 text-center font-mono font-black text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800/50">${sum(adsRent)}</td>
+        </tr>
+
+        <tr class="bg-gray-50/70 dark:bg-gray-800/30">
+          <td colspan="6" class="py-1.5 px-4 font-bold text-[11px] text-gray-400 uppercase tracking-wider">Робота з клієнтами та попит</td>
+        </tr>
+        <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
+          <td class="py-2 px-4 flex items-center gap-2"><i data-lucide="file-text" class="w-3.5 h-3.5 text-blue-500"></i>Кол-во заявок продажа</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Заявки продажа', 'Новобудови', ${leadsSale[0]})">${leadsSale[0]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Заявки продажа', 'Вторинне', ${leadsSale[1]})">${leadsSale[1]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Заявки продажа', 'Комерція', ${leadsSale[2]})">${leadsSale[2]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Заявки продажа', 'Земля', ${leadsSale[3]})">${leadsSale[3]}</td>
+          <td class="py-2 px-4 text-center font-mono font-black text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800/50">${sum(leadsSale)}</td>
+        </tr>
+        <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
+          <td class="py-2 px-4 flex items-center gap-2"><i data-lucide="inbox" class="w-3.5 h-3.5 text-blue-500"></i>Кол-во заявок аренда</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Заявки аренда', 'Новобудови', ${leadsRent[0]})">${leadsRent[0]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Заявки аренда', 'Вторинне', ${leadsRent[1]})">${leadsRent[1]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Заявки аренда', 'Комерція', ${leadsRent[2]})">${leadsRent[2]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Заявки аренда', 'Земля', ${leadsRent[3]})">${leadsRent[3]}</td>
+          <td class="py-2 px-4 text-center font-mono font-black text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800/50">${sum(leadsRent)}</td>
+        </tr>
+        <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
+          <td class="py-2 px-4 flex items-center gap-2"><i data-lucide="eye" class="w-3.5 h-3.5 text-teal-500"></i>Кол-во показов продажа</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Показы продажа', 'Новобудови', ${showSale[0]})">${showSale[0]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Показы продажа', 'Вторинне', ${showSale[1]})">${showSale[1]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Показы продажа', 'Комерція', ${showSale[2]})">${showSale[2]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Показы продажа', 'Земля', ${showSale[3]})">${showSale[3]}</td>
+          <td class="py-2 px-4 text-center font-mono font-black text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800/50">${sum(showSale)}</td>
+        </tr>
+        <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
+          <td class="py-2 px-4 flex items-center gap-2"><i data-lucide="eye-off" class="w-3.5 h-3.5 text-teal-500"></i>Кол-во показов аренда</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Показы аренда', 'Новобудови', ${showRent[0]})">${showRent[0]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Показы аренда', 'Вторинне', ${showRent[1]})">${showRent[1]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Показы аренда', 'Комерція', ${showRent[2]})">${showRent[2]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Показы аренда', 'Земля', ${showRent[3]})">${showRent[3]}</td>
+          <td class="py-2 px-4 text-center font-mono font-black text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800/50">${sum(showRent)}</td>
+        </tr>
+
+        <tr class="bg-gray-50/70 dark:bg-gray-800/30">
+          <td colspan="6" class="py-1.5 px-4 font-bold text-[11px] text-gray-400 uppercase tracking-wider">Фінал воронки та фінанси</td>
+        </tr>
+        <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition bg-amber-50/20 dark:bg-amber-950/10">
+          <td class="py-2 px-4 font-bold text-amber-800 dark:text-amber-300 flex items-center gap-2"><i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-amber-500"></i>Кол-во задатков</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Задатки', 'Новобудови', ${deposits[0]})">${deposits[0]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Задатки', 'Вторинне', ${deposits[1]})">${deposits[1]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Задатки', 'Комерція', ${deposits[2]})">${deposits[2]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Задатки', 'Земля', ${deposits[3]})">${deposits[3]}</td>
+          <td class="py-2 px-4 text-center font-mono font-black text-amber-600 dark:text-amber-400 bg-amber-100/50 dark:bg-amber-950/40">${sum(deposits)} 🤝</td>
+        </tr>
+        <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition bg-emerald-50/20 dark:bg-emerald-950/10">
+          <td class="py-2 px-4 font-bold text-emerald-800 dark:text-emerald-300 flex items-center gap-2"><i data-lucide="award" class="w-3.5 h-3.5 text-emerald-500"></i>Кол-во сделок продажа</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Сделки продажа', 'Новобудови', ${dealsSale[0]})">${dealsSale[0]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Сделки продажа', 'Вторинне', ${dealsSale[1]})">${dealsSale[1]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Сделки продажа', 'Комерція', ${dealsSale[2]})">${dealsSale[2]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Сделки продажа', 'Земля', ${dealsSale[3]})">${dealsSale[3]}</td>
+          <td class="py-2 px-4 text-center font-mono font-black text-emerald-600 dark:text-emerald-400 bg-emerald-100/50 dark:bg-emerald-950/40">${sum(dealsSale)} 🏆</td>
+        </tr>
+        <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
+          <td class="py-2 px-4 flex items-center gap-2"><i data-lucide="key" class="w-3.5 h-3.5 text-emerald-500"></i>Кол-во сделок аренда</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Сделки аренда', 'Новобудови', ${dealsRent[0]})">${dealsRent[0]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Сделки аренда', 'Вторинне', ${dealsRent[1]})">${dealsRent[1]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Сделки аренда', 'Комерція', ${dealsRent[2]})">${dealsRent[2]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Сделки аренда', 'Земля', ${dealsRent[3]})">${dealsRent[3]}</td>
+          <td class="py-2 px-4 text-center font-mono font-black text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800/50">${sum(dealsRent)} 🔑</td>
+        </tr>
+        <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
+          <td class="py-2.5 px-4 font-bold text-gray-900 dark:text-white flex items-center gap-2"><i data-lucide="dollar-sign" class="w-3.5 h-3.5 text-emerald-600"></i>Прибыль по продаже</td>
+          <td class="py-2.5 px-3 text-center font-mono font-bold text-emerald-600 dark:text-emerald-400">${fmtMoney(profitSale[0])}</td>
+          <td class="py-2.5 px-3 text-center font-mono font-bold text-emerald-600 dark:text-emerald-400">${fmtMoney(profitSale[1])}</td>
+          <td class="py-2.5 px-3 text-center font-mono text-gray-400">${fmtMoney(profitSale[2])}</td>
+          <td class="py-2.5 px-3 text-center font-mono text-gray-400">${fmtMoney(profitSale[3])}</td>
+          <td class="py-2.5 px-4 text-center font-mono font-black text-emerald-600 dark:text-emerald-400 bg-emerald-50/70 dark:bg-emerald-950/40">${fmtMoney(sum(profitSale))}</td>
+        </tr>
+        <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
+          <td class="py-2.5 px-4 font-bold text-gray-900 dark:text-white flex items-center gap-2"><i data-lucide="coins" class="w-3.5 h-3.5 text-blue-600"></i>Прибыль по аренде</td>
+          <td class="py-2.5 px-3 text-center font-mono font-bold text-blue-600 dark:text-blue-400">${fmtMoney(profitRent[0])}</td>
+          <td class="py-2.5 px-3 text-center font-mono font-bold text-blue-600 dark:text-blue-400">${fmtMoney(profitRent[1])}</td>
+          <td class="py-2.5 px-3 text-center font-mono font-bold text-blue-600 dark:text-blue-400">${fmtMoney(profitRent[2])}</td>
+          <td class="py-2.5 px-3 text-center font-mono text-gray-400">${fmtMoney(profitRent[3])}</td>
+          <td class="py-2.5 px-4 text-center font-mono font-black text-blue-600 dark:text-blue-400 bg-blue-50/70 dark:bg-blue-950/40">${fmtMoney(sum(profitRent))}</td>
+        </tr>
+        <tr class="bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-extrabold text-sm shadow-md">
+          <td class="py-3 px-4 flex items-center gap-2"><i data-lucide="wallet" class="w-4 h-4 text-yellow-300"></i>РАЗОМ ПРИБУТОК РІЄЛТОРА ($/₴)</td>
+          <td class="py-3 px-3 text-center font-mono">${fmtMoney(grandProfitNov)}</td>
+          <td class="py-3 px-3 text-center font-mono">${fmtMoney(grandProfitVtor)}</td>
+          <td class="py-3 px-3 text-center font-mono">${fmtMoney(grandProfitKom)}</td>
+          <td class="py-3 px-3 text-center font-mono text-white/60">${fmtMoney(grandProfitLand)}</td>
+          <td class="py-3 px-4 text-center font-mono text-base font-black text-yellow-300 bg-black/20">${fmtMoney(grandProfitTotal)}</td>
+        </tr>
+      `;
+
+      renderIcons();
+    }
+
     // Main Tab Switching (KPI, статистика, Воронка продаж, воронка_заявок)
     function switchMainTab(tab) {
       state.activeMainTab = tab;
@@ -1568,38 +1968,18 @@
       const usdBtn = document.getElementById('currUsdBtn');
       if (usdBtn) {
         usdBtn.className = isUah 
-          ? "px-2.5 py-1 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 transition"
-          : "px-2.5 py-1 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm transition";
+          ? "px-2.5 py-1 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 transition cursor-pointer"
+          : "px-2.5 py-1 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm transition cursor-pointer";
       }
 
       const uahBtn = document.getElementById('currUahBtn');
       if (uahBtn) {
         uahBtn.className = isUah
-          ? "px-2.5 py-1 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm transition"
-          : "px-2.5 py-1 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 transition";
+          ? "px-2.5 py-1 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm transition cursor-pointer"
+          : "px-2.5 py-1 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 transition cursor-pointer";
       }
 
-      const mult = isUah ? state.rateUah : 1;
-      const sym = isUah ? '₴' : '$';
-
-      const fmtMoney = (usdVal) => `${sym}${(usdVal * mult).toLocaleString('uk-UA')}`;
-
-      // Update Matrix profit row
-      document.getElementById('profit_sale_nov').textContent = fmtMoney(2400);
-      document.getElementById('profit_sale_vtor').textContent = fmtMoney(2100);
-      document.getElementById('profit_sale_total').textContent = fmtMoney(4500);
-
-      document.getElementById('profit_rent_nov').textContent = fmtMoney(600);
-      document.getElementById('profit_rent_vtor').textContent = fmtMoney(1100);
-      document.getElementById('profit_rent_kom').textContent = fmtMoney(650);
-      document.getElementById('profit_rent_total').textContent = fmtMoney(2350);
-
-      document.getElementById('profit_grand_nov').textContent = fmtMoney(3000);
-      document.getElementById('profit_grand_vtor').textContent = fmtMoney(3200);
-      document.getElementById('profit_grand_kom').textContent = fmtMoney(650);
-      document.getElementById('profit_grand_total').textContent = fmtMoney(6850);
-      document.getElementById('matrixTotalProfitHeader').textContent = fmtMoney(6850);
-
+      renderScaledMatrix(state.currentFactor || 1.0);
       showToast(`Валюту перемкнуто на: ${curr}`);
     }
 
@@ -1746,7 +2126,7 @@
     // On Load Initializer
     document.addEventListener('DOMContentLoaded', () => {
       renderIcons();
-      updateKpiDisplay();
+      setQuickPeriod('1m');
     });
   </script>
 
