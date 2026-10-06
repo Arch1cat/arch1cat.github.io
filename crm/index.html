@@ -88,7 +88,7 @@
       <div class="flex items-center gap-2.5">
         <span class="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center text-white font-black text-lg shadow-sm">Y</span>
         <h1 class="font-extrabold text-base tracking-tight text-gray-900 dark:text-white">Робоче місце CRM</h1>
-        <span class="ml-2 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700">Crypto Candlesticks & Zoom Engine v8.0 Active</span>
+        <span class="ml-2 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700">Interactive Series Toggles & Crypto Engine v8.5 Active</span>
       </div>
 
       <!-- Clean Theme Toggle -->
@@ -624,21 +624,23 @@
             </div>
           </div>
 
-          <!-- Dual Lines Interactive Legend (Showings vs Meetings) -->
+          <!-- Dual Lines Interactive Legend (Showings vs Meetings) with Clickable Toggles -->
           <div class="flex flex-wrap items-center justify-between gap-3 p-2.5 rounded-xl bg-gray-50/90 dark:bg-gray-800/80 border border-gray-200/80 dark:border-gray-700/80 text-xs">
-            <div class="flex items-center gap-4 flex-wrap">
-              <div class="flex items-center gap-2 font-bold text-blue-600 dark:text-blue-400">
-                <span class="w-3.5 h-3.5 rounded-full bg-[#2563EB] shadow-2xs"></span>
-                <span>🔵 Покази обʼєктів клієнтам:</span>
-                <span class="font-mono text-gray-900 dark:text-white font-extrabold" id="weeklyShowingsTotal">100 показів</span>
+            <div class="flex items-center gap-3 flex-wrap">
+              <div id="pill_weekly_showings" onclick="toggleSeriesFilter('weekly', 'showings', event)" class="flex items-center gap-2 font-bold text-blue-600 dark:text-blue-400 cursor-pointer px-2.5 py-1 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-2xs transition select-none" title="Клікніть, щоб увімкнути/вимкнути лінію">
+                <div class="w-3.5 h-3.5 rounded-sm bg-blue-600 text-white flex items-center justify-center text-[9px] font-black" id="chk_weekly_showings">✓</div>
+                <span class="w-2.5 h-2.5 rounded-full bg-[#2563EB]"></span>
+                <span>Покази клієнтам:</span>
+                <span class="font-mono text-gray-900 dark:text-white font-extrabold" id="weeklyShowingsTotal">100</span>
               </div>
-              <div class="flex items-center gap-2 font-bold text-rose-600 dark:text-rose-400">
-                <span class="w-3.5 h-3.5 rounded-full bg-[#EF4444] shadow-2xs"></span>
-                <span>🔴 Зустрічі з власниками:</span>
-                <span class="font-mono text-gray-900 dark:text-white font-extrabold" id="weeklyMeetingsTotal">58 зустрічей</span>
+              <div id="pill_weekly_meetings" onclick="toggleSeriesFilter('weekly', 'meetings', event)" class="flex items-center gap-2 font-bold text-rose-600 dark:text-rose-400 cursor-pointer px-2.5 py-1 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-2xs transition select-none" title="Клікніть, щоб увімкнути/вимкнути лінію">
+                <div class="w-3.5 h-3.5 rounded-sm bg-rose-600 text-white flex items-center justify-center text-[9px] font-black" id="chk_weekly_meetings">✓</div>
+                <span class="w-2.5 h-2.5 rounded-full bg-[#EF4444]"></span>
+                <span>Зустрічі з власниками:</span>
+                <span class="font-mono text-gray-900 dark:text-white font-extrabold" id="weeklyMeetingsTotal">58</span>
               </div>
             </div>
-            <span class="text-[11px] text-gray-500 font-mono font-bold">Разом: 158 активностей • 2 окремі лінії</span>
+            <span class="text-[10px] text-gray-400 font-mono font-bold uppercase tracking-wider">Клік = вкл/викл лінію</span>
           </div>
 
           <div class="relative w-full h-64 select-none" id="containerWeeklySpline">
@@ -1922,6 +1924,14 @@
         clients: 'charts',
         marketing: 'charts',
         deals: 'charts'
+      },
+      activeSeries: {
+        objects: { calls: true, objects: true, meetings: true, contracts: true },
+        clients: { leads: true, matches: true, showings: true },
+        marketing_portals: { olx: true, domria: true, rieltor: true },
+        marketing_social: { instagram: true, tiktok: true, facebook: true, youtube: true, x: true },
+        deals: { rent_deal: true, deposit: true, sale_deal: true },
+        weekly: { showings: true, meetings: true }
       },
       visibility: {
         summary: true,
@@ -3385,6 +3395,42 @@
       `;
     }
 
+        // Interactive Series Filtering Helpers
+    function isSeriesActive(section, seriesId) {
+      if (!state.activeSeries) state.activeSeries = {};
+      if (!state.activeSeries[section]) state.activeSeries[section] = {};
+      if (state.activeSeries[section][seriesId] === undefined) {
+        state.activeSeries[section][seriesId] = true;
+      }
+      return state.activeSeries[section][seriesId];
+    }
+
+    function toggleSeriesFilter(section, seriesId, e) {
+      if (e) e.stopPropagation();
+      if (!state.activeSeries) state.activeSeries = {};
+      if (!state.activeSeries[section]) state.activeSeries[section] = {};
+
+      const current = isSeriesActive(section, seriesId);
+      const keys = Object.keys(state.activeSeries[section]);
+      const activeCount = keys.filter(k => state.activeSeries[section][k]).length;
+      if (current && activeCount <= 1) {
+        showToast('Потрібно залишити щонайменше одну активну лінію на графіку!');
+        return;
+      }
+
+      state.activeSeries[section][seriesId] = !current;
+
+      if (section === 'objects' || section === 'clients' || section === 'deals') {
+        updateKpiDisplay();
+      } else if (section === 'marketing_portals' || section === 'marketing_social') {
+        renderMarketingSection(state.blockModes.marketing);
+      } else if (section === 'weekly') {
+        renderWeeklySpline();
+      }
+
+      showToast(`Лінія ${seriesId}: ${!current ? 'увімкнено 🟢' : 'вимкнено ⚪'}`);
+    }
+
     // ─── 1. RENDER OBJECTS SECTION (INTERACTIVE DUAL: CHARTS / DONUT / PIE / BARS) ──
     function renderObjectsSection(mode, { callsPct, objPct, meetPct, contPct }) {
       const c = document.getElementById('container_objects');
@@ -3457,45 +3503,39 @@
         return;
       }
 
-                  // MODE 3: MULTI-LINE SPLINE GRAPH (4 ОКРЕМІ ЛІНІЇ ДЛЯ КОЖНОГО З 4 ПОКАЗНИКІВ)
+                        // MODE 3: MULTI-LINE SPLINE GRAPH (4 ОКРЕМІ ЛІНІЇ З ЧЕКБОКСАМИ ТА ФІЛЬТРАЦІЄЮ)
       if (mode === 'charts') {
         const dates = ['23 вер.', '25 вер.', '27 вер.', '29 вер.', '01 жов.', '03 жов.', '05 жов.', '06 жов.'];
-        const series = [
+        const allSeries = [
           { id: 'calls', name: 'Дзвінки власнику', shortName: 'Дзвінки', color: '#10B981', data: [6, 8, 7, 9, 8, 10, 10, 10] },
           { id: 'objects', name: 'Додавання обʼєктів', shortName: 'Обʼєкти', color: '#3B82F6', data: [2, 3, 2, 3, 2, 3, 2, 2] },
           { id: 'meetings', name: 'Зустрічі з власниками', shortName: 'Зустрічі', color: '#8B5CF6', data: [1, 1, 0, 1, 1, 1, 1, 1] },
           { id: 'contracts', name: 'Договори про продаж', shortName: 'Договори', color: '#F59E0B', data: [0, 0, 1, 0, 1, 0, 1, 0] }
         ];
 
-        const svgContent = renderMultiLineSplineSvg({ dates, series, w: 520, h: 190, yLabel: 'Дій / день' });
+        const activeSeries = allSeries.filter(s => isSeriesActive('objects', s.id));
+        const svgContent = renderMultiLineSplineSvg({ dates, series: activeSeries, w: 520, h: 190, yLabel: 'Дій / день' });
 
         c.innerHTML = `
           <div class="space-y-3">
-            <!-- Top Series Legend Bar with High Contrast Badges -->
+            <!-- Top Series Legend Bar with Clickable Toggles -->
             <div class="flex flex-wrap items-center justify-between gap-2 p-2.5 rounded-xl bg-gray-50/90 dark:bg-gray-800/80 border border-gray-200/80 dark:border-gray-700/80 text-xs">
-              <div class="flex items-center gap-3.5 flex-wrap">
-                <div class="flex items-center gap-1.5 font-bold text-emerald-600 dark:text-emerald-400">
-                  <span class="w-3 h-3 rounded-full bg-[#10B981] shadow-2xs"></span>
-                  <span>Дзвінки власнику:</span>
-                  <span class="font-mono text-gray-900 dark:text-white font-extrabold">${state.kpi.calls}</span>
-                </div>
-                <div class="flex items-center gap-1.5 font-bold text-blue-600 dark:text-blue-400">
-                  <span class="w-3 h-3 rounded-full bg-[#3B82F6] shadow-2xs"></span>
-                  <span>Додавання обʼєктів:</span>
-                  <span class="font-mono text-gray-900 dark:text-white font-extrabold">${state.kpi.objects}</span>
-                </div>
-                <div class="flex items-center gap-1.5 font-bold text-purple-600 dark:text-purple-400">
-                  <span class="w-3 h-3 rounded-full bg-[#8B5CF6] shadow-2xs"></span>
-                  <span>Зустрічі з власниками:</span>
-                  <span class="font-mono text-gray-900 dark:text-white font-extrabold">${state.kpi.meetings}</span>
-                </div>
-                <div class="flex items-center gap-1.5 font-bold text-amber-600 dark:text-amber-400">
-                  <span class="w-3 h-3 rounded-full bg-[#F59E0B] shadow-2xs"></span>
-                  <span>Договори про продаж:</span>
-                  <span class="font-mono text-gray-900 dark:text-white font-extrabold">${state.kpi.contracts}</span>
-                </div>
+              <div class="flex items-center gap-2.5 flex-wrap">
+                ${allSeries.map(s => {
+                  const it = items.find(x => x.id === s.id);
+                  const active = isSeriesActive('objects', s.id);
+                  return `
+                    <div class="flex items-center gap-1.5 px-2 py-1 rounded-lg border cursor-pointer transition select-none ${active ? 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 shadow-2xs' : 'bg-transparent border-dashed border-gray-300 dark:border-gray-700 opacity-40 line-through'}"
+                         onclick="toggleSeriesFilter('objects', '${s.id}', event)"
+                         title="Клікніть, щоб ${active ? 'приховати' : 'показати'} лінію">
+                      <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: ${s.color};"></span>
+                      <span class="font-bold text-gray-800 dark:text-gray-200 text-[11px]">${s.shortName}:</span>
+                      <span class="font-mono font-black text-gray-900 dark:text-white text-[11px]">${it ? it.val : 0}</span>
+                    </div>
+                  `;
+                }).join('')}
               </div>
-              <span class="text-[10px] text-gray-400 font-mono font-bold uppercase tracking-wider">4 окремі лінії</span>
+              <span class="text-[10px] text-gray-400 font-mono font-bold uppercase tracking-wider">Клік = вкл/викл лінію</span>
             </div>
 
             <!-- Multi-Line Graph Area -->
@@ -3503,23 +3543,36 @@
               ${svgContent}
             </div>
 
-            <!-- Bottom Quick Actions & Percentages -->
+            <!-- Bottom Metric Cards with Interactive Checkboxes -->
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 border-t border-gray-100 dark:border-gray-800">
-              ${items.map(it => `
-                <div class="p-2 rounded-xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200/60 dark:border-gray-700/60 flex items-center justify-between">
-                  <div class="truncate">
-                    <div class="flex items-center gap-1.5">
-                      <span class="w-2 h-2 rounded-full shrink-0" style="background-color: ${it.color};"></span>
-                      <span class="text-[10px] text-gray-400 block truncate font-medium">${it.title}</span>
+              ${items.map(it => {
+                const active = isSeriesActive('objects', it.id);
+                return `
+                  <div class="p-2.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between select-none ${active ? 'bg-white dark:bg-gray-800 shadow-xs border-gray-200 dark:border-gray-700' : 'bg-gray-100/70 dark:bg-gray-900/40 border-dashed border-gray-300 dark:border-gray-800 opacity-45'}"
+                       onclick="toggleSeriesFilter('objects', '${it.id}', event)"
+                       title="Клікніть, щоб ${active ? 'вимкнути лінію на графіку' : 'додати лінію на графік'}">
+                    <div class="flex items-center gap-2 truncate">
+                      <div class="w-4 h-4 rounded-md flex items-center justify-center text-[10px] font-black transition ${active ? 'bg-emerald-600 text-white shadow-2xs' : 'border border-gray-400 text-transparent'}">
+                        ${active ? '✓' : ''}
+                      </div>
+                      <div class="truncate">
+                        <div class="flex items-center gap-1.5">
+                          <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: ${it.color};"></span>
+                          <span class="text-[11px] font-bold ${active ? 'text-gray-800 dark:text-gray-200' : 'text-gray-400 line-through'} truncate">${it.title}</span>
+                        </div>
+                        <div class="flex items-center gap-1.5 mt-0.5">
+                          <strong class="text-xs ${active ? 'text-gray-900 dark:text-white' : 'text-gray-400'} font-mono">${it.val} / ${it.tgt}</strong>
+                          <span class="text-[10px] font-bold" style="color: ${active ? it.color : '#9CA3AF'};">(${it.pct}%)</span>
+                        </div>
+                      </div>
                     </div>
-                    <div class="flex items-center gap-1.5 mt-0.5">
-                      <strong class="text-xs text-gray-900 dark:text-white font-mono">${it.val} / ${it.tgt}</strong>
-                      <span class="text-[10px] font-bold text-emerald-600">(${it.pct}%)</span>
-                    </div>
+                    <button onclick="event.stopPropagation(); incrementKpi('${it.id}')"
+                            class="px-2 py-1 text-[10px] font-bold text-white rounded-lg transition cursor-pointer shrink-0 ml-1 shadow-2xs hover:opacity-90"
+                            style="background-color: ${it.color};"
+                            title="Зафіксувати дію">+1</button>
                   </div>
-                  <button onclick="incrementKpi('${it.id}')" class="px-2 py-1 text-[10px] font-bold bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition cursor-pointer shrink-0 ml-1">+1</button>
-                </div>
-              `).join('')}
+                `;
+              }).join('')}
             </div>
           </div>
         `;
@@ -3619,39 +3672,38 @@
         return;
       }
 
-            // MODE 3: MULTI-LINE SPLINE GRAPH (3 ОКРЕМІ ЛІНІЇ ДЛЯ КОЖНОГО З 3 ПОКАЗНИКІВ)
+                  // MODE 3: MULTI-LINE SPLINE GRAPH (3 ОКРЕМІ ЛІНІЇ З ЧЕКБОКСАМИ ТА ФІЛЬТРАЦІЄЮ)
       if (mode === 'charts') {
         const dates = ['23 вер.', '25 вер.', '27 вер.', '29 вер.', '01 жов.', '03 жов.', '05 жов.', '06 жов.'];
-        const series = [
+        const allSeries = [
           { id: 'leads', name: 'Заявки у СРМ', shortName: 'Заявки', color: '#2563EB', data: [2, 3, 2, 4, 3, 3, 3, 2] },
           { id: 'matches', name: 'Підбір під клієнта', shortName: 'Підбори', color: '#10B981', data: [1, 2, 1, 2, 2, 2, 1, 1] },
           { id: 'showings', name: 'Перегляд обʼєкта', shortName: 'Перегляди', color: '#F59E0B', data: [0, 1, 1, 0, 1, 1, 1, 1] }
         ];
 
-        const svgContent = renderMultiLineSplineSvg({ dates, series, w: 520, h: 190, yLabel: 'Заявки / день' });
+        const activeSeries = allSeries.filter(s => isSeriesActive('clients', s.id));
+        const svgContent = renderMultiLineSplineSvg({ dates, series: activeSeries, w: 520, h: 190, yLabel: 'Заявки / день' });
 
         c.innerHTML = `
           <div class="space-y-3">
-            <!-- Top Series Legend Bar -->
+            <!-- Top Series Legend Bar with Clickable Toggles -->
             <div class="flex flex-wrap items-center justify-between gap-2 p-2.5 rounded-xl bg-gray-50/90 dark:bg-gray-800/80 border border-gray-200/80 dark:border-gray-700/80 text-xs">
-              <div class="flex items-center gap-3.5 flex-wrap">
-                <div class="flex items-center gap-1.5 font-bold text-blue-600 dark:text-blue-400">
-                  <span class="w-3 h-3 rounded-full bg-[#2563EB] shadow-2xs"></span>
-                  <span>Заявки у СРМ:</span>
-                  <span class="font-mono text-gray-900 dark:text-white font-extrabold">${state.kpi.leads}</span>
-                </div>
-                <div class="flex items-center gap-1.5 font-bold text-emerald-600 dark:text-emerald-400">
-                  <span class="w-3 h-3 rounded-full bg-[#10B981] shadow-2xs"></span>
-                  <span>Підбір під клієнта:</span>
-                  <span class="font-mono text-gray-900 dark:text-white font-extrabold">${state.kpi.matches}</span>
-                </div>
-                <div class="flex items-center gap-1.5 font-bold text-amber-600 dark:text-amber-400">
-                  <span class="w-3 h-3 rounded-full bg-[#F59E0B] shadow-2xs"></span>
-                  <span>Перегляд обʼєкта:</span>
-                  <span class="font-mono text-gray-900 dark:text-white font-extrabold">${state.kpi.showings}</span>
-                </div>
+              <div class="flex items-center gap-2.5 flex-wrap">
+                ${allSeries.map(s => {
+                  const it = items.find(x => x.id === s.id);
+                  const active = isSeriesActive('clients', s.id);
+                  return `
+                    <div class="flex items-center gap-1.5 px-2 py-1 rounded-lg border cursor-pointer transition select-none ${active ? 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 shadow-2xs' : 'bg-transparent border-dashed border-gray-300 dark:border-gray-700 opacity-40 line-through'}"
+                         onclick="toggleSeriesFilter('clients', '${s.id}', event)"
+                         title="Клікніть, щоб ${active ? 'приховати' : 'показати'} лінію">
+                      <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: ${s.color};"></span>
+                      <span class="font-bold text-gray-800 dark:text-gray-200 text-[11px]">${s.shortName}:</span>
+                      <span class="font-mono font-black text-gray-900 dark:text-white text-[11px]">${it ? it.val : 0}</span>
+                    </div>
+                  `;
+                }).join('')}
               </div>
-              <span class="text-[10px] text-gray-400 font-mono font-bold uppercase tracking-wider">3 окремі лінії</span>
+              <span class="text-[10px] text-gray-400 font-mono font-bold uppercase tracking-wider">Клік = вкл/викл лінію</span>
             </div>
 
             <!-- Multi-Line Graph Area -->
@@ -3659,23 +3711,36 @@
               ${svgContent}
             </div>
 
-            <!-- Bottom Quick Actions & Percentages -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 border-t border-gray-100 dark:border-gray-800">
-              ${items.map(it => `
-                <div class="p-2 rounded-xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200/60 dark:border-gray-700/60 flex items-center justify-between">
-                  <div class="truncate">
-                    <div class="flex items-center gap-1.5">
-                      <span class="w-2 h-2 rounded-full shrink-0" style="background-color: ${it.color};"></span>
-                      <span class="text-[10px] text-gray-400 block truncate font-medium">${it.title}</span>
+            <!-- Bottom Metric Cards with Interactive Checkboxes -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1 border-t border-gray-100 dark:border-gray-800">
+              ${items.map(it => {
+                const active = isSeriesActive('clients', it.id);
+                return `
+                  <div class="p-2.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between select-none ${active ? 'bg-white dark:bg-gray-800 shadow-xs border-gray-200 dark:border-gray-700' : 'bg-gray-100/70 dark:bg-gray-900/40 border-dashed border-gray-300 dark:border-gray-800 opacity-45'}"
+                       onclick="toggleSeriesFilter('clients', '${it.id}', event)"
+                       title="Клікніть, щоб ${active ? 'вимкнути лінію на графіку' : 'додати лінію на графік'}">
+                    <div class="flex items-center gap-2 truncate">
+                      <div class="w-4 h-4 rounded-md flex items-center justify-center text-[10px] font-black transition ${active ? 'bg-blue-600 text-white shadow-2xs' : 'border border-gray-400 text-transparent'}">
+                        ${active ? '✓' : ''}
+                      </div>
+                      <div class="truncate">
+                        <div class="flex items-center gap-1.5">
+                          <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: ${it.color};"></span>
+                          <span class="text-[11px] font-bold ${active ? 'text-gray-800 dark:text-gray-200' : 'text-gray-400 line-through'} truncate">${it.title}</span>
+                        </div>
+                        <div class="flex items-center gap-1.5 mt-0.5">
+                          <strong class="text-xs ${active ? 'text-gray-900 dark:text-white' : 'text-gray-400'} font-mono">${it.val} / ${it.tgt}</strong>
+                          <span class="text-[10px] font-bold" style="color: ${active ? it.color : '#9CA3AF'};">(${it.pct}%)</span>
+                        </div>
+                      </div>
                     </div>
-                    <div class="flex items-center gap-1.5 mt-0.5">
-                      <strong class="text-xs text-gray-900 dark:text-white font-mono">${it.val} / ${it.tgt}</strong>
-                      <span class="text-[10px] font-bold text-blue-600">(${it.pct}%)</span>
-                    </div>
+                    <button onclick="event.stopPropagation(); incrementKpi('${it.id}')"
+                            class="px-2 py-1 text-[10px] font-bold text-white rounded-lg transition cursor-pointer shrink-0 ml-1 shadow-2xs hover:opacity-90"
+                            style="background-color: ${it.color};"
+                            title="Зафіксувати дію">+1</button>
                   </div>
-                  <button onclick="incrementKpi('${it.id}')" class="px-2 py-1 text-[10px] font-bold bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition cursor-pointer shrink-0 ml-1">+1</button>
-                </div>
-              `).join('')}
+                `;
+              }).join('')}
             </div>
           </div>
         `;
@@ -3783,239 +3848,66 @@
             </div>
           </div>
         `;
-      } else if (mode === 'charts') {
+                  } else if (mode === 'charts') {
         const dates = ['23 вер.', '25 вер.', '27 вер.', '29 вер.', '01 жов.', '03 жов.', '05 жов.', '06 жов.'];
-        const series = [
-          { id: 'olx', name: 'Реклама OLX', color: '#059669', data: [2, 3, 2, 3, 2, 3, 3, 2] },
-          { id: 'domria', name: 'Реклама DOM.RIA', color: '#EA580C', data: [2, 2, 2, 3, 2, 2, 3, 2] },
-          { id: 'rieltor', name: 'Реклама Рієлтор.юа', color: '#2563EB', data: [1, 2, 2, 2, 2, 3, 2, 2] }
+        const allSeries = [
+          { id: 'instagram', name: 'Instagram', shortName: 'Instagram', color: '#E1306C', data: [45, 52, 50, 58, 56, 62, 65, 68] },
+          { id: 'tiktok', name: 'TikTok', shortName: 'TikTok', color: '#111827', data: [38, 44, 42, 50, 48, 55, 58, 62] },
+          { id: 'facebook', name: 'Facebook', shortName: 'Facebook', color: '#1877F2', data: [35, 42, 40, 48, 46, 52, 56, 60] },
+          { id: 'youtube', name: 'YouTube', shortName: 'YouTube', color: '#DC2626', data: [1, 1, 2, 2, 3, 3, 4, 4] },
+          { id: 'x', name: 'Twitter / X', shortName: '𝕏 Twitter', color: '#4B5563', data: [32, 38, 36, 44, 42, 48, 54, 58] }
         ];
 
-        const svgContent = renderMultiLineSplineSvg({ dates, series, w: 480, h: 180, yLabel: 'Оголошення' });
-
-        c1.innerHTML = `
-          <div class="space-y-3 bg-white dark:bg-[#1A1D24] p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs">
-            <div class="flex flex-wrap items-center justify-between gap-2 pb-1 border-b border-gray-100 dark:border-gray-800 text-[11px]">
-              <div class="flex items-center gap-3 flex-wrap">
-                ${series.map(s => {
-                  const it = classItems.find(x => x.id === s.id);
-                  return `
-                    <div class="flex items-center gap-1.5">
-                      <span class="w-3 h-3 rounded-xs shrink-0" style="background-color: ${s.color};"></span>
-                      <span class="font-bold text-gray-800 dark:text-gray-200">${s.name}:</span>
-                      <span class="font-mono font-bold text-gray-900 dark:text-white">${it ? it.val : 0}</span>
-                    </div>
-                  `;
-                }).join('')}
-              </div>
-              <span class="text-[10px] text-gray-400 font-mono">3 лінії порталів</span>
-            </div>
-            <div class="relative w-full h-44 select-none">
-              ${svgContent}
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1 border-t border-gray-100 dark:border-gray-800">
-              ${classItems.map(it => `
-                <div class="p-2.5 rounded-xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200/60 dark:border-gray-700/60 flex items-center justify-between">
-                  <div class="truncate">
-                    <div class="flex items-center gap-1.5">
-                      <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: ${it.barColor};"></span>
-                      <span class="text-[11px] text-gray-700 dark:text-gray-300 block truncate font-bold">${it.name}</span>
-                    </div>
-                    <div class="flex items-center gap-2 mt-1">
-                      <strong class="text-xs text-gray-900 dark:text-white font-mono">${it.val} / ${it.tgt}</strong>
-                      <span class="text-[10px] font-bold" style="color: ${it.barColor};">(${it.pct}%)</span>
-                    </div>
-                  </div>
-                  <button onclick="incrementMarketing('${it.id}')" class="px-2.5 py-1 text-[10px] font-bold text-white rounded-lg transition cursor-pointer shrink-0 ml-1 shadow-2xs hover:opacity-90" style="background-color: ${it.barColor};">+1</button>
-                </div>
-              `).join('')}
-            </div>
-          </div>
-        `;
-      } else {
-        c1.innerHTML = `
-        <div class="flex flex-wrap items-center justify-between gap-3 pb-1">
-          <div>
-            <h4 class="text-xs font-black text-purple-700 dark:text-purple-300 uppercase tracking-wider flex items-center gap-2">
-              <i data-lucide="layout-grid" class="w-4 h-4 text-purple-600"></i>
-              Оголошення на порталах (Класифайди)
-            </h4>
-            <p class="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5">Публікація та просування об'єктів на ключових майданчиках нерухомості з нормативом 20 оголошень.</p>
-          </div>
-          <div class="flex items-center gap-2">
-            <span class="px-3 py-1 rounded-full text-xs font-black bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800 font-mono">
-              Всього на порталах: ${totClassVal} / 60 (${totClassPct}%)
-            </span>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
-          ${classItems.map(it => `
-            <div class="bg-gray-50/70 dark:bg-gray-800/40 rounded-2xl border border-gray-200/70 dark:border-gray-700/70 p-5 shadow-xs space-y-4">
-              <div class="flex items-center justify-between">
-                <div class="flex items-center gap-2.5">
-                  <span class="px-2.5 py-1 rounded-lg text-xs font-black ${it.tagBg}">${it.tag}</span>
-                  <div>
-                    <h5 class="font-extrabold text-sm text-gray-900 dark:text-white">${it.name}</h5>
-                    <span class="text-[11px] text-gray-400">${it.desc}</span>
-                  </div>
-                </div>
-              </div>
-              <div class="space-y-2">
-                <div class="flex items-center justify-between text-xs font-mono">
-                  <span class="text-gray-500">Норма: ${it.tgt} огл.</span>
-                  <div class="flex items-center gap-1.5">
-                    <strong class="text-sm font-black text-gray-900 dark:text-white">${it.val}</strong>
-                    <span class="font-bold text-purple-600">(${it.pct}%)</span>
-                  </div>
-                </div>
-                <div class="w-full bg-gray-200 dark:bg-gray-700 h-2.5 rounded-full overflow-hidden">
-                  <div class="h-full rounded-full transition-all duration-500" style="width: ${Math.min(100, it.pct)}%; background-color: ${it.barColor};"></div>
-                </div>
-              </div>
-              <button onclick="incrementMarketing('${it.id}')" class="w-full py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-xl text-xs font-bold transition shadow-xs flex items-center justify-center gap-1.5 cursor-pointer">
-                <i data-lucide="plus-circle" class="w-4 h-4"></i>
-                +1 Оголошення
-              </button>
-            </div>
-          `).join('')}
-        </div>
-      `;
-      }
-
-      // ── 2. БЛОК СОЦІАЛЬНИХ МЕРЕЖ ТА SMM ──────────────────────────
-      const activeTab = state.socialTab || 'all';
-
-      const igTotal = state.marketing.ig_posts + state.marketing.ig_video + state.marketing.ig_stories;
-      const igTgt = 85;
-      const ttTotal = state.marketing.tt_posts + state.marketing.tt_video + state.marketing.tt_stories;
-      const ttTgt = 85;
-      const fbTotal = state.marketing.fb_posts + state.marketing.fb_video + state.marketing.fb_stories;
-      const fbTgt = 85;
-      const ytTotal = state.marketing.yt_video;
-      const ytTgt = 5;
-      const xTotal = state.marketing.x_posts + state.marketing.x_video + state.marketing.x_comments;
-      const xTgt = 85;
-      const grandMediaDone = igTotal + ttTotal + fbTotal + ytTotal + xTotal;
-      const grandMediaTgt = 85 + 85 + 85 + 5 + 85; // 345
-      const grandMediaPct = Math.round((grandMediaDone / grandMediaTgt) * 100);
-
-      const platforms = [
-        { id: 'instagram', name: 'Instagram (Reels, Posts, Stories)', colorHex: '#E1306C', val: igTotal, tgt: igTgt, pct: Math.round((igTotal / igTgt) * 100) },
-        { id: 'tiktok', name: 'TikTok (Short Video)', colorHex: '#111827', val: ttTotal, tgt: ttTgt, pct: Math.round((ttTotal / ttTgt) * 100) },
-        { id: 'facebook', name: 'Facebook (Групи, Пости, Reels)', colorHex: '#1877F2', val: fbTotal, tgt: fbTgt, pct: Math.round((fbTotal / fbTgt) * 100) },
-        { id: 'youtube', name: 'YouTube (Огляди та Shorts)', colorHex: '#DC2626', val: ytTotal, tgt: ytTgt, pct: Math.round((ytTotal / ytTgt) * 100) },
-        { id: 'x', name: 'Twitter / X (Твіти, Аналітика)', colorHex: '#4B5563', val: xTotal, tgt: xTgt, pct: Math.round((xTotal / xTgt) * 100) }
-      ];
-
-      if (mode === 'pie' || mode === 'circles') {
-        const cx = 90, cy = 90, rOut = 80, rIn = 46;
-        let currentAngle = 0;
-        const total = Math.max(1, grandMediaDone);
-
-        const paths = platforms.map((p, idx) => {
-          const sliceAngle = (p.val / total) * 360;
-          const startA = currentAngle;
-          const endA = currentAngle + sliceAngle;
-          currentAngle = endA;
-
-          const pathD = describeDonutArc(cx, cy, rIn, rOut, startA, endA);
-          return `
-            <path id="soc_pie_${idx}"
-                  d="${pathD}"
-                  fill="${p.colorHex}"
-                  stroke="#FFFFFF"
-                  stroke-width="1.5"
-                  class="cursor-pointer hover:opacity-85 transition"
-                  onmousemove="showChartTooltip(event, '${p.name}', 'Виконано: ${p.val} / ${p.tgt} (${p.pct}%)', 'SMM активність')"
-                  onmouseleave="hideChartTooltip()" />
-          `;
-        }).join('');
-
-        c2.innerHTML = `
-          <div class="flex flex-wrap items-center justify-between gap-3 pb-1">
-            <h4 class="text-xs font-black text-pink-600 dark:text-pink-400 uppercase tracking-wider flex items-center gap-2">
-              <i data-lucide="share-2" class="w-4 h-4 text-pink-500"></i>
-              Соціальні мережі та SMM (Кругова діаграма %)
-            </h4>
-            <span class="px-3 py-1 rounded-full text-xs font-black bg-pink-50 dark:bg-pink-950/60 text-pink-700 dark:text-pink-300 border border-pink-200 font-mono">
-              Всього: ${grandMediaDone} / ${grandMediaTgt} (${grandMediaPct}%)
-            </span>
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-12 gap-5 items-center bg-white dark:bg-[#1A1D24] p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs">
-            <div class="sm:col-span-5 flex justify-center py-2">
-              <div class="relative w-48 h-48 flex items-center justify-center">
-                <svg class="w-48 h-48 overflow-visible" viewBox="0 0 180 180">${paths}</svg>
-                <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                  <span class="text-2xl font-black text-gray-900 dark:text-white font-mono">${grandMediaDone}</span>
-                  <span class="text-[10px] uppercase font-bold text-gray-400">з ${grandMediaTgt} дій (${grandMediaPct}%)</span>
-                </div>
-              </div>
-            </div>
-            <div class="sm:col-span-7 space-y-2 text-xs">
-              ${platforms.map(p => `
-                <div class="flex items-center justify-between p-2 rounded-xl bg-gray-50/80 dark:bg-gray-800/40 border border-gray-200/60 dark:border-gray-700/60 hover:border-pink-300 transition">
-                  <div class="flex items-center gap-2 truncate">
-                    <span class="w-3.5 h-3.5 rounded-xs shrink-0" style="background-color: ${p.colorHex};"></span>
-                    <span class="font-bold text-gray-800 dark:text-gray-200 truncate text-[11px]">${p.name}</span>
-                  </div>
-                  <div class="flex items-center gap-2 font-mono text-[11px] shrink-0">
-                    <span class="font-bold text-gray-900 dark:text-white">${p.val} / ${p.tgt}</span>
-                    <span class="px-2 py-0.5 rounded-full font-bold text-[11px] bg-pink-100 dark:bg-pink-950/80 text-pink-800 dark:text-pink-300 border border-pink-200 dark:border-pink-800">${p.pct}%</span>
-                  </div>
-                </div>
-              `).join('')}
-            </div>
-          </div>
-        `;
-      } else if (mode === 'charts') {
-        const dates = ['23 вер.', '25 вер.', '27 вер.', '29 вер.', '01 жов.', '03 жов.', '05 жов.', '06 жов.'];
-        const series = [
-          { id: 'instagram', name: 'Instagram', color: '#E1306C', data: [8, 9, 8, 9, 9, 8, 9, 8] },
-          { id: 'tiktok', name: 'TikTok', color: '#111827', data: [7, 8, 7, 8, 8, 8, 8, 8] },
-          { id: 'facebook', name: 'Facebook', color: '#1877F2', data: [7, 7, 8, 7, 8, 8, 7, 8] },
-          { id: 'youtube', name: 'YouTube', color: '#DC2626', data: [0, 1, 0, 1, 0, 1, 0, 1] },
-          { id: 'x', name: 'Twitter / X', color: '#4B5563', data: [6, 7, 8, 7, 7, 8, 7, 8] }
-        ];
-
-        const svgContent = renderMultiLineSplineSvg({ dates, series, w: 480, h: 180, yLabel: 'SMM дії' });
+        const activeSeries = allSeries.filter(s => isSeriesActive('marketing_social', s.id));
+        const svgContent = renderMultiLineSplineSvg({ dates, series: activeSeries, w: 520, h: 190, yLabel: 'SMM дії' });
 
         c2.innerHTML = `
           <div class="space-y-3 bg-white dark:bg-[#1A1D24] p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs">
-            <div class="flex flex-wrap items-center justify-between gap-2 pb-1 border-b border-gray-100 dark:border-gray-800 text-[11px]">
-              <div class="flex items-center gap-3 flex-wrap">
-                ${series.map(s => {
+            <div class="flex flex-wrap items-center justify-between gap-2 p-2.5 rounded-xl bg-gray-50/90 dark:bg-gray-800/80 border border-gray-200/80 dark:border-gray-700/80 text-xs">
+              <div class="flex items-center gap-2.5 flex-wrap">
+                ${allSeries.map(s => {
                   const it = platforms.find(x => x.id === s.id);
+                  const active = isSeriesActive('marketing_social', s.id);
                   return `
-                    <div class="flex items-center gap-1.5">
-                      <span class="w-3 h-3 rounded-xs shrink-0" style="background-color: ${s.color};"></span>
-                      <span class="font-bold text-gray-800 dark:text-gray-200">${s.name}:</span>
-                      <span class="font-mono font-bold text-gray-900 dark:text-white">${it ? it.val : 0}</span>
+                    <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg border cursor-pointer transition select-none ${active ? 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 shadow-2xs' : 'bg-transparent border-dashed border-gray-300 dark:border-gray-700 opacity-40 line-through'}"
+                         onclick="toggleSeriesFilter('marketing_social', '${s.id}', event)"
+                         title="Клікніть, щоб ${active ? 'приховати' : 'показати'} лінію">
+                      <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: ${s.color};"></span>
+                      <span class="font-bold text-gray-800 dark:text-gray-200 text-[11px]">${s.shortName}:</span>
+                      <span class="font-mono font-black text-gray-900 dark:text-white text-[11px]">${it ? it.val : 0}</span>
                     </div>
                   `;
                 }).join('')}
               </div>
-              <span class="text-[10px] text-gray-400 font-mono">5 ліній соцмереж</span>
+              <span class="text-[10px] text-gray-400 font-mono font-bold uppercase tracking-wider">Клік = вкл/викл лінію</span>
             </div>
-            <div class="relative w-full h-44 select-none">
+            <div class="relative w-full h-48 select-none">
               ${svgContent}
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-5 gap-2 pt-1 border-t border-gray-100 dark:border-gray-800">
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 pt-1 border-t border-gray-100 dark:border-gray-800">
               ${platforms.map(p => {
                 const metricKey = p.id === 'instagram' ? 'ig_posts' : p.id === 'tiktok' ? 'tt_posts' : p.id === 'facebook' ? 'fb_posts' : p.id === 'youtube' ? 'yt_video' : 'x_posts';
+                const active = isSeriesActive('marketing_social', p.id);
                 return `
-                  <div class="p-2.5 rounded-xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200/60 dark:border-gray-700/60 flex items-center justify-between">
-                    <div class="truncate">
-                      <div class="flex items-center gap-1.5">
-                        <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: ${p.colorHex};"></span>
-                        <span class="text-[11px] text-gray-700 dark:text-gray-300 block truncate font-bold">${p.name.split(' ')[0]}</span>
+                  <div class="p-2.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between select-none ${active ? 'bg-white dark:bg-gray-800 shadow-xs border-gray-200 dark:border-gray-700' : 'bg-gray-100/70 dark:bg-gray-900/40 border-dashed border-gray-300 dark:border-gray-800 opacity-45'}"
+                       onclick="toggleSeriesFilter('marketing_social', '${p.id}', event)"
+                       title="Клікніть, щоб ${active ? 'вимкнути лінію на графіку' : 'додати лінію на графік'}">
+                    <div class="flex items-center gap-2 truncate">
+                      <div class="w-4 h-4 rounded-md flex items-center justify-center text-[10px] font-black transition ${active ? 'text-white shadow-2xs' : 'border border-gray-400 text-transparent'}" style="background-color: ${active ? p.colorHex : 'transparent'};">
+                        ${active ? '✓' : ''}
                       </div>
-                      <div class="flex items-center gap-1.5 mt-1 font-mono">
-                        <strong class="text-xs text-gray-900 dark:text-white font-mono">${p.val} / ${p.tgt}</strong>
-                        <span class="text-[10px] font-bold" style="color: ${p.colorHex};">(${p.pct}%)</span>
+                      <div class="truncate">
+                        <span class="text-[11px] font-bold ${active ? 'text-gray-800 dark:text-gray-200' : 'text-gray-400 line-through'} block truncate">${p.name.split(' ')[0]}</span>
+                        <div class="flex items-center gap-1.5 mt-0.5 font-mono">
+                          <strong class="text-xs ${active ? 'text-gray-900 dark:text-white' : 'text-gray-400'}">${p.val} / ${p.tgt}</strong>
+                          <span class="text-[10px] font-bold" style="color: ${active ? p.colorHex : '#9CA3AF'};">(${p.pct}%)</span>
+                        </div>
                       </div>
                     </div>
-                    <button onclick="incrementMarketing('${metricKey}')" class="px-2 py-1 text-[10px] font-bold text-white rounded-lg transition cursor-pointer shrink-0 ml-1 shadow-2xs hover:opacity-90" style="background-color: ${p.colorHex};">+1</button>
+                    <button onclick="event.stopPropagation(); incrementMarketing('${metricKey}')"
+                            class="px-2 py-1 text-[10px] font-bold text-white rounded-lg transition cursor-pointer shrink-0 ml-1 shadow-2xs hover:opacity-90"
+                            style="background-color: ${p.colorHex};"
+                            title="Зафіксувати дію">+1</button>
                   </div>
                 `;
               }).join('')}
@@ -4134,39 +4026,38 @@
         return;
       }
 
-            // MODE 3: MULTI-LINE SPLINE GRAPH (3 ОКРЕМІ ЛІНІЇ ДЛЯ КОЖНОГО З 3 ПОКАЗНИКІВ УГОД)
+                  // MODE 3: MULTI-LINE SPLINE GRAPH (3 ОКРЕМІ ЛІНІЇ З ЧЕКБОКСАМИ ТА ФІЛЬТРАЦІЄЮ)
       if (mode === 'charts') {
         const dates = ['23 вер.', '25 вер.', '27 вер.', '29 вер.', '01 жов.', '03 жов.', '05 жов.', '06 жов.'];
-        const series = [
+        const allSeries = [
           { id: 'rent_deal', name: 'Оренда житла / комерції', shortName: 'Оренда', color: '#10B981', data: [1, 1, 2, 2, 2, 3, 3, 3] },
           { id: 'deposit', name: 'Завдаток (Бронь)', shortName: 'Завдатки', color: '#F59E0B', data: [0, 1, 1, 1, 2, 2, 2, 2] },
           { id: 'sale_deal', name: 'Угода купівлі-продажу', shortName: 'Продаж', color: '#8B5CF6', data: [0, 0, 0, 0, 0, 1, 1, 1] }
         ];
 
-        const svgContent = renderMultiLineSplineSvg({ dates, series, w: 520, h: 190, yLabel: 'Угоди (Факт)' });
+        const activeSeries = allSeries.filter(s => isSeriesActive('deals', s.id));
+        const svgContent = renderMultiLineSplineSvg({ dates, series: activeSeries, w: 520, h: 190, yLabel: 'Угоди (Факт)' });
 
         c.innerHTML = `
           <div class="col-span-full space-y-3">
-            <!-- Top Series Legend Bar -->
+            <!-- Top Series Legend Bar with Clickable Toggles -->
             <div class="flex flex-wrap items-center justify-between gap-2 p-2.5 rounded-xl bg-gray-50/90 dark:bg-gray-800/80 border border-gray-200/80 dark:border-gray-700/80 text-xs">
-              <div class="flex items-center gap-3.5 flex-wrap">
-                <div class="flex items-center gap-1.5 font-bold text-emerald-600 dark:text-emerald-400">
-                  <span class="w-3 h-3 rounded-full bg-[#10B981] shadow-2xs"></span>
-                  <span>Оренда:</span>
-                  <span class="font-mono text-gray-900 dark:text-white font-extrabold">${state.kpi.rent_deal}</span>
-                </div>
-                <div class="flex items-center gap-1.5 font-bold text-amber-600 dark:text-amber-400">
-                  <span class="w-3 h-3 rounded-full bg-[#F59E0B] shadow-2xs"></span>
-                  <span>Завдатки:</span>
-                  <span class="font-mono text-gray-900 dark:text-white font-extrabold">${state.kpi.deposit}</span>
-                </div>
-                <div class="flex items-center gap-1.5 font-bold text-purple-600 dark:text-purple-400">
-                  <span class="w-3 h-3 rounded-full bg-[#8B5CF6] shadow-2xs"></span>
-                  <span>Угода продажу:</span>
-                  <span class="font-mono text-gray-900 dark:text-white font-extrabold">${state.kpi.sale_deal}</span>
-                </div>
+              <div class="flex items-center gap-2.5 flex-wrap">
+                ${allSeries.map(s => {
+                  const it = items.find(x => x.id === s.id);
+                  const active = isSeriesActive('deals', s.id);
+                  return `
+                    <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg border cursor-pointer transition select-none ${active ? 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 shadow-2xs' : 'bg-transparent border-dashed border-gray-300 dark:border-gray-700 opacity-40 line-through'}"
+                         onclick="toggleSeriesFilter('deals', '${s.id}', event)"
+                         title="Клікніть, щоб ${active ? 'приховати' : 'показати'} лінію">
+                      <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: ${s.color};"></span>
+                      <span class="font-bold text-gray-800 dark:text-gray-200 text-[11px]">${s.shortName}:</span>
+                      <span class="font-mono font-black text-gray-900 dark:text-white text-[11px]">${it ? it.val : 0}</span>
+                    </div>
+                  `;
+                }).join('')}
               </div>
-              <span class="text-[10px] text-gray-400 font-mono font-bold uppercase tracking-wider">3 лінії угод</span>
+              <span class="text-[10px] text-gray-400 font-mono font-bold uppercase tracking-wider">Клік = вкл/викл лінію</span>
             </div>
 
             <!-- Multi-Line Graph Area -->
@@ -4174,23 +4065,36 @@
               ${svgContent}
             </div>
 
-            <!-- Bottom Quick Actions & Percentages with category colors -->
+            <!-- Bottom Metric Cards with Interactive Checkboxes -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1 border-t border-gray-100 dark:border-gray-800">
-              ${items.map(it => `
-                <div class="p-2.5 rounded-xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200/60 dark:border-gray-700/60 flex items-center justify-between">
-                  <div class="truncate">
-                    <div class="flex items-center gap-1.5">
-                      <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: ${it.color};"></span>
-                      <span class="text-[11px] text-gray-700 dark:text-gray-300 block truncate font-bold">${it.title}</span>
+              ${items.map(it => {
+                const active = isSeriesActive('deals', it.id);
+                return `
+                  <div class="p-2.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between select-none ${active ? 'bg-white dark:bg-gray-800 shadow-xs border-gray-200 dark:border-gray-700' : 'bg-gray-100/70 dark:bg-gray-900/40 border-dashed border-gray-300 dark:border-gray-800 opacity-45'}"
+                       onclick="toggleSeriesFilter('deals', '${it.id}', event)"
+                       title="Клікніть, щоб ${active ? 'вимкнути лінію на графіку' : 'додати лінію на графік'}">
+                    <div class="flex items-center gap-2 truncate">
+                      <div class="w-4 h-4 rounded-md flex items-center justify-center text-[10px] font-black transition ${active ? 'text-white shadow-2xs' : 'border border-gray-400 text-transparent'}" style="background-color: ${active ? it.color : 'transparent'};">
+                        ${active ? '✓' : ''}
+                      </div>
+                      <div class="truncate">
+                        <div class="flex items-center gap-1.5">
+                          <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: ${it.color};"></span>
+                          <span class="text-[11px] font-bold ${active ? 'text-gray-800 dark:text-gray-200' : 'text-gray-400 line-through'} truncate">${it.title}</span>
+                        </div>
+                        <div class="flex items-center gap-2 mt-1">
+                          <strong class="text-xs ${active ? 'text-gray-900 dark:text-white' : 'text-gray-400'} font-mono">${it.val} / ${it.tgt}</strong>
+                          <span class="text-[10px] font-bold" style="color: ${active ? it.color : '#9CA3AF'};">(${it.pct}%)</span>
+                        </div>
+                      </div>
                     </div>
-                    <div class="flex items-center gap-2 mt-1">
-                      <strong class="text-xs text-gray-900 dark:text-white font-mono">${it.val} / ${it.tgt}</strong>
-                      <span class="text-[10px] font-bold" style="color: ${it.color};">(${it.pct}%)</span>
-                    </div>
+                    <button onclick="event.stopPropagation(); incrementKpi('${it.id}')"
+                            class="px-2.5 py-1 text-[10px] font-bold text-white rounded-lg transition cursor-pointer shrink-0 ml-1 shadow-2xs hover:opacity-90"
+                            style="background-color: ${it.color};"
+                            title="Зафіксувати дію">+1</button>
                   </div>
-                  <button onclick="incrementKpi('${it.id}')" class="px-2.5 py-1 text-[10px] font-bold text-white rounded-lg transition cursor-pointer shrink-0 ml-1 shadow-2xs hover:opacity-90" style="background-color: ${it.color};">+1</button>
-                </div>
-              `).join('')}
+                `;
+              }).join('')}
             </div>
           </div>
         `;
@@ -5127,31 +5031,49 @@
         return;
       }
 
-      // Default: Dual Curves Spline
+      // Update legend pill active styles
+      const isShowActive = isSeriesActive('weekly', 'showings');
+      const isMeetActive = isSeriesActive('weekly', 'meetings');
+
+      const pillShow = document.getElementById('pill_weekly_showings');
+      const pillMeet = document.getElementById('pill_weekly_meetings');
+      const chkShow = document.getElementById('chk_weekly_showings');
+      const chkMeet = document.getElementById('chk_weekly_meetings');
+
+      if (pillShow) pillShow.className = `flex items-center gap-2 font-bold text-blue-600 dark:text-blue-400 cursor-pointer px-2.5 py-1 rounded-lg border transition select-none ${isShowActive ? 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 shadow-2xs' : 'bg-transparent border-dashed border-gray-300 dark:border-gray-700 opacity-40 line-through'}`;
+      if (pillMeet) pillMeet.className = `flex items-center gap-2 font-bold text-rose-600 dark:text-rose-400 cursor-pointer px-2.5 py-1 rounded-lg border transition select-none ${isMeetActive ? 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 shadow-2xs' : 'bg-transparent border-dashed border-gray-300 dark:border-gray-700 opacity-40 line-through'}`;
+      if (chkShow) chkShow.textContent = isShowActive ? '✓' : '';
+      if (chkMeet) chkMeet.textContent = isMeetActive ? '✓' : '';
+
+      // Default: Dual Curves Spline (Filtered by active toggles!)
       const w = 900, h = 220, padLeft = 45, padRight = 30, padTop = 20, padBottom = 32;
       const chartW = w - padLeft - padRight;
       const chartH = h - padTop - padBottom - 6;
-      const maxVal = 14;
 
-      const pointsShowings = showingsData.map((val, i) => ({
+      let activeMax = 1;
+      if (isShowActive) activeMax = Math.max(activeMax, ...showingsData);
+      if (isMeetActive) activeMax = Math.max(activeMax, ...meetingsData);
+      const maxVal = Math.ceil(activeMax <= 4 ? 4 : activeMax <= 8 ? 8 : activeMax <= 14 ? 14 : activeMax * 1.15);
+
+      const pointsShowings = isShowActive ? showingsData.map((val, i) => ({
         x: padLeft + (i / (dates.length - 1)) * chartW,
         y: padTop + chartH + 3 - (val / maxVal) * chartH,
         val,
         date: dates[i]
-      }));
+      })) : [];
 
-      const pointsMeetings = meetingsData.map((val, i) => ({
+      const pointsMeetings = isMeetActive ? meetingsData.map((val, i) => ({
         x: padLeft + (i / (dates.length - 1)) * chartW,
         y: padTop + chartH + 3 - (val / maxVal) * chartH,
         val,
         date: dates[i]
-      }));
+      })) : [];
 
-      const pathShowings = buildCubicSplinePath(pointsShowings);
-      const pathMeetings = buildCubicSplinePath(pointsMeetings);
-      const areaShowings = `${pathShowings} L ${pointsShowings[pointsShowings.length - 1].x.toFixed(1)} ${(padTop + chartH + 3).toFixed(1)} L ${pointsShowings[0].x.toFixed(1)} ${(padTop + chartH + 3).toFixed(1)} Z`;
+      const pathShowings = pointsShowings.length > 0 ? buildCubicSplinePath(pointsShowings) : '';
+      const pathMeetings = pointsMeetings.length > 0 ? buildCubicSplinePath(pointsMeetings) : '';
+      const areaShowings = pointsShowings.length > 0 ? `${pathShowings} L ${pointsShowings[pointsShowings.length - 1].x.toFixed(1)} ${(padTop + chartH + 3).toFixed(1)} L ${pointsShowings[0].x.toFixed(1)} ${(padTop + chartH + 3).toFixed(1)} Z` : '';
 
-      const gridLevels = [0, 4, 8, 12, 14];
+      const gridLevels = [0, Math.round(maxVal / 2), maxVal];
       const gridSvg = gridLevels.map(lvl => {
         const yPos = padTop + chartH + 3 - (lvl / maxVal) * chartH;
         return `
@@ -5195,10 +5117,10 @@
           </defs>
           <text x="-${h / 2}" y="13" transform="rotate(-90)" font-size="9" fill="#94A3B8" text-anchor="middle" font-weight="bold">Дій / тиждень</text>
           ${gridSvg}
-          <path d="${areaShowings}" fill="url(#gradWeeklyShowings)" />
-          <path d="${pathShowings}" fill="none" stroke="#2563EB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+          ${isShowActive ? `<path d="${areaShowings}" fill="url(#gradWeeklyShowings)" />` : ''}
+          ${isShowActive ? `<path d="${pathShowings}" fill="none" stroke="#2563EB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />` : ''}
           ${dotsShowings}
-          <path d="${pathMeetings}" fill="none" stroke="#EF4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+          ${isMeetActive ? `<path d="${pathMeetings}" fill="none" stroke="#EF4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />` : ''}
           ${dotsMeetings}
           ${xLabels}
         </svg>
