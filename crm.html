@@ -77,67 +77,20 @@
 </head>
 <body class="bg-wireframe-grid text-gray-900 dark:text-gray-100 min-h-screen flex flex-col font-sans transition-colors duration-200">
 
-  <!-- TOP APP NOTIFICATION BAR / TEST ENVIRONMENT CONTROLS -->
+  <!-- TOP APP HEADER -->
   <header class="bg-white/95 dark:bg-[#151821]/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 sticky top-0 z-40 px-4 py-2.5 shadow-sm">
-    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
       
-      <!-- Logo & Clean Title -->
-      <div class="flex items-center gap-3">
-        <div class="flex items-center gap-2.5">
-          <span class="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center text-white font-black text-lg shadow-sm">Y</span>
-          <h1 class="font-extrabold text-base tracking-tight text-gray-900 dark:text-white">Робоче місце CRM</h1>
-        </div>
+      <!-- Logo & Title -->
+      <div class="flex items-center gap-2.5">
+        <span class="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center text-white font-black text-lg shadow-sm">Y</span>
+        <h1 class="font-extrabold text-base tracking-tight text-gray-900 dark:text-white">Робоче місце CRM</h1>
       </div>
 
-      <!-- Agent Switcher & Period Controls -->
-      <div class="flex items-center flex-wrap gap-2.5">
-        
-        <!-- Agent Selector -->
-        <div class="flex items-center gap-1.5 bg-gray-100 dark:bg-gray-800/80 px-2.5 py-1 rounded-xl border border-gray-200 dark:border-gray-700 text-xs">
-          <i data-lucide="user" class="w-3.5 h-3.5 text-gray-500"></i>
-          <span class="text-gray-500 font-medium">Агент:</span>
-          <select id="agentSelect" onchange="changeAgent(this.value)" class="bg-transparent font-bold text-gray-900 dark:text-gray-100 focus:outline-none cursor-pointer">
-            <option value="melnyk">Олександр Мельник (Топ-рієлтор)</option>
-            <option value="kovalchuk">Ірина Ковальчук (Агент вторинки)</option>
-            <option value="shevchenko">Дмитро Шевченко (Комерція)</option>
-            <option value="team_avg">Всі агенти (Середнє по компанії)</option>
-          </select>
-        </div>
-
-        <!-- Period selector -->
-        <div class="flex items-center gap-1.5 bg-gray-100 dark:bg-gray-800/80 px-2.5 py-1 rounded-xl border border-gray-200 dark:border-gray-700 text-xs">
-          <i data-lucide="calendar" class="w-3.5 h-3.5 text-gray-500"></i>
-          <span class="font-semibold text-gray-700 dark:text-gray-300">Жовтень 2026</span>
-          <span class="text-[10px] bg-emerald-500 text-white font-bold px-1.5 py-0.2 rounded">День 6 / 31</span>
-        </div>
-
-        <!-- Currency Switcher ($ / ₴) -->
-        <div class="flex items-center bg-gray-200 dark:bg-gray-800 p-0.5 rounded-xl border border-gray-300 dark:border-gray-700 text-xs">
-          <button id="currUsdBtn" onclick="setCurrency('USD')" class="px-2.5 py-1 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm transition">USD ($)</button>
-          <button id="currUahBtn" onclick="setCurrency('UAH')" class="px-2.5 py-1 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 transition">UAH (₴)</button>
-        </div>
-
-        <!-- Theme Toggle -->
-        <button onclick="toggleTheme()" id="themeBtn" title="Перемикач теми" class="p-1.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer text-gray-700 dark:text-gray-300">
-          <i data-lucide="sun" id="themeIcon" class="w-4 h-4"></i>
-        </button>
-
-        <!-- Action Buttons -->
-        <button onclick="openModal('quickActionModal')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm transition cursor-pointer">
-          <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
-          <span>+ Фіксувати дію</span>
-        </button>
-
-        <button onclick="openModal('targetsModal')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 transition cursor-pointer">
-          <i data-lucide="settings" class="w-3.5 h-3.5"></i>
-          <span>Нормативи</span>
-        </button>
-
-        <button onclick="exportCSV()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 transition cursor-pointer">
-          <i data-lucide="download" class="w-3.5 h-3.5"></i>
-          <span>Експорт</span>
-        </button>
-      </div>
+      <!-- Clean Theme Toggle -->
+      <button onclick="toggleTheme()" id="themeBtn" title="Перемикач теми" class="p-1.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer text-gray-700 dark:text-gray-300">
+        <i data-lucide="sun" id="themeIcon" class="w-4 h-4"></i>
+      </button>
 
     </div>
   </header>
