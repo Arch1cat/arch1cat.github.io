@@ -403,9 +403,9 @@
             </div>
           </div>
 
-          <div id="card_marketing_body" class="p-4 grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div id="container_classifieds" class="space-y-3"></div>
-            <div id="container_social" class="space-y-3"></div>
+          <div id="card_marketing_body" class="p-4 grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div id="container_classifieds" class="lg:col-span-4 space-y-3"></div>
+            <div id="container_social" class="lg:col-span-8 space-y-3"></div>
           </div>
         </div>
 
@@ -1334,6 +1334,7 @@
         deposit: 2,
         sale_deal: 1,
       },
+      socialTab: 'all', // 'all' | 'instagram' | 'tiktok' | 'facebook' | 'youtube' | 'x'
       marketing: {
         olx: 18,
         domria: 16,
@@ -1854,14 +1855,20 @@
       }
     }
 
-    // Increment social media item
+    // Increment social media item with instant reactivity
     function incMedia(key, target) {
       if (state.marketing[key] !== undefined) {
         state.marketing[key] += 1;
-        const el = document.getElementById(key);
-        if (el) el.textContent = state.marketing[key];
-        showToast(`Публікацію в соцмережах додано!`);
+        updateKpiDisplay();
+        showToast(`Публікацію додано! +1`);
       }
+    }
+
+    // Set Active Social Media Platform Tab
+    function setSocialPlatformTab(tabKey) {
+      state.socialTab = tabKey;
+      renderMarketingSection(state.blockModes.marketing);
+      renderIcons();
     }
 
     // Refresh KPI DOM elements & Render Dynamic View Modes
@@ -2182,70 +2189,237 @@
         }).join('')}
       `;
 
-      // Social Media sub-block
-      c2.innerHTML = `
-        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-1.5 mb-2">
-          <i data-lucide="share-2" class="w-3.5 h-3.5 text-pink-500"></i>
-          Соціальні мережі та SMM
-        </h4>
-        <div class="bg-gray-50 dark:bg-gray-800/60 p-2.5 rounded-xl border border-gray-200 dark:border-gray-700/60">
-          <div class="flex items-center justify-between mb-2">
-            <span class="flex items-center gap-1.5 font-bold text-xs text-pink-600 dark:text-pink-400">
-              <i data-lucide="instagram" class="w-4 h-4"></i>
-              Інстаграм
+      // ─── PREMIUM REDESIGNED SOCIAL MEDIA & SMM SECTION ────────────────────────
+      const activeTab = state.socialTab || 'all';
+
+      // Aggregate Metrics for Pills
+      const igTotal = state.marketing.ig_posts + state.marketing.ig_video + state.marketing.ig_stories;
+      const igTgt = 20 + 5 + 60; // 85
+      const ttTotal = state.marketing.tt_posts + state.marketing.tt_video + state.marketing.tt_stories;
+      const ttTgt = 85;
+      const fbTotal = state.marketing.fb_posts + state.marketing.fb_video + state.marketing.fb_stories;
+      const fbTgt = 85;
+      const ytTotal = state.marketing.yt_video;
+      const ytTgt = 5;
+      const xTotal = state.marketing.x_posts + state.marketing.x_video + state.marketing.x_comments;
+      const xTgt = 85;
+      const grandMediaDone = igTotal + ttTotal + fbTotal + ytTotal + xTotal;
+      const grandMediaTgt = igTgt + ttTgt + fbTgt + ytTgt + xTgt;
+      const grandMediaPct = Math.round((grandMediaDone / grandMediaTgt) * 100);
+
+      const mediaHero = document.getElementById('mediaHeroCount');
+      if (mediaHero) mediaHero.textContent = grandMediaDone;
+      const adsHero = document.getElementById('adsHeroCount');
+      if (adsHero) adsHero.textContent = state.marketing.olx + state.marketing.domria + state.marketing.rieltor;
+
+      const renderMetricCard = (label, key, val, tgt, colorHex, btnClass) => {
+        const p = Math.round((val / tgt) * 100);
+        if (mode === 'circles') {
+          return `
+            <div class="p-2.5 bg-white dark:bg-gray-800 rounded-xl border border-gray-200/80 dark:border-gray-700 shadow-xs flex items-center justify-between gap-2.5">
+              <div class="flex items-center gap-2">
+                ${makeCircleGauge(p, `text-[${colorHex}]`, 42, 4)}
+                <div>
+                  <span class="text-[10px] font-bold text-gray-400 uppercase tracking-tight block">${label}</span>
+                  <div class="text-xs font-black text-gray-900 dark:text-white">${val} <span class="text-[10px] font-normal text-gray-400">/ ${tgt}</span></div>
+                </div>
+              </div>
+              <button onclick="incMedia('${key}', ${tgt})" class="px-2 py-1 text-[10px] font-bold ${btnClass} text-white rounded-lg transition shadow-xs hover:opacity-90 active:scale-95 cursor-pointer">+1</button>
+            </div>
+          `;
+        }
+
+        if (mode === 'charts') {
+          return `
+            <div class="p-2.5 bg-white dark:bg-gray-800 rounded-xl border border-gray-200/80 dark:border-gray-700 shadow-xs flex items-center justify-between gap-2">
+              <div>
+                <span class="text-[10px] font-bold text-gray-400 uppercase tracking-tight block">${label}</span>
+                <div class="text-xs font-black text-gray-900 dark:text-white">${val} / ${tgt} <span class="text-[10px] font-bold text-gray-500">(${p}%)</span></div>
+              </div>
+              <div class="flex items-center gap-1.5">
+                ${makeMiniChart(p, colorHex)}
+                <button onclick="incMedia('${key}', ${tgt})" class="px-2 py-1 text-[10px] font-bold ${btnClass} text-white rounded-lg transition shadow-xs hover:opacity-90 active:scale-95 cursor-pointer">+1</button>
+              </div>
+            </div>
+          `;
+        }
+
+        // Default: Clean Linear Progress Bar
+        return `
+          <div class="p-2.5 bg-white dark:bg-gray-800 rounded-xl border border-gray-200/80 dark:border-gray-700 shadow-xs flex flex-col justify-between">
+            <div class="flex items-center justify-between text-xs mb-1">
+              <span class="text-[11px] font-bold text-gray-500 dark:text-gray-400">${label}</span>
+              <div class="flex items-center gap-1.5">
+                <span class="font-black text-gray-900 dark:text-white font-mono text-xs">${val}</span>
+                <span class="text-[10px] text-gray-400">/ ${tgt}</span>
+                <button onclick="incMedia('${key}', ${tgt})" class="px-1.5 py-0.5 text-[10px] font-bold ${btnClass} text-white rounded-md transition shadow-xs hover:opacity-90 active:scale-95 cursor-pointer" title="Додати 1">+1</button>
+              </div>
+            </div>
+            <div class="w-full bg-gray-100 dark:bg-gray-700 h-1.5 rounded-full overflow-hidden mb-1">
+              <div class="h-full rounded-full transition-all duration-500" style="width: ${Math.min(100, p)}%; background-color: ${colorHex};"></div>
+            </div>
+            <div class="flex justify-between items-center text-[9px] text-gray-400">
+              <span>Виконано: <strong class="text-gray-700 dark:text-gray-300">${p}%</strong></span>
+              ${p >= 100 ? '<span class="text-emerald-600 font-bold">100% ✓</span>' : `<span>Залишилось: ${Math.max(0, tgt - val)}</span>`}
+            </div>
+          </div>
+        `;
+      };
+
+      // Platform Cards Configuration
+      const platforms = [
+        {
+          id: 'instagram',
+          name: 'Instagram',
+          badgeText: `${Math.round((igTotal / igTgt) * 100)}% плану`,
+          badgeDone: `${igTotal} / ${igTgt}`,
+          iconSvg: `
+            <span class="w-6 h-6 rounded-lg bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+              <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
             </span>
-            <span class="text-[10px] text-gray-400">20 постів • 5 відео • 60 сторіз</span>
-          </div>
-          <div class="grid grid-cols-3 gap-2 text-center text-xs">
-            <div class="bg-white dark:bg-gray-800 p-1.5 rounded-lg border border-gray-200 dark:border-gray-700">
-              <span class="text-[10px] text-gray-400 block">Пости</span>
-              <span class="font-black text-gray-900 dark:text-white" id="ig_posts">${state.marketing.ig_posts}</span><span class="text-[10px] text-gray-400">/20</span>
-              <button onclick="incMedia('ig_posts', 20)" class="text-[10px] text-pink-600 font-bold block mx-auto mt-0.5 hover:underline">+1</button>
-            </div>
-            <div class="bg-white dark:bg-gray-800 p-1.5 rounded-lg border border-gray-200 dark:border-gray-700">
-              <span class="text-[10px] text-gray-400 block">Відео (Reels)</span>
-              <span class="font-black text-gray-900 dark:text-white" id="ig_video">${state.marketing.ig_video}</span><span class="text-[10px] text-gray-400">/5</span>
-              <button onclick="incMedia('ig_video', 5)" class="text-[10px] text-pink-600 font-bold block mx-auto mt-0.5 hover:underline">+1</button>
-            </div>
-            <div class="bg-white dark:bg-gray-800 p-1.5 rounded-lg border border-gray-200 dark:border-gray-700">
-              <span class="text-[10px] text-gray-400 block">Сторіз</span>
-              <span class="font-black text-gray-900 dark:text-white" id="ig_stories">${state.marketing.ig_stories}</span><span class="text-[10px] text-gray-400">/60</span>
-              <button onclick="incMedia('ig_stories', 60)" class="text-[10px] text-pink-600 font-bold block mx-auto mt-0.5 hover:underline">+1</button>
-            </div>
-          </div>
+          `,
+          borderColor: 'border-pink-200 dark:border-pink-900/50',
+          bgHeader: 'from-pink-500/10 to-rose-500/5',
+          btnClass: 'bg-gradient-to-r from-rose-500 to-pink-600',
+          colorHex: '#E1306C',
+          metrics: [
+            { label: 'Пости в стрічку', key: 'ig_posts', val: state.marketing.ig_posts, tgt: 20 },
+            { label: 'Відео (Reels)', key: 'ig_video', val: state.marketing.ig_video, tgt: 5 },
+            { label: 'Stories (Історії)', key: 'ig_stories', val: state.marketing.ig_stories, tgt: 60 }
+          ]
+        },
+        {
+          id: 'tiktok',
+          name: 'TikTok',
+          badgeText: `${Math.round((ttTotal / ttTgt) * 100)}% плану`,
+          badgeDone: `${ttTotal} / ${ttTgt}`,
+          iconSvg: `
+            <span class="w-6 h-6 rounded-lg bg-black text-white flex items-center justify-center shrink-0 shadow-xs border border-gray-700">
+              <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.27 1.76-.23 1.05.15 2.21.93 2.93.72.68 1.76.95 2.73.73.96-.2 1.76-.87 2.08-1.8.14-.49.19-1.01.19-1.52.02-4.99.01-9.98.01-14.97z"/></svg>
+            </span>
+          `,
+          borderColor: 'border-teal-200 dark:border-teal-900/50',
+          bgHeader: 'from-cyan-500/10 to-teal-500/5',
+          btnClass: 'bg-black dark:bg-gray-700',
+          colorHex: '#00F2FE',
+          metrics: [
+            { label: 'Пости / Слайди', key: 'tt_posts', val: state.marketing.tt_posts, tgt: 20 },
+            { label: 'Короткі відео', key: 'tt_video', val: state.marketing.tt_video, tgt: 5 },
+            { label: 'TikTok Stories', key: 'tt_stories', val: state.marketing.tt_stories, tgt: 60 }
+          ]
+        },
+        {
+          id: 'facebook',
+          name: 'Facebook',
+          badgeText: `${Math.round((fbTotal / fbTgt) * 100)}% плану`,
+          badgeDone: `${fbTotal} / ${fbTgt}`,
+          iconSvg: `
+            <span class="w-6 h-6 rounded-lg bg-[#1877F2] text-white flex items-center justify-center shrink-0 shadow-xs">
+              <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </span>
+          `,
+          borderColor: 'border-blue-200 dark:border-blue-900/50',
+          bgHeader: 'from-blue-500/10 to-indigo-500/5',
+          btnClass: 'bg-[#1877F2]',
+          colorHex: '#1877F2',
+          metrics: [
+            { label: 'Дописи в стрічці', key: 'fb_posts', val: state.marketing.fb_posts, tgt: 20 },
+            { label: 'FB Відео', key: 'fb_video', val: state.marketing.fb_video, tgt: 5 },
+            { label: 'FB Stories', key: 'fb_stories', val: state.marketing.fb_stories, tgt: 60 }
+          ]
+        },
+        {
+          id: 'youtube',
+          name: 'YouTube',
+          badgeText: `${Math.round((ytTotal / ytTgt) * 100)}% плану`,
+          badgeDone: `${ytTotal} / ${ytTgt}`,
+          iconSvg: `
+            <span class="w-6 h-6 rounded-lg bg-[#FF0000] text-white flex items-center justify-center shrink-0 shadow-xs">
+              <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </span>
+          `,
+          borderColor: 'border-red-200 dark:border-red-900/50',
+          bgHeader: 'from-red-500/10 to-rose-500/5',
+          btnClass: 'bg-[#FF0000]',
+          colorHex: '#FF0000',
+          metrics: [
+            { label: 'Огляди нерухомості (відео)', key: 'yt_video', val: state.marketing.yt_video, tgt: 5 }
+          ]
+        },
+        {
+          id: 'x',
+          name: 'X (Twitter)',
+          badgeText: `${Math.round((xTotal / xTgt) * 100)}% плану`,
+          badgeDone: `${xTotal} / ${xTgt}`,
+          iconSvg: `
+            <span class="w-6 h-6 rounded-lg bg-black text-white flex items-center justify-center shrink-0 shadow-xs border border-gray-700">
+              <span class="font-black text-xs leading-none">𝕏</span>
+            </span>
+          `,
+          borderColor: 'border-gray-200 dark:border-gray-800',
+          bgHeader: 'from-gray-500/10 to-slate-500/5',
+          btnClass: 'bg-black dark:bg-gray-700',
+          colorHex: '#000000',
+          metrics: [
+            { label: 'Твіти / Пости', key: 'x_posts', val: state.marketing.x_posts, tgt: 20 },
+            { label: 'Відео-твіти', key: 'x_video', val: state.marketing.x_video, tgt: 5 },
+            { label: 'Коментарі / Реплаї', key: 'x_comments', val: state.marketing.x_comments, tgt: 60 }
+          ]
+        }
+      ];
+
+      // Filter by active tab
+      const visiblePlatforms = activeTab === 'all' 
+        ? platforms 
+        : platforms.filter(p => p.id === activeTab);
+
+      c2.innerHTML = `
+        <!-- Header with Aggregate Done Pill -->
+        <div class="flex items-center justify-between mb-2">
+          <h4 class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
+            <i data-lucide="share-2" class="w-3.5 h-3.5 text-pink-500"></i>
+            Соціальні мережі та SMM
+          </h4>
+          <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-pink-50 dark:bg-pink-950/60 text-pink-700 dark:text-pink-300 border border-pink-200 dark:border-pink-800">
+            Всього: ${grandMediaDone} / ${grandMediaTgt} (${grandMediaPct}%)
+          </span>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
-          <div class="bg-gray-50 dark:bg-gray-800/60 p-2.5 rounded-xl border border-gray-200 dark:border-gray-700/60">
-            <div class="flex items-center justify-between mb-1.5">
-              <span class="font-bold text-xs flex items-center gap-1 text-gray-900 dark:text-white">
-                <span class="w-3.5 h-3.5 bg-black text-white rounded-full text-[9px] flex items-center justify-center">♪</span>
-                Тік ток
-              </span>
-              <span class="text-[9px] text-gray-400">20 / 5 / 60</span>
+        <!-- Platform Tabs Navigation -->
+        <div class="flex items-center gap-1 overflow-x-auto scrollbar-none pb-1 mb-2.5">
+          <button type="button" onclick="setSocialPlatformTab('all')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold transition shrink-0 cursor-pointer ${activeTab === 'all' ? 'bg-pink-600 text-white shadow-xs' : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200'}">Всі (5)</button>
+          <button type="button" onclick="setSocialPlatformTab('instagram')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold transition shrink-0 cursor-pointer flex items-center gap-1 ${activeTab === 'instagram' ? 'bg-gradient-to-r from-rose-500 to-pink-600 text-white shadow-xs' : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200'}">📷 Instagram</button>
+          <button type="button" onclick="setSocialPlatformTab('tiktok')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold transition shrink-0 cursor-pointer flex items-center gap-1 ${activeTab === 'tiktok' ? 'bg-black text-white shadow-xs' : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200'}">🎵 TikTok</button>
+          <button type="button" onclick="setSocialPlatformTab('facebook')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold transition shrink-0 cursor-pointer flex items-center gap-1 ${activeTab === 'facebook' ? 'bg-[#1877F2] text-white shadow-xs' : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200'}">📘 Facebook</button>
+          <button type="button" onclick="setSocialPlatformTab('youtube')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold transition shrink-0 cursor-pointer flex items-center gap-1 ${activeTab === 'youtube' ? 'bg-[#FF0000] text-white shadow-xs' : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200'}">▶️ YouTube</button>
+          <button type="button" onclick="setSocialPlatformTab('x')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold transition shrink-0 cursor-pointer flex items-center gap-1 ${activeTab === 'x' ? 'bg-black text-white shadow-xs' : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200'}">𝕏 Twitter</button>
+        </div>
+
+        <!-- Platform Cards Grid -->
+        <div class="space-y-3">
+          ${visiblePlatforms.map(p => `
+            <div class="bg-gray-50/70 dark:bg-gray-800/40 rounded-2xl border ${p.borderColor} p-3.5 shadow-xs transition-all hover:shadow-md">
+              <!-- Platform Header -->
+              <div class="flex items-center justify-between pb-2 mb-2.5 border-b border-gray-200/60 dark:border-gray-700/60">
+                <div class="flex items-center gap-2">
+                  ${p.iconSvg}
+                  <div>
+                    <h5 class="font-extrabold text-xs text-gray-900 dark:text-white leading-none">${p.name}</h5>
+                    <span class="text-[9px] text-gray-400 font-medium">План: ${p.id === 'youtube' ? '5 відео' : '20 постів • 5 відео • 60 сторіз/коментарів'}</span>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-[10px] font-mono font-bold text-gray-500 dark:text-gray-400">${p.badgeDone}</span>
+                  <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 border border-gray-200 dark:border-gray-600 shadow-2xs">${p.badgeText}</span>
+                </div>
+              </div>
+
+              <!-- Metrics Grid -->
+              <div class="grid grid-cols-1 ${p.metrics.length === 3 ? 'sm:grid-cols-3' : 'sm:grid-cols-1'} gap-2.5">
+                ${p.metrics.map(m => renderMetricCard(m.label, m.key, m.val, m.tgt, p.colorHex, p.btnClass)).join('')}
+              </div>
             </div>
-            <div class="flex justify-between items-center text-xs">
-              <span>П: <strong>${state.marketing.tt_posts}</strong></span>
-              <span>В: <strong>${state.marketing.tt_video}</strong></span>
-              <span>С: <strong>${state.marketing.tt_stories}</strong></span>
-              <button onclick="incMedia('tt_posts', 20)" class="px-1 text-[10px] font-bold bg-gray-200 dark:bg-gray-700 rounded">+1</button>
-            </div>
-          </div>
-          <div class="bg-gray-50 dark:bg-gray-800/60 p-2.5 rounded-xl border border-gray-200 dark:border-gray-700/60">
-            <div class="flex items-center justify-between mb-1.5">
-              <span class="font-bold text-xs flex items-center gap-1 text-blue-600">
-                <i data-lucide="facebook" class="w-3.5 h-3.5"></i>
-                Фейсбук
-              </span>
-              <span class="text-[9px] text-gray-400">20 / 5 / 60</span>
-            </div>
-            <div class="flex justify-between items-center text-xs">
-              <span>П: <strong>${state.marketing.fb_posts}</strong></span>
-              <span>В: <strong>${state.marketing.fb_video}</strong></span>
-              <span>С: <strong>${state.marketing.fb_stories}</strong></span>
-              <button onclick="incMedia('fb_posts', 20)" class="px-1 text-[10px] font-bold bg-blue-100 text-blue-800 rounded">+1</button>
-            </div>
-          </div>
+          `).join('')}
         </div>
       `;
     }
