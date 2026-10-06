@@ -3744,7 +3744,123 @@
 
       const totClassVal = state.marketing.olx + state.marketing.domria + state.marketing.rieltor;
 
-      c1.innerHTML = `
+      // Individual Card View Mode Switcher for Marketing
+      if (mode === 'circles') {
+        const cx = 90, cy = 90, rOut = 80, rIn = 48;
+        let currentAngle = 0;
+        const total = Math.max(1, totClassVal);
+
+        const paths = classItems.map((it, idx) => {
+          const sliceAngle = (it.val / total) * 360;
+          const startA = currentAngle;
+          const endA = currentAngle + sliceAngle;
+          currentAngle = endA;
+
+          const pathD = describeDonutArc(cx, cy, rIn, rOut, startA, endA);
+          return `
+            <path id="mkt_donut_${idx}"
+                  d="${pathD}"
+                  fill="${it.barColor}"
+                  stroke="#FFFFFF"
+                  stroke-width="1.5"
+                  class="cursor-pointer hover:opacity-85 transition"
+                  onmousemove="showChartTooltip(event, '${it.name}', 'Факт: ${it.val} / ${it.tgt}', '${it.desc}')"
+                  onmouseleave="hideChartTooltip()" />
+          `;
+        }).join('');
+
+        c1.innerHTML = `
+          <div class="flex flex-wrap items-center justify-between gap-3 pb-1">
+            <h4 class="text-xs font-black text-purple-700 dark:text-purple-300 uppercase tracking-wider flex items-center gap-2">
+              <i data-lucide="layout-grid" class="w-4 h-4 text-purple-600"></i>
+              Оголошення на порталах (Кільце Donut)
+            </h4>
+            <span class="px-3 py-1 rounded-full text-xs font-black bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 border border-purple-200 font-mono">
+              Всього: ${totClassVal} / 60
+            </span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center bg-white dark:bg-[#1A1D24] p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs">
+            <div class="sm:col-span-5 flex justify-center py-2">
+              <div class="relative w-44 h-44 flex items-center justify-center">
+                <svg class="w-44 h-44 overflow-visible" viewBox="0 0 180 180">${paths}</svg>
+                <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                  <span class="text-xl font-black text-gray-900 dark:text-white font-mono">${totClassVal}</span>
+                  <span class="text-[9px] uppercase font-bold text-gray-400">з 60 оголошень</span>
+                </div>
+              </div>
+            </div>
+            <div class="sm:col-span-7 space-y-2.5 text-xs">
+              ${classItems.map(it => `
+                <div class="flex items-center justify-between p-2.5 rounded-xl bg-gray-50/80 dark:bg-gray-800/40 border border-gray-200/60 dark:border-gray-700/60 hover:border-purple-300 transition">
+                  <div class="flex items-center gap-2 truncate">
+                    <span class="w-3.5 h-3 rounded-xs shrink-0" style="background-color: ${it.barColor};"></span>
+                    <span class="font-bold text-gray-800 dark:text-gray-200 truncate text-[11px]">${it.name}</span>
+                  </div>
+                  <div class="flex items-center gap-2 font-mono text-[11px] shrink-0">
+                    <span class="font-bold text-gray-900 dark:text-white">${it.val} / ${it.tgt}</span>
+                    <button onclick="incrementMarketing('${it.id}')" class="px-2 py-0.5 text-[10px] font-bold bg-purple-100 hover:bg-purple-200 text-purple-800 rounded transition cursor-pointer">+1</button>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      } else if (mode === 'pie') {
+        const cx = 90, cy = 90, r = 80;
+        let currentAngle = 0;
+        const total = Math.max(1, totClassVal);
+
+        const paths = classItems.map((it, idx) => {
+          const sliceAngle = (it.val / total) * 360;
+          const startA = currentAngle;
+          const endA = currentAngle + sliceAngle;
+          currentAngle = endA;
+
+          const pathD = describePieSlice(cx, cy, r, startA, endA);
+          return `
+            <path id="mkt_pie_${idx}"
+                  d="${pathD}"
+                  fill="${it.barColor}"
+                  stroke="#FFFFFF"
+                  stroke-width="2"
+                  class="cursor-pointer hover:opacity-85 transition"
+                  onmousemove="showChartTooltip(event, '${it.name}', 'Факт: ${it.val} / ${it.tgt}', '${it.desc}')"
+                  onmouseleave="hideChartTooltip()" />
+          `;
+        }).join('');
+
+        c1.innerHTML = `
+          <div class="flex flex-wrap items-center justify-between gap-3 pb-1">
+            <h4 class="text-xs font-black text-purple-700 dark:text-purple-300 uppercase tracking-wider flex items-center gap-2">
+              <i data-lucide="layout-grid" class="w-4 h-4 text-purple-600"></i>
+              Оголошення на порталах (Кругова Pie)
+            </h4>
+            <span class="px-3 py-1 rounded-full text-xs font-black bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 border border-purple-200 font-mono">
+              Всього: ${totClassVal} / 60
+            </span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center bg-white dark:bg-[#1A1D24] p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs">
+            <div class="sm:col-span-5 flex justify-center py-2">
+              <svg class="w-44 h-44 overflow-visible" viewBox="0 0 180 180">${paths}</svg>
+            </div>
+            <div class="sm:col-span-7 space-y-2.5 text-xs">
+              ${classItems.map(it => `
+                <div class="flex items-center justify-between p-2.5 rounded-xl bg-gray-50/80 dark:bg-gray-800/40 border border-gray-200/60 dark:border-gray-700/60 hover:border-purple-300 transition">
+                  <div class="flex items-center gap-2 truncate">
+                    <span class="w-3.5 h-3 rounded-xs shrink-0" style="background-color: ${it.barColor};"></span>
+                    <span class="font-bold text-gray-800 dark:text-gray-200 truncate text-[11px]">${it.name}</span>
+                  </div>
+                  <div class="flex items-center gap-2 font-mono text-[11px] shrink-0">
+                    <span class="font-bold text-gray-900 dark:text-white">${it.val} / ${it.tgt}</span>
+                    <button onclick="incrementMarketing('${it.id}')" class="px-2 py-0.5 text-[10px] font-bold bg-purple-100 hover:bg-purple-200 text-purple-800 rounded transition cursor-pointer">+1</button>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      } else {
+        c1.innerHTML = `
         <div class="flex flex-wrap items-center justify-between gap-3 pb-1">
           <div>
             <h4 class="text-xs font-black text-purple-700 dark:text-purple-300 uppercase tracking-wider flex items-center gap-2">
@@ -3763,46 +3879,6 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
           ${classItems.map(it => {
             const pct = Math.round((it.val / it.tgt) * 100);
-            if (mode === 'circles') {
-              return `
-                <div class="bg-white dark:bg-[#1A1D24] p-5 rounded-2xl border border-gray-200/90 dark:border-gray-800 shadow-xs hover:shadow-md transition flex flex-col justify-between space-y-4">
-                  <div class="flex items-center justify-between">
-                    <span class="px-2.5 py-1 rounded-lg ${it.tagBg} font-black text-xs">${it.tag}</span>
-                    <span class="text-xs font-bold text-gray-400 font-mono">${it.val} з ${it.tgt} норм</span>
-                  </div>
-                  <div class="flex items-center gap-4 py-1">
-                    ${makeCircleGauge(pct, 'text-purple-600', 58, 5)}
-                    <div>
-                      <h5 class="font-extrabold text-sm text-gray-900 dark:text-white">${it.name}</h5>
-                      <span class="text-xs text-gray-400 block mt-0.5">${it.desc}</span>
-                    </div>
-                  </div>
-                  <button onclick="incrementMarketing('${it.id}')" class="w-full py-2.5 px-4 rounded-xl font-bold text-xs bg-purple-600 hover:bg-purple-700 text-white shadow-xs transition active:scale-98 flex items-center justify-center gap-1.5 cursor-pointer">
-                    <i data-lucide="plus" class="w-3.5 h-3.5"></i>
-                    <span>+1 Додати оголошення</span>
-                  </button>
-                </div>
-              `;
-            }
-            if (mode === 'charts') {
-              return `
-                <div class="bg-white dark:bg-[#1A1D24] p-5 rounded-2xl border border-gray-200/90 dark:border-gray-800 shadow-xs hover:shadow-md transition flex flex-col justify-between space-y-4">
-                  <div class="flex items-center justify-between">
-                    <span class="px-2.5 py-1 rounded-lg ${it.tagBg} font-black text-xs">${it.tag}</span>
-                    <span class="text-xs font-mono font-bold text-purple-600">${pct}%</span>
-                  </div>
-                  <div>
-                    <h5 class="font-extrabold text-sm text-gray-900 dark:text-white">${it.name}</h5>
-                    <div class="text-2xl font-black text-gray-900 dark:text-white font-mono mt-1">${it.val} <span class="text-xs font-normal text-gray-400">/ ${it.tgt}</span></div>
-                  </div>
-                  <div class="py-1">${makeMiniChart(pct, '#9333EA')}</div>
-                  <button onclick="incrementMarketing('${it.id}')" class="w-full py-2.5 px-4 rounded-xl font-bold text-xs bg-purple-600 hover:bg-purple-700 text-white shadow-xs transition active:scale-98 flex items-center justify-center gap-1.5 cursor-pointer">
-                    <i data-lucide="plus" class="w-3.5 h-3.5"></i>
-                    <span>+1 Додати оголошення</span>
-                  </button>
-                </div>
-              `;
-            }
             return `
               <div class="bg-white dark:bg-[#1A1D24] p-5 rounded-2xl border border-gray-200/90 dark:border-gray-800 shadow-xs hover:shadow-md transition flex flex-col justify-between space-y-4 group">
                 <div class="flex items-center justify-between">
@@ -3841,6 +3917,7 @@
           }).join('')}
         </div>
       `;
+      }
 
       // ─── PREMIUM REDESIGNED SOCIAL MEDIA & SMM SECTION ────────────────────────
       const activeTab = state.socialTab || 'all';
@@ -4027,7 +4104,208 @@
         ? platforms 
         : platforms.filter(p => p.id === activeTab);
 
-      c2.innerHTML = `
+      if (mode === 'circles') {
+        const cx = 90, cy = 90, rOut = 80, rIn = 48;
+        let currentAngle = 0;
+        const total = Math.max(1, grandMediaDone);
+
+        const paths = platforms.map((p, idx) => {
+          const val = p.id === 'instagram' ? igTotal : p.id === 'tiktok' ? ttTotal : p.id === 'facebook' ? fbTotal : p.id === 'youtube' ? ytTotal : xTotal;
+          const sliceAngle = (val / total) * 360;
+          const startA = currentAngle;
+          const endA = currentAngle + sliceAngle;
+          currentAngle = endA;
+
+          const pathD = describeDonutArc(cx, cy, rIn, rOut, startA, endA);
+          return `
+            <path id="soc_donut_${idx}"
+                  d="${pathD}"
+                  fill="${p.colorHex}"
+                  stroke="#FFFFFF"
+                  stroke-width="1.5"
+                  class="cursor-pointer hover:opacity-85 transition"
+                  onmousemove="showChartTooltip(event, '${p.name}', 'Виконано: ${val} / ${p.id === 'youtube' ? ytTgt : 85} дій', '${p.badgeText}')"
+                  onmouseleave="hideChartTooltip()" />
+          `;
+        }).join('');
+
+        c2.innerHTML = `
+          <div class="flex flex-wrap items-center justify-between gap-3 pb-1">
+            <h4 class="text-xs font-black text-pink-600 dark:text-pink-400 uppercase tracking-wider flex items-center gap-2">
+              <i data-lucide="share-2" class="w-4 h-4 text-pink-500"></i>
+              Соціальні мережі та SMM (Кільце Donut)
+            </h4>
+            <span class="px-3 py-1 rounded-full text-xs font-black bg-pink-50 dark:bg-pink-950/60 text-pink-700 dark:text-pink-300 border border-pink-200 font-mono">
+              Всього: ${grandMediaDone} / ${grandMediaTgt} (${grandMediaPct}%)
+            </span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-12 gap-5 items-center bg-white dark:bg-[#1A1D24] p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs">
+            <div class="sm:col-span-5 flex justify-center py-2">
+              <div class="relative w-44 h-44 flex items-center justify-center">
+                <svg class="w-44 h-44 overflow-visible" viewBox="0 0 180 180">${paths}</svg>
+                <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                  <span class="text-xl font-black text-gray-900 dark:text-white font-mono">${grandMediaDone}</span>
+                  <span class="text-[9px] uppercase font-bold text-gray-400">з ${grandMediaTgt} дій</span>
+                </div>
+              </div>
+            </div>
+            <div class="sm:col-span-7 space-y-2 text-xs">
+              ${platforms.map(p => {
+                const val = p.id === 'instagram' ? igTotal : p.id === 'tiktok' ? ttTotal : p.id === 'facebook' ? fbTotal : p.id === 'youtube' ? ytTotal : xTotal;
+                const tgt = p.id === 'youtube' ? ytTgt : 85;
+                const pct = Math.round((val / tgt) * 100);
+                return `
+                  <div class="flex items-center justify-between p-2 rounded-xl bg-gray-50/80 dark:bg-gray-800/40 border border-gray-200/60 dark:border-gray-700/60 hover:border-pink-300 transition">
+                    <div class="flex items-center gap-2 truncate">
+                      <span class="w-3.5 h-3 rounded-xs shrink-0" style="background-color: ${p.colorHex};"></span>
+                      <span class="font-bold text-gray-800 dark:text-gray-200 truncate text-[11px]">${p.name}</span>
+                    </div>
+                    <div class="flex items-center gap-2 font-mono text-[11px] shrink-0">
+                      <span class="font-bold text-gray-900 dark:text-white">${val} / ${tgt}</span>
+                      <span class="font-bold text-pink-600">(${pct}%)</span>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        `;
+      } else if (mode === 'pie') {
+        const cx = 90, cy = 90, r = 80;
+        let currentAngle = 0;
+        const total = Math.max(1, grandMediaDone);
+
+        const paths = platforms.map((p, idx) => {
+          const val = p.id === 'instagram' ? igTotal : p.id === 'tiktok' ? ttTotal : p.id === 'facebook' ? fbTotal : p.id === 'youtube' ? ytTotal : xTotal;
+          const sliceAngle = (val / total) * 360;
+          const startA = currentAngle;
+          const endA = currentAngle + sliceAngle;
+          currentAngle = endA;
+
+          const pathD = describePieSlice(cx, cy, r, startA, endA);
+          return `
+            <path id="soc_pie_${idx}"
+                  d="${pathD}"
+                  fill="${p.colorHex}"
+                  stroke="#FFFFFF"
+                  stroke-width="2"
+                  class="cursor-pointer hover:opacity-85 transition"
+                  onmousemove="showChartTooltip(event, '${p.name}', 'Виконано: ${val} / ${p.id === 'youtube' ? ytTgt : 85} дій', '${p.badgeText}')"
+                  onmouseleave="hideChartTooltip()" />
+          `;
+        }).join('');
+
+        c2.innerHTML = `
+          <div class="flex flex-wrap items-center justify-between gap-3 pb-1">
+            <h4 class="text-xs font-black text-pink-600 dark:text-pink-400 uppercase tracking-wider flex items-center gap-2">
+              <i data-lucide="share-2" class="w-4 h-4 text-pink-500"></i>
+              Соціальні мережі та SMM (Кругова Pie)
+            </h4>
+            <span class="px-3 py-1 rounded-full text-xs font-black bg-pink-50 dark:bg-pink-950/60 text-pink-700 dark:text-pink-300 border border-pink-200 font-mono">
+              Всього: ${grandMediaDone} / ${grandMediaTgt} (${grandMediaPct}%)
+            </span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-12 gap-5 items-center bg-white dark:bg-[#1A1D24] p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs">
+            <div class="sm:col-span-5 flex justify-center py-2">
+              <svg class="w-44 h-44 overflow-visible" viewBox="0 0 180 180">${paths}</svg>
+            </div>
+            <div class="sm:col-span-7 space-y-2 text-xs">
+              ${platforms.map(p => {
+                const val = p.id === 'instagram' ? igTotal : p.id === 'tiktok' ? ttTotal : p.id === 'facebook' ? fbTotal : p.id === 'youtube' ? ytTotal : xTotal;
+                const tgt = p.id === 'youtube' ? ytTgt : 85;
+                const pct = Math.round((val / tgt) * 100);
+                return `
+                  <div class="flex items-center justify-between p-2 rounded-xl bg-gray-50/80 dark:bg-gray-800/40 border border-gray-200/60 dark:border-gray-700/60 hover:border-pink-300 transition">
+                    <div class="flex items-center gap-2 truncate">
+                      <span class="w-3.5 h-3 rounded-xs shrink-0" style="background-color: ${p.colorHex};"></span>
+                      <span class="font-bold text-gray-800 dark:text-gray-200 truncate text-[11px]">${p.name}</span>
+                    </div>
+                    <div class="flex items-center gap-2 font-mono text-[11px] shrink-0">
+                      <span class="font-bold text-gray-900 dark:text-white">${val} / ${tgt}</span>
+                      <span class="font-bold text-pink-600">(${pct}%)</span>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        `;
+      } else if (mode === 'charts') {
+        const splineData = [
+          { date: '23 вер.', val: 12 },
+          { date: '25 вер.', val: 18 },
+          { date: '27 вер.', val: 24 },
+          { date: '29 вер.', val: 19 },
+          { date: '01 жов.', val: 28 },
+          { date: '03 жов.', val: 22 },
+          { date: '05 жов.', val: 32 },
+          { date: '06 жов.', val: 35 }
+        ];
+
+        const w = 480, h = 180, padLeft = 40, padRight = 15, padTop = 15, padBottom = 30;
+        const chartW = w - padLeft - padRight;
+        const chartH = h - padTop - padBottom;
+        const maxVal = 40;
+
+        const points = splineData.map((d, i) => ({
+          x: padLeft + (i / (splineData.length - 1)) * chartW,
+          y: padTop + chartH - (d.val / maxVal) * chartH,
+          raw: d
+        }));
+
+        const splinePath = buildCubicSplinePath(points);
+        const areaPath = `${splinePath} L ${points[points.length - 1].x.toFixed(1)} ${(padTop + chartH).toFixed(1)} L ${points[0].x.toFixed(1)} ${(padTop + chartH).toFixed(1)} Z`;
+
+        const gridSvg = [0, 10, 20, 30, 40].map(lvl => {
+          const yPos = padTop + chartH - (lvl / maxVal) * chartH;
+          return `
+            <line x1="${padLeft}" y1="${yPos}" x2="${w - padRight}" y2="${yPos}" stroke="#E2E8F0" stroke-dasharray="3,3" stroke-width="1" />
+            <text x="${padLeft - 6}" y="${yPos + 3}" font-size="9" fill="#94A3B8" text-anchor="end" font-family="monospace">${lvl}</text>
+          `;
+        }).join('');
+
+        const xLabels = points.map(p => `
+          <text x="${p.x}" y="${h - 10}" font-size="9" fill="#94A3B8" text-anchor="middle" font-weight="500">${p.raw.date}</text>
+        `).join('');
+
+        const dotsSvg = points.map(p => `
+          <g class="cursor-pointer group"
+             onmousemove="showChartTooltip(event, '${p.raw.date}', '${p.raw.val} публікацій та сторіз', 'Денний SMM обсяг')"
+             onmouseleave="hideChartTooltip()">
+            <circle cx="${p.x}" cy="${p.y}" r="8" fill="transparent" />
+            <circle cx="${p.x}" cy="${p.y}" r="3.5" fill="#E1306C" stroke="#FFFFFF" stroke-width="2" class="group-hover:r-5 transition" />
+          </g>
+        `).join('');
+
+        c2.innerHTML = `
+          <div class="space-y-3 bg-white dark:bg-[#1A1D24] p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs">
+            <div class="flex items-center justify-between pb-1">
+              <h4 class="font-black text-xs uppercase tracking-wider text-pink-600 flex items-center gap-1.5">
+                <i data-lucide="trending-up" class="w-4 h-4"></i>
+                Динаміка SMM активності (Пости, Reels, Stories)
+              </h4>
+              <span class="text-xs font-mono font-bold text-gray-500">Всього: ${grandMediaDone} дій</span>
+            </div>
+            <div class="relative w-full h-44 select-none">
+              <svg class="w-full h-full overflow-visible" viewBox="0 0 480 180" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="gradSmmSpline" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#E1306C" stop-opacity="0.35" />
+                    <stop offset="100%" stop-color="#E1306C" stop-opacity="0.0" />
+                  </linearGradient>
+                </defs>
+                <text x="-${h / 2}" y="12" transform="rotate(-90)" font-size="9" fill="#94A3B8" text-anchor="middle" font-weight="bold">Дії</text>
+                ${gridSvg}
+                <path d="${areaPath}" fill="url(#gradSmmSpline)" />
+                <path d="${splinePath}" fill="none" stroke="#E1306C" stroke-width="2.5" stroke-linecap="round" />
+                ${xLabels}
+                ${dotsSvg}
+              </svg>
+            </div>
+          </div>
+        `;
+      } else {
+        c2.innerHTML = `
         <div class="flex flex-wrap items-center justify-between gap-3 pb-1">
           <div>
             <h4 class="text-xs font-black text-pink-600 dark:text-pink-400 uppercase tracking-wider flex items-center gap-2">
@@ -4080,6 +4358,7 @@
           `).join('')}
         </div>
       `;
+      }
     }
 
     // ─── 4. RENDER DEALS SECTION (INTERACTIVE DUAL: CHARTS / DONUT / PIE / BARS) ───
@@ -5007,7 +5286,7 @@
 
     // On Load Initializer
     document.addEventListener('DOMContentLoaded', () => {
-      setVisualMode('bars');
+      setVisualMode('charts');
       setQuickPeriod('1m');
       renderSalesKanban();
       renderLeadsKanban();
