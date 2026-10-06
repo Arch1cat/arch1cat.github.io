@@ -88,7 +88,7 @@
       <div class="flex items-center gap-2.5">
         <span class="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center text-white font-black text-lg shadow-sm">Y</span>
         <h1 class="font-extrabold text-base tracking-tight text-gray-900 dark:text-white">Робоче місце CRM</h1>
-        <span class="ml-2 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-blue-100 dark:bg-blue-950/80 text-blue-800 dark:text-blue-300 border border-blue-300 dark:border-blue-700">Multi-Line & Dual-Series v6.5 Active</span>
+        <span class="ml-2 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700">Unified Analytics v7.0 Active</span>
       </div>
 
       <!-- Clean Theme Toggle -->
@@ -467,12 +467,24 @@
 
         <!-- Quick Metrics Highlights & View Switcher -->
         <div class="flex items-center gap-2 text-xs flex-wrap">
-          <!-- View Switcher in Statistics -->
+          <!-- View Switcher in Statistics (1-v-1 with KPI tab) -->
           <div class="flex items-center bg-gray-100 dark:bg-gray-800 p-0.5 rounded-xl border border-gray-200 dark:border-gray-700 text-xs">
-            <button type="button" onclick="setStatsViewMode('pro')" id="btn_stats_pro" class="px-2.5 py-1 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-xs transition cursor-pointer">📈 Графіки RealSoft</button>
-            <button type="button" onclick="setStatsViewMode('table')" id="btn_stats_table" class="px-2.5 py-1 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 transition cursor-pointer">📋 Матриця 16 рядків</button>
-            <button type="button" onclick="setStatsViewMode('bars')" id="btn_stats_bars" class="px-2.5 py-1 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 transition cursor-pointer">📊 Стовпчики</button>
-            <button type="button" onclick="setStatsViewMode('donut')" id="btn_stats_donut" class="px-2.5 py-1 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 transition cursor-pointer">⭕ Кругова %</button>
+            <button type="button" onclick="setStatsViewMode('charts')" id="btn_stats_charts" class="px-3 py-1.5 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-xs transition cursor-pointer flex items-center gap-1.5">
+              <i data-lucide="trending-up" class="w-3.5 h-3.5 text-blue-500"></i>
+              <span>📈 Графіки (Мульти-лінії)</span>
+            </button>
+            <button type="button" onclick="setStatsViewMode('pie')" id="btn_stats_pie" class="px-3 py-1.5 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition cursor-pointer flex items-center gap-1.5">
+              <i data-lucide="pie-chart" class="w-3.5 h-3.5 text-pink-500"></i>
+              <span>🥧 Кругова діаграма (%)</span>
+            </button>
+            <button type="button" onclick="setStatsViewMode('bars')" id="btn_stats_bars" class="px-3 py-1.5 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition cursor-pointer flex items-center gap-1.5">
+              <i data-lucide="bar-chart-horizontal" class="w-3.5 h-3.5 text-emerald-500"></i>
+              <span>📊 Смуги нормативів</span>
+            </button>
+            <!-- Compatibility fallbacks -->
+            <button type="button" onclick="setStatsViewMode('charts')" id="btn_stats_pro" class="hidden"></button>
+            <button type="button" onclick="setStatsViewMode('bars')" id="btn_stats_table" class="hidden"></button>
+            <button type="button" onclick="setStatsViewMode('pie')" id="btn_stats_donut" class="hidden"></button>
           </div>
 
           <!-- Currency Switcher ($ / ₴) in Stats -->
@@ -3732,14 +3744,20 @@
             <div class="relative w-full h-44 select-none">
               ${svgContent}
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 border-t border-gray-100 dark:border-gray-800">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1 border-t border-gray-100 dark:border-gray-800">
               ${classItems.map(it => `
-                <div class="p-2 rounded-xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200/60 dark:border-gray-700/60 flex items-center justify-between">
+                <div class="p-2.5 rounded-xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200/60 dark:border-gray-700/60 flex items-center justify-between">
                   <div class="truncate">
-                    <span class="text-[10px] text-gray-400 block truncate font-medium">${it.name}</span>
-                    <strong class="text-xs text-gray-900 dark:text-white font-mono">${it.val} / ${it.tgt} (${it.pct}%)</strong>
+                    <div class="flex items-center gap-1.5">
+                      <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: ${it.barColor};"></span>
+                      <span class="text-[11px] text-gray-700 dark:text-gray-300 block truncate font-bold">${it.name}</span>
+                    </div>
+                    <div class="flex items-center gap-2 mt-1">
+                      <strong class="text-xs text-gray-900 dark:text-white font-mono">${it.val} / ${it.tgt}</strong>
+                      <span class="text-[10px] font-bold" style="color: ${it.barColor};">(${it.pct}%)</span>
+                    </div>
                   </div>
-                  <button onclick="incrementMarketing('${it.id}')" class="px-2 py-1 text-[10px] font-bold bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition cursor-pointer shrink-0 ml-1">+1</button>
+                  <button onclick="incrementMarketing('${it.id}')" class="px-2.5 py-1 text-[10px] font-bold text-white rounded-lg transition cursor-pointer shrink-0 ml-1 shadow-2xs hover:opacity-90" style="background-color: ${it.barColor};">+1</button>
                 </div>
               `).join('')}
             </div>
@@ -3913,16 +3931,25 @@
             <div class="relative w-full h-44 select-none">
               ${svgContent}
             </div>
-            <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 pt-1 border-t border-gray-100 dark:border-gray-800">
-              ${platforms.map(p => `
-                <div class="p-2 rounded-xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200/60 dark:border-gray-700/60 flex items-center justify-between">
-                  <div class="truncate">
-                    <span class="text-[10px] text-gray-400 block truncate font-medium">${p.name.split(' ')[0]}</span>
-                    <strong class="text-xs text-gray-900 dark:text-white font-mono">${p.val} / ${p.tgt}</strong>
-                    <span class="text-[10px] font-bold text-pink-600 block">(${p.pct}%)</span>
+            <div class="grid grid-cols-1 sm:grid-cols-5 gap-2 pt-1 border-t border-gray-100 dark:border-gray-800">
+              ${platforms.map(p => {
+                const metricKey = p.id === 'instagram' ? 'ig_posts' : p.id === 'tiktok' ? 'tt_posts' : p.id === 'facebook' ? 'fb_posts' : p.id === 'youtube' ? 'yt_video' : 'x_posts';
+                return `
+                  <div class="p-2.5 rounded-xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200/60 dark:border-gray-700/60 flex items-center justify-between">
+                    <div class="truncate">
+                      <div class="flex items-center gap-1.5">
+                        <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: ${p.colorHex};"></span>
+                        <span class="text-[11px] text-gray-700 dark:text-gray-300 block truncate font-bold">${p.name.split(' ')[0]}</span>
+                      </div>
+                      <div class="flex items-center gap-1.5 mt-1 font-mono">
+                        <strong class="text-xs text-gray-900 dark:text-white font-mono">${p.val} / ${p.tgt}</strong>
+                        <span class="text-[10px] font-bold" style="color: ${p.colorHex};">(${p.pct}%)</span>
+                      </div>
+                    </div>
+                    <button onclick="incrementMarketing('${metricKey}')" class="px-2 py-1 text-[10px] font-bold text-white rounded-lg transition cursor-pointer shrink-0 ml-1 shadow-2xs hover:opacity-90" style="background-color: ${p.colorHex};">+1</button>
                   </div>
-                </div>
-              `).join('')}
+                `;
+              }).join('')}
             </div>
           </div>
         `;
@@ -4038,56 +4065,61 @@
         return;
       }
 
-      // MODE 3: MULTI-LINE SPLINE GRAPH (3 ОКРЕМІ ЛІНІЇ ДЛЯ КОЖНОГО З 3 ПОКАЗНИКІВ УГОД)
+            // MODE 3: MULTI-LINE SPLINE GRAPH (3 ОКРЕМІ ЛІНІЇ ДЛЯ КОЖНОГО З 3 ПОКАЗНИКІВ УГОД)
       if (mode === 'charts') {
         const dates = ['23 вер.', '25 вер.', '27 вер.', '29 вер.', '01 жов.', '03 жов.', '05 жов.', '06 жов.'];
         const series = [
-          { id: 'rent_deal', name: 'Оренда житла / комерції', color: '#10B981', data: [0, 1, 0, 0, 1, 0, 1, 0] },
-          { id: 'deposit', name: 'Завдаток (Бронь)', color: '#F59E0B', data: [0, 0, 1, 0, 0, 1, 0, 0] },
-          { id: 'sale_deal', name: 'Угода купівлі-продажу', color: '#8B5CF6', data: [0, 0, 0, 0, 0, 0, 1, 0] }
+          { id: 'rent_deal', name: 'Оренда житла / комерції', shortName: 'Оренда', color: '#10B981', data: [1, 1, 2, 2, 2, 3, 3, 3] },
+          { id: 'deposit', name: 'Завдаток (Бронь)', shortName: 'Завдатки', color: '#F59E0B', data: [0, 1, 1, 1, 2, 2, 2, 2] },
+          { id: 'sale_deal', name: 'Угода купівлі-продажу', shortName: 'Продаж', color: '#8B5CF6', data: [0, 0, 0, 0, 0, 1, 1, 1] }
         ];
 
-        const svgContent = renderMultiLineSplineSvg({ dates, series, w: 480, h: 180, yLabel: 'Угоди' });
+        const svgContent = renderMultiLineSplineSvg({ dates, series, w: 520, h: 190, yLabel: 'Угоди (Факт)' });
 
         c.innerHTML = `
           <div class="col-span-full space-y-3">
             <!-- Top Series Legend Bar -->
-            <div class="flex flex-wrap items-center justify-between gap-2 pb-1 border-b border-gray-100 dark:border-gray-800 text-[11px]">
-              <div class="flex items-center gap-3 flex-wrap">
-                ${series.map(s => {
-                  const it = items.find(x => x.id === s.id);
-                  return `
-                    <div class="flex items-center gap-1.5">
-                      <span class="w-3 h-3 rounded-xs shrink-0" style="background-color: ${s.color};"></span>
-                      <span class="font-bold text-gray-800 dark:text-gray-200">${s.name}:</span>
-                      <span class="font-mono font-bold text-gray-900 dark:text-white">${it ? it.val : 0}</span>
-                    </div>
-                  `;
-                }).join('')}
+            <div class="flex flex-wrap items-center justify-between gap-2 p-2.5 rounded-xl bg-gray-50/90 dark:bg-gray-800/80 border border-gray-200/80 dark:border-gray-700/80 text-xs">
+              <div class="flex items-center gap-3.5 flex-wrap">
+                <div class="flex items-center gap-1.5 font-bold text-emerald-600 dark:text-emerald-400">
+                  <span class="w-3 h-3 rounded-full bg-[#10B981] shadow-2xs"></span>
+                  <span>Оренда:</span>
+                  <span class="font-mono text-gray-900 dark:text-white font-extrabold">${state.kpi.rent_deal}</span>
+                </div>
+                <div class="flex items-center gap-1.5 font-bold text-amber-600 dark:text-amber-400">
+                  <span class="w-3 h-3 rounded-full bg-[#F59E0B] shadow-2xs"></span>
+                  <span>Завдатки:</span>
+                  <span class="font-mono text-gray-900 dark:text-white font-extrabold">${state.kpi.deposit}</span>
+                </div>
+                <div class="flex items-center gap-1.5 font-bold text-purple-600 dark:text-purple-400">
+                  <span class="w-3 h-3 rounded-full bg-[#8B5CF6] shadow-2xs"></span>
+                  <span>Угода продажу:</span>
+                  <span class="font-mono text-gray-900 dark:text-white font-extrabold">${state.kpi.sale_deal}</span>
+                </div>
               </div>
-              <span class="text-[10px] text-gray-400 font-mono">3 лінії активності угод</span>
+              <span class="text-[10px] text-gray-400 font-mono font-bold uppercase tracking-wider">3 лінії угод</span>
             </div>
 
             <!-- Multi-Line Graph Area -->
-            <div class="relative w-full h-44 select-none">
+            <div class="relative w-full h-48 select-none">
               ${svgContent}
             </div>
 
-            <!-- Bottom Quick Actions & Percentages -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 border-t border-gray-100 dark:border-gray-800">
+            <!-- Bottom Quick Actions & Percentages with category colors -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1 border-t border-gray-100 dark:border-gray-800">
               ${items.map(it => `
                 <div class="p-2.5 rounded-xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200/60 dark:border-gray-700/60 flex items-center justify-between">
                   <div class="truncate">
                     <div class="flex items-center gap-1.5">
-                      <span class="w-2 h-2 rounded-full shrink-0" style="background-color: ${it.color};"></span>
-                      <span class="text-[11px] text-gray-400 block truncate font-medium">${it.title}</span>
+                      <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: ${it.color};"></span>
+                      <span class="text-[11px] text-gray-700 dark:text-gray-300 block truncate font-bold">${it.title}</span>
                     </div>
                     <div class="flex items-center gap-2 mt-1">
                       <strong class="text-xs text-gray-900 dark:text-white font-mono">${it.val} / ${it.tgt}</strong>
-                      <span class="text-[10px] font-bold text-amber-600">(${it.pct}%)</span>
+                      <span class="text-[10px] font-bold" style="color: ${it.color};">(${it.pct}%)</span>
                     </div>
                   </div>
-                  <button onclick="incrementKpi('${it.id}')" class="px-2.5 py-1 text-[10px] font-bold bg-amber-600 hover:bg-amber-700 text-white rounded-lg transition cursor-pointer shrink-0 ml-1">+1</button>
+                  <button onclick="incrementKpi('${it.id}')" class="px-2.5 py-1 text-[10px] font-bold text-white rounded-lg transition cursor-pointer shrink-0 ml-1 shadow-2xs hover:opacity-90" style="background-color: ${it.color};">+1</button>
                 </div>
               `).join('')}
             </div>
@@ -4220,52 +4252,43 @@
       showToast('Всі блоки відновлено!');
     }
 
-    // Statistics View Mode Switcher (Графіки RealSoft / Таблиця / Стовпчики / Кругова %)
+    // Statistics View Mode Switcher (Matching KPI 1-v-1: charts | pie | bars)
     function setStatsViewMode(mode) {
+      if (mode === 'pro') mode = 'charts';
+      if (mode === 'donut') mode = 'pie';
+      if (mode === 'table') mode = 'bars';
       state.statsViewMode = mode;
-      
+
       const vPro = document.getElementById('statsView_pro');
       const vTable = document.getElementById('statsView_table');
       const vBars = document.getElementById('statsView_bars');
       const vDonut = document.getElementById('statsView_donut');
 
-      if (vPro) vPro.classList.toggle('hidden', mode !== 'pro');
-      if (vTable) vTable.classList.toggle('hidden', mode !== 'table');
-      if (vBars) vBars.classList.toggle('hidden', mode !== 'bars');
-      if (vDonut) vDonut.classList.toggle('hidden', mode !== 'donut');
+      if (vPro) vPro.classList.toggle('hidden', mode !== 'charts');
+      if (vDonut) vDonut.classList.toggle('hidden', mode !== 'pie');
+      if (vTable) vTable.classList.toggle('hidden', mode !== 'bars');
+      if (vBars) vBars.classList.add('hidden'); // merged into table / bars view
 
-      const btnPro = document.getElementById('btn_stats_pro');
-      const btnTable = document.getElementById('btn_stats_table');
-      const btnBars = document.getElementById('btn_stats_bars');
-      const btnDonut = document.getElementById('btn_stats_donut');
+      const btnCharts = document.getElementById('btn_stats_charts') || document.getElementById('btn_stats_pro');
+      const btnPie = document.getElementById('btn_stats_pie') || document.getElementById('btn_stats_donut');
+      const btnBars = document.getElementById('btn_stats_bars') || document.getElementById('btn_stats_table');
 
-      if (btnPro) {
-        btnPro.className = mode === 'pro' 
-          ? "px-2.5 py-1 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-xs transition cursor-pointer"
-          : "px-2.5 py-1 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 transition cursor-pointer";
-      }
-      if (btnTable) {
-        btnTable.className = mode === 'table' 
-          ? "px-2.5 py-1 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-xs transition cursor-pointer"
-          : "px-2.5 py-1 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 transition cursor-pointer";
-      }
-      if (btnBars) {
-        btnBars.className = mode === 'bars' 
-          ? "px-2.5 py-1 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-xs transition cursor-pointer"
-          : "px-2.5 py-1 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 transition cursor-pointer";
-      }
-      if (btnDonut) {
-        btnDonut.className = mode === 'donut' 
-          ? "px-2.5 py-1 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-xs transition cursor-pointer"
-          : "px-2.5 py-1 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 transition cursor-pointer";
-      }
+      [
+        { btn: btnCharts, m: 'charts' },
+        { btn: btnPie, m: 'pie' },
+        { btn: btnBars, m: 'bars' }
+      ].forEach(({ btn, m }) => {
+        if (!btn) return;
+        btn.className = mode === m
+          ? "px-3 py-1.5 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-xs transition cursor-pointer flex items-center gap-1.5"
+          : "px-3 py-1.5 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition cursor-pointer flex items-center gap-1.5";
+      });
 
-      if (mode === 'pro') {
+      if (mode === 'charts') {
         renderProAnalyticsCharts();
       }
-
       renderIcons();
-      showToast(`Вид статистики: ${mode === 'pro' ? 'Графіки RealSoft' : mode === 'table' ? 'Матриця 16 рядків' : mode === 'bars' ? 'Стовпчики' : 'Кругова %'}`);
+      showToast(`Вид статистики: ${mode === 'charts' ? 'Графіки (Мульти-лінії)' : mode === 'pie' ? 'Кругова діаграма (%)' : 'Смуги нормативів / Матриця'}`);
     }
 
     // ═════════════════════════════════════════════════════════════════════════
@@ -4326,28 +4349,29 @@
     }
 
     // MULTI-LINE SPLINE SVG GENERATOR (PLOTS SEPARATE COLORED LINE FOR EACH METRIC)
+    // MULTI-LINE SPLINE SVG GENERATOR (PLOTS SEPARATE COLORED LINE FOR EACH METRIC)
     function renderMultiLineSplineSvg({
       dates,
       series, // array of { id, name, shortName, color, data: [numbers] }
       w = 520,
       h = 190,
       padLeft = 35,
-      padRight = 55,
+      padRight = 20,
       padTop = 16,
       padBottom = 26,
-      yLabel = 'Кількість дій / день'
+      yLabel = 'Кількість дій'
     }) {
       const chartW = w - padLeft - padRight;
       const chartH = h - padTop - padBottom - 8;
       const allVals = series.flatMap(s => s.data);
       const rawMax = Math.max(...allVals, 1);
-      const maxVal = Math.ceil(rawMax <= 4 ? 4 : rawMax <= 8 ? 8 : rawMax <= 12 ? 12 : rawMax * 1.15);
+      const maxVal = Math.ceil(rawMax <= 3 ? 3 : rawMax <= 4 ? 4 : rawMax <= 8 ? 8 : rawMax <= 12 ? 12 : rawMax <= 25 ? 25 : rawMax * 1.12);
 
       const gridLevels = [0, Math.round(maxVal / 2), maxVal];
       const gridSvg = gridLevels.map(lvl => {
         const yPos = padTop + chartH + 4 - (lvl / maxVal) * chartH;
         return `
-          <line x1="${padLeft}" y1="${yPos.toFixed(1)}" x2="${(w - padRight + 10).toFixed(1)}" y2="${yPos.toFixed(1)}" stroke="#E2E8F0" stroke-dasharray="3,3" stroke-width="1" />
+          <line x1="${padLeft}" y1="${yPos.toFixed(1)}" x2="${(w - padRight).toFixed(1)}" y2="${yPos.toFixed(1)}" stroke="#E2E8F0" stroke-dasharray="3,3" stroke-width="1" />
           <text x="${padLeft - 6}" y="${(yPos + 3).toFixed(1)}" font-size="9" fill="#94A3B8" text-anchor="end" font-family="monospace">${lvl}</text>
         `;
       }).join('');
@@ -4367,22 +4391,16 @@
         const pathD = buildCubicSplinePath(points);
         const dots = points.map(p => `
           <g class="cursor-pointer group"
-             onmousemove="showChartTooltip(event, '${s.name} • ${p.date}', '${p.val} дій', 'Факт за день')"
+             onmousemove="showChartTooltip(event, '${s.name} • ${p.date}', '${p.val} дій', 'Факт за період')"
              onmouseleave="hideChartTooltip()">
-            <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="8" fill="transparent" />
-            <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="3.5" fill="${s.color}" stroke="#FFFFFF" stroke-width="2" class="group-hover:r-5 transition" />
+            <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="7" fill="transparent" />
+            <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="3.5" fill="${s.color}" stroke="#FFFFFF" stroke-width="1.8" class="group-hover:r-5 transition" />
           </g>
         `).join('');
-
-        const lastP = points[points.length - 1];
-        const endLabel = `
-          <text x="${(lastP.x + 8).toFixed(1)}" y="${(lastP.y + 3.5).toFixed(1)}" font-size="9" font-weight="800" fill="${s.color}">${s.shortName || s.name.split(' ')[0]}</text>
-        `;
 
         return `
           <path d="${pathD}" fill="none" stroke="${s.color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
           ${dots}
-          ${endLabel}
         `;
       }).join('');
 
