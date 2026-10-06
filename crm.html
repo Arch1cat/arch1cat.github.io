@@ -88,7 +88,7 @@
       <div class="flex items-center gap-2.5">
         <span class="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center text-white font-black text-lg shadow-sm">Y</span>
         <h1 class="font-extrabold text-base tracking-tight text-gray-900 dark:text-white">Робоче місце CRM</h1>
-        <span class="ml-2 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700">Interactive Series Toggles & Crypto Engine v8.5 Active</span>
+        <span class="ml-2 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700">Benchmark Performance Zones v9.0 Active</span>
       </div>
 
       <!-- Clean Theme Toggle -->
@@ -4348,6 +4348,37 @@
 
     // MULTI-LINE SPLINE SVG GENERATOR (PLOTS SEPARATE COLORED LINE FOR EACH METRIC)
     // MULTI-LINE SPLINE SVG GENERATOR (PLOTS SEPARATE COLORED LINE FOR EACH METRIC)
+        // BENCHMARK PERFORMANCE BANDS GENERATOR (5 KPI TIERS: RED, YELLOW, LIGHT-GREEN, GREEN, DARK-GREEN)
+    function buildBenchmarkBandsSvg(padLeft, padTop, chartW, chartH) {
+      const bandHeight = (chartH + 4) / 5.0;
+      const bandWidth = chartW + 8;
+      const bandX = padLeft - 3;
+
+      return `
+        <g id="kpi_benchmark_bands" class="opacity-95 select-none pointer-events-none">
+          <!-- 5. Темно-зелена: Рекорд / Топ-агент (Tier 5) -->
+          <rect x="${bandX}" y="${(padTop).toFixed(1)}" width="${bandWidth}" height="${(bandHeight).toFixed(1)}"
+                fill="#059669" fill-opacity="0.22" rx="7" />
+
+          <!-- 4. Зелена: Перевиконання плану (Tier 4) -->
+          <rect x="${bandX}" y="${(padTop + bandHeight).toFixed(1)}" width="${bandWidth}" height="${(bandHeight).toFixed(1)}"
+                fill="#10B981" fill-opacity="0.18" rx="7" />
+
+          <!-- 3. Світло-зелена: Робоча норма / План (Tier 3) -->
+          <rect x="${bandX}" y="${(padTop + bandHeight * 2).toFixed(1)}" width="${bandWidth}" height="${(bandHeight).toFixed(1)}"
+                fill="#84CC16" fill-opacity="0.18" rx="7" />
+
+          <!-- 2. Жовта: Зона уваги / Нижче норми (Tier 2) -->
+          <rect x="${bandX}" y="${(padTop + bandHeight * 3).toFixed(1)}" width="${bandWidth}" height="${(bandHeight).toFixed(1)}"
+                fill="#F59E0B" fill-opacity="0.18" rx="7" />
+
+          <!-- 1. Червона: Критична зона / Простій (Tier 1) -->
+          <rect x="${bandX}" y="${(padTop + bandHeight * 4).toFixed(1)}" width="${bandWidth}" height="${(bandHeight).toFixed(1)}"
+                fill="#EF4444" fill-opacity="0.18" rx="7" />
+        </g>
+      `;
+    }
+
     function renderMultiLineSplineSvg({
       dates,
       series, // array of { id, name, shortName, color, data: [numbers] }
@@ -4402,9 +4433,12 @@
         `;
       }).join('');
 
+      const bandsSvg = buildBenchmarkBandsSvg(padLeft, padTop, chartW, chartH);
+
       return `
         <svg class="w-full h-full overflow-visible" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
           <text x="-${h / 2}" y="11" transform="rotate(-90)" font-size="8.5" fill="#94A3B8" text-anchor="middle" font-weight="bold">${yLabel}</text>
+          ${bandsSvg}
           ${gridSvg}
           ${seriesSvg}
           ${xLabels}
@@ -4572,9 +4606,12 @@
         `;
       }).join('');
 
+      const bandsSvg = buildBenchmarkBandsSvg(padLeft, padTop, chartW, chartH);
+
       return `
         <svg class="w-full h-full overflow-visible" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
           <text x="-${h / 2}" y="14" transform="rotate(-90)" font-size="9" fill="#94A3B8" text-anchor="middle" font-weight="bold">${yLabel}</text>
+          ${bandsSvg}
           ${gridSvg}
           ${candlesSvg}
           ${xLabels}
@@ -4742,6 +4779,8 @@
         </g>
       `).join('');
 
+      const bandsSvg = buildBenchmarkBandsSvg(padLeft, padTop, chartW, chartH);
+
       container.innerHTML = `
         <svg id="svgMyLeadsChart" class="w-full h-full overflow-visible" viewBox="0 0 540 220" preserveAspectRatio="none">
           <defs>
@@ -4751,6 +4790,7 @@
             </linearGradient>
           </defs>
           <text x="-${h / 2}" y="14" transform="rotate(-90)" font-size="10" fill="#94A3B8" text-anchor="middle" font-weight="bold">Заявки / день</text>
+          ${bandsSvg}
           ${gridSvg}
           <path d="${areaPath}" fill="url(#gradMyLeads)" />
           <path d="${splinePath}" fill="none" stroke="#3B82F6" stroke-width="2.5" stroke-linecap="round" />
@@ -5107,6 +5147,8 @@
         </g>
       `).join('');
 
+      const bandsSvg = buildBenchmarkBandsSvg(padLeft, padTop, chartW, chartH);
+
       container.innerHTML = `
         <svg id="svgWeeklySplineChart" class="w-full h-full overflow-visible" viewBox="0 0 900 220" preserveAspectRatio="none">
           <defs>
@@ -5116,6 +5158,7 @@
             </linearGradient>
           </defs>
           <text x="-${h / 2}" y="13" transform="rotate(-90)" font-size="9" fill="#94A3B8" text-anchor="middle" font-weight="bold">Дій / тиждень</text>
+          ${bandsSvg}
           ${gridSvg}
           ${isShowActive ? `<path d="${areaShowings}" fill="url(#gradWeeklyShowings)" />` : ''}
           ${isShowActive ? `<path d="${pathShowings}" fill="none" stroke="#2563EB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />` : ''}
