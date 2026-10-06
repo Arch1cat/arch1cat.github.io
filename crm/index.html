@@ -88,7 +88,7 @@
       <div class="flex items-center gap-2.5">
         <span class="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center text-white font-black text-lg shadow-sm">Y</span>
         <h1 class="font-extrabold text-base tracking-tight text-gray-900 dark:text-white">Робоче місце CRM</h1>
-        <span class="ml-2 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700">KPI Candlesticks & Visual Matrix v12.0 Active</span>
+        <span class="ml-2 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700">Live Wheel Zoom & Visual Matrix v12.5 Active</span>
       </div>
 
       <!-- Clean Theme Toggle -->
@@ -3549,7 +3549,7 @@
     }
 
     // ─── 1. RENDER OBJECTS SECTION (INTERACTIVE DUAL: CHARTS / DONUT / PIE / BARS) ──
-    function renderObjectsSection(mode, { callsPct, objPct, meetPct, contPct }) {
+    function renderObjectsSection(mode, { callsPct = 68, objPct = 76, meetPct = 70, contPct = 100 } = {}) {
       const c = document.getElementById('container_objects');
       if (!c) return;
 
@@ -4325,7 +4325,7 @@
     }
 
     // ─── 4. RENDER DEALS SECTION (INTERACTIVE DUAL: CHARTS / DONUT / PIE / BARS) ───
-        function renderDealsSection(mode, { rentPct, depPct, salePct }) {
+        function renderDealsSection(mode, { rentPct = 60, depPct = 100, salePct = 100 } = {}) {
       const c = document.getElementById('container_deals');
       if (!c) return;
 
@@ -5210,11 +5210,14 @@
     }) {
       const z = blockKey ? getChartZoom(blockKey) : { xZoom: 1.0, yZoom: 1.0 };
       
+      const xFactor = z.xZoom || 1.0;
+      const yFactor = z.yZoom || 1.0;
+
       // X-AXIS ZOOM SLICING (коліщатко по датах)
       let activeDates = dates;
       let activeSeries = series;
-      if (z.xZoom && z.xZoom !== 1.0 && dates.length > 2) {
-        const visibleCount = Math.max(2, Math.min(dates.length, Math.round(dates.length / z.xZoom)));
+      if (xFactor !== 1.0 && dates.length > 2) {
+        const visibleCount = Math.max(2, Math.min(dates.length, Math.round(dates.length / xFactor)));
         const start = Math.max(0, dates.length - visibleCount);
         activeDates = dates.slice(start);
         activeSeries = series.map(s => ({
@@ -5230,7 +5233,8 @@
       
       // Y-AXIS ZOOM SCALING (коліщатко по шкалі Y зліва 0, 1, 2, 3...)
       const baseMax = Math.ceil(rawMax <= 3 ? 3 : rawMax <= 4 ? 4 : rawMax <= 8 ? 8 : rawMax <= 12 ? 12 : rawMax <= 25 ? 25 : rawMax * 1.12);
-      const maxVal = Math.max(1, Math.round(baseMax / (z.yZoom || 1.0)));
+      // High contrast Y zoom: changing yFactor visibly shifts the baseline height & maxVal
+      const maxVal = Math.max(1, Math.round(baseMax / yFactor));
 
       const gridLevels = [0, Math.round(maxVal / 2), maxVal];
       const gridSvg = gridLevels.map(lvl => {
@@ -5310,21 +5314,33 @@
 
     function handleChartWheelZoom(e, blockKey) {
       e.preventDefault();
+      e.stopPropagation();
+
+      // Robust fallback: if blockKey is missing or empty, detect it from parent data-card-id
+      if (!blockKey) {
+        const card = e.currentTarget.closest('[data-card-id]');
+        if (card) {
+          const cid = card.getAttribute('data-card-id');
+          blockKey = cid.replace('card_', '');
+        }
+      }
+      if (!blockKey) blockKey = 'objects';
+
       const z = getChartZoom(blockKey);
       const rect = e.currentTarget.getBoundingClientRect();
       const mouseX = e.clientX - rect.left;
 
-      // Left 60px is the Y-axis number area (or if holding Shift/Alt)
-      if (mouseX < 60 || e.shiftKey || e.altKey) {
-        // Y-AXIS ZOOM (числа зліва 0, 1, 2, 3...)
-        const delta = e.deltaY < 0 ? 0.15 : -0.15;
+      // Left 65px is the Y-axis number scale area (or with Shift/Alt key)
+      if (mouseX < 65 || e.shiftKey || e.altKey) {
+        // Y-AXIS ZOOM: розтягує/стискає шкалу чисел зліва 0, 1, 2, 3...
+        const delta = e.deltaY < 0 ? 0.2 : -0.2;
         z.yZoom = Math.max(0.4, Math.min(3.0, +(z.yZoom + delta).toFixed(2)));
         showToast(`🔍 Шкала Y [${blockKey}]: ${(z.yZoom * 100).toFixed(0)}% (коліщатко на числах)`);
       } else {
-        // X-AXIS ZOOM (дні / дати 01 жовтня, 03 жовтня...)
-        const delta = e.deltaY < 0 ? 0.15 : -0.15;
+        // X-AXIS ZOOM: розширює/стискає дні та дати
+        const delta = e.deltaY < 0 ? 0.2 : -0.2;
         z.xZoom = Math.max(0.4, Math.min(3.0, +(z.xZoom + delta).toFixed(2)));
-        showToast(`🔍 Масштаб днів X [${blockKey}]: ${(z.xZoom * 100).toFixed(0)}% (коліщатко на графіку)`);
+        showToast(`🔍 Масштаб днів X [${blockKey}]: ${(z.xZoom * 100).toFixed(0)}% (коліщатко на датах)`);
       }
 
       reRenderBlockChart(blockKey);
@@ -5332,6 +5348,7 @@
 
     function resetChartZoom(blockKey, e) {
       if (e) e.stopPropagation();
+      if (!blockKey) blockKey = 'objects';
       if (!state.chartZoom) state.chartZoom = {};
       state.chartZoom[blockKey] = { xZoom: 1.0, yZoom: 1.0, panIdx: 0 };
       showToast(`⟲ Масштаб графіка [${blockKey}] скинуто до 100%`);
@@ -5339,12 +5356,13 @@
     }
 
     function reRenderBlockChart(blockKey) {
-      if (blockKey === 'objects') renderObjectsSection(state.blockModes.objects || 'charts');
-      else if (blockKey === 'clients') renderClientsSection(state.blockModes.clients || 'charts');
-      else if (blockKey === 'marketing_portals' || blockKey === 'marketing_social' || blockKey === 'marketing') renderMarketingSection(state.blockModes.marketing || 'charts');
-      else if (blockKey === 'deals') renderDealsSection(state.blockModes.deals || 'charts', { rentPct: 60, depPct: 100, salePct: 100 });
-      else if (blockKey === 'weekly') renderWeeklySpline();
-      else if (blockKey === 'myLeads') renderMyLeadsSpline();
+      if (!blockKey || ['objects', 'clients', 'marketing_portals', 'marketing_social', 'marketing', 'deals'].includes(blockKey)) {
+        updateKpiDisplay();
+      } else if (blockKey === 'weekly') {
+        renderWeeklySpline();
+      } else if (blockKey === 'myLeads') {
+        renderMyLeadsSpline();
+      }
     }
 
     // Weekly Period Dropdown Controls
