@@ -1,0 +1,1801 @@
+<!DOCTYPE html>
+<html lang="uk" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Робоче місце CRM | Yotei Analytics Sandbox</title>
+  <meta name="description" content="Тестовий інтерактивний дашборд 'Робоче місце CRM' для тестування віджетів, KPI нормативів та статистики агентів нерухомості.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2327AE60'/%3E%3Cpath d='M20 44 L32 20 L44 44 Z' fill='%23F1C40F'/%3E%3C/svg%3E">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brandGreen: '#27AE60',
+            brandGreenHover: '#219653',
+            brandGold: '#F1C40F',
+            brandGoldDark: '#D4AC0D',
+            brandDark: '#12141A',
+            brandCardDark: '#1A1D24',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* Blueprint & Grid background matching wireframe */
+    .bg-wireframe-grid {
+      background-color: #F4F4F6;
+      background-image: 
+        linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+    .dark .bg-wireframe-grid {
+      background-color: #0F1117;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+    
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(150, 150, 150, 0.3); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(150, 150, 150, 0.5); }
+
+    /* Number badge highlight */
+    .metric-badge {
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Pulse animation for hot targets */
+    @keyframes subtlePulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.85; transform: scale(1.02); }
+    }
+    .badge-pulse { animation: subtlePulse 3s infinite ease-in-out; }
+  </style>
+</head>
+<body class="bg-wireframe-grid text-gray-900 dark:text-gray-100 min-h-screen flex flex-col font-sans transition-colors duration-200">
+
+  <!-- TOP APP NOTIFICATION BAR / TEST ENVIRONMENT CONTROLS -->
+  <header class="bg-white/95 dark:bg-[#151821]/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 sticky top-0 z-40 px-4 py-2.5 shadow-sm">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+      
+      <!-- Logo & Environment Tag -->
+      <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center text-white font-black text-lg shadow-sm">Y</span>
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="font-extrabold text-base tracking-tight text-gray-900 dark:text-white">Робоче місце CRM</h1>
+              <span class="px-2 py-0.5 text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 rounded-full border border-emerald-300 dark:border-emerald-700">Sandbox v3.2</span>
+            </div>
+            <p class="text-[11px] text-gray-500 dark:text-gray-400">Yotei Real Estate • Тестовий полігон віджетів та KPI</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Agent Switcher & Period Controls -->
+      <div class="flex items-center flex-wrap gap-2.5">
+        
+        <!-- Agent Selector -->
+        <div class="flex items-center gap-1.5 bg-gray-100 dark:bg-gray-800/80 px-2.5 py-1 rounded-xl border border-gray-200 dark:border-gray-700 text-xs">
+          <i data-lucide="user" class="w-3.5 h-3.5 text-gray-500"></i>
+          <span class="text-gray-500 font-medium">Агент:</span>
+          <select id="agentSelect" onchange="changeAgent(this.value)" class="bg-transparent font-bold text-gray-900 dark:text-gray-100 focus:outline-none cursor-pointer">
+            <option value="melnyk">Олександр Мельник (Топ-рієлтор)</option>
+            <option value="kovalchuk">Ірина Ковальчук (Агент вторинки)</option>
+            <option value="shevchenko">Дмитро Шевченко (Комерція)</option>
+            <option value="team_avg">Всі агенти (Середнє по компанії)</option>
+          </select>
+        </div>
+
+        <!-- Period selector -->
+        <div class="flex items-center gap-1.5 bg-gray-100 dark:bg-gray-800/80 px-2.5 py-1 rounded-xl border border-gray-200 dark:border-gray-700 text-xs">
+          <i data-lucide="calendar" class="w-3.5 h-3.5 text-gray-500"></i>
+          <span class="font-semibold text-gray-700 dark:text-gray-300">Жовтень 2026</span>
+          <span class="text-[10px] bg-emerald-500 text-white font-bold px-1.5 py-0.2 rounded">День 6 / 31</span>
+        </div>
+
+        <!-- Currency Switcher ($ / ₴) -->
+        <div class="flex items-center bg-gray-200 dark:bg-gray-800 p-0.5 rounded-xl border border-gray-300 dark:border-gray-700 text-xs">
+          <button id="currUsdBtn" onclick="setCurrency('USD')" class="px-2.5 py-1 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm transition">USD ($)</button>
+          <button id="currUahBtn" onclick="setCurrency('UAH')" class="px-2.5 py-1 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 transition">UAH (₴)</button>
+        </div>
+
+        <!-- Theme Toggle -->
+        <button onclick="toggleTheme()" id="themeBtn" title="Перемикач теми" class="p-1.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer text-gray-700 dark:text-gray-300">
+          <i data-lucide="sun" id="themeIcon" class="w-4 h-4"></i>
+        </button>
+
+        <!-- Action Buttons -->
+        <button onclick="openModal('quickActionModal')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm transition cursor-pointer">
+          <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
+          <span>+ Фіксувати дію</span>
+        </button>
+
+        <button onclick="openModal('targetsModal')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 transition cursor-pointer">
+          <i data-lucide="settings" class="w-3.5 h-3.5"></i>
+          <span>Нормативи</span>
+        </button>
+
+        <button onclick="exportCSV()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 transition cursor-pointer">
+          <i data-lucide="download" class="w-3.5 h-3.5"></i>
+          <span>Експорт</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- MAIN WRAPPER WITH WIREFRAME CONTAINER -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-3 sm:p-5 flex flex-col gap-4">
+
+    <!-- WIRED HEADER UNIT (MATCHING USER SCREENSHOT EXACTLY) -->
+    <div class="rounded-2xl overflow-hidden shadow-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#1A1D24]">
+      
+      <!-- LEVEL 1: EMERALD GREEN TAB BAR (#27AE60) -->
+      <nav class="bg-[#27AE60] text-white flex items-center overflow-x-auto divide-x divide-emerald-500/60 font-bold text-sm tracking-wide shadow-inner select-none">
+        
+        <button onclick="switchMainTab('kpi')" id="mainTab_kpi" class="flex-1 py-3 px-4 text-center cursor-pointer transition flex items-center justify-center gap-2 bg-[#1E8449] shadow-inner text-white">
+          <i data-lucide="target" class="w-4 h-4"></i>
+          <span>KPI</span>
+          <span class="w-2 h-2 rounded-full bg-yellow-300 animate-ping"></span>
+        </button>
+
+        <button onclick="switchMainTab('stats')" id="mainTab_stats" class="flex-1 py-3 px-4 text-center cursor-pointer transition flex items-center justify-center gap-2 hover:bg-[#229954] text-emerald-50">
+          <i data-lucide="bar-chart-3" class="w-4 h-4"></i>
+          <span>статистика</span>
+        </button>
+
+        <button onclick="switchMainTab('funnel_sales')" id="mainTab_funnel_sales" class="flex-1 py-3 px-4 text-center cursor-pointer transition flex items-center justify-center gap-2 hover:bg-[#229954] text-emerald-50">
+          <i data-lucide="filter" class="w-4 h-4"></i>
+          <span>Воронка продаж</span>
+        </button>
+
+        <button onclick="switchMainTab('funnel_leads')" id="mainTab_funnel_leads" class="flex-1 py-3 px-4 text-center cursor-pointer transition flex items-center justify-center gap-2 hover:bg-[#229954] text-emerald-50">
+          <i data-lucide="layers" class="w-4 h-4"></i>
+          <span>воронка_заявок</span>
+        </button>
+
+      </nav>
+
+      <!-- LEVEL 2: GOLDEN / AMBER SUBTAB BAR (#F1C40F) -->
+      <nav id="kpiSubnav" class="bg-[#F1C40F] text-gray-900 flex items-center overflow-x-auto divide-x divide-yellow-500/60 font-semibold text-xs sm:text-sm border-t border-emerald-700/30 select-none">
+        
+        <button onclick="switchKpiSubTab('agent')" id="subTab_agent" class="flex-1 py-2.5 px-3 text-center cursor-pointer transition flex items-center justify-center gap-2 bg-[#D4AC0D] font-extrabold text-black shadow-inner">
+          <i data-lucide="user-check" class="w-4 h-4"></i>
+          <span>KPI агента з нерухомості</span>
+          <span class="text-[10px] bg-black/10 px-1.5 py-0.2 rounded font-normal hidden md:inline">мін. місячний норматив</span>
+        </button>
+
+        <button onclick="switchKpiSubTab('team')" id="subTab_team" class="flex-1 py-2.5 px-3 text-center cursor-pointer transition flex items-center justify-center gap-2 hover:bg-[#F4D03F] text-gray-900">
+          <i data-lucide="users" class="w-4 h-4"></i>
+          <span>KPI команди</span>
+        </button>
+
+        <button onclick="switchKpiSubTab('sales_dept')" id="subTab_sales_dept" class="flex-1 py-2.5 px-3 text-center cursor-pointer transition flex items-center justify-center gap-2 hover:bg-[#F4D03F] text-gray-900">
+          <i data-lucide="building-2" class="w-4 h-4"></i>
+          <span>kpi отдела продаж</span>
+        </button>
+
+        <button onclick="switchKpiSubTab('company')" id="subTab_company" class="flex-1 py-2.5 px-3 text-center cursor-pointer transition flex items-center justify-center gap-2 hover:bg-[#F4D03F] text-gray-900">
+          <i data-lucide="award" class="w-4 h-4"></i>
+          <span>KPI компанії</span>
+        </button>
+
+      </nav>
+
+    </div>
+
+    <!-- TAB 1: KPI АГЕНТА З НЕРУХОМОСТІ (ACTIVE BY DEFAULT) -->
+    <div id="content_kpi_agent" class="space-y-4">
+      
+      <!-- Top Run-Rate Banner & Radial Overview -->
+      <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
+        
+        <!-- Scorecard Card 1: Radial Progress -->
+        <div class="bg-white dark:bg-[#1A1D24] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm flex items-center gap-4">
+          <div class="relative w-20 h-20 shrink-0 flex items-center justify-center">
+            <svg class="w-20 h-20 transform -rotate-90" viewBox="0 0 36 36">
+              <path class="text-gray-200 dark:text-gray-700" stroke-width="3.5" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+              <path id="overallProgressRing" class="text-emerald-500 transition-all duration-1000 ease-out" stroke-dasharray="78, 100" stroke-width="3.5" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+            </svg>
+            <div class="absolute inset-0 flex flex-col items-center justify-center">
+              <span id="overallPctText" class="text-lg font-black text-gray-900 dark:text-white leading-none">78%</span>
+              <span class="text-[9px] text-gray-400 font-bold uppercase">KPI міс.</span>
+            </div>
+          </div>
+          <div>
+            <div class="flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">У графіку</span>
+            </div>
+            <h4 class="font-bold text-sm text-gray-900 dark:text-white mt-0.5">Місячний план агента</h4>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Виконано 25 з 32 цільових показників за 6-й день місяця.</p>
+          </div>
+        </div>
+
+        <!-- Quick Stat 2: Угоди & Завдатки -->
+        <div class="bg-white dark:bg-[#1A1D24] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm flex items-center justify-between">
+          <div>
+            <span class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Фінал воронки</span>
+            <div class="flex items-baseline gap-2 mt-1">
+              <span class="text-2xl font-black text-emerald-600 dark:text-emerald-400" id="dealsHeroCount">1</span>
+              <span class="text-xs text-gray-400">/ 1 угода</span>
+              <span class="text-xs text-gray-300">•</span>
+              <span class="text-2xl font-black text-amber-500" id="depositsHeroCount">2</span>
+              <span class="text-xs text-gray-400">/ 2 завдатки</span>
+            </div>
+            <p class="text-[11px] text-gray-500 mt-1">Оренда: <strong id="rentHeroCount" class="text-gray-800 dark:text-gray-200">3</strong> з 5 закритих</p>
+          </div>
+          <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 flex items-center justify-center text-emerald-600 border border-emerald-200 dark:border-emerald-800">
+            <i data-lucide="handshake" class="w-5 h-5"></i>
+          </div>
+        </div>
+
+        <!-- Quick Stat 3: Зустрічі та Ексклюзиви -->
+        <div class="bg-white dark:bg-[#1A1D24] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm flex items-center justify-between">
+          <div>
+            <span class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Власники & Договори</span>
+            <div class="flex items-baseline gap-2 mt-1">
+              <span class="text-2xl font-black text-indigo-600 dark:text-indigo-400" id="meetingsHeroCount">7</span>
+              <span class="text-xs text-gray-400">/ 10 зустрічей</span>
+            </div>
+            <p class="text-[11px] text-gray-500 mt-1">Договори: <strong id="contractsHeroCount" class="text-emerald-600 font-bold">2</strong> з 2 (100% виконано ⭐)</p>
+          </div>
+          <div class="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/50 flex items-center justify-center text-indigo-600 border border-indigo-200 dark:border-indigo-800">
+            <i data-lucide="file-check-2" class="w-5 h-5"></i>
+          </div>
+        </div>
+
+        <!-- Quick Stat 4: Маркетинг & Оголошення -->
+        <div class="bg-white dark:bg-[#1A1D24] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm flex items-center justify-between">
+          <div>
+            <span class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Рекламна активність</span>
+            <div class="flex items-baseline gap-2 mt-1">
+              <span class="text-2xl font-black text-sky-600 dark:text-sky-400" id="adsHeroCount">54</span>
+              <span class="text-xs text-gray-400">/ 60 портали</span>
+            </div>
+            <p class="text-[11px] text-gray-500 mt-1">Медіа/Соцмережі: <strong id="mediaHeroCount" class="text-purple-600 font-bold">203</strong> активності</p>
+          </div>
+          <div class="w-10 h-10 rounded-xl bg-sky-50 dark:bg-sky-950/50 flex items-center justify-center text-sky-600 border border-sky-200 dark:border-sky-800">
+            <i data-lucide="megaphone" class="w-5 h-5"></i>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 4 CORE KPI SECTIONS SPECIFIED BY USER -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+        <!-- 1. РОБОТА З ОБʼЄКТОМ -->
+        <div class="bg-white dark:bg-[#1A1D24] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden flex flex-col">
+          <div class="px-4 py-3 bg-gradient-to-r from-emerald-50 to-emerald-100/40 dark:from-emerald-950/40 dark:to-transparent border-b border-gray-200 dark:border-gray-800 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <div class="w-7 h-7 rounded-lg bg-emerald-600 text-white flex items-center justify-center">
+                <i data-lucide="home" class="w-4 h-4"></i>
+              </div>
+              <h3 class="font-extrabold text-sm text-gray-900 dark:text-white">1. Робота з обʼєктом</h3>
+            </div>
+            <span class="text-[11px] font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-900/50 px-2 py-0.5 rounded-full">4 показники</span>
+          </div>
+
+          <div class="p-4 space-y-3.5 flex-1 divide-y divide-gray-100 dark:divide-gray-800/80">
+            
+            <!-- Item 1.1 -->
+            <div class="pt-1 first:pt-0">
+              <div class="flex items-center justify-between text-xs font-semibold mb-1">
+                <span class="text-gray-700 dark:text-gray-300 flex items-center gap-1.5">
+                  <i data-lucide="phone-call" class="w-3.5 h-3.5 text-emerald-600"></i>
+                  Телефонні дзвінки власнику
+                </span>
+                <div class="flex items-center gap-2">
+                  <span class="text-gray-500 font-mono text-[11px]">Норма: <strong>100</strong></span>
+                  <span class="font-extrabold text-emerald-600 dark:text-emerald-400 font-mono" id="kpi_calls_val">68</span>
+                  <button onclick="incrementKpi('calls')" class="px-1.5 py-0.5 text-[10px] font-bold bg-emerald-100 hover:bg-emerald-200 text-emerald-800 rounded transition cursor-pointer" title="Додати 1 дзвінок">+1</button>
+                </div>
+              </div>
+              <div class="w-full bg-gray-100 dark:bg-gray-800 h-2 rounded-full overflow-hidden">
+                <div id="kpi_calls_bar" class="bg-emerald-500 h-full rounded-full transition-all duration-500" style="width: 68%;"></div>
+              </div>
+              <div class="flex justify-between items-center text-[10px] text-gray-400 mt-1">
+                <span>Прогрес: <strong id="kpi_calls_pct" class="text-gray-600 dark:text-gray-300">68%</strong></span>
+                <span class="text-emerald-600 dark:text-emerald-400 font-medium">Темп: ~3.4 дзв/день (норма)</span>
+              </div>
+            </div>
+
+            <!-- Item 1.2 -->
+            <div class="pt-3">
+              <div class="flex items-center justify-between text-xs font-semibold mb-1">
+                <span class="text-gray-700 dark:text-gray-300 flex items-center gap-1.5">
+                  <i data-lucide="plus-square" class="w-3.5 h-3.5 text-emerald-600"></i>
+                  Додавання обʼєктів у СРМ
+                </span>
+                <div class="flex items-center gap-2">
+                  <span class="text-gray-500 font-mono text-[11px]">Норма: <strong>25</strong></span>
+                  <span class="font-extrabold text-emerald-600 dark:text-emerald-400 font-mono" id="kpi_objects_val">19</span>
+                  <button onclick="incrementKpi('objects')" class="px-1.5 py-0.5 text-[10px] font-bold bg-emerald-100 hover:bg-emerald-200 text-emerald-800 rounded transition cursor-pointer" title="Додати об'єкт">+1</button>
+                </div>
+              </div>
+              <div class="w-full bg-gray-100 dark:bg-gray-800 h-2 rounded-full overflow-hidden">
+                <div id="kpi_objects_bar" class="bg-emerald-500 h-full rounded-full transition-all duration-500" style="width: 76%;"></div>
+              </div>
+              <div class="flex justify-between items-center text-[10px] text-gray-400 mt-1">
+                <span>Прогрес: <strong id="kpi_objects_pct" class="text-gray-600 dark:text-gray-300">76%</strong></span>
+                <span class="text-emerald-600 dark:text-emerald-400 font-medium">Залишилось: 6 об'єктів</span>
+              </div>
+            </div>
+
+            <!-- Item 1.3 -->
+            <div class="pt-3">
+              <div class="flex items-center justify-between text-xs font-semibold mb-1">
+                <span class="text-gray-700 dark:text-gray-300 flex items-center gap-1.5">
+                  <i data-lucide="users-2" class="w-3.5 h-3.5 text-emerald-600"></i>
+                  Зустрічі з власниками
+                </span>
+                <div class="flex items-center gap-2">
+                  <span class="text-gray-500 font-mono text-[11px]">Норма: <strong>10</strong></span>
+                  <span class="font-extrabold text-emerald-600 dark:text-emerald-400 font-mono" id="kpi_meetings_val">7</span>
+                  <button onclick="incrementKpi('meetings')" class="px-1.5 py-0.5 text-[10px] font-bold bg-emerald-100 hover:bg-emerald-200 text-emerald-800 rounded transition cursor-pointer" title="Додати зустріч">+1</button>
+                </div>
+              </div>
+              <div class="w-full bg-gray-100 dark:bg-gray-800 h-2 rounded-full overflow-hidden">
+                <div id="kpi_meetings_bar" class="bg-emerald-500 h-full rounded-full transition-all duration-500" style="width: 70%;"></div>
+              </div>
+              <div class="flex justify-between items-center text-[10px] text-gray-400 mt-1">
+                <span>Прогрес: <strong id="kpi_meetings_pct" class="text-gray-600 dark:text-gray-300">70%</strong></span>
+                <span class="text-emerald-600 dark:text-emerald-400 font-medium">Залишилось: 3 зустрічі</span>
+              </div>
+            </div>
+
+            <!-- Item 1.4 -->
+            <div class="pt-3">
+              <div class="flex items-center justify-between text-xs font-semibold mb-1">
+                <span class="text-gray-700 dark:text-gray-300 flex items-center gap-1.5">
+                  <i data-lucide="shield-check" class="w-3.5 h-3.5 text-amber-500"></i>
+                  Договір про надання послуг з продажу нерухомості
+                </span>
+                <div class="flex items-center gap-2">
+                  <span class="text-gray-500 font-mono text-[11px]">Норма: <strong>2</strong></span>
+                  <span class="font-extrabold text-amber-600 dark:text-amber-400 font-mono" id="kpi_contracts_val">2</span>
+                  <span class="text-[10px] bg-amber-100 text-amber-800 px-1.5 py-0.2 rounded font-bold">100% ⭐</span>
+                  <button onclick="incrementKpi('contracts')" class="px-1.5 py-0.5 text-[10px] font-bold bg-amber-100 hover:bg-amber-200 text-amber-800 rounded transition cursor-pointer" title="Додати договір">+1</button>
+                </div>
+              </div>
+              <div class="w-full bg-gray-100 dark:bg-gray-800 h-2 rounded-full overflow-hidden">
+                <div id="kpi_contracts_bar" class="bg-amber-500 h-full rounded-full transition-all duration-500" style="width: 100%;"></div>
+              </div>
+              <div class="flex justify-between items-center text-[10px] text-gray-400 mt-1">
+                <span class="text-emerald-600 dark:text-emerald-400 font-bold">✓ Місячний мінімум повністю закрито!</span>
+                <span class="text-gray-500 font-medium">Ексклюзивні права оформлено</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 2. РОБОТА З КЛІЄНТАМИ -->
+        <div class="bg-white dark:bg-[#1A1D24] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden flex flex-col">
+          <div class="px-4 py-3 bg-gradient-to-r from-blue-50 to-blue-100/40 dark:from-blue-950/40 dark:to-transparent border-b border-gray-200 dark:border-gray-800 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <div class="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center">
+                <i data-lucide="user-check" class="w-4 h-4"></i>
+              </div>
+              <h3 class="font-extrabold text-sm text-gray-900 dark:text-white">2. Робота з клієнтами</h3>
+            </div>
+            <span class="text-[11px] font-bold text-blue-700 dark:text-blue-400 bg-blue-100 dark:bg-blue-900/50 px-2 py-0.5 rounded-full">3 показники</span>
+          </div>
+
+          <div class="p-4 space-y-3.5 flex-1 divide-y divide-gray-100 dark:divide-gray-800/80">
+            
+            <!-- Item 2.1 -->
+            <div class="pt-1 first:pt-0">
+              <div class="flex items-center justify-between text-xs font-semibold mb-1">
+                <span class="text-gray-700 dark:text-gray-300 flex items-center gap-1.5">
+                  <i data-lucide="inbox" class="w-3.5 h-3.5 text-blue-600"></i>
+                  Додавання заявок у СРМ
+                </span>
+                <div class="flex items-center gap-2">
+                  <span class="text-gray-500 font-mono text-[11px]">Норма: <strong>30</strong></span>
+                  <span class="font-extrabold text-blue-600 dark:text-blue-400 font-mono" id="kpi_leads_val">22</span>
+                  <button onclick="incrementKpi('leads')" class="px-1.5 py-0.5 text-[10px] font-bold bg-blue-100 hover:bg-blue-200 text-blue-800 rounded transition cursor-pointer" title="Додати заявку">+1</button>
+                </div>
+              </div>
+              <div class="w-full bg-gray-100 dark:bg-gray-800 h-2 rounded-full overflow-hidden">
+                <div id="kpi_leads_bar" class="bg-blue-500 h-full rounded-full transition-all duration-500" style="width: 73.3%;"></div>
+              </div>
+              <div class="flex justify-between items-center text-[10px] text-gray-400 mt-1">
+                <span>Прогрес: <strong id="kpi_leads_pct" class="text-gray-600 dark:text-gray-300">73%</strong></span>
+                <span class="text-blue-600 dark:text-blue-400 font-medium">Залишилось: 8 заявок</span>
+              </div>
+            </div>
+
+            <!-- Item 2.2 -->
+            <div class="pt-3">
+              <div class="flex items-center justify-between text-xs font-semibold mb-1">
+                <span class="text-gray-700 dark:text-gray-300 flex items-center gap-1.5">
+                  <i data-lucide="search" class="w-3.5 h-3.5 text-blue-600"></i>
+                  Підбір під клієнта
+                </span>
+                <div class="flex items-center gap-2">
+                  <span class="text-gray-500 font-mono text-[11px]">Норма: <strong>15</strong></span>
+                  <span class="font-extrabold text-blue-600 dark:text-blue-400 font-mono" id="kpi_matches_val">12</span>
+                  <button onclick="incrementKpi('matches')" class="px-1.5 py-0.5 text-[10px] font-bold bg-blue-100 hover:bg-blue-200 text-blue-800 rounded transition cursor-pointer" title="Додати підбір">+1</button>
+                </div>
+              </div>
+              <div class="w-full bg-gray-100 dark:bg-gray-800 h-2 rounded-full overflow-hidden">
+                <div id="kpi_matches_bar" class="bg-blue-500 h-full rounded-full transition-all duration-500" style="width: 80%;"></div>
+              </div>
+              <div class="flex justify-between items-center text-[10px] text-gray-400 mt-1">
+                <span>Прогрес: <strong id="kpi_matches_pct" class="text-gray-600 dark:text-gray-300">80%</strong></span>
+                <span class="text-blue-600 dark:text-blue-400 font-medium">Конверсія в перегляди: 50%</span>
+              </div>
+            </div>
+
+            <!-- Item 2.3 -->
+            <div class="pt-3">
+              <div class="flex items-center justify-between text-xs font-semibold mb-1">
+                <span class="text-gray-700 dark:text-gray-300 flex items-center gap-1.5">
+                  <i data-lucide="eye" class="w-3.5 h-3.5 text-blue-600"></i>
+                  Зустріч з клієнтом на перегляді
+                </span>
+                <div class="flex items-center gap-2">
+                  <span class="text-gray-500 font-mono text-[11px]">Норма: <strong>8 зустрічей</strong></span>
+                  <span class="font-extrabold text-blue-600 dark:text-blue-400 font-mono" id="kpi_showings_val">6</span>
+                  <button onclick="incrementKpi('showings')" class="px-1.5 py-0.5 text-[10px] font-bold bg-blue-100 hover:bg-blue-200 text-blue-800 rounded transition cursor-pointer" title="Додати перегляд">+1</button>
+                </div>
+              </div>
+              <div class="w-full bg-gray-100 dark:bg-gray-800 h-2 rounded-full overflow-hidden">
+                <div id="kpi_showings_bar" class="bg-blue-500 h-full rounded-full transition-all duration-500" style="width: 75%;"></div>
+              </div>
+              <div class="flex justify-between items-center text-[10px] text-gray-400 mt-1">
+                <span>Прогрес: <strong id="kpi_showings_pct" class="text-gray-600 dark:text-gray-300">75%</strong></span>
+                <span class="text-blue-600 dark:text-blue-400 font-medium">Залишилось: 2 покази</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 3. МАРКЕТИНГ (ПОРТАЛИ ТА СОЦМЕРЕЖІ) -->
+        <div class="bg-white dark:bg-[#1A1D24] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden flex flex-col md:col-span-2">
+          <div class="px-4 py-3 bg-gradient-to-r from-purple-50 to-purple-100/40 dark:from-purple-950/40 dark:to-transparent border-b border-gray-200 dark:border-gray-800 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <div class="w-7 h-7 rounded-lg bg-purple-600 text-white flex items-center justify-center">
+                <i data-lucide="megaphone" class="w-4 h-4"></i>
+              </div>
+              <h3 class="font-extrabold text-sm text-gray-900 dark:text-white">3. Маркетинг та промоція</h3>
+            </div>
+            <span class="text-[11px] font-bold text-purple-700 dark:text-purple-400 bg-purple-100 dark:bg-purple-900/50 px-2 py-0.5 rounded-full">Класифайди + 5 медіаплатформ</span>
+          </div>
+
+          <div class="p-4 grid grid-cols-1 lg:grid-cols-2 gap-6">
+            
+            <!-- Підблок: Класифайди (Дошки оголошень) -->
+            <div class="space-y-3">
+              <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
+                <i data-lucide="layout-grid" class="w-3.5 h-3.5 text-purple-600"></i>
+                Реклама на порталах (Класифайди)
+              </h4>
+
+              <!-- OLX -->
+              <div class="bg-gray-50 dark:bg-gray-800/60 p-2.5 rounded-xl border border-gray-200 dark:border-gray-700/60">
+                <div class="flex justify-between items-center text-xs font-semibold mb-1">
+                  <span class="flex items-center gap-2 text-gray-800 dark:text-gray-200">
+                    <span class="w-5 h-5 rounded bg-[#002f34] text-[#00f898] font-black text-[10px] flex items-center justify-center">OLX</span>
+                    Реклама ОЛХ
+                  </span>
+                  <div class="flex items-center gap-2">
+                    <span class="text-gray-400 text-[11px]">Норма: 20</span>
+                    <span class="font-extrabold text-purple-600 dark:text-purple-400 font-mono" id="mkt_olx_val">18</span>
+                    <button onclick="incrementMarketing('olx')" class="px-1.5 py-0.5 text-[10px] font-bold bg-purple-100 hover:bg-purple-200 text-purple-800 rounded transition cursor-pointer">+1</button>
+                  </div>
+                </div>
+                <div class="w-full bg-gray-200 dark:bg-gray-700 h-1.5 rounded-full overflow-hidden">
+                  <div id="mkt_olx_bar" class="bg-purple-500 h-full rounded-full" style="width: 90%;"></div>
+                </div>
+              </div>
+
+              <!-- DOM.RIA -->
+              <div class="bg-gray-50 dark:bg-gray-800/60 p-2.5 rounded-xl border border-gray-200 dark:border-gray-700/60">
+                <div class="flex justify-between items-center text-xs font-semibold mb-1">
+                  <span class="flex items-center gap-2 text-gray-800 dark:text-gray-200">
+                    <span class="w-5 h-5 rounded bg-[#eb4d27] text-white font-bold text-[9px] flex items-center justify-center">RIA</span>
+                    Реклама Дом Ріа
+                  </span>
+                  <div class="flex items-center gap-2">
+                    <span class="text-gray-400 text-[11px]">Норма: 20</span>
+                    <span class="font-extrabold text-purple-600 dark:text-purple-400 font-mono" id="mkt_domria_val">16</span>
+                    <button onclick="incrementMarketing('domria')" class="px-1.5 py-0.5 text-[10px] font-bold bg-purple-100 hover:bg-purple-200 text-purple-800 rounded transition cursor-pointer">+1</button>
+                  </div>
+                </div>
+                <div class="w-full bg-gray-200 dark:bg-gray-700 h-1.5 rounded-full overflow-hidden">
+                  <div id="mkt_domria_bar" class="bg-purple-500 h-full rounded-full" style="width: 80%;"></div>
+                </div>
+              </div>
+
+              <!-- Rieltor.ua -->
+              <div class="bg-gray-50 dark:bg-gray-800/60 p-2.5 rounded-xl border border-gray-200 dark:border-gray-700/60">
+                <div class="flex justify-between items-center text-xs font-semibold mb-1">
+                  <span class="flex items-center gap-2 text-gray-800 dark:text-gray-200">
+                    <span class="w-5 h-5 rounded bg-[#0b66c3] text-white font-bold text-[9px] flex items-center justify-center">R.UA</span>
+                    Реклама Рієлтор юа
+                  </span>
+                  <div class="flex items-center gap-2">
+                    <span class="text-gray-400 text-[11px]">Норма: 20</span>
+                    <span class="font-extrabold text-emerald-600 dark:text-emerald-400 font-mono" id="mkt_rieltor_val">20</span>
+                    <span class="text-[10px] bg-emerald-100 text-emerald-800 px-1 py-0.2 rounded font-bold">100% ✓</span>
+                    <button onclick="incrementMarketing('rieltor')" class="px-1.5 py-0.5 text-[10px] font-bold bg-purple-100 hover:bg-purple-200 text-purple-800 rounded transition cursor-pointer">+1</button>
+                  </div>
+                </div>
+                <div class="w-full bg-gray-200 dark:bg-gray-700 h-1.5 rounded-full overflow-hidden">
+                  <div id="mkt_rieltor_bar" class="bg-emerald-500 h-full rounded-full" style="width: 100%;"></div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Підблок: Соціальні мережі та Медіа (Instagram, TikTok, FB, YouTube, X) -->
+            <div class="space-y-3">
+              <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
+                <i data-lucide="share-2" class="w-3.5 h-3.5 text-pink-500"></i>
+                Соціальні мережі та SMM
+              </h4>
+
+              <!-- Instagram Grid Card -->
+              <div class="bg-gray-50 dark:bg-gray-800/60 p-2.5 rounded-xl border border-gray-200 dark:border-gray-700/60">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="flex items-center gap-1.5 font-bold text-xs text-pink-600 dark:text-pink-400">
+                    <i data-lucide="instagram" class="w-4 h-4"></i>
+                    Інстаграм
+                  </span>
+                  <span class="text-[10px] text-gray-400">Ціль: 20 постів • 5 відео • 60 сторіз</span>
+                </div>
+                <div class="grid grid-cols-3 gap-2 text-center text-xs">
+                  <div class="bg-white dark:bg-gray-800 p-1.5 rounded-lg border border-gray-200 dark:border-gray-700">
+                    <span class="text-[10px] text-gray-400 block">Пости</span>
+                    <span class="font-black text-gray-900 dark:text-white" id="ig_posts">15</span><span class="text-[10px] text-gray-400">/20</span>
+                    <button onclick="incMedia('ig_posts', 20)" class="text-[10px] text-pink-600 font-bold block mx-auto mt-0.5 hover:underline">+1</button>
+                  </div>
+                  <div class="bg-white dark:bg-gray-800 p-1.5 rounded-lg border border-gray-200 dark:border-gray-700">
+                    <span class="text-[10px] text-gray-400 block">Відео (Reels)</span>
+                    <span class="font-black text-gray-900 dark:text-white" id="ig_video">4</span><span class="text-[10px] text-gray-400">/5</span>
+                    <button onclick="incMedia('ig_video', 5)" class="text-[10px] text-pink-600 font-bold block mx-auto mt-0.5 hover:underline">+1</button>
+                  </div>
+                  <div class="bg-white dark:bg-gray-800 p-1.5 rounded-lg border border-gray-200 dark:border-gray-700">
+                    <span class="text-[10px] text-gray-400 block">Сторіз</span>
+                    <span class="font-black text-gray-900 dark:text-white" id="ig_stories">48</span><span class="text-[10px] text-gray-400">/60</span>
+                    <button onclick="incMedia('ig_stories', 60)" class="text-[10px] text-pink-600 font-bold block mx-auto mt-0.5 hover:underline">+1</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- TikTok & Facebook Row -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <!-- TikTok -->
+                <div class="bg-gray-50 dark:bg-gray-800/60 p-2.5 rounded-xl border border-gray-200 dark:border-gray-700/60">
+                  <div class="flex items-center justify-between mb-1.5">
+                    <span class="font-bold text-xs flex items-center gap-1 text-gray-900 dark:text-white">
+                      <span class="w-3.5 h-3.5 bg-black text-white rounded-full text-[9px] flex items-center justify-center">♪</span>
+                      Тік ток
+                    </span>
+                    <span class="text-[9px] text-gray-400">20 / 5 / 60</span>
+                  </div>
+                  <div class="flex justify-between items-center text-xs">
+                    <span>П: <strong id="tt_posts">12</strong></span>
+                    <span>В: <strong id="tt_video">3</strong></span>
+                    <span>С: <strong id="tt_stories">35</strong></span>
+                    <button onclick="incMedia('tt_posts', 20)" class="px-1 text-[10px] font-bold bg-gray-200 dark:bg-gray-700 rounded">+1</button>
+                  </div>
+                </div>
+
+                <!-- Facebook -->
+                <div class="bg-gray-50 dark:bg-gray-800/60 p-2.5 rounded-xl border border-gray-200 dark:border-gray-700/60">
+                  <div class="flex items-center justify-between mb-1.5">
+                    <span class="font-bold text-xs flex items-center gap-1 text-blue-600">
+                      <i data-lucide="facebook" class="w-3.5 h-3.5"></i>
+                      Фейсбук
+                    </span>
+                    <span class="text-[9px] text-gray-400">20 / 5 / 60</span>
+                  </div>
+                  <div class="flex justify-between items-center text-xs">
+                    <span>П: <strong id="fb_posts">14</strong></span>
+                    <span>В: <strong id="fb_video">4</strong></span>
+                    <span>С: <strong id="fb_stories">42</strong></span>
+                    <button onclick="incMedia('fb_posts', 20)" class="px-1 text-[10px] font-bold bg-blue-100 text-blue-800 rounded">+1</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- YouTube & X (Twitter) Row -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <!-- YouTube -->
+                <div class="bg-gray-50 dark:bg-gray-800/60 p-2.5 rounded-xl border border-gray-200 dark:border-gray-700/60 flex items-center justify-between">
+                  <div class="flex items-center gap-2">
+                    <i data-lucide="youtube" class="w-4 h-4 text-red-600"></i>
+                    <div>
+                      <span class="font-bold text-xs block text-gray-900 dark:text-white">Ютуб</span>
+                      <span class="text-[10px] text-gray-400">Відео: 5 план</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <span class="font-black text-sm text-red-600" id="yt_video">3</span><span class="text-xs text-gray-400">/ 5</span>
+                    <button onclick="incMedia('yt_video', 5)" class="px-1.5 py-0.5 text-[10px] font-bold bg-red-100 text-red-800 rounded">+1</button>
+                  </div>
+                </div>
+
+                <!-- X (Twitter) -->
+                <div class="bg-gray-50 dark:bg-gray-800/60 p-2.5 rounded-xl border border-gray-200 dark:border-gray-700/60">
+                  <div class="flex items-center justify-between mb-1">
+                    <span class="font-bold text-xs flex items-center gap-1 text-gray-900 dark:text-white">
+                      <span class="font-black text-xs">𝕏</span>
+                      X (Twitter)
+                    </span>
+                    <span class="text-[9px] text-gray-400">20 / 5 / 60</span>
+                  </div>
+                  <div class="flex justify-between items-center text-xs">
+                    <span>П: <strong id="x_posts">18</strong></span>
+                    <span>В: <strong id="x_video">2</strong></span>
+                    <span>К: <strong id="x_comments">52</strong></span>
+                    <button onclick="incMedia('x_posts', 20)" class="px-1 text-[10px] font-bold bg-gray-200 dark:bg-gray-700 rounded">+1</button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 4. УГОДИ ТА ФІНАЛ ВОРОНКИ -->
+        <div class="bg-white dark:bg-[#1A1D24] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden flex flex-col md:col-span-2">
+          <div class="px-4 py-3 bg-gradient-to-r from-amber-50 to-amber-100/40 dark:from-amber-950/40 dark:to-transparent border-b border-gray-200 dark:border-gray-800 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <div class="w-7 h-7 rounded-lg bg-amber-500 text-white flex items-center justify-center">
+                <i data-lucide="sparkles" class="w-4 h-4"></i>
+              </div>
+              <h3 class="font-extrabold text-sm text-gray-900 dark:text-white">4. Угоди (Фінал місячного циклу)</h3>
+            </div>
+            <span class="text-[11px] font-bold text-amber-700 dark:text-amber-400 bg-amber-100 dark:bg-amber-900/50 px-2 py-0.5 rounded-full">Ключова конверсія</span>
+          </div>
+
+          <div class="p-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+            
+            <!-- Оренда -->
+            <div class="bg-gradient-to-br from-gray-50 to-emerald-50/30 dark:from-gray-800/60 dark:to-emerald-950/20 p-4 rounded-xl border border-gray-200 dark:border-gray-700 flex flex-col justify-between">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-gray-600 dark:text-gray-300 uppercase tracking-wide">Оренда</span>
+                <span class="text-[10px] font-bold px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded-full">План: 5</span>
+              </div>
+              <div class="flex items-baseline gap-2 my-2">
+                <span class="text-3xl font-black text-emerald-600 dark:text-emerald-400" id="kpi_rent_deals">3</span>
+                <span class="text-xs text-gray-400">/ 5 угод</span>
+              </div>
+              <div class="w-full bg-gray-200 dark:bg-gray-700 h-2 rounded-full overflow-hidden mb-2">
+                <div id="kpi_rent_bar" class="bg-emerald-500 h-full rounded-full" style="width: 60%;"></div>
+              </div>
+              <div class="flex justify-between items-center text-xs">
+                <span class="text-gray-500 text-[11px]">Прогрес: <strong>60%</strong></span>
+                <button onclick="incrementKpi('rent_deal')" class="px-2 py-1 text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition cursor-pointer">+1 угода</button>
+              </div>
+            </div>
+
+            <!-- Завдаток -->
+            <div class="bg-gradient-to-br from-gray-50 to-amber-50/30 dark:from-gray-800/60 dark:to-amber-950/20 p-4 rounded-xl border border-gray-200 dark:border-gray-700 flex flex-col justify-between">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-gray-600 dark:text-gray-300 uppercase tracking-wide">10. Завдаток</span>
+                <span class="text-[10px] font-bold px-2 py-0.5 bg-amber-100 text-amber-800 rounded-full">План: 2</span>
+              </div>
+              <div class="flex items-baseline gap-2 my-2">
+                <span class="text-3xl font-black text-amber-600 dark:text-amber-400" id="kpi_deposits">2</span>
+                <span class="text-xs text-gray-400">/ 2 внесено</span>
+                <span class="text-xs bg-amber-100 text-amber-800 font-bold px-1.5 py-0.2 rounded ml-auto">100% ✓</span>
+              </div>
+              <div class="w-full bg-gray-200 dark:bg-gray-700 h-2 rounded-full overflow-hidden mb-2">
+                <div id="kpi_deposit_bar" class="bg-amber-500 h-full rounded-full" style="width: 100%;"></div>
+              </div>
+              <div class="flex justify-between items-center text-xs">
+                <span class="text-amber-600 dark:text-amber-400 font-bold text-[11px]">Повний норматив закрито!</span>
+                <button onclick="incrementKpi('deposit')" class="px-2 py-1 text-xs font-bold bg-amber-500 hover:bg-amber-600 text-white rounded-lg transition cursor-pointer">+1 завдаток</button>
+              </div>
+            </div>
+
+            <!-- Угода (Продаж) -->
+            <div class="bg-gradient-to-br from-gray-50 to-purple-50/30 dark:from-gray-800/60 dark:to-purple-950/20 p-4 rounded-xl border border-gray-200 dark:border-gray-700 flex flex-col justify-between">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-gray-600 dark:text-gray-300 uppercase tracking-wide">Угода (Продаж)</span>
+                <span class="text-[10px] font-bold px-2 py-0.5 bg-purple-100 text-purple-800 rounded-full">План: 1</span>
+              </div>
+              <div class="flex items-baseline gap-2 my-2">
+                <span class="text-3xl font-black text-purple-600 dark:text-purple-400" id="kpi_sale_deals">1</span>
+                <span class="text-xs text-gray-400">/ 1 успіх</span>
+                <span class="text-xs bg-purple-100 text-purple-800 font-bold px-1.5 py-0.2 rounded ml-auto">100% ⭐</span>
+              </div>
+              <div class="w-full bg-gray-200 dark:bg-gray-700 h-2 rounded-full overflow-hidden mb-2">
+                <div id="kpi_sale_bar" class="bg-purple-600 h-full rounded-full" style="width: 100%;"></div>
+              </div>
+              <div class="flex justify-between items-center text-xs">
+                <span class="text-purple-600 dark:text-purple-400 font-bold text-[11px]">Ціль виконано! Комісія $1,800</span>
+                <button onclick="incrementKpi('sale_deal')" class="px-2 py-1 text-xs font-bold bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition cursor-pointer">+1 угода</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- TAB 2: СТАТИСТИКА РІЄЛТОРА (16 МЕТРИК ПО КАТЕГОРІЯХ) -->
+    <div id="content_stats" class="hidden space-y-4">
+      
+      <!-- Header Banner & Category Filter -->
+      <div class="bg-white dark:bg-[#1A1D24] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h2 class="font-extrabold text-base text-gray-900 dark:text-white flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+            1. Статистика ріелтора (Матриця показників за категоріями)
+          </h2>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Детальний розріз 16 ключових метрик: Новобудови, Вторинне, Комерція, Земля та підсумки.</p>
+        </div>
+
+        <!-- Quick Metrics Highlights -->
+        <div class="flex items-center gap-2 text-xs">
+          <div class="px-3 py-1.5 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 rounded-xl text-emerald-800 dark:text-emerald-300">
+            <span class="font-medium text-[11px] block">Загальний прибуток:</span>
+            <strong class="text-sm font-mono font-black" id="matrixTotalProfitHeader">$6,850</strong>
+          </div>
+          <div class="px-3 py-1.5 bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 rounded-xl text-blue-800 dark:text-blue-300">
+            <span class="font-medium text-[11px] block">Всього об'єктів:</span>
+            <strong class="text-sm font-mono font-black">118</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- THE 16-ROW MATRIX TABLE -->
+      <div class="bg-white dark:bg-[#1A1D24] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs border-collapse">
+            <thead>
+              <tr class="bg-gray-100 dark:bg-gray-800/80 text-gray-700 dark:text-gray-300 font-bold uppercase tracking-wider border-b border-gray-200 dark:border-gray-700">
+                <th class="py-3 px-4 w-2/5">Метрика / Показник</th>
+                <th class="py-3 px-3 text-center bg-blue-50/50 dark:bg-blue-950/20 text-blue-800 dark:text-blue-300 border-x border-gray-200 dark:border-gray-700">🏢 Новобудови</th>
+                <th class="py-3 px-3 text-center bg-emerald-50/50 dark:bg-emerald-950/20 text-emerald-800 dark:text-emerald-300 border-r border-gray-200 dark:border-gray-700">🏠 Вторинне</th>
+                <th class="py-3 px-3 text-center bg-purple-50/50 dark:bg-purple-950/20 text-purple-800 dark:text-purple-300 border-r border-gray-200 dark:border-gray-700">🏬 Комерція</th>
+                <th class="py-3 px-3 text-center bg-amber-50/50 dark:bg-amber-950/20 text-amber-800 dark:text-amber-300 border-r border-gray-200 dark:border-gray-700">🌱 Земля</th>
+                <th class="py-3 px-4 text-center bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white font-black">РАЗОМ (∑)</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100 dark:divide-gray-800/80 font-medium text-gray-700 dark:text-gray-300">
+              
+              <!-- SECTION GROUP 1: ОБ'ЄКТИ В РОБОТІ -->
+              <tr class="bg-gray-50/70 dark:bg-gray-800/30">
+                <td colspan="6" class="py-1.5 px-4 font-bold text-[11px] text-gray-400 uppercase tracking-wider">База об'єктів у роботі</td>
+              </tr>
+              <!-- 1 -->
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
+                <td class="py-2 px-4 flex items-center gap-2">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                  Кол-во объектов продажа
+                </td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Кол-во объектов продажа', 'Новобудови', 28)">28</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Кол-во объектов продажа', 'Вторинне', 42)">42</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Кол-во объектов продажа', 'Комерція', 9)">9</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Кол-во объектов продажа', 'Земля', 6)">6</td>
+                <td class="py-2 px-4 text-center font-mono font-black text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800/50">85</td>
+              </tr>
+              <!-- 2 -->
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
+                <td class="py-2 px-4 flex items-center gap-2">
+                  <span class="w-1.5 h-1.5 rounded-full bg-sky-500"></span>
+                  Кол-во объектов в аренде
+                </td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Кол-во объектов в аренде', 'Новобудови', 8)">8</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Кол-во объектов в аренде', 'Вторинне', 17)">17</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Кол-во объектов в аренде', 'Комерція', 7)">7</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Кол-во объектов в аренде', 'Земля', 1)">1</td>
+                <td class="py-2 px-4 text-center font-mono font-black text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800/50">33</td>
+              </tr>
+
+              <!-- SECTION GROUP 2: ЗУСТРІЧІ З ВЛАСНИКАМИ ТА ЕКСКЛЮЗИВИ -->
+              <tr class="bg-gray-50/70 dark:bg-gray-800/30">
+                <td colspan="6" class="py-1.5 px-4 font-bold text-[11px] text-gray-400 uppercase tracking-wider">Робота з власниками</td>
+              </tr>
+              <!-- 3 -->
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
+                <td class="py-2 px-4 flex items-center gap-2">
+                  <i data-lucide="handshake" class="w-3.5 h-3.5 text-indigo-500"></i>
+                  Кол-во встреч собственник продажа
+                </td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Встречи собственник продажа', 'Новобудови', 3)">3</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Встречи собственник продажа', 'Вторинне', 5)">5</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Встречи собственник продажа', 'Комерція', 1)">1</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Встречи собственник продажа', 'Земля', 1)">1</td>
+                <td class="py-2 px-4 text-center font-mono font-black text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800/50">10</td>
+              </tr>
+              <!-- 4 -->
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
+                <td class="py-2 px-4 flex items-center gap-2">
+                  <i data-lucide="calendar" class="w-3.5 h-3.5 text-indigo-500"></i>
+                  Кол-во встреч собственник аренда
+                </td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Встречи собственник аренда', 'Новобудови', 2)">2</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Встречи собственник аренда', 'Вторинне', 4)">4</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Встречи собственник аренда', 'Комерція', 2)">2</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Встречи собственник аренда', 'Земля', 0)">0</td>
+                <td class="py-2 px-4 text-center font-mono font-black text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800/50">8</td>
+              </tr>
+              <!-- 5 -->
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition bg-amber-50/30 dark:bg-amber-950/10">
+                <td class="py-2 px-4 font-bold text-amber-900 dark:text-amber-300 flex items-center gap-2">
+                  <i data-lucide="star" class="w-3.5 h-3.5 text-amber-500 fill-amber-500"></i>
+                  Кол-во эксклюзивных договоров
+                </td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Эксклюзивные договоры', 'Новобудови', 1)">1</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Эксклюзивные договоры', 'Вторинне', 3)">3</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Эксклюзивные договоры', 'Комерція', 1)">1</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Эксклюзивные договоры', 'Земля', 0)">0</td>
+                <td class="py-2 px-4 text-center font-mono font-black text-amber-600 dark:text-amber-400 bg-amber-100/50 dark:bg-amber-950/40">5 ⭐</td>
+              </tr>
+
+              <!-- SECTION GROUP 3: РЕКЛАМА -->
+              <tr class="bg-gray-50/70 dark:bg-gray-800/30">
+                <td colspan="6" class="py-1.5 px-4 font-bold text-[11px] text-gray-400 uppercase tracking-wider">Маркетинг та реклама</td>
+              </tr>
+              <!-- 6 -->
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
+                <td class="py-2 px-4 flex items-center gap-2">
+                  <i data-lucide="megaphone" class="w-3.5 h-3.5 text-purple-500"></i>
+                  Кол-во реклам по продаже
+                </td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Реклама продажа', 'Новобудови', 16)">16</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Реклама продажа', 'Вторинне', 24)">24</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Реклама продажа', 'Комерція', 5)">5</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Реклама продажа', 'Земля', 3)">3</td>
+                <td class="py-2 px-4 text-center font-mono font-black text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800/50">48</td>
+              </tr>
+              <!-- 7 -->
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
+                <td class="py-2 px-4 flex items-center gap-2">
+                  <i data-lucide="share" class="w-3.5 h-3.5 text-purple-500"></i>
+                  Кол-во реклам по аренде
+                </td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Реклама аренда', 'Новобудови', 6)">6</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Реклама аренда', 'Вторинне', 12)">12</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Реклама аренда', 'Комерція', 4)">4</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Реклама аренда', 'Земля', 0)">0</td>
+                <td class="py-2 px-4 text-center font-mono font-black text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800/50">22</td>
+              </tr>
+
+              <!-- SECTION GROUP 4: ЗАЯВКИ ТА ПОКАЗИ -->
+              <tr class="bg-gray-50/70 dark:bg-gray-800/30">
+                <td colspan="6" class="py-1.5 px-4 font-bold text-[11px] text-gray-400 uppercase tracking-wider">Робота з клієнтами та попит</td>
+              </tr>
+              <!-- 8 -->
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
+                <td class="py-2 px-4 flex items-center gap-2">
+                  <i data-lucide="file-text" class="w-3.5 h-3.5 text-blue-500"></i>
+                  Кол-во заявок продажа
+                </td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Заявки продажа', 'Новобудови', 14)">14</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Заявки продажа', 'Вторинне', 19)">19</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Заявки продажа', 'Комерція', 3)">3</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Заявки продажа', 'Земля', 2)">2</td>
+                <td class="py-2 px-4 text-center font-mono font-black text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800/50">38</td>
+              </tr>
+              <!-- 9 -->
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
+                <td class="py-2 px-4 flex items-center gap-2">
+                  <i data-lucide="inbox" class="w-3.5 h-3.5 text-blue-500"></i>
+                  Кол-во заявок аренда
+                </td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Заявки аренда', 'Новобудови', 5)">5</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Заявки аренда', 'Вторинне', 11)">11</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Заявки аренда', 'Комерція', 2)">2</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Заявки аренда', 'Земля', 0)">0</td>
+                <td class="py-2 px-4 text-center font-mono font-black text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800/50">18</td>
+              </tr>
+              <!-- 10 -->
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
+                <td class="py-2 px-4 flex items-center gap-2">
+                  <i data-lucide="eye" class="w-3.5 h-3.5 text-teal-500"></i>
+                  Кол-во показов продажа
+                </td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Показы продажа', 'Новобудови', 8)">8</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Показы продажа', 'Вторинне', 12)">12</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Показы продажа', 'Комерція', 2)">2</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Показы продажа', 'Земля', 1)">1</td>
+                <td class="py-2 px-4 text-center font-mono font-black text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800/50">23</td>
+              </tr>
+              <!-- 11 -->
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
+                <td class="py-2 px-4 flex items-center gap-2">
+                  <i data-lucide="eye-off" class="w-3.5 h-3.5 text-teal-500"></i>
+                  Кол-во показов аренда
+                </td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Показы аренда', 'Новобудови', 4)">4</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Показы аренда', 'Вторинне', 7)">7</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Показы аренда', 'Комерція', 2)">2</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Показы аренда', 'Земля', 0)">0</td>
+                <td class="py-2 px-4 text-center font-mono font-black text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800/50">13</td>
+              </tr>
+
+              <!-- SECTION GROUP 5: УГОДИ, ЗАВДАТКИ ТА ПРИБУТОК -->
+              <tr class="bg-gray-50/70 dark:bg-gray-800/30">
+                <td colspan="6" class="py-1.5 px-4 font-bold text-[11px] text-gray-400 uppercase tracking-wider">Фінал воронки та фінанси</td>
+              </tr>
+              <!-- 12 -->
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition bg-amber-50/20 dark:bg-amber-950/10">
+                <td class="py-2 px-4 font-bold text-amber-800 dark:text-amber-300 flex items-center gap-2">
+                  <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-amber-500"></i>
+                  Кол-во задатков
+                </td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Задатки', 'Новобудови', 1)">1</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Задатки', 'Вторинне', 2)">2</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Задатки', 'Комерція', 0)">0</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Задатки', 'Земля', 0)">0</td>
+                <td class="py-2 px-4 text-center font-mono font-black text-amber-600 dark:text-amber-400 bg-amber-100/50 dark:bg-amber-950/40">3 🤝</td>
+              </tr>
+              <!-- 13 -->
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition bg-emerald-50/20 dark:bg-emerald-950/10">
+                <td class="py-2 px-4 font-bold text-emerald-800 dark:text-emerald-300 flex items-center gap-2">
+                  <i data-lucide="award" class="w-3.5 h-3.5 text-emerald-500"></i>
+                  Кол-во сделок продажа
+                </td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Сделки продажа', 'Новобудови', 1)">1</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Сделки продажа', 'Вторинне', 1)">1</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Сделки продажа', 'Комерція', 0)">0</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Сделки продажа', 'Земля', 0)">0</td>
+                <td class="py-2 px-4 text-center font-mono font-black text-emerald-600 dark:text-emerald-400 bg-emerald-100/50 dark:bg-emerald-950/40">2 🏆</td>
+              </tr>
+              <!-- 14 -->
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
+                <td class="py-2 px-4 flex items-center gap-2">
+                  <i data-lucide="key" class="w-3.5 h-3.5 text-emerald-500"></i>
+                  Кол-во сделок аренда
+                </td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Сделки аренда', 'Новобудови', 1)">1</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Сделки аренда', 'Вторинне', 2)">2</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Сделки аренда', 'Комерція', 1)">1</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Сделки аренда', 'Земля', 0)">0</td>
+                <td class="py-2 px-4 text-center font-mono font-black text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800/50">4 🔑</td>
+              </tr>
+              <!-- 15 -->
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
+                <td class="py-2.5 px-4 font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                  <i data-lucide="dollar-sign" class="w-3.5 h-3.5 text-emerald-600"></i>
+                  Прибыль по продаже
+                </td>
+                <td class="py-2.5 px-3 text-center font-mono font-bold text-emerald-600 dark:text-emerald-400" id="profit_sale_nov">$2,400</td>
+                <td class="py-2.5 px-3 text-center font-mono font-bold text-emerald-600 dark:text-emerald-400" id="profit_sale_vtor">$2,100</td>
+                <td class="py-2.5 px-3 text-center font-mono text-gray-400">$0</td>
+                <td class="py-2.5 px-3 text-center font-mono text-gray-400">$0</td>
+                <td class="py-2.5 px-4 text-center font-mono font-black text-emerald-600 dark:text-emerald-400 bg-emerald-50/70 dark:bg-emerald-950/40" id="profit_sale_total">$4,500</td>
+              </tr>
+              <!-- 16 -->
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
+                <td class="py-2.5 px-4 font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                  <i data-lucide="coins" class="w-3.5 h-3.5 text-blue-600"></i>
+                  Прибыль по аренде
+                </td>
+                <td class="py-2.5 px-3 text-center font-mono font-bold text-blue-600 dark:text-blue-400" id="profit_rent_nov">$600</td>
+                <td class="py-2.5 px-3 text-center font-mono font-bold text-blue-600 dark:text-blue-400" id="profit_rent_vtor">$1,100</td>
+                <td class="py-2.5 px-3 text-center font-mono font-bold text-blue-600 dark:text-blue-400" id="profit_rent_kom">$650</td>
+                <td class="py-2.5 px-3 text-center font-mono text-gray-400">$0</td>
+                <td class="py-2.5 px-4 text-center font-mono font-black text-blue-600 dark:text-blue-400 bg-blue-50/70 dark:bg-blue-950/40" id="profit_rent_total">$2,350</td>
+              </tr>
+
+              <!-- TOTAL HIGHLIGHT ROW -->
+              <tr class="bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-extrabold text-sm shadow-md">
+                <td class="py-3 px-4 flex items-center gap-2">
+                  <i data-lucide="wallet" class="w-4 h-4 text-yellow-300"></i>
+                  РАЗОМ ПРИБУТОК РІЄЛТОРА ($/₴)
+                </td>
+                <td class="py-3 px-3 text-center font-mono" id="profit_grand_nov">$3,000</td>
+                <td class="py-3 px-3 text-center font-mono" id="profit_grand_vtor">$3,200</td>
+                <td class="py-3 px-3 text-center font-mono" id="profit_grand_kom">$650</td>
+                <td class="py-3 px-3 text-center font-mono text-white/60">$0</td>
+                <td class="py-3 px-4 text-center font-mono text-base font-black text-yellow-300 bg-black/20" id="profit_grand_total">$6,850</td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- TAB 3: ВОРОНКА ПРОДАЖ (INTERACTIVE DEALS PIPELINE) -->
+    <div id="content_funnel_sales" class="hidden space-y-4">
+      <div class="bg-white dark:bg-[#1A1D24] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm flex items-center justify-between">
+        <div>
+          <h2 class="font-extrabold text-base text-gray-900 dark:text-white flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-emerald-600"></span>
+            Воронка продажів (Угоди та етапи проходження)
+          </h2>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">7 стадій угоди від холодного дзвінка до закриття з конверсією кожного вузла.</p>
+        </div>
+        <div class="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-3 py-1.5 rounded-xl border border-emerald-200 dark:border-emerald-800">
+          Пайплайн у роботі: $148,000
+        </div>
+      </div>
+
+      <!-- Funnel stages cards -->
+      <div class="grid grid-cols-1 md:grid-cols-7 gap-2.5">
+        
+        <!-- Stage 1 -->
+        <div class="bg-white dark:bg-[#1A1D24] p-3 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm">
+          <div class="flex items-center justify-between text-xs font-bold text-gray-500 mb-2">
+            <span>1. Дзвінки</span>
+            <span class="text-emerald-600">100%</span>
+          </div>
+          <div class="text-xl font-black text-gray-900 dark:text-white">100</div>
+          <p class="text-[10px] text-gray-400 mt-1">Первинні контакти</p>
+        </div>
+
+        <!-- Stage 2 -->
+        <div class="bg-white dark:bg-[#1A1D24] p-3 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm">
+          <div class="flex items-center justify-between text-xs font-bold text-gray-500 mb-2">
+            <span>2. Зустрічі</span>
+            <span class="text-emerald-600">18%</span>
+          </div>
+          <div class="text-xl font-black text-gray-900 dark:text-white">18</div>
+          <p class="text-[10px] text-gray-400 mt-1">З власниками</p>
+        </div>
+
+        <!-- Stage 3 -->
+        <div class="bg-white dark:bg-[#1A1D24] p-3 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm">
+          <div class="flex items-center justify-between text-xs font-bold text-gray-500 mb-2">
+            <span>3. Договори</span>
+            <span class="text-amber-600">27%</span>
+          </div>
+          <div class="text-xl font-black text-gray-900 dark:text-white">5</div>
+          <p class="text-[10px] text-gray-400 mt-1">Ексклюзивні угоди</p>
+        </div>
+
+        <!-- Stage 4 -->
+        <div class="bg-white dark:bg-[#1A1D24] p-3 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm">
+          <div class="flex items-center justify-between text-xs font-bold text-gray-500 mb-2">
+            <span>4. Покази</span>
+            <span class="text-blue-600">72%</span>
+          </div>
+          <div class="text-xl font-black text-gray-900 dark:text-white">36</div>
+          <p class="text-[10px] text-gray-400 mt-1">Презентації покупцям</p>
+        </div>
+
+        <!-- Stage 5 -->
+        <div class="bg-white dark:bg-[#1A1D24] p-3 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm">
+          <div class="flex items-center justify-between text-xs font-bold text-gray-500 mb-2">
+            <span>5. Оффери</span>
+            <span class="text-indigo-600">22%</span>
+          </div>
+          <div class="text-xl font-black text-gray-900 dark:text-white">8</div>
+          <p class="text-[10px] text-gray-400 mt-1">Цінові пропозиції</p>
+        </div>
+
+        <!-- Stage 6 -->
+        <div class="bg-white dark:bg-[#1A1D24] p-3 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm bg-amber-50/50 dark:bg-amber-950/20">
+          <div class="flex items-center justify-between text-xs font-bold text-amber-700 dark:text-amber-400 mb-2">
+            <span>6. Завдатки</span>
+            <span class="text-amber-600">37%</span>
+          </div>
+          <div class="text-xl font-black text-amber-600 dark:text-amber-400">3</div>
+          <p class="text-[10px] text-gray-400 mt-1">Фіксація броні</p>
+        </div>
+
+        <!-- Stage 7 -->
+        <div class="bg-white dark:bg-[#1A1D24] p-3 rounded-xl border border-emerald-300 dark:border-emerald-700 shadow-sm bg-emerald-50 dark:bg-emerald-950/40">
+          <div class="flex items-center justify-between text-xs font-bold text-emerald-800 dark:text-emerald-300 mb-2">
+            <span>7. Закрито</span>
+            <span class="text-emerald-600 font-extrabold">66%</span>
+          </div>
+          <div class="text-xl font-black text-emerald-600 dark:text-emerald-400">2</div>
+          <p class="text-[10px] text-gray-500 mt-1">1 Продаж + 1 Оренда</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TAB 4: ВОРОНКА ЗАЯВОК (LEADS INTAKE & CHANNELS) -->
+    <div id="content_funnel_leads" class="hidden space-y-4">
+      <div class="bg-white dark:bg-[#1A1D24] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm flex items-center justify-between">
+        <div>
+          <h2 class="font-extrabold text-base text-gray-900 dark:text-white flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-blue-600"></span>
+            Воронка заявок (Аналітика вхідного трафіку лідів)
+          </h2>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Джерела надходження, SLA першого дзвінка та конверсія у підбір об'єктів.</p>
+        </div>
+        <div class="text-xs font-semibold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 px-3 py-1.5 rounded-xl border border-blue-200 dark:border-blue-800">
+          Середній SLA відповіді: <strong>8.4 хв</strong>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        
+        <div class="bg-white dark:bg-[#1A1D24] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm">
+          <span class="text-xs font-bold text-gray-400 uppercase">Нові (Без дзвінка)</span>
+          <div class="text-2xl font-black text-sky-600 mt-1">4</div>
+          <p class="text-xs text-gray-500 mt-1">Потребують швидкого дзвінка (&lt;15 хв)</p>
+        </div>
+
+        <div class="bg-white dark:bg-[#1A1D24] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm">
+          <span class="text-xs font-bold text-gray-400 uppercase">Кваліфіковані</span>
+          <div class="text-2xl font-black text-indigo-600 mt-1">18</div>
+          <p class="text-xs text-gray-500 mt-1">Бюджет і критерії зафіксовано</p>
+        </div>
+
+        <div class="bg-white dark:bg-[#1A1D24] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm">
+          <span class="text-xs font-bold text-gray-400 uppercase">У процесі підбору</span>
+          <div class="text-2xl font-black text-purple-600 mt-1">12</div>
+          <p class="text-xs text-gray-500 mt-1">Надіслано 3+ презентацій</p>
+        </div>
+
+        <div class="bg-white dark:bg-[#1A1D24] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm">
+          <span class="text-xs font-bold text-gray-400 uppercase">На показах</span>
+          <div class="text-2xl font-black text-emerald-600 mt-1">6</div>
+          <p class="text-xs text-gray-500 mt-1">Заплановано перегляди</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SUB-TABS: KPI КОМАНДИ / ВІДДІЛУ / КОМПАНІЇ -->
+    <div id="content_kpi_other" class="hidden space-y-4">
+      <div class="bg-white dark:bg-[#1A1D24] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm">
+        <h3 id="otherKpiTitle" class="font-extrabold text-base text-gray-900 dark:text-white">KPI Команди</h3>
+        <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Зведені показники виконання місячних планів групою агентів.</p>
+
+        <div class="mt-4 overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead>
+              <tr class="border-b border-gray-200 dark:border-gray-700 text-gray-400 font-bold uppercase">
+                <th class="py-2.5 px-3">Агент</th>
+                <th class="py-2.5 px-3 text-center">Дзвінки</th>
+                <th class="py-2.5 px-3 text-center">Зустрічі</th>
+                <th class="py-2.5 px-3 text-center">Покази</th>
+                <th class="py-2.5 px-3 text-center">Ексклюзиви</th>
+                <th class="py-2.5 px-3 text-center">Угоди</th>
+                <th class="py-2.5 px-3 text-center">Виконання KPI</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100 dark:divide-gray-800 font-medium">
+              <tr>
+                <td class="py-2.5 px-3 font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                  Олександр Мельник
+                </td>
+                <td class="py-2.5 px-3 text-center font-mono">68 / 100</td>
+                <td class="py-2.5 px-3 text-center font-mono">7 / 10</td>
+                <td class="py-2.5 px-3 text-center font-mono">6 / 8</td>
+                <td class="py-2.5 px-3 text-center font-mono">2 / 2</td>
+                <td class="py-2.5 px-3 text-center font-mono font-bold text-emerald-600">2</td>
+                <td class="py-2.5 px-3 text-center font-mono font-black text-emerald-600">78%</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-3 font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                  Ірина Ковальчук
+                </td>
+                <td class="py-2.5 px-3 text-center font-mono">84 / 100</td>
+                <td class="py-2.5 px-3 text-center font-mono">9 / 10</td>
+                <td class="py-2.5 px-3 text-center font-mono">7 / 8</td>
+                <td class="py-2.5 px-3 text-center font-mono">3 / 2</td>
+                <td class="py-2.5 px-3 text-center font-mono font-bold text-emerald-600">3</td>
+                <td class="py-2.5 px-3 text-center font-mono font-black text-emerald-600">92%</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-3 font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                  Дмитро Шевченко
+                </td>
+                <td class="py-2.5 px-3 text-center font-mono">42 / 100</td>
+                <td class="py-2.5 px-3 text-center font-mono">4 / 10</td>
+                <td class="py-2.5 px-3 text-center font-mono">3 / 8</td>
+                <td class="py-2.5 px-3 text-center font-mono">1 / 2</td>
+                <td class="py-2.5 px-3 text-center font-mono font-bold text-amber-600">1</td>
+                <td class="py-2.5 px-3 text-center font-mono font-black text-amber-600">51%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="mt-8 border-t border-gray-200 dark:border-gray-800 bg-white/70 dark:bg-[#151821]/70 py-4 px-4 text-center text-xs text-gray-500">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        <span class="font-bold text-gray-800 dark:text-gray-200">Yotei Real Estate CRM</span>
+        <span>•</span>
+        <span>Модуль аналітики та KPI рієлтора v3.2</span>
+      </div>
+      <div>
+        <span>Розробка та тестування інтерфейсів</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MODAL 1: ШВИДКА ФІКСАЦІЯ АКТИВНОСТІ (+ ФІКСУВАТИ ДІЮ) -->
+  <div id="quickActionModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-[#1A1D24] w-full max-w-md rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden animate-scale-up">
+      <div class="px-5 py-4 bg-emerald-600 text-white flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i data-lucide="plus-circle" class="w-5 h-5"></i>
+          <h3 class="font-bold text-sm">Швидка фіксація активності в CRM</h3>
+        </div>
+        <button onclick="closeModal('quickActionModal')" class="text-white/80 hover:text-white transition cursor-pointer">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <form onsubmit="handleQuickAction(event)" class="p-5 space-y-4 text-xs">
+        <div>
+          <label class="block font-semibold text-gray-700 dark:text-gray-300 mb-1">Тип виконаної дії</label>
+          <select id="actionType" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none focus:border-emerald-500">
+            <option value="calls">📞 Телефонний дзвінок власнику (+1)</option>
+            <option value="objects">🏢 Додавання обʼєкта у СРМ (+1)</option>
+            <option value="meetings">🤝 Зустріч з власником (+1)</option>
+            <option value="contracts">⭐ Ексклюзивний договір (+1)</option>
+            <option value="leads">📋 Нова заявка клієнта (+1)</option>
+            <option value="matches">🔍 Підбір об'єктів під клієнта (+1)</option>
+            <option value="showings">👁️ Показ об'єкта покупцю (+1)</option>
+            <option value="mkt_olx">📢 Реклама ОЛХ (+1)</option>
+            <option value="mkt_domria">📢 Реклама Дом Ріа (+1)</option>
+            <option value="mkt_rieltor">📢 Реклама Рієлтор юа (+1)</option>
+            <option value="social_post">📱 Допис / Сторіз у соцмережах (+1)</option>
+            <option value="deposit">🤝 Завдаток (+1)</option>
+            <option value="deal">🏆 Угода (+1)</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-semibold text-gray-700 dark:text-gray-300 mb-1">Категорія нерухомості</label>
+          <div class="grid grid-cols-2 gap-2">
+            <label class="flex items-center gap-1.5 p-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 cursor-pointer">
+              <input type="radio" name="cat" value="nov" checked class="text-emerald-600">
+              <span>🏢 Новобудови</span>
+            </label>
+            <label class="flex items-center gap-1.5 p-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 cursor-pointer">
+              <input type="radio" name="cat" value="vtor" class="text-emerald-600">
+              <span>🏠 Вторинне</span>
+            </label>
+            <label class="flex items-center gap-1.5 p-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 cursor-pointer">
+              <input type="radio" name="cat" value="kom" class="text-emerald-600">
+              <span>🏬 Комерція</span>
+            </label>
+            <label class="flex items-center gap-1.5 p-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 cursor-pointer">
+              <input type="radio" name="cat" value="land" class="text-emerald-600">
+              <span>🌱 Земля</span>
+            </label>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-semibold text-gray-700 dark:text-gray-300 mb-1">Примітка / Клієнт / Адреса об'єкта</label>
+          <input type="text" id="actionNote" placeholder="напр. вул. Сумська 45, власник Андрій, перегляд о 14:00" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-emerald-500">
+        </div>
+
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closeModal('quickActionModal')" class="px-4 py-2 rounded-xl border border-gray-300 dark:border-gray-700 font-semibold text-gray-600 dark:text-gray-300 hover:bg-gray-100 transition cursor-pointer">Скасувати</button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold transition shadow-sm cursor-pointer">Зберегти дію</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 2: ДЕТАЛІЗАЦІЯ ПОКАЗНИКА -->
+  <div id="inspectModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-[#1A1D24] w-full max-w-lg rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+      <div class="px-5 py-4 bg-gray-900 text-white flex items-center justify-between">
+        <div>
+          <h3 id="inspectTitle" class="font-bold text-sm">Деталізація метрики</h3>
+          <p id="inspectSub" class="text-[11px] text-gray-400">Перегляд відповідних записів у базі</p>
+        </div>
+        <button onclick="closeModal('inspectModal')" class="text-white/80 hover:text-white transition cursor-pointer">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div class="p-5 space-y-3 text-xs">
+        <div id="inspectList" class="space-y-2 max-h-64 overflow-y-auto pr-1">
+          <!-- Populated by JS -->
+        </div>
+        <div class="flex justify-end pt-2">
+          <button onclick="closeModal('inspectModal')" class="px-4 py-2 rounded-xl bg-gray-100 dark:bg-gray-800 font-bold text-gray-700 dark:text-gray-300 hover:bg-gray-200 transition cursor-pointer">Закрити</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 3: РЕДАКТОР МІСЯЧНИХ НОРМАТИВІВ -->
+  <div id="targetsModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-[#1A1D24] w-full max-w-md rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+      <div class="px-5 py-4 bg-amber-500 text-white flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i data-lucide="settings" class="w-5 h-5"></i>
+          <h3 class="font-bold text-sm">Мінімальні місячні нормативи рієлтора</h3>
+        </div>
+        <button onclick="closeModal('targetsModal')" class="text-white/80 hover:text-white transition cursor-pointer">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <form onsubmit="saveCustomTargets(event)" class="p-5 space-y-3 text-xs">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-medium text-gray-600 dark:text-gray-400 mb-1">Дзвінки власнику:</label>
+            <input type="number" id="target_calls" value="100" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg p-2 font-mono font-bold">
+          </div>
+          <div>
+            <label class="block font-medium text-gray-600 dark:text-gray-400 mb-1">Додавання об'єктів:</label>
+            <input type="number" id="target_objects" value="25" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg p-2 font-mono font-bold">
+          </div>
+          <div>
+            <label class="block font-medium text-gray-600 dark:text-gray-400 mb-1">Зустрічі з власником:</label>
+            <input type="number" id="target_meetings" value="10" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg p-2 font-mono font-bold">
+          </div>
+          <div>
+            <label class="block font-medium text-gray-600 dark:text-gray-400 mb-1">Ексклюзивні договори:</label>
+            <input type="number" id="target_contracts" value="2" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg p-2 font-mono font-bold">
+          </div>
+          <div>
+            <label class="block font-medium text-gray-600 dark:text-gray-400 mb-1">Заявки в CRM:</label>
+            <input type="number" id="target_leads" value="30" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg p-2 font-mono font-bold">
+          </div>
+          <div>
+            <label class="block font-medium text-gray-600 dark:text-gray-400 mb-1">Покази об'єктів:</label>
+            <input type="number" id="target_showings" value="8" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg p-2 font-mono font-bold">
+          </div>
+        </div>
+
+        <div class="flex justify-end gap-2 pt-3">
+          <button type="button" onclick="closeModal('targetsModal')" class="px-4 py-2 rounded-xl border border-gray-300 dark:border-gray-700 font-semibold text-gray-600 dark:text-gray-300 hover:bg-gray-100 transition cursor-pointer">Скасувати</button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold transition shadow-sm cursor-pointer">Оновити плани</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toastContainer" class="fixed bottom-4 right-4 z-50 space-y-2 pointer-events-none"></div>
+
+  <!-- CORE LOGIC & INTERACTION JAVASCRIPT -->
+  <script>
+    // State Store
+    const state = {
+      currency: 'USD',
+      rateUah: 41.5,
+      activeMainTab: 'kpi',
+      activeKpiSubTab: 'agent',
+      kpi: {
+        calls: 68,
+        objects: 19,
+        meetings: 7,
+        contracts: 2,
+        leads: 22,
+        matches: 12,
+        showings: 6,
+        rent_deal: 3,
+        deposit: 2,
+        sale_deal: 1,
+      },
+      targets: {
+        calls: 100,
+        objects: 25,
+        meetings: 10,
+        contracts: 2,
+        leads: 30,
+        matches: 15,
+        showings: 8,
+        rent_deal: 5,
+        deposit: 2,
+        sale_deal: 1,
+      },
+      marketing: {
+        olx: 18,
+        domria: 16,
+        rieltor: 20,
+        ig_posts: 15,
+        ig_video: 4,
+        ig_stories: 48,
+        tt_posts: 12,
+        tt_video: 3,
+        tt_stories: 35,
+        fb_posts: 14,
+        fb_video: 4,
+        fb_stories: 42,
+        yt_video: 3,
+        x_posts: 18,
+        x_video: 2,
+        x_comments: 52,
+      }
+    };
+
+    // Initialize Lucide Icons
+    function renderIcons() {
+      if (window.lucide) {
+        lucide.createIcons();
+      }
+    }
+
+    // Main Tab Switching (KPI, статистика, Воронка продаж, воронка_заявок)
+    function switchMainTab(tab) {
+      state.activeMainTab = tab;
+      
+      const tabs = ['kpi', 'stats', 'funnel_sales', 'funnel_leads'];
+      tabs.forEach(t => {
+        const btn = document.getElementById(`mainTab_${t}`);
+        if (t === tab) {
+          btn.className = "flex-1 py-3 px-4 text-center cursor-pointer transition flex items-center justify-center gap-2 bg-[#1E8449] shadow-inner text-white";
+        } else {
+          btn.className = "flex-1 py-3 px-4 text-center cursor-pointer transition flex items-center justify-center gap-2 hover:bg-[#229954] text-emerald-50";
+        }
+      });
+
+      // Show/hide content
+      document.getElementById('content_kpi_agent').classList.toggle('hidden', tab !== 'kpi' || state.activeKpiSubTab !== 'agent');
+      document.getElementById('content_kpi_other').classList.toggle('hidden', tab !== 'kpi' || state.activeKpiSubTab === 'agent');
+      document.getElementById('content_stats').classList.toggle('hidden', tab !== 'stats');
+      document.getElementById('content_funnel_sales').classList.toggle('hidden', tab !== 'funnel_sales');
+      document.getElementById('content_funnel_leads').classList.toggle('hidden', tab !== 'funnel_leads');
+
+      // Subnav bar visibility
+      const subnav = document.getElementById('kpiSubnav');
+      if (tab === 'kpi') {
+        subnav.classList.remove('hidden');
+      } else {
+        subnav.classList.add('hidden');
+      }
+
+      showToast(`Розділ перемкнуто: ${tab.toUpperCase()}`);
+    }
+
+    // Level 2 SubTab Switching
+    function switchKpiSubTab(sub) {
+      state.activeKpiSubTab = sub;
+
+      const subs = ['agent', 'team', 'sales_dept', 'company'];
+      subs.forEach(s => {
+        const btn = document.getElementById(`subTab_${s}`);
+        if (s === sub) {
+          btn.className = "flex-1 py-2.5 px-3 text-center cursor-pointer transition flex items-center justify-center gap-2 bg-[#D4AC0D] font-extrabold text-black shadow-inner";
+        } else {
+          btn.className = "flex-1 py-2.5 px-3 text-center cursor-pointer transition flex items-center justify-center gap-2 hover:bg-[#F4D03F] text-gray-900";
+        }
+      });
+
+      if (sub === 'agent') {
+        document.getElementById('content_kpi_agent').classList.remove('hidden');
+        document.getElementById('content_kpi_other').classList.add('hidden');
+      } else {
+        document.getElementById('content_kpi_agent').classList.add('hidden');
+        document.getElementById('content_kpi_other').classList.remove('hidden');
+        
+        const titleMap = {
+          team: 'KPI Команди (Рієлторська група №1)',
+          sales_dept: 'KPI Відділу продажів (Всі команди агентства)',
+          company: 'KPI Компанії (Глобальні показники Yotei)'
+        };
+        document.getElementById('otherKpiTitle').textContent = titleMap[sub] || 'KPI';
+      }
+
+      showToast(`KPI підрівень: ${sub}`);
+    }
+
+    // Increment single KPI metric (+1 button)
+    function incrementKpi(key) {
+      if (state.kpi[key] !== undefined) {
+        state.kpi[key] += 1;
+        updateKpiDisplay();
+        showToast(`Показник оновлено: +1!`);
+      }
+    }
+
+    // Increment marketing item
+    function incrementMarketing(key) {
+      if (state.marketing[key] !== undefined) {
+        state.marketing[key] += 1;
+        const el = document.getElementById(`mkt_${key}_val`);
+        if (el) el.textContent = state.marketing[key];
+        const bar = document.getElementById(`mkt_${key}_bar`);
+        if (bar) {
+          const pct = Math.min(100, Math.round((state.marketing[key] / 20) * 100));
+          bar.style.width = `${pct}%`;
+        }
+        showToast(`Оголошення зафіксовано на ${key.toUpperCase()}`);
+      }
+    }
+
+    // Increment social media item
+    function incMedia(key, target) {
+      if (state.marketing[key] !== undefined) {
+        state.marketing[key] += 1;
+        const el = document.getElementById(key);
+        if (el) el.textContent = state.marketing[key];
+        showToast(`Публікацію в соцмережах додано!`);
+      }
+    }
+
+    // Refresh KPI DOM elements
+    function updateKpiDisplay() {
+      // Calls
+      const callsEl = document.getElementById('kpi_calls_val');
+      if (callsEl) callsEl.textContent = state.kpi.calls;
+      const callsPct = Math.round((state.kpi.calls / state.targets.calls) * 100);
+      document.getElementById('kpi_calls_pct').textContent = `${callsPct}%`;
+      document.getElementById('kpi_calls_bar').style.width = `${Math.min(100, callsPct)}%`;
+
+      // Objects
+      const objEl = document.getElementById('kpi_objects_val');
+      if (objEl) objEl.textContent = state.kpi.objects;
+      const objPct = Math.round((state.kpi.objects / state.targets.objects) * 100);
+      document.getElementById('kpi_objects_pct').textContent = `${objPct}%`;
+      document.getElementById('kpi_objects_bar').style.width = `${Math.min(100, objPct)}%`;
+
+      // Meetings
+      const meetEl = document.getElementById('kpi_meetings_val');
+      if (meetEl) meetEl.textContent = state.kpi.meetings;
+      const meetPct = Math.round((state.kpi.meetings / state.targets.meetings) * 100);
+      document.getElementById('kpi_meetings_pct').textContent = `${meetPct}%`;
+      document.getElementById('kpi_meetings_bar').style.width = `${Math.min(100, meetPct)}%`;
+      document.getElementById('meetingsHeroCount').textContent = state.kpi.meetings;
+
+      // Contracts
+      const contEl = document.getElementById('kpi_contracts_val');
+      if (contEl) contEl.textContent = state.kpi.contracts;
+      const contPct = Math.round((state.kpi.contracts / state.targets.contracts) * 100);
+      document.getElementById('kpi_contracts_bar').style.width = `${Math.min(100, contPct)}%`;
+      document.getElementById('contractsHeroCount').textContent = state.kpi.contracts;
+
+      // Leads
+      const leadsEl = document.getElementById('kpi_leads_val');
+      if (leadsEl) leadsEl.textContent = state.kpi.leads;
+      const leadsPct = Math.round((state.kpi.leads / state.targets.leads) * 100);
+      document.getElementById('kpi_leads_pct').textContent = `${leadsPct}%`;
+      document.getElementById('kpi_leads_bar').style.width = `${Math.min(100, leadsPct)}%`;
+
+      // Showings
+      const showEl = document.getElementById('kpi_showings_val');
+      if (showEl) showEl.textContent = state.kpi.showings;
+      const showPct = Math.round((state.kpi.showings / state.targets.showings) * 100);
+      document.getElementById('kpi_showings_pct').textContent = `${showPct}%`;
+      document.getElementById('kpi_showings_bar').style.width = `${Math.min(100, showPct)}%`;
+
+      // Rent Deals
+      document.getElementById('kpi_rent_deals').textContent = state.kpi.rent_deal;
+      document.getElementById('rentHeroCount').textContent = state.kpi.rent_deal;
+      const rentPct = Math.round((state.kpi.rent_deal / state.targets.rent_deal) * 100);
+      document.getElementById('kpi_rent_bar').style.width = `${Math.min(100, rentPct)}%`;
+
+      // Deposits
+      document.getElementById('kpi_deposits').textContent = state.kpi.deposit;
+      document.getElementById('depositsHeroCount').textContent = state.kpi.deposit;
+      const depPct = Math.round((state.kpi.deposit / state.targets.deposit) * 100);
+      document.getElementById('kpi_deposit_bar').style.width = `${Math.min(100, depPct)}%`;
+
+      // Sale Deals
+      document.getElementById('kpi_sale_deals').textContent = state.kpi.sale_deal;
+      document.getElementById('dealsHeroCount').textContent = state.kpi.sale_deal;
+      const salePct = Math.round((state.kpi.sale_deal / state.targets.sale_deal) * 100);
+      document.getElementById('kpi_sale_bar').style.width = `${Math.min(100, salePct)}%`;
+
+      // Recalculate Radial Gauge
+      const totalScore = Math.round(
+        (callsPct + objPct + meetPct + contPct + leadsPct + showPct + rentPct + depPct + salePct) / 9
+      );
+      const ring = document.getElementById('overallProgressRing');
+      if (ring) {
+        ring.setAttribute('stroke-dasharray', `${Math.min(100, totalScore)}, 100`);
+      }
+      const scoreTxt = document.getElementById('overallPctText');
+      if (scoreTxt) scoreTxt.textContent = `${totalScore}%`;
+    }
+
+    // Currency Switcher
+    function setCurrency(curr) {
+      state.currency = curr;
+      const isUah = curr === 'UAH';
+      
+      document.getElementById('currUsdBtn').className = isUah 
+        ? "px-2.5 py-1 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 transition"
+        : "px-2.5 py-1 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm transition";
+
+      document.getElementById('currUahBtn').className = isUah
+        ? "px-2.5 py-1 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm transition"
+        : "px-2.5 py-1 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 transition";
+
+      const mult = isUah ? state.rateUah : 1;
+      const sym = isUah ? '₴' : '$';
+
+      const fmtMoney = (usdVal) => `${sym}${(usdVal * mult).toLocaleString('uk-UA')}`;
+
+      // Update Matrix profit row
+      document.getElementById('profit_sale_nov').textContent = fmtMoney(2400);
+      document.getElementById('profit_sale_vtor').textContent = fmtMoney(2100);
+      document.getElementById('profit_sale_total').textContent = fmtMoney(4500);
+
+      document.getElementById('profit_rent_nov').textContent = fmtMoney(600);
+      document.getElementById('profit_rent_vtor').textContent = fmtMoney(1100);
+      document.getElementById('profit_rent_kom').textContent = fmtMoney(650);
+      document.getElementById('profit_rent_total').textContent = fmtMoney(2350);
+
+      document.getElementById('profit_grand_nov').textContent = fmtMoney(3000);
+      document.getElementById('profit_grand_vtor').textContent = fmtMoney(3200);
+      document.getElementById('profit_grand_kom').textContent = fmtMoney(650);
+      document.getElementById('profit_grand_total').textContent = fmtMoney(6850);
+      document.getElementById('matrixTotalProfitHeader').textContent = fmtMoney(6850);
+
+      showToast(`Валюту перемкнуто на: ${curr}`);
+    }
+
+    // Theme Switcher
+    function toggleTheme() {
+      const html = document.documentElement;
+      const isDark = html.classList.toggle('dark');
+      const icon = document.getElementById('themeIcon');
+      if (isDark) {
+        icon.setAttribute('data-lucide', 'moon');
+      } else {
+        icon.setAttribute('data-lucide', 'sun');
+      }
+      renderIcons();
+      showToast(isDark ? 'Увімкнено темну тему' : 'Увімкнено світлу тему');
+    }
+
+    // Modal Helpers
+    function openModal(id) {
+      const m = document.getElementById(id);
+      if (m) {
+        m.classList.remove('hidden');
+        renderIcons();
+      }
+    }
+    function closeModal(id) {
+      const m = document.getElementById(id);
+      if (m) m.classList.add('hidden');
+    }
+
+    // Quick Action Form Submission
+    function handleQuickAction(e) {
+      e.preventDefault();
+      const type = document.getElementById('actionType').value;
+      const note = document.getElementById('actionNote').value;
+      
+      if (type === 'social_post') {
+        incMedia('ig_posts', 20);
+      } else if (state.kpi[type] !== undefined) {
+        incrementKpi(type);
+      } else if (state.marketing[type] !== undefined) {
+        incrementMarketing(type);
+      }
+
+      closeModal('quickActionModal');
+      showToast(`Дію успішно зафіксовано в системі! 🚀`);
+      document.getElementById('actionNote').value = '';
+    }
+
+    // Inspect Metric Cell
+    function inspectMetric(title, category, count) {
+      document.getElementById('inspectTitle').textContent = `${title} — ${category}`;
+      document.getElementById('inspectSub').textContent = `Знайдено ${count} записів у поточному періоді`;
+
+      const list = document.getElementById('inspectList');
+      list.innerHTML = '';
+      for (let i = 1; i <= Math.min(count, 5); i++) {
+        const item = document.createElement('div');
+        item.className = 'p-2.5 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 flex justify-between items-center';
+        item.innerHTML = `
+          <div>
+            <span class="font-bold text-gray-900 dark:text-white">#${1000 + i} • ${category}</span>
+            <span class="text-[11px] text-gray-500 block">вул. Шевченка, ${10 + i}, кв. ${i} • Власник: Віктор П.</span>
+          </div>
+          <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800">Активний</span>
+        `;
+        list.appendChild(item);
+      }
+      openModal('inspectModal');
+    }
+
+    // Save Custom Targets
+    function saveCustomTargets(e) {
+      e.preventDefault();
+      state.targets.calls = parseInt(document.getElementById('target_calls').value) || 100;
+      state.targets.objects = parseInt(document.getElementById('target_objects').value) || 25;
+      state.targets.meetings = parseInt(document.getElementById('target_meetings').value) || 10;
+      state.targets.contracts = parseInt(document.getElementById('target_contracts').value) || 2;
+      state.targets.leads = parseInt(document.getElementById('target_leads').value) || 30;
+      state.targets.showings = parseInt(document.getElementById('target_showings').value) || 8;
+      
+      updateKpiDisplay();
+      closeModal('targetsModal');
+      showToast('Нормативи місяця успішно перераховані!');
+    }
+
+    // Change Agent
+    function changeAgent(agent) {
+      showToast(`Завантажено дані для агента: ${agent}`);
+    }
+
+    // Export CSV
+    function exportCSV() {
+      const rows = [
+        ["Метрика", "Новобудови", "Вторинне", "Комерція", "Земля", "Всього"],
+        ["Кол-во объектов продажа", 28, 42, 9, 6, 85],
+        ["Кол-во объектов в аренде", 8, 17, 7, 1, 33],
+        ["Кол-во встреч собственник продажа", 3, 5, 1, 1, 10],
+        ["Кол-во встреч собственник аренда", 2, 4, 2, 0, 8],
+        ["Кол-во эксклюзивных договоров", 1, 3, 1, 0, 5],
+        ["Кол-во реклам по продаже", 16, 24, 5, 3, 48],
+        ["Кол-во реклам по аренде", 6, 12, 4, 0, 22],
+        ["Кол-во заявок продажа", 14, 19, 3, 2, 38],
+        ["Кол-во заявок аренда", 5, 11, 2, 0, 18],
+        ["Кол-во показов продажа", 8, 12, 2, 1, 23],
+        ["Кол-во показов аренда", 4, 7, 2, 0, 13],
+        ["Кол-во задатков", 1, 2, 0, 0, 3],
+        ["Кол-во сделок продажа", 1, 1, 0, 0, 2],
+        ["Кол-во сделок аренда", 1, 2, 1, 0, 4],
+        ["Прибыль по продаже", 2400, 2100, 0, 0, 4500],
+        ["Прибыль по аренде", 600, 1100, 650, 0, 2350],
+        ["РАЗОМ ПРИБУТОК", 3000, 3200, 650, 0, 6850]
+      ];
+
+      let csvContent = "data:text/csv;charset=utf-8," + rows.map(e => e.join(";")).join("\n");
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `crm_statistics_${new Date().toISOString().slice(0, 10)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast("CSV звіт успішно згенеровано та завантажено!");
+    }
+
+    // Toast alerts
+    function showToast(msg) {
+      const c = document.getElementById('toastContainer');
+      const t = document.createElement('div');
+      t.className = 'px-4 py-2.5 bg-gray-900/90 text-white text-xs font-semibold rounded-xl shadow-xl backdrop-blur-md border border-gray-700/50 flex items-center gap-2 transform transition-all duration-300 translate-y-2 opacity-0 pointer-events-auto';
+      t.innerHTML = `<span>✓</span><span>${msg}</span>`;
+      c.appendChild(t);
+      
+      requestAnimationFrame(() => {
+        t.classList.remove('translate-y-2', 'opacity-0');
+      });
+
+      setTimeout(() => {
+        t.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => t.remove(), 300);
+      }, 2500);
+    }
+
+    // On Load Initializer
+    document.addEventListener('DOMContentLoaded', () => {
+      renderIcons();
+      updateKpiDisplay();
+    });
+  </script>
+
+</body>
+</html>
