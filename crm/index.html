@@ -88,7 +88,7 @@
       <div class="flex items-center gap-2.5">
         <span class="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center text-white font-black text-lg shadow-sm">Y</span>
         <h1 class="font-extrabold text-base tracking-tight text-gray-900 dark:text-white">Робоче місце CRM</h1>
-        <span class="ml-2 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700">Unified Stats & Tactile Grid v10.5 Active</span>
+        <span class="ml-2 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700">Wheel Zoom & Dynamic Period v11.0 Active</span>
       </div>
 
       <!-- Clean Theme Toggle -->
@@ -667,12 +667,37 @@
                 <button type="button" onclick="setStatsWidgetMode('weekly', 'pie')" id="btn_stats_weekly_pie" title="Кругова частка" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">🥧</button>
                 <button type="button" onclick="setStatsWidgetMode('weekly', 'table')" id="btn_stats_weekly_table" title="Список тижнів" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">📋</button>
               </div>
-              <div class="bg-gray-50 dark:bg-gray-800 px-2 py-1 rounded-lg border border-gray-200 dark:border-gray-700 text-[11px] font-medium text-gray-600 dark:text-gray-400 flex items-center gap-1 cursor-pointer">
-                <span>Квартал (14 тижнів)</span>
-                <i data-lucide="chevron-down" class="w-3 h-3"></i>
+              <!-- Interactive Period Switcher Dropdown (1-v-1 RealSoft) -->
+              <div class="relative">
+                <button type="button" onclick="toggleWeeklyPeriodDropdown()" id="btn_weekly_period" class="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 px-2.5 py-1 rounded-lg border border-gray-200 dark:border-gray-700 text-[11px] font-bold text-gray-700 dark:text-gray-300 flex items-center gap-1.5 cursor-pointer shadow-2xs transition">
+                  <span id="label_weekly_period">Квартал (14 тижнів)</span>
+                  <i data-lucide="chevron-down" class="w-3 h-3 text-gray-400"></i>
+                </button>
+                <div id="dropdown_weekly_period" class="hidden absolute right-0 mt-1 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 py-1 z-30 text-xs divide-y divide-gray-100 dark:divide-gray-700">
+                  <button type="button" onclick="setWeeklyPeriod(4, '1 місяць (4 тижні)', '08.09.2026 - 06.10.2026')" class="w-full text-left px-3 py-2 hover:bg-rose-50 dark:hover:bg-rose-950/40 hover:text-rose-600 font-medium cursor-pointer transition flex items-center justify-between">
+                    <span>1 місяць (4 тижні)</span>
+                    <span class="text-[10px] text-gray-400 font-mono">4 тиж.</span>
+                  </button>
+                  <button type="button" onclick="setWeeklyPeriod(8, '2 місяці (8 тижнів)', '11.08.2026 - 06.10.2026')" class="w-full text-left px-3 py-2 hover:bg-rose-50 dark:hover:bg-rose-950/40 hover:text-rose-600 font-medium cursor-pointer transition flex items-center justify-between">
+                    <span>2 місяці (8 тижнів)</span>
+                    <span class="text-[10px] text-gray-400 font-mono">8 тиж.</span>
+                  </button>
+                  <button type="button" onclick="setWeeklyPeriod(14, 'Квартал (14 тижнів)', '07.07.2026 - 06.10.2026')" class="w-full text-left px-3 py-2 hover:bg-rose-50 dark:hover:bg-rose-950/40 hover:text-rose-600 font-bold text-rose-600 cursor-pointer transition flex items-center justify-between">
+                    <span>Квартал (14 тижнів)</span>
+                    <span class="text-[10px] font-mono font-bold text-rose-600">✓ 14 тиж.</span>
+                  </button>
+                  <button type="button" onclick="setWeeklyPeriod(26, 'Півроку (26 тижнів)', '14.04.2026 - 06.10.2026')" class="w-full text-left px-3 py-2 hover:bg-rose-50 dark:hover:bg-rose-950/40 hover:text-rose-600 font-medium cursor-pointer transition flex items-center justify-between">
+                    <span>Півроку (26 тижнів)</span>
+                    <span class="text-[10px] text-gray-400 font-mono">26 тиж.</span>
+                  </button>
+                  <button type="button" onclick="setWeeklyPeriod(52, '1 рік (52 тижні)', '08.10.2025 - 06.10.2026')" class="w-full text-left px-3 py-2 hover:bg-rose-50 dark:hover:bg-rose-950/40 hover:text-rose-600 font-medium cursor-pointer transition flex items-center justify-between">
+                    <span>1 рік (52 тижні)</span>
+                    <span class="text-[10px] text-gray-400 font-mono">52 тиж.</span>
+                  </button>
+                </div>
               </div>
               <div class="flex items-center gap-1 bg-gray-50 dark:bg-gray-800 px-2.5 py-1 rounded-lg border border-gray-200 dark:border-gray-700 text-xs font-semibold text-gray-700 dark:text-gray-300">
-                <span>07.07.2026 - 06.10.2026</span>
+                <span id="label_weekly_dates">07.07.2026 - 06.10.2026</span>
                 <i data-lucide="calendar" class="w-3.5 h-3.5 text-gray-400"></i>
               </div>
             </div>
@@ -3936,7 +3961,7 @@
         ];
 
         const activeSeries = allSeries.filter(s => isSeriesActive('marketing_portals', s.id));
-        const svgContent = renderMultiLineSplineSvg({ dates, series: activeSeries, w: 520, h: 190, yLabel: 'Оголошення' });
+        const svgContent = renderMultiLineSplineSvg({ dates, series: activeSeries, w: 520, h: 190, yLabel: 'Оголошення', blockKey: 'marketing_portals' });
 
         c1.innerHTML = `
           <div class="space-y-3 bg-white dark:bg-[#1A1D24] p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs">
@@ -4115,7 +4140,7 @@
         ];
 
         const activeSeries = allSeries.filter(s => isSeriesActive('marketing_social', s.id));
-        const svgContent = renderMultiLineSplineSvg({ dates, series: activeSeries, w: 520, h: 190, yLabel: 'SMM дії' });
+        const svgContent = renderMultiLineSplineSvg({ dates, series: activeSeries, w: 520, h: 190, yLabel: 'SMM дії', blockKey: 'marketing_social' });
 
         c2.innerHTML = `
           <div class="space-y-3 bg-white dark:bg-[#1A1D24] p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs">
@@ -4292,7 +4317,7 @@
         ];
 
         const activeSeries = allSeries.filter(s => isSeriesActive('deals', s.id));
-        const svgContent = renderMultiLineSplineSvg({ dates, series: activeSeries, w: 520, h: 190, yLabel: 'Угоди (Факт)' });
+        const svgContent = renderMultiLineSplineSvg({ dates, series: activeSeries, w: 520, h: 190, yLabel: 'Угоди (Факт)', blockKey: 'deals' });
 
         c.innerHTML = `
           <div class="col-span-full space-y-3">
@@ -4821,13 +4846,32 @@
       padRight = 20,
       padTop = 16,
       padBottom = 26,
-      yLabel = 'Кількість дій'
+      yLabel = 'Кількість дій',
+      blockKey = ''
     }) {
+      const z = blockKey ? getChartZoom(blockKey) : { xZoom: 1.0, yZoom: 1.0 };
+      
+      // X-AXIS ZOOM SLICING (коліщатко по датах)
+      let activeDates = dates;
+      let activeSeries = series;
+      if (z.xZoom && z.xZoom !== 1.0 && dates.length > 2) {
+        const visibleCount = Math.max(2, Math.min(dates.length, Math.round(dates.length / z.xZoom)));
+        const start = Math.max(0, dates.length - visibleCount);
+        activeDates = dates.slice(start);
+        activeSeries = series.map(s => ({
+          ...s,
+          data: s.data.slice(start)
+        }));
+      }
+
       const chartW = w - padLeft - padRight;
       const chartH = h - padTop - padBottom - 8;
-      const allVals = series.flatMap(s => s.data);
+      const allVals = activeSeries.flatMap(s => s.data);
       const rawMax = Math.max(...allVals, 1);
-      const maxVal = Math.ceil(rawMax <= 3 ? 3 : rawMax <= 4 ? 4 : rawMax <= 8 ? 8 : rawMax <= 12 ? 12 : rawMax <= 25 ? 25 : rawMax * 1.12);
+      
+      // Y-AXIS ZOOM SCALING (коліщатко по шкалі Y зліва 0, 1, 2, 3...)
+      const baseMax = Math.ceil(rawMax <= 3 ? 3 : rawMax <= 4 ? 4 : rawMax <= 8 ? 8 : rawMax <= 12 ? 12 : rawMax <= 25 ? 25 : rawMax * 1.12);
+      const maxVal = Math.max(1, Math.round(baseMax / (z.yZoom || 1.0)));
 
       const gridLevels = [0, Math.round(maxVal / 2), maxVal];
       const gridSvg = gridLevels.map(lvl => {
@@ -4838,17 +4882,17 @@
         `;
       }).join('');
 
-      const xLabels = dates.map((d, i) => {
-        const x = padLeft + (i / (dates.length - 1)) * chartW;
+      const xLabels = activeDates.map((d, i) => {
+        const x = padLeft + (i / Math.max(1, activeDates.length - 1)) * chartW;
         return `<text x="${x.toFixed(1)}" y="${h - 6}" font-size="9" fill="#94A3B8" text-anchor="middle" font-weight="500">${d}</text>`;
       }).join('');
 
-      const seriesSvg = series.map(s => {
+      const seriesSvg = activeSeries.map(s => {
         const points = s.data.map((val, i) => ({
-          x: padLeft + (i / (dates.length - 1)) * chartW,
+          x: padLeft + (i / Math.max(1, activeDates.length - 1)) * chartW,
           y: padTop + chartH + 4 - (val / maxVal) * chartH,
           val,
-          date: dates[i]
+          date: activeDates[i]
         }));
         const pathD = buildCubicSplinePath(points);
         const dots = points.map(p => `
@@ -4868,18 +4912,109 @@
 
       const bandsSvg = buildBenchmarkBandsSvg(padLeft, padTop, chartW, chartH);
 
+      const zoomBadge = (blockKey && (z.xZoom !== 1.0 || z.yZoom !== 1.0)) ? `
+        <div class="absolute top-2 right-2 flex items-center gap-1.5 z-20 pointer-events-auto">
+          <span class="px-2 py-0.5 rounded-md text-[10px] font-mono font-bold bg-gray-900/85 text-white border border-gray-700 shadow-sm backdrop-blur-xs">
+            🔍 X: ${(z.xZoom * 100).toFixed(0)}% • Y: ${(z.yZoom * 100).toFixed(0)}%
+          </span>
+          <button type="button" onclick="resetChartZoom('${blockKey}', event)" title="Скинути масштаб (100%)" class="px-1.5 py-0.5 rounded-md text-[10px] font-black bg-rose-600 hover:bg-rose-700 text-white shadow-sm cursor-pointer transition">
+            ⟲ Скинути
+          </button>
+        </div>
+      ` : '';
+
       return `
-        <svg class="w-full h-full overflow-visible" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
-          <text x="-${h / 2}" y="11" transform="rotate(-90)" font-size="8.5" fill="#94A3B8" text-anchor="middle" font-weight="bold">${yLabel}</text>
-          ${bandsSvg}
-          ${gridSvg}
-          ${seriesSvg}
-          ${xLabels}
-        </svg>
+        <div class="relative w-full h-full select-none" onwheel="handleChartWheelZoom(event, '${blockKey}')" title="Коліщатко миші: на числах зліва = масштаб Y, на графіку = масштаб днів X">
+          ${zoomBadge}
+          <svg class="w-full h-full overflow-visible" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
+            <text x="-${h / 2}" y="11" transform="rotate(-90)" font-size="8.5" fill="#94A3B8" text-anchor="middle" font-weight="bold">${yLabel}</text>
+            ${bandsSvg}
+            ${gridSvg}
+            ${seriesSvg}
+            ${xLabels}
+          </svg>
+        </div>
       `;
     }
 
     // Tooltip helper
+    // ═════════════════════════════════════════════════════════════════════════
+    // INTERACTIVE MOUSE WHEEL ZOOM & SCALE ENGINE (X-AXIS DAYS & Y-AXIS SCALE)
+    // ═════════════════════════════════════════════════════════════════════════
+    function getChartZoom(blockKey) {
+      if (!state.chartZoom) state.chartZoom = {};
+      if (!state.chartZoom[blockKey]) {
+        state.chartZoom[blockKey] = { xZoom: 1.0, yZoom: 1.0, panIdx: 0 };
+      }
+      return state.chartZoom[blockKey];
+    }
+
+    function handleChartWheelZoom(e, blockKey) {
+      e.preventDefault();
+      const z = getChartZoom(blockKey);
+      const rect = e.currentTarget.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left;
+
+      // Left 60px is the Y-axis number area (or if holding Shift/Alt)
+      if (mouseX < 60 || e.shiftKey || e.altKey) {
+        // Y-AXIS ZOOM (числа зліва 0, 1, 2, 3...)
+        const delta = e.deltaY < 0 ? 0.15 : -0.15;
+        z.yZoom = Math.max(0.4, Math.min(3.0, +(z.yZoom + delta).toFixed(2)));
+        showToast(`🔍 Шкала Y [${blockKey}]: ${(z.yZoom * 100).toFixed(0)}% (коліщатко на числах)`);
+      } else {
+        // X-AXIS ZOOM (дні / дати 01 жовтня, 03 жовтня...)
+        const delta = e.deltaY < 0 ? 0.15 : -0.15;
+        z.xZoom = Math.max(0.4, Math.min(3.0, +(z.xZoom + delta).toFixed(2)));
+        showToast(`🔍 Масштаб днів X [${blockKey}]: ${(z.xZoom * 100).toFixed(0)}% (коліщатко на графіку)`);
+      }
+
+      reRenderBlockChart(blockKey);
+    }
+
+    function resetChartZoom(blockKey, e) {
+      if (e) e.stopPropagation();
+      if (!state.chartZoom) state.chartZoom = {};
+      state.chartZoom[blockKey] = { xZoom: 1.0, yZoom: 1.0, panIdx: 0 };
+      showToast(`⟲ Масштаб графіка [${blockKey}] скинуто до 100%`);
+      reRenderBlockChart(blockKey);
+    }
+
+    function reRenderBlockChart(blockKey) {
+      if (blockKey === 'objects') renderObjectsSection(state.blockModes.objects || 'charts');
+      else if (blockKey === 'clients') renderClientsSection(state.blockModes.clients || 'charts');
+      else if (blockKey === 'marketing_portals' || blockKey === 'marketing_social' || blockKey === 'marketing') renderMarketingSection(state.blockModes.marketing || 'charts');
+      else if (blockKey === 'deals') renderDealsSection(state.blockModes.deals || 'charts', { rentPct: 60, depPct: 100, salePct: 100 });
+      else if (blockKey === 'weekly') renderWeeklySpline();
+      else if (blockKey === 'myLeads') renderMyLeadsSpline();
+    }
+
+    // Weekly Period Dropdown Controls
+    function toggleWeeklyPeriodDropdown() {
+      const dd = document.getElementById('dropdown_weekly_period');
+      if (dd) dd.classList.toggle('hidden');
+    }
+
+    function setWeeklyPeriod(weeks, title, dateRange) {
+      state.weeklyWeeksCount = weeks;
+      const labelP = document.getElementById('label_weekly_period');
+      if (labelP) labelP.textContent = title;
+      const labelD = document.getElementById('label_weekly_dates');
+      if (labelD) labelD.textContent = dateRange;
+      const dd = document.getElementById('dropdown_weekly_period');
+      if (dd) dd.classList.add('hidden');
+      renderWeeklySpline();
+      showToast(`Період динаміки: ${title}`);
+    }
+
+    // Auto-close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+      const btn = document.getElementById('btn_weekly_period');
+      const dd = document.getElementById('dropdown_weekly_period');
+      if (dd && !dd.classList.contains('hidden') && btn && !btn.contains(e.target) && !dd.contains(e.target)) {
+        dd.classList.add('hidden');
+      }
+    });
+
     function showChartTooltip(e, title, value, subtext) {
       const tt = document.getElementById('chartTooltip');
       const content = document.getElementById('chartTooltipContent');
@@ -5402,9 +5537,17 @@
       if (!container) return;
       const mode = (state.statsWidgetModes && state.statsWidgetModes.weekly) || 'charts';
 
-      const dates = ['7 лип.', '14 лип.', '21 лип.', '28 лип.', '4 серп.', '11 серп.', '18 серп.', '25 серп.', '1 вер.', '8 вер.', '15 вер.', '22 вер.', '29 вер.', '6 жовт.'];
-      const showingsData = [3, 4, 3, 6, 5, 8, 5, 9, 7, 10, 8, 11, 9, 12];
-      const meetingsData = [1, 2, 2, 3, 2, 4, 3, 5, 4, 6, 5, 7, 6, 8];
+      // Full 14-week baseline dataset
+      const allDates = ['7 лип.', '14 лип.', '21 лип.', '28 лип.', '4 серп.', '11 серп.', '18 серп.', '25 серп.', '1 вер.', '8 вер.', '15 вер.', '22 вер.', '29 вер.', '6 жовт.'];
+      const allShowings = [3, 4, 3, 6, 5, 8, 5, 9, 7, 10, 8, 11, 9, 12];
+      const allMeetings = [1, 2, 2, 3, 2, 4, 3, 5, 4, 6, 5, 7, 6, 8];
+
+      // Dynamic week period slice (4, 8, 14, 26, 52)
+      const weeksCount = state.weeklyWeeksCount || 14;
+      const sliceCount = Math.min(weeksCount, allDates.length);
+      const dates = allDates.slice(allDates.length - sliceCount);
+      const showingsData = allShowings.slice(allShowings.length - sliceCount);
+      const meetingsData = allMeetings.slice(allMeetings.length - sliceCount);
 
       const showingsTot = showingsData.reduce((a, b) => a + b, 0);
       const meetingsTot = meetingsData.reduce((a, b) => a + b, 0);
@@ -5414,6 +5557,8 @@
       const elMeet = document.getElementById('weeklyMeetingsTotal');
       if (elMeet) elMeet.textContent = `${meetingsTot} зустрічей`;
 
+      const z = getChartZoom('weekly');
+
       if (mode === 'candles') {
         const candles = dates.map((d, i) => ({
           date: d,
@@ -5422,29 +5567,78 @@
           low: Math.min(showingsData[i], meetingsData[i]) - 1,
           close: showingsData[i]
         }));
-        container.innerHTML = renderCandlestickChartSvg({ dates, candles, w: 900, h: 220, yLabel: 'Дій / тиждень' });
+        container.innerHTML = `
+          <div class="relative w-full h-full select-none" onwheel="handleChartWheelZoom(event, 'weekly')" title="Коліщатко миші: зум графіка">
+            ${renderCandlestickChartSvg({ dates, candles, w: 900, h: 220, yLabel: 'Дій / тиждень' })}
+          </div>
+        `;
         return;
       }
 
+      // ── MODE: BARS (Стовпчики порівняння RealSoft 1-v-1) ─────────────────
       if (mode === 'bars') {
-        const maxVal = 14;
+        const showActive = isSeriesActive('weekly', 'showings');
+        const meetActive = isSeriesActive('weekly', 'meetings');
+        const maxVal = Math.max(12, Math.max(...showingsData, ...meetingsData) + 2);
+        const w = 900, h = 220, padLeft = 45, padRight = 20, padTop = 16, padBottom = 26;
+        const chartW = w - padLeft - padRight;
+        const chartH = h - padTop - padBottom - 8;
+
+        const bandsSvg = buildBenchmarkBandsSvg(padLeft, padTop, chartW, chartH);
+        const gridLevels = [0, 4, 8, 12, maxVal];
+        const gridSvg = gridLevels.map(lvl => {
+          const yPos = padTop + chartH + 4 - (lvl / maxVal) * chartH;
+          return `
+            <line x1="${padLeft}" y1="${yPos.toFixed(1)}" x2="${(w - padRight).toFixed(1)}" y2="${yPos.toFixed(1)}" stroke="#E2E8F0" stroke-dasharray="3,3" stroke-width="1" />
+            <text x="${padLeft - 6}" y="${(yPos + 3).toFixed(1)}" font-size="9" fill="#94A3B8" text-anchor="end" font-family="monospace">${lvl}</text>
+          `;
+        }).join('');
+
+        const colWidth = (chartW / dates.length);
+        const barWidth = Math.max(6, Math.min(18, (colWidth - 8) / (showActive && meetActive ? 2 : 1)));
+
+        const barsSvg = dates.map((d, i) => {
+          const colCenterX = padLeft + i * colWidth + colWidth / 2;
+          const sVal = showingsData[i];
+          const mVal = meetingsData[i];
+          const sH = (sVal / maxVal) * chartH;
+          const mH = (mVal / maxVal) * chartH;
+          const sY = padTop + chartH + 4 - sH;
+          const mY = padTop + chartH + 4 - mH;
+
+          let barsCol = '';
+          if (showActive && meetActive) {
+            barsCol = `
+              <rect x="${(colCenterX - barWidth - 1).toFixed(1)}" y="${sY.toFixed(1)}" width="${barWidth.toFixed(1)}" height="${sH.toFixed(1)}" fill="#2563EB" rx="3" class="cursor-pointer hover:opacity-80 transition" onmousemove="showChartTooltip(event, '${d}', '🔵 Покази: ${sVal}', 'Тижневий факт')" onmouseleave="hideChartTooltip()" />
+              <text x="${(colCenterX - barWidth / 2 - 1).toFixed(1)}" y="${(sY - 3).toFixed(1)}" font-size="8" font-family="monospace" font-weight="bold" fill="#2563EB" text-anchor="middle">${sVal}</text>
+              <rect x="${(colCenterX + 1).toFixed(1)}" y="${mY.toFixed(1)}" width="${barWidth.toFixed(1)}" height="${mH.toFixed(1)}" fill="#EF4444" rx="3" class="cursor-pointer hover:opacity-80 transition" onmousemove="showChartTooltip(event, '${d}', '🔴 Зустрічі: ${mVal}', 'Тижневий факт')" onmouseleave="hideChartTooltip()" />
+              <text x="${(colCenterX + barWidth / 2 + 1).toFixed(1)}" y="${(mY - 3).toFixed(1)}" font-size="8" font-family="monospace" font-weight="bold" fill="#EF4444" text-anchor="middle">${mVal}</text>
+            `;
+          } else if (showActive) {
+            barsCol = `
+              <rect x="${(colCenterX - barWidth / 2).toFixed(1)}" y="${sY.toFixed(1)}" width="${barWidth.toFixed(1)}" height="${sH.toFixed(1)}" fill="#2563EB" rx="3" class="cursor-pointer hover:opacity-80 transition" onmousemove="showChartTooltip(event, '${d}', '🔵 Покази: ${sVal}', 'Тижневий факт')" onmouseleave="hideChartTooltip()" />
+              <text x="${colCenterX.toFixed(1)}" y="${(sY - 3).toFixed(1)}" font-size="8.5" font-family="monospace" font-weight="bold" fill="#2563EB" text-anchor="middle">${sVal}</text>
+            `;
+          } else if (meetActive) {
+            barsCol = `
+              <rect x="${(colCenterX - barWidth / 2).toFixed(1)}" y="${mY.toFixed(1)}" width="${barWidth.toFixed(1)}" height="${mH.toFixed(1)}" fill="#EF4444" rx="3" class="cursor-pointer hover:opacity-80 transition" onmousemove="showChartTooltip(event, '${d}', '🔴 Зустрічі: ${mVal}', 'Тижневий факт')" onmouseleave="hideChartTooltip()" />
+              <text x="${colCenterX.toFixed(1)}" y="${(mY - 3).toFixed(1)}" font-size="8.5" font-family="monospace" font-weight="bold" fill="#EF4444" text-anchor="middle">${mVal}</text>
+            `;
+          }
+
+          const label = `<text x="${colCenterX.toFixed(1)}" y="${h - 6}" font-size="9" fill="#94A3B8" text-anchor="middle" font-weight="500">${d}</text>`;
+
+          return `${barsCol}${label}`;
+        }).join('');
+
         container.innerHTML = `
-          <div class="h-full flex items-end justify-between gap-2 pt-4 pb-2 px-3">
-            ${dates.map((d, i) => {
-              const hShow = Math.round((showingsData[i] / maxVal) * 80);
-              const hMeet = Math.round((meetingsData[i] / maxVal) * 80);
-              return `
-                <div class="flex-1 flex flex-col items-center gap-1 group cursor-pointer"
-                     onmousemove="showChartTooltip(event, '${d}', '🔵 Покази: ${showingsData[i]}<br>🔴 Зустрічі: ${meetingsData[i]}', 'Тижневий підсумок')"
-                     onmouseleave="hideChartTooltip()">
-                  <div class="w-full flex items-end gap-1 h-36">
-                    <div class="flex-1 bg-blue-500 rounded-t-sm" style="height: ${hShow}%;"></div>
-                    <div class="flex-1 bg-rose-500 rounded-t-sm" style="height: ${hMeet}%;"></div>
-                  </div>
-                  <span class="text-[9px] text-gray-400 font-medium truncate w-full text-center">${d}</span>
-                </div>
-              `;
-            }).join('')}
+          <div class="relative w-full h-full select-none" onwheel="handleChartWheelZoom(event, 'weekly')" title="Коліщатко миші: зум графіка">
+            <svg class="w-full h-full overflow-visible" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
+              <text x="-${h / 2}" y="13" transform="rotate(-90)" font-size="9" fill="#94A3B8" text-anchor="middle" font-weight="bold">Дій / тиждень</text>
+              ${bandsSvg}
+              ${gridSvg}
+              ${barsSvg}
+            </svg>
           </div>
         `;
         return;
@@ -5586,7 +5780,8 @@
       const bandsSvg = buildBenchmarkBandsSvg(padLeft, padTop, chartW, chartH);
 
       container.innerHTML = `
-        <svg id="svgWeeklySplineChart" class="w-full h-full overflow-visible" viewBox="0 0 900 220" preserveAspectRatio="none">
+        <div class="relative w-full h-full select-none" onwheel="handleChartWheelZoom(event, 'weekly')" title="Коліщатко миші: зум графіка">
+          <svg id="svgWeeklySplineChart" class="w-full h-full overflow-visible" viewBox="0 0 900 220" preserveAspectRatio="none">
           <defs>
             <linearGradient id="gradWeeklyShowings" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stop-color="#2563EB" stop-opacity="0.25" />
