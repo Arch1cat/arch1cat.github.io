@@ -88,6 +88,7 @@
       <div class="flex items-center gap-2.5">
         <span class="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center text-white font-black text-lg shadow-sm">Y</span>
         <h1 class="font-extrabold text-base tracking-tight text-gray-900 dark:text-white">Робоче місце CRM</h1>
+        <span class="ml-2 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-blue-100 dark:bg-blue-950/80 text-blue-800 dark:text-blue-300 border border-blue-300 dark:border-blue-700">Multi-Line Engine v5.5</span>
       </div>
 
       <!-- Clean Theme Toggle -->
@@ -205,21 +206,18 @@
           </span>
           <button type="button" onclick="setVisualMode('charts')" id="viewMode_charts" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-blue-600 text-white shadow-sm transition cursor-pointer flex items-center gap-1.5">
             <i data-lucide="trending-up" class="w-3.5 h-3.5"></i>
-            <span>📈 Графіки RealSoft (Сплайн)</span>
-          </button>
-          <button type="button" onclick="setVisualMode('circles')" id="viewMode_circles" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer flex items-center gap-1.5">
-            <i data-lucide="pie-chart" class="w-3.5 h-3.5"></i>
-            <span>⭕ Кругова Donut (Стадії %)</span>
+            <span>📈 Графіки (Мульти-лінії)</span>
           </button>
           <button type="button" onclick="setVisualMode('pie')" id="viewMode_pie" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer flex items-center gap-1.5">
             <i data-lucide="pie-chart" class="w-3.5 h-3.5"></i>
-            <span>🥧 Кругова Pie (Частки %)</span>
+            <span>🥧 Кругова діаграма (%)</span>
           </button>
           <button type="button" onclick="setVisualMode('bars')" id="viewMode_bars" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer flex items-center gap-1.5">
             <i data-lucide="bar-chart-horizontal" class="w-3.5 h-3.5"></i>
             <span>📊 Смуги нормативів</span>
           </button>
-          <!-- Hidden fallback for old cached browser click on viewMode_cards -->
+          <!-- Hidden fallback aliases -->
+          <button type="button" onclick="setVisualMode('pie')" id="viewMode_circles" class="hidden"></button>
           <button type="button" onclick="setVisualMode('bars')" id="viewMode_cards" class="hidden"></button>
         </div>
 
@@ -329,10 +327,9 @@
               <span class="text-[11px] font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-900/50 px-2 py-0.5 rounded-full mr-1">4 показники</span>
               <!-- Local Card View Mode Switcher -->
               <div class="flex items-center bg-white/80 dark:bg-gray-800 p-0.5 rounded-lg border border-gray-200 dark:border-gray-700 text-[10px]">
-                <button type="button" onclick="setBlockMode('objects', 'bars')" id="btn_mode_objects_bars" title="Смуги нормативів" class="px-1.5 py-0.5 rounded font-bold bg-emerald-600 text-white">📊</button>
-                <button type="button" onclick="setBlockMode('objects', 'circles')" id="btn_mode_objects_circles" title="Кільцева діаграма (Donut)" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">⭕</button>
-                <button type="button" onclick="setBlockMode('objects', 'pie')" id="btn_mode_objects_pie" title="Кругова діаграма (Pie)" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">🥧</button>
-                <button type="button" onclick="setBlockMode('objects', 'charts')" id="btn_mode_objects_charts" title="Графік динаміки (Spline)" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">📈</button>
+                <button type="button" onclick="setBlockMode('objects', 'bars')" id="btn_mode_objects_bars" title="Смуги нормативів" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">📊</button>
+                <button type="button" onclick="setBlockMode('objects', 'pie')" id="btn_mode_objects_pie" title="Кругова діаграма (%)" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">🥧</button>
+                <button type="button" onclick="setBlockMode('objects', 'charts')" id="btn_mode_objects_charts" title="Графік (Мульти-лінії)" class="px-1.5 py-0.5 rounded font-bold bg-emerald-600 text-white">📈</button>
               </div>
               <!-- Collapse Button -->
               <button type="button" onclick="toggleCardCollapse('card_obj_body', 'chevron_obj')" title="Згорнути / розгорнути" class="p-1 rounded-lg text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition">
@@ -363,10 +360,9 @@
               <span class="text-[11px] font-bold text-blue-700 dark:text-blue-400 bg-blue-100 dark:bg-blue-900/50 px-2 py-0.5 rounded-full mr-1">3 показники</span>
               <!-- Local Card View Mode Switcher -->
               <div class="flex items-center bg-white/80 dark:bg-gray-800 p-0.5 rounded-lg border border-gray-200 dark:border-gray-700 text-[10px]">
-                <button type="button" onclick="setBlockMode('clients', 'bars')" id="btn_mode_clients_bars" title="Смуги нормативів" class="px-1.5 py-0.5 rounded font-bold bg-blue-600 text-white">📊</button>
-                <button type="button" onclick="setBlockMode('clients', 'circles')" id="btn_mode_clients_circles" title="Кільцева діаграма (Donut)" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">⭕</button>
-                <button type="button" onclick="setBlockMode('clients', 'pie')" id="btn_mode_clients_pie" title="Кругова діаграма (Pie)" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">🥧</button>
-                <button type="button" onclick="setBlockMode('clients', 'charts')" id="btn_mode_clients_charts" title="Графік динаміки (Spline)" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">📈</button>
+                <button type="button" onclick="setBlockMode('clients', 'bars')" id="btn_mode_clients_bars" title="Смуги нормативів" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">📊</button>
+                <button type="button" onclick="setBlockMode('clients', 'pie')" id="btn_mode_clients_pie" title="Кругова діаграма (%)" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">🥧</button>
+                <button type="button" onclick="setBlockMode('clients', 'charts')" id="btn_mode_clients_charts" title="Графік (Мульти-лінії)" class="px-1.5 py-0.5 rounded font-bold bg-blue-600 text-white">📈</button>
               </div>
               <!-- Collapse Button -->
               <button type="button" onclick="toggleCardCollapse('card_clients_body', 'chevron_clients')" title="Згорнути / розгорнути" class="p-1 rounded-lg text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition">
@@ -397,9 +393,9 @@
               <span class="text-[11px] font-bold text-purple-700 dark:text-purple-400 bg-purple-100 dark:bg-purple-900/50 px-2 py-0.5 rounded-full mr-1">Класифайди + 5 медіа</span>
               <!-- Local Card View Mode Switcher -->
               <div class="flex items-center bg-white/80 dark:bg-gray-800 p-0.5 rounded-lg border border-gray-200 dark:border-gray-700 text-[10px]">
-                <button type="button" onclick="setBlockMode('marketing', 'bars')" id="btn_mode_marketing_bars" title="Смуги" class="px-1.5 py-0.5 rounded font-bold bg-purple-600 text-white">📊</button>
-                <button type="button" onclick="setBlockMode('marketing', 'circles')" id="btn_mode_marketing_circles" title="Кружечки %" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">⭕</button>
-                <button type="button" onclick="setBlockMode('marketing', 'charts')" id="btn_mode_marketing_charts" title="Графіки" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">📈</button>
+                <button type="button" onclick="setBlockMode('marketing', 'bars')" id="btn_mode_marketing_bars" title="Смуги" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">📊</button>
+                <button type="button" onclick="setBlockMode('marketing', 'pie')" id="btn_mode_marketing_pie" title="Кругова діаграма (%)" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">🥧</button>
+                <button type="button" onclick="setBlockMode('marketing', 'charts')" id="btn_mode_marketing_charts" title="Графік (Мульти-лінії)" class="px-1.5 py-0.5 rounded font-bold bg-purple-600 text-white">📈</button>
               </div>
               <button type="button" onclick="toggleCardCollapse('card_marketing_body', 'chevron_mkt')" title="Згорнути / розгорнути" class="p-1 rounded-lg text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition">
                 <i data-lucide="chevron-down" id="chevron_mkt" class="w-4 h-4"></i>
@@ -434,10 +430,9 @@
             <div class="flex items-center gap-1.5">
               <span class="text-[11px] font-bold text-amber-700 dark:text-amber-400 bg-amber-100 dark:bg-amber-900/50 px-2 py-0.5 rounded-full mr-1">Ключова конверсія</span>
               <div class="flex items-center bg-white/80 dark:bg-gray-800 p-0.5 rounded-lg border border-gray-200 dark:border-gray-700 text-[10px]">
-                <button type="button" onclick="setBlockMode('deals', 'bars')" id="btn_mode_deals_bars" title="Смуги" class="px-1.5 py-0.5 rounded font-bold bg-amber-500 text-white">📊</button>
-                <button type="button" onclick="setBlockMode('deals', 'circles')" id="btn_mode_deals_circles" title="Кільцева діаграма (Donut)" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">⭕</button>
-                <button type="button" onclick="setBlockMode('deals', 'pie')" id="btn_mode_deals_pie" title="Кругова діаграма (Pie)" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">🥧</button>
-                <button type="button" onclick="setBlockMode('deals', 'charts')" id="btn_mode_deals_charts" title="Графіки" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">📈</button>
+                <button type="button" onclick="setBlockMode('deals', 'bars')" id="btn_mode_deals_bars" title="Смуги" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">📊</button>
+                <button type="button" onclick="setBlockMode('deals', 'pie')" id="btn_mode_deals_pie" title="Кругова діаграма (%)" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">🥧</button>
+                <button type="button" onclick="setBlockMode('deals', 'charts')" id="btn_mode_deals_charts" title="Графік (Мульти-лінії)" class="px-1.5 py-0.5 rounded font-bold bg-amber-500 text-white">📈</button>
               </div>
               <button type="button" onclick="toggleCardCollapse('card_deals_body', 'chevron_deals')" title="Згорнути / розгорнути" class="p-1 rounded-lg text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition">
                 <i data-lucide="chevron-down" id="chevron_deals" class="w-4 h-4"></i>
@@ -3296,9 +3291,9 @@
       const totTgt = items.reduce((s, it) => s + it.tgt, 0);
       const grandPct = Math.round((totVal / totTgt) * 100);
 
-      // MODE 1: DONUT CHART (MATCHES USER SCREENSHOT 2 & 5)
-      if (mode === 'circles') {
-        const cx = 90, cy = 90, rOut = 80, rIn = 48;
+      // MODE 1 & 2: UNIFIED CIRCULAR CHART WITH % (PIE & DONUT)
+      if (mode === 'pie' || mode === 'circles') {
+        const cx = 90, cy = 90, rOut = 80, rIn = 46;
         let currentAngle = 0;
         const total = Math.max(1, totVal);
 
@@ -3310,7 +3305,7 @@
 
           const pathD = describeDonutArc(cx, cy, rIn, rOut, startA, endA);
           return `
-            <path id="obj_donut_${idx}"
+            <path id="obj_pie_${idx}"
                   d="${pathD}"
                   fill="${it.color}"
                   stroke="#FFFFFF"
@@ -3352,129 +3347,57 @@
         return;
       }
 
-      // MODE 2: SOLID PIE CHART (MATCHES USER SCREENSHOT 3)
-      if (mode === 'pie') {
-        const cx = 90, cy = 90, r = 80;
-        let currentAngle = 0;
-        const total = Math.max(1, totVal);
-
-        const paths = items.map((it, idx) => {
-          const sliceAngle = (it.val / total) * 360;
-          const startA = currentAngle;
-          const endA = currentAngle + sliceAngle;
-          currentAngle = endA;
-
-          const pathD = describePieSlice(cx, cy, r, startA, endA);
-          return `
-            <path id="obj_pie_${idx}"
-                  d="${pathD}"
-                  fill="${it.color}"
-                  stroke="#FFFFFF"
-                  stroke-width="2"
-                  class="cursor-pointer hover:opacity-85 transition"
-                  onmousemove="showChartTooltip(event, '${it.title}', 'Факт: ${it.val} / ${it.tgt} (${it.pct}%)', '${it.note}')"
-                  onmouseleave="hideChartTooltip()" />
-          `;
-        }).join('');
-
-        c.innerHTML = `
-          <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
-            <div class="sm:col-span-5 flex justify-center py-2">
-              <svg class="w-44 h-44 overflow-visible" viewBox="0 0 180 180">${paths}</svg>
-            </div>
-            <div class="sm:col-span-7 space-y-2 text-xs">
-              ${items.map((it, idx) => `
-                <div class="flex items-center justify-between p-2 rounded-xl bg-gray-50/80 dark:bg-gray-800/40 border border-gray-200/60 dark:border-gray-700/60 hover:border-emerald-300 transition group">
-                  <div class="flex items-center gap-2 truncate">
-                    <span class="w-3.5 h-3 rounded-xs shrink-0" style="background-color: ${it.color};"></span>
-                    <span class="font-bold text-gray-800 dark:text-gray-200 truncate group-hover:text-emerald-600 transition text-[11px]">${it.title}</span>
-                  </div>
-                  <div class="flex items-center gap-2 font-mono text-[11px] shrink-0">
-                    <span class="font-bold text-gray-900 dark:text-white">${it.val} / ${it.tgt}</span>
-                    <button onclick="incrementKpi('${it.id}')" class="px-2 py-0.5 text-[10px] font-bold bg-emerald-100 hover:bg-emerald-200 text-emerald-800 rounded transition cursor-pointer">+1</button>
-                  </div>
-                </div>
-              `).join('')}
-            </div>
-          </div>
-        `;
-        return;
-      }
-
-      // MODE 3: SMOOTH SPLINE GRAPH (MATCHES USER SCREENSHOT 4)
+            // MODE 3: MULTI-LINE SPLINE GRAPH (4 ОКРЕМІ ЛІНІЇ ДЛЯ КОЖНОГО З 4 ПОКАЗНИКІВ)
       if (mode === 'charts') {
-        const splineData = [
-          { date: '23 вер.', val: 2 },
-          { date: '25 вер.', val: 4 },
-          { date: '27 вер.', val: 7 },
-          { date: '29 вер.', val: 5 },
-          { date: '01 жов.', val: 9 },
-          { date: '03 жов.', val: 6 },
-          { date: '05 жов.', val: 11 },
-          { date: '06 жов.', val: 14 }
+        const dates = ['23 вер.', '25 вер.', '27 вер.', '29 вер.', '01 жов.', '03 жов.', '05 жов.', '06 жов.'];
+        const series = [
+          { id: 'calls', name: 'Дзвінки власнику', color: '#10B981', data: [5, 7, 6, 8, 7, 9, 9, 8] },
+          { id: 'objects', name: 'Додавання обʼєктів', color: '#3B82F6', data: [2, 2, 3, 2, 2, 3, 3, 2] },
+          { id: 'meetings', name: 'Зустрічі з власниками', color: '#8B5CF6', data: [1, 0, 1, 1, 1, 1, 1, 1] },
+          { id: 'contracts', name: 'Договори про продаж', color: '#F59E0B', data: [0, 0, 1, 0, 0, 0, 0, 1] }
         ];
 
-        const w = 480, h = 180, padLeft = 40, padRight = 15, padTop = 15, padBottom = 30;
-        const chartW = w - padLeft - padRight;
-        const chartH = h - padTop - padBottom;
-        const maxVal = 15;
-
-        const points = splineData.map((d, i) => ({
-          x: padLeft + (i / (splineData.length - 1)) * chartW,
-          y: padTop + chartH - (d.val / maxVal) * chartH,
-          raw: d
-        }));
-
-        const splinePath = buildCubicSplinePath(points);
-        const areaPath = `${splinePath} L ${points[points.length - 1].x.toFixed(1)} ${(padTop + chartH).toFixed(1)} L ${points[0].x.toFixed(1)} ${(padTop + chartH).toFixed(1)} Z`;
-
-        const gridSvg = [0, 5, 10, 15].map(lvl => {
-          const yPos = padTop + chartH - (lvl / maxVal) * chartH;
-          return `
-            <line x1="${padLeft}" y1="${yPos}" x2="${w - padRight}" y2="${yPos}" stroke="#E2E8F0" stroke-dasharray="3,3" stroke-width="1" />
-            <text x="${padLeft - 6}" y="${yPos + 3}" font-size="9" fill="#94A3B8" text-anchor="end" font-family="monospace">${lvl}</text>
-          `;
-        }).join('');
-
-        const xLabels = points.map(p => `
-          <text x="${p.x}" y="${h - 10}" font-size="9" fill="#94A3B8" text-anchor="middle" font-weight="500">${p.raw.date}</text>
-        `).join('');
-
-        const dotsSvg = points.map(p => `
-          <g class="cursor-pointer group"
-             onmousemove="showChartTooltip(event, '${p.raw.date}', '${p.raw.val} дій по обʼєктах', 'Денна активність')"
-             onmouseleave="hideChartTooltip()">
-            <circle cx="${p.x}" cy="${p.y}" r="8" fill="transparent" />
-            <circle cx="${p.x}" cy="${p.y}" r="3.5" fill="#10B981" stroke="#FFFFFF" stroke-width="2" class="group-hover:r-5 transition" />
-          </g>
-        `).join('');
+        const svgContent = renderMultiLineSplineSvg({ dates, series, w: 480, h: 180, yLabel: 'Дії' });
 
         c.innerHTML = `
           <div class="space-y-3">
-            <div class="relative w-full h-44 select-none">
-              <svg class="w-full h-full overflow-visible" viewBox="0 0 480 180" preserveAspectRatio="none">
-                <defs>
-                  <linearGradient id="gradObjSpline" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="#10B981" stop-opacity="0.35" />
-                    <stop offset="100%" stop-color="#10B981" stop-opacity="0.0" />
-                  </linearGradient>
-                </defs>
-                <text x="-${h / 2}" y="12" transform="rotate(-90)" font-size="9" fill="#94A3B8" text-anchor="middle" font-weight="bold">Кількість</text>
-                ${gridSvg}
-                <path d="${areaPath}" fill="url(#gradObjSpline)" />
-                <path d="${splinePath}" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" />
-                ${xLabels}
-                ${dotsSvg}
-              </svg>
+            <!-- Top Series Legend Bar -->
+            <div class="flex flex-wrap items-center justify-between gap-2 pb-1 border-b border-gray-100 dark:border-gray-800 text-[11px]">
+              <div class="flex items-center gap-3 flex-wrap">
+                ${series.map(s => {
+                  const it = items.find(x => x.id === s.id);
+                  return `
+                    <div class="flex items-center gap-1.5">
+                      <span class="w-3 h-3 rounded-xs shrink-0" style="background-color: ${s.color};"></span>
+                      <span class="font-bold text-gray-800 dark:text-gray-200">${s.name}:</span>
+                      <span class="font-mono font-bold text-gray-900 dark:text-white">${it ? it.val : 0}</span>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+              <span class="text-[10px] text-gray-400 font-mono">4 лінії активності</span>
             </div>
+
+            <!-- Multi-Line Graph Area -->
+            <div class="relative w-full h-44 select-none">
+              ${svgContent}
+            </div>
+
+            <!-- Bottom Quick Actions & Percentages -->
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 border-t border-gray-100 dark:border-gray-800">
               ${items.map(it => `
-                <div class="p-2 rounded-lg bg-gray-50 dark:bg-gray-800 flex items-center justify-between">
+                <div class="p-2 rounded-xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200/60 dark:border-gray-700/60 flex items-center justify-between">
                   <div class="truncate">
-                    <span class="text-[10px] text-gray-400 block truncate">${it.title}</span>
-                    <strong class="text-xs text-gray-900 dark:text-white font-mono">${it.val} / ${it.tgt}</strong>
+                    <div class="flex items-center gap-1.5">
+                      <span class="w-2 h-2 rounded-full shrink-0" style="background-color: ${it.color};"></span>
+                      <span class="text-[10px] text-gray-400 block truncate font-medium">${it.title}</span>
+                    </div>
+                    <div class="flex items-center gap-1.5 mt-0.5">
+                      <strong class="text-xs text-gray-900 dark:text-white font-mono">${it.val} / ${it.tgt}</strong>
+                      <span class="text-[10px] font-bold text-emerald-600">(${it.pct}%)</span>
+                    </div>
                   </div>
-                  <button onclick="incrementKpi('${it.id}')" class="px-2 py-0.5 text-[10px] font-bold bg-emerald-100 hover:bg-emerald-200 text-emerald-800 rounded transition cursor-pointer">+1</button>
+                  <button onclick="incrementKpi('${it.id}')" class="px-2 py-1 text-[10px] font-bold bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition cursor-pointer shrink-0 ml-1">+1</button>
                 </div>
               `).join('')}
             </div>
@@ -3506,7 +3429,7 @@
     }
 
     // ─── 2. RENDER CLIENTS SECTION (INTERACTIVE DUAL: CHARTS / DONUT / PIE / BARS) ──
-    function renderClientsSection(mode, { leadsPct, matchPct, showPct }) {
+        function renderClientsSection(mode, { leadsPct, matchPct, showPct }) {
       const c = document.getElementById('container_clients');
       if (!c) return;
 
@@ -3520,9 +3443,9 @@
       const totTgt = items.reduce((s, it) => s + it.tgt, 0);
       const grandPct = Math.round((totVal / totTgt) * 100);
 
-      // MODE 1: DONUT CHART (MATCHES USER SCREENSHOT 2 «СТАДИИ ЗАЯВОК» & 5 «СОСТОЯНИЕ ЗАДАЧ»)
-      if (mode === 'circles') {
-        const cx = 90, cy = 90, rOut = 80, rIn = 48;
+      // MODE 1 & 2: UNIFIED CIRCULAR CHART WITH % (PIE & DONUT)
+      if (mode === 'pie' || mode === 'circles') {
+        const cx = 90, cy = 90, rOut = 80, rIn = 46;
         let currentAngle = 0;
         const total = Math.max(1, totVal);
 
@@ -3534,7 +3457,7 @@
 
           const pathD = describeDonutArc(cx, cy, rIn, rOut, startA, endA);
           return `
-            <path id="client_donut_${idx}"
+            <path id="client_pie_${idx}"
                   d="${pathD}"
                   fill="${it.color}"
                   stroke="#FFFFFF"
@@ -3576,135 +3499,56 @@
         return;
       }
 
-      // MODE 2: SOLID PIE CHART (MATCHES USER SCREENSHOT 3 «ВОРОНКА ПРОДАЖ»)
-      if (mode === 'pie') {
-        const cx = 90, cy = 90, r = 80;
-        let currentAngle = 0;
-        const total = Math.max(1, totVal);
-
-        const paths = items.map((it, idx) => {
-          const sliceAngle = (it.val / total) * 360;
-          const startA = currentAngle;
-          const endA = currentAngle + sliceAngle;
-          currentAngle = endA;
-
-          const pathD = describePieSlice(cx, cy, r, startA, endA);
-          return `
-            <path id="client_pie_${idx}"
-                  d="${pathD}"
-                  fill="${it.color}"
-                  stroke="#FFFFFF"
-                  stroke-width="2"
-                  class="cursor-pointer hover:opacity-85 transition"
-                  onmousemove="showChartTooltip(event, '${it.title}', 'Факт: ${it.val} / ${it.tgt} (${it.pct}%)', '${it.note}')"
-                  onmouseleave="hideChartTooltip()" />
-          `;
-        }).join('');
-
-        c.innerHTML = `
-          <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
-            <div class="sm:col-span-5 flex justify-center py-2">
-              <svg class="w-44 h-44 overflow-visible" viewBox="0 0 180 180">${paths}</svg>
-            </div>
-            <div class="sm:col-span-7 space-y-2 text-xs">
-              ${items.map((it, idx) => `
-                <div class="flex items-center justify-between p-2 rounded-xl bg-gray-50/80 dark:bg-gray-800/40 border border-gray-200/60 dark:border-gray-700/60 hover:border-blue-300 transition group">
-                  <div class="flex items-center gap-2 truncate">
-                    <span class="w-3.5 h-3 rounded-xs shrink-0" style="background-color: ${it.color};"></span>
-                    <span class="font-bold text-gray-800 dark:text-gray-200 truncate group-hover:text-blue-600 transition text-[11px]">${it.title}</span>
-                  </div>
-                  <div class="flex items-center gap-2 font-mono text-[11px] shrink-0">
-                    <span class="font-bold text-gray-900 dark:text-white">${it.val} / ${it.tgt}</span>
-                    <button onclick="incrementKpi('${it.id}')" class="px-2 py-0.5 text-[10px] font-bold bg-blue-100 hover:bg-blue-200 text-blue-800 rounded transition cursor-pointer">+1</button>
-                  </div>
-                </div>
-              `).join('')}
-            </div>
-          </div>
-        `;
-        return;
-      }
-
-      // MODE 3: SMOOTH SPLINE GRAPH (MATCHES USER SCREENSHOT 4 «ЗАЯВКИ»)
+      // MODE 3: MULTI-LINE SPLINE GRAPH (3 ОКРЕМІ ЛІНІЇ ДЛЯ КОЖНОГО З 3 ПОКАЗНИКІВ)
       if (mode === 'charts') {
-        const splineData = [
-          { date: '23 вер.', val: 0 },
-          { date: '24 вер.', val: 1 },
-          { date: '25 вер.', val: 0 },
-          { date: '26 вер.', val: 0 },
-          { date: '27 вер.', val: 2 },
-          { date: '28 вер.', val: 2 },
-          { date: '29 вер.', val: 1 },
-          { date: '30 вер.', val: 1 },
-          { date: '01 жов.', val: 0 },
-          { date: '02 жов.', val: 0 },
-          { date: '03 жов.', val: 1 },
-          { date: '04 жов.', val: 2 },
-          { date: '05 жов.', val: 1 },
-          { date: '06 жов.', val: 2 }
+        const dates = ['23 вер.', '25 вер.', '27 вер.', '29 вер.', '01 жов.', '03 жов.', '05 жов.', '06 жов.'];
+        const series = [
+          { id: 'leads', name: 'Заявки у СРМ', color: '#2563EB', data: [2, 3, 2, 3, 3, 3, 3, 3] },
+          { id: 'matches', name: 'Підбір під клієнта', color: '#10B981', data: [1, 1, 2, 1, 2, 2, 2, 1] },
+          { id: 'showings', name: 'Перегляд обʼєкта', color: '#F59E0B', data: [0, 1, 1, 0, 1, 1, 1, 1] }
         ];
 
-        const w = 480, h = 180, padLeft = 40, padRight = 15, padTop = 15, padBottom = 30;
-        const chartW = w - padLeft - padRight;
-        const chartH = h - padTop - padBottom;
-        const maxVal = 2.0;
-
-        const points = splineData.map((d, i) => ({
-          x: padLeft + (i / (splineData.length - 1)) * chartW,
-          y: padTop + chartH - (d.val / maxVal) * chartH,
-          raw: d
-        }));
-
-        const splinePath = buildCubicSplinePath(points);
-        const areaPath = `${splinePath} L ${points[points.length - 1].x.toFixed(1)} ${(padTop + chartH).toFixed(1)} L ${points[0].x.toFixed(1)} ${(padTop + chartH).toFixed(1)} Z`;
-
-        const gridSvg = [0, 0.5, 1.0, 1.5, 2.0].map(lvl => {
-          const yPos = padTop + chartH - (lvl / maxVal) * chartH;
-          return `
-            <line x1="${padLeft}" y1="${yPos}" x2="${w - padRight}" y2="${yPos}" stroke="#E2E8F0" stroke-dasharray="3,3" stroke-width="1" />
-            <text x="${padLeft - 6}" y="${yPos + 3}" font-size="9" fill="#94A3B8" text-anchor="end" font-family="monospace">${lvl.toFixed(1)}</text>
-          `;
-        }).join('');
-
-        const xLabels = points.map(p => `
-          <text x="${p.x}" y="${h - 10}" font-size="9" fill="#94A3B8" text-anchor="middle" font-weight="500">${p.raw.date}</text>
-        `).join('');
-
-        const dotsSvg = points.map(p => `
-          <g class="cursor-pointer group"
-             onmousemove="showChartTooltip(event, '${p.raw.date}', '${p.raw.val} нових заявок', 'Денна динаміка')"
-             onmouseleave="hideChartTooltip()">
-            <circle cx="${p.x}" cy="${p.y}" r="8" fill="transparent" />
-            <circle cx="${p.x}" cy="${p.y}" r="3.5" fill="#3B82F6" stroke="#FFFFFF" stroke-width="2" class="group-hover:r-5 transition" />
-          </g>
-        `).join('');
+        const svgContent = renderMultiLineSplineSvg({ dates, series, w: 480, h: 180, yLabel: 'Заявки / дії' });
 
         c.innerHTML = `
           <div class="space-y-3">
-            <div class="relative w-full h-44 select-none">
-              <svg class="w-full h-full overflow-visible" viewBox="0 0 480 180" preserveAspectRatio="none">
-                <defs>
-                  <linearGradient id="gradClientsSpline" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="#3B82F6" stop-opacity="0.32" />
-                    <stop offset="100%" stop-color="#3B82F6" stop-opacity="0.0" />
-                  </linearGradient>
-                </defs>
-                <text x="-${h / 2}" y="12" transform="rotate(-90)" font-size="9" fill="#94A3B8" text-anchor="middle" font-weight="bold">Кількість</text>
-                ${gridSvg}
-                <path d="${areaPath}" fill="url(#gradClientsSpline)" />
-                <path d="${splinePath}" fill="none" stroke="#3B82F6" stroke-width="2.5" stroke-linecap="round" />
-                ${xLabels}
-                ${dotsSvg}
-              </svg>
+            <!-- Top Series Legend Bar -->
+            <div class="flex flex-wrap items-center justify-between gap-2 pb-1 border-b border-gray-100 dark:border-gray-800 text-[11px]">
+              <div class="flex items-center gap-3 flex-wrap">
+                ${series.map(s => {
+                  const it = items.find(x => x.id === s.id);
+                  return `
+                    <div class="flex items-center gap-1.5">
+                      <span class="w-3 h-3 rounded-xs shrink-0" style="background-color: ${s.color};"></span>
+                      <span class="font-bold text-gray-800 dark:text-gray-200">${s.name}:</span>
+                      <span class="font-mono font-bold text-gray-900 dark:text-white">${it ? it.val : 0}</span>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+              <span class="text-[10px] text-gray-400 font-mono">3 лінії активності</span>
             </div>
+
+            <!-- Multi-Line Graph Area -->
+            <div class="relative w-full h-44 select-none">
+              ${svgContent}
+            </div>
+
+            <!-- Bottom Quick Actions & Percentages -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 border-t border-gray-100 dark:border-gray-800">
               ${items.map(it => `
-                <div class="p-2 rounded-lg bg-gray-50 dark:bg-gray-800 flex items-center justify-between">
+                <div class="p-2 rounded-xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200/60 dark:border-gray-700/60 flex items-center justify-between">
                   <div class="truncate">
-                    <span class="text-[10px] text-gray-400 block truncate">${it.title}</span>
-                    <strong class="text-xs text-gray-900 dark:text-white font-mono">${it.val} / ${it.tgt}</strong>
+                    <div class="flex items-center gap-1.5">
+                      <span class="w-2 h-2 rounded-full shrink-0" style="background-color: ${it.color};"></span>
+                      <span class="text-[10px] text-gray-400 block truncate font-medium">${it.title}</span>
+                    </div>
+                    <div class="flex items-center gap-1.5 mt-0.5">
+                      <strong class="text-xs text-gray-900 dark:text-white font-mono">${it.val} / ${it.tgt}</strong>
+                      <span class="text-[10px] font-bold text-blue-600">(${it.pct}%)</span>
+                    </div>
                   </div>
-                  <button onclick="incrementKpi('${it.id}')" class="px-2 py-0.5 text-[10px] font-bold bg-blue-100 hover:bg-blue-200 text-blue-800 rounded transition cursor-pointer">+1</button>
+                  <button onclick="incrementKpi('${it.id}')" class="px-2 py-1 text-[10px] font-bold bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition cursor-pointer shrink-0 ml-1">+1</button>
                 </div>
               `).join('')}
             </div>
@@ -3737,21 +3581,24 @@
 
     // ─── 3. RENDER MARKETING SECTION ────────────────────────────────────────
     function renderMarketingSection(mode) {
+      if (mode === 'circles') mode = 'pie';
+      if (mode === 'cards') mode = 'bars';
       const c1 = document.getElementById('container_classifieds');
       const c2 = document.getElementById('container_social');
       if (!c1 || !c2) return;
 
       const classItems = [
-        { id: 'olx', name: 'Реклама OLX', desc: 'Дошка оголошень №1 в Україні', val: state.marketing.olx, tgt: 20, tag: 'OLX', tagBg: 'bg-[#002f34] text-[#00f898]', barColor: '#00f898' },
-        { id: 'domria', name: 'Реклама DOM.RIA', desc: 'Перевірені квартири та будинки', val: state.marketing.domria, tgt: 20, tag: 'RIA', tagBg: 'bg-[#eb4d27] text-white', barColor: '#eb4d27' },
-        { id: 'rieltor', name: 'Реклама Рієлтор.юа', desc: 'Професійна рієлторська база', val: state.marketing.rieltor, tgt: 20, tag: 'R.UA', tagBg: 'bg-[#0b66c3] text-white', barColor: '#0b66c3' }
+        { id: 'olx', name: 'Реклама OLX', desc: 'Дошка оголошень №1 в Україні', val: state.marketing.olx, tgt: 20, tag: 'OLX', tagBg: 'bg-[#002f34] text-[#00f898]', barColor: '#059669', pct: Math.round((state.marketing.olx / 20) * 100) },
+        { id: 'domria', name: 'Реклама DOM.RIA', desc: 'Перевірені квартири та будинки', val: state.marketing.domria, tgt: 20, tag: 'RIA', tagBg: 'bg-[#eb4d27] text-white', barColor: '#EA580C', pct: Math.round((state.marketing.domria / 20) * 100) },
+        { id: 'rieltor', name: 'Реклама Рієлтор.юа', desc: 'Професійна рієлторська база', val: state.marketing.rieltor, tgt: 20, tag: 'R.UA', tagBg: 'bg-[#0b66c3] text-white', barColor: '#2563EB', pct: Math.round((state.marketing.rieltor / 20) * 100) }
       ];
 
       const totClassVal = state.marketing.olx + state.marketing.domria + state.marketing.rieltor;
+      const totClassPct = Math.round((totClassVal / 60) * 100);
 
-      // Individual Card View Mode Switcher for Marketing
-      if (mode === 'circles') {
-        const cx = 90, cy = 90, rOut = 80, rIn = 48;
+      // ── 1. БЛОК ПОРТАЛІВ ОГОЛОШЕНЬ (КЛАСИФАЙДИ) ──────────────────────────
+      if (mode === 'pie' || mode === 'circles') {
+        const cx = 90, cy = 90, rOut = 80, rIn = 46;
         let currentAngle = 0;
         const total = Math.max(1, totClassVal);
 
@@ -3763,13 +3610,13 @@
 
           const pathD = describeDonutArc(cx, cy, rIn, rOut, startA, endA);
           return `
-            <path id="mkt_donut_${idx}"
+            <path id="mkt_pie_${idx}"
                   d="${pathD}"
                   fill="${it.barColor}"
                   stroke="#FFFFFF"
                   stroke-width="1.5"
                   class="cursor-pointer hover:opacity-85 transition"
-                  onmousemove="showChartTooltip(event, '${it.name}', 'Факт: ${it.val} / ${it.tgt}', '${it.desc}')"
+                  onmousemove="showChartTooltip(event, '${it.name}', 'Факт: ${it.val} / ${it.tgt} (${it.pct}%)', '${it.desc}')"
                   onmouseleave="hideChartTooltip()" />
           `;
         }).join('');
@@ -3778,87 +3625,77 @@
           <div class="flex flex-wrap items-center justify-between gap-3 pb-1">
             <h4 class="text-xs font-black text-purple-700 dark:text-purple-300 uppercase tracking-wider flex items-center gap-2">
               <i data-lucide="layout-grid" class="w-4 h-4 text-purple-600"></i>
-              Оголошення на порталах (Кільце Donut)
+              Оголошення на порталах (Кругова діаграма %)
             </h4>
             <span class="px-3 py-1 rounded-full text-xs font-black bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 border border-purple-200 font-mono">
-              Всього: ${totClassVal} / 60
+              Всього: ${totClassVal} / 60 (${totClassPct}%)
             </span>
           </div>
-          <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center bg-white dark:bg-[#1A1D24] p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs">
+          <div class="grid grid-cols-1 sm:grid-cols-12 gap-5 items-center bg-white dark:bg-[#1A1D24] p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs">
             <div class="sm:col-span-5 flex justify-center py-2">
-              <div class="relative w-44 h-44 flex items-center justify-center">
-                <svg class="w-44 h-44 overflow-visible" viewBox="0 0 180 180">${paths}</svg>
+              <div class="relative w-48 h-48 flex items-center justify-center">
+                <svg class="w-48 h-48 overflow-visible" viewBox="0 0 180 180">${paths}</svg>
                 <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                  <span class="text-xl font-black text-gray-900 dark:text-white font-mono">${totClassVal}</span>
-                  <span class="text-[9px] uppercase font-bold text-gray-400">з 60 оголошень</span>
+                  <span class="text-2xl font-black text-gray-900 dark:text-white font-mono">${totClassVal}</span>
+                  <span class="text-[10px] uppercase font-bold text-gray-400">з 60 оголошень</span>
                 </div>
               </div>
             </div>
-            <div class="sm:col-span-7 space-y-2.5 text-xs">
+            <div class="sm:col-span-7 space-y-2 text-xs">
               ${classItems.map(it => `
-                <div class="flex items-center justify-between p-2.5 rounded-xl bg-gray-50/80 dark:bg-gray-800/40 border border-gray-200/60 dark:border-gray-700/60 hover:border-purple-300 transition">
+                <div class="flex items-center justify-between p-2.5 rounded-xl bg-gray-50/80 dark:bg-gray-800/40 border border-gray-200/60 dark:border-gray-700/60 hover:border-purple-300 transition group">
                   <div class="flex items-center gap-2 truncate">
-                    <span class="w-3.5 h-3 rounded-xs shrink-0" style="background-color: ${it.barColor};"></span>
-                    <span class="font-bold text-gray-800 dark:text-gray-200 truncate text-[11px]">${it.name}</span>
+                    <span class="w-3.5 h-3.5 rounded-xs shrink-0" style="background-color: ${it.barColor};"></span>
+                    <span class="font-bold text-gray-800 dark:text-gray-200 truncate group-hover:text-purple-600 transition text-[11px]">${it.name}</span>
                   </div>
                   <div class="flex items-center gap-2 font-mono text-[11px] shrink-0">
                     <span class="font-bold text-gray-900 dark:text-white">${it.val} / ${it.tgt}</span>
-                    <button onclick="incrementMarketing('${it.id}')" class="px-2 py-0.5 text-[10px] font-bold bg-purple-100 hover:bg-purple-200 text-purple-800 rounded transition cursor-pointer">+1</button>
+                    <span class="px-2 py-0.5 rounded-full font-bold text-[11px] bg-purple-100 dark:bg-purple-950/80 text-purple-800 dark:text-purple-300 border border-purple-200 dark:border-purple-800">${it.pct}%</span>
+                    <button onclick="incrementMarketing('${it.id}')" class="px-2 py-0.5 text-[10px] font-bold bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition cursor-pointer">+1</button>
                   </div>
                 </div>
               `).join('')}
             </div>
           </div>
         `;
-      } else if (mode === 'pie') {
-        const cx = 90, cy = 90, r = 80;
-        let currentAngle = 0;
-        const total = Math.max(1, totClassVal);
+      } else if (mode === 'charts') {
+        const dates = ['23 вер.', '25 вер.', '27 вер.', '29 вер.', '01 жов.', '03 жов.', '05 жов.', '06 жов.'];
+        const series = [
+          { id: 'olx', name: 'Реклама OLX', color: '#059669', data: [2, 3, 2, 3, 2, 3, 3, 2] },
+          { id: 'domria', name: 'Реклама DOM.RIA', color: '#EA580C', data: [2, 2, 2, 3, 2, 2, 3, 2] },
+          { id: 'rieltor', name: 'Реклама Рієлтор.юа', color: '#2563EB', data: [1, 2, 2, 2, 2, 3, 2, 2] }
+        ];
 
-        const paths = classItems.map((it, idx) => {
-          const sliceAngle = (it.val / total) * 360;
-          const startA = currentAngle;
-          const endA = currentAngle + sliceAngle;
-          currentAngle = endA;
-
-          const pathD = describePieSlice(cx, cy, r, startA, endA);
-          return `
-            <path id="mkt_pie_${idx}"
-                  d="${pathD}"
-                  fill="${it.barColor}"
-                  stroke="#FFFFFF"
-                  stroke-width="2"
-                  class="cursor-pointer hover:opacity-85 transition"
-                  onmousemove="showChartTooltip(event, '${it.name}', 'Факт: ${it.val} / ${it.tgt}', '${it.desc}')"
-                  onmouseleave="hideChartTooltip()" />
-          `;
-        }).join('');
+        const svgContent = renderMultiLineSplineSvg({ dates, series, w: 480, h: 180, yLabel: 'Оголошення' });
 
         c1.innerHTML = `
-          <div class="flex flex-wrap items-center justify-between gap-3 pb-1">
-            <h4 class="text-xs font-black text-purple-700 dark:text-purple-300 uppercase tracking-wider flex items-center gap-2">
-              <i data-lucide="layout-grid" class="w-4 h-4 text-purple-600"></i>
-              Оголошення на порталах (Кругова Pie)
-            </h4>
-            <span class="px-3 py-1 rounded-full text-xs font-black bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 border border-purple-200 font-mono">
-              Всього: ${totClassVal} / 60
-            </span>
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center bg-white dark:bg-[#1A1D24] p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs">
-            <div class="sm:col-span-5 flex justify-center py-2">
-              <svg class="w-44 h-44 overflow-visible" viewBox="0 0 180 180">${paths}</svg>
+          <div class="space-y-3 bg-white dark:bg-[#1A1D24] p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs">
+            <div class="flex flex-wrap items-center justify-between gap-2 pb-1 border-b border-gray-100 dark:border-gray-800 text-[11px]">
+              <div class="flex items-center gap-3 flex-wrap">
+                ${series.map(s => {
+                  const it = classItems.find(x => x.id === s.id);
+                  return `
+                    <div class="flex items-center gap-1.5">
+                      <span class="w-3 h-3 rounded-xs shrink-0" style="background-color: ${s.color};"></span>
+                      <span class="font-bold text-gray-800 dark:text-gray-200">${s.name}:</span>
+                      <span class="font-mono font-bold text-gray-900 dark:text-white">${it ? it.val : 0}</span>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+              <span class="text-[10px] text-gray-400 font-mono">3 лінії порталів</span>
             </div>
-            <div class="sm:col-span-7 space-y-2.5 text-xs">
+            <div class="relative w-full h-44 select-none">
+              ${svgContent}
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 border-t border-gray-100 dark:border-gray-800">
               ${classItems.map(it => `
-                <div class="flex items-center justify-between p-2.5 rounded-xl bg-gray-50/80 dark:bg-gray-800/40 border border-gray-200/60 dark:border-gray-700/60 hover:border-purple-300 transition">
-                  <div class="flex items-center gap-2 truncate">
-                    <span class="w-3.5 h-3 rounded-xs shrink-0" style="background-color: ${it.barColor};"></span>
-                    <span class="font-bold text-gray-800 dark:text-gray-200 truncate text-[11px]">${it.name}</span>
+                <div class="p-2 rounded-xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200/60 dark:border-gray-700/60 flex items-center justify-between">
+                  <div class="truncate">
+                    <span class="text-[10px] text-gray-400 block truncate font-medium">${it.name}</span>
+                    <strong class="text-xs text-gray-900 dark:text-white font-mono">${it.val} / ${it.tgt} (${it.pct}%)</strong>
                   </div>
-                  <div class="flex items-center gap-2 font-mono text-[11px] shrink-0">
-                    <span class="font-bold text-gray-900 dark:text-white">${it.val} / ${it.tgt}</span>
-                    <button onclick="incrementMarketing('${it.id}')" class="px-2 py-0.5 text-[10px] font-bold bg-purple-100 hover:bg-purple-200 text-purple-800 rounded transition cursor-pointer">+1</button>
-                  </div>
+                  <button onclick="incrementMarketing('${it.id}')" class="px-2 py-1 text-[10px] font-bold bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition cursor-pointer shrink-0 ml-1">+1</button>
                 </div>
               `).join('')}
             </div>
@@ -3876,60 +3713,50 @@
           </div>
           <div class="flex items-center gap-2">
             <span class="px-3 py-1 rounded-full text-xs font-black bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800 font-mono">
-              Всього на порталах: ${totClassVal} / 60 (${Math.round((totClassVal / 60) * 100)}%)
+              Всього на порталах: ${totClassVal} / 60 (${totClassPct}%)
             </span>
           </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-          ${classItems.map(it => {
-            const pct = Math.round((it.val / it.tgt) * 100);
-            return `
-              <div class="bg-white dark:bg-[#1A1D24] p-5 rounded-2xl border border-gray-200/90 dark:border-gray-800 shadow-xs hover:shadow-md transition flex flex-col justify-between space-y-4 group">
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center gap-2.5">
-                    <span class="w-9 h-9 rounded-xl ${it.tagBg} font-black text-xs flex items-center justify-center shadow-xs">${it.tag}</span>
-                    <div>
-                      <h5 class="font-black text-sm text-gray-900 dark:text-white group-hover:text-purple-600 transition">${it.name}</h5>
-                      <span class="text-[11px] text-gray-400 font-medium">${it.desc}</span>
-                    </div>
-                  </div>
-                  ${pct >= 100 
-                    ? '<span class="px-2.5 py-1 rounded-full text-[11px] font-black bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">100% ✓</span>'
-                    : `<span class="px-2.5 py-1 rounded-full text-[11px] font-black bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800 font-mono">${pct}%</span>`
-                  }
-                </div>
-
-                <div class="space-y-2">
-                  <div class="flex items-baseline justify-between">
-                    <div class="flex items-baseline gap-1.5">
-                      <span class="text-3xl font-black font-mono text-gray-900 dark:text-white">${it.val}</span>
-                      <span class="text-sm font-semibold text-gray-400">/ ${it.tgt} норм</span>
-                    </div>
-                    <span class="text-xs font-medium text-gray-400">${pct >= 100 ? 'Виконано повністю' : `Залишилось: ${Math.max(0, it.tgt - it.val)}`}</span>
-                  </div>
-                  <div class="w-full bg-gray-100 dark:bg-gray-700/80 h-2.5 rounded-full overflow-hidden">
-                    <div class="h-full rounded-full transition-all duration-500" style="width: ${Math.min(100, pct)}%; background-color: ${it.barColor};"></div>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+          ${classItems.map(it => `
+            <div class="bg-gray-50/70 dark:bg-gray-800/40 rounded-2xl border border-gray-200/70 dark:border-gray-700/70 p-5 shadow-xs space-y-4">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                  <span class="px-2.5 py-1 rounded-lg text-xs font-black ${it.tagBg}">${it.tag}</span>
+                  <div>
+                    <h5 class="font-extrabold text-sm text-gray-900 dark:text-white">${it.name}</h5>
+                    <span class="text-[11px] text-gray-400">${it.desc}</span>
                   </div>
                 </div>
-
-                <button onclick="incrementMarketing('${it.id}')" class="w-full py-2.5 px-4 rounded-xl font-bold text-xs bg-purple-600 hover:bg-purple-700 text-white shadow-xs transition hover:shadow active:scale-98 flex items-center justify-center gap-1.5 cursor-pointer">
-                  <i data-lucide="plus" class="w-3.5 h-3.5"></i>
-                  <span>+1 Додати оголошення</span>
-                </button>
               </div>
-            `;
-          }).join('')}
+              <div class="space-y-2">
+                <div class="flex items-center justify-between text-xs font-mono">
+                  <span class="text-gray-500">Норма: ${it.tgt} огл.</span>
+                  <div class="flex items-center gap-1.5">
+                    <strong class="text-sm font-black text-gray-900 dark:text-white">${it.val}</strong>
+                    <span class="font-bold text-purple-600">(${it.pct}%)</span>
+                  </div>
+                </div>
+                <div class="w-full bg-gray-200 dark:bg-gray-700 h-2.5 rounded-full overflow-hidden">
+                  <div class="h-full rounded-full transition-all duration-500" style="width: ${Math.min(100, it.pct)}%; background-color: ${it.barColor};"></div>
+                </div>
+              </div>
+              <button onclick="incrementMarketing('${it.id}')" class="w-full py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-xl text-xs font-bold transition shadow-xs flex items-center justify-center gap-1.5 cursor-pointer">
+                <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                +1 Оголошення
+              </button>
+            </div>
+          `).join('')}
         </div>
       `;
       }
 
-      // ─── PREMIUM REDESIGNED SOCIAL MEDIA & SMM SECTION ────────────────────────
+      // ── 2. БЛОК СОЦІАЛЬНИХ МЕРЕЖ ТА SMM ──────────────────────────
       const activeTab = state.socialTab || 'all';
 
-      // Aggregate Metrics for Pills
       const igTotal = state.marketing.ig_posts + state.marketing.ig_video + state.marketing.ig_stories;
-      const igTgt = 20 + 5 + 60; // 85
+      const igTgt = 85;
       const ttTotal = state.marketing.tt_posts + state.marketing.tt_video + state.marketing.tt_stories;
       const ttTgt = 85;
       const fbTotal = state.marketing.fb_posts + state.marketing.fb_video + state.marketing.fb_stories;
@@ -3939,197 +3766,37 @@
       const xTotal = state.marketing.x_posts + state.marketing.x_video + state.marketing.x_comments;
       const xTgt = 85;
       const grandMediaDone = igTotal + ttTotal + fbTotal + ytTotal + xTotal;
-      const grandMediaTgt = igTgt + ttTgt + fbTgt + ytTgt + xTgt;
+      const grandMediaTgt = 85 + 85 + 85 + 5 + 85; // 345
       const grandMediaPct = Math.round((grandMediaDone / grandMediaTgt) * 100);
 
-      const mediaHero = document.getElementById('mediaHeroCount');
-      if (mediaHero) mediaHero.textContent = grandMediaDone;
-      const adsHero = document.getElementById('adsHeroCount');
-      if (adsHero) adsHero.textContent = state.marketing.olx + state.marketing.domria + state.marketing.rieltor;
-
-      const renderMetricCard = (label, key, val, tgt, colorHex, btnClass) => {
-        const p = Math.round((val / tgt) * 100);
-        if (mode === 'circles') {
-          return `
-            <div class="p-3.5 bg-white dark:bg-[#1A1D24] rounded-xl border border-gray-200/80 dark:border-gray-700 shadow-2xs flex flex-col justify-between space-y-3">
-              <span class="text-xs font-bold text-gray-500 dark:text-gray-400 truncate">${label}</span>
-              <div class="flex items-center justify-between">
-                <div>
-                  <div class="text-xl font-black text-gray-900 dark:text-white font-mono">${val} <span class="text-xs text-gray-400 font-normal">/ ${tgt}</span></div>
-                  <span class="text-[10px] text-gray-400">Виконано: ${p}%</span>
-                </div>
-                ${makeCircleGauge(p, `text-[${colorHex}]`, 50, 4)}
-              </div>
-              <button onclick="incMedia('${key}', ${tgt})" class="w-full py-2 rounded-lg text-xs font-bold ${btnClass} text-white shadow-2xs hover:opacity-90 active:scale-95 transition cursor-pointer flex items-center justify-center gap-1">+1 Додати</button>
-            </div>
-          `;
-        }
-
-        if (mode === 'charts') {
-          return `
-            <div class="p-3.5 bg-white dark:bg-[#1A1D24] rounded-xl border border-gray-200/80 dark:border-gray-700 shadow-2xs flex flex-col justify-between space-y-3">
-              <div class="flex justify-between items-center">
-                <span class="text-xs font-bold text-gray-500 dark:text-gray-400 truncate">${label}</span>
-                <span class="text-xs font-mono font-bold text-pink-600">${p}%</span>
-              </div>
-              <div class="text-xl font-black text-gray-900 dark:text-white font-mono">${val} <span class="text-xs text-gray-400 font-normal">/ ${tgt}</span></div>
-              <div class="py-0.5">${makeMiniChart(p, colorHex)}</div>
-              <button onclick="incMedia('${key}', ${tgt})" class="w-full py-2 rounded-lg text-xs font-bold ${btnClass} text-white shadow-2xs hover:opacity-90 active:scale-95 transition cursor-pointer flex items-center justify-center gap-1">+1 Додати</button>
-            </div>
-          `;
-        }
-
-        // Default: Spacious Linear Progress Card
-        return `
-          <div class="p-4 bg-white dark:bg-[#1A1D24] rounded-xl border border-gray-200/80 dark:border-gray-700 shadow-2xs flex flex-col justify-between space-y-3 group hover:border-pink-300 transition">
-            <span class="text-xs font-bold text-gray-600 dark:text-gray-300 truncate">${label}</span>
-            <div class="space-y-1.5">
-              <div class="flex items-baseline justify-between">
-                <div class="flex items-baseline gap-1">
-                  <span class="text-2xl font-black text-gray-900 dark:text-white font-mono">${val}</span>
-                  <span class="text-xs font-semibold text-gray-400">/ ${tgt}</span>
-                </div>
-                <span class="text-[11px] font-mono font-bold text-gray-500 dark:text-gray-400">${p}%</span>
-              </div>
-              <div class="w-full bg-gray-100 dark:bg-gray-700/80 h-2 rounded-full overflow-hidden">
-                <div class="h-full rounded-full transition-all duration-500" style="width: ${Math.min(100, p)}%; background-color: ${colorHex};"></div>
-              </div>
-            </div>
-            <div class="pt-0.5">
-              <button onclick="incMedia('${key}', ${tgt})" class="w-full py-2 px-3 rounded-lg text-xs font-bold ${btnClass} text-white shadow-2xs hover:opacity-90 active:scale-95 transition cursor-pointer flex items-center justify-center gap-1">+1 ${label.split(' ')[0]}</button>
-            </div>
-          </div>
-        `;
-      };
-
-      // Platform Cards Configuration
       const platforms = [
-        {
-          id: 'instagram',
-          name: 'Instagram',
-          badgeText: `${Math.round((igTotal / igTgt) * 100)}% плану`,
-          badgeDone: `${igTotal} / ${igTgt}`,
-          iconSvg: `
-            <span class="w-6 h-6 rounded-lg bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 text-white flex items-center justify-center shrink-0 shadow-xs">
-              <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-            </span>
-          `,
-          borderColor: 'border-pink-200 dark:border-pink-900/50',
-          bgHeader: 'from-pink-500/10 to-rose-500/5',
-          btnClass: 'bg-gradient-to-r from-rose-500 to-pink-600',
-          colorHex: '#E1306C',
-          metrics: [
-            { label: 'Пости в стрічку', key: 'ig_posts', val: state.marketing.ig_posts, tgt: 20 },
-            { label: 'Відео (Reels)', key: 'ig_video', val: state.marketing.ig_video, tgt: 5 },
-            { label: 'Stories (Історії)', key: 'ig_stories', val: state.marketing.ig_stories, tgt: 60 }
-          ]
-        },
-        {
-          id: 'tiktok',
-          name: 'TikTok',
-          badgeText: `${Math.round((ttTotal / ttTgt) * 100)}% плану`,
-          badgeDone: `${ttTotal} / ${ttTgt}`,
-          iconSvg: `
-            <span class="w-6 h-6 rounded-lg bg-black text-white flex items-center justify-center shrink-0 shadow-xs border border-gray-700">
-              <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.27 1.76-.23 1.05.15 2.21.93 2.93.72.68 1.76.95 2.73.73.96-.2 1.76-.87 2.08-1.8.14-.49.19-1.01.19-1.52.02-4.99.01-9.98.01-14.97z"/></svg>
-            </span>
-          `,
-          borderColor: 'border-teal-200 dark:border-teal-900/50',
-          bgHeader: 'from-cyan-500/10 to-teal-500/5',
-          btnClass: 'bg-black dark:bg-gray-700',
-          colorHex: '#00F2FE',
-          metrics: [
-            { label: 'Пости / Слайди', key: 'tt_posts', val: state.marketing.tt_posts, tgt: 20 },
-            { label: 'Короткі відео', key: 'tt_video', val: state.marketing.tt_video, tgt: 5 },
-            { label: 'TikTok Stories', key: 'tt_stories', val: state.marketing.tt_stories, tgt: 60 }
-          ]
-        },
-        {
-          id: 'facebook',
-          name: 'Facebook',
-          badgeText: `${Math.round((fbTotal / fbTgt) * 100)}% плану`,
-          badgeDone: `${fbTotal} / ${fbTgt}`,
-          iconSvg: `
-            <span class="w-6 h-6 rounded-lg bg-[#1877F2] text-white flex items-center justify-center shrink-0 shadow-xs">
-              <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-            </span>
-          `,
-          borderColor: 'border-blue-200 dark:border-blue-900/50',
-          bgHeader: 'from-blue-500/10 to-indigo-500/5',
-          btnClass: 'bg-[#1877F2]',
-          colorHex: '#1877F2',
-          metrics: [
-            { label: 'Дописи в стрічці', key: 'fb_posts', val: state.marketing.fb_posts, tgt: 20 },
-            { label: 'FB Відео', key: 'fb_video', val: state.marketing.fb_video, tgt: 5 },
-            { label: 'FB Stories', key: 'fb_stories', val: state.marketing.fb_stories, tgt: 60 }
-          ]
-        },
-        {
-          id: 'youtube',
-          name: 'YouTube',
-          badgeText: `${Math.round((ytTotal / ytTgt) * 100)}% плану`,
-          badgeDone: `${ytTotal} / ${ytTgt}`,
-          iconSvg: `
-            <span class="w-6 h-6 rounded-lg bg-[#FF0000] text-white flex items-center justify-center shrink-0 shadow-xs">
-              <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-            </span>
-          `,
-          borderColor: 'border-red-200 dark:border-red-900/50',
-          bgHeader: 'from-red-500/10 to-rose-500/5',
-          btnClass: 'bg-[#FF0000]',
-          colorHex: '#FF0000',
-          metrics: [
-            { label: 'Огляди нерухомості (відео)', key: 'yt_video', val: state.marketing.yt_video, tgt: 5 }
-          ]
-        },
-        {
-          id: 'x',
-          name: 'X (Twitter)',
-          badgeText: `${Math.round((xTotal / xTgt) * 100)}% плану`,
-          badgeDone: `${xTotal} / ${xTgt}`,
-          iconSvg: `
-            <span class="w-6 h-6 rounded-lg bg-black text-white flex items-center justify-center shrink-0 shadow-xs border border-gray-700">
-              <span class="font-black text-xs leading-none">𝕏</span>
-            </span>
-          `,
-          borderColor: 'border-gray-200 dark:border-gray-800',
-          bgHeader: 'from-gray-500/10 to-slate-500/5',
-          btnClass: 'bg-black dark:bg-gray-700',
-          colorHex: '#000000',
-          metrics: [
-            { label: 'Твіти / Пости', key: 'x_posts', val: state.marketing.x_posts, tgt: 20 },
-            { label: 'Відео-твіти', key: 'x_video', val: state.marketing.x_video, tgt: 5 },
-            { label: 'Коментарі / Реплаї', key: 'x_comments', val: state.marketing.x_comments, tgt: 60 }
-          ]
-        }
+        { id: 'instagram', name: 'Instagram (Reels, Posts, Stories)', colorHex: '#E1306C', val: igTotal, tgt: igTgt, pct: Math.round((igTotal / igTgt) * 100) },
+        { id: 'tiktok', name: 'TikTok (Short Video)', colorHex: '#111827', val: ttTotal, tgt: ttTgt, pct: Math.round((ttTotal / ttTgt) * 100) },
+        { id: 'facebook', name: 'Facebook (Групи, Пости, Reels)', colorHex: '#1877F2', val: fbTotal, tgt: fbTgt, pct: Math.round((fbTotal / fbTgt) * 100) },
+        { id: 'youtube', name: 'YouTube (Огляди та Shorts)', colorHex: '#DC2626', val: ytTotal, tgt: ytTgt, pct: Math.round((ytTotal / ytTgt) * 100) },
+        { id: 'x', name: 'Twitter / X (Твіти, Аналітика)', colorHex: '#4B5563', val: xTotal, tgt: xTgt, pct: Math.round((xTotal / xTgt) * 100) }
       ];
 
-      // Filter by active tab
-      const visiblePlatforms = activeTab === 'all' 
-        ? platforms 
-        : platforms.filter(p => p.id === activeTab);
-
-      if (mode === 'circles') {
-        const cx = 90, cy = 90, rOut = 80, rIn = 48;
+      if (mode === 'pie' || mode === 'circles') {
+        const cx = 90, cy = 90, rOut = 80, rIn = 46;
         let currentAngle = 0;
         const total = Math.max(1, grandMediaDone);
 
         const paths = platforms.map((p, idx) => {
-          const val = p.id === 'instagram' ? igTotal : p.id === 'tiktok' ? ttTotal : p.id === 'facebook' ? fbTotal : p.id === 'youtube' ? ytTotal : xTotal;
-          const sliceAngle = (val / total) * 360;
+          const sliceAngle = (p.val / total) * 360;
           const startA = currentAngle;
           const endA = currentAngle + sliceAngle;
           currentAngle = endA;
 
           const pathD = describeDonutArc(cx, cy, rIn, rOut, startA, endA);
           return `
-            <path id="soc_donut_${idx}"
+            <path id="soc_pie_${idx}"
                   d="${pathD}"
                   fill="${p.colorHex}"
                   stroke="#FFFFFF"
                   stroke-width="1.5"
                   class="cursor-pointer hover:opacity-85 transition"
-                  onmousemove="showChartTooltip(event, '${p.name}', 'Виконано: ${val} / ${p.id === 'youtube' ? ytTgt : 85} дій', '${p.badgeText}')"
+                  onmousemove="showChartTooltip(event, '${p.name}', 'Виконано: ${p.val} / ${p.tgt} (${p.pct}%)', 'SMM активність')"
                   onmouseleave="hideChartTooltip()" />
           `;
         }).join('');
@@ -4138,7 +3805,7 @@
           <div class="flex flex-wrap items-center justify-between gap-3 pb-1">
             <h4 class="text-xs font-black text-pink-600 dark:text-pink-400 uppercase tracking-wider flex items-center gap-2">
               <i data-lucide="share-2" class="w-4 h-4 text-pink-500"></i>
-              Соціальні мережі та SMM (Кільце Donut)
+              Соціальні мережі та SMM (Кругова діаграма %)
             </h4>
             <span class="px-3 py-1 rounded-full text-xs font-black bg-pink-50 dark:bg-pink-950/60 text-pink-700 dark:text-pink-300 border border-pink-200 font-mono">
               Всього: ${grandMediaDone} / ${grandMediaTgt} (${grandMediaPct}%)
@@ -4146,166 +3813,72 @@
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-12 gap-5 items-center bg-white dark:bg-[#1A1D24] p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs">
             <div class="sm:col-span-5 flex justify-center py-2">
-              <div class="relative w-44 h-44 flex items-center justify-center">
-                <svg class="w-44 h-44 overflow-visible" viewBox="0 0 180 180">${paths}</svg>
+              <div class="relative w-48 h-48 flex items-center justify-center">
+                <svg class="w-48 h-48 overflow-visible" viewBox="0 0 180 180">${paths}</svg>
                 <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                  <span class="text-xl font-black text-gray-900 dark:text-white font-mono">${grandMediaDone}</span>
-                  <span class="text-[9px] uppercase font-bold text-gray-400">з ${grandMediaTgt} дій</span>
+                  <span class="text-2xl font-black text-gray-900 dark:text-white font-mono">${grandMediaDone}</span>
+                  <span class="text-[10px] uppercase font-bold text-gray-400">з ${grandMediaTgt} дій (${grandMediaPct}%)</span>
                 </div>
               </div>
             </div>
             <div class="sm:col-span-7 space-y-2 text-xs">
-              ${platforms.map(p => {
-                const val = p.id === 'instagram' ? igTotal : p.id === 'tiktok' ? ttTotal : p.id === 'facebook' ? fbTotal : p.id === 'youtube' ? ytTotal : xTotal;
-                const tgt = p.id === 'youtube' ? ytTgt : 85;
-                const pct = Math.round((val / tgt) * 100);
-                return `
-                  <div class="flex items-center justify-between p-2 rounded-xl bg-gray-50/80 dark:bg-gray-800/40 border border-gray-200/60 dark:border-gray-700/60 hover:border-pink-300 transition">
-                    <div class="flex items-center gap-2 truncate">
-                      <span class="w-3.5 h-3 rounded-xs shrink-0" style="background-color: ${p.colorHex};"></span>
-                      <span class="font-bold text-gray-800 dark:text-gray-200 truncate text-[11px]">${p.name}</span>
-                    </div>
-                    <div class="flex items-center gap-2 font-mono text-[11px] shrink-0">
-                      <span class="font-bold text-gray-900 dark:text-white">${val} / ${tgt}</span>
-                      <span class="font-bold text-pink-600">(${pct}%)</span>
-                    </div>
+              ${platforms.map(p => `
+                <div class="flex items-center justify-between p-2 rounded-xl bg-gray-50/80 dark:bg-gray-800/40 border border-gray-200/60 dark:border-gray-700/60 hover:border-pink-300 transition">
+                  <div class="flex items-center gap-2 truncate">
+                    <span class="w-3.5 h-3.5 rounded-xs shrink-0" style="background-color: ${p.colorHex};"></span>
+                    <span class="font-bold text-gray-800 dark:text-gray-200 truncate text-[11px]">${p.name}</span>
                   </div>
-                `;
-              }).join('')}
-            </div>
-          </div>
-        `;
-      } else if (mode === 'pie') {
-        const cx = 90, cy = 90, r = 80;
-        let currentAngle = 0;
-        const total = Math.max(1, grandMediaDone);
-
-        const paths = platforms.map((p, idx) => {
-          const val = p.id === 'instagram' ? igTotal : p.id === 'tiktok' ? ttTotal : p.id === 'facebook' ? fbTotal : p.id === 'youtube' ? ytTotal : xTotal;
-          const sliceAngle = (val / total) * 360;
-          const startA = currentAngle;
-          const endA = currentAngle + sliceAngle;
-          currentAngle = endA;
-
-          const pathD = describePieSlice(cx, cy, r, startA, endA);
-          return `
-            <path id="soc_pie_${idx}"
-                  d="${pathD}"
-                  fill="${p.colorHex}"
-                  stroke="#FFFFFF"
-                  stroke-width="2"
-                  class="cursor-pointer hover:opacity-85 transition"
-                  onmousemove="showChartTooltip(event, '${p.name}', 'Виконано: ${val} / ${p.id === 'youtube' ? ytTgt : 85} дій', '${p.badgeText}')"
-                  onmouseleave="hideChartTooltip()" />
-          `;
-        }).join('');
-
-        c2.innerHTML = `
-          <div class="flex flex-wrap items-center justify-between gap-3 pb-1">
-            <h4 class="text-xs font-black text-pink-600 dark:text-pink-400 uppercase tracking-wider flex items-center gap-2">
-              <i data-lucide="share-2" class="w-4 h-4 text-pink-500"></i>
-              Соціальні мережі та SMM (Кругова Pie)
-            </h4>
-            <span class="px-3 py-1 rounded-full text-xs font-black bg-pink-50 dark:bg-pink-950/60 text-pink-700 dark:text-pink-300 border border-pink-200 font-mono">
-              Всього: ${grandMediaDone} / ${grandMediaTgt} (${grandMediaPct}%)
-            </span>
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-12 gap-5 items-center bg-white dark:bg-[#1A1D24] p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs">
-            <div class="sm:col-span-5 flex justify-center py-2">
-              <svg class="w-44 h-44 overflow-visible" viewBox="0 0 180 180">${paths}</svg>
-            </div>
-            <div class="sm:col-span-7 space-y-2 text-xs">
-              ${platforms.map(p => {
-                const val = p.id === 'instagram' ? igTotal : p.id === 'tiktok' ? ttTotal : p.id === 'facebook' ? fbTotal : p.id === 'youtube' ? ytTotal : xTotal;
-                const tgt = p.id === 'youtube' ? ytTgt : 85;
-                const pct = Math.round((val / tgt) * 100);
-                return `
-                  <div class="flex items-center justify-between p-2 rounded-xl bg-gray-50/80 dark:bg-gray-800/40 border border-gray-200/60 dark:border-gray-700/60 hover:border-pink-300 transition">
-                    <div class="flex items-center gap-2 truncate">
-                      <span class="w-3.5 h-3 rounded-xs shrink-0" style="background-color: ${p.colorHex};"></span>
-                      <span class="font-bold text-gray-800 dark:text-gray-200 truncate text-[11px]">${p.name}</span>
-                    </div>
-                    <div class="flex items-center gap-2 font-mono text-[11px] shrink-0">
-                      <span class="font-bold text-gray-900 dark:text-white">${val} / ${tgt}</span>
-                      <span class="font-bold text-pink-600">(${pct}%)</span>
-                    </div>
+                  <div class="flex items-center gap-2 font-mono text-[11px] shrink-0">
+                    <span class="font-bold text-gray-900 dark:text-white">${p.val} / ${p.tgt}</span>
+                    <span class="px-2 py-0.5 rounded-full font-bold text-[11px] bg-pink-100 dark:bg-pink-950/80 text-pink-800 dark:text-pink-300 border border-pink-200 dark:border-pink-800">${p.pct}%</span>
                   </div>
-                `;
-              }).join('')}
+                </div>
+              `).join('')}
             </div>
           </div>
         `;
       } else if (mode === 'charts') {
-        const splineData = [
-          { date: '23 вер.', val: 12 },
-          { date: '25 вер.', val: 18 },
-          { date: '27 вер.', val: 24 },
-          { date: '29 вер.', val: 19 },
-          { date: '01 жов.', val: 28 },
-          { date: '03 жов.', val: 22 },
-          { date: '05 жов.', val: 32 },
-          { date: '06 жов.', val: 35 }
+        const dates = ['23 вер.', '25 вер.', '27 вер.', '29 вер.', '01 жов.', '03 жов.', '05 жов.', '06 жов.'];
+        const series = [
+          { id: 'instagram', name: 'Instagram', color: '#E1306C', data: [8, 9, 8, 9, 9, 8, 9, 8] },
+          { id: 'tiktok', name: 'TikTok', color: '#111827', data: [7, 8, 7, 8, 8, 8, 8, 8] },
+          { id: 'facebook', name: 'Facebook', color: '#1877F2', data: [7, 7, 8, 7, 8, 8, 7, 8] },
+          { id: 'youtube', name: 'YouTube', color: '#DC2626', data: [0, 1, 0, 1, 0, 1, 0, 1] },
+          { id: 'x', name: 'Twitter / X', color: '#4B5563', data: [6, 7, 8, 7, 7, 8, 7, 8] }
         ];
 
-        const w = 480, h = 180, padLeft = 40, padRight = 15, padTop = 15, padBottom = 30;
-        const chartW = w - padLeft - padRight;
-        const chartH = h - padTop - padBottom;
-        const maxVal = 40;
-
-        const points = splineData.map((d, i) => ({
-          x: padLeft + (i / (splineData.length - 1)) * chartW,
-          y: padTop + chartH - (d.val / maxVal) * chartH,
-          raw: d
-        }));
-
-        const splinePath = buildCubicSplinePath(points);
-        const areaPath = `${splinePath} L ${points[points.length - 1].x.toFixed(1)} ${(padTop + chartH).toFixed(1)} L ${points[0].x.toFixed(1)} ${(padTop + chartH).toFixed(1)} Z`;
-
-        const gridSvg = [0, 10, 20, 30, 40].map(lvl => {
-          const yPos = padTop + chartH - (lvl / maxVal) * chartH;
-          return `
-            <line x1="${padLeft}" y1="${yPos}" x2="${w - padRight}" y2="${yPos}" stroke="#E2E8F0" stroke-dasharray="3,3" stroke-width="1" />
-            <text x="${padLeft - 6}" y="${yPos + 3}" font-size="9" fill="#94A3B8" text-anchor="end" font-family="monospace">${lvl}</text>
-          `;
-        }).join('');
-
-        const xLabels = points.map(p => `
-          <text x="${p.x}" y="${h - 10}" font-size="9" fill="#94A3B8" text-anchor="middle" font-weight="500">${p.raw.date}</text>
-        `).join('');
-
-        const dotsSvg = points.map(p => `
-          <g class="cursor-pointer group"
-             onmousemove="showChartTooltip(event, '${p.raw.date}', '${p.raw.val} публікацій та сторіз', 'Денний SMM обсяг')"
-             onmouseleave="hideChartTooltip()">
-            <circle cx="${p.x}" cy="${p.y}" r="8" fill="transparent" />
-            <circle cx="${p.x}" cy="${p.y}" r="3.5" fill="#E1306C" stroke="#FFFFFF" stroke-width="2" class="group-hover:r-5 transition" />
-          </g>
-        `).join('');
+        const svgContent = renderMultiLineSplineSvg({ dates, series, w: 480, h: 180, yLabel: 'SMM дії' });
 
         c2.innerHTML = `
           <div class="space-y-3 bg-white dark:bg-[#1A1D24] p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs">
-            <div class="flex items-center justify-between pb-1">
-              <h4 class="font-black text-xs uppercase tracking-wider text-pink-600 flex items-center gap-1.5">
-                <i data-lucide="trending-up" class="w-4 h-4"></i>
-                Динаміка SMM активності (Пости, Reels, Stories)
-              </h4>
-              <span class="text-xs font-mono font-bold text-gray-500">Всього: ${grandMediaDone} дій</span>
+            <div class="flex flex-wrap items-center justify-between gap-2 pb-1 border-b border-gray-100 dark:border-gray-800 text-[11px]">
+              <div class="flex items-center gap-3 flex-wrap">
+                ${series.map(s => {
+                  const it = platforms.find(x => x.id === s.id);
+                  return `
+                    <div class="flex items-center gap-1.5">
+                      <span class="w-3 h-3 rounded-xs shrink-0" style="background-color: ${s.color};"></span>
+                      <span class="font-bold text-gray-800 dark:text-gray-200">${s.name}:</span>
+                      <span class="font-mono font-bold text-gray-900 dark:text-white">${it ? it.val : 0}</span>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+              <span class="text-[10px] text-gray-400 font-mono">5 ліній соцмереж</span>
             </div>
             <div class="relative w-full h-44 select-none">
-              <svg class="w-full h-full overflow-visible" viewBox="0 0 480 180" preserveAspectRatio="none">
-                <defs>
-                  <linearGradient id="gradSmmSpline" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="#E1306C" stop-opacity="0.35" />
-                    <stop offset="100%" stop-color="#E1306C" stop-opacity="0.0" />
-                  </linearGradient>
-                </defs>
-                <text x="-${h / 2}" y="12" transform="rotate(-90)" font-size="9" fill="#94A3B8" text-anchor="middle" font-weight="bold">Дії</text>
-                ${gridSvg}
-                <path d="${areaPath}" fill="url(#gradSmmSpline)" />
-                <path d="${splinePath}" fill="none" stroke="#E1306C" stroke-width="2.5" stroke-linecap="round" />
-                ${xLabels}
-                ${dotsSvg}
-              </svg>
+              ${svgContent}
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 pt-1 border-t border-gray-100 dark:border-gray-800">
+              ${platforms.map(p => `
+                <div class="p-2 rounded-xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200/60 dark:border-gray-700/60 flex items-center justify-between">
+                  <div class="truncate">
+                    <span class="text-[10px] text-gray-400 block truncate font-medium">${p.name.split(' ')[0]}</span>
+                    <strong class="text-xs text-gray-900 dark:text-white font-mono">${p.val} / ${p.tgt}</strong>
+                    <span class="text-[10px] font-bold text-pink-600 block">(${p.pct}%)</span>
+                  </div>
+                </div>
+              `).join('')}
             </div>
           </div>
         `;
@@ -4326,38 +3899,22 @@
           </div>
         </div>
 
-        <!-- Navigation Tabs -->
-        <div class="flex items-center gap-1.5 overflow-x-auto scrollbar-none pb-1">
-          <button type="button" onclick="setSocialPlatformTab('all')" class="px-3 py-1.5 rounded-xl text-xs font-bold transition shrink-0 cursor-pointer ${activeTab === 'all' ? 'bg-pink-600 text-white shadow-xs' : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200'}">Всі платформи (5)</button>
-          <button type="button" onclick="setSocialPlatformTab('instagram')" class="px-3 py-1.5 rounded-xl text-xs font-bold transition shrink-0 cursor-pointer flex items-center gap-1.5 ${activeTab === 'instagram' ? 'bg-gradient-to-r from-rose-500 to-pink-600 text-white shadow-xs' : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200'}">📷 Instagram</button>
-          <button type="button" onclick="setSocialPlatformTab('tiktok')" class="px-3 py-1.5 rounded-xl text-xs font-bold transition shrink-0 cursor-pointer flex items-center gap-1.5 ${activeTab === 'tiktok' ? 'bg-black text-white shadow-xs' : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200'}">🎵 TikTok</button>
-          <button type="button" onclick="setSocialPlatformTab('facebook')" class="px-3 py-1.5 rounded-xl text-xs font-bold transition shrink-0 cursor-pointer flex items-center gap-1.5 ${activeTab === 'facebook' ? 'bg-[#1877F2] text-white shadow-xs' : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200'}">📘 Facebook</button>
-          <button type="button" onclick="setSocialPlatformTab('youtube')" class="px-3 py-1.5 rounded-xl text-xs font-bold transition shrink-0 cursor-pointer flex items-center gap-1.5 ${activeTab === 'youtube' ? 'bg-[#FF0000] text-white shadow-xs' : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200'}">▶️ YouTube</button>
-          <button type="button" onclick="setSocialPlatformTab('x')" class="px-3 py-1.5 rounded-xl text-xs font-bold transition shrink-0 cursor-pointer flex items-center gap-1.5 ${activeTab === 'x' ? 'bg-black text-white shadow-xs' : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200'}">𝕏 Twitter</button>
-        </div>
-
-        <!-- Spacious Platforms Grid (2 columns on wide screens) -->
-        <div class="grid grid-cols-1 ${visiblePlatforms.length > 1 ? 'xl:grid-cols-2' : 'grid-cols-1'} gap-6">
-          ${visiblePlatforms.map(p => `
-            <div class="bg-gray-50/70 dark:bg-gray-800/40 rounded-2xl border ${p.borderColor} p-5 shadow-xs transition-all hover:shadow-md space-y-4">
-              <!-- Platform Card Header -->
+        <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+          ${platforms.map(p => `
+            <div class="bg-gray-50/70 dark:bg-gray-800/40 rounded-2xl border border-gray-200/70 dark:border-gray-700/70 p-5 shadow-xs space-y-4">
               <div class="flex items-center justify-between pb-3 border-b border-gray-200/70 dark:border-gray-700/70">
-                <div class="flex items-center gap-3">
-                  ${p.iconSvg}
-                  <div>
-                    <h5 class="font-black text-sm text-gray-900 dark:text-white leading-none">${p.name}</h5>
-                    <span class="text-[11px] text-gray-400 font-medium mt-1 block">Норма: ${p.id === 'youtube' ? '5 відео' : '20 постів • 5 відео • 60 сторіз/коментарів'}</span>
-                  </div>
+                <div class="flex items-center gap-2.5">
+                  <span class="w-3.5 h-3.5 rounded-full" style="background-color: ${p.colorHex};"></span>
+                  <h5 class="font-black text-sm text-gray-900 dark:text-white">${p.name}</h5>
                 </div>
-                <div class="flex items-center gap-2">
-                  <span class="text-xs font-mono font-bold text-gray-500 dark:text-gray-400">${p.badgeDone}</span>
-                  <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 border border-gray-200 dark:border-gray-600 shadow-2xs">${p.badgeText}</span>
+                <div class="flex items-center gap-2 font-mono">
+                  <span class="text-xs text-gray-400">Норма: ${p.tgt}</span>
+                  <strong class="text-sm font-bold text-gray-900 dark:text-white">${p.val}</strong>
+                  <span class="px-2 py-0.5 rounded-full text-xs font-bold" style="background-color: ${p.colorHex}20; color: ${p.colorHex};">${p.pct}%</span>
                 </div>
               </div>
-
-              <!-- Spacious Metric Tiles -->
-              <div class="grid grid-cols-1 ${p.metrics.length === 3 ? 'sm:grid-cols-3' : 'sm:grid-cols-1'} gap-3.5">
-                ${p.metrics.map(m => renderMetricCard(m.label, m.key, m.val, m.tgt, p.colorHex, p.btnClass)).join('')}
+              <div class="w-full bg-gray-200 dark:bg-gray-700 h-2.5 rounded-full overflow-hidden">
+                <div class="h-full rounded-full transition-all duration-500" style="width: ${Math.min(100, p.pct)}%; background-color: ${p.colorHex};"></div>
               </div>
             </div>
           `).join('')}
@@ -4367,7 +3924,7 @@
     }
 
     // ─── 4. RENDER DEALS SECTION (INTERACTIVE DUAL: CHARTS / DONUT / PIE / BARS) ───
-    function renderDealsSection(mode, { rentPct, depPct, salePct }) {
+        function renderDealsSection(mode, { rentPct, depPct, salePct }) {
       const c = document.getElementById('container_deals');
       if (!c) return;
 
@@ -4381,9 +3938,9 @@
       const totTgt = items.reduce((s, it) => s + it.tgt, 0);
       const grandPct = Math.round((totVal / totTgt) * 100);
 
-      // MODE 1: DONUT CHART
-      if (mode === 'circles') {
-        const cx = 90, cy = 90, rOut = 80, rIn = 48;
+      // MODE 1 & 2: UNIFIED CIRCULAR CHART WITH % (PIE & DONUT)
+      if (mode === 'pie' || mode === 'circles') {
+        const cx = 90, cy = 90, rOut = 80, rIn = 46;
         let currentAngle = 0;
         const total = Math.max(1, totVal);
 
@@ -4395,7 +3952,7 @@
 
           const pathD = describeDonutArc(cx, cy, rIn, rOut, startA, endA);
           return `
-            <path id="deal_donut_${idx}"
+            <path id="deal_pie_${idx}"
                   d="${pathD}"
                   fill="${it.color}"
                   stroke="#FFFFFF"
@@ -4437,127 +3994,56 @@
         return;
       }
 
-      // MODE 2: SOLID PIE CHART
-      if (mode === 'pie') {
-        const cx = 90, cy = 90, r = 80;
-        let currentAngle = 0;
-        const total = Math.max(1, totVal);
-
-        const paths = items.map((it, idx) => {
-          const sliceAngle = (it.val / total) * 360;
-          const startA = currentAngle;
-          const endA = currentAngle + sliceAngle;
-          currentAngle = endA;
-
-          const pathD = describePieSlice(cx, cy, r, startA, endA);
-          return `
-            <path id="deal_pie_${idx}"
-                  d="${pathD}"
-                  fill="${it.color}"
-                  stroke="#FFFFFF"
-                  stroke-width="2"
-                  class="cursor-pointer hover:opacity-85 transition"
-                  onmousemove="showChartTooltip(event, '${it.title}', 'Факт: ${it.val} / ${it.tgt} (${it.pct}%)', '${it.note}')"
-                  onmouseleave="hideChartTooltip()" />
-          `;
-        }).join('');
-
-        c.innerHTML = `
-          <div class="col-span-full grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
-            <div class="sm:col-span-5 flex justify-center py-2">
-              <svg class="w-44 h-44 overflow-visible" viewBox="0 0 180 180">${paths}</svg>
-            </div>
-            <div class="sm:col-span-7 space-y-2 text-xs">
-              ${items.map((it, idx) => `
-                <div class="flex items-center justify-between p-2 rounded-xl bg-gray-50/80 dark:bg-gray-800/40 border border-gray-200/60 dark:border-gray-700/60 hover:border-amber-300 transition group">
-                  <div class="flex items-center gap-2 truncate">
-                    <span class="w-3.5 h-3 rounded-xs shrink-0" style="background-color: ${it.color};"></span>
-                    <span class="font-bold text-gray-800 dark:text-gray-200 truncate group-hover:text-amber-600 transition text-[11px]">${it.title}</span>
-                  </div>
-                  <div class="flex items-center gap-2 font-mono text-[11px] shrink-0">
-                    <span class="font-bold text-gray-900 dark:text-white">${it.val} / ${it.tgt}</span>
-                    <button onclick="incrementKpi('${it.id}')" class="px-2 py-0.5 text-[10px] font-bold bg-amber-100 hover:bg-amber-200 text-amber-800 rounded transition cursor-pointer">+1</button>
-                  </div>
-                </div>
-              `).join('')}
-            </div>
-          </div>
-        `;
-        return;
-      }
-
-      // MODE 3: SMOOTH SPLINE GRAPH
+      // MODE 3: MULTI-LINE SPLINE GRAPH (3 ОКРЕМІ ЛІНІЇ ДЛЯ КОЖНОГО З 3 ПОКАЗНИКІВ УГОД)
       if (mode === 'charts') {
-        const splineData = [
-          { date: '23 вер.', val: 1 },
-          { date: '26 вер.', val: 2 },
-          { date: '29 вер.', val: 1 },
-          { date: '02 жов.', val: 3 },
-          { date: '04 жов.', val: 2 },
-          { date: '06 жов.', val: 4 }
+        const dates = ['23 вер.', '25 вер.', '27 вер.', '29 вер.', '01 жов.', '03 жов.', '05 жов.', '06 жов.'];
+        const series = [
+          { id: 'rent_deal', name: 'Оренда житла / комерції', color: '#10B981', data: [0, 1, 0, 0, 1, 0, 1, 0] },
+          { id: 'deposit', name: 'Завдаток (Бронь)', color: '#F59E0B', data: [0, 0, 1, 0, 0, 1, 0, 0] },
+          { id: 'sale_deal', name: 'Угода купівлі-продажу', color: '#8B5CF6', data: [0, 0, 0, 0, 0, 0, 1, 0] }
         ];
 
-        const w = 480, h = 180, padLeft = 40, padRight = 15, padTop = 15, padBottom = 30;
-        const chartW = w - padLeft - padRight;
-        const chartH = h - padTop - padBottom;
-        const maxVal = 5;
-
-        const points = splineData.map((d, i) => ({
-          x: padLeft + (i / (splineData.length - 1)) * chartW,
-          y: padTop + chartH - (d.val / maxVal) * chartH,
-          raw: d
-        }));
-
-        const splinePath = buildCubicSplinePath(points);
-        const areaPath = `${splinePath} L ${points[points.length - 1].x.toFixed(1)} ${(padTop + chartH).toFixed(1)} L ${points[0].x.toFixed(1)} ${(padTop + chartH).toFixed(1)} Z`;
-
-        const gridSvg = [0, 1, 2, 3, 4, 5].map(lvl => {
-          const yPos = padTop + chartH - (lvl / maxVal) * chartH;
-          return `
-            <line x1="${padLeft}" y1="${yPos}" x2="${w - padRight}" y2="${yPos}" stroke="#E2E8F0" stroke-dasharray="3,3" stroke-width="1" />
-            <text x="${padLeft - 6}" y="${yPos + 3}" font-size="9" fill="#94A3B8" text-anchor="end" font-family="monospace">${lvl}</text>
-          `;
-        }).join('');
-
-        const xLabels = points.map(p => `
-          <text x="${p.x}" y="${h - 10}" font-size="9" fill="#94A3B8" text-anchor="middle" font-weight="500">${p.raw.date}</text>
-        `).join('');
-
-        const dotsSvg = points.map(p => `
-          <g class="cursor-pointer group"
-             onmousemove="showChartTooltip(event, '${p.raw.date}', '${p.raw.val} угод/завдатків', 'Динаміка фіналів')"
-             onmouseleave="hideChartTooltip()">
-            <circle cx="${p.x}" cy="${p.y}" r="8" fill="transparent" />
-            <circle cx="${p.x}" cy="${p.y}" r="3.5" fill="#F59E0B" stroke="#FFFFFF" stroke-width="2" class="group-hover:r-5 transition" />
-          </g>
-        `).join('');
+        const svgContent = renderMultiLineSplineSvg({ dates, series, w: 480, h: 180, yLabel: 'Угоди' });
 
         c.innerHTML = `
           <div class="col-span-full space-y-3">
-            <div class="relative w-full h-44 select-none">
-              <svg class="w-full h-full overflow-visible" viewBox="0 0 480 180" preserveAspectRatio="none">
-                <defs>
-                  <linearGradient id="gradDealsSpline" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="#F59E0B" stop-opacity="0.35" />
-                    <stop offset="100%" stop-color="#F59E0B" stop-opacity="0.0" />
-                  </linearGradient>
-                </defs>
-                <text x="-${h / 2}" y="12" transform="rotate(-90)" font-size="9" fill="#94A3B8" text-anchor="middle" font-weight="bold">Угоди</text>
-                ${gridSvg}
-                <path d="${areaPath}" fill="url(#gradDealsSpline)" />
-                <path d="${splinePath}" fill="none" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round" />
-                ${xLabels}
-                ${dotsSvg}
-              </svg>
+            <!-- Top Series Legend Bar -->
+            <div class="flex flex-wrap items-center justify-between gap-2 pb-1 border-b border-gray-100 dark:border-gray-800 text-[11px]">
+              <div class="flex items-center gap-3 flex-wrap">
+                ${series.map(s => {
+                  const it = items.find(x => x.id === s.id);
+                  return `
+                    <div class="flex items-center gap-1.5">
+                      <span class="w-3 h-3 rounded-xs shrink-0" style="background-color: ${s.color};"></span>
+                      <span class="font-bold text-gray-800 dark:text-gray-200">${s.name}:</span>
+                      <span class="font-mono font-bold text-gray-900 dark:text-white">${it ? it.val : 0}</span>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+              <span class="text-[10px] text-gray-400 font-mono">3 лінії активності угод</span>
             </div>
+
+            <!-- Multi-Line Graph Area -->
+            <div class="relative w-full h-44 select-none">
+              ${svgContent}
+            </div>
+
+            <!-- Bottom Quick Actions & Percentages -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 border-t border-gray-100 dark:border-gray-800">
               ${items.map(it => `
-                <div class="p-2 rounded-lg bg-gray-50 dark:bg-gray-800 flex items-center justify-between">
+                <div class="p-2.5 rounded-xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200/60 dark:border-gray-700/60 flex items-center justify-between">
                   <div class="truncate">
-                    <span class="text-[10px] text-gray-400 block truncate">${it.title}</span>
-                    <strong class="text-xs text-gray-900 dark:text-white font-mono">${it.val} / ${it.tgt}</strong>
+                    <div class="flex items-center gap-1.5">
+                      <span class="w-2 h-2 rounded-full shrink-0" style="background-color: ${it.color};"></span>
+                      <span class="text-[11px] text-gray-400 block truncate font-medium">${it.title}</span>
+                    </div>
+                    <div class="flex items-center gap-2 mt-1">
+                      <strong class="text-xs text-gray-900 dark:text-white font-mono">${it.val} / ${it.tgt}</strong>
+                      <span class="text-[10px] font-bold text-amber-600">(${it.pct}%)</span>
+                    </div>
                   </div>
-                  <button onclick="incrementKpi('${it.id}')" class="px-2 py-0.5 text-[10px] font-bold bg-amber-100 hover:bg-amber-200 text-amber-800 rounded transition cursor-pointer">+1</button>
+                  <button onclick="incrementKpi('${it.id}')" class="px-2.5 py-1 text-[10px] font-bold bg-amber-600 hover:bg-amber-700 text-white rounded-lg transition cursor-pointer shrink-0 ml-1">+1</button>
                 </div>
               `).join('')}
             </div>
@@ -4566,18 +4052,21 @@
         return;
       }
 
-      // MODE 4: DEFAULT SPACIOUS PROGRESS CARDS
+      // MODE 4: DEFAULT SPACIOUS PROGRESS BARS
       c.innerHTML = items.map(it => `
-        <div class="p-4 rounded-xl bg-gray-50/70 dark:bg-gray-800/40 border border-gray-200/60 dark:border-gray-700/60 flex flex-col justify-between space-y-3">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-bold text-gray-800 dark:text-gray-200">${it.title}</span>
-            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full" style="background-color: ${it.color}20; color: ${it.color};">${it.pct}%</span>
+        <div class="space-y-3 p-4 rounded-xl bg-gray-50/70 dark:bg-gray-800/40 border border-gray-200/60 dark:border-gray-700/60">
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-bold text-gray-800 dark:text-gray-200 flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full" style="background-color: ${it.color};"></span>
+              ${it.title}
+            </span>
+            <div class="flex items-center gap-2 font-mono">
+              <span class="text-gray-400 text-[11px]">Норма: ${it.tgt}</span>
+              <strong class="text-base font-black text-gray-900 dark:text-white">${it.val}</strong>
+              <span class="px-2 py-0.5 rounded-full text-xs font-bold" style="background-color: ${it.color}20; color: ${it.color};">${it.pct}%</span>
+            </div>
           </div>
-          <div class="flex items-baseline gap-2">
-            <span class="text-3xl font-black font-mono text-gray-900 dark:text-white">${it.val}</span>
-            <span class="text-xs font-semibold text-gray-400">/ ${it.tgt} норм</span>
-          </div>
-          <div class="w-full bg-gray-200 dark:bg-gray-700 h-2 rounded-full overflow-hidden">
+          <div class="w-full bg-gray-200 dark:bg-gray-700 h-2.5 rounded-full overflow-hidden">
             <div class="h-full rounded-full transition-all duration-500" style="width: ${Math.min(100, it.pct)}%; background-color: ${it.color};"></div>
           </div>
           <button onclick="incrementKpi('${it.id}')" class="w-full py-2 rounded-lg text-xs font-bold bg-amber-600 hover:bg-amber-700 text-white transition shadow-2xs cursor-pointer flex items-center justify-center gap-1">+1 Фіксувати</button>
@@ -4587,6 +4076,8 @@
 
     // ─── VISUALIZATION VIEW MODE CONTROLLERS ────────────────────────────────
     function setVisualMode(mode) {
+      if (mode === 'circles') mode = 'pie';
+      if (mode === 'cards') mode = 'bars';
       state.visualMode = mode;
       state.blockModes.objects = mode;
       state.blockModes.clients = mode;
@@ -4594,20 +4085,20 @@
       state.blockModes.deals = mode;
 
       // Update Toolbar Buttons
-      const modes = ['bars', 'circles', 'pie', 'charts'];
+      const modes = ['charts', 'pie', 'bars'];
       modes.forEach(m => {
         const btn = document.getElementById(`viewMode_${m}`);
         if (!btn) return;
         if (m === mode) {
-          btn.className = "px-2.5 py-1 rounded-xl text-xs font-bold bg-blue-600 text-white shadow-sm transition cursor-pointer flex items-center gap-1.5";
+          btn.className = "px-3 py-1.5 rounded-xl text-xs font-bold bg-blue-600 text-white shadow-sm transition cursor-pointer flex items-center gap-1.5";
         } else {
-          btn.className = "px-2.5 py-1 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer flex items-center gap-1.5";
+          btn.className = "px-3 py-1.5 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer flex items-center gap-1.5";
         }
       });
 
       // Update Individual Card Button states
       ['objects', 'clients', 'marketing', 'deals'].forEach(block => {
-        ['bars', 'circles', 'pie', 'charts'].forEach(m => {
+        ['bars', 'pie', 'charts'].forEach(m => {
           const b = document.getElementById(`btn_mode_${block}_${m}`);
           if (b) {
             b.className = m === mode 
@@ -4618,12 +4109,14 @@
       });
 
       updateKpiDisplay();
-      showToast(`Режим візуалізації: ${mode === 'bars' ? 'Смуги' : mode === 'circles' ? 'Donut кільце' : mode === 'pie' ? 'Pie сектори' : 'Графіки сплайн'}`);
+      showToast(`Режим візуалізації: ${mode === 'charts' ? 'Графіки (Мульти-лінії)' : mode === 'pie' ? 'Кругова діаграма (%)' : 'Смуги нормативів'}`);
     }
 
     function setBlockMode(block, mode) {
+      if (mode === 'circles') mode = 'pie';
+      if (mode === 'cards') mode = 'bars';
       state.blockModes[block] = mode;
-      ['bars', 'circles', 'pie', 'charts'].forEach(m => {
+      ['bars', 'pie', 'charts'].forEach(m => {
         const b = document.getElementById(`btn_mode_${block}_${m}`);
         if (b) {
           b.className = m === mode 
@@ -4632,7 +4125,7 @@
         }
       });
       updateKpiDisplay();
-      showToast(`Блок ${block}: візуалізація ${mode === 'circles' ? 'Donut' : mode === 'pie' ? 'Pie' : mode === 'charts' ? 'Графік' : 'Смуги'}`);
+      showToast(`Блок ${block}: візуалізація ${mode === 'pie' ? 'Кругова (%)' : mode === 'charts' ? 'Графік (Мульти-лінії)' : 'Смуги'}`);
     }
 
     // ─── CARD COLLAPSE & VISIBILITY CONTROLLERS ─────────────────────────────
@@ -4786,6 +4279,71 @@
         d += ` C ${cp1x.toFixed(1)} ${cp1y.toFixed(1)}, ${cp2x.toFixed(1)} ${cp2y.toFixed(1)}, ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`;
       }
       return d;
+    }
+
+    // MULTI-LINE SPLINE SVG GENERATOR (PLOTS SEPARATE COLORED LINE FOR EACH METRIC)
+    function renderMultiLineSplineSvg({
+      dates,
+      series, // array of { id, name, color, data: [numbers] }
+      w = 480,
+      h = 180,
+      padLeft = 35,
+      padRight = 15,
+      padTop = 15,
+      padBottom = 28,
+      yLabel = 'Кількість дій'
+    }) {
+      const chartW = w - padLeft - padRight;
+      const chartH = h - padTop - padBottom;
+      const allVals = series.flatMap(s => s.data);
+      const rawMax = Math.max(...allVals, 1);
+      const maxVal = Math.ceil(rawMax <= 5 ? 5 : rawMax <= 10 ? 10 : rawMax * 1.15);
+
+      const gridLevels = [0, Math.round(maxVal / 2), maxVal];
+      const gridSvg = gridLevels.map(lvl => {
+        const yPos = padTop + chartH - (lvl / maxVal) * chartH;
+        return `
+          <line x1="${padLeft}" y1="${yPos.toFixed(1)}" x2="${(w - padRight).toFixed(1)}" y2="${yPos.toFixed(1)}" stroke="#E2E8F0" stroke-dasharray="3,3" stroke-width="1" />
+          <text x="${padLeft - 6}" y="${(yPos + 3).toFixed(1)}" font-size="9" fill="#94A3B8" text-anchor="end" font-family="monospace">${lvl}</text>
+        `;
+      }).join('');
+
+      const xLabels = dates.map((d, i) => {
+        const x = padLeft + (i / (dates.length - 1)) * chartW;
+        return `<text x="${x.toFixed(1)}" y="${h - 8}" font-size="9" fill="#94A3B8" text-anchor="middle" font-weight="500">${d}</text>`;
+      }).join('');
+
+      const seriesSvg = series.map(s => {
+        const points = s.data.map((val, i) => ({
+          x: padLeft + (i / (dates.length - 1)) * chartW,
+          y: padTop + chartH - (val / maxVal) * chartH,
+          val,
+          date: dates[i]
+        }));
+        const pathD = buildCubicSplinePath(points);
+        const dots = points.map(p => `
+          <g class="cursor-pointer group"
+             onmousemove="showChartTooltip(event, '${s.name} • ${p.date}', '${p.val} дій', 'Факт за день')"
+             onmouseleave="hideChartTooltip()">
+            <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="7" fill="transparent" />
+            <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="3" fill="${s.color}" stroke="#FFFFFF" stroke-width="1.5" class="group-hover:r-4.5 transition" />
+          </g>
+        `).join('');
+
+        return `
+          <path d="${pathD}" fill="none" stroke="${s.color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+          ${dots}
+        `;
+      }).join('');
+
+      return `
+        <svg class="w-full h-full overflow-visible" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
+          <text x="-${h / 2}" y="12" transform="rotate(-90)" font-size="9" fill="#94A3B8" text-anchor="middle" font-weight="bold">${yLabel}</text>
+          ${gridSvg}
+          ${seriesSvg}
+          ${xLabels}
+        </svg>
+      `;
     }
 
     // Tooltip helper
