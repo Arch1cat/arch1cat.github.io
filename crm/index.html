@@ -88,7 +88,7 @@
       <div class="flex items-center gap-2.5">
         <span class="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center text-white font-black text-lg shadow-sm">Y</span>
         <h1 class="font-extrabold text-base tracking-tight text-gray-900 dark:text-white">Робоче місце CRM</h1>
-        <span class="ml-2 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700">Unified Analytics v7.0 Active</span>
+        <span class="ml-2 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700">Crypto Candlesticks & Zoom Engine v8.0 Active</span>
       </div>
 
       <!-- Clean Theme Toggle -->
@@ -509,18 +509,21 @@
         <!-- Row 1: Мої заявки (Spline Area) + Стадії заявок (Donut) -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
           
-          <!-- Widget 1: МОЇ ЗАЯВКИ (Spline Area Chart) -->
-          <div class="bg-white dark:bg-[#1A1D24] p-4 rounded-xl border border-gray-200 dark:border-gray-800 shadow-xs flex flex-col justify-between">
-            <div class="flex items-center justify-between pb-3 border-b border-gray-100 dark:border-gray-800 mb-2">
+          <!-- Widget 1: МОЇ ЗАЯВКИ (Spline Area / Candlesticks / Bars / Pie / Table) -->
+          <div class="bg-white dark:bg-[#1A1D24] p-4 rounded-xl border border-gray-200 dark:border-gray-800 shadow-xs flex flex-col justify-between space-y-3">
+            <div class="flex items-center justify-between pb-3 border-b border-gray-100 dark:border-gray-800">
               <div class="flex items-center gap-2">
                 <i data-lucide="shopping-cart" class="w-4 h-4 text-[#38A3C8]"></i>
                 <h3 class="font-black text-xs tracking-wider uppercase text-[#38A3C8]">МОЇ ЗАЯВКИ</h3>
               </div>
               <div class="flex items-center gap-2">
+                <!-- 5-Way Mode Switcher: Spline, Candlestick (Crypto), Bars, Pie, Table -->
                 <div class="flex items-center bg-white/80 dark:bg-gray-800 p-0.5 rounded-lg border border-gray-200 dark:border-gray-700 text-[10px]">
                   <button type="button" onclick="setStatsWidgetMode('myLeads', 'charts')" id="btn_stats_myleads_charts" title="Графік сплайн" class="px-1.5 py-0.5 rounded font-bold bg-[#38A3C8] text-white">📈</button>
+                  <button type="button" onclick="setStatsWidgetMode('myLeads', 'candles')" id="btn_stats_myleads_candles" title="Японські свічки (Crypto OHLC)" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">🕯️</button>
                   <button type="button" onclick="setStatsWidgetMode('myLeads', 'bars')" id="btn_stats_myleads_bars" title="Стовпчики (Bar chart)" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">📊</button>
-                  <button type="button" onclick="setStatsWidgetMode('myLeads', 'pie')" id="btn_stats_myleads_pie" title="Кругова (Джерела)" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">🥧</button>
+                  <button type="button" onclick="setStatsWidgetMode('myLeads', 'pie')" id="btn_stats_myleads_pie" title="Кругова діаграма (Джерела)" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">🥧</button>
+                  <button type="button" onclick="setStatsWidgetMode('myLeads', 'table')" id="btn_stats_myleads_table" title="Список / Таблиця" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">📋</button>
                 </div>
                 <div class="flex items-center gap-1.5 bg-gray-50 dark:bg-gray-800 px-2.5 py-1 rounded-lg border border-gray-200 dark:border-gray-700 text-xs font-semibold text-gray-700 dark:text-gray-300">
                   <span id="labelPeriodLeadsSpline">23.09.2026 - 06.10.2026</span>
@@ -528,9 +531,25 @@
                 </div>
               </div>
             </div>
-            <!-- Canvas container for smooth cubic spline -->
-            <div class="relative w-full h-64 select-none" id="containerMyLeads">
+
+            <!-- Canvas container for chart -->
+            <div class="relative w-full h-56 select-none" id="containerMyLeads">
               <svg id="svgMyLeadsChart" class="w-full h-full overflow-visible" viewBox="0 0 540 220" preserveAspectRatio="none"></svg>
+            </div>
+
+            <!-- Crypto-Style Interactive Zoom / Pan Scrubber Controls -->
+            <div class="flex items-center justify-between gap-2 pt-2 border-t border-gray-100 dark:border-gray-800 text-[11px]">
+              <div class="flex items-center gap-1 font-bold text-gray-500">
+                <span class="text-[10px] text-gray-400 mr-1 uppercase font-mono">Шкала:</span>
+                <button type="button" onclick="setLeadsZoomDays(7)" id="btn_zoom_7d" class="px-2 py-0.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 font-mono transition cursor-pointer">7Д</button>
+                <button type="button" onclick="setLeadsZoomDays(14)" id="btn_zoom_14d" class="px-2 py-0.5 rounded-md bg-sky-100 dark:bg-sky-950/80 text-sky-700 dark:text-sky-300 font-bold font-mono transition cursor-pointer">14Д</button>
+                <button type="button" onclick="setLeadsZoomDays(30)" id="btn_zoom_30d" class="px-2 py-0.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 font-mono transition cursor-pointer">30Д</button>
+                <button type="button" onclick="setLeadsZoomDays(0)" id="btn_zoom_all" class="px-2 py-0.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 font-mono transition cursor-pointer">Всі</button>
+              </div>
+              <div class="flex items-center gap-2 flex-1 max-w-[200px]">
+                <input type="range" min="0" max="7" value="0" id="leadsPanSlider" oninput="onLeadsPanChange(this.value)" class="w-full accent-sky-500 cursor-ew-resize h-1.5 bg-gray-200 dark:bg-gray-700 rounded-lg">
+                <span class="text-[9px] font-mono text-gray-400 font-bold shrink-0" id="leadsPanLabel">◀ Скрол ▶</span>
+              </div>
             </div>
           </div>
 
@@ -544,7 +563,9 @@
               <div class="flex items-center gap-2">
                 <div class="flex items-center bg-white/80 dark:bg-gray-800 p-0.5 rounded-lg border border-gray-200 dark:border-gray-700 text-[10px]">
                   <button type="button" onclick="setStatsWidgetMode('leadStages', 'donut')" id="btn_stats_stages_donut" title="Кільцева Donut" class="px-1.5 py-0.5 rounded font-bold bg-[#38A3C8] text-white">⭕</button>
+                  <button type="button" onclick="setStatsWidgetMode('leadStages', 'candles')" id="btn_stats_stages_candles" title="Японські свічки" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">🕯️</button>
                   <button type="button" onclick="setStatsWidgetMode('leadStages', 'bars')" id="btn_stats_stages_bars" title="Воронка / Стовпчики" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">📊</button>
+                  <button type="button" onclick="setStatsWidgetMode('leadStages', 'charts')" id="btn_stats_stages_charts" title="Графік тренду" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">📈</button>
                   <button type="button" onclick="setStatsWidgetMode('leadStages', 'table')" id="btn_stats_stages_table" title="Таблиця конверсій" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">📋</button>
                 </div>
                 <div class="bg-gray-50 dark:bg-gray-800 px-2 py-1 rounded-lg border border-gray-200 dark:border-gray-700 text-[11px] font-medium text-gray-600 dark:text-gray-400 flex items-center gap-1 cursor-pointer">
@@ -584,6 +605,14 @@
               <h3 class="font-black text-xs tracking-wider uppercase text-[#E26A6A]">ДИНАМІКА ПОКАЗІВ ТА ЗУСТРІЧЕЙ</h3>
             </div>
             <div class="flex items-center gap-2">
+              <!-- Local Switcher for Weekly Dynamics -->
+              <div class="flex items-center bg-white/80 dark:bg-gray-800 p-0.5 rounded-lg border border-gray-200 dark:border-gray-700 text-[10px]">
+                <button type="button" onclick="setStatsWidgetMode('weekly', 'charts')" id="btn_stats_weekly_charts" title="Мульти-лінії (2 лінії)" class="px-1.5 py-0.5 rounded font-bold bg-[#E26A6A] text-white">📈</button>
+                <button type="button" onclick="setStatsWidgetMode('weekly', 'candles')" id="btn_stats_weekly_candles" title="Японські свічки" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">🕯️</button>
+                <button type="button" onclick="setStatsWidgetMode('weekly', 'bars')" id="btn_stats_weekly_bars" title="Стовпчики порівняння" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">📊</button>
+                <button type="button" onclick="setStatsWidgetMode('weekly', 'pie')" id="btn_stats_weekly_pie" title="Кругова частка" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">🥧</button>
+                <button type="button" onclick="setStatsWidgetMode('weekly', 'table')" id="btn_stats_weekly_table" title="Список тижнів" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">📋</button>
+              </div>
               <div class="bg-gray-50 dark:bg-gray-800 px-2 py-1 rounded-lg border border-gray-200 dark:border-gray-700 text-[11px] font-medium text-gray-600 dark:text-gray-400 flex items-center gap-1 cursor-pointer">
                 <span>Квартал (14 тижнів)</span>
                 <i data-lucide="chevron-down" class="w-3 h-3"></i>
@@ -625,6 +654,13 @@
               <h3 class="font-black text-xs tracking-wider uppercase text-[#38A3C8]">ЗАЯВКИ ПРИЧИНИ</h3>
             </div>
             <div class="flex items-center gap-2">
+              <!-- Local Switcher for Loss Reasons -->
+              <div class="flex items-center bg-white/80 dark:bg-gray-800 p-0.5 rounded-lg border border-gray-200 dark:border-gray-700 text-[10px]">
+                <button type="button" onclick="setStatsWidgetMode('lossReasons', 'pie')" id="btn_stats_loss_pie" title="Кругова діаграма" class="px-1.5 py-0.5 rounded font-bold bg-[#38A3C8] text-white">🥧</button>
+                <button type="button" onclick="setStatsWidgetMode('lossReasons', 'charts')" id="btn_stats_loss_charts" title="Графік тренду" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">📈</button>
+                <button type="button" onclick="setStatsWidgetMode('lossReasons', 'bars')" id="btn_stats_loss_bars" title="Стовпчики причин" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">📊</button>
+                <button type="button" onclick="setStatsWidgetMode('lossReasons', 'table')" id="btn_stats_loss_table" title="Таблиця / Список" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">📋</button>
+              </div>
               <div class="bg-gray-50 dark:bg-gray-800 px-2 py-1 rounded-lg border border-gray-200 dark:border-gray-700 text-[11px] font-medium text-gray-600 dark:text-gray-400 flex items-center gap-1 cursor-pointer">
                 <span>Не вибрано</span>
                 <i data-lucide="chevron-down" class="w-3 h-3"></i>
@@ -636,36 +672,7 @@
             </div>
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center py-2">
-            <div class="md:col-span-5 flex justify-center py-1">
-              <div class="w-52 h-52 flex items-center justify-center">
-                <svg id="svgLossReasonsPie" class="w-52 h-52 overflow-visible" viewBox="0 0 200 200"></svg>
-              </div>
-            </div>
-            <div class="md:col-span-7 space-y-2.5 text-xs">
-              <div class="flex items-center justify-between p-3 rounded-xl bg-gray-50/80 dark:bg-gray-800/50 border border-gray-200/80 dark:border-gray-700/80 hover:border-emerald-400 transition cursor-pointer" onmouseenter="highlightLossReason(0)" onmouseleave="unhighlightLossReason()">
-                <div class="flex items-center gap-2.5">
-                  <span class="w-4 h-3.5 rounded-xs bg-[#26c299] shrink-0"></span>
-                  <span class="font-semibold text-gray-800 dark:text-gray-200">У клієнта відпала необхідність в об'єкті</span>
-                </div>
-                <strong class="font-mono text-emerald-600 dark:text-emerald-400 font-black text-sm">71.4% (15)</strong>
-              </div>
-              <div class="flex items-center justify-between p-3 rounded-xl bg-gray-50/80 dark:bg-gray-800/50 border border-gray-200/80 dark:border-gray-700/80 hover:border-rose-400 transition cursor-pointer" onmouseenter="highlightLossReason(1)" onmouseleave="unhighlightLossReason()">
-                <div class="flex items-center gap-2.5">
-                  <span class="w-4 h-3.5 rounded-xs bg-[#e27272] shrink-0"></span>
-                  <span class="font-semibold text-gray-800 dark:text-gray-200">Інша причина (не влаштувала ціна / локація)</span>
-                </div>
-                <strong class="font-mono text-rose-600 dark:text-rose-400 font-black text-sm">23.8% (5)</strong>
-              </div>
-              <div class="flex items-center justify-between p-3 rounded-xl bg-gray-50/80 dark:bg-gray-800/50 border border-gray-200/80 dark:border-gray-700/80 hover:border-slate-400 transition cursor-pointer" onmouseenter="highlightLossReason(2)" onmouseleave="unhighlightLossReason()">
-                <div class="flex items-center gap-2.5">
-                  <span class="w-4 h-3.5 rounded-xs bg-[#6b829e] shrink-0"></span>
-                  <span class="font-semibold text-gray-800 dark:text-gray-200">Сделка без участия нашего агентства</span>
-                </div>
-                <strong class="font-mono text-slate-500 font-black text-sm">4.8% (1)</strong>
-              </div>
-            </div>
-          </div>
+          <div id="containerLossReasons" class="w-full"></div>
         </div>
 
       </div>
@@ -1018,45 +1025,107 @@
 
       </div>
 
-      <!-- VIEW 3: ДОНАТ / КРУГОВІ ДІАГРАМИ (DONUT CHARTS %) -->
-      <div id="statsView_donut" class="hidden grid grid-cols-1 md:grid-cols-3 gap-4">
-        
-        <!-- Donut 1: Об'єкти -->
-        <div class="bg-white dark:bg-[#1A1D24] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm flex flex-col items-center text-center">
-          <span class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Частка об'єктів %</span>
-          ${makeCircleGauge(50, 'text-emerald-500', 90, 4)}
-          <div class="mt-3 space-y-1 text-xs">
-            <div class="flex items-center gap-1.5 justify-center"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> 50% Вторинне</div>
-            <div class="flex items-center gap-1.5 justify-center"><span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span> 31% Новобудови</div>
-            <div class="flex items-center gap-1.5 justify-center"><span class="w-2.5 h-2.5 rounded-full bg-purple-500"></span> 14% Комерція</div>
-            <div class="flex items-center gap-1.5 justify-center"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> 5% Земля</div>
+            <!-- VIEW 3: ДОНАТ / КРУГОВІ ДІАГРАМИ (DONUT CHARTS %) -->
+      <div id="statsView_donut" class="hidden space-y-4">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          
+          <!-- Donut 1: Розподіл 118 об'єктів за категоріями -->
+          <div class="bg-white dark:bg-[#1A1D24] p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs flex flex-col justify-between space-y-4">
+            <div class="flex items-center justify-between pb-2 border-b border-gray-100 dark:border-gray-800">
+              <span class="text-xs font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">Частка об'єктів %</span>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 font-mono">118 об'єктів</span>
+            </div>
+            <div class="flex justify-center items-center py-2">
+              <div class="relative w-44 h-44 flex items-center justify-center">
+                <svg class="w-44 h-44 overflow-visible" viewBox="0 0 200 200" id="svgDonutObjCat"></svg>
+                <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                  <span class="text-2xl font-black text-gray-900 dark:text-white font-mono">118</span>
+                  <span class="text-[9px] uppercase font-bold text-gray-400">Об'єктів</span>
+                </div>
+              </div>
+            </div>
+            <div class="space-y-1.5 text-xs font-medium" id="legendDonutObjCat">
+              <div class="flex items-center justify-between p-1.5 rounded-lg bg-gray-50 dark:bg-gray-800/50">
+                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-xs bg-[#10B981]"></span><span>Вторинне</span></div>
+                <strong class="font-mono text-gray-900 dark:text-white">59 (50%)</strong>
+              </div>
+              <div class="flex items-center justify-between p-1.5 rounded-lg bg-gray-50 dark:bg-gray-800/50">
+                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-xs bg-[#3B82F6]"></span><span>Новобудови</span></div>
+                <strong class="font-mono text-gray-900 dark:text-white">36 (31%)</strong>
+              </div>
+              <div class="flex items-center justify-between p-1.5 rounded-lg bg-gray-50 dark:bg-gray-800/50">
+                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-xs bg-[#8B5CF6]"></span><span>Комерція</span></div>
+                <strong class="font-mono text-gray-900 dark:text-white">16 (14%)</strong>
+              </div>
+              <div class="flex items-center justify-between p-1.5 rounded-lg bg-gray-50 dark:bg-gray-800/50">
+                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-xs bg-[#F59E0B]"></span><span>Земля</span></div>
+                <strong class="font-mono text-gray-900 dark:text-white">7 (5%)</strong>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <!-- Donut 2: Угоди & Завдатки -->
-        <div class="bg-white dark:bg-[#1A1D24] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm flex flex-col items-center text-center">
-          <span class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Конверсія угод %</span>
-          ${makeCircleGauge(67, 'text-amber-500', 90, 4)}
-          <div class="mt-3 space-y-1 text-xs">
-            <div class="flex items-center gap-1.5 justify-center"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> 67% Закриті угоди</div>
-            <div class="flex items-center gap-1.5 justify-center"><span class="w-2.5 h-2.5 rounded-full bg-indigo-500"></span> 33% Завдатки в процесі</div>
+          <!-- Donut 2: Конверсія та воронка угод -->
+          <div class="bg-white dark:bg-[#1A1D24] p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs flex flex-col justify-between space-y-4">
+            <div class="flex items-center justify-between pb-2 border-b border-gray-100 dark:border-gray-800">
+              <span class="text-xs font-black text-amber-600 dark:text-amber-400 uppercase tracking-wider">Конверсія угод %</span>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 font-mono">6 фіналів</span>
+            </div>
+            <div class="flex justify-center items-center py-2">
+              <div class="relative w-44 h-44 flex items-center justify-center">
+                <svg class="w-44 h-44 overflow-visible" viewBox="0 0 200 200" id="svgDonutDealsConv"></svg>
+                <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                  <span class="text-2xl font-black text-gray-900 dark:text-white font-mono">6</span>
+                  <span class="text-[9px] uppercase font-bold text-gray-400">Угод / броней</span>
+                </div>
+              </div>
+            </div>
+            <div class="space-y-1.5 text-xs font-medium" id="legendDonutDealsConv">
+              <div class="flex items-center justify-between p-1.5 rounded-lg bg-gray-50 dark:bg-gray-800/50">
+                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-xs bg-[#10B981]"></span><span>Закриті угоди (Продаж + Оренда)</span></div>
+                <strong class="font-mono text-gray-900 dark:text-white">4 (67%)</strong>
+              </div>
+              <div class="flex items-center justify-between p-1.5 rounded-lg bg-gray-50 dark:bg-gray-800/50">
+                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-xs bg-[#F59E0B]"></span><span>Завдатки в процесі оформлення</span></div>
+                <strong class="font-mono text-gray-900 dark:text-white">2 (33%)</strong>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <!-- Donut 3: Дохід за категоріями -->
-        <div class="bg-white dark:bg-[#1A1D24] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm flex flex-col items-center text-center">
-          <span class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Частка виручки %</span>
-          ${makeCircleGauge(47, 'text-blue-500', 90, 4)}
-          <div class="mt-3 space-y-1 text-xs">
-            <div class="flex items-center gap-1.5 justify-center"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> 47% Вторинне</div>
-            <div class="flex items-center gap-1.5 justify-center"><span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span> 44% Новобудови</div>
-            <div class="flex items-center gap-1.5 justify-center"><span class="w-2.5 h-2.5 rounded-full bg-purple-500"></span> 9% Комерція</div>
+          <!-- Donut 3: Частка виручки за категоріями ($6,850) -->
+          <div class="bg-white dark:bg-[#1A1D24] p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs flex flex-col justify-between space-y-4">
+            <div class="flex items-center justify-between pb-2 border-b border-gray-100 dark:border-gray-800">
+              <span class="text-xs font-black text-blue-600 dark:text-blue-400 uppercase tracking-wider">Частка виручки %</span>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-blue-100 dark:bg-blue-950/80 text-blue-800 dark:text-blue-300 font-mono">$6,850</span>
+            </div>
+            <div class="flex justify-center items-center py-2">
+              <div class="relative w-44 h-44 flex items-center justify-center">
+                <svg class="w-44 h-44 overflow-visible" viewBox="0 0 200 200" id="svgDonutProfitShare"></svg>
+                <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                  <span class="text-xl font-black text-gray-900 dark:text-white font-mono">$6,850</span>
+                  <span class="text-[9px] uppercase font-bold text-gray-400">Дохід</span>
+                </div>
+              </div>
+            </div>
+            <div class="space-y-1.5 text-xs font-medium" id="legendDonutProfitShare">
+              <div class="flex items-center justify-between p-1.5 rounded-lg bg-gray-50 dark:bg-gray-800/50">
+                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-xs bg-[#10B981]"></span><span>Вторинне житло</span></div>
+                <strong class="font-mono text-gray-900 dark:text-white">$3,200 (47%)</strong>
+              </div>
+              <div class="flex items-center justify-between p-1.5 rounded-lg bg-gray-50 dark:bg-gray-800/50">
+                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-xs bg-[#3B82F6]"></span><span>Новобудови</span></div>
+                <strong class="font-mono text-gray-900 dark:text-white">$3,000 (44%)</strong>
+              </div>
+              <div class="flex items-center justify-between p-1.5 rounded-lg bg-gray-50 dark:bg-gray-800/50">
+                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-xs bg-[#8B5CF6]"></span><span>Комерційна нерухомість</span></div>
+                <strong class="font-mono text-gray-900 dark:text-white">$650 (9%)</strong>
+              </div>
+            </div>
           </div>
-        </div>
 
+        </div>
       </div>
 
-    </div>
+      </div>
 
     <!-- TAB 3: ВОРОНКА ПРОДАЖ (INTERACTIVE DEALS PIPELINE & KANBAN) -->
     <div id="content_funnel_sales" class="hidden space-y-4">
@@ -4261,14 +4330,42 @@
 
       const vPro = document.getElementById('statsView_pro');
       const vTable = document.getElementById('statsView_table');
-      const vBars = document.getElementById('statsView_bars');
       const vDonut = document.getElementById('statsView_donut');
 
-      if (vPro) vPro.classList.toggle('hidden', mode !== 'charts');
-      if (vDonut) vDonut.classList.toggle('hidden', mode !== 'pie');
-      if (vTable) vTable.classList.toggle('hidden', mode !== 'bars');
-      if (vBars) vBars.classList.add('hidden'); // merged into table / bars view
+      if (!state.statsWidgetModes) {
+        state.statsWidgetModes = { myLeads: 'charts', leadStages: 'donut', weekly: 'charts', lossReasons: 'pie' };
+      }
 
+      if (mode === 'charts') {
+        if (vPro) vPro.classList.remove('hidden');
+        if (vDonut) vDonut.classList.add('hidden');
+        if (vTable) vTable.classList.add('hidden');
+        state.statsWidgetModes.myLeads = 'charts';
+        state.statsWidgetModes.leadStages = 'donut';
+        state.statsWidgetModes.weekly = 'charts';
+        state.statsWidgetModes.lossReasons = 'charts';
+        renderProAnalyticsCharts();
+      } else if (mode === 'pie') {
+        if (vPro) vPro.classList.remove('hidden');
+        if (vDonut) vDonut.classList.remove('hidden');
+        if (vTable) vTable.classList.add('hidden');
+        state.statsWidgetModes.myLeads = 'pie';
+        state.statsWidgetModes.leadStages = 'donut';
+        state.statsWidgetModes.weekly = 'pie';
+        state.statsWidgetModes.lossReasons = 'pie';
+        renderProAnalyticsCharts();
+      } else if (mode === 'bars') {
+        if (vTable) vTable.classList.remove('hidden');
+        if (vPro) vPro.classList.remove('hidden');
+        if (vDonut) vDonut.classList.add('hidden');
+        state.statsWidgetModes.myLeads = 'bars';
+        state.statsWidgetModes.leadStages = 'bars';
+        state.statsWidgetModes.weekly = 'bars';
+        state.statsWidgetModes.lossReasons = 'bars';
+        renderProAnalyticsCharts();
+      }
+
+      // Update button styles
       const btnCharts = document.getElementById('btn_stats_charts') || document.getElementById('btn_stats_pro');
       const btnPie = document.getElementById('btn_stats_pie') || document.getElementById('btn_stats_donut');
       const btnBars = document.getElementById('btn_stats_bars') || document.getElementById('btn_stats_table');
@@ -4284,9 +4381,6 @@
           : "px-3 py-1.5 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition cursor-pointer flex items-center gap-1.5";
       });
 
-      if (mode === 'charts') {
-        renderProAnalyticsCharts();
-      }
       renderIcons();
       showToast(`Вид статистики: ${mode === 'charts' ? 'Графіки (Мульти-лінії)' : mode === 'pie' ? 'Кругова діаграма (%)' : 'Смуги нормативів / Матриця'}`);
     }
@@ -4439,16 +4533,20 @@
     if (!state.statsWidgetModes) {
       state.statsWidgetModes = {
         myLeads: 'charts',
-        leadStages: 'donut'
+        leadStages: 'donut',
+        weekly: 'charts',
+        lossReasons: 'pie'
       };
     }
+    state.leadsZoomDays = 14;
+    state.leadsPanOffset = 0;
 
     function setStatsWidgetMode(widget, mode) {
       if (!state.statsWidgetModes) state.statsWidgetModes = {};
       state.statsWidgetModes[widget] = mode;
 
       if (widget === 'myLeads') {
-        ['charts', 'bars', 'pie'].forEach(m => {
+        ['charts', 'candles', 'bars', 'pie', 'table'].forEach(m => {
           const btn = document.getElementById(`btn_stats_myleads_${m}`);
           if (btn) {
             btn.className = m === mode
@@ -4458,7 +4556,7 @@
         });
         renderMyLeadsSpline();
       } else if (widget === 'leadStages') {
-        ['donut', 'bars', 'table'].forEach(m => {
+        ['donut', 'candles', 'bars', 'charts', 'table'].forEach(m => {
           const btn = document.getElementById(`btn_stats_stages_${m}`);
           if (btn) {
             btn.className = m === mode
@@ -4467,46 +4565,167 @@
           }
         });
         renderLeadStagesDonut();
+      } else if (widget === 'weekly') {
+        ['charts', 'candles', 'bars', 'pie', 'table'].forEach(m => {
+          const btn = document.getElementById(`btn_stats_weekly_${m}`);
+          if (btn) {
+            btn.className = m === mode
+              ? "px-1.5 py-0.5 rounded font-bold bg-[#E26A6A] text-white"
+              : "px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700";
+          }
+        });
+        renderWeeklySpline();
+      } else if (widget === 'lossReasons') {
+        ['pie', 'charts', 'bars', 'table'].forEach(m => {
+          const btn = document.getElementById(`btn_stats_loss_${m}`);
+          if (btn) {
+            btn.className = m === mode
+              ? "px-1.5 py-0.5 rounded font-bold bg-[#38A3C8] text-white"
+              : "px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700";
+          }
+        });
+        renderLossReasonsPie();
       }
       showToast(`Вид віджета оновлено: ${mode}`);
     }
 
-    // 1. Render МОЇ ЗАЯВКИ (Spline Area / Bar / Pie Breakdown)
+    function setLeadsZoomDays(days) {
+      state.leadsZoomDays = days;
+      state.leadsPanOffset = 0;
+      ['7d', '14d', '30d', 'all'].forEach(k => {
+        const btn = document.getElementById(`btn_zoom_${k}`);
+        if (!btn) return;
+        const isMatch = (k === '7d' && days === 7) || (k === '14d' && days === 14) || (k === '30d' && days === 30) || (k === 'all' && days === 0);
+        btn.className = isMatch
+          ? "px-2 py-0.5 rounded-md bg-sky-100 dark:bg-sky-950/80 text-sky-700 dark:text-sky-300 font-bold font-mono transition cursor-pointer"
+          : "px-2 py-0.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 font-mono transition cursor-pointer";
+      });
+      renderMyLeadsSpline();
+    }
+
+    function onLeadsPanChange(val) {
+      state.leadsPanOffset = parseInt(val, 10);
+      renderMyLeadsSpline();
+    }
+
+    // CANDLESTICK CHART SVG GENERATOR (CRYPTO OHLC PARITY)
+    function renderCandlestickChartSvg({
+      dates,
+      candles, // array of { date, open, high, low, close }
+      w = 540,
+      h = 220,
+      padLeft = 45,
+      padRight = 20,
+      padTop = 20,
+      padBottom = 35,
+      yLabel = 'Дії / Свічки'
+    }) {
+      const chartW = w - padLeft - padRight;
+      const chartH = h - padTop - padBottom - 8;
+      const allHighs = candles.map(c => c.high);
+      const rawMax = Math.max(...allHighs, 2);
+      const maxVal = Math.ceil(rawMax <= 2 ? 2 : rawMax <= 4 ? 4 : rawMax <= 8 ? 8 : rawMax * 1.15);
+
+      const gridLevels = [0, Math.round(maxVal / 2), maxVal];
+      const gridSvg = gridLevels.map(lvl => {
+        const yPos = padTop + chartH + 4 - (lvl / maxVal) * chartH;
+        return `
+          <g>
+            <line x1="${padLeft}" y1="${yPos.toFixed(1)}" x2="${(w - padRight).toFixed(1)}" y2="${yPos.toFixed(1)}" stroke="#E2E8F0" stroke-dasharray="3,3" stroke-width="1" />
+            <text x="${padLeft - 8}" y="${(yPos + 3).toFixed(1)}" font-size="10" fill="#94A3B8" text-anchor="end" font-family="monospace">${lvl}</text>
+          </g>
+        `;
+      }).join('');
+
+      const xLabels = dates.map((d, i) => {
+        const x = padLeft + (i / (dates.length - 1)) * chartW;
+        return `<text x="${x.toFixed(1)}" y="${h - 8}" font-size="9" fill="#94A3B8" text-anchor="middle" font-weight="500">${d}</text>`;
+      }).join('');
+
+      const candleW = Math.max(6, Math.min(20, (chartW / dates.length) * 0.65));
+
+      const candlesSvg = candles.map((c, i) => {
+        const x = padLeft + (i / (dates.length - 1)) * chartW;
+        const yHigh = padTop + chartH + 4 - (c.high / maxVal) * chartH;
+        const yLow = padTop + chartH + 4 - (c.low / maxVal) * chartH;
+        const yOpen = padTop + chartH + 4 - (c.open / maxVal) * chartH;
+        const yClose = padTop + chartH + 4 - (c.close / maxVal) * chartH;
+
+        const isBull = c.close >= c.open;
+        const candleColor = isBull ? '#10B981' : '#EF4444';
+        const bodyTop = Math.min(yOpen, yClose);
+        const bodyHeight = Math.max(4, Math.abs(yClose - yOpen));
+
+        return `
+          <g class="cursor-pointer group"
+             onmousemove="showChartTooltip(event, '${c.date} • Японська свічка', '${isBull ? '🟢 Ріст' : '🔴 Спад'}<br>• Відкриття (Open): ${c.open}<br>• Максимум (High): ${c.high}<br>• Мінімум (Low): ${c.low}<br>• Закриття (Close): ${c.close}', 'Денний діапазон дій')"
+             onmouseleave="hideChartTooltip()">
+            <!-- Wick -->
+            <line x1="${x.toFixed(1)}" y1="${yHigh.toFixed(1)}" x2="${x.toFixed(1)}" y2="${yLow.toFixed(1)}" stroke="${candleColor}" stroke-width="1.8" />
+            <!-- Body -->
+            <rect x="${(x - candleW / 2).toFixed(1)}" y="${bodyTop.toFixed(1)}" width="${candleW.toFixed(1)}" height="${bodyHeight.toFixed(1)}" rx="2" fill="${candleColor}" stroke="${candleColor}" stroke-width="1" class="group-hover:opacity-85 transition" />
+          </g>
+        `;
+      }).join('');
+
+      return `
+        <svg class="w-full h-full overflow-visible" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
+          <text x="-${h / 2}" y="14" transform="rotate(-90)" font-size="9" fill="#94A3B8" text-anchor="middle" font-weight="bold">${yLabel}</text>
+          ${gridSvg}
+          ${candlesSvg}
+          ${xLabels}
+        </svg>
+      `;
+    }
+
+    // 1. Render МОЇ ЗАЯВКИ
     function renderMyLeadsSpline() {
       const container = document.getElementById('containerMyLeads');
       if (!container) return;
       const mode = (state.statsWidgetModes && state.statsWidgetModes.myLeads) || 'charts';
 
-      const data = [
-        { date: '23 вер.', val: 0.0 },
-        { date: '24 вер.', val: 0.2 },
-        { date: '25 вер.', val: 0.1 },
-        { date: '26 вер.', val: 0.4 },
-        { date: '27 вер.', val: 0.8 },
-        { date: '28 вер.', val: 1.2 },
-        { date: '29 вер.', val: 0.6 },
-        { date: '30 вер.', val: 1.6 },
-        { date: '01 жов.', val: 0.9 },
-        { date: '02 жов.', val: 1.4 },
-        { date: '03 жов.', val: 0.7 },
-        { date: '04 жов.', val: 1.8 },
-        { date: '05 жов.', val: 1.1 },
-        { date: '06 жов.', val: 2.0 }
+      const allData = [
+        { date: '23 вер.', val: 0, open: 0, high: 1, low: 0, close: 0 },
+        { date: '24 вер.', val: 1, open: 0, high: 1, low: 0, close: 1 },
+        { date: '25 вер.', val: 0, open: 1, high: 1, low: 0, close: 0 },
+        { date: '26 вер.', val: 1, open: 0, high: 2, low: 0, close: 1 },
+        { date: '27 вер.', val: 1, open: 1, high: 2, low: 0, close: 1 },
+        { date: '28 вер.', val: 2, open: 1, high: 2, low: 1, close: 2 },
+        { date: '29 вер.', val: 1, open: 2, high: 2, low: 1, close: 1 },
+        { date: '30 вер.', val: 2, open: 1, high: 3, low: 1, close: 2 },
+        { date: '01 жов.', val: 1, open: 2, high: 2, low: 0, close: 1 },
+        { date: '02 жов.', val: 2, open: 1, high: 2, low: 1, close: 2 },
+        { date: '03 жов.', val: 1, open: 2, high: 2, low: 0, close: 1 },
+        { date: '04 жов.', val: 2, open: 1, high: 3, low: 1, close: 2 },
+        { date: '05 жов.', val: 1, open: 2, high: 2, low: 1, close: 1 },
+        { date: '06 жов.', val: 2, open: 1, high: 3, low: 1, close: 2 }
       ];
 
+      // Slice according to zoom and pan
+      let sliceLen = state.leadsZoomDays === 7 ? 7 : state.leadsZoomDays === 14 ? 14 : allData.length;
+      let startIdx = Math.max(0, Math.min(state.leadsPanOffset, allData.length - sliceLen));
+      let data = allData.slice(startIdx, startIdx + sliceLen);
+      if (data.length < 2) data = allData;
+
+      if (mode === 'candles') {
+        const dates = data.map(d => d.date);
+        container.innerHTML = renderCandlestickChartSvg({ dates, candles: data, w: 540, h: 220, yLabel: 'Заявки / Свічки' });
+        return;
+      }
+
       if (mode === 'bars') {
-        const maxVal = 2.0;
+        const maxVal = Math.max(...data.map(d => d.val), 2);
         container.innerHTML = `
           <div class="h-full flex items-end justify-between gap-1.5 pt-4 pb-2 px-2">
             ${data.map(d => {
-              const hPct = Math.max(8, Math.round((d.val / maxVal) * 85));
+              const hPct = Math.max(12, Math.round((d.val / maxVal) * 85));
               return `
                 <div class="flex-1 flex flex-col items-center gap-1 group cursor-pointer"
                      onmousemove="showChartTooltip(event, '${d.date}', '${d.val} нових заявок', 'Денний факт')"
                      onmouseleave="hideChartTooltip()">
-                  <span class="text-[9px] font-mono font-bold text-sky-600 opacity-0 group-hover:opacity-100 transition">${d.val}</span>
-                  <div class="w-full bg-sky-100 dark:bg-sky-950/60 rounded-t-lg group-hover:bg-sky-500 transition-all duration-300" style="height: ${hPct}%;"></div>
-                  <span class="text-[8px] text-gray-400 font-medium truncate w-full text-center">${d.date.split(' ')[0]}</span>
+                  <span class="text-[10px] font-mono font-bold text-sky-600 opacity-0 group-hover:opacity-100 transition">${d.val}</span>
+                  <div class="w-full bg-sky-200 dark:bg-sky-950/60 rounded-t-lg group-hover:bg-sky-500 transition-all duration-300" style="height: ${hPct}%;"></div>
+                  <span class="text-[9px] text-gray-500 font-medium truncate w-full text-center">${d.date.split(' ')[0]}</span>
                 </div>
               `;
             }).join('')}
@@ -4537,7 +4756,7 @@
               <div class="relative w-40 h-40">
                 <svg class="w-40 h-40" viewBox="0 0 200 200">${paths}</svg>
                 <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                  <span class="text-xl font-black text-gray-900 dark:text-white font-mono">${total}</span>
+                  <span class="text-2xl font-black text-gray-900 dark:text-white font-mono">${total}</span>
                   <span class="text-[9px] uppercase font-bold text-gray-400">Заявок</span>
                 </div>
               </div>
@@ -4558,11 +4777,33 @@
         return;
       }
 
-      // Default: Spline Area Chart
+      if (mode === 'table') {
+        container.innerHTML = `
+          <div class="overflow-y-auto max-h-56 pr-1">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-gray-50 dark:bg-gray-800 text-gray-500 text-[10px] uppercase font-bold">
+                <tr><th class="p-2">Дата</th><th class="p-2 text-center">Заявки</th><th class="p-2 text-right">Діапазон</th></tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+                ${data.map(d => `
+                  <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50">
+                    <td class="p-2 font-medium">${d.date}</td>
+                    <td class="p-2 text-center font-mono font-bold text-sky-600">${d.val}</td>
+                    <td class="p-2 text-right font-mono text-gray-400 text-[10px]">L: ${d.low} • H: ${d.high}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        `;
+        return;
+      }
+
+      // Default: Spline Area Chart (Integer Y-ticks!)
       const w = 540, h = 220, padLeft = 45, padRight = 15, padTop = 20, padBottom = 35;
       const chartW = w - padLeft - padRight;
       const chartH = h - padTop - padBottom;
-      const maxVal = 2.0;
+      const maxVal = Math.max(...data.map(d => d.val), 3);
 
       const points = data.map((d, i) => ({
         x: padLeft + (i / (data.length - 1)) * chartW,
@@ -4573,13 +4814,13 @@
       const splinePath = buildCubicSplinePath(points);
       const areaPath = `${splinePath} L ${points[points.length - 1].x.toFixed(1)} ${(padTop + chartH).toFixed(1)} L ${points[0].x.toFixed(1)} ${(padTop + chartH).toFixed(1)} Z`;
 
-      const gridLevels = [0, 0.4, 0.8, 1.2, 1.6, 2.0];
+      const gridLevels = [0, 1, 2, maxVal];
       const gridSvg = gridLevels.map(lvl => {
         const yPos = padTop + chartH - (lvl / maxVal) * chartH;
         return `
           <g>
-            <line x1="${padLeft}" y1="${yPos}" x2="${w - padRight}" y2="${yPos}" stroke="#E2E8F0" stroke-dasharray="3,3" stroke-width="1" />
-            <text x="${padLeft - 8}" y="${yPos + 3}" font-size="10" fill="#94A3B8" text-anchor="end" font-family="monospace">${lvl.toFixed(1)}</text>
+            <line x1="${padLeft}" y1="${yPos.toFixed(1)}" x2="${w - padRight}" y2="${yPos.toFixed(1)}" stroke="#E2E8F0" stroke-dasharray="3,3" stroke-width="1" />
+            <text x="${padLeft - 8}" y="${(yPos + 3).toFixed(1)}" font-size="10" fill="#94A3B8" text-anchor="end" font-family="monospace">${lvl}</text>
           </g>
         `;
       }).join('');
@@ -4590,7 +4831,7 @@
 
       const dotsSvg = points.map(p => `
         <g class="cursor-pointer group"
-           onmousemove="showChartTooltip(event, '${p.raw.date}', '${p.raw.val} заявок', 'Денна динаміка')"
+           onmousemove="showChartTooltip(event, '${p.raw.date}', '${p.raw.val} нових заявок', 'Денний факт')"
            onmouseleave="hideChartTooltip()">
           <circle cx="${p.x}" cy="${p.y}" r="8" fill="transparent" />
           <circle cx="${p.x}" cy="${p.y}" r="3.5" fill="#3B82F6" stroke="#FFFFFF" stroke-width="2" class="transition-all duration-150 group-hover:r-5 group-hover:fill-sky-400" />
@@ -4605,7 +4846,7 @@
               <stop offset="100%" stop-color="#3B82F6" stop-opacity="0.0" />
             </linearGradient>
           </defs>
-          <text x="-${h / 2}" y="14" transform="rotate(-90)" font-size="10" fill="#94A3B8" text-anchor="middle" font-weight="bold">Кількість</text>
+          <text x="-${h / 2}" y="14" transform="rotate(-90)" font-size="10" fill="#94A3B8" text-anchor="middle" font-weight="bold">Заявки / день</text>
           ${gridSvg}
           <path d="${areaPath}" fill="url(#gradMyLeads)" />
           <path d="${splinePath}" fill="none" stroke="#3B82F6" stroke-width="2.5" stroke-linecap="round" />
@@ -4615,7 +4856,7 @@
       `;
     }
 
-    // 2. Render СТАДІЇ ЗАЯВОК (Radial Donut / Bar Funnel / Table)
+    // 2. Render СТАДІЇ ЗАЯВОК
     function renderLeadStagesDonut() {
       const svg = document.getElementById('svgLeadStagesDonut');
       const legend = document.getElementById('legendLeadStages');
@@ -4637,6 +4878,32 @@
 
       const total = stages.reduce((s, it) => s + it.count, 0);
       if (totalCountEl) totalCountEl.textContent = total;
+
+      if (mode === 'candles') {
+        svg.parentElement.parentElement.classList.add('hidden');
+        legend.parentElement.classList.remove('grid-cols-1', 'sm:grid-cols-12');
+        legend.className = "w-full h-52 py-1";
+        const dates = stages.map(s => s.name.split(' ')[0]);
+        const candles = stages.map(s => ({
+          date: s.name,
+          open: Math.max(1, s.count - 1),
+          high: s.count + 1,
+          low: Math.max(0, s.count - 1),
+          close: s.count
+        }));
+        legend.innerHTML = renderCandlestickChartSvg({ dates, candles, w: 500, h: 200, yLabel: 'Заявок на стадії' });
+        return;
+      }
+
+      if (mode === 'charts') {
+        svg.parentElement.parentElement.classList.add('hidden');
+        legend.parentElement.classList.remove('grid-cols-1', 'sm:grid-cols-12');
+        legend.className = "w-full h-52 py-1";
+        const dates = stages.map(s => s.name.split(' ')[0]);
+        const series = [{ id: 'stages', name: 'Обсяг стадії', color: '#38A3C8', data: stages.map(s => s.count) }];
+        legend.innerHTML = renderMultiLineSplineSvg({ dates, series, w: 500, h: 200, yLabel: 'Заявок' });
+        return;
+      }
 
       if (mode === 'bars') {
         const maxVal = Math.max(...stages.map(s => s.count));
@@ -4675,12 +4942,7 @@
           <div class="overflow-x-auto">
             <table class="w-full text-left text-xs">
               <thead class="bg-gray-50 dark:bg-gray-800 text-gray-500 text-[10px] uppercase font-bold">
-                <tr>
-                  <th class="p-2">Стадія воронки</th>
-                  <th class="p-2 text-center">Кількість</th>
-                  <th class="p-2 text-center">Частка %</th>
-                  <th class="p-2 text-right">Конверсія</th>
-                </tr>
+                <tr><th class="p-2">Стадія воронки</th><th class="p-2 text-center">Кількість</th><th class="p-2 text-center">Частка %</th><th class="p-2 text-right">Конверсія</th></tr>
               </thead>
               <tbody class="divide-y divide-gray-100 dark:divide-gray-800 font-medium">
                 ${stages.map((st, i) => {
@@ -4742,7 +5004,7 @@
                onmouseenter="highlightDonutSlice(${idx})"
                onmouseleave="unhighlightDonutSlices()">
             <div class="flex items-center gap-1.5 truncate">
-              <span class="w-3.5 h-3 rounded-xs shrink-0" style="background-color: ${st.color};"></span>
+              <span class="w-3 h-3 rounded-xs shrink-0" style="background-color: ${st.color};"></span>
               <span class="text-gray-700 dark:text-gray-300 font-medium truncate group-hover:text-sky-600 transition text-[11px]">${st.name}</span>
             </div>
             <div class="flex items-center gap-1.5 font-mono text-[11px] shrink-0">
@@ -4754,16 +5016,14 @@
       }).join('');
     }
 
-    // 3. Render ДИНАМІКА ПОКАЗІВ ТА ЗУСТРІЧЕЙ (ДВІ ОКРЕМІ ЛІНІЇ: ПОКАЗИ ТА ЗУСТРІЧІ)
+    // 3. Render ДИНАМІКА ПОКАЗІВ ТА ЗУСТРІЧЕЙ
     function renderWeeklySpline() {
-      const svg = document.getElementById('svgWeeklySplineChart');
-      if (!svg) return;
+      const container = document.getElementById('containerWeeklySpline');
+      if (!container) return;
+      const mode = (state.statsWidgetModes && state.statsWidgetModes.weekly) || 'charts';
 
       const dates = ['7 лип.', '14 лип.', '21 лип.', '28 лип.', '4 серп.', '11 серп.', '18 серп.', '25 серп.', '1 вер.', '8 вер.', '15 вер.', '22 вер.', '29 вер.', '6 жовт.'];
-      
-      // Line 1: Покази обʼєктів клієнтам (100 всього)
       const showingsData = [3, 4, 3, 6, 5, 8, 5, 9, 7, 10, 8, 11, 9, 12];
-      // Line 2: Зустрічі з власниками (58 всього)
       const meetingsData = [1, 2, 2, 3, 2, 4, 3, 5, 4, 6, 5, 7, 6, 8];
 
       const showingsTot = showingsData.reduce((a, b) => a + b, 0);
@@ -4774,13 +5034,101 @@
       const elMeet = document.getElementById('weeklyMeetingsTotal');
       if (elMeet) elMeet.textContent = `${meetingsTot} зустрічей`;
 
-      const w = 920;
-      const h = 230;
-      const padLeft = 45;
-      const padRight = 70;
-      const padTop = 20;
-      const padBottom = 32;
+      if (mode === 'candles') {
+        const candles = dates.map((d, i) => ({
+          date: d,
+          open: meetingsData[i],
+          high: Math.max(showingsData[i], meetingsData[i]) + 2,
+          low: Math.min(showingsData[i], meetingsData[i]) - 1,
+          close: showingsData[i]
+        }));
+        container.innerHTML = renderCandlestickChartSvg({ dates, candles, w: 900, h: 220, yLabel: 'Дій / тиждень' });
+        return;
+      }
 
+      if (mode === 'bars') {
+        const maxVal = 14;
+        container.innerHTML = `
+          <div class="h-full flex items-end justify-between gap-2 pt-4 pb-2 px-3">
+            ${dates.map((d, i) => {
+              const hShow = Math.round((showingsData[i] / maxVal) * 80);
+              const hMeet = Math.round((meetingsData[i] / maxVal) * 80);
+              return `
+                <div class="flex-1 flex flex-col items-center gap-1 group cursor-pointer"
+                     onmousemove="showChartTooltip(event, '${d}', '🔵 Покази: ${showingsData[i]}<br>🔴 Зустрічі: ${meetingsData[i]}', 'Тижневий підсумок')"
+                     onmouseleave="hideChartTooltip()">
+                  <div class="w-full flex items-end gap-1 h-36">
+                    <div class="flex-1 bg-blue-500 rounded-t-sm" style="height: ${hShow}%;"></div>
+                    <div class="flex-1 bg-rose-500 rounded-t-sm" style="height: ${hMeet}%;"></div>
+                  </div>
+                  <span class="text-[9px] text-gray-400 font-medium truncate w-full text-center">${d}</span>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        `;
+        return;
+      }
+
+      if (mode === 'pie') {
+        const total = showingsTot + meetingsTot;
+        const pShow = ((showingsTot / total) * 100).toFixed(1);
+        const pMeet = ((meetingsTot / total) * 100).toFixed(1);
+        const arcShow = describeDonutArc(100, 100, 50, 85, 0, (showingsTot / total) * 360);
+        const arcMeet = describeDonutArc(100, 100, 50, 85, (showingsTot / total) * 360, 360);
+
+        container.innerHTML = `
+          <div class="flex items-center justify-center gap-8 h-full py-2">
+            <div class="relative w-44 h-44">
+              <svg class="w-44 h-44" viewBox="0 0 200 200">
+                <path d="${arcShow}" fill="#2563EB" stroke="#FFFFFF" stroke-width="2" />
+                <path d="${arcMeet}" fill="#EF4444" stroke="#FFFFFF" stroke-width="2" />
+              </svg>
+              <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                <span class="text-2xl font-black text-gray-900 dark:text-white font-mono">${total}</span>
+                <span class="text-[9px] uppercase font-bold text-gray-400">Активностей</span>
+              </div>
+            </div>
+            <div class="space-y-3 text-xs">
+              <div class="p-2.5 rounded-xl bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 flex items-center justify-between gap-6">
+                <div class="flex items-center gap-2"><span class="w-3.5 h-3.5 rounded-xs bg-[#2563EB]"></span><span class="font-bold text-gray-800 dark:text-gray-200">Покази клієнтам</span></div>
+                <strong class="font-mono text-blue-600 font-bold">${showingsTot} (${pShow}%)</strong>
+              </div>
+              <div class="p-2.5 rounded-xl bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 flex items-center justify-between gap-6">
+                <div class="flex items-center gap-2"><span class="w-3.5 h-3.5 rounded-xs bg-[#EF4444]"></span><span class="font-bold text-gray-800 dark:text-gray-200">Зустрічі з власниками</span></div>
+                <strong class="font-mono text-rose-600 font-bold">${meetingsTot} (${pMeet}%)</strong>
+              </div>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      if (mode === 'table') {
+        container.innerHTML = `
+          <div class="overflow-y-auto max-h-56 pr-1">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-gray-50 dark:bg-gray-800 text-gray-500 text-[10px] uppercase font-bold">
+                <tr><th class="p-2">Тиждень</th><th class="p-2 text-center">🔵 Покази</th><th class="p-2 text-center">🔴 Зустрічі</th><th class="p-2 text-right">Разом</th></tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+                ${dates.map((d, i) => `
+                  <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50">
+                    <td class="p-2 font-medium">${d}</td>
+                    <td class="p-2 text-center font-mono font-bold text-blue-600">${showingsData[i]}</td>
+                    <td class="p-2 text-center font-mono font-bold text-rose-600">${meetingsData[i]}</td>
+                    <td class="p-2 text-right font-mono font-bold text-gray-900 dark:text-white">${showingsData[i] + meetingsData[i]}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        `;
+        return;
+      }
+
+      // Default: Dual Curves Spline
+      const w = 900, h = 220, padLeft = 45, padRight = 30, padTop = 20, padBottom = 32;
       const chartW = w - padLeft - padRight;
       const chartH = h - padTop - padBottom - 6;
       const maxVal = 14;
@@ -4801,7 +5149,6 @@
 
       const pathShowings = buildCubicSplinePath(pointsShowings);
       const pathMeetings = buildCubicSplinePath(pointsMeetings);
-
       const areaShowings = `${pathShowings} L ${pointsShowings[pointsShowings.length - 1].x.toFixed(1)} ${(padTop + chartH + 3).toFixed(1)} L ${pointsShowings[0].x.toFixed(1)} ${(padTop + chartH + 3).toFixed(1)} Z`;
 
       const gridLevels = [0, 4, 8, 12, 14];
@@ -4809,7 +5156,7 @@
         const yPos = padTop + chartH + 3 - (lvl / maxVal) * chartH;
         return `
           <g>
-            <line x1="${padLeft}" y1="${yPos.toFixed(1)}" x2="${(w - padRight + 15).toFixed(1)}" y2="${yPos.toFixed(1)}" stroke="#E2E8F0" stroke-dasharray="3,3" stroke-width="1" />
+            <line x1="${padLeft}" y1="${yPos.toFixed(1)}" x2="${(w - padRight).toFixed(1)}" y2="${yPos.toFixed(1)}" stroke="#E2E8F0" stroke-dasharray="3,3" stroke-width="1" />
             <text x="${padLeft - 8}" y="${(yPos + 3).toFixed(1)}" font-size="10" fill="#94A3B8" text-anchor="end" font-family="monospace">${lvl}</text>
           </g>
         `;
@@ -4820,70 +5167,117 @@
         return `<text x="${x.toFixed(1)}" y="${h - 8}" font-size="9" fill="#94A3B8" text-anchor="middle" font-weight="500">${d}</text>`;
       }).join('');
 
-      // Dots for Showings (Blue)
       const dotsShowings = pointsShowings.map((p, i) => `
         <g class="cursor-pointer group"
            onmousemove="showChartTooltip(event, 'Покази • ${p.date}', '${p.val} показів (Зустрічей: ${meetingsData[i]})', 'Разом: ${p.val + meetingsData[i]} дій')"
            onmouseleave="hideChartTooltip()">
-          <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="8" fill="transparent" />
+          <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="7" fill="transparent" />
           <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="3.5" fill="#2563EB" stroke="#FFFFFF" stroke-width="2" class="group-hover:r-5 transition" />
         </g>
       `).join('');
 
-      // Dots for Meetings (Red/Coral)
       const dotsMeetings = pointsMeetings.map((p, i) => `
         <g class="cursor-pointer group"
            onmousemove="showChartTooltip(event, 'Зустрічі • ${p.date}', '${p.val} зустрічей (Показів: ${showingsData[i]})', 'Разом: ${p.val + showingsData[i]} дій')"
            onmouseleave="hideChartTooltip()">
-          <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="8" fill="transparent" />
+          <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="7" fill="transparent" />
           <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="3.5" fill="#EF4444" stroke="#FFFFFF" stroke-width="2" class="group-hover:r-5 transition" />
         </g>
       `).join('');
 
-      const lastShow = pointsShowings[pointsShowings.length - 1];
-      const lastMeet = pointsMeetings[pointsMeetings.length - 1];
-
-      svg.innerHTML = `
-        <defs>
-          <linearGradient id="gradWeeklyShowings" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#2563EB" stop-opacity="0.25" />
-            <stop offset="100%" stop-color="#2563EB" stop-opacity="0.0" />
-          </linearGradient>
-        </defs>
-
-        <text x="-${h / 2}" y="13" transform="rotate(-90)" font-size="9" fill="#94A3B8" text-anchor="middle" font-weight="bold">Дій / тиждень</text>
-        ${gridSvg}
-
-        <!-- Showings Area & Curve (Blue) -->
-        <path d="${areaShowings}" fill="url(#gradWeeklyShowings)" />
-        <path d="${pathShowings}" fill="none" stroke="#2563EB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-        ${dotsShowings}
-        <text x="${(lastShow.x + 8).toFixed(1)}" y="${(lastShow.y + 3.5).toFixed(1)}" font-size="10" font-weight="800" fill="#2563EB">🔵 Покази</text>
-
-        <!-- Meetings Curve (Coral / Red) -->
-        <path d="${pathMeetings}" fill="none" stroke="#EF4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-        ${dotsMeetings}
-        <text x="${(lastMeet.x + 8).toFixed(1)}" y="${(lastMeet.y + 3.5).toFixed(1)}" font-size="10" font-weight="800" fill="#EF4444">🔴 Зустрічі</text>
-
-        ${xLabels}
+      container.innerHTML = `
+        <svg id="svgWeeklySplineChart" class="w-full h-full overflow-visible" viewBox="0 0 900 220" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="gradWeeklyShowings" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#2563EB" stop-opacity="0.25" />
+              <stop offset="100%" stop-color="#2563EB" stop-opacity="0.0" />
+            </linearGradient>
+          </defs>
+          <text x="-${h / 2}" y="13" transform="rotate(-90)" font-size="9" fill="#94A3B8" text-anchor="middle" font-weight="bold">Дій / тиждень</text>
+          ${gridSvg}
+          <path d="${areaShowings}" fill="url(#gradWeeklyShowings)" />
+          <path d="${pathShowings}" fill="none" stroke="#2563EB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+          ${dotsShowings}
+          <path d="${pathMeetings}" fill="none" stroke="#EF4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+          ${dotsMeetings}
+          ${xLabels}
+        </svg>
       `;
     }
 
-    // 4. Render ЗАЯВКИ ПРИЧИНИ (Solid Pie Chart with reasons breakdown)
+    // 4. Render ЗАЯВКИ ПРИЧИНИ
     function renderLossReasonsPie() {
-      const svg = document.getElementById('svgLossReasonsPie');
-      if (!svg) return;
+      const container = document.getElementById('containerLossReasons');
+      if (!container) return;
+      const mode = (state.statsWidgetModes && state.statsWidgetModes.lossReasons) || 'pie';
 
       const slices = [
         { label: "У клієнта відпала необхідність в об'єкті", count: 15, pct: 71.4, color: '#26c299' },
         { label: "Інша причина (не влаштувала ціна / локація)", count: 5, pct: 23.8, color: '#e27272' },
-        { label: "Сделка без участия нашего агентства", count: 1, pct: 4.8, color: '#6b829e' }
+        { label: "Угода без участі нашої агенції", count: 1, pct: 4.8, color: '#6b829e' }
       ];
 
-      const cx = 100;
-      const cy = 100;
-      const r = 90;
+      if (mode === 'charts') {
+        const dates = ['Тижд. 1', 'Тижд. 2', 'Тижд. 3', 'Тижд. 4'];
+        const series = [
+          { id: 'r1', name: "Відпала необхідність", color: '#26c299', data: [3, 4, 5, 3] },
+          { id: 'r2', name: "Не влаштувала ціна", color: '#e27272', data: [1, 2, 1, 1] },
+          { id: 'r3', name: "Без участі агенції", color: '#6b829e', data: [0, 0, 1, 0] }
+        ];
+        container.innerHTML = renderMultiLineSplineSvg({ dates, series, w: 500, h: 200, yLabel: 'Втрати лідів' });
+        return;
+      }
 
+      if (mode === 'bars') {
+        const total = slices.reduce((s, it) => s + it.count, 0);
+        container.innerHTML = `
+          <div class="space-y-2.5 w-full py-2">
+            ${slices.map(sl => `
+              <div class="p-2.5 rounded-xl bg-gray-50 dark:bg-gray-800/40 border border-gray-200/60 dark:border-gray-700/60 space-y-1">
+                <div class="flex items-center justify-between text-xs">
+                  <div class="flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-xs shrink-0" style="background-color: ${sl.color};"></span>
+                    <span class="font-bold text-gray-800 dark:text-gray-200">${sl.label}</span>
+                  </div>
+                  <strong class="font-mono text-gray-900 dark:text-white">${sl.count} (${sl.pct}%)</strong>
+                </div>
+                <div class="w-full bg-gray-200 dark:bg-gray-700 h-2 rounded-full overflow-hidden">
+                  <div class="h-full rounded-full transition-all duration-500" style="width: ${sl.pct}%; background-color: ${sl.color};"></div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+        return;
+      }
+
+      if (mode === 'table') {
+        container.innerHTML = `
+          <div class="overflow-x-auto w-full py-1">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-gray-50 dark:bg-gray-800 text-gray-500 text-[10px] uppercase font-bold">
+                <tr><th class="p-2">Причина відмови</th><th class="p-2 text-center">Кількість</th><th class="p-2 text-right">Частка %</th></tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100 dark:divide-gray-800 font-medium">
+                ${slices.map(sl => `
+                  <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50">
+                    <td class="p-2 flex items-center gap-2">
+                      <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: ${sl.color};"></span>
+                      <span class="font-bold text-gray-800 dark:text-gray-200">${sl.label}</span>
+                    </td>
+                    <td class="p-2 text-center font-mono font-bold">${sl.count}</td>
+                    <td class="p-2 text-right font-mono font-bold text-rose-500">${sl.pct}%</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        `;
+        return;
+      }
+
+      // Default: Pie Chart
+      const cx = 100, cy = 100, r = 85;
       let currentAngle = 0;
       const paths = slices.map((sl, idx) => {
         const sliceAngle = (sl.pct / 100) * 360;
@@ -4892,7 +5286,6 @@
         currentAngle = endA;
 
         const pathD = describePieSlice(cx, cy, r, startA, endA);
-
         return `
           <path id="pie_slice_loss_${idx}"
                 d="${pathD}"
@@ -4900,25 +5293,82 @@
                 stroke="#FFFFFF"
                 stroke-width="2"
                 class="transition-opacity duration-150 cursor-pointer hover:opacity-85"
-                onmousemove="showChartTooltip(event, '${sl.label}', '${sl.count} лідів (${sl.pct}%)', 'Причина закриття')"
+                onmousemove="showChartTooltip(event, '${sl.label}', '${sl.count} лідів (${sl.pct}%)', 'Причина відмови')"
                 onmouseleave="hideChartTooltip()" />
         `;
       }).join('');
 
-      svg.innerHTML = paths;
+      container.innerHTML = `
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center py-2 w-full">
+          <div class="md:col-span-5 flex justify-center py-1">
+            <div class="w-48 h-48 flex items-center justify-center">
+              <svg class="w-48 h-48 overflow-visible" viewBox="0 0 200 200">${paths}</svg>
+            </div>
+          </div>
+          <div class="md:col-span-7 space-y-2.5 text-xs">
+            ${slices.map(sl => `
+              <div class="flex items-center justify-between p-2.5 rounded-xl bg-gray-50/80 dark:bg-gray-800/50 border border-gray-200/80 dark:border-gray-700/80 hover:border-sky-400 transition cursor-pointer">
+                <div class="flex items-center gap-2.5">
+                  <span class="w-3.5 h-3.5 rounded-xs shrink-0" style="background-color: ${sl.color};"></span>
+                  <span class="font-semibold text-gray-800 dark:text-gray-200">${sl.label}</span>
+                </div>
+                <strong class="font-mono text-gray-900 dark:text-white font-black text-sm shrink-0">${sl.pct}% (${sl.count})</strong>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
     }
 
-    function highlightLossReason(idx) {
-      for (let i = 0; i < 3; i++) {
-        const el = document.getElementById(`pie_slice_loss_${i}`);
-        if (el) el.style.opacity = i === idx ? '1' : '0.35';
+    // Function to render Real SVG Donuts in statsView_donut
+    function renderStatsDonutsView() {
+      const svgObj = document.getElementById('svgDonutObjCat');
+      const svgDeals = document.getElementById('svgDonutDealsConv');
+      const svgRev = document.getElementById('svgDonutProfitShare');
+
+      if (svgObj) {
+        const cats = [
+          { val: 59, col: '#10B981', name: 'Вторинне (50%)' },
+          { val: 36, col: '#3B82F6', name: 'Новобудови (31%)' },
+          { val: 16, col: '#8B5CF6', name: 'Комерція (14%)' },
+          { val: 7, col: '#F59E0B', name: 'Земля (5%)' }
+        ];
+        let cur = 0;
+        svgObj.innerHTML = cats.map(c => {
+          const deg = (c.val / 118) * 360;
+          const p = describeDonutArc(100, 100, 56, 88, cur, cur + deg);
+          cur += deg;
+          return `<path d="${p}" fill="${c.col}" stroke="#FFFFFF" stroke-width="1.5" class="hover:opacity-85 cursor-pointer" onmousemove="showChartTooltip(event, '${c.name}', '${c.val} обʼєктів', 'Категорія нерухомості')" onmouseleave="hideChartTooltip()" />`;
+        }).join('');
       }
-    }
 
-    function unhighlightLossReason() {
-      for (let i = 0; i < 3; i++) {
-        const el = document.getElementById(`pie_slice_loss_${i}`);
-        if (el) el.style.opacity = '1';
+      if (svgDeals) {
+        const deals = [
+          { val: 4, col: '#10B981', name: 'Закриті угоди (67%)' },
+          { val: 2, col: '#F59E0B', name: 'Завдатки в процесі (33%)' }
+        ];
+        let cur = 0;
+        svgDeals.innerHTML = deals.map(d => {
+          const deg = (d.val / 6) * 360;
+          const p = describeDonutArc(100, 100, 56, 88, cur, cur + deg);
+          cur += deg;
+          return `<path d="${p}" fill="${d.col}" stroke="#FFFFFF" stroke-width="1.5" class="hover:opacity-85 cursor-pointer" onmousemove="showChartTooltip(event, '${d.name}', '${d.val} угод', 'Стадія фіналу воронки')" onmouseleave="hideChartTooltip()" />`;
+        }).join('');
+      }
+
+      if (svgRev) {
+        const revs = [
+          { val: 3200, col: '#10B981', name: 'Вторинне ($3,200 • 47%)' },
+          { val: 3000, col: '#3B82F6', name: 'Новобудови ($3,000 • 44%)' },
+          { val: 650, col: '#8B5CF6', name: 'Комерція ($650 • 9%)' }
+        ];
+        let cur = 0;
+        svgRev.innerHTML = revs.map(r => {
+          const deg = (r.val / 6850) * 360;
+          const p = describeDonutArc(100, 100, 56, 88, cur, cur + deg);
+          cur += deg;
+          return `<path d="${p}" fill="${r.col}" stroke="#FFFFFF" stroke-width="1.5" class="hover:opacity-85 cursor-pointer" onmousemove="showChartTooltip(event, '${r.name}', '$${r.val}', 'Комісійний прибуток')" onmouseleave="hideChartTooltip()" />`;
+        }).join('');
       }
     }
 
@@ -4928,6 +5378,7 @@
       renderLeadStagesDonut();
       renderWeeklySpline();
       renderLossReasonsPie();
+      renderStatsDonutsView();
     }
 
     // Currency Switcher
