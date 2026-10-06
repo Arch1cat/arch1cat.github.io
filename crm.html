@@ -88,7 +88,7 @@
       <div class="flex items-center gap-2.5">
         <span class="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center text-white font-black text-lg shadow-sm">Y</span>
         <h1 class="font-extrabold text-base tracking-tight text-gray-900 dark:text-white">Робоче місце CRM</h1>
-        <span class="ml-2 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700">Wheel Zoom & Dynamic Period v11.0 Active</span>
+        <span class="ml-2 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700">KPI Candlesticks & Visual Matrix v12.0 Active</span>
       </div>
 
       <!-- Clean Theme Toggle -->
@@ -215,6 +215,10 @@
           <button type="button" onclick="setVisualMode('bars')" id="viewMode_bars" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer flex items-center gap-1.5">
             <i data-lucide="bar-chart-horizontal" class="w-3.5 h-3.5"></i>
             <span>📊 Смуги нормативів</span>
+          </button>
+          <button type="button" onclick="setVisualMode('candles')" id="viewMode_candles" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer flex items-center gap-1.5">
+            <i data-lucide="candlestick-chart" class="w-3.5 h-3.5 text-amber-500"></i>
+            <span>🕯️ Японські свічки</span>
           </button>
           <!-- Hidden fallback aliases -->
           <button type="button" onclick="setVisualMode('pie')" id="viewMode_circles" class="hidden"></button>
@@ -344,6 +348,7 @@
                 <button type="button" onclick="setBlockMode('objects', 'bars')" id="btn_mode_objects_bars" title="Смуги нормативів" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">📊</button>
                 <button type="button" onclick="setBlockMode('objects', 'pie')" id="btn_mode_objects_pie" title="Кругова діаграма (%)" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">🥧</button>
                 <button type="button" onclick="setBlockMode('objects', 'charts')" id="btn_mode_objects_charts" title="Графік (Мульти-лінії)" class="px-1.5 py-0.5 rounded font-bold bg-emerald-600 text-white">📈</button>
+                <button type="button" onclick="setBlockMode('objects', 'candles')" id="btn_mode_objects_candles" title="Японські свічки" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">🕯️</button>
               </div>
               <!-- Card Width Resizer Button -->
               <button type="button" onclick="toggleCardWidth('card_obj')" id="btn_width_card_obj" title="Змінити ширину картки (50% або 100%)" class="px-2 py-0.5 rounded-lg text-xs font-bold bg-white/80 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 transition cursor-pointer flex items-center gap-1 shadow-2xs">
@@ -387,6 +392,7 @@
                 <button type="button" onclick="setBlockMode('clients', 'bars')" id="btn_mode_clients_bars" title="Смуги нормативів" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">📊</button>
                 <button type="button" onclick="setBlockMode('clients', 'pie')" id="btn_mode_clients_pie" title="Кругова діаграма (%)" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">🥧</button>
                 <button type="button" onclick="setBlockMode('clients', 'charts')" id="btn_mode_clients_charts" title="Графік (Мульти-лінії)" class="px-1.5 py-0.5 rounded font-bold bg-blue-600 text-white">📈</button>
+                <button type="button" onclick="setBlockMode('clients', 'candles')" id="btn_mode_clients_candles" title="Японські свічки" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">🕯️</button>
               </div>
               <!-- Card Width Resizer Button -->
               <button type="button" onclick="toggleCardWidth('card_clients')" id="btn_width_card_clients" title="Змінити ширину картки (50% або 100%)" class="px-2 py-0.5 rounded-lg text-xs font-bold bg-white/80 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 transition cursor-pointer flex items-center gap-1 shadow-2xs">
@@ -430,6 +436,7 @@
                 <button type="button" onclick="setBlockMode('marketing', 'bars')" id="btn_mode_marketing_bars" title="Смуги" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">📊</button>
                 <button type="button" onclick="setBlockMode('marketing', 'pie')" id="btn_mode_marketing_pie" title="Кругова діаграма (%)" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">🥧</button>
                 <button type="button" onclick="setBlockMode('marketing', 'charts')" id="btn_mode_marketing_charts" title="Графік (Мульти-лінії)" class="px-1.5 py-0.5 rounded font-bold bg-purple-600 text-white">📈</button>
+                <button type="button" onclick="setBlockMode('marketing', 'candles')" id="btn_mode_marketing_candles" title="Японські свічки" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">🕯️</button>
               </div>
               <!-- Card Width Resizer Button -->
               <button type="button" onclick="toggleCardWidth('card_marketing')" id="btn_width_card_marketing" title="Змінити ширину картки (50% або 100%)" class="px-2 py-0.5 rounded-lg text-xs font-bold bg-white/80 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 transition cursor-pointer flex items-center gap-1 shadow-2xs">
@@ -477,6 +484,7 @@
                 <button type="button" onclick="setBlockMode('deals', 'bars')" id="btn_mode_deals_bars" title="Смуги" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">📊</button>
                 <button type="button" onclick="setBlockMode('deals', 'pie')" id="btn_mode_deals_pie" title="Кругова діаграма (%)" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">🥧</button>
                 <button type="button" onclick="setBlockMode('deals', 'charts')" id="btn_mode_deals_charts" title="Графік (Мульти-лінії)" class="px-1.5 py-0.5 rounded font-bold bg-amber-500 text-white">📈</button>
+                <button type="button" onclick="setBlockMode('deals', 'candles')" id="btn_mode_deals_candles" title="Японські свічки" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">🕯️</button>
               </div>
               <!-- Card Width Resizer Button -->
               <button type="button" onclick="toggleCardWidth('card_deals')" id="btn_width_card_deals" title="Змінити ширину картки (50% або 100%)" class="px-2 py-0.5 rounded-lg text-xs font-bold bg-white/80 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 transition cursor-pointer flex items-center gap-1 shadow-2xs">
@@ -758,9 +766,38 @@
 
       </div>
 
-      <!-- VIEW 1: 16-ROW MATRIX TABLE -->
+      <!-- VIEW 1: 16-ROW MATRIX & VISUAL SECTION CARDS (1-V-1 REAL ESTATE CRM) -->
       <div id="statsView_table" class="hidden bg-white dark:bg-[#1A1D24] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden">
-        <div class="overflow-x-auto">
+        <!-- Header Controls for Matrix: Visual Cards vs Raw Matrix Table -->
+        <div class="px-5 py-3.5 bg-gray-50/90 dark:bg-gray-800/70 border-b border-gray-200 dark:border-gray-700 flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-black shadow-xs">
+              <i data-lucide="layout-grid" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <h3 class="font-extrabold text-sm text-gray-900 dark:text-white">Зведена статистика за 4 категоріями нерухомості</h3>
+              <p class="text-[11px] text-gray-500 dark:text-gray-400">Розбивка об'єктів, зустрічей, ексклюзивів, реклами, лідів та угод: Новобудови, Вторинне, Комерція, Земля</p>
+            </div>
+          </div>
+          <div class="flex items-center bg-white dark:bg-gray-900 p-1 rounded-xl border border-gray-200 dark:border-gray-700 text-xs shadow-2xs">
+            <button type="button" onclick="setMatrixSubMode('cards')" id="btn_matrix_cards" class="px-3 py-1.5 rounded-lg font-bold bg-indigo-600 text-white shadow-xs transition cursor-pointer flex items-center gap-1.5">
+              <i data-lucide="layout-dashboard" class="w-3.5 h-3.5"></i>
+              <span>📊 Візуальні розділи (Картки)</span>
+            </button>
+            <button type="button" onclick="setMatrixSubMode('table')" id="btn_matrix_table" class="px-3 py-1.5 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition cursor-pointer flex items-center gap-1.5">
+              <i data-lucide="table" class="w-3.5 h-3.5"></i>
+              <span>📋 Повна таблиця-матриця</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 1. VISUAL CARDS SUB-VIEW (5 SECTIONS) -->
+        <div id="matrixSubView_cards" class="p-5 space-y-5">
+          <!-- Injected via renderMatrixVisualCards() -->
+        </div>
+
+        <!-- 2. RAW TABLE SUB-VIEW -->
+        <div id="matrixSubView_table" class="hidden overflow-x-auto">
           <table class="w-full text-left text-xs border-collapse">
             <thead>
               <tr class="bg-gray-100 dark:bg-gray-800/80 text-gray-700 dark:text-gray-300 font-bold uppercase tracking-wider border-b border-gray-200 dark:border-gray-700">
@@ -782,24 +819,24 @@
               <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
                 <td class="py-2 px-4 flex items-center gap-2">
                   <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                  Кол-во объектов продажа
+                  Об'єкти на продаж
                 </td>
-                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Кол-во объектов продажа', 'Новобудови', 28)">28</td>
-                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Кол-во объектов продажа', 'Вторинне', 42)">42</td>
-                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Кол-во объектов продажа', 'Комерція', 9)">9</td>
-                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Кол-во объектов продажа', 'Земля', 6)">6</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Об'єкти на продаж', 'Новобудови', 28)">28</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Об'єкти на продаж', 'Вторинне', 42)">42</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Об'єкти на продаж', 'Комерція', 9)">9</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Об'єкти на продаж', 'Земля', 6)">6</td>
                 <td class="py-2 px-4 text-center font-mono font-black text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800/50">85</td>
               </tr>
               <!-- 2 -->
               <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
                 <td class="py-2 px-4 flex items-center gap-2">
                   <span class="w-1.5 h-1.5 rounded-full bg-sky-500"></span>
-                  Кол-во объектов в аренде
+                  Об'єкти в оренду
                 </td>
-                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Кол-во объектов в аренде', 'Новобудови', 8)">8</td>
-                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Кол-во объектов в аренде', 'Вторинне', 17)">17</td>
-                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Кол-во объектов в аренде', 'Комерція', 7)">7</td>
-                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Кол-во объектов в аренде', 'Земля', 1)">1</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Об'єкти в оренду', 'Новобудови', 8)">8</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Об'єкти в оренду', 'Вторинне', 17)">17</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Об'єкти в оренду', 'Комерція', 7)">7</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Об'єкти в оренду', 'Земля', 1)">1</td>
                 <td class="py-2 px-4 text-center font-mono font-black text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800/50">33</td>
               </tr>
 
@@ -811,7 +848,7 @@
               <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
                 <td class="py-2 px-4 flex items-center gap-2">
                   <i data-lucide="handshake" class="w-3.5 h-3.5 text-indigo-500"></i>
-                  Кол-во встреч собственник продажа
+                  Зустрічі з власниками (продаж)
                 </td>
                 <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Встречи собственник продажа', 'Новобудови', 3)">3</td>
                 <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Встречи собственник продажа', 'Вторинне', 5)">5</td>
@@ -823,7 +860,7 @@
               <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
                 <td class="py-2 px-4 flex items-center gap-2">
                   <i data-lucide="calendar" class="w-3.5 h-3.5 text-indigo-500"></i>
-                  Кол-во встреч собственник аренда
+                  Зустрічі з власниками (оренда)
                 </td>
                 <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Встречи собственник аренда', 'Новобудови', 2)">2</td>
                 <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Встречи собственник аренда', 'Вторинне', 4)">4</td>
@@ -835,7 +872,7 @@
               <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition bg-amber-50/30 dark:bg-amber-950/10">
                 <td class="py-2 px-4 font-bold text-amber-900 dark:text-amber-300 flex items-center gap-2">
                   <i data-lucide="star" class="w-3.5 h-3.5 text-amber-500 fill-amber-500"></i>
-                  Кол-во эксклюзивных договоров
+                  Ексклюзивні договори
                 </td>
                 <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Эксклюзивные договоры', 'Новобудови', 1)">1</td>
                 <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Эксклюзивные договоры', 'Вторинне', 3)">3</td>
@@ -852,7 +889,7 @@
               <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
                 <td class="py-2 px-4 flex items-center gap-2">
                   <i data-lucide="megaphone" class="w-3.5 h-3.5 text-purple-500"></i>
-                  Кол-во реклам по продаже
+                  Реклама на порталах (продаж)
                 </td>
                 <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Реклама продажа', 'Новобудови', 16)">16</td>
                 <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Реклама продажа', 'Вторинне', 24)">24</td>
@@ -864,7 +901,7 @@
               <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
                 <td class="py-2 px-4 flex items-center gap-2">
                   <i data-lucide="share" class="w-3.5 h-3.5 text-purple-500"></i>
-                  Кол-во реклам по аренде
+                  Реклама на порталах (оренда)
                 </td>
                 <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Реклама аренда', 'Новобудови', 6)">6</td>
                 <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Реклама аренда', 'Вторинне', 12)">12</td>
@@ -881,7 +918,7 @@
               <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
                 <td class="py-2 px-4 flex items-center gap-2">
                   <i data-lucide="file-text" class="w-3.5 h-3.5 text-blue-500"></i>
-                  Кол-во заявок продажа
+                  Заявки від покупців
                 </td>
                 <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Заявки продажа', 'Новобудови', 14)">14</td>
                 <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Заявки продажа', 'Вторинне', 19)">19</td>
@@ -893,7 +930,7 @@
               <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
                 <td class="py-2 px-4 flex items-center gap-2">
                   <i data-lucide="inbox" class="w-3.5 h-3.5 text-blue-500"></i>
-                  Кол-во заявок аренда
+                  Заявки на оренду
                 </td>
                 <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Заявки аренда', 'Новобудови', 5)">5</td>
                 <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Заявки аренда', 'Вторинне', 11)">11</td>
@@ -905,7 +942,7 @@
               <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
                 <td class="py-2 px-4 flex items-center gap-2">
                   <i data-lucide="eye" class="w-3.5 h-3.5 text-teal-500"></i>
-                  Кол-во показов продажа
+                  Покази об'єктів (продаж)
                 </td>
                 <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Показы продажа', 'Новобудови', 8)">8</td>
                 <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Показы продажа', 'Вторинне', 12)">12</td>
@@ -917,7 +954,7 @@
               <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
                 <td class="py-2 px-4 flex items-center gap-2">
                   <i data-lucide="eye-off" class="w-3.5 h-3.5 text-teal-500"></i>
-                  Кол-во показов аренда
+                  Покази об'єктів (оренда)
                 </td>
                 <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Показы аренда', 'Новобудови', 4)">4</td>
                 <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Показы аренда', 'Вторинне', 7)">7</td>
@@ -936,10 +973,10 @@
                   <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-amber-500"></i>
                   Кол-во задатков
                 </td>
-                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Задатки', 'Новобудови', 1)">1</td>
-                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Задатки', 'Вторинне', 2)">2</td>
-                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Задатки', 'Комерція', 0)">0</td>
-                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Задатки', 'Земля', 0)">0</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Завдатки та бронювання', 'Новобудови', 1)">1</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Завдатки та бронювання', 'Вторинне', 2)">2</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Завдатки та бронювання', 'Комерція', 0)">0</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Завдатки та бронювання', 'Земля', 0)">0</td>
                 <td class="py-2 px-4 text-center font-mono font-black text-amber-600 dark:text-amber-400 bg-amber-100/50 dark:bg-amber-950/40">3 🤝</td>
               </tr>
               <!-- 13 -->
@@ -948,10 +985,10 @@
                   <i data-lucide="award" class="w-3.5 h-3.5 text-emerald-500"></i>
                   Кол-во сделок продажа
                 </td>
-                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Сделки продажа', 'Новобудови', 1)">1</td>
-                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Сделки продажа', 'Вторинне', 1)">1</td>
-                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Сделки продажа', 'Комерція', 0)">0</td>
-                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Сделки продажа', 'Земля', 0)">0</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Закриті угоди (продаж)', 'Новобудови', 1)">1</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Закриті угоди (продаж)', 'Вторинне', 1)">1</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Закриті угоди (продаж)', 'Комерція', 0)">0</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Закриті угоди (продаж)', 'Земля', 0)">0</td>
                 <td class="py-2 px-4 text-center font-mono font-black text-emerald-600 dark:text-emerald-400 bg-emerald-100/50 dark:bg-emerald-950/40">2 🏆</td>
               </tr>
               <!-- 14 -->
@@ -960,17 +997,17 @@
                   <i data-lucide="key" class="w-3.5 h-3.5 text-emerald-500"></i>
                   Кол-во сделок аренда
                 </td>
-                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Сделки аренда', 'Новобудови', 1)">1</td>
-                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Сделки аренда', 'Вторинне', 2)">2</td>
-                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Сделки аренда', 'Комерція', 1)">1</td>
-                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Сделки аренда', 'Земля', 0)">0</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Закриті угоди (оренда)', 'Новобудови', 1)">1</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Закриті угоди (оренда)', 'Вторинне', 2)">2</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Закриті угоди (оренда)', 'Комерція', 1)">1</td>
+                <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Закриті угоди (оренда)', 'Земля', 0)">0</td>
                 <td class="py-2 px-4 text-center font-mono font-black text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800/50">4 🔑</td>
               </tr>
               <!-- 15 -->
               <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
                 <td class="py-2.5 px-4 font-bold text-gray-900 dark:text-white flex items-center gap-2">
                   <i data-lucide="dollar-sign" class="w-3.5 h-3.5 text-emerald-600"></i>
-                  Прибыль по продаже
+                  Комісійні / Прибуток (продаж)
                 </td>
                 <td class="py-2.5 px-3 text-center font-mono font-bold text-emerald-600 dark:text-emerald-400" id="profit_sale_nov">$2,400</td>
                 <td class="py-2.5 px-3 text-center font-mono font-bold text-emerald-600 dark:text-emerald-400" id="profit_sale_vtor">$2,100</td>
@@ -982,7 +1019,7 @@
               <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
                 <td class="py-2.5 px-4 font-bold text-gray-900 dark:text-white flex items-center gap-2">
                   <i data-lucide="coins" class="w-3.5 h-3.5 text-blue-600"></i>
-                  Прибыль по аренде
+                  Комісійні / Прибуток (оренда)
                 </td>
                 <td class="py-2.5 px-3 text-center font-mono font-bold text-blue-600 dark:text-blue-400" id="profit_rent_nov">$600</td>
                 <td class="py-2.5 px-3 text-center font-mono font-bold text-blue-600 dark:text-blue-400" id="profit_rent_vtor">$1,100</td>
@@ -1006,6 +1043,7 @@
 
             </tbody>
           </table>
+        </div>
         </div>
       </div>
 
@@ -2295,19 +2333,19 @@
           <td colspan="6" class="py-1.5 px-4 font-bold text-[11px] text-gray-400 uppercase tracking-wider">База об'єктів у роботі</td>
         </tr>
         <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
-          <td class="py-2 px-4 flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>Кол-во объектов продажа</td>
-          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Кол-во объектов продажа', 'Новобудови', ${objSale[0]})">${objSale[0]}</td>
-          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Кол-во объектов продажа', 'Вторинне', ${objSale[1]})">${objSale[1]}</td>
-          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Кол-во объектов продажа', 'Комерція', ${objSale[2]})">${objSale[2]}</td>
-          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Кол-во объектов продажа', 'Земля', ${objSale[3]})">${objSale[3]}</td>
+          <td class="py-2 px-4 flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>Об'єкти на продаж</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Об'єкти на продаж', 'Новобудови', ${objSale[0]})">${objSale[0]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Об'єкти на продаж', 'Вторинне', ${objSale[1]})">${objSale[1]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Об'єкти на продаж', 'Комерція', ${objSale[2]})">${objSale[2]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Об'єкти на продаж', 'Земля', ${objSale[3]})">${objSale[3]}</td>
           <td class="py-2 px-4 text-center font-mono font-black text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800/50">${sum(objSale)}</td>
         </tr>
         <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
-          <td class="py-2 px-4 flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-sky-500"></span>Кол-во объектов в аренде</td>
-          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Кол-во объектов в аренде', 'Новобудови', ${objRent[0]})">${objRent[0]}</td>
-          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Кол-во объектов в аренде', 'Вторинне', ${objRent[1]})">${objRent[1]}</td>
-          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Кол-во объектов в аренде', 'Комерція', ${objRent[2]})">${objRent[2]}</td>
-          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Кол-во объектов в аренде', 'Земля', ${objRent[3]})">${objRent[3]}</td>
+          <td class="py-2 px-4 flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-sky-500"></span>Об'єкти в оренду</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Об'єкти в оренду', 'Новобудови', ${objRent[0]})">${objRent[0]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Об'єкти в оренду', 'Вторинне', ${objRent[1]})">${objRent[1]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Об'єкти в оренду', 'Комерція', ${objRent[2]})">${objRent[2]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Об'єкти в оренду', 'Земля', ${objRent[3]})">${objRent[3]}</td>
           <td class="py-2 px-4 text-center font-mono font-black text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800/50">${sum(objRent)}</td>
         </tr>
 
@@ -2315,7 +2353,7 @@
           <td colspan="6" class="py-1.5 px-4 font-bold text-[11px] text-gray-400 uppercase tracking-wider">Робота з власниками</td>
         </tr>
         <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
-          <td class="py-2 px-4 flex items-center gap-2"><i data-lucide="handshake" class="w-3.5 h-3.5 text-indigo-500"></i>Кол-во встреч собственник продажа</td>
+          <td class="py-2 px-4 flex items-center gap-2"><i data-lucide="handshake" class="w-3.5 h-3.5 text-indigo-500"></i>Зустрічі з власниками (продаж)</td>
           <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Встречи собственник продажа', 'Новобудови', ${meetSale[0]})">${meetSale[0]}</td>
           <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Встречи собственник продажа', 'Вторинне', ${meetSale[1]})">${meetSale[1]}</td>
           <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Встречи собственник продажа', 'Комерція', ${meetSale[2]})">${meetSale[2]}</td>
@@ -2323,7 +2361,7 @@
           <td class="py-2 px-4 text-center font-mono font-black text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800/50">${sum(meetSale)}</td>
         </tr>
         <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
-          <td class="py-2 px-4 flex items-center gap-2"><i data-lucide="calendar" class="w-3.5 h-3.5 text-indigo-500"></i>Кол-во встреч собственник аренда</td>
+          <td class="py-2 px-4 flex items-center gap-2"><i data-lucide="calendar" class="w-3.5 h-3.5 text-indigo-500"></i>Зустрічі з власниками (оренда)</td>
           <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Встречи собственник аренда', 'Новобудови', ${meetRent[0]})">${meetRent[0]}</td>
           <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Встречи собственник аренда', 'Вторинне', ${meetRent[1]})">${meetRent[1]}</td>
           <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Встречи собственник аренда', 'Комерція', ${meetRent[2]})">${meetRent[2]}</td>
@@ -2331,7 +2369,7 @@
           <td class="py-2 px-4 text-center font-mono font-black text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800/50">${sum(meetRent)}</td>
         </tr>
         <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition bg-amber-50/30 dark:bg-amber-950/10">
-          <td class="py-2 px-4 font-bold text-amber-900 dark:text-amber-300 flex items-center gap-2"><i data-lucide="star" class="w-3.5 h-3.5 text-amber-500 fill-amber-500"></i>Кол-во эксклюзивных договоров</td>
+          <td class="py-2 px-4 font-bold text-amber-900 dark:text-amber-300 flex items-center gap-2"><i data-lucide="star" class="w-3.5 h-3.5 text-amber-500 fill-amber-500"></i>Ексклюзивні договори</td>
           <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Эксклюзивные договоры', 'Новобудови', ${exclusive[0]})">${exclusive[0]}</td>
           <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Эксклюзивные договоры', 'Вторинне', ${exclusive[1]})">${exclusive[1]}</td>
           <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Эксклюзивные договоры', 'Комерція', ${exclusive[2]})">${exclusive[2]}</td>
@@ -2343,7 +2381,7 @@
           <td colspan="6" class="py-1.5 px-4 font-bold text-[11px] text-gray-400 uppercase tracking-wider">Маркетинг та реклама</td>
         </tr>
         <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
-          <td class="py-2 px-4 flex items-center gap-2"><i data-lucide="megaphone" class="w-3.5 h-3.5 text-purple-500"></i>Кол-во реклам по продаже</td>
+          <td class="py-2 px-4 flex items-center gap-2"><i data-lucide="megaphone" class="w-3.5 h-3.5 text-purple-500"></i>Реклама на порталах (продаж)</td>
           <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Реклама продажа', 'Новобудови', ${adsSale[0]})">${adsSale[0]}</td>
           <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Реклама продажа', 'Вторинне', ${adsSale[1]})">${adsSale[1]}</td>
           <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Реклама продажа', 'Комерція', ${adsSale[2]})">${adsSale[2]}</td>
@@ -2351,7 +2389,7 @@
           <td class="py-2 px-4 text-center font-mono font-black text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800/50">${sum(adsSale)}</td>
         </tr>
         <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
-          <td class="py-2 px-4 flex items-center gap-2"><i data-lucide="share" class="w-3.5 h-3.5 text-purple-500"></i>Кол-во реклам по аренде</td>
+          <td class="py-2 px-4 flex items-center gap-2"><i data-lucide="share" class="w-3.5 h-3.5 text-purple-500"></i>Реклама на порталах (оренда)</td>
           <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Реклама аренда', 'Новобудови', ${adsRent[0]})">${adsRent[0]}</td>
           <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Реклама аренда', 'Вторинне', ${adsRent[1]})">${adsRent[1]}</td>
           <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Реклама аренда', 'Комерція', ${adsRent[2]})">${adsRent[2]}</td>
@@ -2363,7 +2401,7 @@
           <td colspan="6" class="py-1.5 px-4 font-bold text-[11px] text-gray-400 uppercase tracking-wider">Робота з клієнтами та попит</td>
         </tr>
         <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
-          <td class="py-2 px-4 flex items-center gap-2"><i data-lucide="file-text" class="w-3.5 h-3.5 text-blue-500"></i>Кол-во заявок продажа</td>
+          <td class="py-2 px-4 flex items-center gap-2"><i data-lucide="file-text" class="w-3.5 h-3.5 text-blue-500"></i>Заявки від покупців</td>
           <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Заявки продажа', 'Новобудови', ${leadsSale[0]})">${leadsSale[0]}</td>
           <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Заявки продажа', 'Вторинне', ${leadsSale[1]})">${leadsSale[1]}</td>
           <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Заявки продажа', 'Комерція', ${leadsSale[2]})">${leadsSale[2]}</td>
@@ -2371,7 +2409,7 @@
           <td class="py-2 px-4 text-center font-mono font-black text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800/50">${sum(leadsSale)}</td>
         </tr>
         <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
-          <td class="py-2 px-4 flex items-center gap-2"><i data-lucide="inbox" class="w-3.5 h-3.5 text-blue-500"></i>Кол-во заявок аренда</td>
+          <td class="py-2 px-4 flex items-center gap-2"><i data-lucide="inbox" class="w-3.5 h-3.5 text-blue-500"></i>Заявки на оренду</td>
           <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Заявки аренда', 'Новобудови', ${leadsRent[0]})">${leadsRent[0]}</td>
           <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Заявки аренда', 'Вторинне', ${leadsRent[1]})">${leadsRent[1]}</td>
           <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Заявки аренда', 'Комерція', ${leadsRent[2]})">${leadsRent[2]}</td>
@@ -2379,7 +2417,7 @@
           <td class="py-2 px-4 text-center font-mono font-black text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800/50">${sum(leadsRent)}</td>
         </tr>
         <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
-          <td class="py-2 px-4 flex items-center gap-2"><i data-lucide="eye" class="w-3.5 h-3.5 text-teal-500"></i>Кол-во показов продажа</td>
+          <td class="py-2 px-4 flex items-center gap-2"><i data-lucide="eye" class="w-3.5 h-3.5 text-teal-500"></i>Покази об'єктів (продаж)</td>
           <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Показы продажа', 'Новобудови', ${showSale[0]})">${showSale[0]}</td>
           <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Показы продажа', 'Вторинне', ${showSale[1]})">${showSale[1]}</td>
           <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Показы продажа', 'Комерція', ${showSale[2]})">${showSale[2]}</td>
@@ -2387,7 +2425,7 @@
           <td class="py-2 px-4 text-center font-mono font-black text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800/50">${sum(showSale)}</td>
         </tr>
         <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
-          <td class="py-2 px-4 flex items-center gap-2"><i data-lucide="eye-off" class="w-3.5 h-3.5 text-teal-500"></i>Кол-во показов аренда</td>
+          <td class="py-2 px-4 flex items-center gap-2"><i data-lucide="eye-off" class="w-3.5 h-3.5 text-teal-500"></i>Покази об'єктів (оренда)</td>
           <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Показы аренда', 'Новобудови', ${showRent[0]})">${showRent[0]}</td>
           <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Показы аренда', 'Вторинне', ${showRent[1]})">${showRent[1]}</td>
           <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Показы аренда', 'Комерція', ${showRent[2]})">${showRent[2]}</td>
@@ -2400,30 +2438,30 @@
         </tr>
         <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition bg-amber-50/20 dark:bg-amber-950/10">
           <td class="py-2 px-4 font-bold text-amber-800 dark:text-amber-300 flex items-center gap-2"><i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-amber-500"></i>Кол-во задатков</td>
-          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Задатки', 'Новобудови', ${deposits[0]})">${deposits[0]}</td>
-          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Задатки', 'Вторинне', ${deposits[1]})">${deposits[1]}</td>
-          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Задатки', 'Комерція', ${deposits[2]})">${deposits[2]}</td>
-          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Задатки', 'Земля', ${deposits[3]})">${deposits[3]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Завдатки та бронювання', 'Новобудови', ${deposits[0]})">${deposits[0]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Завдатки та бронювання', 'Вторинне', ${deposits[1]})">${deposits[1]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Завдатки та бронювання', 'Комерція', ${deposits[2]})">${deposits[2]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Завдатки та бронювання', 'Земля', ${deposits[3]})">${deposits[3]}</td>
           <td class="py-2 px-4 text-center font-mono font-black text-amber-600 dark:text-amber-400 bg-amber-100/50 dark:bg-amber-950/40">${sum(deposits)} 🤝</td>
         </tr>
         <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition bg-emerald-50/20 dark:bg-emerald-950/10">
           <td class="py-2 px-4 font-bold text-emerald-800 dark:text-emerald-300 flex items-center gap-2"><i data-lucide="award" class="w-3.5 h-3.5 text-emerald-500"></i>Кол-во сделок продажа</td>
-          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Сделки продажа', 'Новобудови', ${dealsSale[0]})">${dealsSale[0]}</td>
-          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Сделки продажа', 'Вторинне', ${dealsSale[1]})">${dealsSale[1]}</td>
-          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Сделки продажа', 'Комерція', ${dealsSale[2]})">${dealsSale[2]}</td>
-          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Сделки продажа', 'Земля', ${dealsSale[3]})">${dealsSale[3]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Закриті угоди (продаж)', 'Новобудови', ${dealsSale[0]})">${dealsSale[0]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Закриті угоди (продаж)', 'Вторинне', ${dealsSale[1]})">${dealsSale[1]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Закриті угоди (продаж)', 'Комерція', ${dealsSale[2]})">${dealsSale[2]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Закриті угоди (продаж)', 'Земля', ${dealsSale[3]})">${dealsSale[3]}</td>
           <td class="py-2 px-4 text-center font-mono font-black text-emerald-600 dark:text-emerald-400 bg-emerald-100/50 dark:bg-emerald-950/40">${sum(dealsSale)} 🏆</td>
         </tr>
         <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
           <td class="py-2 px-4 flex items-center gap-2"><i data-lucide="key" class="w-3.5 h-3.5 text-emerald-500"></i>Кол-во сделок аренда</td>
-          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Сделки аренда', 'Новобудови', ${dealsRent[0]})">${dealsRent[0]}</td>
-          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Сделки аренда', 'Вторинне', ${dealsRent[1]})">${dealsRent[1]}</td>
-          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Сделки аренда', 'Комерція', ${dealsRent[2]})">${dealsRent[2]}</td>
-          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Сделки аренда', 'Земля', ${dealsRent[3]})">${dealsRent[3]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-blue-600" onclick="inspectMetric('Закриті угоди (оренда)', 'Новобудови', ${dealsRent[0]})">${dealsRent[0]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-emerald-600" onclick="inspectMetric('Закриті угоди (оренда)', 'Вторинне', ${dealsRent[1]})">${dealsRent[1]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-purple-600" onclick="inspectMetric('Закриті угоди (оренда)', 'Комерція', ${dealsRent[2]})">${dealsRent[2]}</td>
+          <td class="py-2 px-3 text-center font-mono font-bold cursor-pointer hover:text-amber-600" onclick="inspectMetric('Закриті угоди (оренда)', 'Земля', ${dealsRent[3]})">${dealsRent[3]}</td>
           <td class="py-2 px-4 text-center font-mono font-black text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800/50">${sum(dealsRent)} 🔑</td>
         </tr>
         <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
-          <td class="py-2.5 px-4 font-bold text-gray-900 dark:text-white flex items-center gap-2"><i data-lucide="dollar-sign" class="w-3.5 h-3.5 text-emerald-600"></i>Прибыль по продаже</td>
+          <td class="py-2.5 px-4 font-bold text-gray-900 dark:text-white flex items-center gap-2"><i data-lucide="dollar-sign" class="w-3.5 h-3.5 text-emerald-600"></i>Комісійні / Прибуток (продаж)</td>
           <td class="py-2.5 px-3 text-center font-mono font-bold text-emerald-600 dark:text-emerald-400">${fmtMoney(profitSale[0])}</td>
           <td class="py-2.5 px-3 text-center font-mono font-bold text-emerald-600 dark:text-emerald-400">${fmtMoney(profitSale[1])}</td>
           <td class="py-2.5 px-3 text-center font-mono text-gray-400">${fmtMoney(profitSale[2])}</td>
@@ -2431,7 +2469,7 @@
           <td class="py-2.5 px-4 text-center font-mono font-black text-emerald-600 dark:text-emerald-400 bg-emerald-50/70 dark:bg-emerald-950/40">${fmtMoney(sum(profitSale))}</td>
         </tr>
         <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40 transition">
-          <td class="py-2.5 px-4 font-bold text-gray-900 dark:text-white flex items-center gap-2"><i data-lucide="coins" class="w-3.5 h-3.5 text-blue-600"></i>Прибыль по аренде</td>
+          <td class="py-2.5 px-4 font-bold text-gray-900 dark:text-white flex items-center gap-2"><i data-lucide="coins" class="w-3.5 h-3.5 text-blue-600"></i>Комісійні / Прибуток (оренда)</td>
           <td class="py-2.5 px-3 text-center font-mono font-bold text-blue-600 dark:text-blue-400">${fmtMoney(profitRent[0])}</td>
           <td class="py-2.5 px-3 text-center font-mono font-bold text-blue-600 dark:text-blue-400">${fmtMoney(profitRent[1])}</td>
           <td class="py-2.5 px-3 text-center font-mono font-bold text-blue-600 dark:text-blue-400">${fmtMoney(profitRent[2])}</td>
@@ -3583,6 +3621,31 @@
       }
 
                         // MODE 3: MULTI-LINE SPLINE GRAPH (4 ОКРЕМІ ЛІНІЇ З ЧЕКБОКСАМИ ТА ФІЛЬТРАЦІЄЮ)
+      if (mode === 'candles') {
+        const dates = ['23 вер.', '25 вер.', '27 вер.', '29 вер.', '01 жов.', '03 жов.', '05 жов.', '06 жов.'];
+        const candles = [
+          { date: '23 вер.', open: 5, high: 8, low: 4, close: 7 },
+          { date: '25 вер.', open: 7, high: 10, low: 6, close: 9 },
+          { date: '27 вер.', open: 9, high: 11, low: 7, close: 8 },
+          { date: '29 вер.', open: 8, high: 12, low: 8, close: 11 },
+          { date: '01 жов.', open: 11, high: 13, low: 9, close: 10 },
+          { date: '03 жов.', open: 10, high: 14, low: 10, close: 13 },
+          { date: '05 жов.', open: 13, high: 15, low: 11, close: 14 },
+          { date: '06 жов.', open: 14, high: 16, low: 12, close: 15 }
+        ];
+        const svgContent = renderCandlestickChartSvg({ dates, candles, w: 520, h: 190, yLabel: 'Дій / Свічки', blockKey: 'objects' });
+        c.innerHTML = `
+          <div class="space-y-3">
+            <div class="flex items-center justify-between p-2.5 rounded-xl bg-gray-50/90 dark:bg-gray-800/80 border border-gray-200/80 dark:border-gray-700/80 text-xs">
+              <span class="font-bold text-gray-800 dark:text-gray-200">🕯️ Японські свічки (Діапазон активності по об'єктах: Open / High / Low / Close)</span>
+              <span class="font-mono text-emerald-600 font-bold">8 днів</span>
+            </div>
+            <div class="relative w-full h-48 select-none">${svgContent}</div>
+          </div>
+        `;
+        return;
+      }
+
       if (mode === 'charts') {
         const dates = ['23 вер.', '25 вер.', '27 вер.', '29 вер.', '01 жов.', '03 жов.', '05 жов.', '06 жов.'];
         const allSeries = [
@@ -3593,7 +3656,7 @@
         ];
 
         const activeSeries = allSeries.filter(s => isSeriesActive('objects', s.id));
-        const svgContent = renderMultiLineSplineSvg({ dates, series: activeSeries, w: 520, h: 190, yLabel: 'Дій / день' });
+        const svgContent = renderMultiLineSplineSvg({ dates, series: activeSeries, w: 520, h: 190, yLabel: 'Дій / день', blockKey: 'objects' });
 
         c.innerHTML = `
           <div class="space-y-3">
@@ -3752,6 +3815,31 @@
       }
 
                   // MODE 3: MULTI-LINE SPLINE GRAPH (3 ОКРЕМІ ЛІНІЇ З ЧЕКБОКСАМИ ТА ФІЛЬТРАЦІЄЮ)
+      if (mode === 'candles') {
+        const dates = ['23 вер.', '25 вер.', '27 вер.', '29 вер.', '01 жов.', '03 жов.', '05 жов.', '06 жов.'];
+        const candles = [
+          { date: '23 вер.', open: 3, high: 6, low: 2, close: 5 },
+          { date: '25 вер.', open: 5, high: 7, low: 4, close: 6 },
+          { date: '27 вер.', open: 6, high: 8, low: 5, close: 7 },
+          { date: '29 вер.', open: 7, high: 9, low: 6, close: 8 },
+          { date: '01 жов.', open: 8, high: 10, low: 7, close: 9 },
+          { date: '03 жов.', open: 9, high: 11, low: 8, close: 10 },
+          { date: '05 жов.', open: 10, high: 12, low: 9, close: 11 },
+          { date: '06 жов.', open: 11, high: 13, low: 10, close: 12 }
+        ];
+        const svgContent = renderCandlestickChartSvg({ dates, candles, w: 520, h: 190, yLabel: 'Клієнти / Свічки', blockKey: 'clients' });
+        c.innerHTML = `
+          <div class="space-y-3">
+            <div class="flex items-center justify-between p-2.5 rounded-xl bg-gray-50/90 dark:bg-gray-800/80 border border-gray-200/80 dark:border-gray-700/80 text-xs">
+              <span class="font-bold text-gray-800 dark:text-gray-200">🕯️ Японські свічки (Діапазон роботи з клієнтами)</span>
+              <span class="font-mono text-blue-600 font-bold">8 днів</span>
+            </div>
+            <div class="relative w-full h-48 select-none">${svgContent}</div>
+          </div>
+        `;
+        return;
+      }
+
       if (mode === 'charts') {
         const dates = ['23 вер.', '25 вер.', '27 вер.', '29 вер.', '01 жов.', '03 жов.', '05 жов.', '06 жов.'];
         const allSeries = [
@@ -3761,7 +3849,7 @@
         ];
 
         const activeSeries = allSeries.filter(s => isSeriesActive('clients', s.id));
-        const svgContent = renderMultiLineSplineSvg({ dates, series: activeSeries, w: 520, h: 190, yLabel: 'Заявки / день' });
+        const svgContent = renderMultiLineSplineSvg({ dates, series: activeSeries, w: 520, h: 190, yLabel: 'Заявки / день', blockKey: 'clients' });
 
         c.innerHTML = `
           <div class="space-y-3">
@@ -4308,6 +4396,31 @@
       }
 
                   // MODE 3: MULTI-LINE SPLINE GRAPH (3 ОКРЕМІ ЛІНІЇ З ЧЕКБОКСАМИ ТА ФІЛЬТРАЦІЄЮ)
+      if (mode === 'candles') {
+        const dates = ['23 вер.', '25 вер.', '27 вер.', '29 вер.', '01 жов.', '03 жов.', '05 жов.', '06 жов.'];
+        const candles = [
+          { date: '23 вер.', open: 0, high: 1, low: 0, close: 1 },
+          { date: '25 вер.', open: 1, high: 2, low: 1, close: 2 },
+          { date: '27 вер.', open: 2, high: 2, low: 1, close: 2 },
+          { date: '29 вер.', open: 2, high: 3, low: 2, close: 3 },
+          { date: '01 жов.', open: 3, high: 3, low: 2, close: 3 },
+          { date: '03 жов.', open: 3, high: 4, low: 3, close: 4 },
+          { date: '05 жов.', open: 4, high: 5, low: 4, close: 5 },
+          { date: '06 жов.', open: 5, high: 6, low: 5, close: 6 }
+        ];
+        const svgContent = renderCandlestickChartSvg({ dates, candles, w: 520, h: 190, yLabel: 'Угоди / Свічки', blockKey: 'deals' });
+        c.innerHTML = `
+          <div class="space-y-3">
+            <div class="flex items-center justify-between p-2.5 rounded-xl bg-gray-50/90 dark:bg-gray-800/80 border border-gray-200/80 dark:border-gray-700/80 text-xs">
+              <span class="font-bold text-gray-800 dark:text-gray-200">🕯️ Японські свічки (Динаміка закриття угод та завдатків)</span>
+              <span class="font-mono text-amber-600 font-bold">8 днів</span>
+            </div>
+            <div class="relative w-full h-48 select-none">${svgContent}</div>
+          </div>
+        `;
+        return;
+      }
+
       if (mode === 'charts') {
         const dates = ['23 вер.', '25 вер.', '27 вер.', '29 вер.', '01 жов.', '03 жов.', '05 жов.', '06 жов.'];
         const allSeries = [
@@ -4415,7 +4528,7 @@
       state.blockModes.deals = mode;
 
       // Update Toolbar Buttons
-      const modes = ['charts', 'pie', 'bars'];
+      const modes = ['charts', 'candles', 'pie', 'bars'];
       modes.forEach(m => {
         const btn = document.getElementById(`viewMode_${m}`);
         if (!btn) return;
@@ -4428,7 +4541,7 @@
 
       // Update Individual Card Button states
       ['objects', 'clients', 'marketing', 'deals'].forEach(block => {
-        ['bars', 'pie', 'charts'].forEach(m => {
+        ['bars', 'pie', 'charts', 'candles'].forEach(m => {
           const b = document.getElementById(`btn_mode_${block}_${m}`);
           if (b) {
             b.className = m === mode 
@@ -4446,7 +4559,7 @@
       if (mode === 'circles') mode = 'pie';
       if (mode === 'cards') mode = 'bars';
       state.blockModes[block] = mode;
-      ['bars', 'pie', 'charts'].forEach(m => {
+      ['bars', 'pie', 'charts', 'candles'].forEach(m => {
         const b = document.getElementById(`btn_mode_${block}_${m}`);
         if (b) {
           b.className = m === mode 
@@ -4689,6 +4802,251 @@
     }
 
     // Statistics View Mode Switcher (Matching KPI 1-v-1: charts | pie | bars)
+    // ═════════════════════════════════════════════════════════════════════════
+    // VISUAL CATEGORY MATRIX CARDS (5 SECTIONS: OBJECTS, OWNERS, ADS, LEADS, DEALS)
+    // ═════════════════════════════════════════════════════════════════════════
+    function setMatrixSubMode(subMode) {
+      const vCards = document.getElementById('matrixSubView_cards');
+      const vTable = document.getElementById('matrixSubView_table');
+      const btnCards = document.getElementById('btn_matrix_cards');
+      const btnTable = document.getElementById('btn_matrix_table');
+
+      if (subMode === 'cards') {
+        if (vCards) vCards.classList.remove('hidden');
+        if (vTable) vTable.classList.add('hidden');
+        if (btnCards) btnCards.className = "px-3 py-1.5 rounded-lg font-bold bg-indigo-600 text-white shadow-xs transition cursor-pointer flex items-center gap-1.5";
+        if (btnTable) btnTable.className = "px-3 py-1.5 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition cursor-pointer flex items-center gap-1.5";
+        renderMatrixVisualCards();
+      } else {
+        if (vCards) vCards.classList.add('hidden');
+        if (vTable) vTable.classList.remove('hidden');
+        renderMatrixVisualCards();
+        if (btnCards) btnCards.className = "px-3 py-1.5 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition cursor-pointer flex items-center gap-1.5";
+        if (btnTable) btnTable.className = "px-3 py-1.5 rounded-lg font-bold bg-indigo-600 text-white shadow-xs transition cursor-pointer flex items-center gap-1.5";
+      }
+      renderIcons();
+    }
+
+    function renderMatrixVisualCards() {
+      const container = document.getElementById('matrixSubView_cards');
+      if (!container) return;
+
+      const isUah = (state.currency === 'UAH');
+      const factor = isUah ? 41.0 : 1.0;
+      const curSign = isUah ? '₴' : '$';
+
+      const fmt = (val) => isUah ? `${curSign}${(val * factor).toLocaleString()}` : `${curSign}${val.toLocaleString()}`;
+
+      container.innerHTML = `
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+          <!-- 1. БАЗА ОБ'ЄКТІВ У РОБОТІ -->
+          <div class="bg-gray-50/80 dark:bg-gray-800/40 p-5 rounded-2xl border border-gray-200 dark:border-gray-700/80 space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-gray-200 dark:border-gray-700">
+              <div class="flex items-center gap-2.5">
+                <div class="w-7 h-7 rounded-lg bg-emerald-600 text-white flex items-center justify-center font-bold">
+                  <i data-lucide="home" class="w-4 h-4"></i>
+                </div>
+                <div>
+                  <h4 class="font-extrabold text-sm text-gray-900 dark:text-white">1. База об'єктів у роботі</h4>
+                  <span class="text-[11px] text-gray-400">Продаж (85) та Оренда (33)</span>
+                </div>
+              </div>
+              <span class="px-3 py-1 rounded-full text-xs font-mono font-black bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-200">
+                118 об'єктів
+              </span>
+            </div>
+            <div class="space-y-2 text-xs">
+              <div class="flex items-center justify-between font-bold text-gray-700 dark:text-gray-300">
+                <span>🏙️ Новобудови: 36 об'єктів</span>
+                <span class="font-mono text-blue-600">30.5%</span>
+              </div>
+              <div class="w-full bg-gray-200 dark:bg-gray-700 h-2 rounded-full overflow-hidden">
+                <div class="h-full bg-blue-500 rounded-full" style="width: 30.5%;"></div>
+              </div>
+
+              <div class="flex items-center justify-between font-bold text-gray-700 dark:text-gray-300 pt-1">
+                <span>🏠 Вторинне: 59 об'єктів</span>
+                <span class="font-mono text-emerald-600">50.0%</span>
+              </div>
+              <div class="w-full bg-gray-200 dark:bg-gray-700 h-2 rounded-full overflow-hidden">
+                <div class="h-full bg-emerald-500 rounded-full" style="width: 50.0%;"></div>
+              </div>
+
+              <div class="flex items-center justify-between font-bold text-gray-700 dark:text-gray-300 pt-1">
+                <span>🏢 Комерція: 16 об'єктів</span>
+                <span class="font-mono text-purple-600">13.5%</span>
+              </div>
+              <div class="w-full bg-gray-200 dark:bg-gray-700 h-2 rounded-full overflow-hidden">
+                <div class="h-full bg-purple-500 rounded-full" style="width: 13.5%;"></div>
+              </div>
+
+              <div class="flex items-center justify-between font-bold text-gray-700 dark:text-gray-300 pt-1">
+                <span>🌱 Земля: 7 об'єктів</span>
+                <span class="font-mono text-amber-600">6.0%</span>
+              </div>
+              <div class="w-full bg-gray-200 dark:bg-gray-700 h-2 rounded-full overflow-hidden">
+                <div class="h-full bg-amber-500 rounded-full" style="width: 6.0%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. РОБОТА З ВЛАСНИКАМИ ТА ЕКСКЛЮЗИВИ -->
+          <div class="bg-gray-50/80 dark:bg-gray-800/40 p-5 rounded-2xl border border-gray-200 dark:border-gray-700/80 space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-gray-200 dark:border-gray-700">
+              <div class="flex items-center gap-2.5">
+                <div class="w-7 h-7 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-bold">
+                  <i data-lucide="handshake" class="w-4 h-4"></i>
+                </div>
+                <div>
+                  <h4 class="font-extrabold text-sm text-gray-900 dark:text-white">2. Робота з власниками</h4>
+                  <span class="text-[11px] text-gray-400">18 зустрічей (10 продаж / 8 оренда)</span>
+                </div>
+              </div>
+              <span class="px-3 py-1 rounded-full text-xs font-mono font-black bg-indigo-100 dark:bg-indigo-950/80 text-indigo-800 dark:text-indigo-300 border border-indigo-200">
+                18 зустрічей
+              </span>
+            </div>
+            <!-- Golden Exclusive Contracts Highlight Box -->
+            <div class="p-3.5 rounded-xl bg-gradient-to-r from-amber-50 to-amber-100/60 dark:from-amber-950/40 dark:to-transparent border border-amber-300 dark:border-amber-800 space-y-2">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <i data-lucide="star" class="w-4 h-4 text-amber-500 fill-amber-500"></i>
+                  <span class="font-extrabold text-xs text-amber-900 dark:text-amber-200 uppercase tracking-wider">Ексклюзивні договори</span>
+                </div>
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-mono font-black bg-amber-500 text-white">5 ⭐</span>
+              </div>
+              <div class="grid grid-cols-4 gap-2 text-center text-[10px] font-mono pt-1">
+                <div class="p-1 rounded bg-white/70 dark:bg-gray-800/60 border border-amber-200 dark:border-amber-900">
+                  <span class="block text-gray-400">Новобудови</span>
+                  <strong class="text-xs text-gray-900 dark:text-white font-bold">1</strong>
+                </div>
+                <div class="p-1 rounded bg-white/70 dark:bg-gray-800/60 border border-amber-200 dark:border-amber-900">
+                  <span class="block text-gray-400">Вторинне</span>
+                  <strong class="text-xs text-amber-600 dark:text-amber-400 font-bold">3</strong>
+                </div>
+                <div class="p-1 rounded bg-white/70 dark:bg-gray-800/60 border border-amber-200 dark:border-amber-900">
+                  <span class="block text-gray-400">Комерція</span>
+                  <strong class="text-xs text-gray-900 dark:text-white font-bold">1</strong>
+                </div>
+                <div class="p-1 rounded bg-white/70 dark:bg-gray-800/60 border border-amber-200 dark:border-amber-900">
+                  <span class="block text-gray-400">Земля</span>
+                  <strong class="text-xs text-gray-400 font-bold">0</strong>
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center justify-between text-xs text-gray-500 font-medium">
+              <span>Конверсія зустрічей в ексклюзив:</span>
+              <strong class="font-mono text-amber-600 font-bold">27.7%</strong>
+            </div>
+          </div>
+
+          <!-- 3. МАРКЕТИНГ ТА РЕКЛАМА -->
+          <div class="bg-gray-50/80 dark:bg-gray-800/40 p-5 rounded-2xl border border-gray-200 dark:border-gray-700/80 space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-gray-200 dark:border-gray-700">
+              <div class="flex items-center gap-2.5">
+                <div class="w-7 h-7 rounded-lg bg-purple-600 text-white flex items-center justify-center font-bold">
+                  <i data-lucide="megaphone" class="w-4 h-4"></i>
+                </div>
+                <div>
+                  <h4 class="font-extrabold text-sm text-gray-900 dark:text-white">3. Маркетинг та реклама</h4>
+                  <span class="text-[11px] text-gray-400">Публікації на OLX, DOM.RIA, Рієлтор.юа</span>
+                </div>
+              </div>
+              <span class="px-3 py-1 rounded-full text-xs font-mono font-black bg-purple-100 dark:bg-purple-950/80 text-purple-800 dark:text-purple-300 border border-purple-200">
+                70 оголошень
+              </span>
+            </div>
+            <div class="grid grid-cols-2 gap-3 text-xs font-mono">
+              <div class="p-3 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                <span class="text-[10px] uppercase font-bold text-gray-400 block">Продаж об'єктів</span>
+                <strong class="text-lg font-black text-purple-600">48</strong>
+                <span class="text-[10px] text-gray-400 block mt-0.5">Вторинне 24 • Новобуд 16</span>
+              </div>
+              <div class="p-3 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                <span class="text-[10px] uppercase font-bold text-gray-400 block">Оренда об'єктів</span>
+                <strong class="text-lg font-black text-indigo-600">22</strong>
+                <span class="text-[10px] text-gray-400 block mt-0.5">Вторинне 12 • Новобуд 6</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. ПОПИТ ТА КЛІЄНТИ -->
+          <div class="bg-gray-50/80 dark:bg-gray-800/40 p-5 rounded-2xl border border-gray-200 dark:border-gray-700/80 space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-gray-200 dark:border-gray-700">
+              <div class="flex items-center gap-2.5">
+                <div class="w-7 h-7 rounded-lg bg-sky-600 text-white flex items-center justify-center font-bold">
+                  <i data-lucide="user-check" class="w-4 h-4"></i>
+                </div>
+                <div>
+                  <h4 class="font-extrabold text-sm text-gray-900 dark:text-white">4. Попит та робота з клієнтами</h4>
+                  <span class="text-[11px] text-gray-400">56 заявок та 36 показів</span>
+                </div>
+              </div>
+              <span class="px-3 py-1 rounded-full text-xs font-mono font-black bg-sky-100 dark:bg-sky-950/80 text-sky-800 dark:text-sky-300 border border-sky-200">
+                64.3% конв.
+              </span>
+            </div>
+            <div class="space-y-2 text-xs">
+              <div class="flex items-center justify-between p-2 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                <span class="font-bold text-gray-800 dark:text-gray-200">Заявки від покупців / орендарів</span>
+                <strong class="font-mono text-gray-900 dark:text-white font-bold">56</strong>
+              </div>
+              <div class="flex items-center justify-between p-2 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                <span class="font-bold text-gray-800 dark:text-gray-200">Проведені покази об'єктів</span>
+                <strong class="font-mono text-sky-600 font-bold">36</strong>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 5. ФІНАЛ ВОРОНКИ ТА ФІНАНСИ (FULL WIDTH EXPANDED CARD) -->
+        <div class="p-5 rounded-2xl bg-gradient-to-r from-emerald-950/90 via-emerald-900/95 to-teal-950 text-white border border-emerald-800/80 shadow-md space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-emerald-800/60">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-xl bg-emerald-500 text-white flex items-center justify-center font-black shadow-xs">
+                <i data-lucide="trophy" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <h4 class="font-black text-base text-white">5. Фінал воронки та Фінансовий результат</h4>
+                <p class="text-[11px] text-emerald-200">3 Завдатки 🤝 • 6 Закритих угод 🏆</p>
+              </div>
+            </div>
+            <div class="text-right">
+              <span class="text-[10px] uppercase font-bold text-emerald-300 block">Разом прибуток рієлтора</span>
+              <strong class="text-2xl font-black font-mono text-emerald-100">${fmt(6850)}</strong>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs font-mono">
+            <div class="p-3 rounded-xl bg-emerald-900/40 border border-emerald-700/50">
+              <span class="text-[10px] text-emerald-300 uppercase block">🏢 Новобудови</span>
+              <strong class="text-base text-white font-black block mt-1">${fmt(3000)}</strong>
+              <span class="text-[10px] text-emerald-400">43.8% доходу</span>
+            </div>
+            <div class="p-3 rounded-xl bg-emerald-900/40 border border-emerald-700/50">
+              <span class="text-[10px] text-emerald-300 uppercase block">🏠 Вторинне</span>
+              <strong class="text-base text-white font-black block mt-1">${fmt(3200)}</strong>
+              <span class="text-[10px] text-emerald-400">46.7% доходу</span>
+            </div>
+            <div class="p-3 rounded-xl bg-emerald-900/40 border border-emerald-700/50">
+              <span class="text-[10px] text-emerald-300 uppercase block">🏬 Комерція</span>
+              <strong class="text-base text-white font-black block mt-1">${fmt(650)}</strong>
+              <span class="text-[10px] text-emerald-400">9.5% доходу</span>
+            </div>
+            <div class="p-3 rounded-xl bg-emerald-900/40 border border-emerald-700/50">
+              <span class="text-[10px] text-emerald-300 uppercase block">🌱 Земля</span>
+              <strong class="text-base text-emerald-400/60 font-black block mt-1">${fmt(0)}</strong>
+              <span class="text-[10px] text-emerald-500/60">0%</span>
+            </div>
+          </div>
+        </div>
+      `;
+
+      renderIcons();
+    }
+
     function setStatsViewMode(mode) {
       if (mode === 'pro') mode = 'charts';
       if (mode === 'donut') mode = 'pie';
@@ -4722,6 +5080,7 @@
       } else if (mode === 'bars') {
         if (vPro) vPro.classList.remove('hidden');
         if (vTable) vTable.classList.remove('hidden');
+        renderMatrixVisualCards();
         if (vDonut) vDonut.classList.add('hidden');
 
         state.statsWidgetModes.myLeads = 'bars';
@@ -6092,22 +6451,22 @@
     function exportCSV() {
       const rows = [
         ["Метрика", "Новобудови", "Вторинне", "Комерція", "Земля", "Всього"],
-        ["Кол-во объектов продажа", 28, 42, 9, 6, 85],
-        ["Кол-во объектов в аренде", 8, 17, 7, 1, 33],
-        ["Кол-во встреч собственник продажа", 3, 5, 1, 1, 10],
-        ["Кол-во встреч собственник аренда", 2, 4, 2, 0, 8],
-        ["Кол-во эксклюзивных договоров", 1, 3, 1, 0, 5],
-        ["Кол-во реклам по продаже", 16, 24, 5, 3, 48],
-        ["Кол-во реклам по аренде", 6, 12, 4, 0, 22],
-        ["Кол-во заявок продажа", 14, 19, 3, 2, 38],
-        ["Кол-во заявок аренда", 5, 11, 2, 0, 18],
-        ["Кол-во показов продажа", 8, 12, 2, 1, 23],
-        ["Кол-во показов аренда", 4, 7, 2, 0, 13],
+        ["Об'єкти на продаж", 28, 42, 9, 6, 85],
+        ["Об'єкти в оренду", 8, 17, 7, 1, 33],
+        ["Зустрічі з власниками (продаж)", 3, 5, 1, 1, 10],
+        ["Зустрічі з власниками (оренда)", 2, 4, 2, 0, 8],
+        ["Ексклюзивні договори", 1, 3, 1, 0, 5],
+        ["Реклама на порталах (продаж)", 16, 24, 5, 3, 48],
+        ["Реклама на порталах (оренда)", 6, 12, 4, 0, 22],
+        ["Заявки від покупців", 14, 19, 3, 2, 38],
+        ["Заявки на оренду", 5, 11, 2, 0, 18],
+        ["Покази об'єктів (продаж)", 8, 12, 2, 1, 23],
+        ["Покази об'єктів (оренда)", 4, 7, 2, 0, 13],
         ["Кол-во задатков", 1, 2, 0, 0, 3],
         ["Кол-во сделок продажа", 1, 1, 0, 0, 2],
         ["Кол-во сделок аренда", 1, 2, 1, 0, 4],
-        ["Прибыль по продаже", 2400, 2100, 0, 0, 4500],
-        ["Прибыль по аренде", 600, 1100, 650, 0, 2350],
+        ["Комісійні / Прибуток (продаж)", 2400, 2100, 0, 0, 4500],
+        ["Комісійні / Прибуток (оренда)", 600, 1100, 650, 0, 2350],
         ["РАЗОМ ПРИБУТОК", 3000, 3200, 650, 0, 6850]
       ];
 
