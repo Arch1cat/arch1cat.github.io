@@ -1565,13 +1565,19 @@
       state.currency = curr;
       const isUah = curr === 'UAH';
       
-      document.getElementById('currUsdBtn').className = isUah 
-        ? "px-2.5 py-1 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 transition"
-        : "px-2.5 py-1 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm transition";
+      const usdBtn = document.getElementById('currUsdBtn');
+      if (usdBtn) {
+        usdBtn.className = isUah 
+          ? "px-2.5 py-1 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 transition"
+          : "px-2.5 py-1 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm transition";
+      }
 
-      document.getElementById('currUahBtn').className = isUah
-        ? "px-2.5 py-1 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm transition"
-        : "px-2.5 py-1 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 transition";
+      const uahBtn = document.getElementById('currUahBtn');
+      if (uahBtn) {
+        uahBtn.className = isUah
+          ? "px-2.5 py-1 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm transition"
+          : "px-2.5 py-1 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 transition";
+      }
 
       const mult = isUah ? state.rateUah : 1;
       const sym = isUah ? '₴' : '$';
