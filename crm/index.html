@@ -88,7 +88,7 @@
       <div class="flex items-center gap-2.5">
         <span class="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center text-white font-black text-lg shadow-sm">Y</span>
         <h1 class="font-extrabold text-base tracking-tight text-gray-900 dark:text-white">Робоче місце CRM</h1>
-        <span class="ml-2 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700">Modular Drag & Resize Grid v10.0 Active</span>
+        <span class="ml-2 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700">Unified Stats & Tactile Grid v10.5 Active</span>
       </div>
 
       <!-- Clean Theme Toggle -->
@@ -329,7 +329,7 @@
       <div id="kpi_cards_container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
         <!-- 1. РОБОТА З ОБʼЄКТОМ -->
-        <div id="card_obj" data-card-id="card_obj" draggable="true" ondragstart="handleCardDragStart(event)" ondragover="handleCardDragOver(event)" ondragleave="handleCardDragLeave(event)" ondrop="handleCardDrop(event)" class="col_span_card md:col-span-1 bg-white dark:bg-[#1A1D24] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden flex flex-col transition-all duration-300">
+        <div id="card_obj" data-card-id="card_obj" ondragstart="handleCardDragStart(event)" ondragover="handleCardDragOver(event)" ondragleave="handleCardDragLeave(event)" ondrop="handleCardDrop(event)" class="col_span_card md:col-span-1 bg-white dark:bg-[#1A1D24] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden flex flex-col transition-all duration-300">
           <div class="px-4 py-3 bg-gradient-to-r from-emerald-50 to-emerald-100/40 dark:from-emerald-950/40 dark:to-transparent border-b border-gray-200 dark:border-gray-800 flex items-center justify-between">
             <div class="flex items-center gap-2">
               <div class="w-7 h-7 rounded-lg bg-emerald-600 text-white flex items-center justify-center">
@@ -345,14 +345,15 @@
                 <button type="button" onclick="setBlockMode('objects', 'pie')" id="btn_mode_objects_pie" title="Кругова діаграма (%)" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">🥧</button>
                 <button type="button" onclick="setBlockMode('objects', 'charts')" id="btn_mode_objects_charts" title="Графік (Мульти-лінії)" class="px-1.5 py-0.5 rounded font-bold bg-emerald-600 text-white">📈</button>
               </div>
-              <!-- Width Resizer (50% vs 100%) -->
-              <button type="button" onclick="toggleCardWidth('card_obj')" id="btn_width_card_obj" title="Змінити ширину (50% / 100%)" class="p-1 rounded-lg text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition cursor-pointer">
-                <i data-lucide="maximize-2" id="icon_width_card_obj" class="w-3.5 h-3.5"></i>
+              <!-- Card Width Resizer Button -->
+              <button type="button" onclick="toggleCardWidth('card_obj')" id="btn_width_card_obj" title="Змінити ширину картки (50% або 100%)" class="px-2 py-0.5 rounded-lg text-xs font-bold bg-white/80 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 transition cursor-pointer flex items-center gap-1 shadow-2xs">
+                <i data-lucide="maximize-2" id="icon_width_card_obj" class="w-3.5 h-3.5 text-indigo-500"></i>
+                <span id="label_width_card_obj" class="text-[10px] font-mono font-bold">50%</span>
               </button>
-              <!-- Card Reorder Arrows -->
-              <div class="flex items-center text-gray-400">
-                <button type="button" onclick="moveCardUp('card_obj')" title="Перемістити вище" class="px-1 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-[10px] cursor-pointer">▲</button>
-                <button type="button" onclick="moveCardDown('card_obj')" title="Перемістити нижче" class="px-1 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-[10px] cursor-pointer">▼</button>
+              <!-- Tactile Reorder Movement Buttons -->
+              <div class="flex items-center bg-white/80 dark:bg-gray-800 p-0.5 rounded-lg border border-gray-200 dark:border-gray-700 text-xs shadow-2xs">
+                <button type="button" onclick="moveCardUp('card_obj')" title="Перемістити блок вгору ⬆" class="px-1.5 py-0.5 font-bold hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 rounded cursor-pointer transition text-[11px]">⬆</button>
+                <button type="button" onclick="moveCardDown('card_obj')" title="Перемістити блок вниз ⬇" class="px-1.5 py-0.5 font-bold hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 rounded cursor-pointer transition text-[11px]">⬇</button>
               </div>
               <!-- Collapse Button -->
               <button type="button" onclick="toggleCardCollapse('card_obj_body', 'chevron_obj')" title="Згорнути / розгорнути" class="p-1 rounded-lg text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition">
@@ -371,7 +372,7 @@
         </div>
 
         <!-- 2. РОБОТА З КЛІЄНТАМИ -->
-        <div id="card_clients" data-card-id="card_clients" draggable="true" ondragstart="handleCardDragStart(event)" ondragover="handleCardDragOver(event)" ondragleave="handleCardDragLeave(event)" ondrop="handleCardDrop(event)" class="col_span_card md:col-span-1 bg-white dark:bg-[#1A1D24] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden flex flex-col transition-all duration-300">
+        <div id="card_clients" data-card-id="card_clients" ondragstart="handleCardDragStart(event)" ondragover="handleCardDragOver(event)" ondragleave="handleCardDragLeave(event)" ondrop="handleCardDrop(event)" class="col_span_card md:col-span-1 bg-white dark:bg-[#1A1D24] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden flex flex-col transition-all duration-300">
           <div class="px-4 py-3 bg-gradient-to-r from-blue-50 to-blue-100/40 dark:from-blue-950/40 dark:to-transparent border-b border-gray-200 dark:border-gray-800 flex items-center justify-between">
             <div class="flex items-center gap-2">
               <div class="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center">
@@ -387,14 +388,15 @@
                 <button type="button" onclick="setBlockMode('clients', 'pie')" id="btn_mode_clients_pie" title="Кругова діаграма (%)" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">🥧</button>
                 <button type="button" onclick="setBlockMode('clients', 'charts')" id="btn_mode_clients_charts" title="Графік (Мульти-лінії)" class="px-1.5 py-0.5 rounded font-bold bg-blue-600 text-white">📈</button>
               </div>
-              <!-- Width Resizer (50% vs 100%) -->
-              <button type="button" onclick="toggleCardWidth('card_clients')" id="btn_width_card_clients" title="Змінити ширину (50% / 100%)" class="p-1 rounded-lg text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition cursor-pointer">
-                <i data-lucide="maximize-2" id="icon_width_card_clients" class="w-3.5 h-3.5"></i>
+              <!-- Card Width Resizer Button -->
+              <button type="button" onclick="toggleCardWidth('card_clients')" id="btn_width_card_clients" title="Змінити ширину картки (50% або 100%)" class="px-2 py-0.5 rounded-lg text-xs font-bold bg-white/80 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 transition cursor-pointer flex items-center gap-1 shadow-2xs">
+                <i data-lucide="maximize-2" id="icon_width_card_clients" class="w-3.5 h-3.5 text-indigo-500"></i>
+                <span id="label_width_card_clients" class="text-[10px] font-mono font-bold">50%</span>
               </button>
-              <!-- Card Reorder Arrows -->
-              <div class="flex items-center text-gray-400">
-                <button type="button" onclick="moveCardUp('card_clients')" title="Перемістити вище" class="px-1 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-[10px] cursor-pointer">▲</button>
-                <button type="button" onclick="moveCardDown('card_clients')" title="Перемістити нижче" class="px-1 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-[10px] cursor-pointer">▼</button>
+              <!-- Tactile Reorder Movement Buttons -->
+              <div class="flex items-center bg-white/80 dark:bg-gray-800 p-0.5 rounded-lg border border-gray-200 dark:border-gray-700 text-xs shadow-2xs">
+                <button type="button" onclick="moveCardUp('card_clients')" title="Перемістити блок вгору ⬆" class="px-1.5 py-0.5 font-bold hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 rounded cursor-pointer transition text-[11px]">⬆</button>
+                <button type="button" onclick="moveCardDown('card_clients')" title="Перемістити блок вниз ⬇" class="px-1.5 py-0.5 font-bold hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 rounded cursor-pointer transition text-[11px]">⬇</button>
               </div>
               <!-- Collapse Button -->
               <button type="button" onclick="toggleCardCollapse('card_clients_body', 'chevron_clients')" title="Згорнути / розгорнути" class="p-1 rounded-lg text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition">
@@ -413,7 +415,7 @@
         </div>
 
         <!-- 3. МАРКЕТИНГ (ПОРТАЛИ ТА СОЦМЕРЕЖІ) -->
-        <div id="card_marketing" data-card-id="card_marketing" draggable="true" ondragstart="handleCardDragStart(event)" ondragover="handleCardDragOver(event)" ondragleave="handleCardDragLeave(event)" ondrop="handleCardDrop(event)" class="col_span_card md:col-span-2 bg-white dark:bg-[#1A1D24] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden flex flex-col transition-all duration-300">
+        <div id="card_marketing" data-card-id="card_marketing" ondragstart="handleCardDragStart(event)" ondragover="handleCardDragOver(event)" ondragleave="handleCardDragLeave(event)" ondrop="handleCardDrop(event)" class="col_span_card md:col-span-2 bg-white dark:bg-[#1A1D24] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden flex flex-col transition-all duration-300">
           <div class="px-4 py-3 bg-gradient-to-r from-purple-50 to-purple-100/40 dark:from-purple-950/40 dark:to-transparent border-b border-gray-200 dark:border-gray-800 flex items-center justify-between">
             <div class="flex items-center gap-2">
               <div class="w-7 h-7 rounded-lg bg-purple-600 text-white flex items-center justify-center">
@@ -429,14 +431,15 @@
                 <button type="button" onclick="setBlockMode('marketing', 'pie')" id="btn_mode_marketing_pie" title="Кругова діаграма (%)" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">🥧</button>
                 <button type="button" onclick="setBlockMode('marketing', 'charts')" id="btn_mode_marketing_charts" title="Графік (Мульти-лінії)" class="px-1.5 py-0.5 rounded font-bold bg-purple-600 text-white">📈</button>
               </div>
-              <!-- Width Resizer (50% vs 100%) -->
-              <button type="button" onclick="toggleCardWidth('card_marketing')" id="btn_width_card_marketing" title="Змінити ширину (50% / 100%)" class="p-1 rounded-lg text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition cursor-pointer">
-                <i data-lucide="minimize-2" id="icon_width_card_marketing" class="w-3.5 h-3.5"></i>
+              <!-- Card Width Resizer Button -->
+              <button type="button" onclick="toggleCardWidth('card_marketing')" id="btn_width_card_marketing" title="Змінити ширину картки (50% або 100%)" class="px-2 py-0.5 rounded-lg text-xs font-bold bg-white/80 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 transition cursor-pointer flex items-center gap-1 shadow-2xs">
+                <i data-lucide="minimize-2" id="icon_width_card_marketing" class="w-3.5 h-3.5 text-indigo-500"></i>
+                <span id="label_width_card_marketing" class="text-[10px] font-mono font-bold">100%</span>
               </button>
-              <!-- Card Reorder Arrows -->
-              <div class="flex items-center text-gray-400">
-                <button type="button" onclick="moveCardUp('card_marketing')" title="Перемістити вище" class="px-1 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-[10px] cursor-pointer">▲</button>
-                <button type="button" onclick="moveCardDown('card_marketing')" title="Перемістити нижче" class="px-1 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-[10px] cursor-pointer">▼</button>
+              <!-- Tactile Reorder Movement Buttons -->
+              <div class="flex items-center bg-white/80 dark:bg-gray-800 p-0.5 rounded-lg border border-gray-200 dark:border-gray-700 text-xs shadow-2xs">
+                <button type="button" onclick="moveCardUp('card_marketing')" title="Перемістити блок вгору ⬆" class="px-1.5 py-0.5 font-bold hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 rounded cursor-pointer transition text-[11px]">⬆</button>
+                <button type="button" onclick="moveCardDown('card_marketing')" title="Перемістити блок вниз ⬇" class="px-1.5 py-0.5 font-bold hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 rounded cursor-pointer transition text-[11px]">⬇</button>
               </div>
               <button type="button" onclick="toggleCardCollapse('card_marketing_body', 'chevron_mkt')" title="Згорнути / розгорнути" class="p-1 rounded-lg text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition">
                 <i data-lucide="chevron-down" id="chevron_mkt" class="w-4 h-4"></i>
@@ -460,7 +463,7 @@
         </div>
 
         <!-- 4. УГОДИ ТА ФІНАЛ ВОРОНКИ -->
-        <div id="card_deals" data-card-id="card_deals" draggable="true" ondragstart="handleCardDragStart(event)" ondragover="handleCardDragOver(event)" ondragleave="handleCardDragLeave(event)" ondrop="handleCardDrop(event)" class="col_span_card md:col-span-2 bg-white dark:bg-[#1A1D24] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden flex flex-col transition-all duration-300">
+        <div id="card_deals" data-card-id="card_deals" ondragstart="handleCardDragStart(event)" ondragover="handleCardDragOver(event)" ondragleave="handleCardDragLeave(event)" ondrop="handleCardDrop(event)" class="col_span_card md:col-span-2 bg-white dark:bg-[#1A1D24] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden flex flex-col transition-all duration-300">
           <div class="px-4 py-3 bg-gradient-to-r from-amber-50 to-amber-100/40 dark:from-amber-950/40 dark:to-transparent border-b border-gray-200 dark:border-gray-800 flex items-center justify-between">
             <div class="flex items-center gap-2">
               <div class="w-7 h-7 rounded-lg bg-amber-500 text-white flex items-center justify-center">
@@ -475,14 +478,15 @@
                 <button type="button" onclick="setBlockMode('deals', 'pie')" id="btn_mode_deals_pie" title="Кругова діаграма (%)" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">🥧</button>
                 <button type="button" onclick="setBlockMode('deals', 'charts')" id="btn_mode_deals_charts" title="Графік (Мульти-лінії)" class="px-1.5 py-0.5 rounded font-bold bg-amber-500 text-white">📈</button>
               </div>
-              <!-- Width Resizer (50% vs 100%) -->
-              <button type="button" onclick="toggleCardWidth('card_deals')" id="btn_width_card_deals" title="Змінити ширину (50% / 100%)" class="p-1 rounded-lg text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition cursor-pointer">
-                <i data-lucide="minimize-2" id="icon_width_card_deals" class="w-3.5 h-3.5"></i>
+              <!-- Card Width Resizer Button -->
+              <button type="button" onclick="toggleCardWidth('card_deals')" id="btn_width_card_deals" title="Змінити ширину картки (50% або 100%)" class="px-2 py-0.5 rounded-lg text-xs font-bold bg-white/80 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 transition cursor-pointer flex items-center gap-1 shadow-2xs">
+                <i data-lucide="minimize-2" id="icon_width_card_deals" class="w-3.5 h-3.5 text-indigo-500"></i>
+                <span id="label_width_card_deals" class="text-[10px] font-mono font-bold">100%</span>
               </button>
-              <!-- Card Reorder Arrows -->
-              <div class="flex items-center text-gray-400">
-                <button type="button" onclick="moveCardUp('card_deals')" title="Перемістити вище" class="px-1 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-[10px] cursor-pointer">▲</button>
-                <button type="button" onclick="moveCardDown('card_deals')" title="Перемістити нижче" class="px-1 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-[10px] cursor-pointer">▼</button>
+              <!-- Tactile Reorder Movement Buttons -->
+              <div class="flex items-center bg-white/80 dark:bg-gray-800 p-0.5 rounded-lg border border-gray-200 dark:border-gray-700 text-xs shadow-2xs">
+                <button type="button" onclick="moveCardUp('card_deals')" title="Перемістити блок вгору ⬆" class="px-1.5 py-0.5 font-bold hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 rounded cursor-pointer transition text-[11px]">⬆</button>
+                <button type="button" onclick="moveCardDown('card_deals')" title="Перемістити блок вниз ⬇" class="px-1.5 py-0.5 font-bold hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 rounded cursor-pointer transition text-[11px]">⬇</button>
               </div>
               <button type="button" onclick="toggleCardCollapse('card_deals_body', 'chevron_deals')" title="Згорнути / розгорнути" class="p-1 rounded-lg text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition">
                 <i data-lucide="chevron-down" id="chevron_deals" class="w-4 h-4"></i>
@@ -629,8 +633,8 @@
               </div>
             </div>
             
-            <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center py-1">
-              <div class="sm:col-span-5 flex justify-center items-center py-2">
+            <div id="leadStagesWrapper" class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center py-1">
+              <div id="leadStagesSvgCol" class="sm:col-span-5 flex justify-center items-center py-2">
                 <div class="relative w-44 h-44 flex items-center justify-center">
                   <svg id="svgLeadStagesDonut" class="w-44 h-44 overflow-visible" viewBox="0 0 200 200"></svg>
                   <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
@@ -3827,17 +3831,42 @@
       const c2 = document.getElementById('container_social');
       if (!c1 || !c2) return;
 
+      // ── DATA: CLASSIFIEDS PORTALS ──
       const classItems = [
         { id: 'olx', name: 'Реклама OLX', desc: 'Дошка оголошень №1 в Україні', val: state.marketing.olx, tgt: 20, tag: 'OLX', tagBg: 'bg-[#002f34] text-[#00f898]', barColor: '#059669', pct: Math.round((state.marketing.olx / 20) * 100) },
         { id: 'domria', name: 'Реклама DOM.RIA', desc: 'Перевірені квартири та будинки', val: state.marketing.domria, tgt: 20, tag: 'RIA', tagBg: 'bg-[#eb4d27] text-white', barColor: '#EA580C', pct: Math.round((state.marketing.domria / 20) * 100) },
         { id: 'rieltor', name: 'Реклама Рієлтор.юа', desc: 'Професійна рієлторська база', val: state.marketing.rieltor, tgt: 20, tag: 'R.UA', tagBg: 'bg-[#0b66c3] text-white', barColor: '#2563EB', pct: Math.round((state.marketing.rieltor / 20) * 100) }
       ];
-
       const totClassVal = state.marketing.olx + state.marketing.domria + state.marketing.rieltor;
       const totClassPct = Math.round((totClassVal / 60) * 100);
 
-      // ── 1. БЛОК ПОРТАЛІВ ОГОЛОШЕНЬ (КЛАСИФАЙДИ) ──────────────────────────
-      if (mode === 'pie' || mode === 'circles') {
+      // ── DATA: SOCIAL MEDIA & SMM ──
+      const igTotal = state.marketing.ig_posts + state.marketing.ig_video + state.marketing.ig_stories;
+      const igTgt = 85;
+      const ttTotal = state.marketing.tt_posts + state.marketing.tt_video + state.marketing.tt_stories;
+      const ttTgt = 85;
+      const fbTotal = state.marketing.fb_posts + state.marketing.fb_video + state.marketing.fb_stories;
+      const fbTgt = 85;
+      const ytTotal = state.marketing.yt_video;
+      const ytTgt = 5;
+      const xTotal = state.marketing.x_posts + state.marketing.x_video + state.marketing.x_comments;
+      const xTgt = 85;
+      const grandMediaDone = igTotal + ttTotal + fbTotal + ytTotal + xTotal;
+      const grandMediaTgt = 85 + 85 + 85 + 5 + 85; // 345
+      const grandMediaPct = Math.round((grandMediaDone / grandMediaTgt) * 100);
+
+      const platforms = [
+        { id: 'instagram', name: 'Instagram (Reels, Posts, Stories)', colorHex: '#E1306C', val: igTotal, tgt: igTgt, pct: Math.round((igTotal / igTgt) * 100) },
+        { id: 'tiktok', name: 'TikTok (Short Video)', colorHex: '#111827', val: ttTotal, tgt: ttTgt, pct: Math.round((ttTotal / ttTgt) * 100) },
+        { id: 'facebook', name: 'Facebook (Групи, Пости, Reels)', colorHex: '#1877F2', val: fbTotal, tgt: fbTgt, pct: Math.round((fbTotal / fbTgt) * 100) },
+        { id: 'youtube', name: 'YouTube (Огляди та Shorts)', colorHex: '#DC2626', val: ytTotal, tgt: ytTgt, pct: Math.round((ytTotal / ytTgt) * 100) },
+        { id: 'x', name: 'Twitter / X (Твіти, Аналітика)', colorHex: '#4B5563', val: xTotal, tgt: xTgt, pct: Math.round((xTotal / xTgt) * 100) }
+      ];
+
+      // ═══════════════════════════════════════════════════════════════════
+      // 1. RENDER c1: CLASSIFIEDS PORTALS
+      // ═══════════════════════════════════════════════════════════════════
+      if (mode === 'pie') {
         const cx = 90, cy = 90, rOut = 80, rIn = 46;
         let currentAngle = 0;
         const total = Math.max(1, totClassVal);
@@ -3891,14 +3920,191 @@
                   <div class="flex items-center gap-2 font-mono text-[11px] shrink-0">
                     <span class="font-bold text-gray-900 dark:text-white">${it.val} / ${it.tgt}</span>
                     <span class="px-2 py-0.5 rounded-full font-bold text-[11px] bg-purple-100 dark:bg-purple-950/80 text-purple-800 dark:text-purple-300 border border-purple-200 dark:border-purple-800">${it.pct}%</span>
-                    <button onclick="incrementMarketing('${it.id}')" class="px-2 py-0.5 text-[10px] font-bold bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition cursor-pointer">+1</button>
+                    <button onclick="event.stopPropagation(); incrementMarketing('${it.id}')" class="px-2 py-0.5 text-[10px] font-bold bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition cursor-pointer">+1</button>
                   </div>
                 </div>
               `).join('')}
             </div>
           </div>
         `;
-                  } else if (mode === 'charts') {
+      } else if (mode === 'charts') {
+        const dates = ['23 вер.', '25 вер.', '27 вер.', '29 вер.', '01 жов.', '03 жов.', '05 жов.', '06 жов.'];
+        const allSeries = [
+          { id: 'olx', name: 'Реклама OLX', shortName: 'OLX', color: '#059669', data: [14, 16, 15, 18, 17, 19, 20, 20] },
+          { id: 'domria', name: 'Реклама DOM.RIA', shortName: 'DOM.RIA', color: '#EA580C', data: [12, 14, 13, 16, 15, 17, 18, 18] },
+          { id: 'rieltor', name: 'Реклама Рієлтор.юа', shortName: 'R.UA', color: '#2563EB', data: [10, 12, 11, 14, 13, 15, 16, 16] }
+        ];
+
+        const activeSeries = allSeries.filter(s => isSeriesActive('marketing_portals', s.id));
+        const svgContent = renderMultiLineSplineSvg({ dates, series: activeSeries, w: 520, h: 190, yLabel: 'Оголошення' });
+
+        c1.innerHTML = `
+          <div class="space-y-3 bg-white dark:bg-[#1A1D24] p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs">
+            <div class="flex flex-wrap items-center justify-between gap-2 p-2.5 rounded-xl bg-gray-50/90 dark:bg-gray-800/80 border border-gray-200/80 dark:border-gray-700/80 text-xs">
+              <div class="flex items-center gap-2.5 flex-wrap">
+                ${allSeries.map(s => {
+                  const it = classItems.find(x => x.id === s.id);
+                  const active = isSeriesActive('marketing_portals', s.id);
+                  return `
+                    <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg border cursor-pointer transition select-none ${active ? 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 shadow-2xs' : 'bg-transparent border-dashed border-gray-300 dark:border-gray-700 opacity-40 line-through'}"
+                         onclick="toggleSeriesFilter('marketing_portals', '${s.id}', event)"
+                         title="Клікніть, щоб ${active ? 'приховати' : 'показати'} лінію">
+                      <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: ${s.color};"></span>
+                      <span class="font-bold text-gray-800 dark:text-gray-200 text-[11px]">${s.shortName}:</span>
+                      <span class="font-mono font-black text-gray-900 dark:text-white text-[11px]">${it ? it.val : 0}</span>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+              <span class="text-[10px] text-gray-400 font-mono font-bold uppercase tracking-wider">Клік = вкл/викл лінію</span>
+            </div>
+            <div class="relative w-full h-48 select-none">
+              ${svgContent}
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1 border-t border-gray-100 dark:border-gray-800">
+              ${classItems.map(it => {
+                const active = isSeriesActive('marketing_portals', it.id);
+                return `
+                  <div class="p-2.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between select-none ${active ? 'bg-white dark:bg-gray-800 shadow-xs border-gray-200 dark:border-gray-700' : 'bg-gray-100/70 dark:bg-gray-900/40 border-dashed border-gray-300 dark:border-gray-800 opacity-45'}"
+                       onclick="toggleSeriesFilter('marketing_portals', '${it.id}', event)"
+                       title="Клікніть, щоб ${active ? 'вимкнути лінію на графіку' : 'додати лінію на графік'}">
+                    <div class="flex items-center gap-2 truncate">
+                      <div class="w-4 h-4 rounded-md flex items-center justify-center text-[10px] font-black transition ${active ? 'text-white shadow-2xs' : 'border border-gray-400 text-transparent'}" style="background-color: ${active ? it.barColor : 'transparent'};">
+                        ${active ? '✓' : ''}
+                      </div>
+                      <div class="truncate">
+                        <span class="text-[11px] font-bold ${active ? 'text-gray-800 dark:text-gray-200' : 'text-gray-400 line-through'} block truncate">${it.name}</span>
+                        <div class="flex items-center gap-2 mt-1 font-mono">
+                          <strong class="text-xs ${active ? 'text-gray-900 dark:text-white' : 'text-gray-400'}">${it.val} / ${it.tgt}</strong>
+                          <span class="text-[10px] font-bold" style="color: ${active ? it.barColor : '#9CA3AF'};">(${it.pct}%)</span>
+                        </div>
+                      </div>
+                    </div>
+                    <button onclick="event.stopPropagation(); incrementMarketing('${it.id}')"
+                            class="px-2.5 py-1 text-[10px] font-bold text-white rounded-lg transition cursor-pointer shrink-0 ml-1 shadow-2xs hover:opacity-90"
+                            style="background-color: ${it.barColor};"
+                            title="Додати оголошення">+1</button>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        `;
+      } else {
+        c1.innerHTML = `
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-1">
+          <div>
+            <h4 class="text-xs font-black text-purple-700 dark:text-purple-300 uppercase tracking-wider flex items-center gap-2">
+              <i data-lucide="layout-grid" class="w-4 h-4 text-purple-600"></i>
+              Оголошення на порталах (Класифайди)
+            </h4>
+            <p class="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5">Публікація та просування об'єктів на ключових майданчиках нерухомості з нормативом 20 оголошень.</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="px-3 py-1 rounded-full text-xs font-black bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800 font-mono">
+              Всього на порталах: ${totClassVal} / 60 (${totClassPct}%)
+            </span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+          ${classItems.map(it => `
+            <div class="bg-gray-50/70 dark:bg-gray-800/40 rounded-2xl border border-gray-200/70 dark:border-gray-700/70 p-5 shadow-xs space-y-4">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                  <span class="px-2.5 py-1 rounded-lg text-xs font-black ${it.tagBg}">${it.tag}</span>
+                  <div>
+                    <h5 class="font-extrabold text-sm text-gray-900 dark:text-white">${it.name}</h5>
+                    <span class="text-[11px] text-gray-400">${it.desc}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="space-y-2">
+                <div class="flex items-center justify-between text-xs font-mono">
+                  <span class="text-gray-500">Норма: ${it.tgt} огл.</span>
+                  <div class="flex items-center gap-1.5">
+                    <strong class="text-sm font-black text-gray-900 dark:text-white">${it.val}</strong>
+                    <span class="font-bold text-purple-600">(${it.pct}%)</span>
+                  </div>
+                </div>
+                <div class="w-full bg-gray-200 dark:bg-gray-700 h-2.5 rounded-full overflow-hidden">
+                  <div class="h-full rounded-full transition-all duration-500" style="width: ${Math.min(100, it.pct)}%; background-color: ${it.barColor};"></div>
+                </div>
+              </div>
+              <button onclick="event.stopPropagation(); incrementMarketing('${it.id}')" class="w-full py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-xl text-xs font-bold transition shadow-xs flex items-center justify-center gap-1.5 cursor-pointer">
+                <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                +1 Оголошення
+              </button>
+            </div>
+          `).join('')}
+        </div>
+      `;
+      }
+
+      // ═══════════════════════════════════════════════════════════════════
+      // 2. RENDER c2: SOCIAL MEDIA & SMM
+      // ═══════════════════════════════════════════════════════════════════
+      if (mode === 'pie') {
+        const cx = 90, cy = 90, rOut = 80, rIn = 46;
+        let currentAngle = 0;
+        const total = Math.max(1, grandMediaDone);
+
+        const paths = platforms.map((p, idx) => {
+          const sliceAngle = (p.val / total) * 360;
+          const startA = currentAngle;
+          const endA = currentAngle + sliceAngle;
+          currentAngle = endA;
+
+          const pathD = describeDonutArc(cx, cy, rIn, rOut, startA, endA);
+          return `
+            <path id="soc_pie_${idx}"
+                  d="${pathD}"
+                  fill="${p.colorHex}"
+                  stroke="#FFFFFF"
+                  stroke-width="1.5"
+                  class="cursor-pointer hover:opacity-85 transition"
+                  onmousemove="showChartTooltip(event, '${p.name}', 'Виконано: ${p.val} / ${p.tgt} (${p.pct}%)', 'SMM активність')"
+                  onmouseleave="hideChartTooltip()" />
+          `;
+        }).join('');
+
+        c2.innerHTML = `
+          <div class="flex flex-wrap items-center justify-between gap-3 pb-1">
+            <h4 class="text-xs font-black text-pink-600 dark:text-pink-400 uppercase tracking-wider flex items-center gap-2">
+              <i data-lucide="share-2" class="w-4 h-4 text-pink-500"></i>
+              Соціальні мережі та SMM (Кругова діаграма %)
+            </h4>
+            <span class="px-3 py-1 rounded-full text-xs font-black bg-pink-50 dark:bg-pink-950/60 text-pink-700 dark:text-pink-300 border border-pink-200 font-mono">
+              Всього: ${grandMediaDone} / ${grandMediaTgt} (${grandMediaPct}%)
+            </span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-12 gap-5 items-center bg-white dark:bg-[#1A1D24] p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs">
+            <div class="sm:col-span-5 flex justify-center py-2">
+              <div class="relative w-48 h-48 flex items-center justify-center">
+                <svg class="w-48 h-48 overflow-visible" viewBox="0 0 180 180">${paths}</svg>
+                <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                  <span class="text-2xl font-black text-gray-900 dark:text-white font-mono">${grandMediaDone}</span>
+                  <span class="text-[10px] uppercase font-bold text-gray-400">з ${grandMediaTgt} дій (${grandMediaPct}%)</span>
+                </div>
+              </div>
+            </div>
+            <div class="sm:col-span-7 space-y-2 text-xs">
+              ${platforms.map(p => `
+                <div class="flex items-center justify-between p-2 rounded-xl bg-gray-50/80 dark:bg-gray-800/40 border border-gray-200/60 dark:border-gray-700/60 hover:border-pink-300 transition">
+                  <div class="flex items-center gap-2 truncate">
+                    <span class="w-3.5 h-3.5 rounded-xs shrink-0" style="background-color: ${p.colorHex};"></span>
+                    <span class="font-bold text-gray-800 dark:text-gray-200 truncate text-[11px]">${p.name}</span>
+                  </div>
+                  <div class="flex items-center gap-2 font-mono text-[11px] shrink-0">
+                    <span class="font-bold text-gray-900 dark:text-white">${p.val} / ${p.tgt}</span>
+                    <span class="px-2 py-0.5 rounded-full font-bold text-[11px] bg-pink-100 dark:bg-pink-950/80 text-pink-800 dark:text-pink-300 border border-pink-200 dark:border-pink-800">${p.pct}%</span>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      } else if (mode === 'charts') {
         const dates = ['23 вер.', '25 вер.', '27 вер.', '29 вер.', '01 жов.', '03 жов.', '05 жов.', '06 жов.'];
         const allSeries = [
           { id: 'instagram', name: 'Instagram', shortName: 'Instagram', color: '#E1306C', data: [45, 52, 50, 58, 56, 62, 65, 68] },
@@ -4253,6 +4459,10 @@
       if (icon) {
         icon.setAttribute('data-lucide', newW === 2 ? 'minimize-2' : 'maximize-2');
       }
+      const label = document.getElementById(`label_width_${cardId}`);
+      if (label) {
+        label.textContent = newW === 2 ? '100%' : '50%';
+      }
 
       renderIcons();
       window.dispatchEvent(new Event('resize'));
@@ -4280,6 +4490,10 @@
         const icon = document.getElementById(`icon_width_${id}`);
         if (icon) {
           icon.setAttribute('data-lucide', w === 2 ? 'minimize-2' : 'maximize-2');
+        }
+        const label = document.getElementById(`label_width_${id}`);
+        if (label) {
+          label.textContent = w === 2 ? '100%' : '50%';
         }
       });
       renderIcons();
@@ -4404,6 +4618,51 @@
       showToast('Всі блоки відновлено!');
     }
 
+    // Synchronization for all individual widget header buttons in Statistics
+    function syncAllStatsWidgetButtons() {
+      if (!state.statsWidgetModes) return;
+
+      const mLead = state.statsWidgetModes.myLeads || 'charts';
+      ['charts', 'candles', 'bars', 'pie', 'table'].forEach(m => {
+        const btn = document.getElementById(`btn_stats_myleads_${m}`);
+        if (btn) {
+          btn.className = m === mLead
+            ? "px-1.5 py-0.5 rounded font-bold bg-[#38A3C8] text-white"
+            : "px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700";
+        }
+      });
+
+      const mStage = state.statsWidgetModes.leadStages || 'donut';
+      ['donut', 'candles', 'bars', 'charts', 'table'].forEach(m => {
+        const btn = document.getElementById(`btn_stats_stages_${m}`);
+        if (btn) {
+          btn.className = m === mStage
+            ? "px-1.5 py-0.5 rounded font-bold bg-[#38A3C8] text-white"
+            : "px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700";
+        }
+      });
+
+      const mWeekly = state.statsWidgetModes.weekly || 'charts';
+      ['charts', 'candles', 'bars', 'pie', 'table'].forEach(m => {
+        const btn = document.getElementById(`btn_stats_weekly_${m}`);
+        if (btn) {
+          btn.className = m === mWeekly
+            ? "px-1.5 py-0.5 rounded font-bold bg-[#E26A6A] text-white"
+            : "px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700";
+        }
+      });
+
+      const mLoss = state.statsWidgetModes.lossReasons || 'pie';
+      ['pie', 'charts', 'bars', 'table'].forEach(m => {
+        const btn = document.getElementById(`btn_stats_loss_${m}`);
+        if (btn) {
+          btn.className = m === mLoss
+            ? "px-1.5 py-0.5 rounded font-bold bg-[#38A3C8] text-white"
+            : "px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700";
+        }
+      });
+    }
+
     // Statistics View Mode Switcher (Matching KPI 1-v-1: charts | pie | bars)
     function setStatsViewMode(mode) {
       if (mode === 'pro') mode = 'charts';
@@ -4415,57 +4674,52 @@
       const vTable = document.getElementById('statsView_table');
       const vDonut = document.getElementById('statsView_donut');
 
-      if (!state.statsWidgetModes) {
-        state.statsWidgetModes = { myLeads: 'charts', leadStages: 'donut', weekly: 'charts', lossReasons: 'pie' };
-      }
+      if (!state.statsWidgetModes) state.statsWidgetModes = {};
 
       if (mode === 'charts') {
         if (vPro) vPro.classList.remove('hidden');
         if (vDonut) vDonut.classList.add('hidden');
         if (vTable) vTable.classList.add('hidden');
+
         state.statsWidgetModes.myLeads = 'charts';
-        state.statsWidgetModes.leadStages = 'donut';
+        state.statsWidgetModes.leadStages = 'charts';
         state.statsWidgetModes.weekly = 'charts';
         state.statsWidgetModes.lossReasons = 'charts';
-        renderProAnalyticsCharts();
       } else if (mode === 'pie') {
         if (vPro) vPro.classList.remove('hidden');
         if (vDonut) vDonut.classList.remove('hidden');
         if (vTable) vTable.classList.add('hidden');
+
         state.statsWidgetModes.myLeads = 'pie';
         state.statsWidgetModes.leadStages = 'donut';
         state.statsWidgetModes.weekly = 'pie';
         state.statsWidgetModes.lossReasons = 'pie';
-        renderProAnalyticsCharts();
       } else if (mode === 'bars') {
-        if (vTable) vTable.classList.remove('hidden');
         if (vPro) vPro.classList.remove('hidden');
+        if (vTable) vTable.classList.remove('hidden');
         if (vDonut) vDonut.classList.add('hidden');
+
         state.statsWidgetModes.myLeads = 'bars';
         state.statsWidgetModes.leadStages = 'bars';
         state.statsWidgetModes.weekly = 'bars';
         state.statsWidgetModes.lossReasons = 'bars';
-        renderProAnalyticsCharts();
       }
 
-      // Update button styles
-      const btnCharts = document.getElementById('btn_stats_charts') || document.getElementById('btn_stats_pro');
-      const btnPie = document.getElementById('btn_stats_pie') || document.getElementById('btn_stats_donut');
-      const btnBars = document.getElementById('btn_stats_bars') || document.getElementById('btn_stats_table');
+      syncAllStatsWidgetButtons();
+      renderProAnalyticsCharts();
 
-      [
-        { btn: btnCharts, m: 'charts' },
-        { btn: btnPie, m: 'pie' },
-        { btn: btnBars, m: 'bars' }
-      ].forEach(({ btn, m }) => {
-        if (!btn) return;
-        btn.className = mode === m
-          ? "px-3 py-1.5 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-xs transition cursor-pointer flex items-center gap-1.5"
-          : "px-3 py-1.5 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition cursor-pointer flex items-center gap-1.5";
+      // Update button styles in Statistics Toolbar
+      ['charts', 'pie', 'bars'].forEach(m => {
+        const btn = document.getElementById(`btn_stats_${m}`);
+        if (btn) {
+          btn.className = mode === m
+            ? "px-3 py-1.5 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-xs transition cursor-pointer flex items-center gap-1.5"
+            : "px-3 py-1.5 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition cursor-pointer flex items-center gap-1.5";
+        }
       });
 
       renderIcons();
-      showToast(`Вид статистики: ${mode === 'charts' ? 'Графіки (Мульти-лінії)' : mode === 'pie' ? 'Кругова діаграма (%)' : 'Смуги нормативів / Матриця'}`);
+      showToast(`Вид статистики: ${mode === 'charts' ? '📈 Графіки (Мульти-лінії)' : mode === 'pie' ? '🥧 Кругова діаграма (%)' : '📊 Смуги нормативів / Матриця'}`);
     }
 
     // ═════════════════════════════════════════════════════════════════════════
@@ -4703,6 +4957,7 @@
         });
         renderLossReasonsPie();
       }
+      syncAllStatsWidgetButtons();
       showToast(`Вид віджета оновлено: ${mode}`);
     }
 
@@ -4984,6 +5239,8 @@
       const svg = document.getElementById('svgLeadStagesDonut');
       const legend = document.getElementById('legendLeadStages');
       const totalCountEl = document.getElementById('donutTotalCount');
+      const svgCol = document.getElementById('leadStagesSvgCol') || (svg && svg.parentElement ? svg.parentElement.parentElement : null);
+      const wrapper = document.getElementById('leadStagesWrapper') || (legend ? legend.parentElement : null);
       if (!svg || !legend) return;
       const mode = (state.statsWidgetModes && state.statsWidgetModes.leadStages) || 'donut';
 
@@ -5003,8 +5260,8 @@
       if (totalCountEl) totalCountEl.textContent = total;
 
       if (mode === 'candles') {
-        svg.parentElement.parentElement.classList.add('hidden');
-        legend.parentElement.classList.remove('grid-cols-1', 'sm:grid-cols-12');
+        if (svgCol) svgCol.classList.add('hidden');
+        if (wrapper) wrapper.className = "w-full py-1";
         legend.className = "w-full h-52 py-1";
         const dates = stages.map(s => s.name.split(' ')[0]);
         const candles = stages.map(s => ({
@@ -5019,8 +5276,8 @@
       }
 
       if (mode === 'charts') {
-        svg.parentElement.parentElement.classList.add('hidden');
-        legend.parentElement.classList.remove('grid-cols-1', 'sm:grid-cols-12');
+        if (svgCol) svgCol.classList.add('hidden');
+        if (wrapper) wrapper.className = "w-full py-1";
         legend.className = "w-full h-52 py-1";
         const dates = stages.map(s => s.name.split(' ')[0]);
         const series = [{ id: 'stages', name: 'Обсяг стадії', color: '#38A3C8', data: stages.map(s => s.count) }];
@@ -5030,8 +5287,8 @@
 
       if (mode === 'bars') {
         const maxVal = Math.max(...stages.map(s => s.count));
-        svg.parentElement.parentElement.classList.add('hidden');
-        legend.parentElement.classList.remove('grid-cols-1', 'sm:grid-cols-12');
+        if (svgCol) svgCol.classList.add('hidden');
+        if (wrapper) wrapper.className = "w-full py-1";
         legend.className = "space-y-2 text-xs w-full py-1";
         legend.innerHTML = stages.map(st => {
           const pct = ((st.count / total) * 100).toFixed(1);
@@ -5058,8 +5315,8 @@
       }
 
       if (mode === 'table') {
-        svg.parentElement.parentElement.classList.add('hidden');
-        legend.parentElement.classList.remove('grid-cols-1', 'sm:grid-cols-12');
+        if (svgCol) svgCol.classList.add('hidden');
+        if (wrapper) wrapper.className = "w-full py-1";
         legend.className = "w-full text-xs py-1";
         legend.innerHTML = `
           <div class="overflow-x-auto">
@@ -5091,8 +5348,8 @@
       }
 
       // Default: Radial Donut Chart
-      svg.parentElement.parentElement.classList.remove('hidden');
-      legend.parentElement.className = "grid grid-cols-1 sm:grid-cols-12 gap-3 items-center py-1";
+      if (svgCol) svgCol.classList.remove('hidden');
+      if (wrapper) wrapper.className = "grid grid-cols-1 sm:grid-cols-12 gap-3 items-center py-1";
       legend.className = "sm:col-span-7 space-y-1 text-xs max-h-56 overflow-y-auto pr-1";
 
       const cx = 100, cy = 100, rOut = 85, rIn = 52;
