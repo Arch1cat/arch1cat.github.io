@@ -192,7 +192,7 @@
       </div>
 
       <!-- Bottom Row: Visualization View Mode & Block Visibility Controls -->
-      <div class="pt-2.5 border-t border-gray-100 dark:border-gray-800/80 flex flex-wrap items-center justify-between gap-2.5">
+      <div id="visualModeToolbar" class="pt-2.5 border-t border-gray-100 dark:border-gray-800/80 flex flex-wrap items-center justify-between gap-2.5">
         
         <!-- View Mode Segmented Controls -->
         <div class="flex items-center gap-1.5 flex-wrap">
@@ -1029,10 +1029,16 @@
         </div>
 
         <div class="flex items-center gap-2.5 flex-wrap">
-          <!-- Funnel View Toggle: Kanban Cards vs Summary Numbers -->
+          <!-- Funnel View Toggle: Kanban Cards vs Graphical Conversion Analytics -->
           <div class="flex items-center bg-gray-100 dark:bg-gray-800 p-0.5 rounded-xl border border-gray-200 dark:border-gray-700 text-xs">
-            <button type="button" onclick="setSalesFunnelView('kanban')" id="btn_sales_view_kanban" class="px-2.5 py-1 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-xs transition cursor-pointer">🗂️ Канбан картки</button>
-            <button type="button" onclick="setSalesFunnelView('summary')" id="btn_sales_view_summary" class="px-2.5 py-1 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 transition cursor-pointer">📊 Конверсії %</button>
+            <button type="button" onclick="setSalesFunnelView('kanban')" id="btn_sales_view_kanban" class="px-3 py-1.5 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-xs transition cursor-pointer flex items-center gap-1.5">
+              <i data-lucide="trello" class="w-3.5 h-3.5 text-emerald-600"></i>
+              <span>🗂️ Канбан картки</span>
+            </button>
+            <button type="button" onclick="setSalesFunnelView('summary')" id="btn_sales_view_summary" class="px-3 py-1.5 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition cursor-pointer flex items-center gap-1.5">
+              <i data-lucide="trending-up" class="w-3.5 h-3.5 text-emerald-600"></i>
+              <span>📈 Графіки конверсій %</span>
+            </button>
           </div>
 
           <!-- Total Volume Badge -->
@@ -1055,11 +1061,64 @@
         </div>
       </div>
 
-      <!-- VIEW B: CONVERSION STEP SUMMARY (NUMERICAL SUMMARY WITH DROP-OFFS) -->
-      <div id="salesFunnel_summary" class="hidden space-y-3">
-        <div class="grid grid-cols-1 md:grid-cols-7 gap-2.5" id="salesSummaryCards">
-          <!-- Rendered via renderSalesSummary() -->
+      <!-- VIEW B: CONVERSION STEP ANALYTICS & GRAPHICAL VISUALIZATION -->
+      <div id="salesFunnel_summary" class="hidden space-y-6">
+        
+        <!-- Row 1: Каскадна воронка конверсій угод (Waterfall Funnel Flow) -->
+        <div class="bg-white dark:bg-[#1A1D24] p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-gray-100 dark:border-gray-800">
+            <div>
+              <h3 class="font-black text-sm text-gray-900 dark:text-white flex items-center gap-2">
+                <i data-lucide="filter" class="w-4 h-4 text-emerald-600"></i>
+                Каскадна воронка конверсій угод (Waterfall Pipeline Flow)
+              </h3>
+              <p class="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5">Поетапне проходження угод від першого дзвінка до закриття з розрахунком коефіцієнтів конверсії та відсіву.</p>
+            </div>
+            <span class="px-3 py-1 rounded-full text-xs font-mono font-bold bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+              Сквозна конверсія: 2.0%
+            </span>
+          </div>
+
+          <!-- Dynamic Waterfall Funnel Bars -->
+          <div class="space-y-3" id="salesFunnelWaterfallBars">
+            <!-- Injected via renderSalesFunnelWaterfall() -->
+          </div>
         </div>
+
+        <!-- Row 2: Сплайн-графік конверсії та фінансова аналітика -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          
+          <!-- Left: Графік кривої конверсій (Spline Curve) -->
+          <div class="lg:col-span-7 bg-white dark:bg-[#1A1D24] p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs space-y-3">
+            <div class="flex items-center justify-between pb-2 border-b border-gray-100 dark:border-gray-800">
+              <h4 class="font-black text-xs uppercase tracking-wider text-emerald-600 flex items-center gap-1.5">
+                <i data-lucide="activity" class="w-4 h-4"></i>
+                Крива конверсій за стадіями (%)
+              </h4>
+              <span class="text-[10px] text-gray-400 font-mono">7 етапів</span>
+            </div>
+            <div class="relative w-full h-56 select-none" id="containerSalesFunnelSpline">
+              <svg id="svgSalesFunnelSpline" class="w-full h-full overflow-visible" viewBox="0 0 540 200" preserveAspectRatio="none"></svg>
+            </div>
+          </div>
+
+          <!-- Right: Фінанси пайплайну (Pipeline Financials) -->
+          <div class="lg:col-span-5 bg-white dark:bg-[#1A1D24] p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs space-y-4 flex flex-col justify-between">
+            <div class="pb-2 border-b border-gray-100 dark:border-gray-800">
+              <h4 class="font-black text-xs uppercase tracking-wider text-emerald-600 flex items-center gap-1.5">
+                <i data-lucide="dollar-sign" class="w-4 h-4"></i>
+                Фінансовий об'єм у роботі
+              </h4>
+              <p class="text-[11px] text-gray-400 mt-0.5">Розподіл бюджету угод та очікуваної комісії агентства.</p>
+            </div>
+
+            <div class="space-y-3" id="salesFunnelFinanceSummary">
+              <!-- Rendered via renderSalesFunnelFinance() -->
+            </div>
+          </div>
+
+        </div>
+
       </div>
 
     </div>
@@ -1081,8 +1140,14 @@
         <div class="flex items-center gap-2.5 flex-wrap">
           <!-- Leads View Toggle -->
           <div class="flex items-center bg-gray-100 dark:bg-gray-800 p-0.5 rounded-xl border border-gray-200 dark:border-gray-700 text-xs">
-            <button type="button" onclick="setLeadsFunnelView('kanban')" id="btn_leads_view_kanban" class="px-2.5 py-1 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-xs transition cursor-pointer">🗂️ Канбан заявок</button>
-            <button type="button" onclick="setLeadsFunnelView('summary')" id="btn_leads_view_summary" class="px-2.5 py-1 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 transition cursor-pointer">📊 SLA & Джерела</button>
+            <button type="button" onclick="setLeadsFunnelView('kanban')" id="btn_leads_view_kanban" class="px-3 py-1.5 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-xs transition cursor-pointer flex items-center gap-1.5">
+              <i data-lucide="trello" class="w-3.5 h-3.5 text-blue-600"></i>
+              <span>🗂️ Канбан заявок</span>
+            </button>
+            <button type="button" onclick="setLeadsFunnelView('summary')" id="btn_leads_view_summary" class="px-3 py-1.5 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition cursor-pointer flex items-center gap-1.5">
+              <i data-lucide="trending-up" class="w-3.5 h-3.5 text-blue-600"></i>
+              <span>📈 Графіки конверсій заявок %</span>
+            </button>
           </div>
 
           <!-- Average SLA Badge -->
@@ -1105,30 +1170,78 @@
         </div>
       </div>
 
-      <!-- VIEW B: LEADS SLA & SOURCES SUMMARY -->
-      <div id="leadsFunnel_summary" class="hidden space-y-4">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div class="bg-white dark:bg-[#1A1D24] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm">
-            <span class="text-xs font-bold text-gray-400 uppercase">Нові (Без дзвінка)</span>
-            <div class="text-2xl font-black text-sky-600 mt-1" id="lead_stat_new">4</div>
-            <p class="text-xs text-gray-500 mt-1">Потребують термінового дзвінка (&lt;15 хв)</p>
+      <!-- VIEW B: LEADS ANALYTICS & GRAPHICAL CONVERSIONS -->
+      <div id="leadsFunnel_summary" class="hidden space-y-6">
+        
+        <!-- Row 1: Воронка лідів (Waterfall 8 Stages) -->
+        <div class="bg-white dark:bg-[#1A1D24] p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-gray-100 dark:border-gray-800">
+            <div>
+              <h3 class="font-black text-sm text-gray-900 dark:text-white flex items-center gap-2">
+                <i data-lucide="users" class="w-4 h-4 text-blue-600"></i>
+                Каскадна воронка лідів та заявок (8 етапів)
+              </h3>
+              <p class="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5">Шлях клієнта: від вхідного запиту до успішної угоди або архіву.</p>
+            </div>
+            <span class="px-3 py-1 rounded-full text-xs font-mono font-bold bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+              SLA первинного дзвінка: 8.4 хв
+            </span>
           </div>
-          <div class="bg-white dark:bg-[#1A1D24] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm">
-            <span class="text-xs font-bold text-gray-400 uppercase">Кваліфіковані</span>
-            <div class="text-2xl font-black text-indigo-600 mt-1" id="lead_stat_qual">18</div>
-            <p class="text-xs text-gray-500 mt-1">Бюджет і критерії зафіксовано</p>
-          </div>
-          <div class="bg-white dark:bg-[#1A1D24] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm">
-            <span class="text-xs font-bold text-gray-400 uppercase">У процесі підбору</span>
-            <div class="text-2xl font-black text-purple-600 mt-1" id="lead_stat_match">12</div>
-            <p class="text-xs text-gray-500 mt-1">Надіслано 3+ презентацій</p>
-          </div>
-          <div class="bg-white dark:bg-[#1A1D24] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm">
-            <span class="text-xs font-bold text-gray-400 uppercase">На показах</span>
-            <div class="text-2xl font-black text-emerald-600 mt-1" id="lead_stat_show">6</div>
-            <p class="text-xs text-gray-500 mt-1">Заплановано виїзні перегляди</p>
+
+          <div class="space-y-3" id="leadsFunnelWaterfallBars">
+            <!-- Injected via renderLeadsFunnelWaterfall() -->
           </div>
         </div>
+
+        <!-- Row 2: Джерела заявок & SLA розподіл -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <!-- Джерела лідів (Pie / Donut) -->
+          <div class="lg:col-span-6 bg-white dark:bg-[#1A1D24] p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs space-y-3">
+            <h4 class="font-black text-xs uppercase tracking-wider text-blue-600 flex items-center gap-1.5 pb-2 border-b border-gray-100 dark:border-gray-800">
+              <i data-lucide="pie-chart" class="w-4 h-4"></i>
+              Розподіл джерел заявок (Маркетингові канали)
+            </h4>
+            <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center py-2">
+              <div class="sm:col-span-5 flex justify-center">
+                <svg id="svgLeadsSourcesDonut" class="w-44 h-44 overflow-visible" viewBox="0 0 200 200"></svg>
+              </div>
+              <div class="sm:col-span-7 space-y-1.5 text-xs" id="legendLeadsSources">
+                <!-- Sources legend -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Метрики ефективності обробки лідів -->
+          <div class="lg:col-span-6 bg-white dark:bg-[#1A1D24] p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs space-y-3 flex flex-col justify-between">
+            <h4 class="font-black text-xs uppercase tracking-wider text-blue-600 flex items-center gap-1.5 pb-2 border-b border-gray-100 dark:border-gray-800">
+              <i data-lucide="zap" class="w-4 h-4"></i>
+              Показники якості обробки лідів
+            </h4>
+            <div class="grid grid-cols-2 gap-3">
+              <div class="p-3 rounded-xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200/80 dark:border-gray-700">
+                <span class="text-[10px] text-gray-400 uppercase font-bold block">Швидкість відповіді</span>
+                <strong class="text-xl font-black text-emerald-600 font-mono">8.4 хв</strong>
+                <span class="text-[10px] text-gray-400 block mt-0.5">Ціль: &lt; 15 хв</span>
+              </div>
+              <div class="p-3 rounded-xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200/80 dark:border-gray-700">
+                <span class="text-[10px] text-gray-400 uppercase font-bold block">Конверсія в підбір</span>
+                <strong class="text-xl font-black text-blue-600 font-mono">68.2%</strong>
+                <span class="text-[10px] text-gray-400 block mt-0.5">Від кваліфікованих</span>
+              </div>
+              <div class="p-3 rounded-xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200/80 dark:border-gray-700">
+                <span class="text-[10px] text-gray-400 uppercase font-bold block">Доля повторних звернень</span>
+                <strong class="text-xl font-black text-purple-600 font-mono">24.5%</strong>
+                <span class="text-[10px] text-gray-400 block mt-0.5">Рекомендації та база</span>
+              </div>
+              <div class="p-3 rounded-xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200/80 dark:border-gray-700">
+                <span class="text-[10px] text-gray-400 uppercase font-bold block">Конверсія у перегляд</span>
+                <strong class="text-xl font-black text-amber-600 font-mono">38.0%</strong>
+                <span class="text-[10px] text-gray-400 block mt-0.5">Виїзд на об'єкт</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
 
     </div>
@@ -2227,6 +2340,12 @@
         subnav.classList.add('hidden');
       }
 
+      // Hide "ВІЗУАЛІЗАЦІЯ" toolbar on non-KPI tabs (funnels and stats)!
+      const visToolbar = document.getElementById('visualModeToolbar');
+      if (visToolbar) {
+        visToolbar.classList.toggle('hidden', tab !== 'kpi');
+      }
+
       if (tab === 'funnel_sales') {
         renderSalesKanban();
       } else if (tab === 'funnel_leads') {
@@ -2395,8 +2514,8 @@
       
       const bK = document.getElementById('btn_sales_view_kanban');
       const bS = document.getElementById('btn_sales_view_summary');
-      if (bK) bK.className = view === 'kanban' ? "px-2.5 py-1 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-xs transition cursor-pointer" : "px-2.5 py-1 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 transition cursor-pointer";
-      if (bS) bS.className = view === 'summary' ? "px-2.5 py-1 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-xs transition cursor-pointer" : "px-2.5 py-1 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 transition cursor-pointer";
+      if (bK) bK.className = view === 'kanban' ? "px-3 py-1.5 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-xs transition cursor-pointer flex items-center gap-1.5" : "px-3 py-1.5 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition cursor-pointer flex items-center gap-1.5";
+      if (bS) bS.className = view === 'summary' ? "px-3 py-1.5 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-xs transition cursor-pointer flex items-center gap-1.5" : "px-3 py-1.5 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition cursor-pointer flex items-center gap-1.5";
 
       if (view === 'summary') renderSalesSummary();
       else renderSalesKanban();
@@ -2409,8 +2528,8 @@
 
       const bK = document.getElementById('btn_leads_view_kanban');
       const bS = document.getElementById('btn_leads_view_summary');
-      if (bK) bK.className = view === 'kanban' ? "px-2.5 py-1 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-xs transition cursor-pointer" : "px-2.5 py-1 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 transition cursor-pointer";
-      if (bS) bS.className = view === 'summary' ? "px-2.5 py-1 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-xs transition cursor-pointer" : "px-2.5 py-1 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 transition cursor-pointer";
+      if (bK) bK.className = view === 'kanban' ? "px-3 py-1.5 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-xs transition cursor-pointer flex items-center gap-1.5" : "px-3 py-1.5 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition cursor-pointer flex items-center gap-1.5";
+      if (bS) bS.className = view === 'summary' ? "px-3 py-1.5 rounded-lg font-bold bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-xs transition cursor-pointer flex items-center gap-1.5" : "px-3 py-1.5 rounded-lg font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition cursor-pointer flex items-center gap-1.5";
 
       if (view === 'summary') renderLeadsSummary();
       else renderLeadsKanban();
@@ -2745,41 +2864,285 @@
       e.target.reset();
     }
 
-    // Render Sales Summary View (Step-by-step conversion summary)
+    // ═════════════════════════════════════════════════════════════════════════
+    // GRAPHICAL FUNNEL CONVERSIONS & WATERFALL PIPELINE ENGINE
+    // ═════════════════════════════════════════════════════════════════════════
+
     function renderSalesSummary() {
-      const c = document.getElementById('salesSummaryCards');
-      if (!c) return;
-      c.innerHTML = SALES_STAGES.map((s, idx) => {
-        const count = state.deals.filter(d => d.stage === s.id).length;
-        const pct = idx === 0 ? 100 : Math.round((count / Math.max(1, state.deals.length)) * 100);
+      renderSalesFunnelWaterfall();
+      renderSalesFunnelSpline();
+      renderSalesFunnelFinance();
+    }
+
+    function renderSalesFunnelWaterfall() {
+      const container = document.getElementById('salesFunnelWaterfallBars');
+      if (!container) return;
+
+      const stagesData = [
+        { label: '1. Дзвінки (Первинні контакти)', count: 100, val: 1250000, color: '#10B981', throughPct: 100, stepTrans: '18.0% у зустрічі (відсів 82%)' },
+        { label: '2. Зустрічі (З власниками)', count: 18, val: 450000, color: '#3B82F6', throughPct: 18, stepTrans: '27.8% у договори (відсів 72.2%)' },
+        { label: '3. Договори (Ексклюзивні)', count: 5, val: 220000, color: '#8B5CF6', throughPct: 5, stepTrans: '100% презентації клієнтам' },
+        { label: '4. Покази (Презентації покупцям)', count: 36, val: 185000, color: '#06B6D4', throughPct: 12, stepTrans: '44.4% в оферти (відсів 55.6%)' },
+        { label: '5. Оффери (Цінові пропозиції)', count: 8, val: 138500, color: '#F59E0B', throughPct: 8, stepTrans: '37.5% у завдатки (відсів 62.5%)' },
+        { label: '6. Завдатки (Фіксація броні)', count: 3, val: 76450, color: '#E11D48', throughPct: 3, stepTrans: '66.7% у закриття угоди' },
+        { label: '7. Закрито ✅ (Успішні угоди)', count: 2, val: 42100, color: '#059669', throughPct: 2, stepTrans: 'Фінальний успіх! Комісія отримана' }
+      ];
+
+      container.innerHTML = stagesData.map((st, idx) => {
+        const barWidth = Math.max(12, Math.min(100, st.throughPct));
         return `
-          <div class="bg-white dark:bg-[#1A1D24] p-3 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm">
-            <div class="flex items-center justify-between text-xs font-bold text-gray-500 mb-2">
-              <span>${s.label}</span>
-              <span class="text-emerald-600">${pct}%</span>
+          <div class="p-3.5 bg-gray-50/70 dark:bg-gray-800/40 rounded-xl border border-gray-200/80 dark:border-gray-700/80 space-y-2 hover:border-emerald-300 transition">
+            <div class="flex flex-wrap items-center justify-between gap-2 text-xs">
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full" style="background-color: ${st.color};"></span>
+                <span class="font-extrabold text-gray-900 dark:text-white">${st.label}</span>
+              </div>
+              <div class="flex items-center gap-3 font-mono">
+                <span class="font-bold text-gray-500 dark:text-gray-400">${st.count} дій</span>
+                <span class="font-black text-gray-900 dark:text-white">$${st.val.toLocaleString('uk-UA')}</span>
+                <span class="px-2 py-0.5 rounded-full font-bold text-white text-[11px]" style="background-color: ${st.color};">${st.throughPct}%</span>
+              </div>
             </div>
-            <div class="text-xl font-black text-gray-900 dark:text-white">${count}</div>
-            <p class="text-[10px] text-gray-400 mt-1">Угод на стадії</p>
+
+            <!-- Gradient Horizontal Funnel Bar -->
+            <div class="w-full bg-gray-200 dark:bg-gray-700 h-3 rounded-full overflow-hidden">
+              <div class="h-full rounded-full transition-all duration-700" style="width: ${barWidth}%; background-color: ${st.color};"></div>
+            </div>
+
+            ${idx < stagesData.length - 1 ? `
+              <div class="flex items-center gap-1.5 text-[10px] text-gray-400 font-medium pl-1">
+                <i data-lucide="corner-down-right" class="w-3 h-3 text-emerald-500"></i>
+                <span>Конверсія у наступний етап: <strong class="text-gray-700 dark:text-gray-200">${st.stepTrans}</strong></span>
+              </div>
+            ` : `
+              <div class="flex items-center gap-1.5 text-[10px] text-emerald-600 font-bold pl-1">
+                <i data-lucide="check-circle" class="w-3 h-3"></i>
+                <span>${st.stepTrans}</span>
+              </div>
+            `}
           </div>
         `;
       }).join('');
+
+      renderIcons();
     }
 
-    function renderLeadsSummary() {
-      // Sync counts
-      const nNew = state.leads.filter(l => l.stage === 'NEW' || l.stage === 'INFO_REQUEST').length;
-      const nQual = state.leads.filter(l => l.stage === 'NEEDS_DISCOVERY').length;
-      const nMatch = state.leads.filter(l => l.stage === 'PROPERTY_SELECTION').length;
-      const nShow = state.leads.filter(l => l.stage === 'SHOWING' || l.stage === 'NEGOTIATION').length;
+    function renderSalesFunnelSpline() {
+      const svg = document.getElementById('svgSalesFunnelSpline');
+      if (!svg) return;
 
-      const elNew = document.getElementById('lead_stat_new');
-      if (elNew) elNew.textContent = nNew;
-      const elQual = document.getElementById('lead_stat_qual');
-      if (elQual) elQual.textContent = nQual;
-      const elMatch = document.getElementById('lead_stat_match');
-      if (elMatch) elMatch.textContent = nMatch;
-      const elShow = document.getElementById('lead_stat_show');
-      if (elShow) elShow.textContent = nShow;
+      const data = [
+        { label: 'Дзвінки', val: 100 },
+        { label: 'Зустрічі', val: 18 },
+        { label: 'Договори', val: 5 },
+        { label: 'Покази', val: 12 },
+        { label: 'Оффери', val: 8 },
+        { label: 'Завдатки', val: 3 },
+        { label: 'Закрито', val: 2 }
+      ];
+
+      const w = 540;
+      const h = 200;
+      const padLeft = 45;
+      const padRight = 20;
+      const padTop = 20;
+      const padBottom = 35;
+
+      const chartW = w - padLeft - padRight;
+      const chartH = h - padTop - padBottom;
+      const maxVal = 100;
+
+      const points = data.map((d, i) => {
+        const x = padLeft + (i / (data.length - 1)) * chartW;
+        const y = padTop + chartH - (d.val / maxVal) * chartH;
+        return { x, y, raw: d };
+      });
+
+      const splinePath = buildCubicSplinePath(points);
+      const areaPath = `${splinePath} L ${points[points.length - 1].x.toFixed(1)} ${(padTop + chartH).toFixed(1)} L ${points[0].x.toFixed(1)} ${(padTop + chartH).toFixed(1)} Z`;
+
+      const gridLevels = [0, 25, 50, 75, 100];
+      const gridSvg = gridLevels.map(lvl => {
+        const yPos = padTop + chartH - (lvl / maxVal) * chartH;
+        return `
+          <g>
+            <line x1="${padLeft}" y1="${yPos}" x2="${w - padRight}" y2="${yPos}" stroke="#E2E8F0" stroke-dasharray="3,3" stroke-width="1" />
+            <text x="${padLeft - 8}" y="${yPos + 3}" font-size="10" fill="#94A3B8" text-anchor="end" font-family="monospace">${lvl}%</text>
+          </g>
+        `;
+      }).join('');
+
+      const xLabels = points.map(p => `
+        <text x="${p.x}" y="${h - 10}" font-size="9.5" fill="#94A3B8" text-anchor="middle" font-weight="600">${p.raw.label}</text>
+      `).join('');
+
+      const dotsSvg = points.map(p => `
+        <g class="cursor-pointer group"
+           onmousemove="showChartTooltip(event, '${p.raw.label}', '${p.raw.val}% конверсія', 'Стадія воронки')"
+           onmouseleave="hideChartTooltip()">
+          <circle cx="${p.x}" cy="${p.y}" r="8" fill="transparent" />
+          <circle cx="${p.x}" cy="${p.y}" r="4" fill="#059669" stroke="#FFFFFF" stroke-width="2" class="transition-all duration-150 group-hover:r-5 group-hover:fill-emerald-400" />
+        </g>
+      `).join('');
+
+      svg.innerHTML = `
+        <defs>
+          <linearGradient id="gradSalesFunnel" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#10B981" stop-opacity="0.35" />
+            <stop offset="100%" stop-color="#10B981" stop-opacity="0.0" />
+          </linearGradient>
+        </defs>
+
+        <text x="-${h / 2}" y="14" transform="rotate(-90)" font-size="10" fill="#94A3B8" text-anchor="middle" font-weight="bold">Конверсія %</text>
+
+        ${gridSvg}
+        <path d="${areaPath}" fill="url(#gradSalesFunnel)" />
+        <path d="${splinePath}" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" />
+        ${xLabels}
+        ${dotsSvg}
+      `;
+    }
+
+    function renderSalesFunnelFinance() {
+      const c = document.getElementById('salesFunnelFinanceSummary');
+      if (!c) return;
+
+      let grandTotalVolume = 0;
+      state.deals.forEach(d => grandTotalVolume += (d.price || 0));
+      const estCommission = Math.round(grandTotalVolume * 0.05);
+
+      c.innerHTML = `
+        <div class="p-3.5 rounded-xl bg-emerald-50/80 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 flex justify-between items-center">
+          <div>
+            <span class="text-[10px] text-emerald-800 dark:text-emerald-300 font-bold uppercase tracking-wider block">Пайплайн у роботі</span>
+            <strong class="text-xl font-black text-emerald-700 dark:text-emerald-300 font-mono">$${grandTotalVolume.toLocaleString('uk-UA')}</strong>
+          </div>
+          <span class="p-2 rounded-lg bg-emerald-600 text-white"><i data-lucide="layers" class="w-4 h-4"></i></span>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-blue-50/80 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800 flex justify-between items-center">
+          <div>
+            <span class="text-[10px] text-blue-800 dark:text-blue-300 font-bold uppercase tracking-wider block">Очікувана комісія (5%)</span>
+            <strong class="text-xl font-black text-blue-700 dark:text-blue-300 font-mono">$${estCommission.toLocaleString('uk-UA')}</strong>
+          </div>
+          <span class="p-2 rounded-lg bg-blue-600 text-white"><i data-lucide="percent" class="w-4 h-4"></i></span>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-purple-50/80 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-800 flex justify-between items-center">
+          <div>
+            <span class="text-[10px] text-purple-800 dark:text-purple-300 font-bold uppercase tracking-wider block">Середній чек закритої угоди</span>
+            <strong class="text-xl font-black text-purple-700 dark:text-purple-300 font-mono">$42,500</strong>
+          </div>
+          <span class="p-2 rounded-lg bg-purple-600 text-white"><i data-lucide="check-circle-2" class="w-4 h-4"></i></span>
+        </div>
+      `;
+
+      renderIcons();
+    }
+
+    // ─── LEADS FUNNEL ANALYTICS & CONVERSION CHARTS ──────────────────────────
+    function renderLeadsSummary() {
+      renderLeadsFunnelWaterfall();
+      renderLeadsSourcesDonut();
+    }
+
+    function renderLeadsFunnelWaterfall() {
+      const container = document.getElementById('leadsFunnelWaterfallBars');
+      if (!container) return;
+
+      const leadsStagesData = [
+        { label: 'Вхідна заявка (NEW)', count: 32, color: '#1D4ED8', throughPct: 100, stepTrans: '81.2% кваліфікація (запит інформації)' },
+        { label: 'Запит інформації (INFO)', count: 26, color: '#0284C7', throughPct: 81, stepTrans: '84.6% виявлення потреби' },
+        { label: 'Виявлення потреби (NEEDS)', count: 22, color: '#0EA5E9', throughPct: 68, stepTrans: '81.8% підбір об\'єктів' },
+        { label: 'Підбір нерухомості (MATCH)', count: 18, color: '#6366F1', throughPct: 56, stepTrans: '66.7% виїзні покази' },
+        { label: 'Показ об\'єктів (SHOWING)', count: 12, color: '#D97706', throughPct: 37, stepTrans: '58.3% переговори по ціні' },
+        { label: 'Переговори (NEGOTIATION)', count: 7, color: '#7C3AED', throughPct: 22, stepTrans: '57.1% внесення завдатку' },
+        { label: 'Завдаток (DEPOSIT)', count: 4, color: '#CA8A04', throughPct: 12, stepTrans: '75.0% фінальна угода' },
+        { label: 'Угода ✅ (DEAL)', count: 3, color: '#059669', throughPct: 9, stepTrans: 'Успішне закриття ліда! 🎉' }
+      ];
+
+      container.innerHTML = leadsStagesData.map((st, idx) => {
+        const barWidth = Math.max(10, st.throughPct);
+        return `
+          <div class="p-3 bg-gray-50/70 dark:bg-gray-800/40 rounded-xl border border-gray-200/80 dark:border-gray-700/80 space-y-1.5 hover:border-blue-300 transition">
+            <div class="flex flex-wrap items-center justify-between gap-2 text-xs">
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full" style="background-color: ${st.color};"></span>
+                <span class="font-extrabold text-gray-900 dark:text-white">${st.label}</span>
+              </div>
+              <div class="flex items-center gap-3 font-mono">
+                <span class="font-bold text-gray-500 dark:text-gray-400">${st.count} лідів</span>
+                <span class="px-2 py-0.5 rounded-full font-bold text-white text-[11px]" style="background-color: ${st.color};">${st.throughPct}%</span>
+              </div>
+            </div>
+
+            <div class="w-full bg-gray-200 dark:bg-gray-700 h-2.5 rounded-full overflow-hidden">
+              <div class="h-full rounded-full transition-all duration-700" style="width: ${barWidth}%; background-color: ${st.color};"></div>
+            </div>
+
+            <div class="flex items-center gap-1.5 text-[10px] text-gray-400 font-medium pl-1">
+              <i data-lucide="corner-down-right" class="w-3 h-3 text-blue-500"></i>
+              <span>${st.stepTrans}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      renderIcons();
+    }
+
+    function renderLeadsSourcesDonut() {
+      const svg = document.getElementById('svgLeadsSourcesDonut');
+      const legend = document.getElementById('legendLeadsSources');
+      if (!svg || !legend) return;
+
+      const sources = [
+        { name: 'OLX Нерухомість', count: 12, pct: 37.5, color: '#002f34' },
+        { name: 'DOM.RIA', count: 8, pct: 25.0, color: '#eb4d27' },
+        { name: 'Instagram Direct / Reels', count: 6, pct: 18.8, color: '#E1306C' },
+        { name: 'Сайт Yotei (Органіка)', count: 4, pct: 12.5, color: '#2563EB' },
+        { name: 'Вхідні дзвінки / Рекомендації', count: 2, pct: 6.2, color: '#10B981' }
+      ];
+
+      const cx = 100;
+      const cy = 100;
+      const rOut = 85;
+      const rIn = 52;
+
+      let currentAngle = 0;
+      const pathsSvg = sources.map((s, idx) => {
+        const sliceAngle = (s.pct / 100) * 360;
+        const startA = currentAngle;
+        const endA = currentAngle + sliceAngle;
+        currentAngle = endA;
+
+        const pathD = describeDonutArc(cx, cy, rIn, rOut, startA, endA);
+        return `
+          <path id="source_slice_${idx}"
+                d="${pathD}"
+                fill="${s.color}"
+                stroke="#FFFFFF"
+                stroke-width="1.5"
+                class="transition-opacity duration-150 cursor-pointer hover:opacity-85"
+                onmousemove="showChartTooltip(event, '${s.name}', '${s.count} лідів (${s.pct}%)', 'Маркетинговий канал')"
+                onmouseleave="hideChartTooltip()" />
+        `;
+      }).join('');
+
+      svg.innerHTML = pathsSvg;
+
+      legend.innerHTML = sources.map((s, idx) => `
+        <div class="flex items-center justify-between p-1.5 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition cursor-pointer">
+          <div class="flex items-center gap-2 truncate">
+            <span class="w-3.5 h-3 rounded-xs shrink-0" style="background-color: ${s.color};"></span>
+            <span class="text-gray-700 dark:text-gray-300 font-medium truncate text-[11px]">${s.name}</span>
+          </div>
+          <div class="flex items-center gap-2 font-mono text-[11px] shrink-0">
+            <strong class="text-gray-900 dark:text-white font-bold">${s.count}</strong>
+            <span class="text-gray-400">(${s.pct}%)</span>
+          </div>
+        </div>
+      `).join('');
     }
 
     // Increment single KPI metric (+1 button)
