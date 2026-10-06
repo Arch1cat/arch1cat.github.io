@@ -88,7 +88,7 @@
       <div class="flex items-center gap-2.5">
         <span class="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center text-white font-black text-lg shadow-sm">Y</span>
         <h1 class="font-extrabold text-base tracking-tight text-gray-900 dark:text-white">Робоче місце CRM</h1>
-        <span class="ml-2 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700">Benchmark Performance Zones v9.0 Active</span>
+        <span class="ml-2 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700">Modular Drag & Resize Grid v10.0 Active</span>
       </div>
 
       <!-- Clean Theme Toggle -->
@@ -221,11 +221,25 @@
           <button type="button" onclick="setVisualMode('bars')" id="viewMode_cards" class="hidden"></button>
         </div>
 
-        <!-- Block Visibility Management Button -->
-        <div class="flex items-center gap-2">
+        <!-- Modular Dashboard Grid Controls & Presets -->
+        <div class="flex items-center gap-2 flex-wrap">
+          <div class="flex items-center bg-gray-100 dark:bg-gray-800/90 p-0.5 rounded-xl border border-gray-200 dark:border-gray-700 text-xs">
+            <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-2 font-mono">Макет:</span>
+            <button type="button" onclick="setDashboardGridPreset('grid2x2')" id="btn_layout_2x2" title="Всі блоки по 50% (Сітка 2х2)" class="px-2.5 py-1 rounded-lg font-bold hover:bg-white dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 transition cursor-pointer flex items-center gap-1">
+              <i data-lucide="grid" class="w-3.5 h-3.5 text-blue-500"></i>
+              <span>▦ 2х2 (50%)</span>
+            </button>
+            <button type="button" onclick="setDashboardGridPreset('full')" id="btn_layout_full" title="Всі блоки на 100% ширини" class="px-2.5 py-1 rounded-lg font-bold hover:bg-white dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 transition cursor-pointer flex items-center gap-1">
+              <i data-lucide="maximize" class="w-3.5 h-3.5 text-purple-500"></i>
+              <span>⤢ Всі 100%</span>
+            </button>
+            <button type="button" onclick="setDashboardGridPreset('default')" id="btn_layout_reset" title="Скинути макет до стандартного" class="px-2 py-1 rounded-lg font-bold hover:bg-white dark:hover:bg-gray-700 text-gray-500 transition cursor-pointer" title="Скинути">
+              ↺
+            </button>
+          </div>
           <button type="button" onclick="openModal('visibilityModal')" class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl text-xs font-bold border border-gray-200 dark:border-gray-700 transition cursor-pointer flex items-center gap-1.5">
             <i data-lucide="eye" class="w-3.5 h-3.5 text-emerald-600"></i>
-            <span>👁️ Видимість блоків</span>
+            <span>Видимість</span>
           </button>
         </div>
 
@@ -311,11 +325,11 @@
 
       </div>
 
-      <!-- 4 CORE KPI SECTIONS SPECIFIED BY USER -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- 4 CORE KPI SECTIONS SPECIFIED BY USER (MODULAR RESIZABLE & REORDERABLE GRID) -->
+      <div id="kpi_cards_container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
         <!-- 1. РОБОТА З ОБʼЄКТОМ -->
-        <div id="card_obj" class="bg-white dark:bg-[#1A1D24] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden flex flex-col transition-all duration-300">
+        <div id="card_obj" data-card-id="card_obj" draggable="true" ondragstart="handleCardDragStart(event)" ondragover="handleCardDragOver(event)" ondragleave="handleCardDragLeave(event)" ondrop="handleCardDrop(event)" class="col_span_card md:col-span-1 bg-white dark:bg-[#1A1D24] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden flex flex-col transition-all duration-300">
           <div class="px-4 py-3 bg-gradient-to-r from-emerald-50 to-emerald-100/40 dark:from-emerald-950/40 dark:to-transparent border-b border-gray-200 dark:border-gray-800 flex items-center justify-between">
             <div class="flex items-center gap-2">
               <div class="w-7 h-7 rounded-lg bg-emerald-600 text-white flex items-center justify-center">
@@ -330,6 +344,15 @@
                 <button type="button" onclick="setBlockMode('objects', 'bars')" id="btn_mode_objects_bars" title="Смуги нормативів" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">📊</button>
                 <button type="button" onclick="setBlockMode('objects', 'pie')" id="btn_mode_objects_pie" title="Кругова діаграма (%)" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">🥧</button>
                 <button type="button" onclick="setBlockMode('objects', 'charts')" id="btn_mode_objects_charts" title="Графік (Мульти-лінії)" class="px-1.5 py-0.5 rounded font-bold bg-emerald-600 text-white">📈</button>
+              </div>
+              <!-- Width Resizer (50% vs 100%) -->
+              <button type="button" onclick="toggleCardWidth('card_obj')" id="btn_width_card_obj" title="Змінити ширину (50% / 100%)" class="p-1 rounded-lg text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition cursor-pointer">
+                <i data-lucide="maximize-2" id="icon_width_card_obj" class="w-3.5 h-3.5"></i>
+              </button>
+              <!-- Card Reorder Arrows -->
+              <div class="flex items-center text-gray-400">
+                <button type="button" onclick="moveCardUp('card_obj')" title="Перемістити вище" class="px-1 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-[10px] cursor-pointer">▲</button>
+                <button type="button" onclick="moveCardDown('card_obj')" title="Перемістити нижче" class="px-1 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-[10px] cursor-pointer">▼</button>
               </div>
               <!-- Collapse Button -->
               <button type="button" onclick="toggleCardCollapse('card_obj_body', 'chevron_obj')" title="Згорнути / розгорнути" class="p-1 rounded-lg text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition">
@@ -348,7 +371,7 @@
         </div>
 
         <!-- 2. РОБОТА З КЛІЄНТАМИ -->
-        <div id="card_clients" class="bg-white dark:bg-[#1A1D24] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden flex flex-col transition-all duration-300">
+        <div id="card_clients" data-card-id="card_clients" draggable="true" ondragstart="handleCardDragStart(event)" ondragover="handleCardDragOver(event)" ondragleave="handleCardDragLeave(event)" ondrop="handleCardDrop(event)" class="col_span_card md:col-span-1 bg-white dark:bg-[#1A1D24] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden flex flex-col transition-all duration-300">
           <div class="px-4 py-3 bg-gradient-to-r from-blue-50 to-blue-100/40 dark:from-blue-950/40 dark:to-transparent border-b border-gray-200 dark:border-gray-800 flex items-center justify-between">
             <div class="flex items-center gap-2">
               <div class="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center">
@@ -363,6 +386,15 @@
                 <button type="button" onclick="setBlockMode('clients', 'bars')" id="btn_mode_clients_bars" title="Смуги нормативів" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">📊</button>
                 <button type="button" onclick="setBlockMode('clients', 'pie')" id="btn_mode_clients_pie" title="Кругова діаграма (%)" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">🥧</button>
                 <button type="button" onclick="setBlockMode('clients', 'charts')" id="btn_mode_clients_charts" title="Графік (Мульти-лінії)" class="px-1.5 py-0.5 rounded font-bold bg-blue-600 text-white">📈</button>
+              </div>
+              <!-- Width Resizer (50% vs 100%) -->
+              <button type="button" onclick="toggleCardWidth('card_clients')" id="btn_width_card_clients" title="Змінити ширину (50% / 100%)" class="p-1 rounded-lg text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition cursor-pointer">
+                <i data-lucide="maximize-2" id="icon_width_card_clients" class="w-3.5 h-3.5"></i>
+              </button>
+              <!-- Card Reorder Arrows -->
+              <div class="flex items-center text-gray-400">
+                <button type="button" onclick="moveCardUp('card_clients')" title="Перемістити вище" class="px-1 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-[10px] cursor-pointer">▲</button>
+                <button type="button" onclick="moveCardDown('card_clients')" title="Перемістити нижче" class="px-1 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-[10px] cursor-pointer">▼</button>
               </div>
               <!-- Collapse Button -->
               <button type="button" onclick="toggleCardCollapse('card_clients_body', 'chevron_clients')" title="Згорнути / розгорнути" class="p-1 rounded-lg text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition">
@@ -381,7 +413,7 @@
         </div>
 
         <!-- 3. МАРКЕТИНГ (ПОРТАЛИ ТА СОЦМЕРЕЖІ) -->
-        <div id="card_marketing" class="bg-white dark:bg-[#1A1D24] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden flex flex-col md:col-span-2 transition-all duration-300">
+        <div id="card_marketing" data-card-id="card_marketing" draggable="true" ondragstart="handleCardDragStart(event)" ondragover="handleCardDragOver(event)" ondragleave="handleCardDragLeave(event)" ondrop="handleCardDrop(event)" class="col_span_card md:col-span-2 bg-white dark:bg-[#1A1D24] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden flex flex-col transition-all duration-300">
           <div class="px-4 py-3 bg-gradient-to-r from-purple-50 to-purple-100/40 dark:from-purple-950/40 dark:to-transparent border-b border-gray-200 dark:border-gray-800 flex items-center justify-between">
             <div class="flex items-center gap-2">
               <div class="w-7 h-7 rounded-lg bg-purple-600 text-white flex items-center justify-center">
@@ -396,6 +428,15 @@
                 <button type="button" onclick="setBlockMode('marketing', 'bars')" id="btn_mode_marketing_bars" title="Смуги" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">📊</button>
                 <button type="button" onclick="setBlockMode('marketing', 'pie')" id="btn_mode_marketing_pie" title="Кругова діаграма (%)" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">🥧</button>
                 <button type="button" onclick="setBlockMode('marketing', 'charts')" id="btn_mode_marketing_charts" title="Графік (Мульти-лінії)" class="px-1.5 py-0.5 rounded font-bold bg-purple-600 text-white">📈</button>
+              </div>
+              <!-- Width Resizer (50% vs 100%) -->
+              <button type="button" onclick="toggleCardWidth('card_marketing')" id="btn_width_card_marketing" title="Змінити ширину (50% / 100%)" class="p-1 rounded-lg text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition cursor-pointer">
+                <i data-lucide="minimize-2" id="icon_width_card_marketing" class="w-3.5 h-3.5"></i>
+              </button>
+              <!-- Card Reorder Arrows -->
+              <div class="flex items-center text-gray-400">
+                <button type="button" onclick="moveCardUp('card_marketing')" title="Перемістити вище" class="px-1 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-[10px] cursor-pointer">▲</button>
+                <button type="button" onclick="moveCardDown('card_marketing')" title="Перемістити нижче" class="px-1 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-[10px] cursor-pointer">▼</button>
               </div>
               <button type="button" onclick="toggleCardCollapse('card_marketing_body', 'chevron_mkt')" title="Згорнути / розгорнути" class="p-1 rounded-lg text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition">
                 <i data-lucide="chevron-down" id="chevron_mkt" class="w-4 h-4"></i>
@@ -419,7 +460,7 @@
         </div>
 
         <!-- 4. УГОДИ ТА ФІНАЛ ВОРОНКИ -->
-        <div id="card_deals" class="bg-white dark:bg-[#1A1D24] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden flex flex-col md:col-span-2 transition-all duration-300">
+        <div id="card_deals" data-card-id="card_deals" draggable="true" ondragstart="handleCardDragStart(event)" ondragover="handleCardDragOver(event)" ondragleave="handleCardDragLeave(event)" ondrop="handleCardDrop(event)" class="col_span_card md:col-span-2 bg-white dark:bg-[#1A1D24] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden flex flex-col transition-all duration-300">
           <div class="px-4 py-3 bg-gradient-to-r from-amber-50 to-amber-100/40 dark:from-amber-950/40 dark:to-transparent border-b border-gray-200 dark:border-gray-800 flex items-center justify-between">
             <div class="flex items-center gap-2">
               <div class="w-7 h-7 rounded-lg bg-amber-500 text-white flex items-center justify-center">
@@ -433,6 +474,15 @@
                 <button type="button" onclick="setBlockMode('deals', 'bars')" id="btn_mode_deals_bars" title="Смуги" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">📊</button>
                 <button type="button" onclick="setBlockMode('deals', 'pie')" id="btn_mode_deals_pie" title="Кругова діаграма (%)" class="px-1.5 py-0.5 rounded font-bold hover:bg-gray-100 dark:hover:bg-gray-700">🥧</button>
                 <button type="button" onclick="setBlockMode('deals', 'charts')" id="btn_mode_deals_charts" title="Графік (Мульти-лінії)" class="px-1.5 py-0.5 rounded font-bold bg-amber-500 text-white">📈</button>
+              </div>
+              <!-- Width Resizer (50% vs 100%) -->
+              <button type="button" onclick="toggleCardWidth('card_deals')" id="btn_width_card_deals" title="Змінити ширину (50% / 100%)" class="p-1 rounded-lg text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition cursor-pointer">
+                <i data-lucide="minimize-2" id="icon_width_card_deals" class="w-3.5 h-3.5"></i>
+              </button>
+              <!-- Card Reorder Arrows -->
+              <div class="flex items-center text-gray-400">
+                <button type="button" onclick="moveCardUp('card_deals')" title="Перемістити вище" class="px-1 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-[10px] cursor-pointer">▲</button>
+                <button type="button" onclick="moveCardDown('card_deals')" title="Перемістити нижче" class="px-1 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-[10px] cursor-pointer">▼</button>
               </div>
               <button type="button" onclick="toggleCardCollapse('card_deals_body', 'chevron_deals')" title="Згорнути / розгорнути" class="p-1 rounded-lg text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition">
                 <i data-lucide="chevron-down" id="chevron_deals" class="w-4 h-4"></i>
@@ -4175,6 +4225,135 @@
       });
       updateKpiDisplay();
       showToast(`Блок ${block}: візуалізація ${mode === 'pie' ? 'Кругова (%)' : mode === 'charts' ? 'Графік (Мульти-лінії)' : 'Смуги'}`);
+    }
+
+    // ═════════════════════════════════════════════════════════════════════════
+    // DASHBOARD MODULAR GRID & REORDERING ENGINE
+    // ═════════════════════════════════════════════════════════════════════════
+    if (!state.dashboardLayout) {
+      state.dashboardLayout = {
+        widths: { card_obj: 1, card_clients: 1, card_marketing: 2, card_deals: 2 }
+      };
+    }
+
+    function toggleCardWidth(cardId) {
+      const card = document.getElementById(cardId);
+      if (!card) return;
+      if (!state.dashboardLayout) state.dashboardLayout = { widths: {} };
+      if (!state.dashboardLayout.widths) state.dashboardLayout.widths = {};
+
+      const currentW = state.dashboardLayout.widths[cardId] || (card.classList.contains('md:col-span-2') ? 2 : 1);
+      const newW = currentW === 1 ? 2 : 1;
+      state.dashboardLayout.widths[cardId] = newW;
+
+      card.classList.toggle('md:col-span-1', newW === 1);
+      card.classList.toggle('md:col-span-2', newW === 2);
+
+      const icon = document.getElementById(`icon_width_${cardId}`);
+      if (icon) {
+        icon.setAttribute('data-lucide', newW === 2 ? 'minimize-2' : 'maximize-2');
+      }
+
+      renderIcons();
+      window.dispatchEvent(new Event('resize'));
+      showToast(newW === 2 ? 'Розгорнуто на 100% ширини ⤢' : 'Звужено до 50% ширини (можна поставити блок поруч!) ⤡');
+    }
+
+    function setDashboardGridPreset(preset) {
+      const cards = ['card_obj', 'card_clients', 'card_marketing', 'card_deals'];
+      cards.forEach(id => {
+        const card = document.getElementById(id);
+        if (!card) return;
+        let w = 1;
+        if (preset === 'full') {
+          w = 2;
+        } else if (preset === 'grid2x2') {
+          w = 1;
+        } else {
+          w = (id === 'card_obj' || id === 'card_clients') ? 1 : 2;
+        }
+        if (!state.dashboardLayout) state.dashboardLayout = { widths: {} };
+        state.dashboardLayout.widths[id] = w;
+
+        card.classList.toggle('md:col-span-1', w === 1);
+        card.classList.toggle('md:col-span-2', w === 2);
+        const icon = document.getElementById(`icon_width_${id}`);
+        if (icon) {
+          icon.setAttribute('data-lucide', w === 2 ? 'minimize-2' : 'maximize-2');
+        }
+      });
+      renderIcons();
+      window.dispatchEvent(new Event('resize'));
+      showToast(`Застосовано макет: ${preset === 'grid2x2' ? 'Сітка 2х2 (50%)' : preset === 'full' ? 'Всі на 100%' : 'Стандартний'}`);
+    }
+
+    let draggedCardId = null;
+
+    function handleCardDragStart(e) {
+      const card = e.target.closest('[data-card-id]');
+      if (!card) return;
+      draggedCardId = card.getAttribute('data-card-id');
+      e.dataTransfer.effectAllowed = 'move';
+      card.classList.add('opacity-50', 'scale-[0.99]');
+    }
+
+    function handleCardDragOver(e) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      const targetCard = e.target.closest('[data-card-id]');
+      if (targetCard && targetCard.getAttribute('data-card-id') !== draggedCardId) {
+        targetCard.classList.add('ring-2', 'ring-emerald-500', 'ring-offset-2');
+      }
+    }
+
+    function handleCardDragLeave(e) {
+      const targetCard = e.target.closest('[data-card-id]');
+      if (targetCard) {
+        targetCard.classList.remove('ring-2', 'ring-emerald-500', 'ring-offset-2');
+      }
+    }
+
+    function handleCardDrop(e) {
+      e.preventDefault();
+      const targetCard = e.target.closest('[data-card-id]');
+      if (!targetCard) return;
+      targetCard.classList.remove('ring-2', 'ring-emerald-500', 'ring-offset-2');
+
+      const targetId = targetCard.getAttribute('data-card-id');
+      const sourceCard = document.getElementById(draggedCardId);
+      if (sourceCard) sourceCard.classList.remove('opacity-50', 'scale-[0.99]');
+
+      if (!draggedCardId || draggedCardId === targetId) return;
+
+      const container = document.getElementById('kpi_cards_container');
+      if (!container) return;
+
+      const children = Array.from(container.children);
+      const srcIdx = children.indexOf(sourceCard);
+      const tgtIdx = children.indexOf(targetCard);
+
+      if (srcIdx < tgtIdx) {
+        container.insertBefore(sourceCard, targetCard.nextSibling);
+      } else {
+        container.insertBefore(sourceCard, targetCard);
+      }
+
+      showToast('Розташування блоків оновлено!');
+      draggedCardId = null;
+    }
+
+    function moveCardUp(cardId) {
+      const card = document.getElementById(cardId);
+      if (!card || !card.previousElementSibling) return;
+      card.parentNode.insertBefore(card, card.previousElementSibling);
+      showToast('Блок переміщено вище ⬆');
+    }
+
+    function moveCardDown(cardId) {
+      const card = document.getElementById(cardId);
+      if (!card || !card.nextElementSibling) return;
+      card.parentNode.insertBefore(card.nextElementSibling, card);
+      showToast('Блок переміщено нижче ⬇');
     }
 
     // ─── CARD COLLAPSE & VISIBILITY CONTROLLERS ─────────────────────────────
