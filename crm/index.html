@@ -403,9 +403,15 @@
             </div>
           </div>
 
-          <div id="card_marketing_body" class="p-4 grid grid-cols-1 lg:grid-cols-12 gap-6">
-            <div id="container_classifieds" class="lg:col-span-4 space-y-3"></div>
-            <div id="container_social" class="lg:col-span-8 space-y-3"></div>
+          <div id="card_marketing_body" class="p-5 sm:p-6 space-y-7">
+            <!-- БЛОК 1: РЕКЛАМА НА ПОРТАЛАХ (КЛАСИФАЙДИ) - НА ВСЮ ШИРИНУ -->
+            <div id="container_classifieds" class="space-y-3.5"></div>
+
+            <!-- ДЕЛІКАТНИЙ РОЗДІЛЬНИК ІЗ ПОВІТРЯМ -->
+            <div class="border-t border-gray-200/80 dark:border-gray-800 my-1"></div>
+
+            <!-- БЛОК 2: СОЦІАЛЬНІ МЕРЕЖІ ТА SMM - НА ВСЮ ШИРИНУ -->
+            <div id="container_social" class="space-y-4"></div>
           </div>
         </div>
 
@@ -3066,72 +3072,109 @@
       if (!c1 || !c2) return;
 
       const classItems = [
-        { id: 'olx', name: 'Реклама ОЛХ', val: state.marketing.olx, tgt: 20, tag: 'OLX', tagBg: 'bg-[#002f34] text-[#00f898]' },
-        { id: 'domria', name: 'Реклама Дом Ріа', val: state.marketing.domria, tgt: 20, tag: 'RIA', tagBg: 'bg-[#eb4d27] text-white' },
-        { id: 'rieltor', name: 'Реклама Рієлтор юа', val: state.marketing.rieltor, tgt: 20, tag: 'R.UA', tagBg: 'bg-[#0b66c3] text-white' }
+        { id: 'olx', name: 'Реклама OLX', desc: 'Дошка оголошень №1 в Україні', val: state.marketing.olx, tgt: 20, tag: 'OLX', tagBg: 'bg-[#002f34] text-[#00f898]', barColor: '#00f898' },
+        { id: 'domria', name: 'Реклама DOM.RIA', desc: 'Перевірені квартири та будинки', val: state.marketing.domria, tgt: 20, tag: 'RIA', tagBg: 'bg-[#eb4d27] text-white', barColor: '#eb4d27' },
+        { id: 'rieltor', name: 'Реклама Рієлтор.юа', desc: 'Професійна рієлторська база', val: state.marketing.rieltor, tgt: 20, tag: 'R.UA', tagBg: 'bg-[#0b66c3] text-white', barColor: '#0b66c3' }
       ];
 
+      const totClassVal = state.marketing.olx + state.marketing.domria + state.marketing.rieltor;
+
       c1.innerHTML = `
-        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-1.5 mb-2">
-          <i data-lucide="layout-grid" class="w-3.5 h-3.5 text-purple-600"></i>
-          Реклама на порталах (Класифайди)
-        </h4>
-        ${classItems.map(it => {
-          const pct = Math.round((it.val / it.tgt) * 100);
-          if (mode === 'circles') {
-            return `
-              <div class="p-2.5 bg-gray-50 dark:bg-gray-800/60 rounded-xl border border-gray-200 dark:border-gray-700/60 flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                  ${makeCircleGauge(pct, 'text-purple-600', 44, 4)}
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-1">
+          <div>
+            <h4 class="text-xs font-black text-purple-700 dark:text-purple-300 uppercase tracking-wider flex items-center gap-2">
+              <i data-lucide="layout-grid" class="w-4 h-4 text-purple-600"></i>
+              Оголошення на порталах (Класифайди)
+            </h4>
+            <p class="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5">Публікація та просування об'єктів на ключових майданчиках нерухомості з нормативом 20 оголошень.</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="px-3 py-1 rounded-full text-xs font-black bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800 font-mono">
+              Всього на порталах: ${totClassVal} / 60 (${Math.round((totClassVal / 60) * 100)}%)
+            </span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          ${classItems.map(it => {
+            const pct = Math.round((it.val / it.tgt) * 100);
+            if (mode === 'circles') {
+              return `
+                <div class="bg-white dark:bg-[#1A1D24] p-5 rounded-2xl border border-gray-200/90 dark:border-gray-800 shadow-xs hover:shadow-md transition flex flex-col justify-between space-y-4">
+                  <div class="flex items-center justify-between">
+                    <span class="px-2.5 py-1 rounded-lg ${it.tagBg} font-black text-xs">${it.tag}</span>
+                    <span class="text-xs font-bold text-gray-400 font-mono">${it.val} з ${it.tgt} норм</span>
+                  </div>
+                  <div class="flex items-center gap-4 py-1">
+                    ${makeCircleGauge(pct, 'text-purple-600', 58, 5)}
+                    <div>
+                      <h5 class="font-extrabold text-sm text-gray-900 dark:text-white">${it.name}</h5>
+                      <span class="text-xs text-gray-400 block mt-0.5">${it.desc}</span>
+                    </div>
+                  </div>
+                  <button onclick="incrementMarketing('${it.id}')" class="w-full py-2.5 px-4 rounded-xl font-bold text-xs bg-purple-600 hover:bg-purple-700 text-white shadow-xs transition active:scale-98 flex items-center justify-center gap-1.5 cursor-pointer">
+                    <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                    <span>+1 Додати оголошення</span>
+                  </button>
+                </div>
+              `;
+            }
+            if (mode === 'charts') {
+              return `
+                <div class="bg-white dark:bg-[#1A1D24] p-5 rounded-2xl border border-gray-200/90 dark:border-gray-800 shadow-xs hover:shadow-md transition flex flex-col justify-between space-y-4">
+                  <div class="flex items-center justify-between">
+                    <span class="px-2.5 py-1 rounded-lg ${it.tagBg} font-black text-xs">${it.tag}</span>
+                    <span class="text-xs font-mono font-bold text-purple-600">${pct}%</span>
+                  </div>
                   <div>
-                    <span class="flex items-center gap-1.5 font-bold text-xs text-gray-800 dark:text-gray-200">
-                      <span class="w-4 h-4 rounded ${it.tagBg} font-black text-[8px] flex items-center justify-center">${it.tag}</span>
-                      ${it.name}
-                    </span>
-                    <span class="text-[10px] text-gray-400 font-mono">${it.val} з ${it.tgt} оголошень</span>
+                    <h5 class="font-extrabold text-sm text-gray-900 dark:text-white">${it.name}</h5>
+                    <div class="text-2xl font-black text-gray-900 dark:text-white font-mono mt-1">${it.val} <span class="text-xs font-normal text-gray-400">/ ${it.tgt}</span></div>
+                  </div>
+                  <div class="py-1">${makeMiniChart(pct, '#9333EA')}</div>
+                  <button onclick="incrementMarketing('${it.id}')" class="w-full py-2.5 px-4 rounded-xl font-bold text-xs bg-purple-600 hover:bg-purple-700 text-white shadow-xs transition active:scale-98 flex items-center justify-center gap-1.5 cursor-pointer">
+                    <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                    <span>+1 Додати оголошення</span>
+                  </button>
+                </div>
+              `;
+            }
+            return `
+              <div class="bg-white dark:bg-[#1A1D24] p-5 rounded-2xl border border-gray-200/90 dark:border-gray-800 shadow-xs hover:shadow-md transition flex flex-col justify-between space-y-4 group">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2.5">
+                    <span class="w-9 h-9 rounded-xl ${it.tagBg} font-black text-xs flex items-center justify-center shadow-xs">${it.tag}</span>
+                    <div>
+                      <h5 class="font-black text-sm text-gray-900 dark:text-white group-hover:text-purple-600 transition">${it.name}</h5>
+                      <span class="text-[11px] text-gray-400 font-medium">${it.desc}</span>
+                    </div>
+                  </div>
+                  ${pct >= 100 
+                    ? '<span class="px-2.5 py-1 rounded-full text-[11px] font-black bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">100% ✓</span>'
+                    : `<span class="px-2.5 py-1 rounded-full text-[11px] font-black bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800 font-mono">${pct}%</span>`
+                  }
+                </div>
+
+                <div class="space-y-2">
+                  <div class="flex items-baseline justify-between">
+                    <div class="flex items-baseline gap-1.5">
+                      <span class="text-3xl font-black font-mono text-gray-900 dark:text-white">${it.val}</span>
+                      <span class="text-sm font-semibold text-gray-400">/ ${it.tgt} норм</span>
+                    </div>
+                    <span class="text-xs font-medium text-gray-400">${pct >= 100 ? 'Виконано повністю' : `Залишилось: ${Math.max(0, it.tgt - it.val)}`}</span>
+                  </div>
+                  <div class="w-full bg-gray-100 dark:bg-gray-700/80 h-2.5 rounded-full overflow-hidden">
+                    <div class="h-full rounded-full transition-all duration-500" style="width: ${Math.min(100, pct)}%; background-color: ${it.barColor};"></div>
                   </div>
                 </div>
-                <button onclick="incrementMarketing('${it.id}')" class="px-2 py-0.5 text-[10px] font-bold bg-purple-100 hover:bg-purple-200 text-purple-800 rounded transition cursor-pointer">+1</button>
+
+                <button onclick="incrementMarketing('${it.id}')" class="w-full py-2.5 px-4 rounded-xl font-bold text-xs bg-purple-600 hover:bg-purple-700 text-white shadow-xs transition hover:shadow active:scale-98 flex items-center justify-center gap-1.5 cursor-pointer">
+                  <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                  <span>+1 Додати оголошення</span>
+                </button>
               </div>
             `;
-          }
-          if (mode === 'charts') {
-            return `
-              <div class="p-2.5 bg-gray-50 dark:bg-gray-800/60 rounded-xl border border-gray-200 dark:border-gray-700/60 flex items-center justify-between">
-                <div>
-                  <span class="flex items-center gap-1.5 font-bold text-xs text-gray-800 dark:text-gray-200">
-                    <span class="w-4 h-4 rounded ${it.tagBg} font-black text-[8px] flex items-center justify-center">${it.tag}</span>
-                    ${it.name}
-                  </span>
-                  <span class="text-[10px] text-gray-400 font-mono">${it.val} / ${it.tgt} (${pct}%)</span>
-                </div>
-                <div class="flex items-center gap-2">
-                  ${makeMiniChart(pct, '#9333EA')}
-                  <button onclick="incrementMarketing('${it.id}')" class="px-2 py-0.5 text-[10px] font-bold bg-purple-100 text-purple-800 rounded cursor-pointer">+1</button>
-                </div>
-              </div>
-            `;
-          }
-          return `
-            <div class="bg-gray-50 dark:bg-gray-800/60 p-2.5 rounded-xl border border-gray-200 dark:border-gray-700/60">
-              <div class="flex justify-between items-center text-xs font-semibold mb-1">
-                <span class="flex items-center gap-2 text-gray-800 dark:text-gray-200">
-                  <span class="w-5 h-5 rounded ${it.tagBg} font-bold text-[9px] flex items-center justify-center">${it.tag}</span>
-                  ${it.name}
-                </span>
-                <div class="flex items-center gap-2">
-                  <span class="text-gray-400 text-[11px]">Норма: ${it.tgt}</span>
-                  <span class="font-extrabold text-purple-600 dark:text-purple-400 font-mono">${it.val}</span>
-                  ${pct >= 100 ? '<span class="text-[10px] bg-emerald-100 text-emerald-800 px-1 py-0.2 rounded font-bold">100% ✓</span>' : ''}
-                  <button onclick="incrementMarketing('${it.id}')" class="px-1.5 py-0.5 text-[10px] font-bold bg-purple-100 hover:bg-purple-200 text-purple-800 rounded transition cursor-pointer">+1</button>
-                </div>
-              </div>
-              <div class="w-full bg-gray-200 dark:bg-gray-700 h-1.5 rounded-full overflow-hidden">
-                <div class="bg-purple-500 h-full rounded-full" style="width: ${Math.min(100, pct)}%;"></div>
-              </div>
-            </div>
-          `;
-        }).join('')}
+          }).join('')}
+        </div>
       `;
 
       // ─── PREMIUM REDESIGNED SOCIAL MEDIA & SMM SECTION ────────────────────────
@@ -3161,51 +3204,52 @@
         const p = Math.round((val / tgt) * 100);
         if (mode === 'circles') {
           return `
-            <div class="p-2.5 bg-white dark:bg-gray-800 rounded-xl border border-gray-200/80 dark:border-gray-700 shadow-xs flex items-center justify-between gap-2.5">
-              <div class="flex items-center gap-2">
-                ${makeCircleGauge(p, `text-[${colorHex}]`, 42, 4)}
+            <div class="p-3.5 bg-white dark:bg-[#1A1D24] rounded-xl border border-gray-200/80 dark:border-gray-700 shadow-2xs flex flex-col justify-between space-y-3">
+              <span class="text-xs font-bold text-gray-500 dark:text-gray-400 truncate">${label}</span>
+              <div class="flex items-center justify-between">
                 <div>
-                  <span class="text-[10px] font-bold text-gray-400 uppercase tracking-tight block">${label}</span>
-                  <div class="text-xs font-black text-gray-900 dark:text-white">${val} <span class="text-[10px] font-normal text-gray-400">/ ${tgt}</span></div>
+                  <div class="text-xl font-black text-gray-900 dark:text-white font-mono">${val} <span class="text-xs text-gray-400 font-normal">/ ${tgt}</span></div>
+                  <span class="text-[10px] text-gray-400">Виконано: ${p}%</span>
                 </div>
+                ${makeCircleGauge(p, `text-[${colorHex}]`, 50, 4)}
               </div>
-              <button onclick="incMedia('${key}', ${tgt})" class="px-2 py-1 text-[10px] font-bold ${btnClass} text-white rounded-lg transition shadow-xs hover:opacity-90 active:scale-95 cursor-pointer">+1</button>
+              <button onclick="incMedia('${key}', ${tgt})" class="w-full py-2 rounded-lg text-xs font-bold ${btnClass} text-white shadow-2xs hover:opacity-90 active:scale-95 transition cursor-pointer flex items-center justify-center gap-1">+1 Додати</button>
             </div>
           `;
         }
 
         if (mode === 'charts') {
           return `
-            <div class="p-2.5 bg-white dark:bg-gray-800 rounded-xl border border-gray-200/80 dark:border-gray-700 shadow-xs flex items-center justify-between gap-2">
-              <div>
-                <span class="text-[10px] font-bold text-gray-400 uppercase tracking-tight block">${label}</span>
-                <div class="text-xs font-black text-gray-900 dark:text-white">${val} / ${tgt} <span class="text-[10px] font-bold text-gray-500">(${p}%)</span></div>
+            <div class="p-3.5 bg-white dark:bg-[#1A1D24] rounded-xl border border-gray-200/80 dark:border-gray-700 shadow-2xs flex flex-col justify-between space-y-3">
+              <div class="flex justify-between items-center">
+                <span class="text-xs font-bold text-gray-500 dark:text-gray-400 truncate">${label}</span>
+                <span class="text-xs font-mono font-bold text-pink-600">${p}%</span>
               </div>
-              <div class="flex items-center gap-1.5">
-                ${makeMiniChart(p, colorHex)}
-                <button onclick="incMedia('${key}', ${tgt})" class="px-2 py-1 text-[10px] font-bold ${btnClass} text-white rounded-lg transition shadow-xs hover:opacity-90 active:scale-95 cursor-pointer">+1</button>
-              </div>
+              <div class="text-xl font-black text-gray-900 dark:text-white font-mono">${val} <span class="text-xs text-gray-400 font-normal">/ ${tgt}</span></div>
+              <div class="py-0.5">${makeMiniChart(p, colorHex)}</div>
+              <button onclick="incMedia('${key}', ${tgt})" class="w-full py-2 rounded-lg text-xs font-bold ${btnClass} text-white shadow-2xs hover:opacity-90 active:scale-95 transition cursor-pointer flex items-center justify-center gap-1">+1 Додати</button>
             </div>
           `;
         }
 
-        // Default: Clean Linear Progress Bar
+        // Default: Spacious Linear Progress Card
         return `
-          <div class="p-2.5 bg-white dark:bg-gray-800 rounded-xl border border-gray-200/80 dark:border-gray-700 shadow-xs flex flex-col justify-between">
-            <div class="flex items-center justify-between text-xs mb-1">
-              <span class="text-[11px] font-bold text-gray-500 dark:text-gray-400">${label}</span>
-              <div class="flex items-center gap-1.5">
-                <span class="font-black text-gray-900 dark:text-white font-mono text-xs">${val}</span>
-                <span class="text-[10px] text-gray-400">/ ${tgt}</span>
-                <button onclick="incMedia('${key}', ${tgt})" class="px-1.5 py-0.5 text-[10px] font-bold ${btnClass} text-white rounded-md transition shadow-xs hover:opacity-90 active:scale-95 cursor-pointer" title="Додати 1">+1</button>
+          <div class="p-4 bg-white dark:bg-[#1A1D24] rounded-xl border border-gray-200/80 dark:border-gray-700 shadow-2xs flex flex-col justify-between space-y-3 group hover:border-pink-300 transition">
+            <span class="text-xs font-bold text-gray-600 dark:text-gray-300 truncate">${label}</span>
+            <div class="space-y-1.5">
+              <div class="flex items-baseline justify-between">
+                <div class="flex items-baseline gap-1">
+                  <span class="text-2xl font-black text-gray-900 dark:text-white font-mono">${val}</span>
+                  <span class="text-xs font-semibold text-gray-400">/ ${tgt}</span>
+                </div>
+                <span class="text-[11px] font-mono font-bold text-gray-500 dark:text-gray-400">${p}%</span>
+              </div>
+              <div class="w-full bg-gray-100 dark:bg-gray-700/80 h-2 rounded-full overflow-hidden">
+                <div class="h-full rounded-full transition-all duration-500" style="width: ${Math.min(100, p)}%; background-color: ${colorHex};"></div>
               </div>
             </div>
-            <div class="w-full bg-gray-100 dark:bg-gray-700 h-1.5 rounded-full overflow-hidden mb-1">
-              <div class="h-full rounded-full transition-all duration-500" style="width: ${Math.min(100, p)}%; background-color: ${colorHex};"></div>
-            </div>
-            <div class="flex justify-between items-center text-[9px] text-gray-400">
-              <span>Виконано: <strong class="text-gray-700 dark:text-gray-300">${p}%</strong></span>
-              ${p >= 100 ? '<span class="text-emerald-600 font-bold">100% ✓</span>' : `<span>Залишилось: ${Math.max(0, tgt - val)}</span>`}
+            <div class="pt-0.5">
+              <button onclick="incMedia('${key}', ${tgt})" class="w-full py-2 px-3 rounded-lg text-xs font-bold ${btnClass} text-white shadow-2xs hover:opacity-90 active:scale-95 transition cursor-pointer flex items-center justify-center gap-1">+1 ${label.split(' ')[0]}</button>
             </div>
           </div>
         `;
@@ -3319,48 +3363,52 @@
         : platforms.filter(p => p.id === activeTab);
 
       c2.innerHTML = `
-        <!-- Header with Aggregate Done Pill -->
-        <div class="flex items-center justify-between mb-2">
-          <h4 class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
-            <i data-lucide="share-2" class="w-3.5 h-3.5 text-pink-500"></i>
-            Соціальні мережі та SMM
-          </h4>
-          <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-pink-50 dark:bg-pink-950/60 text-pink-700 dark:text-pink-300 border border-pink-200 dark:border-pink-800">
-            Всього: ${grandMediaDone} / ${grandMediaTgt} (${grandMediaPct}%)
-          </span>
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-1">
+          <div>
+            <h4 class="text-xs font-black text-pink-600 dark:text-pink-400 uppercase tracking-wider flex items-center gap-2">
+              <i data-lucide="share-2" class="w-4 h-4 text-pink-500"></i>
+              Соціальні мережі та SMM-активність
+            </h4>
+            <p class="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5">Особистий бренд рієлтора, залучення органічних лідів через Reels, Shorts, пости та активність.</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="px-3.5 py-1 rounded-full text-xs font-black bg-pink-50 dark:bg-pink-950/60 text-pink-700 dark:text-pink-300 border border-pink-200 dark:border-pink-800 font-mono">
+              Всього контенту: ${grandMediaDone} / ${grandMediaTgt} (${grandMediaPct}%)
+            </span>
+          </div>
         </div>
 
-        <!-- Platform Tabs Navigation -->
-        <div class="flex items-center gap-1 overflow-x-auto scrollbar-none pb-1 mb-2.5">
-          <button type="button" onclick="setSocialPlatformTab('all')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold transition shrink-0 cursor-pointer ${activeTab === 'all' ? 'bg-pink-600 text-white shadow-xs' : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200'}">Всі (5)</button>
-          <button type="button" onclick="setSocialPlatformTab('instagram')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold transition shrink-0 cursor-pointer flex items-center gap-1 ${activeTab === 'instagram' ? 'bg-gradient-to-r from-rose-500 to-pink-600 text-white shadow-xs' : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200'}">📷 Instagram</button>
-          <button type="button" onclick="setSocialPlatformTab('tiktok')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold transition shrink-0 cursor-pointer flex items-center gap-1 ${activeTab === 'tiktok' ? 'bg-black text-white shadow-xs' : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200'}">🎵 TikTok</button>
-          <button type="button" onclick="setSocialPlatformTab('facebook')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold transition shrink-0 cursor-pointer flex items-center gap-1 ${activeTab === 'facebook' ? 'bg-[#1877F2] text-white shadow-xs' : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200'}">📘 Facebook</button>
-          <button type="button" onclick="setSocialPlatformTab('youtube')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold transition shrink-0 cursor-pointer flex items-center gap-1 ${activeTab === 'youtube' ? 'bg-[#FF0000] text-white shadow-xs' : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200'}">▶️ YouTube</button>
-          <button type="button" onclick="setSocialPlatformTab('x')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold transition shrink-0 cursor-pointer flex items-center gap-1 ${activeTab === 'x' ? 'bg-black text-white shadow-xs' : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200'}">𝕏 Twitter</button>
+        <!-- Navigation Tabs -->
+        <div class="flex items-center gap-1.5 overflow-x-auto scrollbar-none pb-1">
+          <button type="button" onclick="setSocialPlatformTab('all')" class="px-3 py-1.5 rounded-xl text-xs font-bold transition shrink-0 cursor-pointer ${activeTab === 'all' ? 'bg-pink-600 text-white shadow-xs' : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200'}">Всі платформи (5)</button>
+          <button type="button" onclick="setSocialPlatformTab('instagram')" class="px-3 py-1.5 rounded-xl text-xs font-bold transition shrink-0 cursor-pointer flex items-center gap-1.5 ${activeTab === 'instagram' ? 'bg-gradient-to-r from-rose-500 to-pink-600 text-white shadow-xs' : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200'}">📷 Instagram</button>
+          <button type="button" onclick="setSocialPlatformTab('tiktok')" class="px-3 py-1.5 rounded-xl text-xs font-bold transition shrink-0 cursor-pointer flex items-center gap-1.5 ${activeTab === 'tiktok' ? 'bg-black text-white shadow-xs' : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200'}">🎵 TikTok</button>
+          <button type="button" onclick="setSocialPlatformTab('facebook')" class="px-3 py-1.5 rounded-xl text-xs font-bold transition shrink-0 cursor-pointer flex items-center gap-1.5 ${activeTab === 'facebook' ? 'bg-[#1877F2] text-white shadow-xs' : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200'}">📘 Facebook</button>
+          <button type="button" onclick="setSocialPlatformTab('youtube')" class="px-3 py-1.5 rounded-xl text-xs font-bold transition shrink-0 cursor-pointer flex items-center gap-1.5 ${activeTab === 'youtube' ? 'bg-[#FF0000] text-white shadow-xs' : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200'}">▶️ YouTube</button>
+          <button type="button" onclick="setSocialPlatformTab('x')" class="px-3 py-1.5 rounded-xl text-xs font-bold transition shrink-0 cursor-pointer flex items-center gap-1.5 ${activeTab === 'x' ? 'bg-black text-white shadow-xs' : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200'}">𝕏 Twitter</button>
         </div>
 
-        <!-- Platform Cards Grid -->
-        <div class="space-y-3">
+        <!-- Spacious Platforms Grid (2 columns on wide screens) -->
+        <div class="grid grid-cols-1 ${visiblePlatforms.length > 1 ? 'xl:grid-cols-2' : 'grid-cols-1'} gap-6">
           ${visiblePlatforms.map(p => `
-            <div class="bg-gray-50/70 dark:bg-gray-800/40 rounded-2xl border ${p.borderColor} p-3.5 shadow-xs transition-all hover:shadow-md">
-              <!-- Platform Header -->
-              <div class="flex items-center justify-between pb-2 mb-2.5 border-b border-gray-200/60 dark:border-gray-700/60">
-                <div class="flex items-center gap-2">
+            <div class="bg-gray-50/70 dark:bg-gray-800/40 rounded-2xl border ${p.borderColor} p-5 shadow-xs transition-all hover:shadow-md space-y-4">
+              <!-- Platform Card Header -->
+              <div class="flex items-center justify-between pb-3 border-b border-gray-200/70 dark:border-gray-700/70">
+                <div class="flex items-center gap-3">
                   ${p.iconSvg}
                   <div>
-                    <h5 class="font-extrabold text-xs text-gray-900 dark:text-white leading-none">${p.name}</h5>
-                    <span class="text-[9px] text-gray-400 font-medium">План: ${p.id === 'youtube' ? '5 відео' : '20 постів • 5 відео • 60 сторіз/коментарів'}</span>
+                    <h5 class="font-black text-sm text-gray-900 dark:text-white leading-none">${p.name}</h5>
+                    <span class="text-[11px] text-gray-400 font-medium mt-1 block">Норма: ${p.id === 'youtube' ? '5 відео' : '20 постів • 5 відео • 60 сторіз/коментарів'}</span>
                   </div>
                 </div>
                 <div class="flex items-center gap-2">
-                  <span class="text-[10px] font-mono font-bold text-gray-500 dark:text-gray-400">${p.badgeDone}</span>
-                  <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 border border-gray-200 dark:border-gray-600 shadow-2xs">${p.badgeText}</span>
+                  <span class="text-xs font-mono font-bold text-gray-500 dark:text-gray-400">${p.badgeDone}</span>
+                  <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 border border-gray-200 dark:border-gray-600 shadow-2xs">${p.badgeText}</span>
                 </div>
               </div>
 
-              <!-- Metrics Grid -->
-              <div class="grid grid-cols-1 ${p.metrics.length === 3 ? 'sm:grid-cols-3' : 'sm:grid-cols-1'} gap-2.5">
+              <!-- Spacious Metric Tiles -->
+              <div class="grid grid-cols-1 ${p.metrics.length === 3 ? 'sm:grid-cols-3' : 'sm:grid-cols-1'} gap-3.5">
                 ${p.metrics.map(m => renderMetricCard(m.label, m.key, m.val, m.tgt, p.colorHex, p.btnClass)).join('')}
               </div>
             </div>
