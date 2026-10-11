@@ -88,7 +88,7 @@
       <div class="flex items-center gap-2.5">
         <span class="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center text-white font-black text-lg shadow-sm">Y</span>
         <h1 class="font-extrabold text-base tracking-tight text-gray-900 dark:text-white">Робоче місце CRM</h1>
-        <span class="ml-2 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700">Live Wheel Zoom & Visual Matrix v12.5 Active</span>
+        <span class="ml-2 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700">Tactile Mouse Drag Engine v13.0 Active</span>
       </div>
 
       <!-- Clean Theme Toggle -->
@@ -5275,10 +5275,11 @@
 
       const bandsSvg = buildBenchmarkBandsSvg(padLeft, padTop, chartW, chartH);
 
-      const zoomBadge = (blockKey && (z.xZoom !== 1.0 || z.yZoom !== 1.0)) ? `
+      const isZoomed = (z.xZoom !== 1.0 || z.yZoom !== 1.0);
+      const zoomBadge = (blockKey && isZoomed) ? `
         <div class="absolute top-2 right-2 flex items-center gap-1.5 z-20 pointer-events-auto">
           <span class="px-2 py-0.5 rounded-md text-[10px] font-mono font-bold bg-gray-900/85 text-white border border-gray-700 shadow-sm backdrop-blur-xs">
-            🔍 X: ${(z.xZoom * 100).toFixed(0)}% • Y: ${(z.yZoom * 100).toFixed(0)}%
+            ↕ Y: ${(yFactor * 100).toFixed(0)}% • ↔ X: ${(xFactor * 100).toFixed(0)}%
           </span>
           <button type="button" onclick="resetChartZoom('${blockKey}', event)" title="Скинути масштаб (100%)" class="px-1.5 py-0.5 rounded-md text-[10px] font-black bg-rose-600 hover:bg-rose-700 text-white shadow-sm cursor-pointer transition">
             ⟲ Скинути
@@ -5286,15 +5287,43 @@
         </div>
       ` : '';
 
+      // TACTILE DRAG REGIONS (TradingView style):
+      // 1. Left Y-axis numbers zone (x: 0..padLeft+5, y: 0..h-padBottom)
+      // 2. Bottom X-axis dates zone (x: padLeft..w, y: h-padBottom-6..h)
       return `
-        <div class="relative w-full h-full select-none" onwheel="handleChartWheelZoom(event, '${blockKey}')" title="Коліщатко миші: на числах зліва = масштаб Y, на графіку = масштаб днів X">
+        <div class="relative w-full h-full select-none">
           ${zoomBadge}
+
+          <!-- Visual Guide Badges for Drag Interaction -->
+          <div class="absolute top-1 left-1 pointer-events-none z-10 flex items-center gap-1 text-[9px] font-mono font-bold text-gray-400 dark:text-gray-500 opacity-60">
+            <span>↕ Тягніть числа</span>
+          </div>
+          <div class="absolute bottom-0.5 right-2 pointer-events-none z-10 flex items-center gap-1 text-[9px] font-mono font-bold text-gray-400 dark:text-gray-500 opacity-60">
+            <span>↔ Тягніть дати</span>
+          </div>
+
           <svg class="w-full h-full overflow-visible" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
             <text x="-${h / 2}" y="11" transform="rotate(-90)" font-size="8.5" fill="#94A3B8" text-anchor="middle" font-weight="bold">${yLabel}</text>
             ${bandsSvg}
             ${gridSvg}
             ${seriesSvg}
             ${xLabels}
+
+            <!-- 1. LEFT Y-AXIS DRAG OVERLAY (↕ NS-RESIZE) -->
+            <rect x="0" y="0" width="${padLeft + 4}" height="${h - padBottom}"
+                  fill="transparent"
+                  class="cursor-ns-resize hover:fill-indigo-500/10 transition"
+                  onmousedown="startChartAxisDrag(event, '${blockKey}', 'y')"
+                  ondblclick="resetChartZoom('${blockKey}', event)"
+                  title="Затисніть ліву кнопку миші і тягніть ↕ вгору/вниз для зміни висоти графіка. Подвійний клік = скинути (100%)" />
+
+            <!-- 2. BOTTOM X-AXIS DRAG OVERLAY (↔ EW-RESIZE) -->
+            <rect x="${padLeft}" y="${h - padBottom - 8}" width="${chartW + padRight}" height="${padBottom + 8}"
+                  fill="transparent"
+                  class="cursor-ew-resize hover:fill-blue-500/10 transition"
+                  onmousedown="startChartAxisDrag(event, '${blockKey}', 'x')"
+                  ondblclick="resetChartZoom('${blockKey}', event)"
+                  title="Затисніть ліву кнопку миші і тягніть ↔ вліво/вправо для зміни масштабу днів. Подвійний клік = скинути (100%)" />
           </svg>
         </div>
       `;
@@ -5302,8 +5331,10 @@
 
     // Tooltip helper
     // ═════════════════════════════════════════════════════════════════════════
-    // INTERACTIVE MOUSE WHEEL ZOOM & SCALE ENGINE (X-AXIS DAYS & Y-AXIS SCALE)
+    // TRADINGVIEW-STYLE TACTILE MOUSE DRAG ENGINE (Y-AXIS NUMBERS & X-AXIS DATES)
     // ═════════════════════════════════════════════════════════════════════════
+    let activeChartDrag = null;
+
     function getChartZoom(blockKey) {
       if (!state.chartZoom) state.chartZoom = {};
       if (!state.chartZoom[blockKey]) {
@@ -5312,11 +5343,10 @@
       return state.chartZoom[blockKey];
     }
 
-    function handleChartWheelZoom(e, blockKey) {
+    function startChartAxisDrag(e, blockKey, axis) {
       e.preventDefault();
       e.stopPropagation();
 
-      // Robust fallback: if blockKey is missing or empty, detect it from parent data-card-id
       if (!blockKey) {
         const card = e.currentTarget.closest('[data-card-id]');
         if (card) {
@@ -5327,23 +5357,65 @@
       if (!blockKey) blockKey = 'objects';
 
       const z = getChartZoom(blockKey);
-      const rect = e.currentTarget.getBoundingClientRect();
-      const mouseX = e.clientX - rect.left;
+      activeChartDrag = {
+        blockKey,
+        axis,
+        startX: e.clientX,
+        startY: e.clientY,
+        initialXZoom: z.xZoom || 1.0,
+        initialYZoom: z.yZoom || 1.0
+      };
 
-      // Left 65px is the Y-axis number scale area (or with Shift/Alt key)
-      if (mouseX < 65 || e.shiftKey || e.altKey) {
-        // Y-AXIS ZOOM: розтягує/стискає шкалу чисел зліва 0, 1, 2, 3...
-        const delta = e.deltaY < 0 ? 0.2 : -0.2;
-        z.yZoom = Math.max(0.4, Math.min(3.0, +(z.yZoom + delta).toFixed(2)));
-        showToast(`🔍 Шкала Y [${blockKey}]: ${(z.yZoom * 100).toFixed(0)}% (коліщатко на числах)`);
-      } else {
-        // X-AXIS ZOOM: розширює/стискає дні та дати
-        const delta = e.deltaY < 0 ? 0.2 : -0.2;
-        z.xZoom = Math.max(0.4, Math.min(3.0, +(z.xZoom + delta).toFixed(2)));
-        showToast(`🔍 Масштаб днів X [${blockKey}]: ${(z.xZoom * 100).toFixed(0)}% (коліщатко на датах)`);
+      document.body.style.cursor = axis === 'y' ? 'ns-resize' : 'ew-resize';
+      document.body.style.userSelect = 'none';
+
+      window.addEventListener('mousemove', onChartAxisDragMove);
+      window.addEventListener('mouseup', onChartAxisDragEnd);
+    }
+
+    function onChartAxisDragMove(e) {
+      if (!activeChartDrag) return;
+      const { blockKey, axis, startX, startY, initialXZoom, initialYZoom } = activeChartDrag;
+      const z = getChartZoom(blockKey);
+
+      if (axis === 'y') {
+        // Рух мишкою вгору (startY - e.clientY > 0) розтягує шкалу значень Y (збільшує висоту ліній)
+        // Рух мишкою вниз стискає шкалу Y
+        const deltaY = startY - e.clientY;
+        const sensitivity = 0.012;
+        const newY = Math.max(0.3, Math.min(4.0, +(initialYZoom + deltaY * sensitivity).toFixed(2)));
+        if (newY !== z.yZoom) {
+          z.yZoom = newY;
+          reRenderBlockChart(blockKey);
+        }
+      } else if (axis === 'x') {
+        // Рух мишкою вправо (e.clientX - startX > 0) розтягує шкалу дат X (менше днів, ширший крок)
+        // Рух мишкою вліво стискає дні (більше дат на екрані)
+        const deltaX = e.clientX - startX;
+        const sensitivity = 0.012;
+        const newX = Math.max(0.3, Math.min(4.0, +(initialXZoom + deltaX * sensitivity).toFixed(2)));
+        if (newX !== z.xZoom) {
+          z.xZoom = newX;
+          reRenderBlockChart(blockKey);
+        }
       }
+    }
 
-      reRenderBlockChart(blockKey);
+    function onChartAxisDragEnd(e) {
+      if (!activeChartDrag) return;
+      const { blockKey, axis } = activeChartDrag;
+      const z = getChartZoom(blockKey);
+      activeChartDrag = null;
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+      window.removeEventListener('mousemove', onChartAxisDragMove);
+      window.removeEventListener('mouseup', onChartAxisDragEnd);
+
+      if (axis === 'y') {
+        showToast(`↕ Шкала Y [${blockKey}]: ${(z.yZoom * 100).toFixed(0)}% (налаштовано мишкою)`);
+      } else {
+        showToast(`↔ Масштаб дат X [${blockKey}]: ${(z.xZoom * 100).toFixed(0)}% (налаштовано мишкою)`);
+      }
     }
 
     function resetChartZoom(blockKey, e) {
@@ -5502,13 +5574,28 @@
       padRight = 20,
       padTop = 20,
       padBottom = 35,
-      yLabel = 'Дії / Свічки'
+      yLabel = 'Дії / Свічки',
+      blockKey = ''
     }) {
+      const z = blockKey ? getChartZoom(blockKey) : { xZoom: 1.0, yZoom: 1.0 };
+      const xFactor = z.xZoom || 1.0;
+      const yFactor = z.yZoom || 1.0;
+
+      let activeDates = dates;
+      let activeCandles = candles;
+      if (xFactor !== 1.0 && dates.length > 2) {
+        const visibleCount = Math.max(2, Math.min(dates.length, Math.round(dates.length / xFactor)));
+        const start = Math.max(0, dates.length - visibleCount);
+        activeDates = dates.slice(start);
+        activeCandles = candles.slice(start);
+      }
+
       const chartW = w - padLeft - padRight;
       const chartH = h - padTop - padBottom - 8;
-      const allHighs = candles.map(c => c.high);
+      const allHighs = activeCandles.map(c => c.high);
       const rawMax = Math.max(...allHighs, 2);
-      const maxVal = Math.ceil(rawMax <= 2 ? 2 : rawMax <= 4 ? 4 : rawMax <= 8 ? 8 : rawMax * 1.15);
+      const baseMax = Math.ceil(rawMax <= 2 ? 2 : rawMax <= 4 ? 4 : rawMax <= 8 ? 8 : rawMax * 1.15);
+      const maxVal = Math.max(1, Math.round(baseMax / yFactor));
 
       const gridLevels = [0, Math.round(maxVal / 2), maxVal];
       const gridSvg = gridLevels.map(lvl => {
@@ -5554,14 +5641,52 @@
 
       const bandsSvg = buildBenchmarkBandsSvg(padLeft, padTop, chartW, chartH);
 
+      const isZoomed = (z.xZoom !== 1.0 || z.yZoom !== 1.0);
+      const zoomBadge = (blockKey && isZoomed) ? `
+        <div class="absolute top-2 right-2 flex items-center gap-1.5 z-20 pointer-events-auto">
+          <span class="px-2 py-0.5 rounded-md text-[10px] font-mono font-bold bg-gray-900/85 text-white border border-gray-700 shadow-sm backdrop-blur-xs">
+            ↕ Y: ${(yFactor * 100).toFixed(0)}% • ↔ X: ${(xFactor * 100).toFixed(0)}%
+          </span>
+          <button type="button" onclick="resetChartZoom('${blockKey}', event)" title="Скинути масштаб (100%)" class="px-1.5 py-0.5 rounded-md text-[10px] font-black bg-rose-600 hover:bg-rose-700 text-white shadow-sm cursor-pointer transition">
+            ⟲ Скинути
+          </button>
+        </div>
+      ` : '';
+
       return `
-        <svg class="w-full h-full overflow-visible" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
-          <text x="-${h / 2}" y="14" transform="rotate(-90)" font-size="9" fill="#94A3B8" text-anchor="middle" font-weight="bold">${yLabel}</text>
-          ${bandsSvg}
-          ${gridSvg}
-          ${candlesSvg}
-          ${xLabels}
-        </svg>
+        <div class="relative w-full h-full select-none">
+          ${zoomBadge}
+          <div class="absolute top-1 left-1 pointer-events-none z-10 flex items-center gap-1 text-[9px] font-mono font-bold text-gray-400 dark:text-gray-500 opacity-60">
+            <span>↕ Тягніть числа</span>
+          </div>
+          <div class="absolute bottom-0.5 right-2 pointer-events-none z-10 flex items-center gap-1 text-[9px] font-mono font-bold text-gray-400 dark:text-gray-500 opacity-60">
+            <span>↔ Тягніть дати</span>
+          </div>
+
+          <svg class="w-full h-full overflow-visible" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
+            <text x="-${h / 2}" y="14" transform="rotate(-90)" font-size="9" fill="#94A3B8" text-anchor="middle" font-weight="bold">${yLabel}</text>
+            ${bandsSvg}
+            ${gridSvg}
+            ${candlesSvg}
+            ${xLabels}
+
+            <!-- 1. LEFT Y-AXIS DRAG OVERLAY (↕ NS-RESIZE) -->
+            <rect x="0" y="0" width="${padLeft + 4}" height="${h - padBottom}"
+                  fill="transparent"
+                  class="cursor-ns-resize hover:fill-amber-500/10 transition"
+                  onmousedown="startChartAxisDrag(event, '${blockKey}', 'y')"
+                  ondblclick="resetChartZoom('${blockKey}', event)"
+                  title="Затисніть ліву кнопку миші і тягніть ↕ вгору/вниз для зміни висоти свічок. Подвійний клік = скинути (100%)" />
+
+            <!-- 2. BOTTOM X-AXIS DRAG OVERLAY (↔ EW-RESIZE) -->
+            <rect x="${padLeft}" y="${h - padBottom - 8}" width="${chartW + padRight}" height="${padBottom + 8}"
+                  fill="transparent"
+                  class="cursor-ew-resize hover:fill-blue-500/10 transition"
+                  onmousedown="startChartAxisDrag(event, '${blockKey}', 'x')"
+                  ondblclick="resetChartZoom('${blockKey}', event)"
+                  title="Затисніть ліву кнопку миші і тягніть ↔ вліво/вправо для зміни масштабу днів. Подвійний клік = скинути (100%)" />
+          </svg>
+        </div>
       `;
     }
 
@@ -5945,7 +6070,7 @@
           close: showingsData[i]
         }));
         container.innerHTML = `
-          <div class="relative w-full h-full select-none" onwheel="handleChartWheelZoom(event, 'weekly')" title="Коліщатко миші: зум графіка">
+          <div class="relative w-full h-full select-none">
             ${renderCandlestickChartSvg({ dates, candles, w: 900, h: 220, yLabel: 'Дій / тиждень' })}
           </div>
         `;
@@ -6009,12 +6134,28 @@
         }).join('');
 
         container.innerHTML = `
-          <div class="relative w-full h-full select-none" onwheel="handleChartWheelZoom(event, 'weekly')" title="Коліщатко миші: зум графіка">
+          <div class="relative w-full h-full select-none">
             <svg class="w-full h-full overflow-visible" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
               <text x="-${h / 2}" y="13" transform="rotate(-90)" font-size="9" fill="#94A3B8" text-anchor="middle" font-weight="bold">Дій / тиждень</text>
               ${bandsSvg}
               ${gridSvg}
               ${barsSvg}
+
+              <!-- 1. LEFT Y-AXIS DRAG OVERLAY (↕ NS-RESIZE) -->
+              <rect x="0" y="0" width="${padLeft + 4}" height="${h - padBottom}"
+                    fill="transparent"
+                    class="cursor-ns-resize hover:fill-rose-500/10 transition"
+                    onmousedown="startChartAxisDrag(event, 'weekly', 'y')"
+                    ondblclick="resetChartZoom('weekly', event)"
+                    title="Затисніть ліву кнопку миші і тягніть ↕ вгору/вниз для зміни висоти стовпчиків. Подвійний клік = скинути (100%)" />
+
+              <!-- 2. BOTTOM X-AXIS DRAG OVERLAY (↔ EW-RESIZE) -->
+              <rect x="${padLeft}" y="${h - padBottom - 8}" width="${chartW + padRight}" height="${padBottom + 8}"
+                    fill="transparent"
+                    class="cursor-ew-resize hover:fill-blue-500/10 transition"
+                    onmousedown="startChartAxisDrag(event, 'weekly', 'x')"
+                    ondblclick="resetChartZoom('weekly', event)"
+                    title="Затисніть ліву кнопку миші і тягніть ↔ вліво/вправо для зміни масштабу тижнів. Подвійний клік = скинути (100%)" />
             </svg>
           </div>
         `;
@@ -6157,7 +6298,7 @@
       const bandsSvg = buildBenchmarkBandsSvg(padLeft, padTop, chartW, chartH);
 
       container.innerHTML = `
-        <div class="relative w-full h-full select-none" onwheel="handleChartWheelZoom(event, 'weekly')" title="Коліщатко миші: зум графіка">
+        <div class="relative w-full h-full select-none">
           <svg id="svgWeeklySplineChart" class="w-full h-full overflow-visible" viewBox="0 0 900 220" preserveAspectRatio="none">
           <defs>
             <linearGradient id="gradWeeklyShowings" x1="0" y1="0" x2="0" y2="1">
@@ -6174,7 +6315,24 @@
           ${isMeetActive ? `<path d="${pathMeetings}" fill="none" stroke="#EF4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />` : ''}
           ${dotsMeetings}
           ${xLabels}
+
+          <!-- 1. LEFT Y-AXIS DRAG OVERLAY (↕ NS-RESIZE) -->
+          <rect x="0" y="0" width="${padLeft + 4}" height="${h - padBottom}"
+                fill="transparent"
+                class="cursor-ns-resize hover:fill-rose-500/10 transition"
+                onmousedown="startChartAxisDrag(event, 'weekly', 'y')"
+                ondblclick="resetChartZoom('weekly', event)"
+                title="Затисніть ліву кнопку миші і тягніть ↕ вгору/вниз для зміни висоти графіка. Подвійний клік = скинути (100%)" />
+
+          <!-- 2. BOTTOM X-AXIS DRAG OVERLAY (↔ EW-RESIZE) -->
+          <rect x="${padLeft}" y="${h - padBottom - 8}" width="${chartW + padRight}" height="${padBottom + 8}"
+                fill="transparent"
+                class="cursor-ew-resize hover:fill-blue-500/10 transition"
+                onmousedown="startChartAxisDrag(event, 'weekly', 'x')"
+                ondblclick="resetChartZoom('weekly', event)"
+                title="Затисніть ліву кнопку миші і тягніть ↔ вліво/вправо для зміни масштабу тижнів. Подвійний клік = скинути (100%)" />
         </svg>
+        </div>
       `;
     }
 
