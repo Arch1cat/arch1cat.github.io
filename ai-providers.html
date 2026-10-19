@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ru" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Provider Matrix — arch1cat</title>
+    <meta name="description" content="Сравнение бесплатных AI-моделей и провайдеров: Nous, OpenRouter, OpenCode, NVIDIA, CommandCode, OrcaRouter, Freebuff и BeatAPI.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        cyber: {
+                            bg: '#020904',
+                            panel: '#07170d',
+                            border: '#174d2a',
+                            green: '#00ff66',
+                            cyan: '#00f2fe',
+                            amber: '#ffc857',
+                            red: '#ff5577',
+                            violet: '#a78bfa'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    }
+                }
+            }
+        };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { color-scheme: dark; }
+        * { box-sizing: border-box; }
+        body { margin: 0; background: #020904; color: #d7e7dc; font-family: Inter, sans-serif; overflow-x: hidden; }
+        body::before { content: ''; position: fixed; inset: 0; pointer-events: none; z-index: -1; opacity: .6; background: radial-gradient(circle at 12% 8%, rgba(0,255,102,.14), transparent 28rem), radial-gradient(circle at 86% 20%, rgba(0,242,254,.09), transparent 26rem), linear-gradient(180deg, #020904 0%, #03100a 48%, #020904 100%); }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .glass { background: rgba(5, 24, 13, .84); border: 1px solid rgba(0,255,102,.2); box-shadow: 0 14px 50px rgba(0,0,0,.2); backdrop-filter: blur(16px); }
+        .table-wrap { overflow-x: auto; border: 1px solid rgba(0,255,102,.16); border-radius: 18px; }
+        table { width: 100%; border-collapse: collapse; min-width: 860px; }
+        th { background: rgba(0,255,102,.08); color: #8fffb2; text-align: left; font: 700 10px/1.3 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; }
+        th, td { padding: 13px 14px; border-bottom: 1px solid rgba(127,255,164,.11); vertical-align: top; }
+        tbody tr:last-child td { border-bottom: 0; }
+        tbody tr:hover { background: rgba(0,255,102,.045); }
+        td { color: #c8d8cd; font-size: 12px; line-height: 1.45; }
+        code { color: #7fffa1; font: 500 11px/1.4 'JetBrains Mono', monospace; overflow-wrap: anywhere; }
+        .status { display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; padding: 4px 8px; font: 700 10px/1 'JetBrains Mono', monospace; white-space: nowrap; }
+        .status-ok { color: #a8ffc0; background: rgba(0,255,102,.12); border: 1px solid rgba(0,255,102,.26); }
+        .status-catalog { color: #a7f8ff; background: rgba(0,242,254,.1); border: 1px solid rgba(0,242,254,.24); }
+        .status-paid { color: #ffd889; background: rgba(255,200,87,.12); border: 1px solid rgba(255,200,87,.27); }
+        .status-blocked { color: #ff9eb0; background: rgba(255,85,119,.11); border: 1px solid rgba(255,85,119,.26); }
+        .status-inconclusive { color: #d1bdff; background: rgba(167,139,250,.12); border: 1px solid rgba(167,139,250,.26); }
+        .filter-btn { min-height: 38px; border: 1px solid rgba(0,255,102,.22); background: rgba(0,0,0,.25); color: #a4b8aa; border-radius: 11px; padding: 0 12px; font: 700 11px 'JetBrains Mono', monospace; transition: .2s ease; }
+        .filter-btn:hover, .filter-btn.active { color: #001b08; background: #00ff66; border-color: #00ff66; }
+        .copy-btn { color: #7de99a; border: 1px solid rgba(0,255,102,.2); border-radius: 7px; padding: 3px 7px; font: 700 10px 'JetBrains Mono', monospace; white-space: nowrap; }
+        .copy-btn:hover { color: #001b08; background: #00ff66; }
+        details > summary { cursor: pointer; list-style: none; }
+        details > summary::-webkit-details-marker { display: none; }
+        .provider-card { background: rgba(3,15,8,.72); border: 1px solid rgba(0,255,102,.16); border-radius: 16px; }
+        .provider-card[open] { border-color: rgba(0,255,102,.38); }
+        .provider-card summary { padding: 15px 17px; }
+        .provider-card .details-body { border-top: 1px solid rgba(0,255,102,.12); padding: 0 17px 17px; }
+        .tag { display: inline-flex; align-items: center; border-radius: 999px; padding: 3px 7px; background: rgba(255,255,255,.055); border: 1px solid rgba(255,255,255,.1); color: #b8d1bd; font: 600 10px 'JetBrains Mono', monospace; }
+        .recommend { border-left: 3px solid #00ff66; background: linear-gradient(90deg, rgba(0,255,102,.11), rgba(0,255,102,.025)); }
+        .overview-mobile { display: none; min-width: 0; width: 100%; }
+        .overview-mobile article { min-width: 0; max-width: 100%; overflow: hidden; }
+        .overview-mobile article > div:first-child { min-width: 0; flex-wrap: wrap !important; }
+        .overview-mobile article > div:first-child > div:first-child { min-width: 0; flex: 1 1 180px; overflow-wrap: anywhere; }
+        .overview-mobile .status { max-width: 100px; min-width: 0; flex: 0 1 auto; overflow-wrap: anywhere; white-space: normal; text-align: center; }
+        @media (max-width: 700px) {
+            th, td { padding: 10px; }
+            .hero-title { font-size: 2rem; }
+            .overview-table-wrap { display: none; }
+            .overview-mobile { display: grid; }
+            .mobile-table-hint { display: block; }
+            .back-label { display: none; }
+        }
+        @media (min-width: 701px) { .mobile-table-hint { display: none; } }
+    </style>
+</head>
+<body>
+    <header class="sticky top-0 z-50 border-b border-emerald-400/20 bg-[#020904]/90 backdrop-blur-xl">
+        <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
+            <a href="index.html" class="flex min-w-0 items-center gap-3">
+                <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-tr from-green-500 to-cyan-400 text-lg text-black shadow-lg shadow-emerald-500/20"><i class="fa-solid fa-cat"></i></span>
+                <span class="min-w-0"><span class="block truncate font-extrabold tracking-widest text-white">ARCH1CAT</span><span class="block truncate mono text-[10px] text-emerald-300">AI PROVIDER MATRIX</span></span>
+            </a>
+            <a href="index.html" class="shrink-0 rounded-xl border border-emerald-400/25 px-3 py-2 mono text-[11px] font-bold text-emerald-200 transition hover:border-emerald-300 hover:bg-emerald-400/10"><i class="fa-solid fa-arrow-left mr-1"></i><span class="back-label">Portfolio</span></a>
+        </div>
+    </header>
+
+    <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12">
+        <section class="mb-8 grid gap-6 lg:grid-cols-[1fr_330px] lg:items-end">
+            <div>
+                <div class="mb-4 inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1.5 mono text-[10px] font-bold uppercase tracking-[.18em] text-emerald-300"><span class="h-2 w-2 rounded-full bg-emerald-300 shadow-[0_0_12px_#00ff66]"></span>Snapshot: 19 Oct 2026</div>
+                <h1 class="hero-title mb-4 max-w-4xl text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-6xl">Free AI Provider<br><span class="bg-gradient-to-r from-emerald-300 via-cyan-300 to-violet-300 bg-clip-text text-transparent">Matrix</span></h1>
+                <p class="max-w-3xl text-base leading-7 text-slate-300">Не путай каталог с доступом: здесь отдельно показано, какие модели есть у провайдера, какой у них лимит и что реально разрешает наш аккаунт.</p>
+            </div>
+            <div class="glass rounded-2xl p-4 text-sm">
+                <div class="mb-3 mono text-[10px] font-bold uppercase tracking-widest text-emerald-300">Status legend</div>
+                <div class="flex flex-wrap gap-2"><span class="status status-ok">WORKING</span><span class="status status-catalog">CATALOG</span><span class="status status-paid">PAID</span><span class="status status-blocked">BLOCKED</span><span class="status status-inconclusive">INCONCLUSIVE</span></div>
+                <p class="mt-3 text-xs leading-5 text-slate-400"><span class="mono text-emerald-300">ctx</span> = входной контекст. Это не дневная квота токенов.</p>
+            </div>
+        </section>
+
+        <section class="mb-10">
+            <div class="mb-4 flex flex-wrap items-end justify-between gap-3"><div><div class="mono text-[10px] uppercase tracking-widest text-emerald-300">01 / provider view</div><h2 class="mt-1 text-2xl font-extrabold text-white">Провайдеры целиком</h2></div><div class="mono text-[11px] text-slate-500">Free / preview / stealth — не только одна модель</div></div>
+            <div class="table-wrap glass overview-table-wrap"><table><thead><tr><th>Provider</th><th>Free AI в текущем срезе</th><th>Сильные маршруты</th><th>Лимиты</th><th>Доступ</th><th>Вердикт</th></tr></thead><tbody id="provider-overview"></tbody></table></div>
+            <div id="provider-overview-mobile" class="overview-mobile gap-3"></div>
+            <p class="mobile-table-hint mt-3 mono text-[10px] text-slate-500">На мобильном provider overview превращён в карточки; детальные matrix-таблицы можно листать горизонтально.</p>
+        </section>
+
+        <section class="mb-10" id="matrix-section">
+            <div class="mb-4 flex flex-wrap items-end justify-between gap-3"><div><div class="mono text-[10px] uppercase tracking-widest text-cyan-300">02 / cross-provider matrix</div><h2 class="mt-1 text-2xl font-extrabold text-white">Какая AI где есть</h2></div><div id="result-count" class="mono text-[11px] text-slate-400"></div></div>
+            <div class="glass mb-4 rounded-2xl p-3">
+                <div class="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+                    <label class="relative block min-w-0 flex-1"><i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-emerald-300"></i><input id="search" type="search" placeholder="Ищи модель, провайдера или задачу..." class="h-10 w-full rounded-xl border border-emerald-400/20 bg-black/25 pl-9 pr-3 text-sm text-white outline-none placeholder:text-slate-500 focus:border-emerald-300"></label>
+                    <div class="flex flex-wrap gap-2" id="provider-filters"></div>
+                </div>
+                <div class="mt-3 flex flex-wrap gap-2" id="task-filters"></div>
+            </div>
+            <div class="table-wrap glass"><table><thead><tr><th>#</th><th>AI / сила</th><th>Задачи</th><th>Benchmark</th><th>Где использовать и exact ID</th><th>Лимит/статус</th></tr></thead><tbody id="model-matrix"></tbody></table></div>
+        </section>
+
+        <section class="mb-10">
+            <div class="mb-4"><div class="mono text-[10px] uppercase tracking-widest text-violet-300">03 / complete catalogues</div><h2 class="mt-1 text-2xl font-extrabold text-white">Полные списки по провайдерам</h2><p class="mt-2 text-sm text-slate-400">Открывай нужного провайдера. Длинные каталоги спрятаны в раскрывающиеся блоки, чтобы страница не превращалась в вертикальную кашу.</p></div>
+            <div id="provider-details" class="space-y-3"></div>
+        </section>
+
+        <section class="mb-10 grid gap-5 lg:grid-cols-2">
+            <div>
+                <div class="mb-4"><div class="mono text-[10px] uppercase tracking-widest text-amber-300">04 / budget</div><h2 class="mt-1 text-2xl font-extrabold text-white">Что взять за $0–30</h2></div>
+                <div class="table-wrap glass"><table><thead><tr><th>Бюджет</th><th>Вариант</th><th>Что получаешь</th><th>Ограничение</th></tr></thead><tbody id="budget-table"></tbody></table></div>
+            </div>
+            <div>
+                <div class="mb-4"><div class="mono text-[10px] uppercase tracking-widest text-rose-300">05 / verified</div><h2 class="mt-1 text-2xl font-extrabold text-white">Что реально проверено</h2></div>
+                <div class="table-wrap glass"><table><thead><tr><th>Маршрут</th><th>Результат</th><th>Как понимать</th></tr></thead><tbody id="test-table"></tbody></table></div>
+            </div>
+        </section>
+
+        <section class="recommend mb-10 rounded-2xl p-5 sm:p-6">
+            <div class="mono text-[10px] uppercase tracking-widest text-emerald-300">Final routing</div>
+            <h2 class="mt-2 text-2xl font-extrabold text-white">Что использовать каждый день</h2>
+            <div class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                <div><div class="mono text-[10px] text-slate-500">PRIMARY</div><code class="mt-1 block text-sm">freebuff/deepseek/deepseek-v4.1-flash</code></div>
+                <div><div class="mono text-[10px] text-slate-500">API FALLBACK</div><code class="mt-1 block text-sm">poolside/laguna-s-2.1:free</code></div>
+                <div><div class="mono text-[10px] text-slate-500">FAST</div><code class="mt-1 block text-sm">nvidia/nemotron-3.5-lightning-30b-a3b</code></div>
+                <div><div class="mono text-[10px] text-slate-500">STEALTH</div><code class="mt-1 block text-sm">freebuff/stealth/space-bunny-alpha</code></div>
+            </div>
+            <p class="mt-5 max-w-4xl text-sm leading-6 text-slate-300">Если нужен долгий стабильный coding за небольшие деньги — OpenCode Go за $10/month с DeepSeek V4.1 Flash. Если строго бесплатно — Freebuff DeepSeek + OpenRouter Laguna + NVIDIA Lightning + native OpenCode Free.</p>
+        </section>
+    </main>
+
+    <footer class="border-t border-emerald-400/15 py-8"><div class="mx-auto flex max-w-7xl flex-col gap-3 px-4 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between sm:px-6"><span class="mono">ARCH1CAT // AI PROVIDER MATRIX</span><a href="index.html" class="text-emerald-300 hover:text-white">← Back to portfolio</a></div></footer>
+
+    <script>
+        const providers = [
+            { id: 'Nous', count: 3, best: 'LongCat 2.5 · Laguna · Beam', limits: 'RPM/TPM/RPD не раскрыты', access: 'inconclusive', verdict: 'Hermes-native; иногда latency', free: ['meituan/longcat-2.5-preview:free', 'poolside/laguna-s-2.1:free', 'reflection/beam-1.0-501b-a23b:free'], preview: [], note: 'Видимый локальный список может быть curated, не весь Portal catalogue.' },
+            { id: 'OpenRouter', count: 20, best: 'Inkling · Nemotron · MiniMax · Laguna', limits: '20 RPM / 50 RPD; $10 credits → до 1000 RPD', access: 'working', verdict: 'Самый прозрачный API free-пул', free: ['google/lyria-3-clip-preview', 'google/lyria-3-pro-preview', 'thinkingmachines/inkling-small:free', 'thinkingmachines/inkling:free', 'minimax/minimax-m3.1-flash:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'nvidia/nemotron-3.5-lightning:free', 'nvidia/nemotron-3.5-super-vl:free', 'dots-studio/dots-3-note-preview:free', 'google/gemma-4-26b-a4b-it:free', 'google/gemma-4-31b-it:free', 'nvidia/nemotron-3-super-120b-a12b:free', 'poolside/laguna-s-2.1:free', 'poolside/laguna-xs-2.1:free', 'xingchen-agi/xing4.0-29b-a4b:free', 'cohere/north-mini-code:free', 'nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free', 'openrouter/free', 'nvidia/nemotron-3.5-content-safety:free', 'liquid/lfm-2.5-2.6b:free'], preview: [], note: 'Live zero-price API snapshot; DeepSeek free web pages not counted unless live API exposes them.' },
+            { id: 'OpenCode Free', count: 10, best: 'DeepSeek V4.1 · MiMo Flash · Nemotron', limits: 'Daily quota; exact number hidden', access: 'catalog', verdict: 'Нативный OpenCode, внешний client 403', free: ['opencode/deepseek-v4.1-flash-free', 'opencode/glm-5.3-flash-free', 'opencode/minimax-m3.1-flash-free', 'opencode/longcat-2.5-preview-free', 'opencode/mimo-v2.6-flash-free', 'opencode/nemotron-3.5-lightning-free', 'opencode/nemotron-3.5-super-vl-free', 'opencode/beam-free', 'opencode/big-pickle', 'opencode/jev-1.13-free'], preview: ['opencode/space-bunny-free'], note: 'Free-модели разрешены в native OpenCode; внешний CLI получил FreeTierError 403.' },
+            { id: 'OpenCode Go', count: 0, best: 'DeepSeek V4.1 · MiMo · MiniMax · Kimi', limits: '$10/month; usage budgets 5h/week/month', access: 'paid', verdict: 'Не free; самый выгодный low-cost', free: [], preview: ['opencode-go/deepseek-v4.1-flash', 'opencode-go/deepseek-v4-pro', 'opencode-go/deepseek-v4-flash', 'opencode-go/mimo-v2.6-flash', 'opencode-go/mimo-v2.6-pro', 'opencode-go/minimax-m3', 'opencode-go/kimi-k3', 'opencode-go/kimi-k2.7-code', 'opencode-go/qwen3.8-max', 'opencode-go/qwen3.8-flash', 'opencode-go/glm-5.3-flash', 'opencode-go/grok-4.7', 'opencode-go/hy4-preview', 'opencode-go/step-5-preview-free', 'opencode-go/longcat-2.5-preview-free', 'opencode-go/space-bunny'], note: 'Платный план, выделен отдельно, чтобы не путать с Free.' },
+            { id: 'NVIDIA NIM', count: 5, best: 'Nemotron Lightning · Ultra · Super VL', limits: 'обычно до 40 RPM; общий TPD не указан', access: 'working', verdict: 'Сильный free endpoint, иногда очередь', free: ['nvidia/nemotron-3.5-lightning-30b-a3b', 'nvidia/nemotron-3.5-super-vl', 'nvidia/nemotron-3-ultra-550b-a55b', 'nvidia/nemotron-3-nano-omni-30b-a3b-reasoning', 'deepseek-ai/deepseek-v4.1-flash'], preview: [], note: 'Exact NIM Lightning ID прошёл PROBE_OK.' },
+            { id: 'CommandCode', count: 5, best: 'DeepSeek · MiniMax · Hy4 · stealth', limits: 'Free preview часто требует credits/entitlement', access: 'blocked', verdict: 'Жирный каталог; наш аккаунт без credits', free: ['minimax/minimax-m3.1-flash:free', 'stealth/glyph-cluster:free', 'stealth/cat-jam:free', 'reflection/beam:free', 'poolside/laguna-s-2.1-free'], preview: [], note: 'Cat Jam free probe → HTTP 400 insufficient credits.' },
+            { id: 'OrcaRouter', count: 6, best: 'DeepSeek V4.1 · Hy4 · GLM Flash', limits: '10 RPM / 50 RPD; Hy4 50 RPM / 250 RPD', access: 'blocked', verdict: 'Free-пул хороший; наш account gate', free: ['deepseek/deepseek-v4-flash-free', 'deepseek/deepseek-v4.1-flash-free', 'orca/orcaverify-text1.0-free', 'tencent/hy3-free', 'tencent/hy4-preview-free', 'z-ai/glm-5.3-flash-free'], preview: [], note: 'DeepSeek free probe → HTTP 429 account/GitHub eligibility.' },
+            { id: 'Freebuff', count: 18, best: 'DeepSeek · MiMo · Kimi · Space Bunny', limits: '100–150 Freebucks/day; tier-dependent', access: 'working', verdict: 'Самый богатый наш practical pool', free: ['freebuff/deepseek/deepseek-v4.1-flash', 'freebuff/deepseek/deepseek-v4-pro', 'freebuff/mimo/mimo-v2.6-pro', 'freebuff/moonshotai/kimi-k3', 'freebuff/z-ai/glm-5.3-flash', 'freebuff/z-ai/glm-5.3', 'freebuff/minimax/minimax-m3', 'freebuff/qwen/qwen3.8-max', 'freebuff/qwen/qwen3.8-flash', 'freebuff/openai/gpt-6.1-sol', 'freebuff/openai/gpt-6-sol', 'freebuff/anthropic/claude-opus-5.5', 'freebuff/google/gemini-3.8-flash', 'freebuff/x-ai/grok-4.7', 'freebuff/meta/muse-spark-1.3-contributor', 'freebuff/stealth/space-bunny-alpha', 'freebuff/stealth/ox-alpha', 'freebuff/crof/kimi-k3-eco'], preview: [], note: 'Список взят из текущего Hermes config; allowance tier может различаться.' },
+            { id: 'BeatAPI', count: 12, best: 'DeepSeek · GLM · Gemini · Jev', limits: '1 RPM без top-up; до 10 RPM после', access: 'catalog', verdict: 'Emergency fallback, слабый RPM', free: ['deepseek-v4.1-flash-free', 'deepseek-v4-flash-0731-free', 'glm-5.3-free', 'glm-5.3-flash-free', 'gemini-3.8-flash-free', 'jev-1.13-free', 'jev-1.14-free', 'kimi-k3', 'glm-5.3', 'MiniMax-M3', 'qwen3.8-max', 'hy3'], preview: [], note: 'Не запускался массово, чтобы не выбить 1 RPM.' }
+        ];
+
+        const models = [
+            { rank: 1, name: 'DeepSeek V4.1 Flash 1017', aliases: ['deepseek v4.1', '1017'], tasks: ['Кодинг', 'Reasoning', 'Tools', 'Vision'], benchmark: 'WebDev 1664 · open №1 · Agent ~№4', strength: 'Лучший общий coding-agent', providers: ['Freebuff: freebuff/deepseek/deepseek-v4.1-flash ✅', 'BeatAPI: deepseek-v4.1-flash-free ✅', 'OpenCode Free: opencode/deepseek-v4.1-flash-free ⚠️ native', 'OpenCode Go: opencode-go/deepseek-v4.1-flash 💳', 'CommandCode: deepseek/deepseek-v4.1-flash ❌ credits', 'OrcaRouter: deepseek/deepseek-v4.1-flash-free ❌ gate', 'NVIDIA: deepseek-ai/deepseek-v4.1-flash ⚠️'], limit: 'Freebuff/BeatAPI доступны; OpenCode Free 200K ctx / 32K out' },
+            { rank: 2, name: 'MiniMax M3.1 Flash', aliases: ['minimax m3.1', 'minimax'], tasks: ['Кодинг', 'Fast Agent', 'Tools'], benchmark: 'Agent ~№13 · preview', strength: 'Быстрый agent с хорошим балансом', providers: ['OpenRouter: minimax/minimax-m3.1-flash:free ⚠️', 'OpenCode Free: opencode/minimax-m3.1-flash-free ⚠️', 'OpenCode Go: opencode-go/minimax-m3.1-flash-free 💳', 'CommandCode: minimax/minimax-m3.1-flash:free ❌ credits'], limit: 'Free preview; точная daily quota provider-specific' },
+            { rank: 3, name: 'MiMo V2.6 Flash', aliases: ['mimo flash', 'mimo v2.6'], tasks: ['UI', 'Frontend', 'Refactor', 'Fast Agent'], benchmark: 'WebDev 1634 · open ~№3', strength: 'Самый удобный быстрый frontend-agent', providers: ['OpenCode Free: opencode/mimo-v2.6-flash-free ⚠️', 'OpenCode Go: opencode-go/mimo-v2.6-flash 💳', 'CommandCode: xiaomi/mimo-v2.6-flash ❌ credits'], limit: 'Free daily quota; Go usage budget' },
+            { rank: 4, name: 'MiMo V2.6 Pro', aliases: ['mimo pro', 'mimo v2.6 pro'], tasks: ['Архитектура', 'Reasoning', 'CRM/UI'], benchmark: 'Agent ~№6 · WebDev ~1626', strength: 'Сложнее и глубже Flash', providers: ['Freebuff: freebuff/mimo/mimo-v2.6-pro ✅', 'OpenCode Go: opencode-go/mimo-v2.6-pro 💳', 'CommandCode: xiaomi/mimo-v2.6-pro ❌ credits'], limit: 'Freebucks у Freebuff; Go paid' },
+            { rank: 5, name: 'Hy4 Preview', aliases: ['hy4', 'tencent hy4'], tasks: ['Agent', 'Reasoning', 'Large Codebase'], benchmark: 'WebDev ~1631 · Agent ~№8', strength: 'Мощный open-agent', providers: ['OrcaRouter: tencent/hy4-preview-free ❌ gate', 'CommandCode: tencent/hy4-preview ❌ credits', 'OpenCode Go: opencode-go/hy4-preview 💳'], limit: 'Orca 50 RPM / 250 RPD' },
+            { rank: 6, name: 'Kimi K3', aliases: ['kimi k3', 'kimi'], tasks: ['Архитектура', 'Planning', 'Big Codebase'], benchmark: 'WebDev ~1655 · open №2', strength: 'Сильный планировщик', providers: ['Freebuff: freebuff/moonshotai/kimi-k3 ✅', 'BeatAPI: kimi-k3 ⚠️', 'OpenCode Go: opencode-go/kimi-k3 💳', 'CommandCode: moonshotai/Kimi-K3 ❌ credits'], limit: 'Freebuff tier-dependent' },
+            { rank: 7, name: 'GLM-5.3 Flash', aliases: ['glm flash', 'glm 5.3'], tasks: ['Fast Patch', 'Small Code', 'Agent'], benchmark: 'WebDev ~1607', strength: 'Быстрый ежедневный patcher', providers: ['Freebuff: freebuff/z-ai/glm-5.3-flash ✅', 'BeatAPI: glm-5.3-flash-free ✅', 'OpenCode Free: opencode/glm-5.3-flash-free ⚠️', 'OrcaRouter: z-ai/glm-5.3-flash-free ❌', 'CommandCode: z-ai/glm-5.3-flash ❌'], limit: 'BeatAPI 1 RPM pre-top-up' },
+            { rank: 8, name: 'Nemotron 3.5 Lightning', aliases: ['nemotron lightning'], tasks: ['Fast Agent', 'Tools', 'Coding'], benchmark: 'Provider agentic model · Arena comparable score limited', strength: 'Самый быстрый NVIDIA fallback', providers: ['NVIDIA: nvidia/nemotron-3.5-lightning-30b-a3b ✅', 'OpenRouter: nvidia/nemotron-3.5-lightning:free ⚠️', 'OpenCode Free: opencode/nemotron-3.5-lightning-free ⚠️'], limit: 'NVIDIA обычно до 40 RPM' },
+            { rank: 9, name: 'Nemotron 3 Ultra / Super VL', aliases: ['nemotron ultra', 'nemotron vl'], tasks: ['Reasoning', 'Vision', 'Screenshots'], benchmark: 'Ultra Agent ~№16; Super VL — vision-first', strength: 'Сложное reasoning и vision', providers: ['OpenRouter: nvidia/nemotron-3-ultra-550b-a55b:free ⚠️; nvidia/nemotron-3.5-super-vl:free ⚠️', 'OpenCode Free: nemotron-3-ultra-free / nemotron-3.5-super-vl-free ⚠️', 'NVIDIA: catalog ⚠️', 'CommandCode: catalog ❌ credits'], limit: 'Free route; token/day not published' },
+            { rank: 10, name: 'Laguna S 2.1', aliases: ['laguna', 'poolside'], tasks: ['Coding', 'Patch', 'Fallback'], benchmark: 'WebDev ~1350', strength: 'Самый проверенный бесплатный API fallback', providers: ['OpenRouter: poolside/laguna-s-2.1:free ✅', 'Nous: poolside/laguna-s-2.1:free ⏳', 'CommandCode: poolside/laguna-s-2.1-free ❌'], limit: 'OpenRouter 20 RPM / 50 RPD' },
+            { rank: 11, name: 'LongCat 2.5 Preview', aliases: ['longcat', 'longcat 2.5'], tasks: ['Long Context', 'Reasoning', 'Coding'], benchmark: 'Public comparable score limited', strength: 'Длинные проекты', providers: ['Nous: meituan/longcat-2.5-preview:free ⏳', 'OpenCode Free: opencode/longcat-2.5-preview-free ⚠️', 'OpenCode Go: opencode-go/longcat-2.5-preview-free 💳'], limit: 'Nous limits not disclosed' },
+            { rank: 12, name: 'Space Bunny / Ox Alpha', aliases: ['space bunny', 'ox alpha', 'stealth'], tasks: ['Stealth', 'Experiment', 'Fast Agent'], benchmark: 'Нет публичного comparable score', strength: 'Экспериментальные скрытые маршруты', providers: ['Freebuff: freebuff/stealth/space-bunny-alpha ✅; freebuff/stealth/ox-alpha ✅', 'OpenCode: space-bunny-free ⚠️ catalog / Go 💳'], limit: 'Freebuff 100–150 Freebucks/day; tier-dependent' },
+            { rank: 13, name: 'Beam / Big Pickle / Cat Jam / Glyph', aliases: ['beam', 'big pickle', 'cat jam', 'glyph'], tasks: ['Stealth', 'Reasoning', 'Experiment'], benchmark: 'Нет публичного comparable score', strength: 'Preview/stealth — только как резерв', providers: ['Nous: reflection/beam-1.0-501b-a23b:free ⏳', 'OpenCode: beam-free / big-pickle ⚠️', 'CommandCode: beam / cat-jam / glyph ❌ credits'], limit: 'Preview/credits/account dependent' },
+            { rank: 14, name: 'Qwen 3.8 Max / Flash', aliases: ['qwen', 'qwen 3.8'], tasks: ['Reasoning', 'Multilingual', 'Coding'], benchmark: 'Max Agent ~№11', strength: 'Хороший второй opinion', providers: ['Freebuff: freebuff/qwen/qwen3.8-max / flash ✅', 'BeatAPI: qwen3.8-max ⚠️', 'OpenCode Go: qwen3.8-max / flash 💳', 'CommandCode: Qwen/Qwen3.8-Max / Flash ❌'], limit: 'Freebuff tier-dependent' },
+            { rank: 15, name: 'Claude Opus 5.5 / GPT-6.1 Sol / Grok 4.7', aliases: ['claude', 'gpt sol', 'grok'], tasks: ['Deep Review', 'Architecture', 'Reasoning'], benchmark: 'Opus Agent №1; Grok ~№7; exact free route varies', strength: 'Сильные commercial модели через allowance', providers: ['Freebuff: Claude/GPT/Grok ✅ по config, расход Freebucks', 'CommandCode: catalog ❌ credits', 'OpenCode Go: Grok 💳'], limit: 'Не permanent free; allowance/provider-specific' }
+        ];
+
+        const budgets = [
+            ['Зеро', 'Freebuff + OpenRouter + NVIDIA + native OpenCode Free', 'DeepSeek, Laguna, Nemotron, GLM, Space Bunny', 'Динамические quotas; OpenCode Free native-only'],
+            ['$10', 'OpenCode Go', 'DeepSeek V4.1, MiMo, MiniMax, Kimi, Qwen', '$12–16/5h, $30–40/week, $60–80/month usage budget'],
+            ['$20', 'OpenCode Go + $10 OpenRouter credits', 'Go-модели + OpenRouter free pool', 'OpenRouter после credits до 1000 free RPD; Go — rolling budget'],
+            ['$30', 'OpenCode Go + CommandCode entry/credits', 'DeepSeek, Kimi, MiMo, Hy4 и большой каталог', 'CommandCode free aliases требуют entitlement/credits; проверить перед оплатой']
+        ];
+        const tests = [
+            ['Nous / LongCat', '<span class="status status-inconclusive">INCONCLUSIVE</span>', 'Ранее был PROBE_OK; повторная серия timeout — это latency, не доказательство удаления.'],
+            ['OpenRouter / Laguna', '<span class="status status-ok">PROBE_OK</span>', 'Рабочий бесплатный API fallback.'],
+            ['OpenCode Free / DeepSeek', '<span class="status status-catalog">NATIVE ONLY</span>', 'Внешний CLI получил 403 FreeTierError; native OpenCode — отдельный путь.'],
+            ['NVIDIA / Lightning', '<span class="status status-ok">PROBE_OK</span>', 'Правильный NIM ID: `...lightning-30b-a3b`; старый alias давал 404.'],
+            ['OrcaRouter / DeepSeek', '<span class="status status-blocked">ACCOUNT BLOCKED</span>', 'HTTP 429: нужна GitHub/account eligibility; модель не объявляется мёртвой.'],
+            ['CommandCode / Cat Jam', '<span class="status status-blocked">CREDITS REQUIRED</span>', 'HTTP 400 insufficient credits; free suffix не гарантирует entitlement.']
+        ];
+
+        const statusMap = { working: ['WORKING', 'status-ok'], catalog: ['CATALOG', 'status-catalog'], paid: ['PAID', 'status-paid'], blocked: ['BLOCKED', 'status-blocked'], inconclusive: ['INCONCLUSIVE', 'status-inconclusive'] };
+        const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
+        const statusBadge = (status) => { const [label, klass] = statusMap[status] || statusMap.catalog; return `<span class="status ${klass}">${label}</span>`; };
+        const providerById = Object.fromEntries(providers.map((provider) => [provider.id, provider]));
+
+        document.getElementById('provider-overview').innerHTML = providers.map((provider) => `<tr><td><strong class="text-white">${escapeHtml(provider.id)}</strong><br><span class="mono text-[10px] text-slate-500">${provider.count ? provider.count + ' listed' : 'subscription'}</span></td><td><span class="text-emerald-200">${provider.count}</span></td><td>${escapeHtml(provider.best)}</td><td>${escapeHtml(provider.limits)}</td><td>${statusBadge(provider.access)}</td><td>${escapeHtml(provider.verdict)}</td></tr>`).join('');
+        document.getElementById('provider-overview-mobile').innerHTML = providers.map((provider) => `<article class="glass rounded-2xl p-4"><div class="flex items-start gap-3"><div><h3 class="font-extrabold text-white">${escapeHtml(provider.id)}</h3><div class="mono text-[10px] text-slate-500">${provider.count ? provider.count + ' free/preview entries' : 'subscription comparison'}</div></div></div><div class="mt-2">${statusBadge(provider.access)}</div><div class="mt-3 grid gap-2 text-xs"><div><span class="mono text-[10px] uppercase text-slate-500">Лучшие</span><p class="mt-1 text-emerald-100">${escapeHtml(provider.best)}</p></div><div><span class="mono text-[10px] uppercase text-slate-500">Лимиты</span><p class="mt-1 text-slate-300">${escapeHtml(provider.limits)}</p></div><div><span class="mono text-[10px] uppercase text-slate-500">Вердикт</span><p class="mt-1 text-slate-400">${escapeHtml(provider.verdict)}</p></div></div></article>`).join('');
+
+        const providerNames = ['Все', ...providers.filter((provider) => provider.id !== 'OpenCode Go').map((provider) => provider.id)];
+        const taskNames = ['Все задачи', 'Кодинг', 'Reasoning', 'UI', 'Vision', 'Fast Agent', 'Stealth', 'Long Context'];
+        let state = { search: '', provider: 'Все', task: 'Все задачи' };
+        const providerFilters = document.getElementById('provider-filters');
+        const taskFilters = document.getElementById('task-filters');
+        const renderFilters = () => {
+            providerFilters.innerHTML = providerNames.map((name) => `<button type="button" class="filter-btn ${state.provider === name ? 'active' : ''}" data-provider="${escapeHtml(name)}">${escapeHtml(name)}</button>`).join('');
+            taskFilters.innerHTML = taskNames.map((name) => `<button type="button" class="filter-btn ${state.task === name ? 'active' : ''}" data-task="${escapeHtml(name)}">${escapeHtml(name)}</button>`).join('');
+        };
+        const matchesModel = (model) => {
+            const haystack = [model.name, model.strength, model.tasks.join(' '), model.benchmark, model.providers.join(' ')].join(' ').toLowerCase();
+            const searchOk = !state.search || haystack.includes(state.search.toLowerCase());
+            const providerOk = state.provider === 'Все' || model.providers.some((entry) => entry.toLowerCase().startsWith(state.provider.toLowerCase() + ':'));
+            const taskOk = state.task === 'Все задачи' || model.tasks.includes(state.task);
+            return searchOk && providerOk && taskOk;
+        };
+        const renderModels = () => {
+            const visible = models.filter(matchesModel);
+            document.getElementById('result-count').textContent = `${visible.length} / ${models.length} model families`;
+            document.getElementById('model-matrix').innerHTML = visible.map((model) => `<tr><td class="mono text-emerald-300">${model.rank}</td><td><strong class="block text-white">${escapeHtml(model.name)}</strong><span class="mt-1 block text-xs text-slate-400">${escapeHtml(model.strength)}</span></td><td><div class="flex max-w-[190px] flex-wrap gap-1">${model.tasks.map((task) => `<span class="tag">${escapeHtml(task)}</span>`).join('')}</div></td><td class="text-xs text-cyan-100">${escapeHtml(model.benchmark)}</td><td><div class="space-y-1.5">${model.providers.map((entry) => { const [provider, ...rest] = entry.split(': '); const id = rest.join(': '); return `<div class="flex items-start gap-2"><span class="mt-0.5 shrink-0 text-[10px] ${id.includes('✅') ? 'text-emerald-300' : id.includes('❌') ? 'text-rose-300' : id.includes('💳') ? 'text-amber-300' : 'text-cyan-300'}">${id.includes('✅') ? 'OK' : id.includes('❌') ? 'NO' : id.includes('💳') ? 'GO' : 'CAT'}</span><span><b class="text-slate-200">${escapeHtml(provider)}</b>: <code>${escapeHtml(id.replaceAll('✅', '').replaceAll('❌', '').replaceAll('💳', '').replaceAll('⚠️', '').trim())}</code></span></div>`; }).join('')}</div></td><td class="text-xs text-slate-400">${escapeHtml(model.limit)}</td></tr>`).join('') || '<tr><td colspan="6" class="py-8 text-center text-slate-400">Ничего не найдено. Очисти фильтр.</td></tr>';
+        };
+        providerFilters.addEventListener('click', (event) => { const button = event.target.closest('[data-provider]'); if (!button) return; state.provider = button.dataset.provider; renderFilters(); renderModels(); });
+        taskFilters.addEventListener('click', (event) => { const button = event.target.closest('[data-task]'); if (!button) return; state.task = button.dataset.task; renderFilters(); renderModels(); });
+        document.getElementById('search').addEventListener('input', (event) => { state.search = event.target.value.trim(); renderModels(); });
+        renderFilters(); renderModels();
+
+        document.getElementById('provider-details').innerHTML = providers.map((provider, index) => { const all = [...provider.free.map((id) => ({ id, kind: 'FREE' })), ...provider.preview.map((id) => ({ id, kind: provider.id === 'OpenCode Go' ? 'GO / PAID' : 'PREVIEW' }))]; return `<details class="provider-card" ${index < 3 ? 'open' : ''}><summary class="flex items-center justify-between gap-4"><span><strong class="text-white">${escapeHtml(provider.id)}</strong><span class="ml-2 text-xs text-slate-500">${provider.count ? provider.count + ' entries' : 'paid comparison'}</span></span><span class="flex items-center gap-2">${statusBadge(provider.access)}<i class="fa-solid fa-chevron-down text-xs text-emerald-300"></i></span></summary><div class="details-body"><p class="py-3 text-xs leading-5 text-slate-400">${escapeHtml(provider.note)}</p><div class="table-wrap"><table><thead><tr><th>Exact ID</th><th>Class</th><th>Copy</th></tr></thead><tbody>${all.map((item) => `<tr><td><code>${escapeHtml(item.id)}</code></td><td>${item.kind === 'FREE' ? '<span class="status status-ok">FREE</span>' : item.kind === 'GO / PAID' ? '<span class="status status-paid">GO / PAID</span>' : '<span class="status status-catalog">PREVIEW</span>'}</td><td><button type="button" class="copy-btn" data-copy="${escapeHtml(item.id)}">copy</button></td></tr>`).join('') || '<tr><td colspan="3" class="text-slate-500">Live exact list requires provider login/API discovery.</td></tr>'}</tbody></table></div></div></details>`; }).join('');
+
+        document.getElementById('budget-table').innerHTML = budgets.map((row) => `<tr><td class="mono font-bold text-emerald-300">${escapeHtml(row[0])}</td><td><strong class="text-white">${escapeHtml(row[1])}</strong></td><td>${escapeHtml(row[2])}</td><td class="text-slate-400">${escapeHtml(row[3])}</td></tr>`).join('');
+        document.getElementById('test-table').innerHTML = tests.map((row) => `<tr><td class="mono text-slate-200">${escapeHtml(row[0])}</td><td>${row[1]}</td><td>${row[2].replaceAll('`', '<code>').replace(/<code>(.*?)<code>/g, '<code>$1</code>')}</td></tr>`).join('');
+
+        document.addEventListener('click', async (event) => {
+            const button = event.target.closest('[data-copy]');
+            if (!button) return;
+            const value = button.dataset.copy;
+            try {
+                await navigator.clipboard.writeText(value);
+            } catch {
+                const textarea = document.createElement('textarea'); textarea.value = value; document.body.appendChild(textarea); textarea.select(); document.execCommand('copy'); textarea.remove();
+            }
+            const original = button.textContent; button.textContent = 'copied'; setTimeout(() => { button.textContent = original; }, 1200);
+        });
+    </script>
+</body>
+</html>
