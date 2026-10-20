@@ -325,7 +325,7 @@
             <div class="mb-2 flex flex-wrap items-center justify-between gap-2">
                 <div>
                     <div class="mono text-[9px] uppercase tracking-widest text-cyan-300">Бесплатные API-тиры рынка</div>
-                    <div class="mt-0.5 text-sm font-extrabold text-white">29 провайдеров с бесплатным доступом — точные лимиты, нужна ли карта, сколько реально за месяц</div>
+                    <div class="mt-0.5 text-sm font-extrabold text-white"><span id="fapi-count">—</span> провайдеров с бесплатным доступом — точные лимиты, нужна ли карта, сколько реально за месяц</div>
                 </div>
                 <div class="flex flex-wrap gap-1.5">
                     <button class="preset active" data-fapi="all">Все</button>
@@ -384,6 +384,7 @@
             <th>План</th><th class="num">Цена/мес</th><th>Квоты / трафик</th><th class="num">Токенов/мес</th>
             <th class="num">Эффективность</th><th>Модели</th><th>Где работает</th><th>Источник</th>
         </tr></thead><tbody id="mkt-rows"></tbody></table></div>
+        <div class="mono mt-1.5 text-[9px] text-slate-600">«~» = оценка по опубликованной квоте, а не точное число провайдера. Токены считаются по входным (дешёвым) ценам — реальный расход выше, если модель много пишет.</div>
         <div class="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-3" id="plans-grid"></div>
     </section>
 
@@ -412,7 +413,7 @@
     </div>
 </footer>
 
-<script src="data/free-ai.js?v=12"></script>
+<script src="data/free-ai.js?v=13"></script>
 <script>
 const D = window.FREE_AI_DATA;
 const $ = (id) => document.getElementById(id);
@@ -1196,6 +1197,8 @@ function renderFreeApi(){
         return rpd >= 1000 || /1B|10 000|14400|14 400|1M/.test(String(f.tok)+String(f.rpd));
     });
     $('fapi-note').textContent = `Показано ${list.length} из ${(D.freeApi||[]).length} провайдеров · данные на 20.10.2026 (tokenplans.dev, freellmpool, mnfst/awesome-free-llm-apis, decodethefuture.org)`;
+    const cnt = $('fapi-count');
+    if (cnt) cnt.textContent = (D.freeApi||[]).length;
     el.innerHTML = list.map(f=>`<tr>
         <td class="font-bold text-white text-[11px]">${esc(f.name)}</td>
         <td>${f.keyless?'<span class="status st-ok">БЕЗ КЛЮЧА</span>':(String(f.key).toLowerCase().startsWith('да')?'<span class="status st-cat">нужен</span>':'<span class="status st-inc">любой PAT</span>')}</td>
@@ -1269,8 +1272,8 @@ function renderMarketPlans(){
         <td class="font-bold text-white text-[11px]">${esc(p.name)}${p.ours?' <span class="status st-ok">У НАС</span>':''}</td>
         <td class="num mono text-emerald-300 text-[11px]">${p.price?'$'+p.price:'free'}</td>
         <td class="text-[10px] text-slate-300">${esc(p.quota)}</td>
-        <td class="num tok text-[10px]">${p.tokM?p.tokM.toLocaleString()+'M':'—'}</td>
-        <td class="num mono text-[10px] text-cyan-200">${p.eff?p.eff+' M/$':'—'}</td>
+        <td class="num tok text-[10px]">${p.tokM?(p.est?'~':'')+p.tokM.toLocaleString()+'M':'—'}</td>
+        <td class="num mono text-[10px] text-cyan-200">${p.eff?(p.est?'~':'')+p.eff+' M/$':'—'}</td>
         <td class="text-[9px] text-slate-400 max-w-[250px]">${esc(p.models)}</td>
         <td class="text-[9px] text-slate-500 max-w-[190px]">${esc(p.tools)}</td>
         <td class="mono text-[9px] text-slate-600">${esc(p.src)}</td>

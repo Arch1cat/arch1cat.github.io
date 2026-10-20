@@ -1949,6 +1949,7 @@ window.FREE_AI_DATA = {
    "tools": "Hermes, все OpenAI-клиенты",
    "ours": true,
    "src": "nousresearch.com",
+   "est": false,
    "eff": null
   },
   {
@@ -1960,6 +1961,7 @@ window.FREE_AI_DATA = {
    "tools": "Hermes, все OpenAI-клиенты",
    "ours": true,
    "src": "nousresearch.com",
+   "est": false,
    "eff": 0.36
   },
   {
@@ -1971,6 +1973,7 @@ window.FREE_AI_DATA = {
    "tools": "Hermes, все OpenAI-клиенты",
    "ours": true,
    "src": "nousresearch.com",
+   "est": false,
    "eff": 0.37
   },
   {
@@ -1982,18 +1985,20 @@ window.FREE_AI_DATA = {
    "tools": "Hermes, все OpenAI-клиенты",
    "ours": true,
    "src": "nousresearch.com",
+   "est": false,
    "eff": 0.37
   },
   {
    "name": "OpenCode Go",
    "price": 10,
    "quota": "$12 / 5ч · $30 / нед · $60 / мес на модель (V4.1 Flash $80)",
-   "tokM": 24.0,
+   "tokM": 20.0,
    "models": "DeepSeek V4.1 Flash · Kimi K3 · GLM-5.3-Flash · MiMo V2.6 Flash · MiniMax M3 · Qwen3.8 · GPT-6 Luna",
    "tools": "opencode, Cline, любой OpenAI-клиент",
    "ours": true,
    "src": "opencode.ai",
-   "eff": 2.4
+   "est": true,
+   "eff": 2.0
   },
   {
    "name": "OpenCode Go Plus",
@@ -2004,6 +2009,7 @@ window.FREE_AI_DATA = {
    "tools": "opencode, Cline, любой OpenAI-клиент",
    "ours": true,
    "src": "opencode.ai",
+   "est": true,
    "eff": 1.6
   },
   {
@@ -2015,6 +2021,7 @@ window.FREE_AI_DATA = {
    "tools": "Hermes, OpenAI-совместимые",
    "ours": true,
    "src": "localhost:20128",
+   "est": false,
    "eff": null
   },
   {
@@ -2026,17 +2033,19 @@ window.FREE_AI_DATA = {
    "tools": "command-code CLI",
    "ours": true,
    "src": "commandcode.ai",
+   "est": false,
    "eff": 0.5
   },
   {
    "name": "CommandCode GOAT",
    "price": 10,
-   "quota": "1B токенов/мес (обсуждается как 88% месячного лимита)",
+   "quota": "1B токенов/мес — цифра обсуждается (≈88% месячного лимита)",
    "tokM": 1000.0,
    "models": "GLM-5.3 · GLM-5.2 · GLM-5.3-Flash + 60",
    "tools": "command-code CLI",
    "ours": true,
    "src": "commandcode.ai",
+   "est": true,
    "eff": 100.0
   },
   {
@@ -2048,6 +2057,7 @@ window.FREE_AI_DATA = {
    "tools": "command-code CLI",
    "ours": true,
    "src": "commandcode.ai",
+   "est": false,
    "eff": null
   },
   {
@@ -2059,6 +2069,7 @@ window.FREE_AI_DATA = {
    "tools": "command-code CLI",
    "ours": true,
    "src": "commandcode.ai",
+   "est": false,
    "eff": null
   },
   {
@@ -2070,6 +2081,7 @@ window.FREE_AI_DATA = {
    "tools": "Hermes, все клиенты",
    "ours": true,
    "src": "nousresearch.com",
+   "est": false,
    "eff": null
   },
   {
@@ -2081,6 +2093,7 @@ window.FREE_AI_DATA = {
    "tools": "Claude Code, Codex, opencode, Cursor, ZCode",
    "ours": false,
    "src": "z.ai",
+   "est": false,
    "eff": null
   },
   {
@@ -2092,6 +2105,7 @@ window.FREE_AI_DATA = {
    "tools": "20+ инструментов",
    "ours": false,
    "src": "z.ai",
+   "est": false,
    "eff": null
   },
   {
@@ -2103,6 +2117,7 @@ window.FREE_AI_DATA = {
    "tools": "20+ инструментов",
    "ours": false,
    "src": "z.ai",
+   "est": false,
    "eff": null
   },
   {
@@ -2114,6 +2129,7 @@ window.FREE_AI_DATA = {
    "tools": "Claude Code, Codex, opencode, Cursor, Qwen Code, Hermes",
    "ours": false,
    "src": "alibabacloud.com",
+   "est": false,
    "eff": null
   },
   {
@@ -2125,6 +2141,7 @@ window.FREE_AI_DATA = {
    "tools": "Kimi Code, Claude Code",
    "ours": false,
    "src": "moonshot.ai",
+   "est": false,
    "eff": null
   },
   {
@@ -2136,6 +2153,7 @@ window.FREE_AI_DATA = {
    "tools": "Kimi Code, Claude Code",
    "ours": false,
    "src": "moonshot.ai",
+   "est": false,
    "eff": null
   },
   {
@@ -2147,6 +2165,7 @@ window.FREE_AI_DATA = {
    "tools": "Kimi Code, Claude Code",
    "ours": false,
    "src": "moonshot.ai",
+   "est": false,
    "eff": null
   },
   {
@@ -2158,6 +2177,7 @@ window.FREE_AI_DATA = {
    "tools": "Kimi Code, Claude Code",
    "ours": false,
    "src": "moonshot.ai",
+   "est": false,
    "eff": null
   },
   {
@@ -2169,6 +2189,7 @@ window.FREE_AI_DATA = {
    "tools": "Claude Code, Codex, opencode",
    "ours": false,
    "src": "minimax.io",
+   "est": false,
    "eff": null
   },
   {
@@ -2180,6 +2201,7 @@ window.FREE_AI_DATA = {
    "tools": "то же",
    "ours": false,
    "src": "minimax.io",
+   "est": false,
    "eff": null
   },
   {
@@ -2191,6 +2213,7 @@ window.FREE_AI_DATA = {
    "tools": "то же",
    "ours": false,
    "src": "minimax.io",
+   "est": false,
    "eff": null
   },
   {
@@ -2202,6 +2225,7 @@ window.FREE_AI_DATA = {
    "tools": "любой OpenAI-клиент",
    "ours": false,
    "src": "alibabacloud.com",
+   "est": false,
    "eff": null
   },
   {
@@ -2213,6 +2237,7 @@ window.FREE_AI_DATA = {
    "tools": "любой OpenAI-клиент",
    "ours": false,
    "src": "alibabacloud.com",
+   "est": false,
    "eff": null
   },
   {
@@ -2224,6 +2249,7 @@ window.FREE_AI_DATA = {
    "tools": "любой OpenAI-клиент",
    "ours": false,
    "src": "alibabacloud.com",
+   "est": false,
    "eff": null
   },
   {
@@ -2235,6 +2261,7 @@ window.FREE_AI_DATA = {
    "tools": "любой OpenAI-клиент",
    "ours": false,
    "src": "xiaomi.com",
+   "est": false,
    "eff": null
   },
   {
@@ -2246,6 +2273,7 @@ window.FREE_AI_DATA = {
    "tools": "любой OpenAI-клиент",
    "ours": false,
    "src": "xiaomi.com",
+   "est": false,
    "eff": null
   },
   {
@@ -2257,6 +2285,7 @@ window.FREE_AI_DATA = {
    "tools": "любой OpenAI-клиент",
    "ours": false,
    "src": "xiaomi.com",
+   "est": false,
    "eff": null
   },
   {
@@ -2268,6 +2297,7 @@ window.FREE_AI_DATA = {
    "tools": "любой OpenAI-клиент",
    "ours": false,
    "src": "xiaomi.com",
+   "est": false,
    "eff": null
   },
   {
@@ -2279,6 +2309,7 @@ window.FREE_AI_DATA = {
    "tools": "интерактивные coding-тулы",
    "ours": false,
    "src": "byteplus.com",
+   "est": false,
    "eff": null
   },
   {
@@ -2290,6 +2321,7 @@ window.FREE_AI_DATA = {
    "tools": "интерактивные coding-тулы",
    "ours": false,
    "src": "byteplus.com",
+   "est": false,
    "eff": null
   },
   {
@@ -2301,6 +2333,7 @@ window.FREE_AI_DATA = {
    "tools": "любой OpenAI-клиент",
    "ours": false,
    "src": "stepfun.com",
+   "est": false,
    "eff": 57.22
   },
   {
@@ -2312,6 +2345,7 @@ window.FREE_AI_DATA = {
    "tools": "любой OpenAI-клиент",
    "ours": false,
    "src": "stepfun.com",
+   "est": false,
    "eff": 16.16
   },
   {
@@ -2323,6 +2357,7 @@ window.FREE_AI_DATA = {
    "tools": "Claude Code только",
    "ours": false,
    "src": "claude.com",
+   "est": false,
    "eff": null
   },
   {
@@ -2334,6 +2369,7 @@ window.FREE_AI_DATA = {
    "tools": "Claude Code только",
    "ours": false,
    "src": "claude.com",
+   "est": false,
    "eff": null
   },
   {
@@ -2345,6 +2381,7 @@ window.FREE_AI_DATA = {
    "tools": "Claude Code только",
    "ours": false,
    "src": "claude.com",
+   "est": false,
    "eff": null
   },
   {
@@ -2356,6 +2393,7 @@ window.FREE_AI_DATA = {
    "tools": "Codex, сторонние приложения через Sign in",
    "ours": false,
    "src": "openai.com",
+   "est": false,
    "eff": null
   },
   {
@@ -2367,6 +2405,7 @@ window.FREE_AI_DATA = {
    "tools": "Codex, сторонние приложения",
    "ours": false,
    "src": "openai.com",
+   "est": false,
    "eff": null
   },
   {
@@ -2378,6 +2417,7 @@ window.FREE_AI_DATA = {
    "tools": "Codex",
    "ours": false,
    "src": "openai.com",
+   "est": false,
    "eff": null
   },
   {
@@ -2389,6 +2429,7 @@ window.FREE_AI_DATA = {
    "tools": "Codex",
    "ours": false,
    "src": "openai.com",
+   "est": false,
    "eff": null
   },
   {
@@ -2400,6 +2441,7 @@ window.FREE_AI_DATA = {
    "tools": "Codex",
    "ours": false,
    "src": "openai.com",
+   "est": false,
    "eff": null
   },
   {
@@ -2411,6 +2453,7 @@ window.FREE_AI_DATA = {
    "tools": "Gemini CLI, Code Assist, Gemini Code",
    "ours": false,
    "src": "google.com",
+   "est": false,
    "eff": null
   },
   {
@@ -2422,6 +2465,7 @@ window.FREE_AI_DATA = {
    "tools": "Gemini",
    "ours": false,
    "src": "google.com",
+   "est": false,
    "eff": null
   },
   {
@@ -2433,6 +2477,7 @@ window.FREE_AI_DATA = {
    "tools": "Gemini",
    "ours": false,
    "src": "google.com",
+   "est": false,
    "eff": null
   },
   {
@@ -2444,6 +2489,7 @@ window.FREE_AI_DATA = {
    "tools": "Copilot CLI, ACP-клиенты",
    "ours": true,
    "src": "github.com",
+   "est": false,
    "eff": null
   },
   {
@@ -2455,6 +2501,7 @@ window.FREE_AI_DATA = {
    "tools": "Copilot CLI, ACP",
    "ours": true,
    "src": "github.com",
+   "est": false,
    "eff": null
   },
   {
@@ -2466,6 +2513,7 @@ window.FREE_AI_DATA = {
    "tools": "Copilot CLI, ACP",
    "ours": true,
    "src": "github.com",
+   "est": false,
    "eff": null
   },
   {
@@ -2477,6 +2525,7 @@ window.FREE_AI_DATA = {
    "tools": "Studio, API, Vibe Code",
    "ours": false,
    "src": "mistral.ai",
+   "est": false,
    "eff": null
   },
   {
@@ -2488,6 +2537,7 @@ window.FREE_AI_DATA = {
    "tools": "Ollama, любой клиент",
    "ours": false,
    "src": "ollama.com",
+   "est": false,
    "eff": null
   },
   {
@@ -2499,18 +2549,20 @@ window.FREE_AI_DATA = {
    "tools": "Ollama",
    "ours": false,
    "src": "ollama.com",
+   "est": false,
    "eff": null
   },
   {
    "name": "NanoGPT Subscription",
    "price": 12,
-   "quota": "60M входных токенов/нед · 2× на GLM/Kimi/DeepSeek · 100 картинок/день",
-   "tokM": 60.0,
+   "quota": "60M входных токенов/нед (≈260M/мес) · 2× на GLM/Kimi/DeepSeek · 100 картинок/день",
+   "tokM": 260.0,
    "models": "GLM-5.2 · MiniMax M3 · DeepSeek V4 Pro + 7",
    "tools": "любой инструмент",
    "ours": false,
    "src": "nanogpt.com",
-   "eff": 5.0
+   "est": true,
+   "eff": 21.67
   },
   {
    "name": "Cline Pass",
@@ -2521,6 +2573,7 @@ window.FREE_AI_DATA = {
    "tools": "Cline и другие",
    "ours": false,
    "src": "cline.bot",
+   "est": false,
    "eff": null
   },
   {
@@ -2532,6 +2585,7 @@ window.FREE_AI_DATA = {
    "tools": "любой инструмент",
    "ours": false,
    "src": "chutes.ai",
+   "est": false,
    "eff": null
   },
   {
@@ -2543,6 +2597,7 @@ window.FREE_AI_DATA = {
    "tools": "любой инструмент",
    "ours": false,
    "src": "chutes.ai",
+   "est": false,
    "eff": null
   },
   {
@@ -2554,6 +2609,7 @@ window.FREE_AI_DATA = {
    "tools": "API",
    "ours": false,
    "src": "phoenixgrove.ai",
+   "est": false,
    "eff": null
   },
   {
@@ -2565,6 +2621,7 @@ window.FREE_AI_DATA = {
    "tools": "API",
    "ours": false,
    "src": "phoenixgrove.ai",
+   "est": false,
    "eff": null
   },
   {
@@ -2576,6 +2633,7 @@ window.FREE_AI_DATA = {
    "tools": "Muse Code CLI",
    "ours": false,
    "src": "dev.meta.ai",
+   "est": false,
    "eff": null
   },
   {
@@ -2587,18 +2645,20 @@ window.FREE_AI_DATA = {
    "tools": "Grok Bot, Cursor (связка)",
    "ours": false,
    "src": "docs.x.ai",
+   "est": false,
    "eff": null
   },
   {
    "name": "Standard Compute Starter",
    "price": 19,
-   "quota": "долларовый бюджет по листовым ценам ≈ $60 API",
-   "tokM": 60.0,
+   "quota": "долларовый бюджет по листовым ценам ≈ $60 API (≈20M входных токенов Haiku 4.5)",
+   "tokM": 20.0,
    "models": "GPT-6 Astra · Claude Fable 5.1 · Claude Opus 5 + 20",
    "tools": "любой инструмент",
    "ours": false,
    "src": "standardcompute.com",
-   "eff": 3.16
+   "est": true,
+   "eff": 1.05
   },
   {
    "name": "LLM Gateway DevPass Lite",
@@ -2609,6 +2669,7 @@ window.FREE_AI_DATA = {
    "tools": "любой инструмент",
    "ours": false,
    "src": "llmgateway.dev",
+   "est": false,
    "eff": 1.0
   },
   {
@@ -2620,6 +2681,7 @@ window.FREE_AI_DATA = {
    "tools": "любой инструмент",
    "ours": false,
    "src": "neuralwatt.ai",
+   "est": false,
    "eff": null
   },
   {
@@ -2631,6 +2693,7 @@ window.FREE_AI_DATA = {
    "tools": "любой инструмент",
    "ours": false,
    "src": "synthetic.new",
+   "est": false,
    "eff": null
   }
  ],

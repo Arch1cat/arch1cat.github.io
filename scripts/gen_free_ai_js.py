@@ -897,10 +897,11 @@ _market = _ilu.module_from_spec(_spec); _spec.loader.exec_module(_market)
 
 PLANS_MARKET = []
 for _p in _market.PLANS_MARKET:
-    name, price, quota, tok_m, models, tools, ours, src = _p
+    name, price, quota, tok_m, models, tools, ours, src = _p[:8]
+    est = bool(_p[8]) if len(_p) > 8 else False
     PLANS_MARKET.append({
         "name": name, "price": price, "quota": quota, "tokM": tok_m, "models": models,
-        "tools": tools, "ours": ours, "src": src,
+        "tools": tools, "ours": ours, "src": src, "est": est,
         "eff": round(tok_m / price, 2) if (price and tok_m) else None,
     })
 
