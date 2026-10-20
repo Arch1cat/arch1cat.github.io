@@ -115,4 +115,26 @@ if changed:
     r2 = subprocess.run([sys.executable, os.path.join(SCRIPTS, "gen_free_ai_js.py")],
                         capture_output=True, text=True, cwd=SITE)
     report.append("gen_free_ai_js.py: " + (r2.stdout.strip().splitlines()[-1] if r2.stdout.strip() else r2.stderr[:200]))
-    print("\n".join(report[-2:]))
+
+    # bump the data cache-buster in the page so browsers pick up the new snapshot
+    page = os.path.join(SITE, "ai-matrix.html")
+    html = io.open(page, encoding="utf-8").read()
+    import re as _re
+    m = _re.search(r"data/free-ai\.js\?v=(\d+)", html)
+    if m:
+        newv = int(m.group(1)) + 1
+        html = html.replace(f"data/free-ai.js?v={m.group(1)}", f"data/free-ai.js?v={newv}")
+        io.open(page, "w", encoding="utf-8", newline="\n").write(html)
+        report.append(f"cache-buster bumped -> v={newv}")
+
+    # publish
+    g = lambda *a: subprocess.run(["git", "-c", "safe.directory=D:/hermes/projects/site_arch1cat", *a],
+                                  capture_output=True, text=True, cwd=SITE)
+    g("add", "-A", "data", "ai-matrix.html")
+    cm = g("commit", "-m", f"chore: daily refresh {today}")
+    if "nothing to commit" not in (cm.stdout + cm.stderr):
+        ps = g("push", "origin", "main")
+        report.append("push: " + ((ps.stdout or ps.stderr).strip().splitlines()[-1] if (ps.stdout or ps.stderr).strip() else "?"))
+    else:
+        report.append("nothing to commit")
+    print("\n".join(report[-4:]))
