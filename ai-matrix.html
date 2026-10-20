@@ -72,6 +72,42 @@
         .rank-row { display:grid; grid-template-columns:28px 1fr 60px; gap:10px; align-items:center; padding:8px 0; border-bottom:1px solid rgba(127,255,164,.08); }
         .bar { height:7px; border-radius:4px; background:rgba(255,255,255,.07); overflow:hidden; }
         .bar > i { display:block; height:100%; border-radius:4px; background:linear-gradient(90deg,#00ff66,#00f2fe); }
+        /* sortable headers */
+        th.sortable { cursor:pointer; user-select:none; transition:background .15s; }
+        th.sortable:hover { background:rgba(0,255,102,.14); color:#b6ffd0; }
+        th.sorted { color:#00ff66; background:rgba(0,255,102,.13); }
+        th .sarrow { opacity:.35; margin-left:3px; font-size:8px; }
+        th.sorted .sarrow { opacity:1; }
+        /* filter groups */
+        .fgroup { display:flex; flex-direction:column; gap:3px; min-width:0; }
+        .fgroup > span { font:700 8px/1 'JetBrains Mono',monospace; color:#5f7268; text-transform:uppercase; letter-spacing:.09em; }
+        .fgroup > select { width:100%; }
+        /* chips */
+        .chip { display:inline-flex; align-items:center; gap:5px; border-radius:999px; padding:3px 9px;
+                background:rgba(0,255,102,.12); border:1px solid rgba(0,255,102,.3); color:#9dffbe;
+                font:600 10px 'JetBrains Mono',monospace; cursor:pointer; }
+        .chip:hover { background:rgba(255,85,119,.16); border-color:rgba(255,85,119,.4); color:#ffb3c1; }
+        .chip .x { font-weight:800; }
+        .preset { height:28px; border:1px solid rgba(0,242,254,.24); background:rgba(0,242,254,.06); color:#a7f8ff; border-radius:8px; padding:0 10px; font:700 10px 'JetBrains Mono',monospace; }
+        .preset:hover, .preset.active { background:rgba(0,242,254,.2); }
+        /* zebra + numeric alignment */
+        tbody tr:nth-child(even) { background:rgba(255,255,255,.012); }
+        .num { text-align:right; font-variant-numeric:tabular-nums; }
+        /* heatmap */
+        .hm-cell { rx:3; }
+        .hm-label { font:600 10px 'JetBrains Mono',monospace; fill:#c8d8cd; }
+        .hm-head { font:700 9px 'JetBrains Mono',monospace; fill:#8fffb2; }
+        /* ladder */
+        .ladder-label { font:600 11px 'JetBrains Mono',monospace; fill:#d7e7dc; }
+        .ladder-val { font:700 11px 'JetBrains Mono',monospace; fill:#ffd889; }
+        .ladder-gap { font:600 9px 'JetBrains Mono',monospace; fill:#7b8f82; }
+        /* family group */
+        .fam-dot { display:inline-block; width:4px; border-radius:2px; align-self:stretch; }
+        .ppill { align-items:center; gap:4px; border:1px solid rgba(127,255,164,.18); border-radius:6px;
+                 padding:1px 6px; background:rgba(255,255,255,.03); font:600 9px 'JetBrains Mono',monospace; color:#b7cbbf; }
+        .pdot { width:6px; height:6px; border-radius:50%; display:inline-block; flex:0 0 auto; }
+        .grp-toggle { cursor:pointer; color:#5f7268; font:700 10px 'JetBrains Mono',monospace; }
+        .grp-toggle:hover { color:#00ff66; }
         @media (max-width:760px){
             th,td { padding:6px 7px; }
             .hero-t { font-size:1.7rem; }
@@ -118,46 +154,87 @@
     <!-- ================= FREE AI ================= -->
     <section class="tabp" id="tab-free">
         <div class="glass mb-3 rounded-2xl p-3">
+            <div class="mb-2 flex flex-wrap items-center gap-1.5">
+                <span class="mono text-[8px] uppercase tracking-widest text-slate-500 mr-1">Быстрые фильтры:</span>
+                <div id="presets" class="flex flex-wrap gap-1.5"></div>
+            </div>
             <div class="grid grid-cols-2 gap-2 md:grid-cols-4 lg:grid-cols-8">
-                <div class="relative col-span-2 md:col-span-2 lg:col-span-2">
+                <div class="relative col-span-2 md:col-span-2 lg:col-span-2 self-end">
                     <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-1/2 -translate-y-1/2 text-emerald-300 text-[10px]"></i>
                     <input id="q" type="search" placeholder="Модель, провайдер, exact ID, задача..." class="finp">
                 </div>
-                <select id="f-prov" class="fsel"></select>
-                <select id="f-type" class="fsel"></select>
-                <select id="f-status" class="fsel"></select>
-                <select id="f-task" class="fsel"></select>
-                <select id="f-src" class="fsel"></select>
-                <select id="f-ctx" class="fsel"></select>
-            </div>
-            <div class="mt-2 grid grid-cols-2 gap-2 md:grid-cols-4 lg:grid-cols-6">
-                <select id="f-bench" class="fsel"></select>
-                <select id="f-reason" class="fsel"></select>
-                <select id="f-sort" class="fsel">
-                    <option value="rank">Сортировка: rank</option>
-                    <option value="ctx">Сортировка: ctx ↓</option>
-                    <option value="swe">Сортировка: SWE ↓</option>
-                    <option value="out">Сортировка: out ↓</option>
-                    <option value="prov">Сортировка: провайдер</option>
-                    <option value="st">Сортировка: статус</option>
-                </select>
-                <div class="relative">
-                    <button id="col-btn" class="btn cyan w-full"><i class="fa-solid fa-columns mr-1"></i>Колонки</button>
-                    <div id="col-panel" class="colpanel hidden"></div>
+                <label class="fgroup"><span>Провайдер</span><select id="f-prov" class="fsel"></select></label>
+                <label class="fgroup"><span>Тип</span><select id="f-type" class="fsel"></select></label>
+                <label class="fgroup"><span>Статус</span><select id="f-status" class="fsel"></select></label>
+                <label class="fgroup"><span>Источник</span><select id="f-src" class="fsel"></select></label>
+                <label class="fgroup"><span>Задача</span><select id="f-task" class="fsel"></select></label>
+                <label class="fgroup"><span>Качество</span><select id="f-bench" class="fsel"></select></label>
+                <label class="fgroup"><span>Контекст</span><select id="f-ctx" class="fsel"></select></label>
+                <label class="fgroup"><span>Reasoning</span><select id="f-reason" class="fsel"></select></label>
+                <label class="fgroup"><span>Сортировка</span><select id="f-sort" class="fsel">
+                    <option value="rank">По rank</option>
+                    <option value="ctx">По ctx ↓</option>
+                    <option value="swe">По SWE ↓</option>
+                    <option value="out">По out ↓</option>
+                    <option value="prov">По провайдеру</option>
+                    <option value="st">По статусу</option>
+                </select></label>
+                <div class="fgroup"><span>Колонки</span>
+                    <div class="relative">
+                        <button id="col-btn" class="fsel w-full text-left"><i class="fa-solid fa-columns mr-1"></i>Настроить</button>
+                        <div id="col-panel" class="colpanel hidden"></div>
+                    </div>
                 </div>
-                <button id="reset" class="btn danger">Сбросить</button>
-                <span id="cnt" class="mono self-center text-[9px] text-slate-500"></span>
+            </div>
+            <div class="mt-2.5 flex flex-wrap items-center gap-1.5 border-t border-emerald-400/10 pt-2.5">
+                <span id="chips" class="flex flex-wrap items-center gap-1.5"></span>
+                <span id="cnt" class="mono text-[10px] text-slate-500 ml-auto"></span>
+                <button id="reset" class="btn danger">Сбросить всё</button>
             </div>
         </div>
 
         <div class="mb-4 grid gap-3 lg:grid-cols-2">
             <div class="chartbox">
-                <div class="mb-2 flex items-center justify-between"><span class="mono text-[9px] uppercase tracking-widest text-emerald-300">Free-модели по провайдерам</span><span class="mono text-[9px] text-slate-600">working / catalog / blocked</span></div>
+                <div class="mb-2 flex items-center justify-between gap-2">
+                    <span class="mono text-[9px] uppercase tracking-widest text-emerald-300">Топ качества (SWE-bench)</span>
+                    <span class="mono text-[9px] text-slate-600">реальные числа + разрыв к лидеру</span>
+                </div>
+                <div id="chart-ladder"></div>
+            </div>
+            <div class="chartbox">
+                <div class="mb-2 flex items-center justify-between gap-2">
+                    <span class="mono text-[9px] uppercase tracking-widest text-cyan-300">ctx × SWE</span>
+                    <span class="mono text-[9px] text-slate-600">размер = out-токены</span>
+                </div>
+                <div id="chart-scatter"></div>
+            </div>
+        </div>
+
+        <div class="mb-4 grid gap-3 lg:grid-cols-2">
+            <div class="chartbox">
+                <div class="mb-2 flex items-center justify-between gap-2">
+                    <span class="mono text-[9px] uppercase tracking-widest text-violet-300">Профиль топ-5</span>
+                    <div class="flex gap-1" id="radar-modes"></div>
+                </div>
+                <div id="chart-radar"></div>
+            </div>
+            <div class="chartbox">
+                <div class="mb-2 mono text-[9px] uppercase tracking-widest text-amber-300">Покрытие задач: модель × задача</div>
+                <div id="chart-heatmap"></div>
+            </div>
+        </div>
+
+        <div class="mb-4 grid gap-3 lg:grid-cols-2">
+            <div class="chartbox">
+                <div class="mb-2 flex items-center justify-between gap-2">
+                    <span class="mono text-[9px] uppercase tracking-widest text-emerald-300">Модели по провайдерам</span>
+                    <span class="mono text-[9px] text-slate-600">working / catalog / blocked</span>
+                </div>
                 <div id="chart-providers"></div>
             </div>
             <div class="chartbox">
-                <div class="mb-2 flex items-center justify-between"><span class="mono text-[9px] uppercase tracking-widest text-cyan-300">ctx × SWE-bench</span><span class="mono text-[9px] text-slate-600">размер = out-токены</span></div>
-                <div id="chart-scatter"></div>
+                <div class="mb-2 mono text-[9px] uppercase tracking-widest text-amber-300">Лимиты: RPM · RPD · токены/день</div>
+                <div id="chart-limits"></div>
             </div>
         </div>
 
@@ -166,12 +243,15 @@
 
         <div class="mt-4 grid gap-3 lg:grid-cols-2">
             <div class="chartbox">
-                <div class="mb-2 mono text-[9px] uppercase tracking-widest text-violet-300">Radar: топ-5 по качеству</div>
-                <div id="chart-radar"></div>
+                <div class="mb-2 flex items-center justify-between gap-2">
+                    <span class="mono text-[9px] uppercase tracking-widest text-violet-300">Топ-5: разрыв к лидеру</span>
+                    <span class="mono text-[9px] text-slate-600">SWE · HumanEval · Aider</span>
+                </div>
+                <div id="chart-gaps"></div>
             </div>
             <div class="chartbox">
-                <div class="mb-2 mono text-[9px] uppercase tracking-widest text-amber-300">Лимиты по провайдерам</div>
-                <div id="chart-limits"></div>
+                <div class="mb-2 mono text-[9px] uppercase tracking-widest text-amber-300">Покрытие: где какая модель сильнее</div>
+                <div id="chart-roles"></div>
             </div>
         </div>
     </section>
@@ -271,29 +351,84 @@ const TASKS = [...new Set(D.families.flatMap(f=>f.tasks))].sort();
 const CTX_BANDS = [['Любой ctx',0],['≥64K',65536],['≥128K',131072],['≥256K',262144],['≥1M',1048576]];
 
 const COLS = [
-    {k:'rank', l:'#', def:true}, {k:'fam', l:'Модель', def:true}, {k:'prov', l:'Провайдер', def:true},
-    {k:'id', l:'Exact ID', def:true}, {k:'status', l:'Статус', def:true}, {k:'type', l:'Тип', def:false},
-    {k:'src', l:'Источник', def:false}, {k:'ctx', l:'ctx', def:true}, {k:'out', l:'out', def:true},
-    {k:'reason', l:'R', def:true}, {k:'swe', l:'SWE', def:true}, {k:'he', l:'HE', def:false},
-    {k:'aider', l:'Aider', def:false}, {k:'tasks', l:'Задачи', def:false}, {k:'bench', l:'Benchmark', def:false},
+    {k:'rank', l:'#', def:true, sort:'rank', num:true},
+    {k:'fam', l:'AI / сила', def:true, sort:'fam'},
+    {k:'prov', l:'Провайдер', def:true, sort:'prov'},
+    {k:'id', l:'Exact ID', def:true, sort:'id'},
+    {k:'status', l:'Статус', def:true, sort:'status'},
+    {k:'type', l:'Тип', def:false, sort:'type'},
+    {k:'src', l:'Источник', def:false, sort:'src'},
+    {k:'ctx', l:'ctx', def:true, sort:'ctx', num:true},
+    {k:'out', l:'out', def:true, sort:'out', num:true},
+    {k:'reason', l:'R', def:true, sort:'reason'},
+    {k:'swe', l:'SWE', def:true, sort:'swe', num:true},
+    {k:'he', l:'HE', def:false, sort:'he', num:true},
+    {k:'aider', l:'Aider', def:false, sort:'aider', num:true},
+    {k:'tasks', l:'Задачи', def:false, sort:'tasks'},
+    {k:'bench', l:'Benchmark', def:false, sort:'bench'},
 ];
 const colState = {};
 COLS.forEach(c => { const v = localStorage.getItem('fc_'+c.k); colState[c.k] = v===null ? c.def : v==='1'; });
 const saveCols = () => COLS.forEach(c => localStorage.setItem('fc_'+c.k, colState[c.k]?'1':'0'));
 
-let state = { q:'', prov:'Все', type:'Все', status:'Все', task:'Все', src:'Все', ctx:'Любой ctx', reason:'Любой', bench:'Любой', sort:'rank' };
+const STATUS_ORDER = { working: 0, catalog: 1, paid: 2, inconclusive: 3, blocked: 4 };
+const TYPE_ORDER = { free: 0, preview: 1, stealth: 2, paid: 3 };
+const SRC_ORDER = { noauth: 0, local: 1, api: 2, oauth: 3 };
+const FIELD = {
+    rank: r => r.rank, fam: r => r.family, prov: r => r.p, id: r => r.id,
+    status: r => STATUS_ORDER[r.status] ?? 9, type: r => TYPE_ORDER[r.type] ?? 9,
+    src: r => SRC_ORDER[r.src] ?? 9, ctx: r => r.ctx || 0, out: r => r.out || 0,
+    reason: r => r.reasoning ? 1 : 0, swe: r => r.bench.swe ?? -1,
+    he: r => r.bench.he ?? -1, aider: r => r.bench.aider ?? -1,
+    tasks: r => r.tasks.join(','), bench: r => r.bench.arenaRank || '',
+};
+const SORTER = {
+    rank: (a, b) => a.rank - b.rank || a.p.localeCompare(b.p),
+    fam: (a, b) => a.family.localeCompare(b.family) || a.rank - b.rank,
+    prov: (a, b) => a.p.localeCompare(b.p) || a.rank - b.rank,
+    id: (a, b) => a.id.localeCompare(b.id),
+    status: (a, b) => (STATUS_ORDER[a.status] ?? 9) - (STATUS_ORDER[b.status] ?? 9) || a.rank - b.rank,
+    type: (a, b) => (TYPE_ORDER[a.type] ?? 9) - (TYPE_ORDER[b.type] ?? 9) || a.rank - b.rank,
+    src: (a, b) => (SRC_ORDER[a.src] ?? 9) - (SRC_ORDER[b.src] ?? 9) || a.rank - b.rank,
+    ctx: (a, b) => (b.ctx || 0) - (a.ctx || 0),
+    out: (a, b) => (b.out || 0) - (a.out || 0),
+    reason: (a, b) => (b.reasoning ? 1 : 0) - (a.reasoning ? 1 : 0),
+    swe: (a, b) => (b.bench.swe ?? -1) - (a.bench.swe ?? -1),
+    he: (a, b) => (b.bench.he ?? -1) - (a.bench.he ?? -1),
+    aider: (a, b) => (b.bench.aider ?? -1) - (a.bench.aider ?? -1),
+    tasks: (a, b) => a.tasks.join(',').localeCompare(b.tasks.join(',')),
+    bench: (a, b) => (a.bench.arenaRank || '').localeCompare(b.bench.arenaRank || ''),
+};
+
+let state = { q:'', prov:'Все', type:'Все', status:'Все', task:'Все', src:'Все', ctx:'Любой ctx',
+              reason:'Любой', bench:'Любой', sort:'rank', dir:'desc', radarMode:'spread', group:false };
+
+const FILTER_KEYS = { prov:'f-prov', type:'f-type', status:'f-status', task:'f-task',
+                      src:'f-src', ctx:'f-ctx', bench:'f-bench', reason:'f-reason' };
+const FILTER_LABEL = { prov:'Провайдер', type:'Тип', status:'Статус', task:'Задача',
+                       src:'Источник', ctx:'Контекст', bench:'Качество', reason:'Reasoning' };
+const DEFAULTS = { prov:'Все', type:'Все', status:'Все', task:'Все', src:'Все', ctx:'Любой ctx', reason:'Любой', bench:'Любой' };
+const saveState = () => { try { localStorage.setItem('matrix_state', JSON.stringify({
+    q:state.q, prov:state.prov, type:state.type, status:state.status, task:state.task, src:state.src,
+    ctx:state.ctx, reason:state.reason, bench:state.bench, sort:state.sort, dir:state.dir,
+    radarMode:state.radarMode, group:state.group })); } catch(e){} };
+const loadState = () => { try { const s = JSON.parse(localStorage.getItem('matrix_state')||'null');
+    if (s) Object.assign(state, s); } catch(e){} };
 
 // ---------------- filters
 const fill = (el, opts) => el.innerHTML = opts.map(o=>`<option value="${esc(o)}">${esc(o)}</option>`).join('');
-fill($('f-prov'), ['Все', ...D.providers.map(p=>p.id)]);
-fill($('f-type'), ['Все','Free','Preview','Stealth']);
-fill($('f-status'), ['Все','Working','Catalog','Blocked']);
-fill($('f-task'), ['Все', ...TASKS]);
-fill($('f-src'), ['Все','API','OAuth','No-Auth','Local']);
-fill($('f-ctx'), CTX_BANDS.map(b=>b[0]));
-fill($('f-bench'), ['Любой','SWE ≥60%','SWE ≥55%','HumanEval ≥85%','Есть Arena','Нет бенчмарков']);
-fill($('f-reason'), ['Любой','Reasoning: да','Reasoning: нет']);
+function populateSelects(){
+    fill($('f-prov'), ['Все', ...D.providers.map(p=>p.id)]);
+    fill($('f-type'), ['Все','Free','Preview','Stealth','Paid']);
+    fill($('f-status'), ['Все','Working','Catalog','Blocked','Paid']);
+    fill($('f-task'), ['Все', ...TASKS]);
+    fill($('f-src'), ['Все','API','OAuth','No-Auth','Local']);
+    fill($('f-ctx'), CTX_BANDS.map(b=>b[0]));
+    fill($('f-bench'), ['Любой','SWE ≥60%','SWE ≥55%','HumanEval ≥85%','Есть Arena','Нет бенчмарков']);
+    fill($('f-reason'), ['Любой','Reasoning: да','Reasoning: нет']);
+}
 
+const normSrc = s => String(s||'').toLowerCase().replace(/[^a-z]/g,'');
 const match = r => {
     const hay = [r.family, r.p, r.id, r.tasks.join(' '), r.bench.arenaRank||'', r.famId].join(' ').toLowerCase();
     if (state.q && !hay.includes(state.q.toLowerCase())) return false;
@@ -301,7 +436,7 @@ const match = r => {
     if (state.type!=='Все' && r.type.toLowerCase()!==state.type.toLowerCase()) return false;
     if (state.status!=='Все' && r.status!==state.status.toLowerCase()) return false;
     if (state.task!=='Все' && !r.tasks.includes(state.task)) return false;
-    if (state.src!=='Все' && r.src.toLowerCase()!==state.src.toLowerCase()) return false;
+    if (state.src!=='Все' && normSrc(r.src)!==normSrc(state.src)) return false;
     const band = (CTX_BANDS.find(b=>b[0]===state.ctx)||[null,0])[1];
     if ((r.ctx||0) < band) return false;
     if (state.reason!=='Любой' && (state.reason==='Reasoning: да' ? !r.reasoning : r.reasoning)) return false;
@@ -314,24 +449,35 @@ const match = r => {
     return true;
 };
 const sorter = (list) => { const c=[...list];
-    if(state.sort==='ctx') c.sort((a,b)=>(b.ctx||0)-(a.ctx||0));
-    else if(state.sort==='swe') c.sort((a,b)=>(b.bench.swe||0)-(a.bench.swe||0));
-    else if(state.sort==='out') c.sort((a,b)=>(b.out||0)-(a.out||0));
-    else if(state.sort==='prov') c.sort((a,b)=>a.p.localeCompare(b.p)||a.rank-b.rank);
-    else if(state.sort==='st') c.sort((a,b)=>a.status.localeCompare(b.status)||a.rank-b.rank);
-    else c.sort((a,b)=>a.rank-b.rank||a.p.localeCompare(b.p));
+    const fn = SORTER[state.sort] || SORTER.rank;
+    c.sort((a,b)=> fn(a,b));
+    if (state.dir === 'asc') c.reverse();
     return c; };
 
 // ---------------- column panel
 function renderColPanel(){
     $('col-panel').innerHTML = '<div class="mono text-[9px] uppercase text-emerald-300 mb-2">Колонки</div>' +
-        COLS.map(c=>`<label class="coltog"><input type="checkbox" ${colState[c.k]?'checked':''} data-c="${c.k}"> ${c.l}</label>`).join('');
-    $('col-panel').querySelectorAll('input').forEach(cb=>cb.addEventListener('change',e=>{
+        COLS.map(c=>`<label class="coltog"><input type="checkbox" ${colState[c.k]?'checked':''} data-c="${c.k}"> ${c.l}</label>`).join('') +
+        '<div class="mt-2 border-t border-emerald-400/15 pt-2"><label class="coltog"><input type="checkbox" id="col-group" '+(state.group?'checked':'')+'> Группировать по модели</label></div>';
+    $('col-panel').querySelectorAll('input[data-c]').forEach(cb=>cb.addEventListener('change',e=>{
         colState[e.target.dataset.c]=e.target.checked; saveCols(); renderTable();
     }));
+    $('col-group').addEventListener('change', e=>{ state.group=e.target.checked; saveState(); renderTable(); });
 }
 function renderHead(){
-    $('thead').innerHTML = COLS.filter(c=>colState[c.k]).map(c=>`<th>${c.l}</th>`).join('');
+    const cols = COLS.filter(c=>colState[c.k]);
+    $('thead').innerHTML = cols.map(c=>{
+        const active = state.sort === c.sort;
+        const arrow = active ? (state.dir === 'desc' ? '▼' : '▲') : '◆';
+        return `<th class="sortable ${active?'sorted':''}" data-sort="${c.sort}" ${active?`aria-sort="${state.dir==='desc'?'descending':'ascending'}"`:''} title="Сортировать по ${esc(c.l)}">${esc(c.l)}<span class="sarrow">${arrow}</span></th>`;
+    }).join('');
+    $('thead').querySelectorAll('th.sortable').forEach(th=>th.addEventListener('click',()=>{
+        const key = th.dataset.sort;
+        if (state.sort === key) state.dir = state.dir === 'desc' ? 'asc' : 'desc';
+        else { state.sort = key; state.dir = ['ctx','out','swe','he','aider','rank'].includes(key) ? 'desc' : 'asc'; }
+        $('f-sort').value = ['ctx','out','swe'].includes(key) ? key : 'rank';
+        saveState(); renderHead(); renderTable();
+    }));
 }
 function cell(r, k){
     const col = provColor[r.p]||'#00ff66';
@@ -356,10 +502,29 @@ function cell(r, k){
 }
 function renderTable(){
     const vis = sorter(routes.filter(match));
-    $('cnt').textContent = `${vis.length} / ${routes.length} маршрутов`;
+    $('cnt').textContent = `${vis.length} из ${routes.length} маршрутов · ${new Set(vis.map(r=>r.famId)).size} моделей`;
     const cols = COLS.filter(c=>colState[c.k]);
-    $('rows').innerHTML = vis.map(r=>`<tr>${cols.map(c=>cell(r,c.k)).join('')}</tr>`).join('') ||
-        '<tr><td colspan="15" class="py-6 text-center text-slate-400 text-xs">Ничего не найдено</td></tr>';
+    const head = cols.map(c=>cell);
+    let html = '';
+    if (state.group) {
+        const groups = {};
+        vis.forEach(r => { (groups[r.famId] = groups[r.famId] || []).push(r); });
+        Object.values(groups).forEach(rs => {
+            const r0 = rs[0];
+            const c = provColor[r0.p]||'#00ff66';
+            html += `<tr style="background:rgba(0,255,102,.05)">` +
+                `<td class="mono text-emerald-300">${r0.rank}</td>` +
+                `<td><strong class="text-white text-[11px]">${esc(r0.family)}</strong>
+                    <span class="block text-[9px] text-slate-500">${esc(r0.strength)}</span></td>` +
+                `<td colspan="${Math.max(1, cols.length-2)}" class="text-[10px] text-slate-400">` +
+                    rs.map(x=>`<span class="ppill mr-1 mb-1 inline-flex"><span class="pdot" style="background:${provColor[x.p]||'#00ff66'}"></span>${esc(x.p)}</span>`).join('') +
+                `</td></tr>`;
+            rs.forEach(x => { html += `<tr>${head.map((f,i)=>f(x, cols[i].k)).join('')}</tr>`; });
+        });
+    } else {
+        html = vis.map(r=>`<tr>${head.map((f,i)=>f(r, cols[i].k)).join('')}</tr>`).join('');
+    }
+    $('rows').innerHTML = html || '<tr><td colspan="15" class="py-8 text-center"><div class="text-slate-300 text-xs mb-2">Ничего не найдено под текущими фильтрами</div><button class="btn danger" onclick="document.getElementById(\'reset\').click()">Сбросить фильтры</button></td></tr>';
     $('cards').innerHTML = vis.map(r=>`<article class="mcard">
         <div class="flex items-start justify-between gap-2">
             <div><div class="text-xs font-bold text-white">${esc(r.family)}</div>
@@ -375,6 +540,47 @@ function renderTable(){
         </div>
         <div class="mt-2 flex items-start gap-1.5"><code class="flex-1 text-[9px]">${esc(r.id)}</code><button class="copy" data-cp="${esc(r.id)}">cp</button></div>
     </article>`).join('') || '<div class="mcard text-xs text-slate-400">Ничего не найдено</div>';
+    renderChips();
+    renderPresets();
+}
+
+function renderChips(){
+    const chips = [];
+    if (state.q) chips.push(['q', `Поиск: ${state.q}`]);
+    for (const k of Object.keys(FILTER_KEYS)) {
+        if (state[k] !== DEFAULTS[k]) chips.push([k, `${FILTER_LABEL[k]}: ${state[k]}`]);
+    }
+    if (!chips.length) {
+        $('chips').innerHTML = '<span class="mono text-[10px] text-slate-600">Фильтров нет — показываем все маршруты</span>';
+        return;
+    }
+    $('chips').innerHTML = chips.map(([k,label])=>`<span class="chip" data-chip="${k}" title="Снять фильтр">${esc(label)} <span class="x">×</span></span>`).join('');
+    $('chips').querySelectorAll('[data-chip]').forEach(el=>el.addEventListener('click',()=>{
+        const k = el.dataset.chip;
+        if (k === 'q') { state.q=''; $('q').value=''; }
+        else { state[k] = DEFAULTS[k]; const elId = FILTER_KEYS[k]; if (elId) $(elId).value = DEFAULTS[k]; }
+        saveState(); renderTable();
+    }));
+}
+
+function renderPresets(){
+    $('presets').innerHTML = (D.presets||[]).map(p=>{
+        const active = Object.entries(p.f).every(([k,v]) => state[k] === v);
+        return `<button class="preset ${active?'active':''}" data-preset="${p.id}">${esc(p.label)}</button>`;
+    }).join('') + `<button class="preset" data-preset="group">${state.group?'Разгруппировать':'Группировать по модели'}</button>`;
+    $('presets').querySelectorAll('[data-preset]').forEach(b=>b.addEventListener('click',()=>{
+        const id = b.dataset.preset;
+        if (id === 'group') { state.group = !state.group; saveState(); renderColPanel(); renderTable(); return; }
+        const p = (D.presets||[]).find(x=>x.id===id);
+        if (!p) return;
+        const isActive = Object.entries(p.f).every(([k,v])=>state[k]===v);
+        Object.assign(state, DEFAULTS);
+        if (!isActive) Object.assign(state, p.f);
+        if (p.sort) { state.sort = p.sort; state.dir='desc'; }
+        for (const k of Object.keys(FILTER_KEYS)) { const elId=FILTER_KEYS[k]; if (elId) $(elId).value = state[k]; }
+        $('q').value = state.q;
+        saveState(); renderHead(); renderTable();
+    }));
 }
 
 // ---------------- SVG charts
@@ -425,23 +631,163 @@ function chartScatter(){
     $('chart-scatter').innerHTML = SVG(W,H,s);
 }
 
+function chartLadder(){
+    const pts = D.families.filter(f=>f.bench.swe).sort((a,b)=>b.bench.swe-a.bench.swe).slice(0,15);
+    if (!pts.length) { $('chart-ladder').innerHTML=''; return; }
+    const max = Math.max(...pts.map(f=>f.bench.swe));
+    const min = Math.min(...pts.map(f=>f.bench.swe));
+    const W=700, rowH=22, H=pts.length*rowH+30, labelX=0, barX=210, barW=370;
+    let s='';
+    [0,0.25,0.5,0.75,1].forEach(t=>{
+        const x = barX + barW*t;
+        s += `<line x1="${x.toFixed(1)}" y1="14" x2="${x.toFixed(1)}" y2="${H-16}" stroke="rgba(127,255,164,.08)"/>`;
+        s += `<text x="${x.toFixed(1)}" y="${H-3}" fill="#5d7167" font-size="9" text-anchor="middle" font-family="JetBrains Mono,monospace">${Math.round(max*t)}%</text>`;
+    });
+    pts.forEach((f,i)=>{
+        const y = 14+i*rowH, bw = barW*(f.bench.swe/max), gap = f.bench.swe - max;
+        const hue = 160 - (1 - f.bench.swe/max)*90;
+        s += `<text x="${labelX}" y="${y+10}" class="ladder-label">${esc(f.name.length>30?f.name.slice(0,29)+'…':f.name)}</text>`;
+        s += `<rect x="${barX}" y="${y+1}" width="${bw.toFixed(1)}" height="12" rx="3" fill="hsl(${hue} 90% 55% / .85)"/>`;
+        s += `<text x="${(barX+bw+7).toFixed(1)}" y="${y+11}" class="ladder-val">${f.bench.swe.toFixed(1)}%</text>`;
+        s += `<text x="${(barX+bw+62).toFixed(1)}" y="${y+11}" class="ladder-gap">${gap===0?'лидер':(gap>0?'+'+gap.toFixed(1):gap.toFixed(1))}</text>`;
+        s += `<title>${esc(f.name)} — SWE ${f.bench.swe}% · HE ${f.bench.he??'—'}% · Aider ${f.bench.aider??'—'}% · ${esc(f.strength)}</title>`;
+    });
+    s += `<text x="${barX}" y="9" fill="#5d7167" font-size="9" font-family="JetBrains Mono,monospace">SWE-bench Verified</text>`;
+    $('chart-ladder').innerHTML = SVG(W,H,s);
+}
+
+function chartHeatmap(){
+    const tm = D.taskMatrix;
+    if (!tm) { $('chart-heatmap').innerHTML=''; return; }
+    const rows = tm.rows, cols = tm.tasks;
+    const W=700, labelW=190, cellW=Math.floor((W-labelW-10)/cols.length), cellH=17, H=rows.length*cellH+34;
+    const COL = ['rgba(255,255,255,.05)','rgba(0,255,102,.28)','rgba(0,255,102,.55)','rgba(0,242,254,.85)'];
+    const GLYPH = ['', '•', '●●', '●●●'];
+    let s='';
+    cols.forEach((c,j)=>{
+        const x = labelW + j*cellW + cellW/2;
+        s += `<text x="${x}" y="14" class="hm-head" text-anchor="middle">${esc(c.length>11?c.slice(0,10)+'…':c)}</text>`;
+    });
+    rows.forEach((r,i)=>{
+        const y = 20 + i*cellH;
+        s += `<text x="0" y="${y+12}" class="hm-label">${esc(r.name.length>27?r.name.slice(0,26)+'…':r.name)}</text>`;
+        r.v.forEach((v,j)=>{
+            const x = labelW + j*cellW;
+            s += `<rect class="hm-cell" x="${x+1}" y="${y+1}" width="${cellW-3}" height="${cellH-3}" fill="${COL[v]||COL[0]}"/>`;
+            if (v) s += `<text x="${x+cellW/2}" y="${y+12}" font-size="8" text-anchor="middle" fill="${v>=3?'#001b08':'#bff7d0'}" font-family="JetBrains Mono,monospace">${GLYPH[v]||''}</text>`;
+            s += `<title>${esc(r.name)} — ${esc(cols[j])}: ${v===0?'нет':v===1?'слабо':v===2?'средне':'сильно'}</title>`;
+        });
+    });
+    s += `<g transform="translate(${labelW},${H-8})"><text x="0" y="0" fill="#5d7167" font-size="9" font-family="JetBrains Mono,monospace">● = слабо</text>`;
+    s += `<text x="64" y="0" fill="#5d7167" font-size="9" font-family="JetBrains Mono,monospace">●● = средне</text>`;
+    s += `<text x="152" y="0" fill="#5d7167" font-size="9" font-family="JetBrains Mono,monospace">●●● = сильно</text></g>`;
+    $('chart-heatmap').innerHTML = SVG(W,H,s);
+}
+
+function chartGaps(){
+    const top = D.families.filter(f=>f.bench.swe).sort((a,b)=>b.bench.swe-a.bench.swe).slice(0,5);
+    if (!top.length) { $('chart-gaps').innerHTML=''; return; }
+    const maxSwe = top[0].bench.swe;
+    const W=700, rowH=44, H=top.length*rowH+18, barX=150, barW=380;
+    const metrics = [{k:'swe', l:'SWE', m:75}, {k:'he', l:'HE', m:100}, {k:'aider', l:'Aider', m:80}];
+    const COL = ['#00ff66','#00f2fe','#a78bfa','#ffc857','#ff5577'];
+    let s='';
+    top.forEach((f,i)=>{
+        const y = 10+i*rowH;
+        s += `<text x="0" y="${y+16}" class="ladder-label">${esc(f.name.length>24?f.name.slice(0,23)+'…':f.name)}</text>`;
+        metrics.forEach((mt,j)=>{
+            const v = f.bench[mt.k] ?? 0;
+            const rel = v ? (v / mt.m) : 0;
+            const w = barW*rel;
+            const yy = y + j*11;
+            s += `<text x="0" y="${yy+7}" fill="#5d7167" font-size="8" font-family="JetBrains Mono,monospace">${mt.l}</text>`;
+            s += `<rect x="${barX}" y="${yy}" width="${w.toFixed(1)}" height="8" rx="2" fill="${COL[i]}" opacity=".8"/>`;
+            s += `<text x="${(barX+w+6).toFixed(1)}" y="${yy+8}" fill="#c8d8cd" font-size="9" font-family="JetBrains Mono,monospace">${v?v.toFixed(1)+'%':'—'}</text>`;
+            if (mt.k==='swe' && v < maxSwe) {
+                s += `<text x="${(barX+w+52).toFixed(1)}" y="${yy+8}" fill="#7b8f82" font-size="8" font-family="JetBrains Mono,monospace">−${(maxSwe-v).toFixed(1)} к лидеру</text>`;
+            }
+        });
+    });
+    $('chart-gaps').innerHTML = SVG(W,H,s);
+}
+
+function chartRoles(){
+    const tm = D.taskMatrix;
+    if (!tm) { $('chart-roles').innerHTML=''; return; }
+    const W=700, H=280, pad={l:150,r:60,t:26,b:40};
+    const tasks = tm.tasks;
+    const best = tasks.map((_,j)=>{
+        let bv=-1, bn='';
+        tm.rows.forEach(r=>{ if (r.v[j] > bv) { bv=r.v[j]; bn=r.name; } });
+        return {v:bv, n:bn};
+    });
+    const x = j => pad.l + (j/(tasks.length-1))*(W-pad.l-pad.r);
+    let s='';
+    s += `<text x="${pad.l}" y="12" fill="#5d7167" font-size="9" font-family="JetBrains Mono,monospace">Кто сильнее в каждой задаче (3 = сильно)</text>`;
+    tasks.forEach((t,j)=>{
+        const b = best[j];
+        const cx = x(j), cy = pad.t + (3-b.v)*30;
+        const col = b.v>=3?'#00ff66':b.v>=2?'#00f2fe':b.v>=1?'#a78bfa':'#6b7f72';
+        s += `<line x1="${cx}" y1="${pad.t}" x2="${cx}" y2="${pad.t+90}" stroke="rgba(127,255,164,.1)"/>`;
+        s += `<circle cx="${cx}" cy="${cy+18}" r="11" fill="${col}" opacity=".85"/>`;
+        s += `<text x="${cx}" y="${cy+22}" font-size="9" text-anchor="middle" fill="#001b08" font-family="JetBrains Mono,monospace" font-weight="700">${b.v}</text>`;
+        s += `<text x="${cx}" y="${H-pad.b+16}" fill="#8fffb2" font-size="8" text-anchor="middle" font-family="JetBrains Mono,monospace" transform="rotate(-32 ${cx} ${H-pad.b+16})">${esc(t)}</text>`;
+        s += `<title>${esc(t)}: ${esc(b.n)}</title>`;
+    });
+    s += `<text x="${W-pad.r+8}" y="${pad.t+16}" fill="#7b8f82" font-size="9" font-family="JetBrains Mono,monospace">выше = сильнее</text>`;
+    $('chart-roles').innerHTML = SVG(W,H,s);
+}
+
 function chartRadar(){
     const top = D.families.filter(f=>f.bench.swe).sort((a,b)=>b.bench.swe-a.bench.swe).slice(0,5);
+    if (!top.length) { $('chart-radar').innerHTML=''; return; }
     const axes=[{k:'swe',l:'SWE',m:75},{k:'he',l:'HumanEval',m:100},{k:'aider',l:'Aider',m:80},{k:'ctx',l:'ctx',m:1048576},{k:'out',l:'out',m:524288}];
-    const W=700,H=340,cx=W/2,cy=H/2+6,R=118;
-    const pt=(i,v,m)=>{const a=-Math.PI/2+i*2*Math.PI/axes.length;return [cx+Math.cos(a)*R*(v/m), cy+Math.sin(a)*R*(v/m)];};
+    const mode = state.radarMode || 'spread';
+    // per-axis normalisation: relative = dataset max, spread = min-max within the compared set
+    const norm = {};
+    axes.forEach(ax=>{
+        const vals = top.map(f=>f.bench[ax.k] ?? (ax.k==='ctx'?f.ctx:ax.k==='out'?f.out:0)).filter(v=>v>0);
+        const dmax = Math.max(...D.families.map(f=> ax.k==='ctx'?f.ctx : ax.k==='out'?f.out : (f.bench[ax.k]||0)).filter(v=>v>0), 1);
+        const mn = vals.length?Math.min(...vals):0, mx = vals.length?Math.max(...vals):1;
+        norm[ax.k] = { max: dmax, min: mn, span: (mx-mn)||1, mx };
+    });
+    const N = (f, ax) => {
+        const raw = ax.k==='ctx'?f.ctx : ax.k==='out'?f.out : (f.bench[ax.k]||0);
+        if (mode==='raw') return Math.min(1, raw/ax.m);
+        if (mode==='relative') return Math.min(1, raw/norm[ax.k].max);
+        const n = norm[ax.k];
+        return Math.max(0, Math.min(1, (raw - n.min)/n.span));
+    };
+    const W=700,H=330,cx=W/2-40,cy=H/2+4,R=112;
+    const pt=(i,f,ax)=>{const a=-Math.PI/2+i*2*Math.PI/axes.length;const r=R*N(f,ax);return [cx+Math.cos(a)*r, cy+Math.sin(a)*r];};
     let s='';
-    for(let ring=1;ring<=4;ring++){ const rr=R*ring/4; s+=`<polygon points="${axes.map((_,i)=>{const a=-Math.PI/2+i*2*Math.PI/axes.length;return (cx+Math.cos(a)*rr).toFixed(1)+','+(cy+Math.sin(a)*rr).toFixed(1);}).join(' ')}" fill="none" stroke="rgba(127,255,164,.1)"/>`; }
-    axes.forEach((ax,i)=>{const p=pt(i,ax.m,ax.m); s+=`<text x="${p[0]}" y="${p[1]}" fill="#8fffb2" font-size="9" text-anchor="middle" font-family="JetBrains Mono,monospace">${ax.l}</text>`;});
+    for(let ring=1;ring<=4;ring++){ const rr=R*ring/4;
+        s+=`<polygon points="${axes.map((_,i)=>{const a=-Math.PI/2+i*2*Math.PI/axes.length;return (cx+Math.cos(a)*rr).toFixed(1)+','+(cy+Math.sin(a)*rr).toFixed(1);}).join(' ')}" fill="none" stroke="rgba(127,255,164,.12)"/>`; }
+    axes.forEach((ax,i)=>{const a=-Math.PI/2+i*2*Math.PI/axes.length;
+        s+=`<line x1="${cx}" y1="${cy}" x2="${(cx+Math.cos(a)*R).toFixed(1)}" y2="${(cy+Math.sin(a)*R).toFixed(1)}" stroke="rgba(127,255,164,.12)"/>`;
+        s+=`<text x="${(cx+Math.cos(a)*(R+18)).toFixed(1)}" y="${(cy+Math.sin(a)*(R+18)+3).toFixed(1)}" fill="#8fffb2" font-size="9" text-anchor="middle" font-family="JetBrains Mono,monospace">${ax.l}</text>`;});
     const cols=['#00ff66','#00f2fe','#a78bfa','#ffc857','#ff5577'];
     top.forEach((f,fi)=>{
-        const vals=[f.bench.swe||0,f.bench.he||0,f.bench.aider||0,f.ctx||0,f.out||0];
-        const pts=vals.map((v,i)=>pt(i,v,axes[i].m).map(x=>x.toFixed(1)).join(',')).join(' ');
-        s+=`<polygon points="${pts}" fill="${cols[fi]}" fill-opacity=".12" stroke="${cols[fi]}" stroke-width="1.6"/>`;
+        const pts=axes.map((ax,i)=>pt(i,f,ax).map(x=>x.toFixed(1)).join(',')).join(' ');
+        s+=`<polygon points="${pts}" fill="${cols[fi]}" fill-opacity=".10" stroke="${cols[fi]}" stroke-width="1.8"/>`;
+        axes.forEach((ax,i)=>{ const p=pt(i,f,ax);
+            const raw = ax.k==='ctx'?f.ctx : ax.k==='out'?f.out : (f.bench[ax.k]||0);
+            s+=`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="2.6" fill="${cols[fi]}"/>`;
+            s+=`<title>${esc(f.name)} — ${ax.l}: ${raw?raw.toLocaleString():'—'}</title>`;});
     });
-    axes.forEach((ax,i)=>{ const p=pt(i,ax.m,ax.m); s+=`<line x1="${cx}" y1="${cy}" x2="${p[0].toFixed(1)}" y2="${p[1].toFixed(1)}" stroke="rgba(127,255,164,.12)"/>`; });
-    s+=`<g transform="translate(14,10)">` + top.map((f,i)=>`<rect x="0" y="${i*15}" width="9" height="9" fill="${cols[i]}"/><text x="14" y="${i*15+8}" fill="#c8d8cd" font-size="9" font-family="JetBrains Mono,monospace">${esc(f.name.slice(0,26))}</text>`).join('') + `</g>`;
+    const legend = top.map((f,i)=>`<rect x="0" y="${i*16}" width="9" height="9" fill="${cols[i]}"/><text x="14" y="${i*16+8}" fill="#c8d8cd" font-size="9" font-family="JetBrains Mono,monospace">${esc(f.name.length>24?f.name.slice(0,23)+'…':f.name)} · SWE ${f.bench.swe}%</text>`).join('');
+    s+=`<g transform="translate(${W-215},12)">${legend}</g>`;
+    const modeTxt = { spread:'размах внутри топ-5 (видны отличия)', relative:'% от лучшего в датасете', raw:'абсолютные значения' }[mode];
+    s+=`<text x="0" y="${H-6}" fill="#5d7167" font-size="9" font-family="JetBrains Mono,monospace">${esc(modeTxt)}</text>`;
     $('chart-radar').innerHTML = SVG(W,H,s);
+}
+
+function renderRadarModes(){
+    const modes = [['spread','Размах'],['relative','К лучшему'],['raw','Абсолют']];
+    $('radar-modes').innerHTML = modes.map(([m,l])=>`<button class="preset ${(state.radarMode||'spread')===m?'active':''}" data-rmode="${m}">${l}</button>`).join('');
+    $('radar-modes').querySelectorAll('[data-rmode]').forEach(b=>b.addEventListener('click',()=>{
+        state.radarMode=b.dataset.rmode; saveState(); renderRadarModes(); chartRadar();
+    }));
 }
 
 function chartLimits(){
@@ -588,22 +934,37 @@ function renderStats(){
 }
 
 // ---------------- init
+loadState();
+populateSelects();
+for (const k of Object.keys(FILTER_KEYS)) { const elId=FILTER_KEYS[k]; if (elId) $(elId).value = state[k]; }
+$('q').value = state.q || '';
+$('f-sort').value = state.sort || 'rank';
 renderStats(); renderColPanel(); renderHead(); renderTable();
-chartProviders(); chartScatter(); chartRadar(); chartLimits();
+chartLadder(); chartScatter(); chartHeatmap(); chartGaps(); chartRoles();
+chartProviders(); chartLimits(); chartRadar(); renderRadarModes();
 renderRank(); renderTools(); renderPlans(); renderNews();
 
-const bindSel = (id,key) => $(id).addEventListener('change', e=>{ state[key]=e.target.value; renderTable(); });
+const bindSel = (id,key) => $(id).addEventListener('change', e=>{ state[key]=e.target.value; saveState(); renderTable(); });
 bindSel('f-prov','prov'); bindSel('f-type','type'); bindSel('f-status','status'); bindSel('f-task','task');
 bindSel('f-src','src'); bindSel('f-ctx','ctx'); bindSel('f-bench','bench'); bindSel('f-reason','reason');
-$('f-sort').addEventListener('change', e=>{ state.sort=e.target.value; renderTable(); });
-$('q').addEventListener('input', e=>{ state.q=e.target.value.trim(); renderTable(); });
+$('f-sort').addEventListener('change', e=>{ state.sort=e.target.value; state.dir='desc'; saveState(); renderHead(); renderTable(); });
+$('q').addEventListener('input', e=>{ state.q=e.target.value.trim(); saveState(); renderTable(); });
 $('reset').addEventListener('click', ()=>{
-    state={q:'',prov:'Все',type:'Все',status:'Все',task:'Все',src:'Все',ctx:'Любой ctx',reason:'Любой',bench:'Любой',sort:'rank'};
+    Object.assign(state, DEFAULTS, { q:'', sort:'rank', dir:'desc' });
     $('q').value=''; ['f-prov','f-type','f-status','f-task','f-src','f-ctx','f-bench','f-reason'].forEach(id=>$(id).value = id==='f-ctx'?'Любой ctx':'Все');
-    $('f-sort').value='rank'; renderTable();
+    $('f-sort').value='rank'; saveState(); renderHead(); renderTable();
 });
 $('col-btn').addEventListener('click', e=>{ e.stopPropagation(); $('col-panel').classList.toggle('hidden'); });
 document.addEventListener('click', e=>{ if(!e.target.closest('#col-panel') && !e.target.closest('#col-btn')) $('col-panel').classList.add('hidden'); });
+
+document.addEventListener('keydown', e=>{
+    if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'SELECT') {
+        e.preventDefault(); $('q').focus();
+    } else if (e.key === 'Escape') {
+        if (!$('col-panel').classList.contains('hidden')) { $('col-panel').classList.add('hidden'); return; }
+        $('reset').click();
+    }
+});
 
 document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{
     document.querySelectorAll('[data-tab]').forEach(x=>x.classList.remove('active')); b.classList.add('active');
