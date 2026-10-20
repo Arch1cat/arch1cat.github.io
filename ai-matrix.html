@@ -110,8 +110,9 @@
     <nav class="mb-4 flex flex-wrap gap-2">
         <button class="tabb active" data-tab="free">01 / Free AI</button>
         <button class="tabb" data-tab="rank">02 / Рейтинг</button>
-        <button class="tabb" data-tab="plans">03 / Тарифы</button>
-        <button class="tabb" data-tab="news">04 / Новинки</button>
+        <button class="tabb" data-tab="tools">03 / Инструменты</button>
+        <button class="tabb" data-tab="plans">04 / Тарифы</button>
+        <button class="tabb" data-tab="news">05 / Новинки</button>
     </nav>
 
     <!-- ================= FREE AI ================= -->
@@ -197,6 +198,16 @@
         <div class="table-wrap glass"><table><thead><tr>
             <th>#</th><th>Провайдер</th><th>Score</th><th>Работает</th><th>Каталог</th><th>Blocked</th><th>Всего</th><th>Access</th><th>Карта</th><th>Обучение</th><th>RPM</th><th>RPD</th><th>Max ctx</th><th>Avg SWE</th><th>Uptime</th><th>Лимиты</th><th>Заметка</th>
         </tr></thead><tbody id="rank-rows"></tbody></table></div>
+    </section>
+
+    <!-- ================= TOOLS ================= -->
+    <section class="tabp hidden" id="tab-tools">
+        <div class="mb-4 chartbox">
+            <div class="mono text-[9px] uppercase tracking-widest text-emerald-300">Большие бесплатные лимиты</div>
+            <div class="mt-0.5 text-lg font-extrabold text-white">Сервисы и агенты с лимитами, а не с ценой за токены</div>
+            <p class="mt-1 text-[11px] text-slate-400">Здесь ты получаешь мощные модели по подписке/аккаунту — платишь не за токены, а за тариф или не платишь вовсе. Регистрация по OAuth, без карты.</p>
+        </div>
+        <div id="tools-grid" class="grid gap-3 md:grid-cols-2 xl:grid-cols-3"></div>
     </section>
 
     <!-- ================= PLANS ================= -->
@@ -501,6 +512,25 @@ function renderRank(){
 }
 
 // ---------------- plans / news / probes
+function renderTools(){
+    $('tools-grid').innerHTML = (D.tools||[]).map(t=>`
+        <article class="card">
+            <div class="flex items-start justify-between gap-2">
+                <div class="min-w-0">
+                    <div class="text-sm font-extrabold text-white">${esc(t.n)}</div>
+                    <div class="mono text-[9px] text-slate-500 mt-0.5">${esc(t.signup)}</div>
+                </div>
+                <div class="shrink-0 text-right">
+                    <div class="mono text-sm font-bold text-emerald-300">${t.score}</div>
+                    ${t.badge?`<div class="status st-ok mt-0.5">${esc(t.badge)}</div>`:''}
+                </div>
+            </div>
+            <div class="mt-2 text-[11px] text-emerald-200"><b>Квота:</b> ${esc(t.quota)}</div>
+            <div class="mt-1 text-[10px] text-slate-300 leading-4"><b class="text-cyan-200">Модели:</b> ${esc(t.models)}</div>
+            <div class="mt-1 text-[10px] text-slate-400">ctx: <span class="tok">${esc(t.ctx)}</span></div>
+            <div class="mt-1.5 text-[10px] text-slate-400 leading-4">${esc(t.note)}</div>
+        </article>`).join('');
+}
 function renderPlans(){
     $('plans-grid').innerHTML = D.plans.map(p=>{
         const isFree = p.price==='$0';
@@ -560,7 +590,7 @@ function renderStats(){
 // ---------------- init
 renderStats(); renderColPanel(); renderHead(); renderTable();
 chartProviders(); chartScatter(); chartRadar(); chartLimits();
-renderRank(); renderPlans(); renderNews();
+renderRank(); renderTools(); renderPlans(); renderNews();
 
 const bindSel = (id,key) => $(id).addEventListener('change', e=>{ state[key]=e.target.value; renderTable(); });
 bindSel('f-prov','prov'); bindSel('f-type','type'); bindSel('f-status','status'); bindSel('f-task','task');

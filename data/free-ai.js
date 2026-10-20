@@ -167,6 +167,66 @@ window.FREE_AI_DATA = {
    "uptime": "—"
   },
   {
+   "id": "LLM7.io",
+   "access": "api",
+   "status": "working",
+   "color": "#22d3ee",
+   "limits": "free-подмножество без баланса; остальное — 402",
+   "rpm": null,
+   "rpd": null,
+   "tpd": null,
+   "card": false,
+   "training": "no",
+   "ctxCap": 262144,
+   "note": "Ключ уже есть в .env и подключён в Hermes. 67 моделей в каталоге, 7 реально бесплатны.",
+   "uptime": "96%"
+  },
+  {
+   "id": "NiloVR",
+   "access": "api",
+   "status": "working",
+   "color": "#f472b6",
+   "limits": "2 из 64 моделей доступны бесплатно",
+   "rpm": null,
+   "rpd": null,
+   "tpd": null,
+   "card": false,
+   "training": "no",
+   "ctxCap": 262144,
+   "note": "Ключ есть в .env, подключён в Hermes. nemotron-3-ultra + laguna-s-2.1 отвечают 200.",
+   "uptime": "90%"
+  },
+  {
+   "id": "B.AI",
+   "access": "api",
+   "status": "blocked",
+   "color": "#ef4444",
+   "limits": "баланс $0 → 402 на всех моделях",
+   "rpm": null,
+   "rpd": null,
+   "tpd": null,
+   "card": true,
+   "training": "no",
+   "ctxCap": 200000,
+   "note": "Ключ есть, 62 модели (Opus 5.5, Fable 5.1, Haiku 5.5, Gemini 3.8, GPT-6.1 Sol). Нужен депозит.",
+   "uptime": "—"
+  },
+  {
+   "id": "GitHub Models / Copilot",
+   "access": "oauth",
+   "status": "candidate",
+   "color": "#a78bfa",
+   "limits": "Models: 15 RPM / 150–1000 RPD. Copilot Free: 2000 completions + 50 chat/мес",
+   "rpm": 15,
+   "rpd": 500,
+   "tpd": null,
+   "card": false,
+   "training": "no",
+   "ctxCap": 128000,
+   "note": "GITHUB_TOKEN уже есть. Copilot даёт Claude/GPT/Gemini по подписке GitHub.",
+   "uptime": "99%"
+  },
+  {
    "id": "Groq",
    "access": "api",
    "status": "candidate",
@@ -825,6 +885,13 @@ window.FREE_AI_DATA = {
      "src": "api"
     },
     {
+     "p": "NiloVR",
+     "id": "nemotron-3-ultra-550b-a55b",
+     "status": "working",
+     "type": "free",
+     "src": "api"
+    },
+    {
      "p": "OpenRouter",
      "id": "nvidia/nemotron-3.5-super-vl:free",
      "status": "catalog",
@@ -879,6 +946,13 @@ window.FREE_AI_DATA = {
     {
      "p": "Nous Portal",
      "id": "poolside/laguna-s-2.1:free",
+     "status": "working",
+     "type": "free",
+     "src": "api"
+    },
+    {
+     "p": "NiloVR",
+     "id": "laguna-s-2.1",
      "status": "working",
      "type": "free",
      "src": "api"
@@ -1543,8 +1617,81 @@ window.FREE_AI_DATA = {
    ]
   },
   {
-   "id": "content-safety",
+   "id": "llm7-free",
    "rank": 28,
+   "name": "LLM7.io free subset",
+   "tasks": [
+    "Кодинг",
+    "Fast Agent",
+    "Reasoning"
+   ],
+   "family": "LLM7",
+   "ctx": 262144,
+   "out": 32768,
+   "reasoning": true,
+   "bench": {
+    "swe": 55.4,
+    "he": 82.3,
+    "aider": 58.9,
+    "livecode": 51.2,
+    "arena": null,
+    "arenaRank": null
+   },
+   "routes": [
+    {
+     "p": "LLM7.io",
+     "id": "GLM-5.3-Flash",
+     "status": "working",
+     "type": "free",
+     "src": "api"
+    },
+    {
+     "p": "LLM7.io",
+     "id": "DeepSeek-V4-Flash-0731",
+     "status": "working",
+     "type": "free",
+     "src": "api"
+    },
+    {
+     "p": "LLM7.io",
+     "id": "gpt-oss:20b",
+     "status": "working",
+     "type": "free",
+     "src": "api"
+    },
+    {
+     "p": "LLM7.io",
+     "id": "nemotron-3-nano:30b",
+     "status": "working",
+     "type": "free",
+     "src": "api"
+    },
+    {
+     "p": "LLM7.io",
+     "id": "mistral-Nemo-Instruct-2407",
+     "status": "working",
+     "type": "free",
+     "src": "api"
+    },
+    {
+     "p": "LLM7.io",
+     "id": "codestral-latest",
+     "status": "working",
+     "type": "free",
+     "src": "api"
+    },
+    {
+     "p": "LLM7.io",
+     "id": "minimax-m2.7",
+     "status": "working",
+     "type": "free",
+     "src": "api"
+    }
+   ]
+  },
+  {
+   "id": "content-safety",
+   "rank": 29,
    "name": "Content Safety / Nemotron Nano",
    "tasks": [
     "Safety",
@@ -1581,6 +1728,56 @@ window.FREE_AI_DATA = {
   }
  ],
  "plans": [
+  {
+   "name": "Nous Portal Free",
+   "price": "$0",
+   "kind": "Free tier",
+   "includes": "Все бесплатные модели Nous: LongCat 2.5, Laguna S/XS 2.1, Beam 501B, Step 3.7 Flash, Solar Mini4 + preview. Каталог портала — 248 моделей (325 с embeddings)",
+   "allowance": "50 RPM / 500K TPM. Только free-модели — платные через портал недоступны",
+   "tokens": "Без лимита токенов, но жёсткий RPM",
+   "verdict": "Наш основной Nous-маршрут. Работает в Hermes",
+   "score": 89
+  },
+  {
+   "name": "Nous Portal Plus",
+   "price": "$20/мес",
+   "kind": "Подписка",
+   "includes": "Полный каталог Portal: Kimi K2.7, GLM-5.3, MiniMax M3.1, DeepSeek V4.1, Mistral Large 4, Nemotron 3.5 + Tool Gateway",
+   "allowance": "$22 кредитов в месяц, rollover-кап $10. 400 RPM / 4M TPM",
+   "tokens": "$22 кредитов ≈ 7.3M токенов Claude Haiku 4.5",
+   "verdict": "Дешевле всех подписок при больших лимитах",
+   "score": 91
+  },
+  {
+   "name": "Nous Portal Super",
+   "price": "$100/мес",
+   "kind": "Подписка",
+   "includes": "Тот же полный каталог + Tool Gateway",
+   "allowance": "$110 кредитов, rollover-кап $50. 800 RPM / 8M TPM",
+   "tokens": "$110 ≈ 36.7M токенов Claude Haiku 4.5",
+   "verdict": "Для тяжёлых агентных прогонов",
+   "score": 84
+  },
+  {
+   "name": "Nous Portal Ultra",
+   "price": "$200/мес",
+   "kind": "Подписка",
+   "includes": "Максимальный каталог и лимиты",
+   "allowance": "$220 кредитов, rollover-кап $100. 1600 RPM / 16M TPM",
+   "tokens": "$220 ≈ 73.3M токенов Claude Haiku 4.5",
+   "verdict": "Максимум RPM в одном месте",
+   "score": 76
+  },
+  {
+   "name": "Nous PAYG (без плана)",
+   "price": "по факту",
+   "kind": "Оплата по факту",
+   "includes": "Любая модель каталога, оплата с баланса",
+   "allowance": "180 RPM / 720K TPM. Скидка 10% на Anthropic и OpenAI от публичных цен",
+   "tokens": "Оплата только за использованное",
+   "verdict": "Без месячной платы — для нерегулярного usage",
+   "score": 72
+  },
   {
    "name": "OpenCode Go",
    "price": "$10/мес",
@@ -1740,6 +1937,198 @@ window.FREE_AI_DATA = {
    "tokens": "до 1000 RPD",
    "verdict": "GITHUB_TOKEN уже есть — можно подключить",
    "score": 82
+  }
+ ],
+ "tools": [
+  {
+   "n": "Qwen Code",
+   "signup": "OAuth (Google/GitHub), без карты",
+   "quota": "2000 запросов/день · 60 RPM",
+   "models": "Qwen3-Coder-480B-A35B, Qwen3-Coder-Next, Qwen3-VL, qwen3-coder-plus, qwen3-max",
+   "ctx": "1M",
+   "note": "Крупнейший бесплатный дневной лимит среди CLI-агентов. Локально через Ollama — 0 лимитов.",
+   "score": 95,
+   "badge": "ТОП"
+  },
+  {
+   "n": "Gemini CLI",
+   "signup": "Google account, без карты",
+   "quota": "1000 запросов/день · 60 RPM",
+   "models": "Gemini 3.1 Pro (до 1M ctx), Gemini 3.8 Flash, 2.5 Pro/Flash, 2.5 Flash-Lite",
+   "ctx": "1M",
+   "note": "Официальный CLI от Google. 1000 запросов/день на аккаунт.",
+   "score": 93,
+   "badge": "ТОП"
+  },
+  {
+   "n": "Rovo Dev CLI",
+   "signup": "Atlassian account",
+   "quota": "5M токенов/день (beta)",
+   "models": "Claude Sonnet 4, GPT-5, Gemini",
+   "ctx": "200K",
+   "note": "Самый большой суточный объём токенов. Вход через Atlassian.",
+   "score": 91,
+   "badge": "ТОП"
+  },
+  {
+   "n": "Gemini Code Assist",
+   "signup": "Google account",
+   "quota": "~6000 completions/день (~180K/мес) · 240 чат-сообщений/день",
+   "models": "Gemini 3.1 Pro (2M ctx), 2.5 Pro/Flash",
+   "ctx": "2M",
+   "note": "Статус неоднозначен: для индивидуалов Google переводил на Antigravity с июня 2026. Проверяй в аккаунте.",
+   "score": 88,
+   "badge": ""
+  },
+  {
+   "n": "GitHub Copilot Free",
+   "signup": "GitHub account, бесплатно",
+   "quota": "2000 completions + 50 премиум-запросов/мес + AI credits",
+   "models": "Claude Sonnet 4.5, GPT-5.1/5-mini, Gemini 2.5 Pro",
+   "ctx": "128K",
+   "note": "GITHUB_TOKEN уже есть. В Hermes работает через ACP: hermes model (spawns local copilot --acp).",
+   "score": 87,
+   "badge": "У НАС ЕСТЬ"
+  },
+  {
+   "n": "Cursor Hobby",
+   "signup": "Email, без карты",
+   "quota": "~2000 completions + 50 slow-запросов/мес",
+   "models": "Claude Sonnet 4.5, GPT-5, Gemini 2.5 Pro, Auto (routing)",
+   "ctx": "128K",
+   "note": "Бесплатный тариф без карты. 50 запросов на Pro-модели в месяц.",
+   "score": 84,
+   "badge": ""
+  },
+  {
+   "n": "Windsurf Free",
+   "signup": "Google account, без карты",
+   "quota": "~25 Cascade agent actions/мес + unlimited Tab",
+   "models": "Cascade (Claude 4.5/4.6, GPT-5, Gemini 2.5)",
+   "ctx": "128K",
+   "note": "Бесплатно без карты, но агентных действий мало. Tab-автодополнение без лимита.",
+   "score": 79,
+   "badge": ""
+  },
+  {
+   "n": "Trae",
+   "signup": "Email, без карты",
+   "quota": "~10 fast + 50 slow запросов/мес",
+   "models": "Claude Sonnet 4.5, GPT-4o, Gemini 2.5, Auto",
+   "ctx": "128K",
+   "note": "Бесплатный тариф с 50 slow-запросами.",
+   "score": 77,
+   "badge": ""
+  },
+  {
+   "n": "Qoder",
+   "signup": "Email, без карты",
+   "quota": "Unlimited completions + 1000 кредитов пробный период (2 недели)",
+   "models": "Claude Sonnet 4.5, GPT-4o, Gemini 2.5 Pro, auto",
+   "ctx": "128K",
+   "note": "Pro $20/мес = 2000 кредитов, Pro+ $60 = 6000. Бесплатный тариф без карты.",
+   "score": 76,
+   "badge": ""
+  },
+  {
+   "n": "Kiro",
+   "signup": "AWS Builder ID",
+   "quota": "50 кредитов/мес + 50 agentic-запросов/мес",
+   "models": "Claude Sonnet 4.5, GPT-5, DeepSeek R1",
+   "ctx": "128K",
+   "note": "От AWS. Бесплатный тариф, но кредиты кончаются быстро.",
+   "score": 74,
+   "badge": ""
+  },
+  {
+   "n": "Amazon Q Developer",
+   "signup": "AWS Builder ID (или AWS CLI)",
+   "quota": "~50 agentic-запросов/мес",
+   "models": "Claude Sonnet 4.5, DeepSeek R1, Nova",
+   "ctx": "128K",
+   "note": "CLI бесплатно. Переход на Claude Opus 4.6 в AgentCore Agent Gateway.",
+   "score": 72,
+   "badge": ""
+  },
+  {
+   "n": "Warp",
+   "signup": "Email, без карты",
+   "quota": "150 кредитов в первые 2 мес, далее 75/мес",
+   "models": "Claude 4.5, GPT-5, Gemini 2.5, режим Agent",
+   "ctx": "128K",
+   "note": "Терминальный агент. Кредиты обновляются ежемесячно.",
+   "score": 70,
+   "badge": ""
+  },
+  {
+   "n": "Jules",
+   "signup": "Google account",
+   "quota": "~15 задач/день",
+   "models": "Gemini 3.1 Pro",
+   "ctx": "1M",
+   "note": "Асинхронный кодовый агент от Google. Задачи выполняются в облаке.",
+   "score": 71,
+   "badge": ""
+  },
+  {
+   "n": "Cline / Roo Code / Continue",
+   "signup": "нет — свой API-ключ",
+   "quota": "лимиты твоего провайдера, 0 оверхеда",
+   "models": "любые OpenAI-совместимые, включая бесплатные",
+   "ctx": "до 1M",
+   "note": "Локальный VS Code. Бесплатные маршруты из нашего каталога подключаются как custom provider.",
+   "score": 82,
+   "badge": "У НАС ЕСТЬ"
+  },
+  {
+   "n": "opencode / Zed / Aider",
+   "signup": "нет — свой ключ",
+   "quota": "лимиты провайдера, 0 оверхеда",
+   "models": "любые OpenAI-совместимые",
+   "ctx": "до 1M",
+   "note": "Локальные CLI/редакторы. Мы уже гоняем opencode через Hermes (zenfree).",
+   "score": 81,
+   "badge": "У НАС ЕСТЬ"
+  },
+  {
+   "n": "Ollama / LM Studio",
+   "signup": "нет — полностью локально",
+   "quota": "без лимитов, без интернета",
+   "models": "любые open-weight: Qwen3-Coder, DeepSeek, Kimi, GLM",
+   "ctx": "по VRAM",
+   "note": "Ноль в копейку и без лимитов — если хватает железа. Нужен мощный CPU/GPU.",
+   "score": 83,
+   "badge": "БЕЗ ЛИМИТОВ"
+  },
+  {
+   "n": "Supermaven",
+   "signup": "Email",
+   "quota": "бесплатный completion tier",
+   "models": "авто-комплит (70+ языков)",
+   "ctx": "н/д",
+   "note": "Только автодополнение в IDE.",
+   "score": 60,
+   "badge": ""
+  },
+  {
+   "n": "BlackBox AI",
+   "signup": "Email, без карты",
+   "quota": "бесплатные completions + 1 запрос/день к моделям",
+   "models": "Claude Sonnet, GPT-4o, Gemini",
+   "ctx": "128K",
+   "note": "Бесплатный тариф без карты.",
+   "score": 58,
+   "badge": ""
+  },
+  {
+   "n": "Poe / Perplexity / LMArena",
+   "signup": "Email / Google",
+   "quota": "по подписке, есть free-уровни",
+   "models": "большинство премиум-моделей по подписке",
+   "ctx": "разный",
+   "note": "Не API для агентов, но мощные модели по подписке без оплаты за токены.",
+   "score": 64,
+   "badge": ""
   }
  ],
  "releases": [
@@ -2398,6 +2787,99 @@ window.FREE_AI_DATA = {
    "place": 5
   },
   {
+   "id": "LLM7.io",
+   "score": 66.2,
+   "working": 7,
+   "catalog": 0,
+   "blocked": 0,
+   "total": 7,
+   "wr": 100,
+   "access": "api",
+   "color": "#22d3ee",
+   "benchAvg": 55.4,
+   "ctxCap": 262144,
+   "rpm": null,
+   "rpd": null,
+   "tpd": null,
+   "card": false,
+   "training": "no",
+   "uptime": "96%",
+   "status": "working",
+   "limits": "free-подмножество без баланса; остальное — 402",
+   "note": "Ключ уже есть в .env и подключён в Hermes. 67 моделей в каталоге, 7 реально бесплатны.",
+   "parts": {
+    "Работоспособность": 40.0,
+    "Покрытие моделей": 10.6,
+    "Контекст": 3.8,
+    "Бенчмарки": 7.9,
+    "Лимиты": 0,
+    "Доступ": 4.0
+   },
+   "place": 6
+  },
+  {
+   "id": "LLM7.io",
+   "score": 64.4,
+   "working": 7,
+   "catalog": 0,
+   "blocked": 0,
+   "total": 7,
+   "wr": 100,
+   "access": "api",
+   "color": "#22d3ee",
+   "benchAvg": 55.4,
+   "ctxCap": 131072,
+   "rpm": null,
+   "rpd": null,
+   "tpd": null,
+   "card": false,
+   "training": "no",
+   "uptime": "90%",
+   "status": "candidate",
+   "limits": "free tier",
+   "note": "5 моделей, text+code.",
+   "parts": {
+    "Работоспособность": 40.0,
+    "Покрытие моделей": 10.6,
+    "Контекст": 1.9,
+    "Бенчмарки": 7.9,
+    "Лимиты": 0,
+    "Доступ": 4.0
+   },
+   "place": 7
+  },
+  {
+   "id": "NiloVR",
+   "score": 61.5,
+   "working": 2,
+   "catalog": 0,
+   "blocked": 0,
+   "total": 2,
+   "wr": 100,
+   "access": "api",
+   "color": "#f472b6",
+   "benchAvg": 56.8,
+   "ctxCap": 262144,
+   "rpm": null,
+   "rpd": null,
+   "tpd": null,
+   "card": false,
+   "training": "no",
+   "uptime": "90%",
+   "status": "working",
+   "limits": "2 из 64 моделей доступны бесплатно",
+   "note": "Ключ есть в .env, подключён в Hermes. nemotron-3-ultra + laguna-s-2.1 отвечают 200.",
+   "parts": {
+    "Работоспособность": 40.0,
+    "Покрытие моделей": 5.7,
+    "Контекст": 3.8,
+    "Бенчмарки": 8.1,
+    "Лимиты": 0,
+    "Доступ": 4.0
+   },
+   "place": 8
+  },
+  {
    "id": "NVIDIA NIM",
    "score": 53.4,
    "working": 1,
@@ -2426,7 +2908,7 @@ window.FREE_AI_DATA = {
     "Лимиты": 6.0,
     "Доступ": 4.0
    },
-   "place": 6
+   "place": 9
   },
   {
    "id": "BeatAPI",
@@ -2457,7 +2939,7 @@ window.FREE_AI_DATA = {
     "Лимиты": 0.1,
     "Доступ": 4.0
    },
-   "place": 7
+   "place": 10
   },
   {
    "id": "OpenCode Free",
@@ -2488,7 +2970,7 @@ window.FREE_AI_DATA = {
     "Лимиты": 0,
     "Доступ": 3.5
    },
-   "place": 8
+   "place": 11
   },
   {
    "id": "OrcaRouter",
@@ -2519,7 +3001,7 @@ window.FREE_AI_DATA = {
     "Лимиты": 1.7,
     "Доступ": 0.0
    },
-   "place": 9
+   "place": 12
   },
   {
    "id": "Google AI Studio",
@@ -2550,7 +3032,7 @@ window.FREE_AI_DATA = {
     "Лимиты": 2.5,
     "Доступ": 0.0
    },
-   "place": 10
+   "place": 13
   },
   {
    "id": "Cerebras",
@@ -2581,7 +3063,7 @@ window.FREE_AI_DATA = {
     "Лимиты": 9.5,
     "Доступ": 4.0
    },
-   "place": 11
+   "place": 14
   },
   {
    "id": "Groq",
@@ -2612,7 +3094,7 @@ window.FREE_AI_DATA = {
     "Лимиты": 8.5,
     "Доступ": 4.0
    },
-   "place": 12
+   "place": 15
   },
   {
    "id": "CommandCode",
@@ -2643,7 +3125,7 @@ window.FREE_AI_DATA = {
     "Лимиты": 0,
     "Доступ": 0.0
    },
-   "place": 13
+   "place": 16
   },
   {
    "id": "Requesty",
@@ -2674,7 +3156,7 @@ window.FREE_AI_DATA = {
     "Лимиты": 3.8,
     "Доступ": 4.0
    },
-   "place": 14
+   "place": 17
   },
   {
    "id": "Cohere",
@@ -2705,7 +3187,38 @@ window.FREE_AI_DATA = {
     "Лимиты": 3.4,
     "Доступ": 4.0
    },
-   "place": 15
+   "place": 18
+  },
+  {
+   "id": "GitHub Models / Copilot",
+   "score": 9.1,
+   "working": 0,
+   "catalog": 0,
+   "blocked": 0,
+   "total": 0,
+   "wr": 0,
+   "access": "oauth",
+   "color": "#a78bfa",
+   "benchAvg": null,
+   "ctxCap": 128000,
+   "rpm": 15,
+   "rpd": 500,
+   "tpd": null,
+   "card": false,
+   "training": "no",
+   "uptime": "99%",
+   "status": "candidate",
+   "limits": "Models: 15 RPM / 150–1000 RPD. Copilot Free: 2000 completions + 50 chat/мес",
+   "note": "GITHUB_TOKEN уже есть. Copilot даёт Claude/GPT/Gemini по подписке GitHub.",
+   "parts": {
+    "Работоспособность": 0,
+    "Покрытие моделей": 0,
+    "Контекст": 1.8,
+    "Бенчмарки": 0,
+    "Лимиты": 4.2,
+    "Доступ": 3.0
+   },
+   "place": 19
   },
   {
    "id": "GitHub Models",
@@ -2736,7 +3249,7 @@ window.FREE_AI_DATA = {
     "Лимиты": 4.2,
     "Доступ": 3.0
    },
-   "place": 16
+   "place": 20
   },
   {
    "id": "SambaNova",
@@ -2767,7 +3280,7 @@ window.FREE_AI_DATA = {
     "Лимиты": 3.1,
     "Доступ": 4.0
    },
-   "place": 17
+   "place": 21
   },
   {
    "id": "OVH Cloud",
@@ -2798,7 +3311,7 @@ window.FREE_AI_DATA = {
     "Лимиты": 0.3,
     "Доступ": 5.0
    },
-   "place": 18
+   "place": 22
   },
   {
    "id": "Z AI (Zhipu)",
@@ -2829,7 +3342,7 @@ window.FREE_AI_DATA = {
     "Лимиты": 0,
     "Доступ": 4.0
    },
-   "place": 19
+   "place": 23
   },
   {
    "id": "Routeway",
@@ -2860,7 +3373,7 @@ window.FREE_AI_DATA = {
     "Лимиты": 0.8,
     "Доступ": 4.0
    },
-   "place": 20
+   "place": 24
   },
   {
    "id": "Mistral",
@@ -2891,7 +3404,7 @@ window.FREE_AI_DATA = {
     "Лимиты": 0,
     "Доступ": 4.0
    },
-   "place": 21
+   "place": 25
   },
   {
    "id": "Chutes.ai",
@@ -2922,7 +3435,7 @@ window.FREE_AI_DATA = {
     "Лимиты": 0,
     "Доступ": 4.0
    },
-   "place": 22
+   "place": 26
   },
   {
    "id": "ModelScope",
@@ -2953,38 +3466,7 @@ window.FREE_AI_DATA = {
     "Лимиты": 0,
     "Доступ": 4.0
    },
-   "place": 23
-  },
-  {
-   "id": "LLM7.io",
-   "score": 5.9,
-   "working": 0,
-   "catalog": 0,
-   "blocked": 0,
-   "total": 0,
-   "wr": 0,
-   "access": "api",
-   "color": "#22d3ee",
-   "benchAvg": null,
-   "ctxCap": 131072,
-   "rpm": null,
-   "rpd": null,
-   "tpd": null,
-   "card": false,
-   "training": "no",
-   "uptime": "90%",
-   "status": "candidate",
-   "limits": "free tier",
-   "note": "5 моделей, text+code.",
-   "parts": {
-    "Работоспособность": 0,
-    "Покрытие моделей": 0,
-    "Контекст": 1.9,
-    "Бенчмарки": 0,
-    "Лимиты": 0,
-    "Доступ": 4.0
-   },
-   "place": 24
+   "place": 27
   },
   {
    "id": "Kilo Code",
@@ -3015,7 +3497,7 @@ window.FREE_AI_DATA = {
     "Лимиты": 0,
     "Доступ": 4.0
    },
-   "place": 25
+   "place": 28
   },
   {
    "id": "OVH AI Endpoints",
@@ -3046,7 +3528,7 @@ window.FREE_AI_DATA = {
     "Лимиты": 0,
     "Доступ": 4.0
    },
-   "place": 26
+   "place": 29
   },
   {
    "id": "SiliconFlow",
@@ -3077,7 +3559,7 @@ window.FREE_AI_DATA = {
     "Лимиты": 0,
     "Доступ": 4.0
    },
-   "place": 27
+   "place": 30
   },
   {
    "id": "Cyrus Relay",
@@ -3108,7 +3590,7 @@ window.FREE_AI_DATA = {
     "Лимиты": 0,
     "Доступ": 4.0
    },
-   "place": 28
+   "place": 31
   },
   {
    "id": "AI Horde",
@@ -3139,7 +3621,7 @@ window.FREE_AI_DATA = {
     "Лимиты": 0,
     "Доступ": 5.0
    },
-   "place": 29
+   "place": 32
   },
   {
    "id": "Cloudflare Workers AI",
@@ -3170,7 +3652,7 @@ window.FREE_AI_DATA = {
     "Лимиты": 0,
     "Доступ": 4.0
    },
-   "place": 30
+   "place": 33
   },
   {
    "id": "Hugging Face",
@@ -3201,7 +3683,38 @@ window.FREE_AI_DATA = {
     "Лимиты": 0,
     "Доступ": 4.0
    },
-   "place": 31
+   "place": 34
+  },
+  {
+   "id": "B.AI",
+   "score": 2.9,
+   "working": 0,
+   "catalog": 0,
+   "blocked": 0,
+   "total": 0,
+   "wr": 0,
+   "access": "api",
+   "color": "#ef4444",
+   "benchAvg": null,
+   "ctxCap": 200000,
+   "rpm": null,
+   "rpd": null,
+   "tpd": null,
+   "card": true,
+   "training": "no",
+   "uptime": "—",
+   "status": "blocked",
+   "limits": "баланс $0 → 402 на всех моделях",
+   "note": "Ключ есть, 62 модели (Opus 5.5, Fable 5.1, Haiku 5.5, Gemini 3.8, GPT-6.1 Sol). Нужен депозит.",
+   "parts": {
+    "Работоспособность": 0,
+    "Покрытие моделей": 0,
+    "Контекст": 2.9,
+    "Бенчмарки": 0,
+    "Лимиты": 0,
+    "Доступ": 0.0
+   },
+   "place": 35
   }
  ],
  "meta": {
