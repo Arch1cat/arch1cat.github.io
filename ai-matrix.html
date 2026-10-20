@@ -227,6 +227,20 @@
         <div class="mb-4 grid gap-3 lg:grid-cols-2">
             <div class="chartbox">
                 <div class="mb-2 flex items-center justify-between gap-2">
+                    <span class="mono text-[9px] uppercase tracking-widest text-violet-300">Топ-5: разрыв к лидеру</span>
+                    <span class="mono text-[9px] text-slate-600">SWE · HumanEval · Aider</span>
+                </div>
+                <div id="chart-gaps"></div>
+            </div>
+            <div class="chartbox">
+                <div class="mb-2 mono text-[9px] uppercase tracking-widest text-amber-300">Покрытие: где какая модель сильнее</div>
+                <div id="chart-roles"></div>
+            </div>
+        </div>
+
+        <div class="mb-4 grid gap-3 lg:grid-cols-2">
+            <div class="chartbox">
+                <div class="mb-2 flex items-center justify-between gap-2">
                     <span class="mono text-[9px] uppercase tracking-widest text-emerald-300">Модели по провайдерам</span>
                     <span class="mono text-[9px] text-slate-600">working / catalog / blocked</span>
                 </div>
@@ -240,20 +254,6 @@
 
         <div class="table-wrap glass desk"><table><thead><tr id="thead"></tr></thead><tbody id="rows"></tbody></table></div>
         <div id="cards" class="mob mobonly"></div>
-
-        <div class="mt-4 grid gap-3 lg:grid-cols-2">
-            <div class="chartbox">
-                <div class="mb-2 flex items-center justify-between gap-2">
-                    <span class="mono text-[9px] uppercase tracking-widest text-violet-300">Топ-5: разрыв к лидеру</span>
-                    <span class="mono text-[9px] text-slate-600">SWE · HumanEval · Aider</span>
-                </div>
-                <div id="chart-gaps"></div>
-            </div>
-            <div class="chartbox">
-                <div class="mb-2 mono text-[9px] uppercase tracking-widest text-amber-300">Покрытие: где какая модель сильнее</div>
-                <div id="chart-roles"></div>
-            </div>
-        </div>
     </section>
 
     <!-- ================= RANKING ================= -->
