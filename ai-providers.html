@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Provider Matrix — arch1cat</title>
-    <meta name="description" content="Главная таблица бесплатных и preview AI с токенами ctx/out/reasoning И бенчмарками SWE/HumanEval/Aider/Arena. Платные, заблокированные, кандидаты — отдельными блоками.">
+    <meta name="description" content="Компактная таблица бесплатных/preview AI с токенами и бенчмарками. Настраиваемые колонки, фильтры, сортировка.">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -24,46 +24,51 @@
     <style>
         :root { color-scheme: dark; }
         * { box-sizing: border-box; }
-        body { margin: 0; background: #020904; color: #d7e7dc; font-family: Inter, sans-serif; overflow-x: hidden; }
+        body { margin: 0; background: #020904; color: #d7e7dc; font-family: Inter, sans-serif; overflow-x: hidden; font-size: 13px; }
         body::before { content: ''; position: fixed; inset: 0; pointer-events: none; z-index: -1; opacity: .6; background: radial-gradient(circle at 12% 8%, rgba(0,255,102,.14), transparent 28rem), radial-gradient(circle at 86% 20%, rgba(0,242,254,.09), transparent 26rem), linear-gradient(180deg, #020904 0%, #03100a 48%, #020904 100%); }
         .mono { font-family: 'JetBrains Mono', monospace; }
         .glass { background: rgba(5, 24, 13, .84); border: 1px solid rgba(0,255,102,.2); box-shadow: 0 14px 50px rgba(0,0,0,.2); backdrop-filter: blur(16px); }
-        .table-wrap { overflow-x: auto; border: 1px solid rgba(0,255,102,.16); border-radius: 18px; }
-        table { width: 100%; border-collapse: collapse; min-width: 1320px; }
-        thead th { position: sticky; top: 0; z-index: 10; background: rgba(7,23,13,.98); color: #8fffb2; text-align: left; font: 700 10px/1.3 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; }
-        th, td { padding: 10px 12px; border-bottom: 1px solid rgba(127,255,164,.11); vertical-align: top; }
+        .table-wrap { overflow-x: auto; border: 1px solid rgba(0,255,102,.16); border-radius: 14px; }
+        table { width: 100%; border-collapse: collapse; min-width: 900px; }
+        thead th { position: sticky; top: 0; z-index: 10; background: rgba(7,23,13,.98); color: #8fffb2; text-align: left; font: 700 9px/1.2 'JetBrains Mono', monospace; letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; padding: 6px 8px; border-bottom: 1px solid rgba(0,255,102,.2); }
+        td { padding: 6px 8px; border-bottom: 1px solid rgba(127,255,164,.08); vertical-align: top; font-size: 11px; line-height: 1.35; color: #c8d8cd; }
         tbody tr:last-child td { border-bottom: 0; }
-        tbody tr:hover { background: rgba(0,255,102,.045); }
-        td { color: #c8d8cd; font-size: 12px; line-height: 1.45; }
-        code { color: #7fffa1; font: 500 11px/1.4 'JetBrains Mono', monospace; overflow-wrap: anywhere; }
-        .status { display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; padding: 4px 8px; font: 700 10px/1 'JetBrains Mono', monospace; white-space: nowrap; }
+        tbody tr:hover { background: rgba(0,255,102,.04); }
+        code { color: #7fffa1; font: 500 10px/1.3 'JetBrains Mono', monospace; overflow-wrap: anywhere; }
+        .status { display: inline-flex; align-items: center; gap: 4px; border-radius: 999px; padding: 2px 6px; font: 700 9px/1 'JetBrains Mono', monospace; white-space: nowrap; }
         .status-ok { color: #a8ffc0; background: rgba(0,255,102,.12); border: 1px solid rgba(0,255,102,.26); }
         .status-catalog { color: #a7f8ff; background: rgba(0,242,254,.1); border: 1px solid rgba(0,242,254,.24); }
         .status-blocked { color: #ff9eb0; background: rgba(255,85,119,.11); border: 1px solid rgba(255,85,119,.26); }
         .status-inconclusive { color: #d1bdff; background: rgba(167,139,250,.12); border: 1px solid rgba(167,139,250,.26); }
-        .filter-btn { min-height: 34px; border: 1px solid rgba(0,255,102,.22); background: rgba(0,0,0,.25); color: #a4b8aa; border-radius: 10px; padding: 0 11px; font: 700 11px 'JetBrains Mono', monospace; transition: .2s ease; }
-        .filter-btn:hover, .filter-btn.active { color: #001b08; background: #00ff66; border-color: #00ff66; }
-        .copy-btn { color: #7de99a; border: 1px solid rgba(0,255,102,.2); border-radius: 7px; padding: 3px 7px; font: 700 10px 'JetBrains Mono', monospace; white-space: nowrap; }
+        .filter-select { height: 30px; border: 1px solid rgba(0,255,102,.22); background: rgba(0,0,0,.3); color: #c8d8cd; border-radius: 8px; padding: 0 8px; font: 600 11px 'JetBrains Mono', monospace; outline: none; }
+        .filter-select:focus { border-color: #00ff66; }
+        .filter-input { height: 30px; border: 1px solid rgba(0,255,102,.22); background: rgba(0,0,0,.3); color: #c8d8cd; border-radius: 8px; padding: 0 10px 0 28px; font: 500 11px Inter, sans-serif; outline: none; width: 100%; }
+        .filter-input:focus { border-color: #00ff66; }
+        .copy-btn { color: #7de99a; border: 1px solid rgba(0,255,102,.2); border-radius: 6px; padding: 2px 6px; font: 700 9px 'JetBrains Mono', monospace; white-space: nowrap; }
         .copy-btn:hover { color: #001b08; background: #00ff66; }
-        .tag { display: inline-flex; align-items: center; border-radius: 999px; padding: 3px 7px; background: rgba(255,255,255,.055); border: 1px solid rgba(255,255,255,.1); color: #b8d1bd; font: 600 10px 'JetBrains Mono', monospace; }
-        .token { font: 700 11px 'JetBrains Mono', monospace; color: #7fffa1; }
+        .tag { display: inline-flex; align-items: center; border-radius: 999px; padding: 1px 5px; background: rgba(255,255,255,.055); border: 1px solid rgba(255,255,255,.1); color: #b8d1bd; font: 600 9px 'JetBrains Mono', monospace; }
+        .token { font: 700 10px 'JetBrains Mono', monospace; color: #7fffa1; }
         .token-dim { color: #6b7f72; }
-        .provider-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
-        .reset-btn { min-height: 34px; border: 1px solid rgba(255,85,119,.3); background: rgba(255,85,119,.08); color: #ff9eb0; border-radius: 10px; padding: 0 11px; font: 700 11px 'JetBrains Mono', monospace; }
+        .provider-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 4px; }
+        .reset-btn { height: 30px; border: 1px solid rgba(255,85,119,.3); background: rgba(255,85,119,.08); color: #ff9eb0; border-radius: 8px; padding: 0 10px; font: 700 10px 'JetBrains Mono', monospace; }
         .reset-btn:hover { background: rgba(255,85,119,.18); }
-        .sort-btn { min-height: 34px; border: 1px solid rgba(0,242,254,.25); background: rgba(0,242,254,.06); color: #a7f8ff; border-radius: 10px; padding: 0 11px; font: 700 11px 'JetBrains Mono', monospace; }
+        .sort-btn { height: 30px; border: 1px solid rgba(0,242,254,.25); background: rgba(0,242,254,.06); color: #a7f8ff; border-radius: 8px; padding: 0 10px; font: 700 10px 'JetBrains Mono', monospace; }
         .sort-btn.active { background: rgba(0,242,254,.18); }
-        .entry-card { background: rgba(3,15,8,.72); border: 1px solid rgba(0,255,102,.16); border-radius: 14px; padding: 14px; }
+        .entry-card { background: rgba(3,15,8,.72); border: 1px solid rgba(0,255,102,.16); border-radius: 12px; padding: 10px; }
         .overview-mobile { display: none; }
-        .provider-pill { display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; padding: 4px 10px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); color: #c8d8cd; font: 600 11px 'JetBrains Mono', monospace; }
-        .section-title { border-left: 3px solid #00ff66; padding-left: 12px; }
+        .provider-pill { display: inline-flex; align-items: center; gap: 4px; border-radius: 999px; padding: 2px 8px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); color: #c8d8cd; font: 600 10px 'JetBrains Mono', monospace; }
+        .section-title { border-left: 3px solid #00ff66; padding-left: 10px; }
         .bench { font: 600 10px 'JetBrains Mono', monospace; color: #ffd889; }
         .bench-dim { color: #6b7f72; }
+        .col-toggle { display: inline-flex; align-items: center; gap: 6px; padding: 4px 8px; border-radius: 6px; cursor: pointer; font: 600 10px 'JetBrains Mono', monospace; color: #a4b8aa; }
+        .col-toggle:hover { background: rgba(0,255,102,.08); color: #00ff66; }
+        .col-toggle input { accent-color: #00ff66; }
+        .col-panel { position: absolute; top: 36px; right: 0; z-index: 50; background: rgba(7,23,13,.98); border: 1px solid rgba(0,255,102,.2); border-radius: 12px; padding: 10px; min-width: 180px; box-shadow: 0 14px 50px rgba(0,0,0,.4); }
         @media (max-width: 760px) {
-            th, td { padding: 9px; }
-            .hero-title { font-size: 2rem; }
-            .table-wrap table { min-width: 1320px; }
-            .overview-mobile { display: grid; gap: 12px; }
+            th, td { padding: 5px 6px; }
+            .hero-title { font-size: 1.8rem; }
+            .table-wrap table { min-width: 900px; }
+            .overview-mobile { display: grid; gap: 8px; }
             .desktop-only { display: none; }
         }
         @media (min-width: 761px) { .mobile-only { display: none; } }
@@ -71,110 +76,111 @@
 </head>
 <body>
     <header class="sticky top-0 z-50 border-b border-emerald-400/20 bg-[#020904]/90 backdrop-blur-xl">
-        <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
-            <a href="index.html" class="flex min-w-0 items-center gap-3">
-                <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-tr from-green-500 to-cyan-400 text-lg text-black shadow-lg shadow-emerald-500/20"><i class="fa-solid fa-cat"></i></span>
-                <span class="min-w-0"><span class="block truncate font-extrabold tracking-widest text-white">ARCH1CAT</span><span class="block truncate mono text-[10px] text-emerald-300">AI PROVIDER MATRIX</span></span>
+        <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-2 sm:px-6">
+            <a href="index.html" class="flex min-w-0 items-center gap-2">
+                <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-tr from-green-500 to-cyan-400 text-sm text-black shadow-lg shadow-emerald-500/20"><i class="fa-solid fa-cat"></i></span>
+                <span class="min-w-0"><span class="block truncate font-extrabold tracking-widest text-white text-sm">ARCH1CAT</span><span class="block truncate mono text-[9px] text-emerald-300">AI PROVIDER MATRIX</span></span>
             </a>
-            <a href="index.html" class="shrink-0 rounded-xl border border-emerald-400/25 px-3 py-2 mono text-[11px] font-bold text-emerald-200 transition hover:border-emerald-300 hover:bg-emerald-400/10"><i class="fa-solid fa-arrow-left mr-1"></i>Portfolio</a>
+            <a href="index.html" class="shrink-0 rounded-lg border border-emerald-400/25 px-2.5 py-1.5 mono text-[10px] font-bold text-emerald-200 transition hover:border-emerald-300 hover:bg-emerald-400/10"><i class="fa-solid fa-arrow-left mr-1"></i>Portfolio</a>
         </div>
     </header>
 
-    <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12">
-        <section class="mb-6 grid gap-6 lg:grid-cols-[1fr_340px] lg:items-end">
+    <main class="mx-auto max-w-7xl px-4 py-6 sm:px-6">
+        <section class="mb-4 grid gap-4 lg:grid-cols-[1fr_300px] lg:items-end">
             <div>
-                <div class="mb-4 inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1.5 mono text-[10px] font-bold uppercase tracking-[.18em] text-emerald-300"><span class="h-2 w-2 rounded-full bg-emerald-300 shadow-[0_0_12px_#00ff66]"></span>Snapshot: 20 Oct 2026 · v5 benchmarks</div>
-                <h1 class="hero-title mb-4 max-w-4xl text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-6xl">Free AI Provider<br><span class="bg-gradient-to-r from-emerald-300 via-cyan-300 to-violet-300 bg-clip-text text-transparent">Matrix</span></h1>
-                <p class="max-w-3xl text-base leading-7 text-slate-300">Главная таблица — только бесплатные и preview AI. С токенами ctx/out/reasoning И бенчмарками SWE/HumanEval/Aider/Arena. Платные, заблокированные, кандидаты — отдельными блоками. 6 free-провайдеров, 15 семейств, 60+ routes.</p>
+                <div class="mb-2 inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-2.5 py-1 mono text-[9px] font-bold uppercase tracking-[.18em] text-emerald-300"><span class="h-1.5 w-1.5 rounded-full bg-emerald-300 shadow-[0_0_12px_#00ff66]"></span>Snapshot: 20 Oct 2026 · v6 compact</div>
+                <h1 class="hero-title mb-2 max-w-4xl text-3xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl">Free AI Provider <span class="bg-gradient-to-r from-emerald-300 via-cyan-300 to-violet-300 bg-clip-text text-transparent">Matrix</span></h1>
+                <p class="max-w-3xl text-sm leading-6 text-slate-300">Компактная таблица бесплатных/preview AI. Токены ctx/out/reasoning + бенчмарки SWE/HE/Aider. Настраиваемые колонки. 6 free-провайдеров, 15 семейств, 60+ routes.</p>
             </div>
-            <div class="glass rounded-2xl p-4 text-sm">
-                <div class="mb-3 mono text-[10px] font-bold uppercase tracking-widest text-emerald-300">Legend</div>
-                <div class="flex flex-wrap gap-2"><span class="status status-ok">WORKING</span><span class="status status-catalog">CATALOG</span><span class="status status-blocked">BLOCKED</span><span class="status status-inconclusive">INCONCLUSIVE</span></div>
-                <p class="mt-3 text-xs leading-5 text-slate-400"><span class="mono text-emerald-300">ctx</span>=входной контекст · <span class="mono text-emerald-300">out</span>=max output · <span class="mono text-emerald-300">R</span>=reasoning · <span class="mono text-amber-300">SWE</span>=SWE-bench Verified</p>
+            <div class="glass rounded-xl p-3 text-xs">
+                <div class="mb-2 mono text-[9px] font-bold uppercase tracking-widest text-emerald-300">Legend</div>
+                <div class="flex flex-wrap gap-1.5"><span class="status status-ok">WORKING</span><span class="status status-catalog">CATALOG</span><span class="status status-blocked">BLOCKED</span><span class="status status-inconclusive">INCONCLUSIVE</span></div>
+                <p class="mt-2 text-[10px] leading-4 text-slate-400"><span class="mono text-emerald-300">ctx</span>=вход · <span class="mono text-emerald-300">out</span>=max output · <span class="mono text-emerald-300">R</span>=reasoning · <span class="mono text-amber-300">SWE</span>=SWE-bench Verified</p>
             </div>
         </section>
 
-        <div class="mb-4 flex flex-wrap items-center gap-2">
-            <span id="stats" class="mono text-[11px] text-slate-400"></span>
-            <button id="reset" class="reset-btn ml-auto">Сбросить фильтры</button>
+        <div class="mb-3 flex flex-wrap items-center gap-2">
+            <span id="stats" class="mono text-[10px] text-slate-400"></span>
+            <div class="relative ml-auto">
+                <button id="col-toggle-btn" class="reset-btn" style="border-color:rgba(0,242,254,.3);background:rgba(0,242,254,.06);color:#a7f8ff;"><i class="fa-solid fa-columns mr-1"></i>Колонки</button>
+                <div id="col-panel" class="col-panel hidden"></div>
+            </div>
+            <button id="reset" class="reset-btn">Сбросить</button>
         </div>
 
-        <div class="glass mb-4 rounded-2xl p-3">
-            <div class="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-                <label class="relative block min-w-0 flex-1"><i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-emerald-300"></i><input id="search" type="search" placeholder="Ищи модель, провайдера, exact ID, задачу, benchmark..." class="h-10 w-full rounded-xl border border-emerald-400/20 bg-black/25 pl-9 pr-3 text-sm text-white outline-none placeholder:text-slate-500 focus:border-emerald-300"></label>
-                <div class="flex flex-wrap gap-2" id="provider-filters"></div>
+        <div class="glass mb-3 rounded-xl p-2.5">
+            <div class="grid grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-8">
+                <div class="relative col-span-2 sm:col-span-2 lg:col-span-2">
+                    <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-1/2 -translate-y-1/2 text-emerald-300 text-[10px]"></i>
+                    <input id="search" type="search" placeholder="Поиск..." class="filter-input">
+                </div>
+                <select id="f-provider" class="filter-select"></select>
+                <select id="f-type" class="filter-select"></select>
+                <select id="f-status" class="filter-select"></select>
+                <select id="f-task" class="filter-select"></select>
+                <select id="f-ctx" class="filter-select"></select>
+                <select id="f-bench" class="filter-select"></select>
             </div>
-            <div class="mt-3 flex flex-wrap gap-2" id="type-filters"></div>
-            <div class="mt-3 flex flex-wrap gap-2" id="status-filters"></div>
-            <div class="mt-3 flex flex-wrap gap-2" id="task-filters"></div>
-            <div class="mt-3 flex flex-wrap gap-2" id="ctx-filters"></div>
-            <div class="mt-3 flex flex-wrap gap-2" id="reasoning-filters"></div>
-            <div class="mt-3 flex flex-wrap gap-2" id="bench-filters"></div>
-            <div class="mt-3 flex flex-wrap gap-2 items-center">
-                <span class="mono text-[10px] uppercase text-slate-500">Сортировка:</span>
-                <button class="sort-btn active" data-sort="rank">По rank</button>
-                <button class="sort-btn" data-sort="ctx">По ctx ↓</button>
-                <button class="sort-btn" data-sort="swe">По SWE ↓</button>
-                <button class="sort-btn" data-sort="provider">По провайдеру</button>
-                <button class="sort-btn" data-sort="status">По статусу</button>
+            <div class="mt-2 flex flex-wrap items-center gap-2">
+                <select id="f-reasoning" class="filter-select"></select>
+                <select id="f-sort" class="filter-select">
+                    <option value="rank">Сортировка: rank</option>
+                    <option value="ctx">Сортировка: ctx ↓</option>
+                    <option value="swe">Сортировка: SWE ↓</option>
+                    <option value="provider">Сортировка: провайдер</option>
+                    <option value="status">Сортировка: статус</option>
+                </select>
+                <span id="filter-count" class="mono text-[9px] text-slate-500 ml-auto"></span>
             </div>
         </div>
 
-        <div class="table-wrap glass desktop-only"><table><thead><tr>
-            <th>#</th><th>AI / сила</th><th>Задачи</th><th>Benchmark</th><th>ctx</th><th>out</th><th>R</th><th>SWE</th><th>HE</th><th>Aider</th><th>Provider</th><th>Exact ID</th><th>Status</th><th>Limit</th>
-        </tr></thead><tbody id="model-matrix"></tbody></table></div>
+        <div class="table-wrap glass desktop-only"><table><thead><tr id="thead-row"></tr></thead><tbody id="model-matrix"></tbody></table></div>
         <div id="model-cards" class="mobile-only overview-mobile"></div>
 
-        <!-- Benchmark comparison -->
-        <section class="mt-12">
-            <div class="section-title mb-4"><div class="mono text-[10px] uppercase tracking-widest text-amber-300">Benchmarks</div><h2 class="mt-1 text-2xl font-extrabold text-white">Сравнение бенчмарков</h2><p class="mt-2 text-sm text-slate-400">SWE-bench Verified / HumanEval / Aider Polyglot / LiveCodeBench / WebDev Arena. Источники: Arena, SWE-bench leaderboard, Aider.</p></div>
-            <div class="table-wrap glass"><table><thead><tr><th>AI / семейство</th><th>SWE-bench</th><th>HumanEval</th><th>Aider Polyglot</th><th>LiveCodeBench</th><th>WebDev Arena</th><th>Verdict</th></tr></thead><tbody id="bench-table"></tbody></table></div>
+        <section class="mt-8">
+            <div class="section-title mb-3"><div class="mono text-[9px] uppercase tracking-widest text-amber-300">Benchmarks</div><h2 class="mt-0.5 text-lg font-extrabold text-white">Сравнение бенчмарков</h2></div>
+            <div class="table-wrap glass"><table><thead><tr><th>AI / семейство</th><th>SWE</th><th>HE</th><th>Aider</th><th>LiveCode</th><th>Arena</th><th>Verdict</th></tr></thead><tbody id="bench-table"></tbody></table></div>
         </section>
 
-        <!-- Paid plans -->
-        <section class="mt-12">
-            <div class="section-title mb-4"><div class="mono text-[10px] uppercase tracking-widest text-amber-300">Paid plans</div><h2 class="mt-1 text-2xl font-extrabold text-white">Платные тарифы (не основное)</h2><p class="mt-2 text-sm text-slate-400">Отдельный блок. Платные модели не в главной таблице.</p></div>
+        <section class="mt-8">
+            <div class="section-title mb-3"><div class="mono text-[9px] uppercase tracking-widest text-amber-300">Paid plans</div><h2 class="mt-0.5 text-lg font-extrabold text-white">Платные тарифы</h2></div>
             <div class="table-wrap glass"><table><thead><tr><th>План</th><th>Цена</th><th>Что получаешь</th><th>Лимиты</th><th>Вердикт</th></tr></thead><tbody id="paid-table"></tbody></table></div>
         </section>
 
-        <!-- Blocked -->
-        <section class="mt-12">
-            <div class="section-title mb-4"><div class="mono text-[10px] uppercase tracking-widest text-rose-300">Blocked / needs account</div><h2 class="mt-1 text-2xl font-extrabold text-white">Заблокированные провайдеры</h2><p class="mt-2 text-sm text-slate-400">Что нужно для разблокировки.</p></div>
+        <section class="mt-8">
+            <div class="section-title mb-3"><div class="mono text-[9px] uppercase tracking-widest text-rose-300">Blocked</div><h2 class="mt-0.5 text-lg font-extrabold text-white">Заблокированные</h2></div>
             <div class="table-wrap glass"><table><thead><tr><th>Провайдер</th><th>Причина</th><th>Что нужно</th><th>Модели</th></tr></thead><tbody id="blocked-table"></tbody></table></div>
         </section>
 
-        <!-- New candidates -->
-        <section class="mt-12">
-            <div class="section-title mb-4"><div class="mono text-[10px] uppercase tracking-widest text-cyan-300">New candidates</div><h2 class="mt-1 text-2xl font-extrabold text-white">Новые кандидаты для подключения</h2><p class="mt-2 text-sm text-slate-400">Не подключены в нашем Hermes. Что нужно для старта.</p></div>
+        <section class="mt-8">
+            <div class="section-title mb-3"><div class="mono text-[9px] uppercase tracking-widest text-cyan-300">Candidates</div><h2 class="mt-0.5 text-lg font-extrabold text-white">Новые кандидаты</h2></div>
             <div class="table-wrap glass"><table><thead><tr><th>Провайдер</th><th>Модели</th><th>Free limits</th><th>Что нужно</th><th>Вердикт</th></tr></thead><tbody id="candidates-table"></tbody></table></div>
         </section>
 
-        <!-- Budget & Verified -->
-        <section class="mt-12 grid gap-5 lg:grid-cols-2">
+        <section class="mt-8 grid gap-4 lg:grid-cols-2">
             <div>
-                <div class="mb-4"><div class="mono text-[10px] uppercase tracking-widest text-amber-300">Budget</div><h2 class="mt-1 text-2xl font-extrabold text-white">Что взять за $0–30</h2></div>
+                <div class="mb-3"><div class="mono text-[9px] uppercase tracking-widest text-amber-300">Budget</div><h2 class="mt-0.5 text-lg font-extrabold text-white">Что взять за $0–30</h2></div>
                 <div class="table-wrap glass"><table><thead><tr><th>Бюджет</th><th>Вариант</th><th>Что получаешь</th><th>Ограничение</th></tr></thead><tbody id="budget-table"></tbody></table></div>
             </div>
             <div>
-                <div class="mb-4"><div class="mono text-[10px] uppercase tracking-widest text-rose-300">Verified</div><h2 class="mt-1 text-2xl font-extrabold text-white">Что реально проверено</h2></div>
+                <div class="mb-3"><div class="mono text-[9px] uppercase tracking-widest text-rose-300">Verified</div><h2 class="mt-0.5 text-lg font-extrabold text-white">Что проверено</h2></div>
                 <div class="table-wrap glass"><table><thead><tr><th>Маршрут</th><th>Результат</th><th>Как понимать</th></tr></thead><tbody id="test-table"></tbody></table></div>
             </div>
         </section>
 
-        <section class="recommend mt-10 rounded-2xl p-5 sm:p-6">
-            <div class="mono text-[10px] uppercase tracking-widest text-emerald-300">Final routing</div>
-            <h2 class="mt-2 text-2xl font-extrabold text-white">Что использовать каждый день</h2>
-            <div class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                <div><div class="mono text-[10px] text-slate-500">PRIMARY</div><code class="mt-1 block text-sm">freebuff/deepseek/deepseek-v4.1-flash</code></div>
-                <div><div class="mono text-[10px] text-slate-500">API FALLBACK</div><code class="mt-1 block text-sm">poolside/laguna-s-2.1:free</code></div>
-                <div><div class="mono text-[10px] text-slate-500">FAST</div><code class="mt-1 block text-sm">nvidia/nemotron-3.5-lightning-30b-a3b</code></div>
-                <div><div class="mono text-[10px] text-slate-500">STEALTH</div><code class="mt-1 block text-sm">freebuff/stealth/space-bunny-alpha</code></div>
+        <section class="recommend mt-8 rounded-xl p-4">
+            <div class="mono text-[9px] uppercase tracking-widest text-emerald-300">Final routing</div>
+            <h2 class="mt-1 text-lg font-extrabold text-white">Что использовать каждый день</h2>
+            <div class="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+                <div><div class="mono text-[9px] text-slate-500">PRIMARY</div><code class="mt-0.5 block text-xs">freebuff/deepseek/deepseek-v4.1-flash</code></div>
+                <div><div class="mono text-[9px] text-slate-500">API FALLBACK</div><code class="mt-0.5 block text-xs">poolside/laguna-s-2.1:free</code></div>
+                <div><div class="mono text-[9px] text-slate-500">FAST</div><code class="mt-0.5 block text-xs">nvidia/nemotron-3.5-lightning-30b-a3b</code></div>
+                <div><div class="mono text-[9px] text-slate-500">STEALTH</div><code class="mt-0.5 block text-xs">freebuff/stealth/space-bunny-alpha</code></div>
             </div>
-            <p class="mt-5 max-w-4xl text-sm leading-6 text-slate-300">Если нужен долгий стабильный coding за небольшие деньги — OpenCode Go за $10/month с DeepSeek V4.1 Flash. Если строго бесплатно — Freebuff DeepSeek + OpenRouter Laguna + NVIDIA Lightning + native OpenCode Free.</p>
         </section>
     </main>
 
-    <footer class="border-t border-emerald-400/15 py-8"><div class="mx-auto flex max-w-7xl flex-col gap-3 px-4 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between sm:px-6"><span class="mono">ARCH1CAT // AI PROVIDER MATRIX</span><a href="index.html" class="text-emerald-300 hover:text-white">← Back to portfolio</a></div></footer>
+    <footer class="border-t border-emerald-400/15 py-4"><div class="mx-auto flex max-w-7xl flex-col gap-2 px-4 text-[10px] text-slate-500 sm:flex-row sm:items-center sm:justify-between sm:px-6"><span class="mono">ARCH1CAT // AI PROVIDER MATRIX</span><a href="index.html" class="text-emerald-300 hover:text-white">← Back to portfolio</a></div></footer>
 
     <script>
         const providers = [
@@ -329,36 +335,62 @@
         const providerColor = { Nous: '#a78bfa', OpenRouter: '#00f2fe', 'OpenCode Free': '#00ff66', 'NVIDIA NIM': '#76b900', Freebuff: '#00ff66', BeatAPI: '#00f2fe' };
 
         const providerNames = ['Все', ...providers.map((p) => p.id)];
-        const typeNames = ['Все типы', 'Free', 'Preview', 'Stealth'];
-        const statusNames = ['Все статусы', 'Working', 'Catalog', 'Blocked', 'Inconclusive'];
-        const taskNames = ['Все задачи', 'Кодинг', 'Reasoning', 'UI', 'Vision', 'Fast Agent', 'Stealth', 'Long Context', 'Архитектура', 'Planning', 'Patch', 'Multilingual', 'Deep Review', 'Tools', 'Refactor', 'CRM/UI', 'Audio', 'Experiment', 'Large Codebase', 'Big Codebase'];
-        const ctxNames = ['Любой ctx', '≥32K', '≥128K', '≥256K', '≥1M'];
-        const reasoningNames = ['Любой', 'Reasoning: да', 'Reasoning: нет'];
-        const benchNames = ['Любой bench', 'SWE ≥60%', 'SWE ≥65%', 'HumanEval ≥85%', 'Arena top-5', 'Нет бенчмарков'];
-        let state = { search: '', provider: 'Все', type: 'Все типы', status: 'Все статусы', task: 'Все задачи', ctx: 'Любой ctx', reasoning: 'Любой', bench: 'Любой bench', sort: 'rank' };
+        const typeNames = ['Все', 'Free', 'Preview', 'Stealth'];
+        const statusNames = ['Все', 'Working', 'Catalog', 'Blocked', 'Inconclusive'];
+        const taskNames = ['Все', 'Кодинг', 'Reasoning', 'UI', 'Vision', 'Fast Agent', 'Stealth', 'Long Context', 'Архитектура', 'Planning', 'Patch', 'Multilingual', 'Deep Review', 'Tools', 'Refactor', 'CRM/UI', 'Audio', 'Experiment', 'Large Codebase', 'Big Codebase'];
+        const ctxNames = ['Любой', '≥32K', '≥128K', '≥256K', '≥1M'];
+        const reasoningNames = ['Любой', 'R: да', 'R: нет'];
+        const benchNames = ['Любой', 'SWE≥60', 'SWE≥65', 'HE≥85', 'Arena top', 'Нет bench'];
 
-        const providerFilters = document.getElementById('provider-filters');
-        const typeFilters = document.getElementById('type-filters');
-        const statusFilters = document.getElementById('status-filters');
-        const taskFilters = document.getElementById('task-filters');
-        const ctxFilters = document.getElementById('ctx-filters');
-        const reasoningFilters = document.getElementById('reasoning-filters');
-        const benchFilters = document.getElementById('bench-filters');
+        let state = { search: '', provider: 'Все', type: 'Все', status: 'Все', task: 'Все', ctx: 'Любой', reasoning: 'Любой', bench: 'Любой', sort: 'rank' };
 
-        const renderFilters = () => {
-            providerFilters.innerHTML = providerNames.map((name) => `<button type="button" class="filter-btn ${state.provider === name ? 'active' : ''}" data-provider="${escapeHtml(name)}">${escapeHtml(name)}</button>`).join('');
-            typeFilters.innerHTML = typeNames.map((name) => `<button type="button" class="filter-btn ${state.type === name ? 'active' : ''}" data-type="${escapeHtml(name)}">${escapeHtml(name)}</button>`).join('');
-            statusFilters.innerHTML = statusNames.map((name) => `<button type="button" class="filter-btn ${state.status === name ? 'active' : ''}" data-status="${escapeHtml(name)}">${escapeHtml(name)}</button>`).join('');
-            taskFilters.innerHTML = taskNames.map((name) => `<button type="button" class="filter-btn ${state.task === name ? 'active' : ''}" data-task="${escapeHtml(name)}">${escapeHtml(name)}</button>`).join('');
-            ctxFilters.innerHTML = ctxNames.map((name) => `<button type="button" class="filter-btn ${state.ctx === name ? 'active' : ''}" data-ctx="${escapeHtml(name)}">${escapeHtml(name)}</button>`).join('');
-            reasoningFilters.innerHTML = reasoningNames.map((name) => `<button type="button" class="filter-btn ${state.reasoning === name ? 'active' : ''}" data-reasoning="${escapeHtml(name)}">${escapeHtml(name)}</button>`).join('');
-            benchFilters.innerHTML = benchNames.map((name) => `<button type="button" class="filter-btn ${state.bench === name ? 'active' : ''}" data-bench="${escapeHtml(name)}">${escapeHtml(name)}</button>`).join('');
+        const COLUMNS = [
+            { key: 'rank', label: '#', default: true },
+            { key: 'family', label: 'AI / сила', default: true },
+            { key: 'tasks', label: 'Задачи', default: false },
+            { key: 'benchmark', label: 'Benchmark', default: false },
+            { key: 'ctx', label: 'ctx', default: true },
+            { key: 'out', label: 'out', default: true },
+            { key: 'r', label: 'R', default: true },
+            { key: 'swe', label: 'SWE', default: true },
+            { key: 'he', label: 'HE', default: false },
+            { key: 'aider', label: 'Aider', default: false },
+            { key: 'provider', label: 'Provider', default: true },
+            { key: 'id', label: 'Exact ID', default: true },
+            { key: 'status', label: 'Status', default: true },
+            { key: 'limit', label: 'Limit', default: false },
+        ];
+
+        const colState = {};
+        COLUMNS.forEach((c) => { colState[c.key] = (localStorage.getItem('col_' + c.key) === null) ? c.default : localStorage.getItem('col_' + c.key) === '1'; });
+
+        const saveColState = () => { COLUMNS.forEach((c) => localStorage.setItem('col_' + c.key, colState[c.key] ? '1' : '0')); };
+
+        const renderColumnPanel = () => {
+            document.getElementById('col-panel').innerHTML = '<div class="mono text-[9px] uppercase text-emerald-300 mb-2">Колонки</div>' + COLUMNS.map((c) => `<label class="col-toggle"><input type="checkbox" ${colState[c.key] ? 'checked' : ''} data-col="${c.key}"> ${c.label}</label>`).join('');
+            document.getElementById('col-panel').querySelectorAll('input[data-col]').forEach((cb) => {
+                cb.addEventListener('change', (e) => { colState[e.target.dataset.col] = e.target.checked; saveColState(); renderModels(); renderHeader(); });
+            });
         };
 
-        const ctxThreshold = (label) => ({ 'Любой ctx': 0, '≥32K': 32000, '≥128K': 128000, '≥256K': 256000, '≥1M': 1000000 }[label] || 0);
+        const renderHeader = () => {
+            const visible = COLUMNS.filter((c) => colState[c.key]);
+            document.getElementById('thead-row').innerHTML = visible.map((c) => `<th>${c.label}</th>`).join('');
+        };
+
+        const populateSelects = () => {
+            const fill = (id, opts) => { document.getElementById(id).innerHTML = opts.map((o) => `<option value="${escapeHtml(o)}">${escapeHtml(o)}</option>`).join(''); };
+            fill('f-provider', providerNames);
+            fill('f-type', typeNames);
+            fill('f-status', statusNames);
+            fill('f-task', taskNames);
+            fill('f-ctx', ctxNames);
+            fill('f-bench', benchNames);
+            fill('f-reasoning', reasoningNames);
+        };
 
         const matchesType = (entry, type) => {
-            if (type === 'Все типы') return true;
+            if (type === 'Все') return true;
             if (type === 'Free') return entry.kind === 'free';
             if (type === 'Preview') return entry.kind === 'preview';
             if (type === 'Stealth') return entry.family.toLowerCase().includes('stealth') || entry.family.toLowerCase().includes('space bunny') || entry.family.toLowerCase().includes('beam') || entry.family.toLowerCase().includes('ox alpha');
@@ -368,12 +400,12 @@
         const matchesBench = (entry, bench) => {
             const b = entry.bench || {};
             const swe = b.swe;
-            if (bench === 'Любой bench') return true;
-            if (bench === 'SWE ≥60%') return swe != null && swe >= 60;
-            if (bench === 'SWE ≥65%') return swe != null && swe >= 65;
-            if (bench === 'HumanEval ≥85%') return b.he != null && b.he >= 85;
-            if (bench === 'Arena top-5') return b.arenaRank != null && (b.arenaRank.includes('open #') || b.arenaRank.includes('agent #'));
-            if (bench === 'Нет бенчмарков') return swe == null;
+            if (bench === 'Любой') return true;
+            if (bench === 'SWE≥60') return swe != null && swe >= 60;
+            if (bench === 'SWE≥65') return swe != null && swe >= 65;
+            if (bench === 'HE≥85') return b.he != null && b.he >= 85;
+            if (bench === 'Arena top') return b.arenaRank != null;
+            if (bench === 'Нет bench') return swe == null;
             return true;
         };
 
@@ -382,10 +414,10 @@
             const searchOk = !state.search || haystack.includes(state.search.toLowerCase());
             const providerOk = state.provider === 'Все' || entry.provider === state.provider;
             const typeOk = matchesType(entry, state.type);
-            const statusOk = state.status === 'Все статусы' || entry.status === state.status.toLowerCase();
-            const taskOk = state.task === 'Все задачи' || entry.tasks.includes(state.task);
-            const ctxOk = (entry.ctx || 0) >= ctxThreshold(state.ctx);
-            const reasoningOk = state.reasoning === 'Любой' || (state.reasoning === 'Reasoning: да' ? entry.reasoning : !entry.reasoning);
+            const statusOk = state.status === 'Все' || entry.status === state.status.toLowerCase();
+            const taskOk = state.task === 'Все' || entry.tasks.includes(state.task);
+            const ctxOk = (entry.ctx || 0) >= ({ 'Любой': 0, '≥32K': 32000, '≥128K': 128000, '≥256K': 256000, '≥1M': 1000000 }[state.ctx] || 0);
+            const reasoningOk = state.reasoning === 'Любой' || (state.reasoning === 'R: да' ? entry.reasoning : !entry.reasoning);
             const benchOk = matchesBench(entry, state.bench);
             return searchOk && providerOk && typeOk && statusOk && taskOk && ctxOk && reasoningOk && benchOk;
         };
@@ -400,84 +432,100 @@
             return copy;
         };
 
+        const cell = (entry, key) => {
+            const color = providerColor[entry.provider] || '#00ff66';
+            const b = entry.bench || {};
+            switch (key) {
+                case 'rank': return `<td class="mono text-emerald-300">${entry.rank}</td>`;
+                case 'family': return `<td><strong class="block text-white text-[11px]">${escapeHtml(entry.family)}</strong><span class="block text-[9px] text-slate-400 mt-0.5">${escapeHtml(entry.strength)}</span></td>`;
+                case 'tasks': return `<td><div class="flex flex-wrap gap-0.5">${entry.tasks.map((t) => `<span class="tag">${escapeHtml(t)}</span>`).join('')}</div></td>`;
+                case 'benchmark': return `<td class="text-[10px] text-cyan-100">${escapeHtml(entry.benchmark)}</td>`;
+                case 'ctx': return `<td class="token">${fmt(entry.ctx)}</td>`;
+                case 'out': return `<td class="token">${fmt(entry.out)}</td>`;
+                case 'r': return `<td>${reasoningBadge(entry.reasoning)}</td>`;
+                case 'swe': return `<td class="bench">${fmtBench(b.swe)}</td>`;
+                case 'he': return `<td class="bench">${fmtBench(b.he)}</td>`;
+                case 'aider': return `<td class="bench">${fmtBench(b.aider)}</td>`;
+                case 'provider': return `<td><span class="provider-pill"><span class="provider-dot" style="background:${color}"></span>${escapeHtml(entry.provider)}</span></td>`;
+                case 'id': return `<td><div class="space-y-0.5"><code>${escapeHtml(entry.id)}</code><div class="text-[9px] text-slate-500">${escapeHtml(entry.note)}</div></div></td>`;
+                case 'status': return `<td>${statusBadge(entry.status)}</td>`;
+                case 'limit': return `<td><div class="text-[9px] text-slate-400">${escapeHtml(entry.limit)}</div></td>`;
+                default: return '<td></td>';
+            }
+        };
+
         const renderModels = () => {
             const visible = sortEntries(entries.filter(matchesEntry));
             const total = entries.length;
             const freeCount = entries.filter((e) => e.kind === 'free').length;
             const previewCount = entries.filter((e) => e.kind === 'preview').length;
             const workingCount = entries.filter((e) => e.status === 'working').length;
-            const blockedCount = entries.filter((e) => e.status === 'blocked').length;
-            document.getElementById('stats').textContent = `${visible.length} / ${total} free/preview routes · ${freeCount} free · ${previewCount} preview · ${workingCount} working · ${blockedCount} blocked`;
+            document.getElementById('stats').textContent = `${visible.length}/${total} routes · ${freeCount} free · ${previewCount} preview · ${workingCount} working`;
+            document.getElementById('filter-count').textContent = `${visible.length} shown`;
 
-            const rows = visible.map((entry) => {
-                const color = providerColor[entry.provider] || '#00ff66';
-                const b = entry.bench || {};
-                return `<tr>
-                    <td class="mono text-emerald-300">${entry.rank}</td>
-                    <td><strong class="block text-white">${escapeHtml(entry.family)}</strong><span class="mt-1 block text-xs text-slate-400">${escapeHtml(entry.strength)}</span></td>
-                    <td><div class="flex flex-wrap gap-1">${entry.tasks.map((task) => `<span class="tag">${escapeHtml(task)}</span>`).join('')}</div></td>
-                    <td class="text-xs text-cyan-100">${escapeHtml(entry.benchmark)}</td>
-                    <td class="token">${fmt(entry.ctx)}</td>
-                    <td class="token">${fmt(entry.out)}</td>
-                    <td>${reasoningBadge(entry.reasoning)}</td>
-                    <td class="bench">${fmtBench(b.swe)}</td>
-                    <td class="bench">${fmtBench(b.he)}</td>
-                    <td class="bench">${fmtBench(b.aider)}</td>
-                    <td><span class="provider-pill"><span class="provider-dot" style="background:${color}"></span>${escapeHtml(entry.provider)}</span></td>
-                    <td><div class="space-y-1.5"><code>${escapeHtml(entry.id)}</code><div class="text-[10px] text-slate-500">${escapeHtml(entry.note)}</div></div></td>
-                    <td>${statusBadge(entry.status)}</td>
-                    <td><div class="text-[10px] text-slate-400">${escapeHtml(entry.limit)}</div></td>
-                </tr>`;
-            }).join('');
-            document.getElementById('model-matrix').innerHTML = rows || '<tr><td colspan="14" class="py-8 text-center text-slate-400">Ничего не найдено. Очисти фильтр.</td></tr>';
+            const visibleCols = COLUMNS.filter((c) => colState[c.key]);
+            const rows = visible.map((entry) => `<tr>${visibleCols.map((c) => cell(entry, c.key)).join('')}</tr>`).join('');
+            document.getElementById('model-matrix').innerHTML = rows || '<tr><td colspan="14" class="py-4 text-center text-slate-400 text-xs">Ничего не найдено.</td></tr>';
 
             document.getElementById('model-cards').innerHTML = visible.map((entry) => {
                 const color = providerColor[entry.provider] || '#00ff66';
                 const b = entry.bench || {};
                 return `<article class="entry-card">
-                    <div class="flex items-start justify-between gap-3"><div><h3 class="font-extrabold text-white">${escapeHtml(entry.family)}</h3><div class="mono text-[10px] text-slate-500">${escapeHtml(entry.provider)} · rank ${entry.rank}</div></div>${kindBadge(entry.kind)} ${statusBadge(entry.status)}</div>
-                    <div class="mt-2 text-xs text-emerald-100">${escapeHtml(entry.strength)}</div>
-                    <div class="mt-2 flex flex-wrap gap-1">${entry.tasks.map((task) => `<span class="tag">${escapeHtml(task)}</span>`).join('')}</div>
-                    <div class="mt-3 text-xs text-cyan-100">${escapeHtml(entry.benchmark)}</div>
-                    <div class="mt-3 grid grid-cols-3 gap-2 text-xs"><div><span class="mono text-[10px] text-slate-500">ctx</span><div class="token">${fmt(entry.ctx)}</div></div><div><span class="mono text-[10px] text-slate-500">out</span><div class="token">${fmt(entry.out)}</div></div><div><span class="mono text-[10px] text-slate-500">reasoning</span><div>${reasoningBadge(entry.reasoning)}</div></div></div>
-                    <div class="mt-3 grid grid-cols-4 gap-2 text-xs"><div><span class="mono text-[10px] text-slate-500">SWE</span><div class="bench">${fmtBench(b.swe)}</div></div><div><span class="mono text-[10px] text-slate-500">HE</span><div class="bench">${fmtBench(b.he)}</div></div><div><span class="mono text-[10px] text-slate-500">Aider</span><div class="bench">${fmtBench(b.aider)}</div></div><div><span class="mono text-[10px] text-slate-500">Arena</span><div class="bench">${b.arena ? b.arena : '—'}</div></div></div>
-                    <div class="mt-3"><code class="block">${escapeHtml(entry.id)}</code></div>
-                    <div class="mt-2 text-[10px] text-slate-500">${escapeHtml(entry.note)} · ${escapeHtml(entry.limit)}</div>
-                    <button class="copy-btn mt-3" data-copy="${escapeHtml(entry.id)}">copy ID</button>
+                    <div class="flex items-start justify-between gap-2"><div><h3 class="font-bold text-white text-xs">${escapeHtml(entry.family)}</h3><div class="mono text-[9px] text-slate-500">${escapeHtml(entry.provider)} · #${entry.rank}</div></div>${kindBadge(entry.kind)} ${statusBadge(entry.status)}</div>
+                    <div class="mt-1 text-[10px] text-emerald-100">${escapeHtml(entry.strength)}</div>
+                    <div class="mt-1 flex flex-wrap gap-0.5">${entry.tasks.map((t) => `<span class="tag">${escapeHtml(t)}</span>`).join('')}</div>
+                    <div class="mt-2 grid grid-cols-4 gap-1 text-[10px]"><div><span class="mono text-[9px] text-slate-500">ctx</span><div class="token">${fmt(entry.ctx)}</div></div><div><span class="mono text-[9px] text-slate-500">out</span><div class="token">${fmt(entry.out)}</div></div><div><span class="mono text-[9px] text-slate-500">SWE</span><div class="bench">${fmtBench(b.swe)}</div></div><div><span class="mono text-[9px] text-slate-500">HE</span><div class="bench">${fmtBench(b.he)}</div></div></div>
+                    <div class="mt-2"><code class="block text-[9px]">${escapeHtml(entry.id)}</code></div>
+                    <div class="mt-1 text-[9px] text-slate-500">${escapeHtml(entry.note)}</div>
+                    <button class="copy-btn mt-1.5" data-copy="${escapeHtml(entry.id)}">copy</button>
                 </article>`;
-            }).join('') || '<div class="text-slate-400">Ничего не найдено.</div>';
+            }).join('') || '<div class="text-slate-400 text-xs">Ничего не найдено.</div>';
         };
 
-        providerFilters.addEventListener('click', (event) => { const button = event.target.closest('[data-provider]'); if (!button) return; state.provider = button.dataset.provider; renderFilters(); renderModels(); });
-        typeFilters.addEventListener('click', (event) => { const button = event.target.closest('[data-type]'); if (!button) return; state.type = button.dataset.type; renderFilters(); renderModels(); });
-        statusFilters.addEventListener('click', (event) => { const button = event.target.closest('[data-status]'); if (!button) return; state.status = button.dataset.status; renderFilters(); renderModels(); });
-        taskFilters.addEventListener('click', (event) => { const button = event.target.closest('[data-task]'); if (!button) return; state.task = button.dataset.task; renderFilters(); renderModels(); });
-        ctxFilters.addEventListener('click', (event) => { const button = event.target.closest('[data-ctx]'); if (!button) return; state.ctx = button.dataset.ctx; renderFilters(); renderModels(); });
-        reasoningFilters.addEventListener('click', (event) => { const button = event.target.closest('[data-reasoning]'); if (!button) return; state.reasoning = button.dataset.reasoning; renderFilters(); renderModels(); });
-        benchFilters.addEventListener('click', (event) => { const button = event.target.closest('[data-bench]'); if (!button) return; state.bench = button.dataset.bench; renderFilters(); renderModels(); });
-        document.getElementById('search').addEventListener('input', (event) => { state.search = event.target.value.trim(); renderModels(); });
-        document.getElementById('reset').addEventListener('click', () => { state = { search: '', provider: 'Все', type: 'Все типы', status: 'Все статусы', task: 'Все задачи', ctx: 'Любой ctx', reasoning: 'Любой', bench: 'Любой bench', sort: state.sort }; document.getElementById('search').value = ''; renderFilters(); renderModels(); });
-        document.querySelectorAll('[data-sort]').forEach((button) => {
-            button.addEventListener('click', () => {
-                document.querySelectorAll('[data-sort]').forEach((item) => item.classList.remove('active'));
-                button.classList.add('active');
-                state.sort = button.dataset.sort;
+        const bindFilters = () => {
+            const bind = (id, key) => { const el = document.getElementById(id); el.addEventListener('change', (e) => { state[key] = e.target.value; renderModels(); }); };
+            bind('f-provider', 'provider'); bind('f-type', 'type'); bind('f-status', 'status'); bind('f-task', 'task'); bind('f-ctx', 'ctx'); bind('f-bench', 'bench'); bind('f-reasoning', 'reasoning');
+            document.getElementById('search').addEventListener('input', (e) => { state.search = e.target.value.trim(); renderModels(); });
+            document.getElementById('f-sort').addEventListener('change', (e) => { state.sort = e.target.value; renderModels(); });
+            document.getElementById('reset').addEventListener('click', () => {
+                state = { search: '', provider: 'Все', type: 'Все', status: 'Все', task: 'Все', ctx: 'Любой', reasoning: 'Любой', bench: 'Любой', sort: 'rank' };
+                document.getElementById('search').value = '';
+                document.getElementById('f-provider').value = 'Все';
+                document.getElementById('f-type').value = 'Все';
+                document.getElementById('f-status').value = 'Все';
+                document.getElementById('f-task').value = 'Все';
+                document.getElementById('f-ctx').value = 'Любой';
+                document.getElementById('f-bench').value = 'Любой';
+                document.getElementById('f-reasoning').value = 'Любой';
+                document.getElementById('f-sort').value = 'rank';
                 renderModels();
             });
-        });
-        renderFilters(); renderModels();
+            document.getElementById('col-toggle-btn').addEventListener('click', (e) => {
+                e.stopPropagation();
+                document.getElementById('col-panel').classList.toggle('hidden');
+            });
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('#col-panel') && !e.target.closest('#col-toggle-btn')) document.getElementById('col-panel').classList.add('hidden');
+            });
+        };
+
+        populateSelects();
+        renderColumnPanel();
+        renderHeader();
+        bindFilters();
+        renderModels();
 
         document.getElementById('bench-table').innerHTML = modelFamilies.map((f) => {
             const b = f.bench || {};
             const verdict = b.swe == null ? 'Нет публичных бенчмарков (stealth/preview)' : (b.swe >= 65 ? 'Сильная coding-модель' : b.swe >= 60 ? 'Хороший баланс' : 'Слабее топов, но бесплатная');
-            return `<tr><td><strong class="text-white">${escapeHtml(f.name)}</strong></td><td class="bench">${fmtBench(b.swe)}</td><td class="bench">${fmtBench(b.he)}</td><td class="bench">${fmtBench(b.aider)}</td><td class="bench">${fmtBench(b.livecode)}</td><td class="bench">${b.arena ? b.arena + (b.arenaRank ? ' · ' + b.arenaRank : '') : '—'}</td><td class="text-slate-400">${escapeHtml(verdict)}</td></tr>`;
+            return `<tr><td><strong class="text-white text-[11px]">${escapeHtml(f.name)}</strong></td><td class="bench">${fmtBench(b.swe)}</td><td class="bench">${fmtBench(b.he)}</td><td class="bench">${fmtBench(b.aider)}</td><td class="bench">${fmtBench(b.livecode)}</td><td class="bench">${b.arena ? b.arena + (b.arenaRank ? ' · ' + b.arenaRank : '') : '—'}</td><td class="text-slate-400 text-[10px]">${escapeHtml(verdict)}</td></tr>`;
         }).join('');
 
-        document.getElementById('paid-table').innerHTML = paidPlans.map((row) => `<tr><td class="mono font-bold text-amber-300">${escapeHtml(row[0])}</td><td class="mono text-white">${escapeHtml(row[1])}</td><td>${escapeHtml(row[2])}</td><td class="text-slate-400">${escapeHtml(row[3])}</td><td class="text-slate-400">${escapeHtml(row[4])}</td></tr>`).join('');
-        document.getElementById('blocked-table').innerHTML = blocked.map((row) => `<tr><td class="mono font-bold text-rose-300">${escapeHtml(row[0])}</td><td>${escapeHtml(row[1])}</td><td>${escapeHtml(row[2])}</td><td class="text-slate-400">${escapeHtml(row[3])}</td></tr>`).join('');
-        document.getElementById('candidates-table').innerHTML = candidates.map((row) => `<tr><td class="mono font-bold text-cyan-300">${escapeHtml(row[0])}</td><td>${escapeHtml(row[1])}</td><td>${escapeHtml(row[2])}</td><td class="text-slate-400">${escapeHtml(row[3])}</td><td class="text-slate-400">${escapeHtml(row[4])}</td></tr>`).join('');
-        document.getElementById('budget-table').innerHTML = budgets.map((row) => `<tr><td class="mono font-bold text-emerald-300">${escapeHtml(row[0])}</td><td><strong class="text-white">${escapeHtml(row[1])}</strong></td><td>${escapeHtml(row[2])}</td><td class="text-slate-400">${escapeHtml(row[3])}</td></tr>`).join('');
-        document.getElementById('test-table').innerHTML = tests.map((row) => `<tr><td class="mono text-slate-200">${escapeHtml(row[0])}</td><td>${row[1]}</td><td>${row[2].replaceAll('`', '<code>').replace(/<code>(.*?)<code>/g, '<code>$1</code>')}</td></tr>`).join('');
+        document.getElementById('paid-table').innerHTML = paidPlans.map((row) => `<tr><td class="mono font-bold text-amber-300 text-[11px]">${escapeHtml(row[0])}</td><td class="mono text-white text-[11px]">${escapeHtml(row[1])}</td><td class="text-[11px]">${escapeHtml(row[2])}</td><td class="text-slate-400 text-[10px]">${escapeHtml(row[3])}</td><td class="text-slate-400 text-[10px]">${escapeHtml(row[4])}</td></tr>`).join('');
+        document.getElementById('blocked-table').innerHTML = blocked.map((row) => `<tr><td class="mono font-bold text-rose-300 text-[11px]">${escapeHtml(row[0])}</td><td class="text-[11px]">${escapeHtml(row[1])}</td><td class="text-[11px]">${escapeHtml(row[2])}</td><td class="text-slate-400 text-[10px]">${escapeHtml(row[3])}</td></tr>`).join('');
+        document.getElementById('candidates-table').innerHTML = candidates.map((row) => `<tr><td class="mono font-bold text-cyan-300 text-[11px]">${escapeHtml(row[0])}</td><td class="text-[11px]">${escapeHtml(row[1])}</td><td class="text-[11px]">${escapeHtml(row[2])}</td><td class="text-slate-400 text-[10px]">${escapeHtml(row[3])}</td><td class="text-slate-400 text-[10px]">${escapeHtml(row[4])}</td></tr>`).join('');
+        document.getElementById('budget-table').innerHTML = budgets.map((row) => `<tr><td class="mono font-bold text-emerald-300 text-[11px]">${escapeHtml(row[0])}</td><td><strong class="text-white text-[11px]">${escapeHtml(row[1])}</strong></td><td class="text-[11px]">${escapeHtml(row[2])}</td><td class="text-slate-400 text-[10px]">${escapeHtml(row[3])}</td></tr>`).join('');
+        document.getElementById('test-table').innerHTML = tests.map((row) => `<tr><td class="mono text-slate-200 text-[11px]">${escapeHtml(row[0])}</td><td>${row[1]}</td><td class="text-[10px]">${row[2].replaceAll('`', '<code>').replace(/<code>(.*?)<code>/g, '<code>$1</code>')}</td></tr>`).join('');
 
         document.addEventListener('click', async (event) => {
             const button = event.target.closest('[data-copy]');
@@ -488,6 +536,8 @@
             }
             const original = button.textContent; button.textContent = 'copied'; setTimeout(() => { button.textContent = original; }, 1200);
         });
+
+        populateSelects();
     </script>
 </body>
 </html>
