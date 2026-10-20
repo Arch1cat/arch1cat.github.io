@@ -609,7 +609,7 @@ function renderPresets(){
     $('presets').innerHTML = (D.presets||[]).map(p=>{
         const active = Object.entries(p.f).every(([k,v]) => state[k] === v);
         return `<button class="preset ${active?'active':''}" data-preset="${p.id}">${esc(p.label)}</button>`;
-    }).join('') + `<button class="preset" data-preset="group">${state.group?'Разгруппировать':'Группировать по модели'}</button>`;
+    }).join('') + `<button class="preset ${state.group?'active':''}" data-preset="group">${state.group?'Разгруппировать':'Группировать по модели'}</button>`;
     $('presets').querySelectorAll('[data-preset]').forEach(b=>b.addEventListener('click',()=>{
         const id = b.dataset.preset;
         if (id === 'group') { state.group = !state.group; saveState(); renderColPanel(); renderTable(); return; }
