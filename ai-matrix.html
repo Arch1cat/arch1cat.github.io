@@ -325,7 +325,7 @@
     </div>
 </footer>
 
-<script src="data/free-ai.js"></script>
+<script src="data/free-ai.js?v=10"></script>
 <script>
 const D = window.FREE_AI_DATA;
 const $ = (id) => document.getElementById(id);
@@ -374,14 +374,25 @@ const saveCols = () => COLS.forEach(c => localStorage.setItem('fc_'+c.k, colStat
 const STATUS_ORDER = { working: 0, catalog: 1, paid: 2, inconclusive: 3, blocked: 4 };
 const TYPE_ORDER = { free: 0, preview: 1, stealth: 2, paid: 3 };
 const SRC_ORDER = { noauth: 0, local: 1, api: 2, oauth: 3 };
+// null-safe numeric compare: missing values always last, regardless of direction
+const cmpNum = (a, b) => {
+    const av = (a === null || a === undefined || Number.isNaN(a)) ? -Infinity : a;
+    const bv = (b === null || b === undefined || Number.isNaN(b)) ? -Infinity : b;
+    if (av === bv) return 0;
+    if (av === -Infinity) return 1;   // missing -> last
+    if (bv === -Infinity) return -1;
+    return av - bv;                   // natural ascending
+};
 const FIELD = {
     rank: r => r.rank, fam: r => r.family, prov: r => r.p, id: r => r.id,
     status: r => STATUS_ORDER[r.status] ?? 9, type: r => TYPE_ORDER[r.type] ?? 9,
     src: r => SRC_ORDER[r.src] ?? 9, ctx: r => r.ctx || 0, out: r => r.out || 0,
-    reason: r => r.reasoning ? 1 : 0, swe: r => r.bench.swe ?? -1,
-    he: r => r.bench.he ?? -1, aider: r => r.bench.aider ?? -1,
+    reason: r => r.reasoning ? 1 : 0, swe: r => r.bench.swe ?? null,
+    he: r => r.bench.he ?? null, aider: r => r.bench.aider ?? null,
     tasks: r => r.tasks.join(','), bench: r => r.bench.arenaRank || '',
 };
+// every comparator is NATURAL ASCENDING; state.dir decides whether to reverse.
+// numeric columns default to dir='desc' (biggest first), semantic columns to 'asc' (working first)
 const SORTER = {
     rank: (a, b) => a.rank - b.rank || a.p.localeCompare(b.p),
     fam: (a, b) => a.family.localeCompare(b.family) || a.rank - b.rank,
@@ -390,30 +401,35 @@ const SORTER = {
     status: (a, b) => (STATUS_ORDER[a.status] ?? 9) - (STATUS_ORDER[b.status] ?? 9) || a.rank - b.rank,
     type: (a, b) => (TYPE_ORDER[a.type] ?? 9) - (TYPE_ORDER[b.type] ?? 9) || a.rank - b.rank,
     src: (a, b) => (SRC_ORDER[a.src] ?? 9) - (SRC_ORDER[b.src] ?? 9) || a.rank - b.rank,
-    ctx: (a, b) => (b.ctx || 0) - (a.ctx || 0),
-    out: (a, b) => (b.out || 0) - (a.out || 0),
-    reason: (a, b) => (b.reasoning ? 1 : 0) - (a.reasoning ? 1 : 0),
-    swe: (a, b) => (b.bench.swe ?? -1) - (a.bench.swe ?? -1),
-    he: (a, b) => (b.bench.he ?? -1) - (a.bench.he ?? -1),
-    aider: (a, b) => (b.bench.aider ?? -1) - (a.bench.aider ?? -1),
+    ctx: (a, b) => cmpNum(a.ctx || 0, b.ctx || 0),
+    out: (a, b) => cmpNum(a.out || 0, b.out || 0),
+    reason: (a, b) => (a.reasoning ? 1 : 0) - (b.reasoning ? 1 : 0),
+    swe: (a, b) => cmpNum(a.bench.swe, b.bench.swe),
+    he: (a, b) => cmpNum(a.bench.he, b.bench.he),
+    aider: (a, b) => cmpNum(a.bench.aider, b.bench.aider),
     tasks: (a, b) => a.tasks.join(',').localeCompare(b.tasks.join(',')),
     bench: (a, b) => (a.bench.arenaRank || '').localeCompare(b.bench.arenaRank || ''),
 };
+const NUMERIC_COLS = ['ctx','out','swe','he','aider','rank'];
+const defaultDir = key => NUMERIC_COLS.includes(key) ? 'desc' : 'asc';
 
 let state = { q:'', prov:'Все', type:'Все', status:'Все', task:'Все', src:'Все', ctx:'Любой ctx',
-              reason:'Любой', bench:'Любой', sort:'rank', dir:'desc', radarMode:'spread', group:false };
+              reason:'Любой', bench:'Любой', sort:'rank', dir:'asc', radarMode:'spread', group:false };
 
 const FILTER_KEYS = { prov:'f-prov', type:'f-type', status:'f-status', task:'f-task',
                       src:'f-src', ctx:'f-ctx', bench:'f-bench', reason:'f-reason' };
 const FILTER_LABEL = { prov:'Провайдер', type:'Тип', status:'Статус', task:'Задача',
                        src:'Источник', ctx:'Контекст', bench:'Качество', reason:'Reasoning' };
 const DEFAULTS = { prov:'Все', type:'Все', status:'Все', task:'Все', src:'Все', ctx:'Любой ctx', reason:'Любой', bench:'Любой' };
-const saveState = () => { try { localStorage.setItem('matrix_state', JSON.stringify({
+const saveState = () => { try { localStorage.setItem('matrix_state_v10', JSON.stringify({
     q:state.q, prov:state.prov, type:state.type, status:state.status, task:state.task, src:state.src,
     ctx:state.ctx, reason:state.reason, bench:state.bench, sort:state.sort, dir:state.dir,
     radarMode:state.radarMode, group:state.group })); } catch(e){} };
-const loadState = () => { try { const s = JSON.parse(localStorage.getItem('matrix_state')||'null');
-    if (s) Object.assign(state, s); } catch(e){} };
+const loadState = () => { try { const s = JSON.parse(localStorage.getItem('matrix_state_v10')||'null');
+    if (s && SORTER[s.sort]) { Object.assign(state, s);
+        if (!['asc','desc'].includes(state.dir)) state.dir = defaultDir(state.sort);
+        if (!['spread','relative','raw'].includes(state.radarMode)) state.radarMode = 'spread';
+    } } catch(e){} };
 
 // ---------------- filters
 const fill = (el, opts) => el.innerHTML = opts.map(o=>`<option value="${esc(o)}">${esc(o)}</option>`).join('');
@@ -451,7 +467,7 @@ const match = r => {
 const sorter = (list) => { const c=[...list];
     const fn = SORTER[state.sort] || SORTER.rank;
     c.sort((a,b)=> fn(a,b));
-    if (state.dir === 'asc') c.reverse();
+    if (state.dir === 'desc') c.reverse();   // comparators are natural ASC; desc flips
     return c; };
 
 // ---------------- column panel
@@ -469,13 +485,15 @@ function renderHead(){
     $('thead').innerHTML = cols.map(c=>{
         const active = state.sort === c.sort;
         const arrow = active ? (state.dir === 'desc' ? '▼' : '▲') : '◆';
-        return `<th class="sortable ${active?'sorted':''}" data-sort="${c.sort}" ${active?`aria-sort="${state.dir==='desc'?'descending':'ascending'}"`:''} title="Сортировать по ${esc(c.l)}">${esc(c.l)}<span class="sarrow">${arrow}</span></th>`;
+        const a = active ? (state.dir==='desc' ? 'descending' : 'ascending') : 'none';
+        return `<th class="sortable ${active?'sorted':''}" data-sort="${c.sort}" aria-sort="${a}" title="Сортировать по ${esc(c.l)}">${esc(c.l)}<span class="sarrow">${arrow}</span></th>`;
     }).join('');
     $('thead').querySelectorAll('th.sortable').forEach(th=>th.addEventListener('click',()=>{
         const key = th.dataset.sort;
         if (state.sort === key) state.dir = state.dir === 'desc' ? 'asc' : 'desc';
-        else { state.sort = key; state.dir = ['ctx','out','swe','he','aider','rank'].includes(key) ? 'desc' : 'asc'; }
-        $('f-sort').value = ['ctx','out','swe'].includes(key) ? key : 'rank';
+        else { state.sort = key; state.dir = defaultDir(key); }
+        const selMap = { ctx:'ctx', out:'out', swe:'swe', rank:'rank' };
+        $('f-sort').value = selMap[key] || 'rank';
         saveState(); renderHead(); renderTable();
     }));
 }
