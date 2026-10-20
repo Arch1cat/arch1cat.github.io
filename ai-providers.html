@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Provider Matrix — arch1cat</title>
-    <meta name="description" content="Главная таблица бесплатных и preview AI с токенами ctx/out/reasoning. Платные планы, заблокированные провайдеры и новые кандидаты — отдельными блоками.">
+    <meta name="description" content="Главная таблица бесплатных и preview AI с токенами ctx/out/reasoning И бенчмарками SWE/HumanEval/Aider/Arena. Платные, заблокированные, кандидаты — отдельными блоками.">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -29,7 +29,7 @@
         .mono { font-family: 'JetBrains Mono', monospace; }
         .glass { background: rgba(5, 24, 13, .84); border: 1px solid rgba(0,255,102,.2); box-shadow: 0 14px 50px rgba(0,0,0,.2); backdrop-filter: blur(16px); }
         .table-wrap { overflow-x: auto; border: 1px solid rgba(0,255,102,.16); border-radius: 18px; }
-        table { width: 100%; border-collapse: collapse; min-width: 1200px; }
+        table { width: 100%; border-collapse: collapse; min-width: 1320px; }
         thead th { position: sticky; top: 0; z-index: 10; background: rgba(7,23,13,.98); color: #8fffb2; text-align: left; font: 700 10px/1.3 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; }
         th, td { padding: 10px 12px; border-bottom: 1px solid rgba(127,255,164,.11); vertical-align: top; }
         tbody tr:last-child td { border-bottom: 0; }
@@ -39,7 +39,6 @@
         .status { display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; padding: 4px 8px; font: 700 10px/1 'JetBrains Mono', monospace; white-space: nowrap; }
         .status-ok { color: #a8ffc0; background: rgba(0,255,102,.12); border: 1px solid rgba(0,255,102,.26); }
         .status-catalog { color: #a7f8ff; background: rgba(0,242,254,.1); border: 1px solid rgba(0,242,254,.24); }
-        .status-paid { color: #ffd889; background: rgba(255,200,87,.12); border: 1px solid rgba(255,200,87,.27); }
         .status-blocked { color: #ff9eb0; background: rgba(255,85,119,.11); border: 1px solid rgba(255,85,119,.26); }
         .status-inconclusive { color: #d1bdff; background: rgba(167,139,250,.12); border: 1px solid rgba(167,139,250,.26); }
         .filter-btn { min-height: 34px; border: 1px solid rgba(0,255,102,.22); background: rgba(0,0,0,.25); color: #a4b8aa; border-radius: 10px; padding: 0 11px; font: 700 11px 'JetBrains Mono', monospace; transition: .2s ease; }
@@ -58,10 +57,12 @@
         .overview-mobile { display: none; }
         .provider-pill { display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; padding: 4px 10px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); color: #c8d8cd; font: 600 11px 'JetBrains Mono', monospace; }
         .section-title { border-left: 3px solid #00ff66; padding-left: 12px; }
+        .bench { font: 600 10px 'JetBrains Mono', monospace; color: #ffd889; }
+        .bench-dim { color: #6b7f72; }
         @media (max-width: 760px) {
             th, td { padding: 9px; }
             .hero-title { font-size: 2rem; }
-            .table-wrap table { min-width: 1200px; }
+            .table-wrap table { min-width: 1320px; }
             .overview-mobile { display: grid; gap: 12px; }
             .desktop-only { display: none; }
         }
@@ -82,14 +83,14 @@
     <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12">
         <section class="mb-6 grid gap-6 lg:grid-cols-[1fr_340px] lg:items-end">
             <div>
-                <div class="mb-4 inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1.5 mono text-[10px] font-bold uppercase tracking-[.18em] text-emerald-300"><span class="h-2 w-2 rounded-full bg-emerald-300 shadow-[0_0_12px_#00ff66]"></span>Snapshot: 20 Oct 2026 · v4 free-first</div>
+                <div class="mb-4 inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1.5 mono text-[10px] font-bold uppercase tracking-[.18em] text-emerald-300"><span class="h-2 w-2 rounded-full bg-emerald-300 shadow-[0_0_12px_#00ff66]"></span>Snapshot: 20 Oct 2026 · v5 benchmarks</div>
                 <h1 class="hero-title mb-4 max-w-4xl text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-6xl">Free AI Provider<br><span class="bg-gradient-to-r from-emerald-300 via-cyan-300 to-violet-300 bg-clip-text text-transparent">Matrix</span></h1>
-                <p class="max-w-3xl text-base leading-7 text-slate-300">Главная таблица — только бесплатные и preview AI. Платные планы, заблокированные провайдеры и новые кандидаты — отдельными блоками ниже. 11 free-провайдеров, 16 семейств, 70+ free/preview routes.</p>
+                <p class="max-w-3xl text-base leading-7 text-slate-300">Главная таблица — только бесплатные и preview AI. С токенами ctx/out/reasoning И бенчмарками SWE/HumanEval/Aider/Arena. Платные, заблокированные, кандидаты — отдельными блоками. 6 free-провайдеров, 15 семейств, 60+ routes.</p>
             </div>
             <div class="glass rounded-2xl p-4 text-sm">
                 <div class="mb-3 mono text-[10px] font-bold uppercase tracking-widest text-emerald-300">Legend</div>
                 <div class="flex flex-wrap gap-2"><span class="status status-ok">WORKING</span><span class="status status-catalog">CATALOG</span><span class="status status-blocked">BLOCKED</span><span class="status status-inconclusive">INCONCLUSIVE</span></div>
-                <p class="mt-3 text-xs leading-5 text-slate-400"><span class="mono text-emerald-300">ctx</span>=входной контекст · <span class="mono text-emerald-300">out</span>=max output · <span class="mono text-emerald-300">R</span>=reasoning tokens</p>
+                <p class="mt-3 text-xs leading-5 text-slate-400"><span class="mono text-emerald-300">ctx</span>=входной контекст · <span class="mono text-emerald-300">out</span>=max output · <span class="mono text-emerald-300">R</span>=reasoning · <span class="mono text-amber-300">SWE</span>=SWE-bench Verified</p>
             </div>
         </section>
 
@@ -100,7 +101,7 @@
 
         <div class="glass mb-4 rounded-2xl p-3">
             <div class="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-                <label class="relative block min-w-0 flex-1"><i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-emerald-300"></i><input id="search" type="search" placeholder="Ищи модель, провайдера, exact ID, задачу..." class="h-10 w-full rounded-xl border border-emerald-400/20 bg-black/25 pl-9 pr-3 text-sm text-white outline-none placeholder:text-slate-500 focus:border-emerald-300"></label>
+                <label class="relative block min-w-0 flex-1"><i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-emerald-300"></i><input id="search" type="search" placeholder="Ищи модель, провайдера, exact ID, задачу, benchmark..." class="h-10 w-full rounded-xl border border-emerald-400/20 bg-black/25 pl-9 pr-3 text-sm text-white outline-none placeholder:text-slate-500 focus:border-emerald-300"></label>
                 <div class="flex flex-wrap gap-2" id="provider-filters"></div>
             </div>
             <div class="mt-3 flex flex-wrap gap-2" id="type-filters"></div>
@@ -108,19 +109,27 @@
             <div class="mt-3 flex flex-wrap gap-2" id="task-filters"></div>
             <div class="mt-3 flex flex-wrap gap-2" id="ctx-filters"></div>
             <div class="mt-3 flex flex-wrap gap-2" id="reasoning-filters"></div>
+            <div class="mt-3 flex flex-wrap gap-2" id="bench-filters"></div>
             <div class="mt-3 flex flex-wrap gap-2 items-center">
                 <span class="mono text-[10px] uppercase text-slate-500">Сортировка:</span>
                 <button class="sort-btn active" data-sort="rank">По rank</button>
                 <button class="sort-btn" data-sort="ctx">По ctx ↓</button>
+                <button class="sort-btn" data-sort="swe">По SWE ↓</button>
                 <button class="sort-btn" data-sort="provider">По провайдеру</button>
                 <button class="sort-btn" data-sort="status">По статусу</button>
             </div>
         </div>
 
         <div class="table-wrap glass desktop-only"><table><thead><tr>
-            <th>#</th><th>AI / сила</th><th>Задачи</th><th>Benchmark</th><th>ctx</th><th>out</th><th>R</th><th>Provider</th><th>Exact ID</th><th>Status</th><th>Limit</th>
+            <th>#</th><th>AI / сила</th><th>Задачи</th><th>Benchmark</th><th>ctx</th><th>out</th><th>R</th><th>SWE</th><th>HE</th><th>Aider</th><th>Provider</th><th>Exact ID</th><th>Status</th><th>Limit</th>
         </tr></thead><tbody id="model-matrix"></tbody></table></div>
         <div id="model-cards" class="mobile-only overview-mobile"></div>
+
+        <!-- Benchmark comparison -->
+        <section class="mt-12">
+            <div class="section-title mb-4"><div class="mono text-[10px] uppercase tracking-widest text-amber-300">Benchmarks</div><h2 class="mt-1 text-2xl font-extrabold text-white">Сравнение бенчмарков</h2><p class="mt-2 text-sm text-slate-400">SWE-bench Verified / HumanEval / Aider Polyglot / LiveCodeBench / WebDev Arena. Источники: Arena, SWE-bench leaderboard, Aider.</p></div>
+            <div class="table-wrap glass"><table><thead><tr><th>AI / семейство</th><th>SWE-bench</th><th>HumanEval</th><th>Aider Polyglot</th><th>LiveCodeBench</th><th>WebDev Arena</th><th>Verdict</th></tr></thead><tbody id="bench-table"></tbody></table></div>
+        </section>
 
         <!-- Paid plans -->
         <section class="mt-12">
@@ -178,74 +187,77 @@
         ];
 
         const modelFamilies = [
-            { rank: 1, name: 'DeepSeek V4.1 Flash 1017', aliases: ['deepseek v4.1', '1017'], tasks: ['Кодинг', 'Reasoning', 'Tools', 'Vision'], benchmark: 'WebDev 1664 · open №1 · Agent ~№4', strength: 'Лучший общий coding-agent', ctx: 200000, out: 32000, reasoning: true, rpm: 20, rpd: 50, entries: [
+            { rank: 1, name: 'DeepSeek V4.1 Flash 1017', aliases: ['deepseek v4.1', '1017'], tasks: ['Кодинг', 'Reasoning', 'Tools', 'Vision'], benchmark: 'WebDev 1664 · open №1 · Agent ~№4', strength: 'Лучший общий coding-agent', ctx: 200000, out: 32000, reasoning: true, rpm: 20, rpd: 50, bench: { swe: 67.4, he: 89.2, aider: 71.3, livecode: 62.1, arena: 1664, arenaRank: 'open #1' }, entries: [
                 { provider: 'Freebuff', id: 'freebuff/deepseek/deepseek-v4.1-flash', status: 'working', kind: 'free', ctx: 200000, out: 32000, reasoning: true, note: 'Основной бесплатный маршрут' },
                 { provider: 'BeatAPI', id: 'deepseek-v4.1-flash-free', status: 'working', kind: 'free', ctx: 262144, out: 32768, reasoning: true, note: 'Emergency fallback' },
                 { provider: 'OpenCode Free', id: 'opencode/deepseek-v4.1-flash-free', status: 'catalog', kind: 'free', ctx: 200000, out: 32000, reasoning: true, note: 'Только native OpenCode' },
                 { provider: 'NVIDIA NIM', id: 'deepseek-ai/deepseek-v4.1-flash', status: 'catalog', kind: 'free', ctx: 128000, out: 8192, reasoning: true, note: 'NIM endpoint' }
             ], limit: 'Freebuff/BeatAPI доступны; OpenCode Free 200K ctx / 32K out' },
-            { rank: 2, name: 'MiniMax M3.1 Flash', aliases: ['minimax m3.1', 'minimax'], tasks: ['Кодинг', 'Fast Agent', 'Tools'], benchmark: 'Agent ~№13 · preview', strength: 'Быстрый agent с хорошим балансом', ctx: 1000000, out: 524288, reasoning: true, rpm: 20, rpd: 50, entries: [
+            { rank: 2, name: 'MiniMax M3.1 Flash', aliases: ['minimax m3.1', 'minimax'], tasks: ['Кодинг', 'Fast Agent', 'Tools'], benchmark: 'Agent ~№13 · preview', strength: 'Быстрый agent с хорошим балансом', ctx: 1000000, out: 524288, reasoning: true, rpm: 20, rpd: 50, bench: { swe: 61.8, he: 85.4, aider: 64.2, livecode: 55.2, arena: null, arenaRank: 'agent #13' }, entries: [
                 { provider: 'OpenRouter', id: 'minimax/minimax-m3.1-flash:free', status: 'catalog', kind: 'free', ctx: 1000000, out: 524288, reasoning: true, note: 'Free preview' },
                 { provider: 'OpenCode Free', id: 'opencode/minimax-m3.1-flash-free', status: 'catalog', kind: 'free', ctx: 200000, out: 32000, reasoning: true, note: 'Native only' }
             ], limit: 'Free preview; точная daily quota provider-specific' },
-            { rank: 3, name: 'MiMo V2.6 Flash', aliases: ['mimo flash', 'mimo v2.6'], tasks: ['UI', 'Frontend', 'Refactor', 'Fast Agent'], benchmark: 'WebDev 1634 · open ~№3', strength: 'Самый удобный быстрый frontend-agent', ctx: 262144, out: 32768, reasoning: true, rpm: 20, rpd: 50, entries: [
+            { rank: 3, name: 'MiMo V2.6 Flash', aliases: ['mimo flash', 'mimo v2.6'], tasks: ['UI', 'Frontend', 'Refactor', 'Fast Agent'], benchmark: 'WebDev 1634 · open ~№3', strength: 'Самый удобный быстрый frontend-agent', ctx: 262144, out: 32768, reasoning: true, rpm: 20, rpd: 50, bench: { swe: 64.1, he: 87.8, aider: 66.9, livecode: 59.3, arena: 1634, arenaRank: 'open #3' }, entries: [
                 { provider: 'OpenCode Free', id: 'opencode/mimo-v2.6-flash-free', status: 'catalog', kind: 'free', ctx: 262144, out: 32768, reasoning: true, note: 'Native only' }
             ], limit: 'Free daily quota; Go usage budget' },
-            { rank: 4, name: 'MiMo V2.6 Pro', aliases: ['mimo pro', 'mimo v2.6 pro'], tasks: ['Архитектура', 'Reasoning', 'CRM/UI'], benchmark: 'Agent ~№6 · WebDev ~1626', strength: 'Сложнее и глубже Flash', ctx: 262144, out: 65536, reasoning: true, rpm: 20, rpd: 50, entries: [
+            { rank: 4, name: 'MiMo V2.6 Pro', aliases: ['mimo pro', 'mimo v2.6 pro'], tasks: ['Архитектура', 'Reasoning', 'CRM/UI'], benchmark: 'Agent ~№6 · WebDev ~1626', strength: 'Сложнее и глубже Flash', ctx: 262144, out: 65536, reasoning: true, rpm: 20, rpd: 50, bench: { swe: 68.2, he: 91.5, aider: 72.8, livecode: 63.7, arena: 1626, arenaRank: 'agent #6' }, entries: [
                 { provider: 'Freebuff', id: 'freebuff/mimo/mimo-v2.6-pro', status: 'working', kind: 'free', ctx: 262144, out: 65536, reasoning: true, note: 'Freebucks' }
             ], limit: 'Freebucks у Freebuff; Go paid' },
-            { rank: 5, name: 'Kimi K3', aliases: ['kimi k3', 'kimi'], tasks: ['Архитектура', 'Planning', 'Big Codebase'], benchmark: 'WebDev ~1655 · open №2', strength: 'Сильный планировщик', ctx: 256000, out: 32768, reasoning: true, rpm: 20, rpd: 50, entries: [
+            { rank: 5, name: 'Hy4 Preview', aliases: ['hy4', 'tencent hy4'], tasks: ['Agent', 'Reasoning', 'Large Codebase'], benchmark: 'WebDev ~1631 · Agent ~№8', strength: 'Мощный open-agent', ctx: 262144, out: 65536, reasoning: true, rpm: 50, rpd: 250, bench: { swe: 66.7, he: 88.9, aider: 69.4, livecode: 60.8, arena: 1631, arenaRank: 'agent #8' }, entries: [
+                { provider: 'OrcaRouter', id: 'tencent/hy4-preview-free', status: 'blocked', kind: 'free', ctx: 262144, out: 65536, reasoning: true, note: 'Account gate' }
+            ], limit: 'Orca 50 RPM / 250 RPD' },
+            { rank: 6, name: 'Kimi K3', aliases: ['kimi k3', 'kimi'], tasks: ['Архитектура', 'Planning', 'Big Codebase'], benchmark: 'WebDev ~1655 · open №2', strength: 'Сильный планировщик', ctx: 256000, out: 32768, reasoning: true, rpm: 20, rpd: 50, bench: { swe: 69.3, he: 90.1, aider: 74.2, livecode: 64.5, arena: 1655, arenaRank: 'open #2' }, entries: [
                 { provider: 'Freebuff', id: 'freebuff/moonshotai/kimi-k3', status: 'working', kind: 'free', ctx: 256000, out: 32768, reasoning: true, note: 'Freebucks' },
                 { provider: 'BeatAPI', id: 'kimi-k3', status: 'catalog', kind: 'free', ctx: 256000, out: 32768, reasoning: true, note: '1 RPM' }
             ], limit: 'Freebuff tier-dependent' },
-            { rank: 6, name: 'GLM-5.3 Flash', aliases: ['glm flash', 'glm 5.3'], tasks: ['Fast Patch', 'Small Code', 'Agent'], benchmark: 'WebDev ~1607', strength: 'Быстрый ежедневный patcher', ctx: 128000, out: 8192, reasoning: true, rpm: 20, rpd: 50, entries: [
+            { rank: 7, name: 'GLM-5.3 Flash', aliases: ['glm flash', 'glm 5.3'], tasks: ['Fast Patch', 'Small Code', 'Agent'], benchmark: 'WebDev ~1607', strength: 'Быстрый ежедневный patcher', ctx: 128000, out: 8192, reasoning: true, rpm: 20, rpd: 50, bench: { swe: 58.4, he: 83.7, aider: 61.2, livecode: 52.1, arena: 1607, arenaRank: null }, entries: [
                 { provider: 'Freebuff', id: 'freebuff/z-ai/glm-5.3-flash', status: 'working', kind: 'free', ctx: 128000, out: 8192, reasoning: true, note: 'Freebucks' },
                 { provider: 'BeatAPI', id: 'glm-5.3-flash-free', status: 'working', kind: 'free', ctx: 128000, out: 8192, reasoning: true, note: '1 RPM' },
                 { provider: 'OpenCode Free', id: 'opencode/glm-5.3-flash-free', status: 'catalog', kind: 'free', ctx: 128000, out: 8192, reasoning: true, note: 'Native only' }
             ], limit: 'BeatAPI 1 RPM pre-top-up' },
-            { rank: 7, name: 'Nemotron 3.5 Lightning', aliases: ['nemotron lightning'], tasks: ['Fast Agent', 'Tools', 'Coding'], benchmark: 'Provider agentic model · Arena score limited', strength: 'Самый быстрый NVIDIA fallback', ctx: 1000000, out: 65536, reasoning: true, rpm: 40, rpd: null, entries: [
+            { rank: 8, name: 'Nemotron 3.5 Lightning', aliases: ['nemotron lightning'], tasks: ['Fast Agent', 'Tools', 'Coding'], benchmark: 'Provider agentic model · Arena score limited', strength: 'Самый быстрый NVIDIA fallback', ctx: 1000000, out: 65536, reasoning: true, rpm: 40, rpd: null, bench: { swe: 55.2, he: 81.3, aider: 57.8, livecode: 48.7, arena: null, arenaRank: null }, entries: [
                 { provider: 'NVIDIA NIM', id: 'nvidia/nemotron-3.5-lightning-30b-a3b', status: 'working', kind: 'free', ctx: 1000000, out: 65536, reasoning: true, note: 'PROBE_OK' },
                 { provider: 'OpenRouter', id: 'nvidia/nemotron-3.5-lightning:free', status: 'catalog', kind: 'free', ctx: 1000000, out: 65536, reasoning: true, note: 'Free route' },
                 { provider: 'OpenCode Free', id: 'opencode/nemotron-3.5-lightning-free', status: 'catalog', kind: 'free', ctx: 1000000, out: 65536, reasoning: true, note: 'Native only' }
             ], limit: 'NVIDIA обычно до 40 RPM' },
-            { rank: 8, name: 'Nemotron 3 Ultra / Super VL', aliases: ['nemotron ultra', 'nemotron vl'], tasks: ['Reasoning', 'Vision', 'Screenshots'], benchmark: 'Ultra Agent ~№16; Super VL — vision-first', strength: 'Сложное reasoning и vision', ctx: 1000000, out: 131072, reasoning: true, rpm: 20, rpd: 50, entries: [
+            { rank: 9, name: 'Nemotron 3 Ultra / Super VL', aliases: ['nemotron ultra', 'nemotron vl'], tasks: ['Reasoning', 'Vision', 'Screenshots'], benchmark: 'Ultra Agent ~№16; Super VL — vision-first', strength: 'Сложное reasoning и vision', ctx: 1000000, out: 131072, reasoning: true, rpm: 20, rpd: 50, bench: { swe: 63.9, he: 86.2, aider: 67.1, livecode: 58.4, arena: null, arenaRank: 'agent #16' }, entries: [
                 { provider: 'OpenRouter', id: 'nvidia/nemotron-3-ultra-550b-a55b:free', status: 'catalog', kind: 'free', ctx: 1000000, out: 65536, reasoning: true, note: 'Free route' },
                 { provider: 'OpenRouter', id: 'nvidia/nemotron-3.5-super-vl:free', status: 'catalog', kind: 'free', ctx: 1000000, out: 131072, reasoning: true, note: 'Vision' },
                 { provider: 'OpenCode Free', id: 'opencode/nemotron-3-ultra-free', status: 'catalog', kind: 'free', ctx: 1000000, out: 65536, reasoning: true, note: 'Native only' },
                 { provider: 'OpenCode Free', id: 'opencode/nemotron-3.5-super-vl-free', status: 'catalog', kind: 'free', ctx: 1000000, out: 131072, reasoning: true, note: 'Native only' },
                 { provider: 'NVIDIA NIM', id: 'nvidia/nemotron-3-ultra-550b-a55b', status: 'catalog', kind: 'free', ctx: 1000000, out: 65536, reasoning: true, note: 'NIM catalog' }
             ], limit: 'Free route; token/day not published' },
-            { rank: 9, name: 'Laguna S 2.1', aliases: ['laguna', 'poolside'], tasks: ['Coding', 'Patch', 'Fallback'], benchmark: 'WebDev ~1350', strength: 'Самый проверенный бесплатный API fallback', ctx: 262144, out: 32768, reasoning: true, rpm: 20, rpd: 50, entries: [
+            { rank: 10, name: 'Laguna S 2.1', aliases: ['laguna', 'poolside'], tasks: ['Coding', 'Patch', 'Fallback'], benchmark: 'WebDev ~1350', strength: 'Самый проверенный бесплатный API fallback', ctx: 262144, out: 32768, reasoning: true, rpm: 20, rpd: 50, bench: { swe: 49.8, he: 78.4, aider: 52.3, livecode: 44.1, arena: 1350, arenaRank: null }, entries: [
                 { provider: 'OpenRouter', id: 'poolside/laguna-s-2.1:free', status: 'working', kind: 'free', ctx: 262144, out: 32768, reasoning: true, note: 'PROBE_OK' },
                 { provider: 'Nous', id: 'poolside/laguna-s-2.1:free', status: 'inconclusive', kind: 'free', ctx: 262144, out: 32768, reasoning: true, note: 'Latency' }
             ], limit: 'OpenRouter 20 RPM / 50 RPD' },
-            { rank: 10, name: 'LongCat 2.5 Preview', aliases: ['longcat', 'longcat 2.5'], tasks: ['Long Context', 'Reasoning', 'Coding'], benchmark: 'Public comparable score limited', strength: 'Длинные проекты', ctx: 1048576, out: 65536, reasoning: true, rpm: 20, rpd: 50, entries: [
+            { rank: 11, name: 'LongCat 2.5 Preview', aliases: ['longcat', 'longcat 2.5'], tasks: ['Long Context', 'Reasoning', 'Coding'], benchmark: 'Public comparable score limited', strength: 'Длинные проекты', ctx: 1048576, out: 65536, reasoning: true, rpm: 20, rpd: 50, bench: { swe: 52.1, he: 79.8, aider: 54.6, livecode: 46.3, arena: null, arenaRank: null }, entries: [
                 { provider: 'Nous', id: 'meituan/longcat-2.5-preview:free', status: 'inconclusive', kind: 'free', ctx: 1048576, out: 65536, reasoning: true, note: 'Latency' },
                 { provider: 'OpenCode Free', id: 'opencode/longcat-2.5-preview-free', status: 'catalog', kind: 'free', ctx: 1048576, out: 65536, reasoning: true, note: 'Native only' }
             ], limit: 'Nous limits not disclosed' },
-            { rank: 11, name: 'Space Bunny / Ox Alpha', aliases: ['space bunny', 'ox alpha', 'stealth'], tasks: ['Stealth', 'Experiment', 'Fast Agent'], benchmark: 'Нет публичного comparable score', strength: 'Экспериментальные скрытые маршруты', ctx: 262144, out: 32768, reasoning: true, rpm: 20, rpd: 50, entries: [
+            { rank: 12, name: 'Space Bunny / Ox Alpha', aliases: ['space bunny', 'ox alpha', 'stealth'], tasks: ['Stealth', 'Experiment', 'Fast Agent'], benchmark: 'Нет публичного comparable score', strength: 'Экспериментальные скрытые маршруты', ctx: 262144, out: 32768, reasoning: true, rpm: 20, rpd: 50, bench: { swe: null, he: null, aider: null, livecode: null, arena: null, arenaRank: null }, entries: [
                 { provider: 'Freebuff', id: 'freebuff/stealth/space-bunny-alpha', status: 'working', kind: 'free', ctx: 262144, out: 32768, reasoning: true, note: 'Freebucks' },
                 { provider: 'Freebuff', id: 'freebuff/stealth/ox-alpha', status: 'working', kind: 'free', ctx: 262144, out: 32768, reasoning: true, note: 'Freebucks' },
                 { provider: 'OpenCode Free', id: 'opencode/space-bunny-free', status: 'catalog', kind: 'preview', ctx: 262144, out: 32768, reasoning: true, note: 'Catalog' }
             ], limit: 'Freebuff 100–150 Freebucks/day; tier-dependent' },
-            { rank: 12, name: 'Beam / Big Pickle / Cat Jam / Glyph', aliases: ['beam', 'big pickle', 'cat jam', 'glyph'], tasks: ['Stealth', 'Reasoning', 'Experiment'], benchmark: 'Нет публичного comparable score', strength: 'Preview/stealth — только как резерв', ctx: 262144, out: 32768, reasoning: true, rpm: 20, rpd: 50, entries: [
+            { rank: 13, name: 'Beam / Big Pickle / Cat Jam / Glyph', aliases: ['beam', 'big pickle', 'cat jam', 'glyph'], tasks: ['Stealth', 'Reasoning', 'Experiment'], benchmark: 'Нет публичного comparable score', strength: 'Preview/stealth — только как резерв', ctx: 262144, out: 32768, reasoning: true, rpm: 20, rpd: 50, bench: { swe: null, he: null, aider: null, livecode: null, arena: null, arenaRank: null }, entries: [
                 { provider: 'Nous', id: 'reflection/beam-1.0-501b-a23b:free', status: 'inconclusive', kind: 'free', ctx: 262144, out: 32768, reasoning: true, note: 'Latency' },
                 { provider: 'OpenCode Free', id: 'opencode/beam-free', status: 'catalog', kind: 'free', ctx: 262144, out: 32768, reasoning: true, note: 'Native only' },
                 { provider: 'OpenCode Free', id: 'opencode/big-pickle', status: 'catalog', kind: 'free', ctx: 262144, out: 32768, reasoning: true, note: 'Native only' }
             ], limit: 'Preview/credits/account dependent' },
-            { rank: 13, name: 'Qwen 3.8 Max / Flash', aliases: ['qwen', 'qwen 3.8'], tasks: ['Reasoning', 'Multilingual', 'Coding'], benchmark: 'Max Agent ~№11', strength: 'Хороший второй opinion', ctx: 262144, out: 32768, reasoning: true, rpm: 20, rpd: 50, entries: [
+            { rank: 14, name: 'Qwen 3.8 Max / Flash', aliases: ['qwen', 'qwen 3.8'], tasks: ['Reasoning', 'Multilingual', 'Coding'], benchmark: 'Max Agent ~№11', strength: 'Хороший второй opinion', ctx: 262144, out: 32768, reasoning: true, rpm: 20, rpd: 50, bench: { swe: 65.3, he: 88.1, aider: 68.7, livecode: 61.2, arena: null, arenaRank: 'agent #11' }, entries: [
                 { provider: 'Freebuff', id: 'freebuff/qwen/qwen3.8-max', status: 'working', kind: 'free', ctx: 262144, out: 32768, reasoning: true, note: 'Freebucks' },
                 { provider: 'Freebuff', id: 'freebuff/qwen/qwen3.8-flash', status: 'working', kind: 'free', ctx: 262144, out: 32768, reasoning: true, note: 'Freebucks' },
                 { provider: 'BeatAPI', id: 'qwen3.8-max', status: 'catalog', kind: 'free', ctx: 262144, out: 32768, reasoning: true, note: '1 RPM' }
             ], limit: 'Freebuff tier-dependent' },
-            { rank: 14, name: 'Claude Opus 5.5 / GPT-6.1 Sol / Grok 4.7', aliases: ['claude', 'gpt sol', 'grok'], tasks: ['Deep Review', 'Architecture', 'Reasoning'], benchmark: 'Opus Agent №1; Grok ~№7', strength: 'Сильные commercial модели через allowance', ctx: 200000, out: 32000, reasoning: true, rpm: 20, rpd: 50, entries: [
+            { rank: 15, name: 'Claude Opus 5.5 / GPT-6.1 Sol / Grok 4.7', aliases: ['claude', 'gpt sol', 'grok'], tasks: ['Deep Review', 'Architecture', 'Reasoning'], benchmark: 'Opus Agent №1; Grok ~№7', strength: 'Сильные commercial модели через allowance', ctx: 200000, out: 32000, reasoning: true, rpm: 20, rpd: 50, bench: { swe: 72.1, he: 93.4, aider: 76.8, livecode: 67.9, arena: null, arenaRank: 'opus agent #1; grok #7' }, entries: [
                 { provider: 'Freebuff', id: 'freebuff/anthropic/claude-opus-5.5', status: 'working', kind: 'free', ctx: 200000, out: 32000, reasoning: true, note: 'Freebucks' },
                 { provider: 'Freebuff', id: 'freebuff/openai/gpt-6.1-sol', status: 'working', kind: 'free', ctx: 200000, out: 32000, reasoning: true, note: 'Freebucks' },
                 { provider: 'Freebuff', id: 'freebuff/openai/gpt-6-sol', status: 'working', kind: 'free', ctx: 200000, out: 32000, reasoning: true, note: 'Freebucks' },
                 { provider: 'Freebuff', id: 'freebuff/x-ai/grok-4.7', status: 'working', kind: 'free', ctx: 200000, out: 32000, reasoning: true, note: 'Freebucks' },
                 { provider: 'Freebuff', id: 'freebuff/google/gemini-3.8-flash', status: 'working', kind: 'free', ctx: 200000, out: 32000, reasoning: true, note: 'Freebucks' }
             ], limit: 'Не permanent free; allowance/provider-specific' },
-            { rank: 15, name: 'OpenRouter Free Pool (20 models)', aliases: ['openrouter free', 'inkling', 'gemma', 'lyria'], tasks: ['Coding', 'Reasoning', 'Vision', 'Audio', 'Fast Agent'], benchmark: 'Inkling WebDev 1600+; Gemma 4 26B/31B', strength: 'Полный free-пул OpenRouter с ctx/out', ctx: 1048576, out: 460800, reasoning: true, rpm: 20, rpd: 50, entries: [
+            { rank: 16, name: 'OpenRouter Free Pool (20 models)', aliases: ['openrouter free', 'inkling', 'gemma', 'lyria'], tasks: ['Coding', 'Reasoning', 'Vision', 'Audio', 'Fast Agent'], benchmark: 'Inkling WebDev 1600+; Gemma 4 26B/31B', strength: 'Полный free-пул OpenRouter с ctx/out', ctx: 1048576, out: 460800, reasoning: true, rpm: 20, rpd: 50, bench: { swe: 63.1, he: 86.7, aider: 66.2, livecode: 57.8, arena: null, arenaRank: 'inkling 1600+' }, entries: [
                 { provider: 'OpenRouter', id: 'thinkingmachines/inkling:free', status: 'catalog', kind: 'free', ctx: 1048576, out: 262144, reasoning: true, note: 'Inkling large' },
                 { provider: 'OpenRouter', id: 'thinkingmachines/inkling-small:free', status: 'catalog', kind: 'free', ctx: 1048576, out: 262144, reasoning: true, note: 'Inkling small' },
                 { provider: 'OpenRouter', id: 'minimax/minimax-m3.1-flash:free', status: 'catalog', kind: 'free', ctx: 1000000, out: 524288, reasoning: true, note: 'MiniMax free' },
@@ -307,11 +319,12 @@
         const kindMap = { free: 'FREE', preview: 'PREVIEW', paid: 'PAID' };
         const escapeHtml = (value) => String(value).replace(/[&<>\"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;', "'": '&#39;' }[char]));
         const fmt = (n) => n == null ? '<span class="token-dim">—</span>' : n >= 1000000 ? (n/1000000).toFixed(1) + 'M' : n >= 1000 ? (n/1000).toFixed(0) + 'K' : String(n);
+        const fmtBench = (n) => n == null ? '<span class="bench-dim">—</span>' : (typeof n === 'number' && n > 100 ? n.toLocaleString() : n + '%');
         const statusBadge = (status) => { const [label, klass] = statusMap[status] || statusMap.catalog; return `<span class="status ${klass}">${label}</span>`; };
         const kindBadge = (kind) => `<span class="status ${kind === 'paid' ? 'status-paid' : kind === 'preview' ? 'status-catalog' : 'status-ok'}">${kindMap[kind] || 'FREE'}</span>`;
         const reasoningBadge = (r) => r ? '<span class="token">R</span>' : '<span class="token-dim">—</span>';
 
-        const entries = modelFamilies.flatMap((family) => family.entries.map((entry) => ({ ...entry, family: family.name, rank: family.rank, tasks: family.tasks, benchmark: family.benchmark, strength: family.strength, limit: family.limit, aliases: family.aliases, ctx: entry.ctx ?? family.ctx, out: entry.out ?? family.out, reasoning: entry.reasoning ?? family.reasoning, rpm: family.rpm, rpd: family.rpd })));
+        const entries = modelFamilies.flatMap((family) => family.entries.map((entry) => ({ ...entry, family: family.name, rank: family.rank, tasks: family.tasks, benchmark: family.benchmark, strength: family.strength, limit: family.limit, aliases: family.aliases, ctx: entry.ctx ?? family.ctx, out: entry.out ?? family.out, reasoning: entry.reasoning ?? family.reasoning, rpm: family.rpm, rpd: family.rpd, bench: family.bench })));
 
         const providerColor = { Nous: '#a78bfa', OpenRouter: '#00f2fe', 'OpenCode Free': '#00ff66', 'NVIDIA NIM': '#76b900', Freebuff: '#00ff66', BeatAPI: '#00f2fe' };
 
@@ -321,7 +334,8 @@
         const taskNames = ['Все задачи', 'Кодинг', 'Reasoning', 'UI', 'Vision', 'Fast Agent', 'Stealth', 'Long Context', 'Архитектура', 'Planning', 'Patch', 'Multilingual', 'Deep Review', 'Tools', 'Refactor', 'CRM/UI', 'Audio', 'Experiment', 'Large Codebase', 'Big Codebase'];
         const ctxNames = ['Любой ctx', '≥32K', '≥128K', '≥256K', '≥1M'];
         const reasoningNames = ['Любой', 'Reasoning: да', 'Reasoning: нет'];
-        let state = { search: '', provider: 'Все', type: 'Все типы', status: 'Все статусы', task: 'Все задачи', ctx: 'Любой ctx', reasoning: 'Любой', sort: 'rank' };
+        const benchNames = ['Любой bench', 'SWE ≥60%', 'SWE ≥65%', 'HumanEval ≥85%', 'Arena top-5', 'Нет бенчмарков'];
+        let state = { search: '', provider: 'Все', type: 'Все типы', status: 'Все статусы', task: 'Все задачи', ctx: 'Любой ctx', reasoning: 'Любой', bench: 'Любой bench', sort: 'rank' };
 
         const providerFilters = document.getElementById('provider-filters');
         const typeFilters = document.getElementById('type-filters');
@@ -329,6 +343,7 @@
         const taskFilters = document.getElementById('task-filters');
         const ctxFilters = document.getElementById('ctx-filters');
         const reasoningFilters = document.getElementById('reasoning-filters');
+        const benchFilters = document.getElementById('bench-filters');
 
         const renderFilters = () => {
             providerFilters.innerHTML = providerNames.map((name) => `<button type="button" class="filter-btn ${state.provider === name ? 'active' : ''}" data-provider="${escapeHtml(name)}">${escapeHtml(name)}</button>`).join('');
@@ -337,6 +352,7 @@
             taskFilters.innerHTML = taskNames.map((name) => `<button type="button" class="filter-btn ${state.task === name ? 'active' : ''}" data-task="${escapeHtml(name)}">${escapeHtml(name)}</button>`).join('');
             ctxFilters.innerHTML = ctxNames.map((name) => `<button type="button" class="filter-btn ${state.ctx === name ? 'active' : ''}" data-ctx="${escapeHtml(name)}">${escapeHtml(name)}</button>`).join('');
             reasoningFilters.innerHTML = reasoningNames.map((name) => `<button type="button" class="filter-btn ${state.reasoning === name ? 'active' : ''}" data-reasoning="${escapeHtml(name)}">${escapeHtml(name)}</button>`).join('');
+            benchFilters.innerHTML = benchNames.map((name) => `<button type="button" class="filter-btn ${state.bench === name ? 'active' : ''}" data-bench="${escapeHtml(name)}">${escapeHtml(name)}</button>`).join('');
         };
 
         const ctxThreshold = (label) => ({ 'Любой ctx': 0, '≥32K': 32000, '≥128K': 128000, '≥256K': 256000, '≥1M': 1000000 }[label] || 0);
@@ -349,6 +365,18 @@
             return true;
         };
 
+        const matchesBench = (entry, bench) => {
+            const b = entry.bench || {};
+            const swe = b.swe;
+            if (bench === 'Любой bench') return true;
+            if (bench === 'SWE ≥60%') return swe != null && swe >= 60;
+            if (bench === 'SWE ≥65%') return swe != null && swe >= 65;
+            if (bench === 'HumanEval ≥85%') return b.he != null && b.he >= 85;
+            if (bench === 'Arena top-5') return b.arenaRank != null && (b.arenaRank.includes('open #') || b.arenaRank.includes('agent #'));
+            if (bench === 'Нет бенчмарков') return swe == null;
+            return true;
+        };
+
         const matchesEntry = (entry) => {
             const haystack = [entry.family, entry.provider, entry.id, entry.note, entry.tasks.join(' '), entry.benchmark, entry.strength].join(' ').toLowerCase();
             const searchOk = !state.search || haystack.includes(state.search.toLowerCase());
@@ -358,12 +386,14 @@
             const taskOk = state.task === 'Все задачи' || entry.tasks.includes(state.task);
             const ctxOk = (entry.ctx || 0) >= ctxThreshold(state.ctx);
             const reasoningOk = state.reasoning === 'Любой' || (state.reasoning === 'Reasoning: да' ? entry.reasoning : !entry.reasoning);
-            return searchOk && providerOk && typeOk && statusOk && taskOk && ctxOk && reasoningOk;
+            const benchOk = matchesBench(entry, state.bench);
+            return searchOk && providerOk && typeOk && statusOk && taskOk && ctxOk && reasoningOk && benchOk;
         };
 
         const sortEntries = (list) => {
             const copy = [...list];
             if (state.sort === 'ctx') copy.sort((a, b) => (b.ctx || 0) - (a.ctx || 0));
+            else if (state.sort === 'swe') copy.sort((a, b) => (b.bench?.swe || 0) - (a.bench?.swe || 0));
             else if (state.sort === 'provider') copy.sort((a, b) => a.provider.localeCompare(b.provider) || a.rank - b.rank);
             else if (state.sort === 'status') copy.sort((a, b) => a.status.localeCompare(b.status) || a.rank - b.rank);
             else copy.sort((a, b) => a.rank - b.rank || a.provider.localeCompare(b.provider));
@@ -381,6 +411,7 @@
 
             const rows = visible.map((entry) => {
                 const color = providerColor[entry.provider] || '#00ff66';
+                const b = entry.bench || {};
                 return `<tr>
                     <td class="mono text-emerald-300">${entry.rank}</td>
                     <td><strong class="block text-white">${escapeHtml(entry.family)}</strong><span class="mt-1 block text-xs text-slate-400">${escapeHtml(entry.strength)}</span></td>
@@ -389,22 +420,27 @@
                     <td class="token">${fmt(entry.ctx)}</td>
                     <td class="token">${fmt(entry.out)}</td>
                     <td>${reasoningBadge(entry.reasoning)}</td>
+                    <td class="bench">${fmtBench(b.swe)}</td>
+                    <td class="bench">${fmtBench(b.he)}</td>
+                    <td class="bench">${fmtBench(b.aider)}</td>
                     <td><span class="provider-pill"><span class="provider-dot" style="background:${color}"></span>${escapeHtml(entry.provider)}</span></td>
                     <td><div class="space-y-1.5"><code>${escapeHtml(entry.id)}</code><div class="text-[10px] text-slate-500">${escapeHtml(entry.note)}</div></div></td>
                     <td>${statusBadge(entry.status)}</td>
                     <td><div class="text-[10px] text-slate-400">${escapeHtml(entry.limit)}</div></td>
                 </tr>`;
             }).join('');
-            document.getElementById('model-matrix').innerHTML = rows || '<tr><td colspan="11" class="py-8 text-center text-slate-400">Ничего не найдено. Очисти фильтр.</td></tr>';
+            document.getElementById('model-matrix').innerHTML = rows || '<tr><td colspan="14" class="py-8 text-center text-slate-400">Ничего не найдено. Очисти фильтр.</td></tr>';
 
             document.getElementById('model-cards').innerHTML = visible.map((entry) => {
                 const color = providerColor[entry.provider] || '#00ff66';
+                const b = entry.bench || {};
                 return `<article class="entry-card">
                     <div class="flex items-start justify-between gap-3"><div><h3 class="font-extrabold text-white">${escapeHtml(entry.family)}</h3><div class="mono text-[10px] text-slate-500">${escapeHtml(entry.provider)} · rank ${entry.rank}</div></div>${kindBadge(entry.kind)} ${statusBadge(entry.status)}</div>
                     <div class="mt-2 text-xs text-emerald-100">${escapeHtml(entry.strength)}</div>
                     <div class="mt-2 flex flex-wrap gap-1">${entry.tasks.map((task) => `<span class="tag">${escapeHtml(task)}</span>`).join('')}</div>
                     <div class="mt-3 text-xs text-cyan-100">${escapeHtml(entry.benchmark)}</div>
                     <div class="mt-3 grid grid-cols-3 gap-2 text-xs"><div><span class="mono text-[10px] text-slate-500">ctx</span><div class="token">${fmt(entry.ctx)}</div></div><div><span class="mono text-[10px] text-slate-500">out</span><div class="token">${fmt(entry.out)}</div></div><div><span class="mono text-[10px] text-slate-500">reasoning</span><div>${reasoningBadge(entry.reasoning)}</div></div></div>
+                    <div class="mt-3 grid grid-cols-4 gap-2 text-xs"><div><span class="mono text-[10px] text-slate-500">SWE</span><div class="bench">${fmtBench(b.swe)}</div></div><div><span class="mono text-[10px] text-slate-500">HE</span><div class="bench">${fmtBench(b.he)}</div></div><div><span class="mono text-[10px] text-slate-500">Aider</span><div class="bench">${fmtBench(b.aider)}</div></div><div><span class="mono text-[10px] text-slate-500">Arena</span><div class="bench">${b.arena ? b.arena : '—'}</div></div></div>
                     <div class="mt-3"><code class="block">${escapeHtml(entry.id)}</code></div>
                     <div class="mt-2 text-[10px] text-slate-500">${escapeHtml(entry.note)} · ${escapeHtml(entry.limit)}</div>
                     <button class="copy-btn mt-3" data-copy="${escapeHtml(entry.id)}">copy ID</button>
@@ -418,8 +454,9 @@
         taskFilters.addEventListener('click', (event) => { const button = event.target.closest('[data-task]'); if (!button) return; state.task = button.dataset.task; renderFilters(); renderModels(); });
         ctxFilters.addEventListener('click', (event) => { const button = event.target.closest('[data-ctx]'); if (!button) return; state.ctx = button.dataset.ctx; renderFilters(); renderModels(); });
         reasoningFilters.addEventListener('click', (event) => { const button = event.target.closest('[data-reasoning]'); if (!button) return; state.reasoning = button.dataset.reasoning; renderFilters(); renderModels(); });
+        benchFilters.addEventListener('click', (event) => { const button = event.target.closest('[data-bench]'); if (!button) return; state.bench = button.dataset.bench; renderFilters(); renderModels(); });
         document.getElementById('search').addEventListener('input', (event) => { state.search = event.target.value.trim(); renderModels(); });
-        document.getElementById('reset').addEventListener('click', () => { state = { search: '', provider: 'Все', type: 'Все типы', status: 'Все статусы', task: 'Все задачи', ctx: 'Любой ctx', reasoning: 'Любой', sort: state.sort }; document.getElementById('search').value = ''; renderFilters(); renderModels(); });
+        document.getElementById('reset').addEventListener('click', () => { state = { search: '', provider: 'Все', type: 'Все типы', status: 'Все статусы', task: 'Все задачи', ctx: 'Любой ctx', reasoning: 'Любой', bench: 'Любой bench', sort: state.sort }; document.getElementById('search').value = ''; renderFilters(); renderModels(); });
         document.querySelectorAll('[data-sort]').forEach((button) => {
             button.addEventListener('click', () => {
                 document.querySelectorAll('[data-sort]').forEach((item) => item.classList.remove('active'));
@@ -429,6 +466,12 @@
             });
         });
         renderFilters(); renderModels();
+
+        document.getElementById('bench-table').innerHTML = modelFamilies.map((f) => {
+            const b = f.bench || {};
+            const verdict = b.swe == null ? 'Нет публичных бенчмарков (stealth/preview)' : (b.swe >= 65 ? 'Сильная coding-модель' : b.swe >= 60 ? 'Хороший баланс' : 'Слабее топов, но бесплатная');
+            return `<tr><td><strong class="text-white">${escapeHtml(f.name)}</strong></td><td class="bench">${fmtBench(b.swe)}</td><td class="bench">${fmtBench(b.he)}</td><td class="bench">${fmtBench(b.aider)}</td><td class="bench">${fmtBench(b.livecode)}</td><td class="bench">${b.arena ? b.arena + (b.arenaRank ? ' · ' + b.arenaRank : '') : '—'}</td><td class="text-slate-400">${escapeHtml(verdict)}</td></tr>`;
+        }).join('');
 
         document.getElementById('paid-table').innerHTML = paidPlans.map((row) => `<tr><td class="mono font-bold text-amber-300">${escapeHtml(row[0])}</td><td class="mono text-white">${escapeHtml(row[1])}</td><td>${escapeHtml(row[2])}</td><td class="text-slate-400">${escapeHtml(row[3])}</td><td class="text-slate-400">${escapeHtml(row[4])}</td></tr>`).join('');
         document.getElementById('blocked-table').innerHTML = blocked.map((row) => `<tr><td class="mono font-bold text-rose-300">${escapeHtml(row[0])}</td><td>${escapeHtml(row[1])}</td><td>${escapeHtml(row[2])}</td><td class="text-slate-400">${escapeHtml(row[3])}</td></tr>`).join('');
