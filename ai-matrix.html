@@ -412,6 +412,16 @@ const SORTER = {
 };
 const NUMERIC_COLS = ['ctx','out','swe','he','aider','rank'];
 const defaultDir = key => NUMERIC_COLS.includes(key) ? 'desc' : 'asc';
+// numeric value of a route for a given column (null when the model has no such metric)
+const numericValue = (r, key) => {
+    if (key === 'ctx') return r.ctx || 0;
+    if (key === 'out') return r.out || 0;
+    if (key === 'swe') return r.bench.swe ?? null;
+    if (key === 'he') return r.bench.he ?? null;
+    if (key === 'aider') return r.bench.aider ?? null;
+    if (key === 'rank') return r.rank;
+    return null;
+};
 
 let state = { q:'', prov:'Все', type:'Все', status:'Все', task:'Все', src:'Все', ctx:'Любой ctx',
               reason:'Любой', bench:'Любой', sort:'rank', dir:'asc', radarMode:'spread', group:false };
@@ -465,9 +475,23 @@ const match = r => {
     return true;
 };
 const sorter = (list) => { const c=[...list];
-    const fn = SORTER[state.sort] || SORTER.rank;
-    c.sort((a,b)=> fn(a,b));
-    if (state.dir === 'desc') c.reverse();   // comparators are natural ASC; desc flips
+    const key = state.sort;
+    const fn = SORTER[key] || SORTER.rank;
+    const desc = state.dir === 'desc';
+    const numeric = NUMERIC_COLS.includes(key);
+    c.sort((a,b)=>{
+        const r = fn(a,b);
+        if (r === 0) return 0;
+        if (numeric) {
+            // models without a metric always stay at the bottom, in BOTH directions
+            const av = numericValue(a, key), bv = numericValue(b, key);
+            const aMissing = av === null, bMissing = bv === null;
+            if (aMissing && bMissing) return 0;
+            if (aMissing) return 1;
+            if (bMissing) return -1;
+        }
+        return desc ? -r : r;
+    });
     return c; };
 
 // ---------------- column panel
@@ -968,7 +992,7 @@ bindSel('f-src','src'); bindSel('f-ctx','ctx'); bindSel('f-bench','bench'); bind
 $('f-sort').addEventListener('change', e=>{ state.sort=e.target.value; state.dir='desc'; saveState(); renderHead(); renderTable(); });
 $('q').addEventListener('input', e=>{ state.q=e.target.value.trim(); saveState(); renderTable(); });
 $('reset').addEventListener('click', ()=>{
-    Object.assign(state, DEFAULTS, { q:'', sort:'rank', dir:'desc' });
+    Object.assign(state, DEFAULTS, { q:'', sort:'rank', dir:'asc' });
     $('q').value=''; ['f-prov','f-type','f-status','f-task','f-src','f-ctx','f-bench','f-reason'].forEach(id=>$(id).value = id==='f-ctx'?'Любой ctx':'Все');
     $('f-sort').value='rank'; saveState(); renderHead(); renderTable();
 });
