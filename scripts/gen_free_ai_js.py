@@ -808,6 +808,10 @@ PROBES = [
 
 # ------------------------------------------------------------------ tools (big free quotas, not per-token)
 TOOLS = [
+    {"n": "OmniRoute (локальный шлюз)", "signup": "У нас уже поднят: localhost:20128", "quota": "Без квот и без карты · 1292 модели в 17 префиксах · no-auth пулы: ddgw (6), auto/* (4)",
+     "models": "GPT-5.4 Mini · GPT-5.6 Luna · Claude Haiku 4.5 · Mistral Small 2603 · GPT-OSS 120B · Gemma4 31B · auto/best-free · auto/coding:free",
+     "ctx": "до 1M", "note": "Это шлюз, а не тариф: раздаёт бесплатные пулы и маршрутит по качеству. Проверен read-only, конфиг не менялся.",
+     "score": 88, "badge": "У НАС ЕСТЬ"},
     {"n": "Qwen Code", "signup": "OAuth (Google/GitHub), без карты", "quota": "2000 запросов/день · 60 RPM",
      "models": "Qwen3-Coder-480B-A35B, Qwen3-Coder-Next, Qwen3-VL, qwen3-coder-plus, qwen3-max",
      "ctx": "1M", "note": "Крупнейший бесплатный дневной лимит среди CLI-агентов. Локально через Ollama — 0 лимитов.",
@@ -886,6 +890,29 @@ TOOLS = [
      "score": 64, "badge": ""},
 ]
 
+# ------------------------------------------------------------------ market data (2026-10-20 research)
+import importlib.util as _ilu
+_spec = _ilu.spec_from_file_location("market_data", os.path.join(os.path.dirname(os.path.abspath(__file__)), "market_data.py"))
+_market = _ilu.module_from_spec(_spec); _spec.loader.exec_module(_market)
+
+PLANS_MARKET = []
+for _p in _market.PLANS_MARKET:
+    name, price, quota, tok_m, models, tools, ours, src = _p
+    PLANS_MARKET.append({
+        "name": name, "price": price, "quota": quota, "tokM": tok_m, "models": models,
+        "tools": tools, "ours": ours, "src": src,
+        "eff": round(tok_m / price, 2) if (price and tok_m) else None,
+    })
+
+FREE_API = []
+for _f in _market.FREE_API:
+    name, key, rpm, rpd, tok, card, credit, models, notes, src = _f
+    FREE_API.append({
+        "name": name, "key": key, "rpm": rpm, "rpd": rpd, "tok": tok, "card": card,
+        "credit": credit, "models": models, "notes": notes, "src": src,
+        "keyless": key.startswith("НЕТ"),
+    })
+
 # ------------------------------------------------------------------ ranking
 def rank_providers(providers, families):
     routes_by_provider = {}
@@ -942,6 +969,8 @@ DATA = {
     "providers": PROVIDERS,
     "families": FAMILIES,
     "plans": PLANS,
+    "plansMarket": PLANS_MARKET,
+    "freeApi": FREE_API,
     "tools": TOOLS,
     "releases": RELEASES,
     "probes": PROBES,
