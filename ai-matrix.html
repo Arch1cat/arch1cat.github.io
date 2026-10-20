@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="ru" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free AI Universe — рейтинг бесплатных AI · arch1cat</title>
+    <meta name="description" content="Рейтинг бесплатных AI-провайдеров: все доступные free-модели, токены ctx/out/reasoning, бенчмарки, графики, тарифы платных планов. Обновляется ежедневно.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { darkMode: 'class', theme: { extend: {
+            colors: { cyber: { bg:'#020904', panel:'#07170d', green:'#00ff66', cyan:'#00f2fe', amber:'#ffc857', red:'#ff5577', violet:'#a78bfa' } },
+            fontFamily: { sans:['Inter','sans-serif'], mono:['JetBrains Mono','monospace'] } } } };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { color-scheme: dark; }
+        * { box-sizing: border-box; }
+        body { margin:0; background:#020904; color:#d7e7dc; font-family:Inter,sans-serif; overflow-x:hidden; font-size:13px; }
+        body::before { content:''; position:fixed; inset:0; pointer-events:none; z-index:-1; opacity:.55;
+            background:radial-gradient(circle at 10% 6%, rgba(0,255,102,.13), transparent 26rem),radial-gradient(circle at 88% 18%, rgba(0,242,254,.08), transparent 24rem),linear-gradient(180deg,#020904 0%,#03100a 50%,#020904 100%); }
+        .mono { font-family:'JetBrains Mono',monospace; }
+        .glass { background:rgba(5,24,13,.84); border:1px solid rgba(0,255,102,.18); box-shadow:0 14px 50px rgba(0,0,0,.2); backdrop-filter:blur(16px); }
+        .table-wrap { overflow-x:auto; border:1px solid rgba(0,255,102,.16); border-radius:16px; }
+        table { width:100%; border-collapse:collapse; min-width:1150px; }
+        thead th { position:sticky; top:0; z-index:10; background:rgba(6,20,12,.98); color:#8fffb2; text-align:left;
+            font:700 9px/1.2 'JetBrains Mono',monospace; letter-spacing:.06em; text-transform:uppercase; white-space:nowrap; padding:7px 9px; border-bottom:1px solid rgba(0,255,102,.2); }
+        th, td { padding:7px 9px; border-bottom:1px solid rgba(127,255,164,.08); vertical-align:top; }
+        tbody tr:last-child td { border-bottom:0; }
+        tbody tr:hover { background:rgba(0,255,102,.04); }
+        td { color:#c8d8cd; font-size:11px; line-height:1.4; }
+        code { color:#7fffa1; font:500 10px/1.35 'JetBrains Mono',monospace; overflow-wrap:anywhere; }
+        .status { display:inline-flex; align-items:center; gap:4px; border-radius:999px; padding:2px 6px; font:700 9px/1 'JetBrains Mono',monospace; white-space:nowrap; }
+        .st-ok { color:#a8ffc0; background:rgba(0,255,102,.12); border:1px solid rgba(0,255,102,.26); }
+        .st-cat { color:#a7f8ff; background:rgba(0,242,254,.1); border:1px solid rgba(0,242,254,.24); }
+        .st-blk { color:#ff9eb0; background:rgba(255,85,119,.11); border:1px solid rgba(255,85,119,.26); }
+        .st-paid { color:#ffd889; background:rgba(255,200,87,.12); border:1px solid rgba(255,200,87,.27); }
+        .st-inc { color:#d1bdff; background:rgba(167,139,250,.12); border:1px solid rgba(167,139,250,.26); }
+        .fsel { height:32px; border:1px solid rgba(0,255,102,.2); background:rgba(0,0,0,.3); color:#c8d8cd; border-radius:9px; padding:0 8px; font:600 11px 'JetBrains Mono',monospace; outline:none; }
+        .fsel:focus { border-color:#00ff66; }
+        .finp { height:32px; border:1px solid rgba(0,255,102,.2); background:rgba(0,0,0,.3); color:#c8d8cd; border-radius:9px; padding:0 10px 0 28px; font:500 11px Inter,sans-serif; outline:none; width:100%; }
+        .finp:focus { border-color:#00ff66; }
+        .btn { height:32px; border:1px solid rgba(0,255,102,.22); background:rgba(0,0,0,.25); color:#a4b8aa; border-radius:9px; padding:0 11px; font:700 10px 'JetBrains Mono',monospace; transition:.18s; }
+        .btn:hover, .btn.active { color:#001b08; background:#00ff66; border-color:#00ff66; }
+        .btn.cyan:hover, .btn.cyan.active { color:#001318; background:#00f2fe; border-color:#00f2fe; }
+        .btn.danger { border-color:rgba(255,85,119,.3); background:rgba(255,85,119,.07); color:#ff9eb0; }
+        .btn.danger:hover { background:rgba(255,85,119,.18); }
+        .tag { display:inline-flex; align-items:center; border-radius:999px; padding:1px 5px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); color:#b8d1bd; font:600 9px 'JetBrains Mono',monospace; }
+        .tok { font:700 10px 'JetBrains Mono',monospace; color:#7fffa1; }
+        .tok-dim { color:#6b7f72; }
+        .bench { font:600 10px 'JetBrains Mono',monospace; color:#ffd889; }
+        .ppill { display:inline-flex; align-items:center; gap:5px; border-radius:999px; padding:2px 8px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); color:#c8d8cd; font:600 10px 'JetBrains Mono',monospace; white-space:nowrap; }
+        .pdot { display:inline-block; width:7px; height:7px; border-radius:50%; }
+        .copy { color:#7de99a; border:1px solid rgba(0,255,102,.2); border-radius:6px; padding:1px 5px; font:700 9px 'JetBrains Mono',monospace; white-space:nowrap; }
+        .copy:hover { color:#001b08; background:#00ff66; }
+        .card { background:rgba(3,15,8,.72); border:1px solid rgba(0,255,102,.16); border-radius:14px; padding:12px; }
+        .mob { display:none; }
+        .sect { border-left:3px solid #00ff66; padding-left:10px; }
+        .mcard { background:rgba(7,23,13,.7); border:1px solid rgba(0,255,102,.14); border-radius:12px; padding:10px; }
+        .stat { background:rgba(3,15,8,.7); border:1px solid rgba(0,255,102,.14); border-radius:12px; padding:10px 12px; }
+        .stat-v { font:800 20px/1.1 'JetBrains Mono',monospace; color:#00ff66; }
+        .stat-l { font:600 9px/1.3 'JetBrains Mono',monospace; color:#7b8f82; text-transform:uppercase; letter-spacing:.05em; }
+        .chartbox { background:rgba(2,12,7,.6); border:1px solid rgba(0,255,102,.12); border-radius:14px; padding:12px; }
+        .coltog { display:inline-flex; align-items:center; gap:6px; padding:3px 8px; border-radius:6px; cursor:pointer; font:600 10px 'JetBrains Mono',monospace; color:#a4b8aa; }
+        .coltog:hover { background:rgba(0,255,102,.08); color:#00ff66; }
+        .coltog input { accent-color:#00ff66; }
+        .colpanel { position:absolute; top:38px; right:0; z-index:60; background:rgba(6,20,12,.99); border:1px solid rgba(0,255,102,.22); border-radius:12px; padding:10px; min-width:190px; box-shadow:0 14px 50px rgba(0,0,0,.5); }
+        .tabb { height:36px; border:1px solid rgba(0,255,102,.2); background:rgba(0,0,0,.2); color:#9ab0a0; border-radius:10px; padding:0 14px; font:700 11px 'JetBrains Mono',monospace; }
+        .tabb.active { color:#001b08; background:#00ff66; border-color:#00ff66; }
+        .rank-row { display:grid; grid-template-columns:28px 1fr 60px; gap:10px; align-items:center; padding:8px 0; border-bottom:1px solid rgba(127,255,164,.08); }
+        .bar { height:7px; border-radius:4px; background:rgba(255,255,255,.07); overflow:hidden; }
+        .bar > i { display:block; height:100%; border-radius:4px; background:linear-gradient(90deg,#00ff66,#00f2fe); }
+        @media (max-width:760px){
+            th,td { padding:6px 7px; }
+            .hero-t { font-size:1.7rem; }
+            .table-wrap table { min-width:1150px; }
+            .mob { display:grid; gap:8px; }
+            .desk { display:none; }
+        }
+        @media (min-width:761px){ .mobonly { display:none; } }
+    </style>
+</head>
+<body>
+<header class="sticky top-0 z-50 border-b border-emerald-400/20 bg-[#020904]/90 backdrop-blur-xl">
+    <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-2 sm:px-6">
+        <a href="index.html" class="flex min-w-0 items-center gap-2">
+            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-tr from-green-500 to-cyan-400 text-sm text-black shadow-lg shadow-emerald-500/20"><i class="fa-solid fa-cat"></i></span>
+            <span class="min-w-0"><span class="block truncate font-extrabold tracking-widest text-white text-sm">ARCH1CAT</span><span class="block truncate mono text-[9px] text-emerald-300">FREE AI UNIVERSE</span></span>
+        </a>
+        <div class="flex items-center gap-2">
+            <span id="snap-label" class="mono text-[9px] text-slate-500 hidden sm:inline"></span>
+            <a href="index.html" class="rounded-lg border border-emerald-400/25 px-2.5 py-1.5 mono text-[10px] font-bold text-emerald-200 transition hover:border-emerald-300 hover:bg-emerald-400/10"><i class="fa-solid fa-arrow-left mr-1"></i>Portfolio</a>
+        </div>
+    </div>
+</header>
+
+<main class="mx-auto max-w-7xl px-4 py-6 sm:px-6">
+    <section class="mb-5">
+        <div class="mb-2 inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-2.5 py-1 mono text-[9px] font-bold uppercase tracking-[.16em] text-emerald-300">
+            <span class="h-1.5 w-1.5 rounded-full bg-emerald-300 shadow-[0_0_10px_#00ff66]"></span>Daily snapshot
+        </div>
+        <h1 class="hero-t mb-2 text-3xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl">Рейтинг бесплатных <span class="bg-gradient-to-r from-emerald-300 via-cyan-300 to-violet-300 bg-clip-text text-transparent">AI Universe</span></h1>
+        <p class="max-w-4xl text-sm leading-6 text-slate-300">Все бесплатные AI, которые нам реально доступны — через API, через OAuth и вообще без подключений. С токенами, бенчмарками, графиками и живыми статусами. Платные тарифы — отдельным блоком.</p>
+    </section>
+
+    <section id="stats" class="mb-5 grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-6"></section>
+
+    <nav class="mb-4 flex flex-wrap gap-2">
+        <button class="tabb active" data-tab="free">01 / Free AI</button>
+        <button class="tabb" data-tab="rank">02 / Рейтинг</button>
+        <button class="tabb" data-tab="plans">03 / Тарифы</button>
+        <button class="tabb" data-tab="news">04 / Новинки</button>
+    </nav>
+
+    <!-- ================= FREE AI ================= -->
+    <section class="tabp" id="tab-free">
+        <div class="glass mb-3 rounded-2xl p-3">
+            <div class="grid grid-cols-2 gap-2 md:grid-cols-4 lg:grid-cols-8">
+                <div class="relative col-span-2 md:col-span-2 lg:col-span-2">
+                    <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-1/2 -translate-y-1/2 text-emerald-300 text-[10px]"></i>
+                    <input id="q" type="search" placeholder="Модель, провайдер, exact ID, задача..." class="finp">
+                </div>
+                <select id="f-prov" class="fsel"></select>
+                <select id="f-type" class="fsel"></select>
+                <select id="f-status" class="fsel"></select>
+                <select id="f-task" class="fsel"></select>
+                <select id="f-src" class="fsel"></select>
+                <select id="f-ctx" class="fsel"></select>
+            </div>
+            <div class="mt-2 grid grid-cols-2 gap-2 md:grid-cols-4 lg:grid-cols-6">
+                <select id="f-bench" class="fsel"></select>
+                <select id="f-reason" class="fsel"></select>
+                <select id="f-sort" class="fsel">
+                    <option value="rank">Сортировка: rank</option>
+                    <option value="ctx">Сортировка: ctx ↓</option>
+                    <option value="swe">Сортировка: SWE ↓</option>
+                    <option value="out">Сортировка: out ↓</option>
+                    <option value="prov">Сортировка: провайдер</option>
+                    <option value="st">Сортировка: статус</option>
+                </select>
+                <div class="relative">
+                    <button id="col-btn" class="btn cyan w-full"><i class="fa-solid fa-columns mr-1"></i>Колонки</button>
+                    <div id="col-panel" class="colpanel hidden"></div>
+                </div>
+                <button id="reset" class="btn danger">Сбросить</button>
+                <span id="cnt" class="mono self-center text-[9px] text-slate-500"></span>
+            </div>
+        </div>
+
+        <div class="mb-4 grid gap-3 lg:grid-cols-2">
+            <div class="chartbox">
+                <div class="mb-2 flex items-center justify-between"><span class="mono text-[9px] uppercase tracking-widest text-emerald-300">Free-модели по провайдерам</span><span class="mono text-[9px] text-slate-600">working / catalog / blocked</span></div>
+                <div id="chart-providers"></div>
+            </div>
+            <div class="chartbox">
+                <div class="mb-2 flex items-center justify-between"><span class="mono text-[9px] uppercase tracking-widest text-cyan-300">ctx × SWE-bench</span><span class="mono text-[9px] text-slate-600">размер = out-токены</span></div>
+                <div id="chart-scatter"></div>
+            </div>
+        </div>
+
+        <div class="table-wrap glass desk"><table><thead><tr id="thead"></tr></thead><tbody id="rows"></tbody></table></div>
+        <div id="cards" class="mob mobonly"></div>
+
+        <div class="mt-4 grid gap-3 lg:grid-cols-2">
+            <div class="chartbox">
+                <div class="mb-2 mono text-[9px] uppercase tracking-widest text-violet-300">Radar: топ-5 по качеству</div>
+                <div id="chart-radar"></div>
+            </div>
+            <div class="chartbox">
+                <div class="mb-2 mono text-[9px] uppercase tracking-widest text-amber-300">Лимиты по провайдерам</div>
+                <div id="chart-limits"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= RANKING ================= -->
+    <section class="tabp hidden" id="tab-rank">
+        <div class="mb-4 grid gap-3 lg:grid-cols-[1fr_320px]">
+            <div class="chartbox">
+                <div class="mb-3 flex items-center justify-between">
+                    <div><div class="mono text-[9px] uppercase tracking-widest text-emerald-300">Provider rating</div><div class="mt-0.5 text-lg font-extrabold text-white">Рейтинг бесплатных провайдеров</div></div>
+                    <span class="mono text-[9px] text-slate-600">score 0–100</span>
+                </div>
+                <div id="rank-list"></div>
+            </div>
+            <div class="chartbox">
+                <div class="mb-2 mono text-[9px] uppercase tracking-widest text-cyan-300">Формула score</div>
+                <div id="rank-formula" class="space-y-2 text-[11px] text-slate-300"></div>
+            </div>
+        </div>
+        <div class="table-wrap glass"><table><thead><tr>
+            <th>#</th><th>Провайдер</th><th>Score</th><th>Работает</th><th>Каталог</th><th>Blocked</th><th>Всего</th><th>Access</th><th>Карта</th><th>Обучение</th><th>RPM</th><th>RPD</th><th>Max ctx</th><th>Avg SWE</th><th>Uptime</th><th>Лимиты</th><th>Заметка</th>
+        </tr></thead><tbody id="rank-rows"></tbody></table></div>
+    </section>
+
+    <!-- ================= PLANS ================= -->
+    <section class="tabp hidden" id="tab-plans">
+        <div class="mb-4 chartbox">
+            <div class="mono text-[9px] uppercase tracking-widest text-amber-300">Тарифы и что в них включено</div>
+            <div class="mt-0.5 text-lg font-extrabold text-white">Платные планы: цена, объём, токены</div>
+            <p class="mt-1 text-[11px] text-slate-400">Основной каталог — бесплатный. Этот блок для тех, кто хочет стабильность без лимитов.</p>
+        </div>
+        <div id="plans-grid" class="grid gap-3 md:grid-cols-2 xl:grid-cols-3"></div>
+    </section>
+
+    <!-- ================= NEWS ================= -->
+    <section class="tabp hidden" id="tab-news">
+        <div class="mb-4 grid gap-3 lg:grid-cols-[1fr_360px]">
+            <div class="chartbox">
+                <div class="mono text-[9px] uppercase tracking-widest text-cyan-300">Релиз-трекер · октябрь 2026</div>
+                <div class="mt-0.5 text-lg font-extrabold text-white">Новые модели</div>
+                <div id="news-list" class="mt-3"></div>
+            </div>
+            <div class="chartbox">
+                <div class="mono text-[9px] uppercase tracking-widest text-emerald-300">Живые пробы</div>
+                <div class="mt-0.5 text-lg font-extrabold text-white">Что проверено 20 Oct</div>
+                <div id="probe-list" class="mt-3 max-h-[520px] overflow-y-auto pr-1"></div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="border-t border-emerald-400/15 py-5">
+    <div class="mx-auto flex max-w-7xl flex-col gap-2 px-4 text-[10px] text-slate-500 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+        <span class="mono">ARCH1CAT // FREE AI UNIVERSE</span>
+        <span class="mono">Antigravity / agy — не трогаем, только читаем каталог</span>
+        <a href="index.html" class="text-emerald-300 hover:text-white">← Back to portfolio</a>
+    </div>
+</footer>
+
+<script src="data/free-ai.js"></script>
+<script>
+const D = window.FREE_AI_DATA;
+const $ = (id) => document.getElementById(id);
+const esc = (v) => String(v).replace(/[&<>\"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]));
+const fmt = (n) => n==null ? '<span class="tok-dim">—</span>' : n>=1048576 ? (n/1048576).toFixed(1)+'M' : n>=1000 ? Math.round(n/1000)+'K' : String(n);
+const fb = (n) => n==null ? '<span class="bench-dim">—</span>' : (n>100 ? n.toLocaleString() : n+'%');
+const ST = { working:['WORKING','st-ok'], catalog:['CATALOG','st-cat'], blocked:['BLOCKED','st-blk'], paid:['PAID','st-paid'], inconclusive:['INCONCLUSIVE','st-inc'] };
+const TY = { free:['FREE','st-ok'], preview:['PREVIEW','st-cat'], stealth:['STEALTH','st-inc'], paid:['PAID','st-paid'] };
+const SRC = { api:['API','st-cat'], oauth:['OAuth','st-inc'], noauth:['NO-AUTH','st-ok'], local:['LOCAL','st-cat'] };
+const stBadge = s => { const [l,k]=ST[s]||ST.catalog; return `<span class="status ${k}">${l}</span>`; };
+const tyBadge = t => { const [l,k]=TY[t]||TY.free; return `<span class="status ${k}">${l}</span>`; };
+const srcBadge = s => { const [l,k]=SRC[s]||SRC.api; return `<span class="status ${k}">${l}</span>`; };
+const provColor = Object.fromEntries(D.providers.map(p=>[p.id,p.color||'#00ff66']));
+const provById = Object.fromEntries(D.providers.map(p=>[p.id,p]));
+
+// ---------------- flatten routes
+const routes = [];
+D.families.forEach(f => f.routes.forEach(r => routes.push({
+    ...r, family: f.name, famId: f.id, rank: f.rank, tasks: f.tasks, bench: f.bench,
+    ctx: f.ctx, out: f.out, reasoning: f.reasoning
+})));
+const TASKS = [...new Set(D.families.flatMap(f=>f.tasks))].sort();
+const CTX_BANDS = [['Любой ctx',0],['≥64K',65536],['≥128K',131072],['≥256K',262144],['≥1M',1048576]];
+
+const COLS = [
+    {k:'rank', l:'#', def:true}, {k:'fam', l:'Модель', def:true}, {k:'prov', l:'Провайдер', def:true},
+    {k:'id', l:'Exact ID', def:true}, {k:'status', l:'Статус', def:true}, {k:'type', l:'Тип', def:false},
+    {k:'src', l:'Источник', def:false}, {k:'ctx', l:'ctx', def:true}, {k:'out', l:'out', def:true},
+    {k:'reason', l:'R', def:true}, {k:'swe', l:'SWE', def:true}, {k:'he', l:'HE', def:false},
+    {k:'aider', l:'Aider', def:false}, {k:'tasks', l:'Задачи', def:false}, {k:'bench', l:'Benchmark', def:false},
+];
+const colState = {};
+COLS.forEach(c => { const v = localStorage.getItem('fc_'+c.k); colState[c.k] = v===null ? c.def : v==='1'; });
+const saveCols = () => COLS.forEach(c => localStorage.setItem('fc_'+c.k, colState[c.k]?'1':'0'));
+
+let state = { q:'', prov:'Все', type:'Все', status:'Все', task:'Все', src:'Все', ctx:'Любой ctx', reason:'Любой', bench:'Любой', sort:'rank' };
+
+// ---------------- filters
+const fill = (el, opts) => el.innerHTML = opts.map(o=>`<option value="${esc(o)}">${esc(o)}</option>`).join('');
+fill($('f-prov'), ['Все', ...D.providers.map(p=>p.id)]);
+fill($('f-type'), ['Все','Free','Preview','Stealth']);
+fill($('f-status'), ['Все','Working','Catalog','Blocked']);
+fill($('f-task'), ['Все', ...TASKS]);
+fill($('f-src'), ['Все','API','OAuth','No-Auth','Local']);
+fill($('f-ctx'), CTX_BANDS.map(b=>b[0]));
+fill($('f-bench'), ['Любой','SWE ≥60%','SWE ≥55%','HumanEval ≥85%','Есть Arena','Нет бенчмарков']);
+fill($('f-reason'), ['Любой','Reasoning: да','Reasoning: нет']);
+
+const match = r => {
+    const hay = [r.family, r.p, r.id, r.tasks.join(' '), r.bench.arenaRank||'', r.famId].join(' ').toLowerCase();
+    if (state.q && !hay.includes(state.q.toLowerCase())) return false;
+    if (state.prov!=='Все' && r.p!==state.prov) return false;
+    if (state.type!=='Все' && r.type.toLowerCase()!==state.type.toLowerCase()) return false;
+    if (state.status!=='Все' && r.status!==state.status.toLowerCase()) return false;
+    if (state.task!=='Все' && !r.tasks.includes(state.task)) return false;
+    if (state.src!=='Все' && r.src.toLowerCase()!==state.src.toLowerCase()) return false;
+    const band = (CTX_BANDS.find(b=>b[0]===state.ctx)||[null,0])[1];
+    if ((r.ctx||0) < band) return false;
+    if (state.reason!=='Любой' && (state.reason==='Reasoning: да' ? !r.reasoning : r.reasoning)) return false;
+    const b = r.bench;
+    if (state.bench==='SWE ≥60%' && !(b.swe>=60)) return false;
+    if (state.bench==='SWE ≥55%' && !(b.swe>=55)) return false;
+    if (state.bench==='HumanEval ≥85%' && !(b.he>=85)) return false;
+    if (state.bench==='Есть Arena' && !b.arena) return false;
+    if (state.bench==='Нет бенчмарков' && b.swe!=null) return false;
+    return true;
+};
+const sorter = (list) => { const c=[...list];
+    if(state.sort==='ctx') c.sort((a,b)=>(b.ctx||0)-(a.ctx||0));
+    else if(state.sort==='swe') c.sort((a,b)=>(b.bench.swe||0)-(a.bench.swe||0));
+    else if(state.sort==='out') c.sort((a,b)=>(b.out||0)-(a.out||0));
+    else if(state.sort==='prov') c.sort((a,b)=>a.p.localeCompare(b.p)||a.rank-b.rank);
+    else if(state.sort==='st') c.sort((a,b)=>a.status.localeCompare(b.status)||a.rank-b.rank);
+    else c.sort((a,b)=>a.rank-b.rank||a.p.localeCompare(b.p));
+    return c; };
+
+// ---------------- column panel
+function renderColPanel(){
+    $('col-panel').innerHTML = '<div class="mono text-[9px] uppercase text-emerald-300 mb-2">Колонки</div>' +
+        COLS.map(c=>`<label class="coltog"><input type="checkbox" ${colState[c.k]?'checked':''} data-c="${c.k}"> ${c.l}</label>`).join('');
+    $('col-panel').querySelectorAll('input').forEach(cb=>cb.addEventListener('change',e=>{
+        colState[e.target.dataset.c]=e.target.checked; saveCols(); renderTable();
+    }));
+}
+function renderHead(){
+    $('thead').innerHTML = COLS.filter(c=>colState[c.k]).map(c=>`<th>${c.l}</th>`).join('');
+}
+function cell(r, k){
+    const col = provColor[r.p]||'#00ff66';
+    switch(k){
+        case 'rank': return `<td class="mono text-emerald-300">${r.rank}</td>`;
+        case 'fam': return `<td><strong class="text-white text-[11px]">${esc(r.family)}</strong><span class="block text-[9px] text-slate-500">${esc(r.bench.arenaRank||'')}</span></td>`;
+        case 'prov': return `<td><span class="ppill"><span class="pdot" style="background:${col}"></span>${esc(r.p)}</span></td>`;
+        case 'id': return `<td><div class="flex items-start gap-1.5"><code class="flex-1">${esc(r.id)}</code><button class="copy" data-cp="${esc(r.id)}">cp</button></div></td>`;
+        case 'status': return `<td>${stBadge(r.status)}</td>`;
+        case 'type': return `<td>${tyBadge(r.type)}</td>`;
+        case 'src': return `<td>${srcBadge(r.src)}</td>`;
+        case 'ctx': return `<td class="tok">${fmt(r.ctx)}</td>`;
+        case 'out': return `<td class="tok">${fmt(r.out)}</td>`;
+        case 'reason': return `<td>${r.reasoning?'<span class="tok">R</span>':'<span class="tok-dim">—</span>'}</td>`;
+        case 'swe': return `<td class="bench">${fb(r.bench.swe)}</td>`;
+        case 'he': return `<td class="bench">${fb(r.bench.he)}</td>`;
+        case 'aider': return `<td class="bench">${fb(r.bench.aider)}</td>`;
+        case 'tasks': return `<td><div class="flex flex-wrap gap-0.5">${r.tasks.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div></td>`;
+        case 'bench': return `<td class="text-[10px] text-cyan-100">${esc(r.bench.arenaRank||'—')}</td>`;
+        default: return '<td></td>';
+    }
+}
+function renderTable(){
+    const vis = sorter(routes.filter(match));
+    $('cnt').textContent = `${vis.length} / ${routes.length} маршрутов`;
+    const cols = COLS.filter(c=>colState[c.k]);
+    $('rows').innerHTML = vis.map(r=>`<tr>${cols.map(c=>cell(r,c.k)).join('')}</tr>`).join('') ||
+        '<tr><td colspan="15" class="py-6 text-center text-slate-400 text-xs">Ничего не найдено</td></tr>';
+    $('cards').innerHTML = vis.map(r=>`<article class="mcard">
+        <div class="flex items-start justify-between gap-2">
+            <div><div class="text-xs font-bold text-white">${esc(r.family)}</div>
+                <div class="mono text-[9px] text-slate-500">${esc(r.p)} · #${r.rank}</div></div>
+            <div class="flex gap-1">${tyBadge(r.type)}${stBadge(r.status)}</div>
+        </div>
+        <div class="mt-1.5 flex flex-wrap gap-0.5">${r.tasks.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>
+        <div class="mt-2 grid grid-cols-4 gap-1 text-[10px]">
+            <div><span class="mono text-[9px] text-slate-500">ctx</span><div class="tok">${fmt(r.ctx)}</div></div>
+            <div><span class="mono text-[9px] text-slate-500">out</span><div class="tok">${fmt(r.out)}</div></div>
+            <div><span class="mono text-[9px] text-slate-500">SWE</span><div class="bench">${fb(r.bench.swe)}</div></div>
+            <div><span class="mono text-[9px] text-slate-500">HE</span><div class="bench">${fb(r.bench.he)}</div></div>
+        </div>
+        <div class="mt-2 flex items-start gap-1.5"><code class="flex-1 text-[9px]">${esc(r.id)}</code><button class="copy" data-cp="${esc(r.id)}">cp</button></div>
+    </article>`).join('') || '<div class="mcard text-xs text-slate-400">Ничего не найдено</div>';
+}
+
+// ---------------- SVG charts
+const SVG = (w,h,inner) => `<svg viewBox="0 0 ${w} ${h}" width="100%" height="${h}" preserveAspectRatio="xMidYMid meet" style="display:block">${inner}</svg>`;
+
+function chartProviders(){
+    const agg = {};
+    routes.forEach(r => { agg[r.p] = agg[r.p] || {w:0,c:0,b:0}; agg[r.p][r.status==='working'?'w':r.status==='catalog'?'c':'b']++; });
+    const entries = Object.entries(agg).sort((a,b)=>(b[1].w+b[1].c+b[1].b)-(a[1].w+a[1].c+a[1].b)).slice(0,13);
+    const max = Math.max(...entries.map(([,v])=>v.w+v.c+v.b));
+    const H = 336, w = 700, barX = 150, barW = 400;
+    const rowH = Math.max(16, (H-8)/entries.length);
+    const bh = Math.min(13, rowH-6);
+    let s = '';
+    entries.forEach(([p,v],i)=>{
+        const tot = v.w+v.c+v.b, y = i*rowH+4;
+        const w1 = barW*v.w/max, w2 = barW*v.c/max, w3 = barW*v.b/max;
+        s += `<text x="0" y="${(y+bh/2+3).toFixed(1)}" fill="#c8d8cd" font-size="10" font-family="JetBrains Mono,monospace">${esc(p)}</text>`;
+        s += `<rect x="${barX}" y="${y}" width="${w1.toFixed(1)}" height="${bh}" fill="#00ff66" opacity=".9" rx="2"/>`;
+        s += `<rect x="${(barX+w1).toFixed(1)}" y="${y}" width="${w2.toFixed(1)}" height="${bh}" fill="#00f2fe" opacity=".7"/>`;
+        s += `<rect x="${(barX+w1+w2).toFixed(1)}" y="${y}" width="${w3.toFixed(1)}" height="${bh}" fill="#ff5577" opacity=".65"/>`;
+        s += `<text x="${barX+barW+8}" y="${(y+bh/2+3).toFixed(1)}" fill="#8fffb2" font-size="10" font-family="JetBrains Mono,monospace">${tot}</text>`;
+    });
+    $('chart-providers').innerHTML = SVG(w,H,s);
+}
+
+function chartScatter(){
+    const pts = D.families.filter(f=>f.bench.swe);
+    const W=700,H=340,pad={l:52,r:20,t:20,b:40};
+    const maxCtx=1048576, maxOut=524288;
+    const x=v=>pad.l+(v/maxCtx)*(W-pad.l-pad.r);
+    const y=v=>H-pad.b-(v/75)*(H-pad.t-pad.b);
+    let s='';
+    [0,15,30,45,60,75].forEach(v=>{
+        s+=`<line x1="${pad.l}" y1="${y(v)}" x2="${W-pad.r}" y2="${y(v)}" stroke="rgba(127,255,164,.09)"/>`;
+        s+=`<text x="${pad.l-6}" y="${y(v)+3}" fill="#5d7167" font-size="9" text-anchor="end" font-family="JetBrains Mono,monospace">${v}%</text>`;
+    });
+    [0,262144,524288,1048576].forEach(v=>{
+        s+=`<text x="${x(v)}" y="${H-pad.b+16}" fill="#5d7167" font-size="9" text-anchor="middle" font-family="JetBrains Mono,monospace">${v>=1048576?'1M':Math.round(v/1024)+'K'}</text>`;
+    });
+    s+=`<text x="${(W/2)}" y="${H-6}" fill="#6b7f72" font-size="9" text-anchor="middle" font-family="JetBrains Mono,monospace">context window</text>`;
+    s+=`<text x="12" y="${(H/2)}" fill="#6b7f72" font-size="9" transform="rotate(-90 12 ${H/2})" text-anchor="middle" font-family="JetBrains Mono,monospace">SWE-bench %</text>`;
+    pts.forEach(f=>{
+        const cx=x(f.ctx), cy=y(f.bench.swe), rad=4+Math.min(11,(f.out||0)/maxOut*11);
+        s+=`<circle cx="${cx}" cy="${cy}" r="${rad.toFixed(1)}" fill="rgba(0,242,254,.32)" stroke="#00f2fe" stroke-width="1.2"/>`;
+        s+=`<title>${esc(f.name)} — SWE ${f.bench.swe}%, ctx ${fmt(f.ctx)}, out ${fmt(f.out)}</title>`;
+    });
+    $('chart-scatter').innerHTML = SVG(W,H,s);
+}
+
+function chartRadar(){
+    const top = D.families.filter(f=>f.bench.swe).sort((a,b)=>b.bench.swe-a.bench.swe).slice(0,5);
+    const axes=[{k:'swe',l:'SWE',m:75},{k:'he',l:'HumanEval',m:100},{k:'aider',l:'Aider',m:80},{k:'ctx',l:'ctx',m:1048576},{k:'out',l:'out',m:524288}];
+    const W=700,H=340,cx=W/2,cy=H/2+6,R=118;
+    const pt=(i,v)=>{const a=-Math.PI/2+i*2*Math.PI/axes.length;return [cx+Math.cos(a)*R*(v/m), cy+Math.sin(a)*R*(v/m)];};
+    let s='';
+    for(let ring=1;ring<=4;ring++){ const rr=R*ring/4; s+=`<polygon points="${axes.map((_,i)=>{const a=-Math.PI/2+i*2*Math.PI/axes.length;return (cx+Math.cos(a)*rr).toFixed(1)+','+(cy+Math.sin(a)*rr).toFixed(1);}).join(' ')}" fill="none" stroke="rgba(127,255,164,.1)"/>`; }
+    axes.forEach((ax,i)=>{const p=pt(i,ax.m); s+=`<text x="${p[0]}" y="${p[1]}" fill="#8fffb2" font-size="9" text-anchor="middle" font-family="JetBrains Mono,monospace">${ax.l}</text>`;});
+    const cols=['#00ff66','#00f2fe','#a78bfa','#ffc857','#ff5577'];
+    top.forEach((f,fi)=>{
+        const vals=[f.bench.swe||0,f.bench.he||0,f.bench.aider||0,f.ctx||0,f.out||0];
+        const pts=vals.map((v,i)=>pt(i,v).map(x=>x.toFixed(1)).join(',')).join(' ');
+        s+=`<polygon points="${pts}" fill="${cols[fi]}" fill-opacity=".12" stroke="${cols[fi]}" stroke-width="1.6"/>`;
+    });
+    axes.forEach((ax,i)=>{ s+=`<line x1="${cx}" y1="${cy}" x2="${pt(i,ax.m)[0].toFixed(1)}" y2="${pt(i,ax.m)[1].toFixed(1)}" stroke="rgba(127,255,164,.12)"/>`; });
+    s+=`<g transform="translate(14,10)">` + top.map((f,i)=>`<rect x="0" y="${i*15}" width="9" height="9" fill="${cols[i]}"/><text x="14" y="${i*15+8}" fill="#c8d8cd" font-size="9" font-family="JetBrains Mono,monospace">${esc(f.name.slice(0,26))}</text>`).join('') + `</g>`;
+    $('chart-radar').innerHTML = SVG(W,H,s);
+}
+
+function chartLimits(){
+    const rows = D.ranking.filter(r=>r.rpm||r.rpd||r.tpd).slice(0,10);
+    const W=700,rowH=28,h=rows.length*rowH+8;
+    let s='';
+    rows.forEach((r,i)=>{
+        const y=i*rowH+6;
+        const rpmW = r.rpm ? Math.min(200, r.rpm*4) : 0;
+        const rpdW = r.rpd ? Math.min(200, r.rpd/5) : 0;
+        s+=`<text x="0" y="${y+11}" fill="#c8d8cd" font-size="10" font-family="JetBrains Mono,monospace">${esc(r.id)}</text>`;
+        s+=`<rect x="150" y="${y+2}" width="${rpmW}" height="9" fill="#00ff66" opacity=".85"/>`;
+        s+=`<text x="${152+rpmW}" y="${y+10}" fill="#8fffb2" font-size="9" font-family="JetBrains Mono,monospace">${r.rpm||0} RPM</text>`;
+        s+=`<rect x="330" y="${y+2}" width="${rpdW}" height="9" fill="#00f2fe" opacity=".7"/>`;
+        s+=`<text x="${332+rpdW}" y="${y+10}" fill="#a7f8ff" font-size="9" font-family="JetBrains Mono,monospace">${r.rpd?r.rpd.toLocaleString()+' RPD':'—'}</text>`;
+        if(r.tpd) s+=`<text x="500" y="${y+10}" fill="#ffd889" font-size="9" font-family="JetBrains Mono,monospace">${(r.tpd/1e6).toFixed(1)}M ток/день</text>`;
+    });
+    $('chart-limits').innerHTML = SVG(W,h,s);
+}
+
+// ---------------- ranking
+function renderRank(){
+    const max = D.ranking[0].score || 1;
+    $('rank-list').innerHTML = D.ranking.map(r=>`
+        <div class="rank-row">
+            <div class="mono text-[11px] font-bold" style="color:${r.color||'#00ff66'}">#${r.place}</div>
+            <div>
+                <div class="flex items-center gap-2"><span class="text-[11px] text-white font-semibold">${esc(r.id)}</span>
+                    <span class="status ${r.status==='working'?'st-ok':r.status==='candidate'?'st-cat':r.status==='blocked'?'st-blk':'st-cat'}">${r.status==='working'?'WORKING':r.status==='candidate'?'CANDIDATE':r.status==='blocked'?'BLOCKED':'CATALOG'}</span>
+                    ${r.access==='noauth'?'<span class="status st-ok">NO-AUTH</span>':''}</div>
+                <div class="bar mt-1"><i style="width:${(r.score/max*100).toFixed(1)}%;background:linear-gradient(90deg,${r.color||'#00ff66'},#00f2fe)"></i></div>
+                <div class="mono text-[9px] text-slate-600 mt-0.5">${r.working} working · ${r.catalog} catalog · ${r.blocked} blocked${r.benchAvg?' · avg SWE '+r.benchAvg+'%':''}</div>
+            </div>
+            <div class="text-right"><div class="mono text-[15px] font-bold" style="color:${r.color||'#00ff66'}">${r.score}</div><div class="mono text-[8px] text-slate-600">score</div></div>
+        </div>`).join('');
+    $('rank-formula').innerHTML = `
+        <div class="mcard"><div class="mono text-[9px] text-emerald-300">score = Σ компонентов</div>
+        <div class="mt-2 space-y-1">
+            <div class="flex justify-between"><span>Работоспособность</span><span class="mono text-emerald-300">40</span></div>
+            <div class="flex justify-between"><span>Покрытие моделей</span><span class="mono text-emerald-300">20</span></div>
+            <div class="flex justify-between"><span>Контекст</span><span class="mono text-emerald-300">15</span></div>
+            <div class="flex justify-between"><span>Бенчмарки</span><span class="mono text-emerald-300">10</span></div>
+            <div class="flex justify-between"><span>Лимиты</span><span class="mono text-emerald-300">10</span></div>
+            <div class="flex justify-between"><span>Простота доступа</span><span class="mono text-emerald-300">5</span></div>
+        </div></div>
+        <div class="mcard text-[10px] text-slate-400">No-auth = 1.0 · API-ключ = 0.8 · локальный = 0.7 · OAuth = 0.6 · blocked = 0</div>`;
+    $('rank-rows').innerHTML = D.ranking.map(r=>`<tr>
+        <td class="mono text-emerald-300">${r.place}</td>
+        <td><span class="ppill"><span class="pdot" style="background:${r.color||'#00ff66'}"></span>${esc(r.id)}</span></td>
+        <td class="mono font-bold" style="color:${r.color||'#00ff66'}">${r.score}</td>
+        <td class="tok">${r.working}</td><td class="text-cyan-300">${r.catalog}</td><td class="text-rose-300">${r.blocked}</td>
+        <td class="text-slate-300">${r.total}</td>
+        <td>${srcBadge(r.access)}</td>
+        <td>${r.card?'<span class="status st-blk">нужна</span>':'<span class="status st-ok">нет</span>'}</td>
+        <td class="text-[10px]">${esc(r.training||'—')}</td>
+        <td class="tok">${r.rpm||'—'}</td><td class="tok">${r.rpd?r.rpd.toLocaleString():'—'}</td>
+        <td class="tok">${fmt(r.ctxCap)}</td><td class="bench">${r.benchAvg?r.benchAvg+'%':'—'}</td>
+        <td class="text-[10px]">${esc(r.uptime||'—')}</td>
+        <td class="text-[10px] text-slate-400">${esc(r.limits||'')}</td>
+        <td class="text-[10px] text-slate-400">${esc(r.note||'')}</td></tr>`).join('');
+}
+
+// ---------------- plans / news / probes
+function renderPlans(){
+    $('plans-grid').innerHTML = D.plans.map(p=>{
+        const isFree = p.price==='$0';
+        return `<article class="card ${isFree?'':'border-amber-400/25'}">
+            <div class="flex items-start justify-between gap-2">
+                <div><div class="text-sm font-extrabold text-white">${esc(p.name)}</div>
+                    <div class="mono text-[9px] text-slate-500">${esc(p.kind)}</div></div>
+                <div class="text-right"><div class="mono text-sm font-bold ${isFree?'text-emerald-300':'text-amber-300'}">${esc(p.price)}</div>
+                    ${p.score?`<div class="mono text-[8px] text-slate-600">score ${p.score}</div>`:''}</div>
+            </div>
+            <div class="mt-2 text-[10px] text-slate-300 leading-4"><b class="text-emerald-200">Включено:</b> ${esc(p.includes)}</div>
+            <div class="mt-1.5 text-[10px] text-slate-400 leading-4"><b class="text-cyan-200">Лимиты:</b> ${esc(p.allowance)}</div>
+            <div class="mt-1.5 text-[10px] text-amber-200 leading-4"><b>Токены:</b> ${esc(p.tokens)}</div>
+            <div class="mt-2 text-[10px] text-slate-300"><b>Вердикт:</b> ${esc(p.verdict)}</div>
+        </article>`; }).join('');
+}
+function renderNews(){
+    $('news-list').innerHTML = D.releases.map(r=>`
+        <div class="flex items-start gap-3 border-b border-emerald-400/8 py-1.5">
+            <div class="mono w-[68px] shrink-0 text-[9px] text-slate-500">${r.d}</div>
+            <div class="min-w-0 flex-1">
+                <div class="text-[11px] text-white font-semibold">${esc(r.n)}</div>
+                <div class="mono text-[9px] text-slate-500">${esc(r.o)}${r.ctx?' · ctx '+r.ctx:''}${r.p?' · '+r.p:''}</div>
+                <div class="mono text-[9px] text-cyan-400/70">${esc(r.k)}</div>
+            </div>
+            ${r.free?'<span class="status st-ok shrink-0">FREE/OPEN</span>':''}
+        </div>`).join('');
+    $('probe-list').innerHTML = D.probes.map(p=>`
+        <div class="flex items-start gap-2 border-b border-emerald-400/8 py-1">
+            <span class="status ${p.r==='ok'?'st-ok':'st-blk'} shrink-0">${p.r==='ok'?'OK':'ERR'}</span>
+            <div class="min-w-0 flex-1">
+                <code class="text-[9px]">${esc(p.m)}</code>
+                <div class="mono text-[9px] text-slate-500">${esc(p.t)} — ${esc(p.n)}</div>
+            </div>
+        </div>`).join('');
+}
+
+// ---------------- stats
+function renderStats(){
+    const working = routes.filter(r=>r.status==='working').length;
+    const noauth = routes.filter(r=>r.src==='noauth').length;
+    const swes = D.families.map(f=>f.bench.swe).filter(v=>v!=null);
+    const maxCtx = Math.max(...D.families.map(f=>f.ctx||0));
+    const provs = new Set(routes.map(r=>r.p)).size;
+    const st = [
+        {v:routes.length, l:'Free-маршрутов'},
+        {v:working, l:'Работают сейчас'},
+        {v:noauth, l:'Без подключения'},
+        {v:provs, l:'Провайдеров'},
+        {v:(swes.reduce((a,b)=>a+b,0)/swes.length).toFixed(1)+'%', l:'Средний SWE'},
+        {v:fmt(maxCtx), l:'Макс контекст'},
+    ];
+    $('stats').innerHTML = st.map(s=>`<div class="stat"><div class="stat-v">${s.v}</div><div class="stat-l mt-1">${s.l}</div></div>`).join('');
+    $('snap-label').textContent = 'snapshot ' + D.snapshot;
+}
+
+// ---------------- init
+renderStats(); renderColPanel(); renderHead(); renderTable();
+chartProviders(); chartScatter(); chartRadar(); chartLimits();
+renderRank(); renderPlans(); renderNews();
+
+const bindSel = (id,key) => $(id).addEventListener('change', e=>{ state[key]=e.target.value; renderTable(); });
+bindSel('f-prov','prov'); bindSel('f-type','type'); bindSel('f-status','status'); bindSel('f-task','task');
+bindSel('f-src','src'); bindSel('f-ctx','ctx'); bindSel('f-bench','bench'); bindSel('f-reason','reason');
+$('f-sort').addEventListener('change', e=>{ state.sort=e.target.value; renderTable(); });
+$('q').addEventListener('input', e=>{ state.q=e.target.value.trim(); renderTable(); });
+$('reset').addEventListener('click', ()=>{
+    state={q:'',prov:'Все',type:'Все',status:'Все',task:'Все',src:'Все',ctx:'Любой ctx',reason:'Любой',bench:'Любой',sort:'rank'};
+    $('q').value=''; ['f-prov','f-type','f-status','f-task','f-src','f-ctx','f-bench','f-reason'].forEach(id=>$(id).value = id==='f-ctx'?'Любой ctx':'Все');
+    $('f-sort').value='rank'; renderTable();
+});
+$('col-btn').addEventListener('click', e=>{ e.stopPropagation(); $('col-panel').classList.toggle('hidden'); });
+document.addEventListener('click', e=>{ if(!e.target.closest('#col-panel') && !e.target.closest('#col-btn')) $('col-panel').classList.add('hidden'); });
+
+document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{
+    document.querySelectorAll('[data-tab]').forEach(x=>x.classList.remove('active')); b.classList.add('active');
+    document.querySelectorAll('.tabp').forEach(p=>p.classList.add('hidden'));
+    $('tab-'+b.dataset.tab).classList.remove('hidden');
+    window.scrollTo({top:0,behavior:'smooth'});
+}));
+
+document.addEventListener('click', async e=>{
+    const b = e.target.closest('[data-cp]'); if(!b) return;
+    const v = b.dataset.cp;
+    try { await navigator.clipboard.writeText(v); }
+    catch { const t=document.createElement('textarea'); t.value=v; document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove(); }
+    const o=b.textContent; b.textContent='ok'; setTimeout(()=>b.textContent=o,1000);
+});
+</script>
+</body>
+</html>

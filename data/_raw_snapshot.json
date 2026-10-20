@@ -1,0 +1,261 @@
+{
+ "snapshot": "2026-10-20",
+ "openrouter": [
+  {
+   "id": "cohere/north-mini-code:free",
+   "ctx": 256000,
+   "out": 64000,
+   "tools": true,
+   "name": "Cohere: North Mini Code (free)"
+  },
+  {
+   "id": "dots-studio/dots-3-note-preview:free",
+   "ctx": 512000,
+   "out": 460800,
+   "tools": true,
+   "name": "Dots Studio: Dots3-Note Preview (free)"
+  },
+  {
+   "id": "google/gemma-4-26b-a4b-it:free",
+   "ctx": 262144,
+   "out": 32768,
+   "tools": true,
+   "name": "Google: Gemma 4 26B A4B  (free)"
+  },
+  {
+   "id": "google/gemma-4-31b-it:free",
+   "ctx": 262144,
+   "out": 32768,
+   "tools": true,
+   "name": "Google: Gemma 4 31B (free)"
+  },
+  {
+   "id": "google/lyria-3-clip-preview",
+   "ctx": 1048576,
+   "out": 65536,
+   "tools": false,
+   "name": "Google: Lyria 3 Clip Preview"
+  },
+  {
+   "id": "google/lyria-3-pro-preview",
+   "ctx": 1048576,
+   "out": 65536,
+   "tools": false,
+   "name": "Google: Lyria 3 Pro Preview"
+  },
+  {
+   "id": "liquid/lfm-2.5-2.6b:free",
+   "ctx": 65536,
+   "out": 8192,
+   "tools": true,
+   "name": "LiquidAI: LFM2.5-2.6B (free)"
+  },
+  {
+   "id": "minimax/minimax-m3.1-flash:free",
+   "ctx": 1000000,
+   "out": 524288,
+   "tools": true,
+   "name": "MiniMax: MiniMax M3.1 Flash (free)"
+  },
+  {
+   "id": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+   "ctx": 256000,
+   "out": 65536,
+   "tools": true,
+   "name": "NVIDIA: Nemotron 3 Nano Omni (free)"
+  },
+  {
+   "id": "nvidia/nemotron-3-super-120b-a12b:free",
+   "ctx": 262144,
+   "out": 235929,
+   "tools": true,
+   "name": "NVIDIA: Nemotron 3 Super (free)"
+  },
+  {
+   "id": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "ctx": 1000000,
+   "out": 65536,
+   "tools": true,
+   "name": "NVIDIA: Nemotron 3 Ultra (free)"
+  },
+  {
+   "id": "nvidia/nemotron-3.5-content-safety:free",
+   "ctx": 128000,
+   "out": 8192,
+   "tools": false,
+   "name": "NVIDIA: Nemotron 3.5 Content Safety (free)"
+  },
+  {
+   "id": "nvidia/nemotron-3.5-lightning:free",
+   "ctx": 1000000,
+   "out": 65536,
+   "tools": true,
+   "name": "NVIDIA: Nemotron 3.5 Lightning (free)"
+  },
+  {
+   "id": "nvidia/nemotron-3.5-super-vl:free",
+   "ctx": 1000000,
+   "out": 131072,
+   "tools": true,
+   "name": "NVIDIA: Nemotron 3.5 Super VL (free)"
+  },
+  {
+   "id": "openrouter/free",
+   "ctx": 200000,
+   "out": null,
+   "tools": true,
+   "name": "Free Models Router"
+  },
+  {
+   "id": "poolside/laguna-s-2.1:free",
+   "ctx": 262144,
+   "out": 32768,
+   "tools": true,
+   "name": "Poolside: Laguna S 2.1 (free)"
+  },
+  {
+   "id": "poolside/laguna-xs-2.1:free",
+   "ctx": 262144,
+   "out": 32768,
+   "tools": true,
+   "name": "Poolside: Laguna XS 2.1 (free)"
+  },
+  {
+   "id": "thinkingmachines/inkling-small:free",
+   "ctx": 1048576,
+   "out": 262144,
+   "tools": true,
+   "name": "Thinking Machines: Inkling Small (free)"
+  },
+  {
+   "id": "thinkingmachines/inkling:free",
+   "ctx": 1048576,
+   "out": 262144,
+   "tools": true,
+   "name": "Thinking Machines: Inkling (free)"
+  },
+  {
+   "id": "xingchen-agi/xing4.0-29b-a4b:free",
+   "ctx": 262144,
+   "out": 235929,
+   "tools": true,
+   "name": "XingChen: Xing4.0 29B A4B (free)"
+  }
+ ],
+ "nous": [
+  {
+   "id": "meituan/longcat-2.0:free",
+   "ctx": null,
+   "out": null,
+   "tools": true,
+   "name": "meituan/longcat-2.0:free"
+  },
+  {
+   "id": "meituan/longcat-2.5-preview:free",
+   "ctx": null,
+   "out": null,
+   "tools": true,
+   "name": "meituan/longcat-2.5-preview:free"
+  },
+  {
+   "id": "poolside/laguna-s-2.1:free",
+   "ctx": null,
+   "out": null,
+   "tools": true,
+   "name": "poolside/laguna-s-2.1:free"
+  },
+  {
+   "id": "poolside/laguna-xs-2.1:free",
+   "ctx": null,
+   "out": null,
+   "tools": true,
+   "name": "poolside/laguna-xs-2.1:free"
+  },
+  {
+   "id": "reflection/beam-1.0-501b-a23b:free",
+   "ctx": null,
+   "out": null,
+   "tools": true,
+   "name": "reflection/beam-1.0-501b-a23b:free"
+  },
+  {
+   "id": "stepfun/step-3.7-flash:free",
+   "ctx": null,
+   "out": null,
+   "tools": true,
+   "name": "stepfun/step-3.7-flash:free"
+  },
+  {
+   "id": "upstage/solar-mini4:free",
+   "ctx": null,
+   "out": null,
+   "tools": true,
+   "name": "upstage/solar-mini4:free"
+  }
+ ],
+ "omniroute": {
+  "total": 1294,
+  "prefixes": {
+   "auto": 45,
+   "agy": 25,
+   "no-think": 63,
+   "antigravity": 19,
+   "dva": 110,
+   "oc": 10,
+   "ddgw": 6,
+   "cfp": 20,
+   "veoaifree-web": 2,
+   "veo-free": 2,
+   "aug": 28,
+   "zc": 14,
+   "cxa": 45,
+   "unc": 1,
+   "aihorde": 167,
+   "openrouter": 737
+  },
+  "noauth_free": [
+   {
+    "id": "ddgw/gpt-5.4-mini",
+    "name": "GPT-5.4 mini",
+    "ctx": null,
+    "out": null,
+    "family": "GPT-5.4"
+   },
+   {
+    "id": "ddgw/gpt-5.6-luna",
+    "name": "GPT-5.6 Luna",
+    "ctx": null,
+    "out": null,
+    "family": "GPT-5.6"
+   },
+   {
+    "id": "ddgw/claude-haiku-4-5",
+    "name": "Claude Haiku 4.5",
+    "ctx": 200000,
+    "out": null,
+    "family": "Claude Haiku 4.5"
+   },
+   {
+    "id": "ddgw/mistral-small-2603",
+    "name": "Mistral Small 2603",
+    "ctx": null,
+    "out": null,
+    "family": "Mistral Small"
+   },
+   {
+    "id": "ddgw/tinfoil/gpt-oss-120b",
+    "name": "GPT-OSS 120B (Tinfoil)",
+    "ctx": 131072,
+    "out": null,
+    "family": "GPT-OSS"
+   },
+   {
+    "id": "ddgw/tinfoil/gemma4-31b",
+    "name": "Gemma 4 31B (Tinfoil)",
+    "ctx": 262144,
+    "out": null,
+    "family": "Gemma 4"
+   }
+  ]
+ }
+}
