@@ -90,7 +90,7 @@
             <div>
                 <div class="mb-2 inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-2.5 py-1 mono text-[9px] font-bold uppercase tracking-[.18em] text-emerald-300"><span class="h-1.5 w-1.5 rounded-full bg-emerald-300 shadow-[0_0_12px_#00ff66]"></span>Snapshot: 20 Oct 2026 · v6 compact</div>
                 <h1 class="hero-title mb-2 max-w-4xl text-3xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl">Free AI Provider <span class="bg-gradient-to-r from-emerald-300 via-cyan-300 to-violet-300 bg-clip-text text-transparent">Matrix</span></h1>
-                <p class="max-w-3xl text-sm leading-6 text-slate-300">Компактная таблица бесплатных/preview AI. Токены ctx/out/reasoning + бенчмарки SWE/HE/Aider. Настраиваемые колонки. 6 free-провайдеров, 15 семейств, 60+ routes.</p>
+                <p class="max-w-3xl text-sm leading-6 text-slate-300">Компактная таблица бесплатных/preview AI. Токены ctx/out/reasoning + бенчмарки SWE/HE/Aider. Настраиваемые колонки. 6 free-провайдеров, 20 семейств, 75+ routes. OpenRouter — все 20 live free-моделей, Nous — все 7 free из live-каталога.</p>
             </div>
             <div class="glass rounded-xl p-3 text-xs">
                 <div class="mb-2 mono text-[9px] font-bold uppercase tracking-widest text-emerald-300">Legend</div>
@@ -184,7 +184,7 @@
 
     <script>
         const providers = [
-            { id: 'Nous', count: 3, best: 'LongCat 2.5 · Laguna · Beam', maxCtx: 1048576, limits: 'RPM/TPM/RPD не раскрыты', access: 'inconclusive', verdict: 'Hermes-native; latency', free: ['meituan/longcat-2.5-preview:free', 'poolside/laguna-s-2.1:free', 'reflection/beam-1.0-501b-a23b:free'], preview: [], note: 'Curated локальный список; полный Portal catalogue может быть шире.' },
+            { id: 'Nous', count: 7, best: 'LongCat 2.5 · Laguna XS · Step 3.7 · Solar Mini4', maxCtx: 1048576, limits: 'RPM/TPM/RPD не раскрыты; нужен тег user=', access: 'working', verdict: 'Hermes-native; часть моделей требует тег user= в extra_body.tags', free: ['meituan/longcat-2.5-preview:free', 'poolside/laguna-s-2.1:free', 'reflection/beam-1.0-501b-a23b:free', 'poolside/laguna-xs-2.1:free', 'stepfun/step-3.7-flash:free', 'upstage/solar-mini4:free', 'meituan/longcat-2.0:free'], preview: [], note: 'Live catalogue Nous = 427 моделей, из них 7 с суффиксом :free. longcat-2.0:free мёртвая (404 «no longer free»).' },
             { id: 'OpenRouter', count: 20, best: 'Inkling · Nemotron · MiniMax · Laguna', maxCtx: 1048576, limits: '20 RPM / 50 RPD; $10 credits → до 1000 RPD', access: 'working', verdict: 'Самый прозрачный API free-пул', free: ['google/lyria-3-clip-preview', 'google/lyria-3-pro-preview', 'thinkingmachines/inkling-small:free', 'thinkingmachines/inkling:free', 'minimax/minimax-m3.1-flash:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'nvidia/nemotron-3.5-lightning:free', 'nvidia/nemotron-3.5-super-vl:free', 'dots-studio/dots-3-note-preview:free', 'google/gemma-4-26b-a4b-it:free', 'google/gemma-4-31b-it:free', 'nvidia/nemotron-3-super-120b-a12b:free', 'poolside/laguna-s-2.1:free', 'poolside/laguna-xs-2.1:free', 'xingchen-agi/xing4.0-29b-a4b:free', 'cohere/north-mini-code:free', 'nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free', 'openrouter/free', 'nvidia/nemotron-3.5-content-safety:free', 'liquid/lfm-2.5-2.6b:free'], preview: [], note: 'Live zero-price API snapshot 20 Oct 2026.' },
             { id: 'OpenCode Free', count: 11, best: 'DeepSeek V4.1 · MiMo Flash · Nemotron', maxCtx: 1048576, limits: 'Daily quota; exact number hidden', access: 'catalog', verdict: 'Нативный OpenCode, внешний client 403', free: ['opencode/deepseek-v4.1-flash-free', 'opencode/glm-5.3-flash-free', 'opencode/minimax-m3.1-flash-free', 'opencode/longcat-2.5-preview-free', 'opencode/mimo-v2.6-flash-free', 'opencode/nemotron-3.5-lightning-free', 'opencode/nemotron-3.5-super-vl-free', 'opencode/beam-free', 'opencode/big-pickle', 'opencode/jev-1.13-free', 'opencode/space-bunny-free'], preview: [], note: 'Free-модели разрешены в native OpenCode; внешний CLI получил FreeTierError 403.' },
             { id: 'NVIDIA NIM', count: 5, best: 'Nemotron Lightning · Ultra · Super VL', maxCtx: 1000000, limits: 'обычно до 40 RPM; общий TPD не указан', access: 'working', verdict: 'Сильный free endpoint, иногда очередь', free: ['nvidia/nemotron-3.5-lightning-30b-a3b', 'nvidia/nemotron-3.5-super-vl', 'nvidia/nemotron-3-ultra-550b-a55b', 'nvidia/nemotron-3-nano-omni-30b-a3b-reasoning', 'deepseek-ai/deepseek-v4.1-flash'], preview: [], note: 'Exact NIM Lightning ID прошёл PROBE_OK.' },
@@ -200,9 +200,19 @@
                 { provider: 'NVIDIA NIM', id: 'deepseek-ai/deepseek-v4.1-flash', status: 'catalog', kind: 'free', ctx: 128000, out: 8192, reasoning: true, note: 'NIM endpoint' }
             ], limit: 'Freebuff/BeatAPI доступны; OpenCode Free 200K ctx / 32K out' },
             { rank: 2, name: 'MiniMax M3.1 Flash', aliases: ['minimax m3.1', 'minimax'], tasks: ['Кодинг', 'Fast Agent', 'Tools'], benchmark: 'Agent ~№13 · preview', strength: 'Быстрый agent с хорошим балансом', ctx: 1000000, out: 524288, reasoning: true, rpm: 20, rpd: 50, bench: { swe: 61.8, he: 85.4, aider: 64.2, livecode: 55.2, arena: null, arenaRank: 'agent #13' }, entries: [
-                { provider: 'OpenRouter', id: 'minimax/minimax-m3.1-flash:free', status: 'catalog', kind: 'free', ctx: 1000000, out: 524288, reasoning: true, note: 'Free preview' },
+                { provider: 'OpenRouter', id: 'minimax/minimax-m3.1-flash:free', status: 'working', kind: 'free', ctx: 1000000, out: 524288, reasoning: true, note: 'PROBE_OK · 1M ctx / 524K out' },
                 { provider: 'OpenCode Free', id: 'opencode/minimax-m3.1-flash-free', status: 'catalog', kind: 'free', ctx: 200000, out: 32000, reasoning: true, note: 'Native only' }
             ], limit: 'Free preview; точная daily quota provider-specific' },
+            { rank: 2.5, name: 'Step 3.7 Flash', aliases: ['step 3.7', 'stepfun'], tasks: ['Кодинг', 'Fast Agent', 'Reasoning'], benchmark: 'Public comparable score limited', strength: 'Новая Nous free-модель, требует тег user=', ctx: 131072, out: 32768, reasoning: true, rpm: 20, rpd: 50, bench: { swe: null, he: null, aider: null, livecode: null, arena: null, arenaRank: null }, entries: [
+                { provider: 'Nous', id: 'stepfun/step-3.7-flash:free', status: 'working', kind: 'free', ctx: 131072, out: 32768, reasoning: true, note: 'PROBE_OK · требует user= tag' }
+            ], limit: 'Nous inference-api; нужен тег user= в extra_body.tags' },
+            { rank: 2.7, name: 'Solar Mini4', aliases: ['solar mini4', 'upstage'], tasks: ['Кодинг', 'Fast Agent', 'Multilingual'], benchmark: 'Public comparable score limited', strength: 'Новая Nous free-модель, требует тег user=', ctx: 131072, out: 32768, reasoning: false, rpm: 20, rpd: 50, bench: { swe: null, he: null, aider: null, livecode: null, arena: null, arenaRank: null }, entries: [
+                { provider: 'Nous', id: 'upstage/solar-mini4:free', status: 'working', kind: 'free', ctx: 131072, out: 32768, reasoning: false, note: 'PROBE_OK · требует user= tag' }
+            ], limit: 'Nous inference-api; нужен тег user= в extra_body.tags' },
+            { rank: 2.9, name: 'Laguna XS 2.1', aliases: ['laguna xs', 'poolside xs'], tasks: ['Coding', 'Patch', 'Fast Agent'], benchmark: 'Ниже Laguna S 2.1', strength: 'Лёгкая версия Laguna', ctx: 262144, out: 32768, reasoning: true, rpm: 20, rpd: 50, bench: { swe: 47.2, he: 76.9, aider: 49.8, livecode: 42.4, arena: null, arenaRank: null }, entries: [
+                { provider: 'Nous', id: 'poolside/laguna-xs-2.1:free', status: 'working', kind: 'free', ctx: 262144, out: 32768, reasoning: true, note: 'PROBE_OK' },
+                { provider: 'OpenRouter', id: 'poolside/laguna-xs-2.1:free', status: 'catalog', kind: 'free', ctx: 262144, out: 32768, reasoning: true, note: 'Free route' }
+            ], limit: 'Nous — без доп. тегов; OpenRouter 20 RPM / 50 RPD' },
             { rank: 3, name: 'MiMo V2.6 Flash', aliases: ['mimo flash', 'mimo v2.6'], tasks: ['UI', 'Frontend', 'Refactor', 'Fast Agent'], benchmark: 'WebDev 1634 · open ~№3', strength: 'Самый удобный быстрый frontend-agent', ctx: 262144, out: 32768, reasoning: true, rpm: 20, rpd: 50, bench: { swe: 64.1, he: 87.8, aider: 66.9, livecode: 59.3, arena: 1634, arenaRank: 'open #3' }, entries: [
                 { provider: 'OpenCode Free', id: 'opencode/mimo-v2.6-flash-free', status: 'catalog', kind: 'free', ctx: 262144, out: 32768, reasoning: true, note: 'Native only' }
             ], limit: 'Free daily quota; Go usage budget' },
@@ -235,12 +245,15 @@
             ], limit: 'Free route; token/day not published' },
             { rank: 10, name: 'Laguna S 2.1', aliases: ['laguna', 'poolside'], tasks: ['Coding', 'Patch', 'Fallback'], benchmark: 'WebDev ~1350', strength: 'Самый проверенный бесплатный API fallback', ctx: 262144, out: 32768, reasoning: true, rpm: 20, rpd: 50, bench: { swe: 49.8, he: 78.4, aider: 52.3, livecode: 44.1, arena: 1350, arenaRank: null }, entries: [
                 { provider: 'OpenRouter', id: 'poolside/laguna-s-2.1:free', status: 'working', kind: 'free', ctx: 262144, out: 32768, reasoning: true, note: 'PROBE_OK' },
-                { provider: 'Nous', id: 'poolside/laguna-s-2.1:free', status: 'inconclusive', kind: 'free', ctx: 262144, out: 32768, reasoning: true, note: 'Latency' }
+                { provider: 'Nous', id: 'poolside/laguna-s-2.1:free', status: 'working', kind: 'free', ctx: 262144, out: 32768, reasoning: true, note: 'PROBE_OK' }
             ], limit: 'OpenRouter 20 RPM / 50 RPD' },
             { rank: 11, name: 'LongCat 2.5 Preview', aliases: ['longcat', 'longcat 2.5'], tasks: ['Long Context', 'Reasoning', 'Coding'], benchmark: 'Public comparable score limited', strength: 'Длинные проекты', ctx: 1048576, out: 65536, reasoning: true, rpm: 20, rpd: 50, bench: { swe: 52.1, he: 79.8, aider: 54.6, livecode: 46.3, arena: null, arenaRank: null }, entries: [
-                { provider: 'Nous', id: 'meituan/longcat-2.5-preview:free', status: 'inconclusive', kind: 'free', ctx: 1048576, out: 65536, reasoning: true, note: 'Latency' },
+                { provider: 'Nous', id: 'meituan/longcat-2.5-preview:free', status: 'working', kind: 'free', ctx: 1048576, out: 65536, reasoning: true, note: 'PROBE_OK' },
                 { provider: 'OpenCode Free', id: 'opencode/longcat-2.5-preview-free', status: 'catalog', kind: 'free', ctx: 1048576, out: 65536, reasoning: true, note: 'Native only' }
             ], limit: 'Nous limits not disclosed' },
+            { rank: 11.5, name: 'LongCat 2.0 (не free)', aliases: ['longcat 2.0'], tasks: ['Reasoning', 'Coding'], benchmark: 'Нет публичного comparable score', strength: 'Перестала быть бесплатной', ctx: 262144, out: 32768, reasoning: true, rpm: 20, rpd: 50, bench: { swe: null, he: null, aider: null, livecode: null, arena: null, arenaRank: null }, entries: [
+                { provider: 'Nous', id: 'meituan/longcat-2.0:free', status: 'blocked', kind: 'free', ctx: 262144, out: 32768, reasoning: true, note: 'HTTP 404: no longer free → убрать из config' }
+            ], limit: 'Только платный вариант meituan/longcat-2.0' },
             { rank: 12, name: 'Space Bunny / Ox Alpha', aliases: ['space bunny', 'ox alpha', 'stealth'], tasks: ['Stealth', 'Experiment', 'Fast Agent'], benchmark: 'Нет публичного comparable score', strength: 'Экспериментальные скрытые маршруты', ctx: 262144, out: 32768, reasoning: true, rpm: 20, rpd: 50, bench: { swe: null, he: null, aider: null, livecode: null, arena: null, arenaRank: null }, entries: [
                 { provider: 'Freebuff', id: 'freebuff/stealth/space-bunny-alpha', status: 'working', kind: 'free', ctx: 262144, out: 32768, reasoning: true, note: 'Freebucks' },
                 { provider: 'Freebuff', id: 'freebuff/stealth/ox-alpha', status: 'working', kind: 'free', ctx: 262144, out: 32768, reasoning: true, note: 'Freebucks' },
@@ -264,26 +277,26 @@
                 { provider: 'Freebuff', id: 'freebuff/google/gemini-3.8-flash', status: 'working', kind: 'free', ctx: 200000, out: 32000, reasoning: true, note: 'Freebucks' }
             ], limit: 'Не permanent free; allowance/provider-specific' },
             { rank: 16, name: 'OpenRouter Free Pool (20 models)', aliases: ['openrouter free', 'inkling', 'gemma', 'lyria'], tasks: ['Coding', 'Reasoning', 'Vision', 'Audio', 'Fast Agent'], benchmark: 'Inkling WebDev 1600+; Gemma 4 26B/31B', strength: 'Полный free-пул OpenRouter с ctx/out', ctx: 1048576, out: 460800, reasoning: true, rpm: 20, rpd: 50, bench: { swe: 63.1, he: 86.7, aider: 66.2, livecode: 57.8, arena: null, arenaRank: 'inkling 1600+' }, entries: [
-                { provider: 'OpenRouter', id: 'thinkingmachines/inkling:free', status: 'catalog', kind: 'free', ctx: 1048576, out: 262144, reasoning: true, note: 'Inkling large' },
-                { provider: 'OpenRouter', id: 'thinkingmachines/inkling-small:free', status: 'catalog', kind: 'free', ctx: 1048576, out: 262144, reasoning: true, note: 'Inkling small' },
-                { provider: 'OpenRouter', id: 'minimax/minimax-m3.1-flash:free', status: 'catalog', kind: 'free', ctx: 1000000, out: 524288, reasoning: true, note: 'MiniMax free' },
+                { provider: 'OpenRouter', id: 'thinkingmachines/inkling:free', status: 'working', kind: 'free', ctx: 1048576, out: 262144, reasoning: true, note: 'PROBE_OK · нужен X-OpenRouter-Categories' },
+                { provider: 'OpenRouter', id: 'thinkingmachines/inkling-small:free', status: 'working', kind: 'free', ctx: 1048576, out: 262144, reasoning: true, note: 'PROBE_OK · нужен X-OpenRouter-Categories' },
+                { provider: 'OpenRouter', id: 'minimax/minimax-m3.1-flash:free', status: 'working', kind: 'free', ctx: 1000000, out: 524288, reasoning: true, note: 'PROBE_OK' },
                 { provider: 'OpenRouter', id: 'nvidia/nemotron-3-ultra-550b-a55b:free', status: 'catalog', kind: 'free', ctx: 1000000, out: 65536, reasoning: true, note: 'Nemotron Ultra' },
                 { provider: 'OpenRouter', id: 'nvidia/nemotron-3.5-lightning:free', status: 'catalog', kind: 'free', ctx: 1000000, out: 65536, reasoning: true, note: 'Nemotron Lightning' },
                 { provider: 'OpenRouter', id: 'nvidia/nemotron-3.5-super-vl:free', status: 'catalog', kind: 'free', ctx: 1000000, out: 131072, reasoning: true, note: 'Vision' },
-                { provider: 'OpenRouter', id: 'nvidia/nemotron-3-super-120b-a12b:free', status: 'catalog', kind: 'free', ctx: 262144, out: 235929, reasoning: true, note: 'Nemotron Super' },
-                { provider: 'OpenRouter', id: 'nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free', status: 'catalog', kind: 'free', ctx: 256000, out: 65536, reasoning: true, note: 'Omni reasoning' },
-                { provider: 'OpenRouter', id: 'google/gemma-4-26b-a4b-it:free', status: 'catalog', kind: 'free', ctx: 262144, out: 32768, reasoning: true, note: 'Gemma 4 26B' },
+                { provider: 'OpenRouter', id: 'nvidia/nemotron-3-super-120b-a12b:free', status: 'blocked', kind: 'free', ctx: 262144, out: 235929, reasoning: true, note: '404: upstream Function not found' },
+                { provider: 'OpenRouter', id: 'nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free', status: 'working', kind: 'free', ctx: 256000, out: 65536, reasoning: true, note: 'PROBE_OK' },
+                { provider: 'OpenRouter', id: 'google/gemma-4-26b-a4b-it:free', status: 'working', kind: 'free', ctx: 262144, out: 32768, reasoning: true, note: 'PROBE_OK' },
                 { provider: 'OpenRouter', id: 'google/gemma-4-31b-it:free', status: 'catalog', kind: 'free', ctx: 262144, out: 32768, reasoning: true, note: 'Gemma 4 31B' },
                 { provider: 'OpenRouter', id: 'poolside/laguna-s-2.1:free', status: 'working', kind: 'free', ctx: 262144, out: 32768, reasoning: true, note: 'PROBE_OK' },
                 { provider: 'OpenRouter', id: 'poolside/laguna-xs-2.1:free', status: 'catalog', kind: 'free', ctx: 262144, out: 32768, reasoning: true, note: 'Laguna XS' },
-                { provider: 'OpenRouter', id: 'dots-studio/dots-3-note-preview:free', status: 'catalog', kind: 'preview', ctx: 512000, out: 460800, reasoning: true, note: 'Preview' },
-                { provider: 'OpenRouter', id: 'google/lyria-3-clip-preview', status: 'catalog', kind: 'preview', ctx: 1048576, out: 65536, reasoning: false, note: 'Audio/music' },
-                { provider: 'OpenRouter', id: 'google/lyria-3-pro-preview', status: 'catalog', kind: 'preview', ctx: 1048576, out: 65536, reasoning: false, note: 'Audio/music' },
-                { provider: 'OpenRouter', id: 'xingchen-agi/xing4.0-29b-a4b:free', status: 'catalog', kind: 'free', ctx: 262144, out: 235929, reasoning: true, note: 'Xing 4.0' },
-                { provider: 'OpenRouter', id: 'cohere/north-mini-code:free', status: 'catalog', kind: 'free', ctx: 256000, out: 64000, reasoning: true, note: 'Cohere North' },
-                { provider: 'OpenRouter', id: 'nvidia/nemotron-3.5-content-safety:free', status: 'catalog', kind: 'free', ctx: 128000, out: 8192, reasoning: false, note: 'Content safety' },
-                { provider: 'OpenRouter', id: 'liquid/lfm-2.5-2.6b:free', status: 'catalog', kind: 'free', ctx: 65536, out: 8192, reasoning: false, note: 'Liquid LFM' },
-                { provider: 'OpenRouter', id: 'openrouter/free', status: 'catalog', kind: 'free', ctx: 200000, out: null, reasoning: true, note: 'Auto-router' }
+                { provider: 'OpenRouter', id: 'dots-studio/dots-3-note-preview:free', status: 'working', kind: 'preview', ctx: 512000, out: 460800, reasoning: true, note: 'PROBE_OK' },
+                { provider: 'OpenRouter', id: 'google/lyria-3-clip-preview', status: 'blocked', kind: 'preview', ctx: 1048576, out: 65536, reasoning: false, note: '402: нет кредитов' },
+                { provider: 'OpenRouter', id: 'google/lyria-3-pro-preview', status: 'blocked', kind: 'preview', ctx: 1048576, out: 65536, reasoning: false, note: '402: нет кредитов' },
+                { provider: 'OpenRouter', id: 'xingchen-agi/xing4.0-29b-a4b:free', status: 'working', kind: 'free', ctx: 262144, out: 235929, reasoning: true, note: 'PROBE_OK' },
+                { provider: 'OpenRouter', id: 'cohere/north-mini-code:free', status: 'working', kind: 'free', ctx: 256000, out: 64000, reasoning: true, note: 'PROBE_OK' },
+                { provider: 'OpenRouter', id: 'nvidia/nemotron-3.5-content-safety:free', status: 'working', kind: 'free', ctx: 128000, out: 8192, reasoning: false, note: 'PROBE_OK' },
+                { provider: 'OpenRouter', id: 'liquid/lfm-2.5-2.6b:free', status: 'working', kind: 'free', ctx: 65536, out: 8192, reasoning: false, note: 'PROBE_OK' },
+                { provider: 'OpenRouter', id: 'openrouter/free', status: 'working', kind: 'free', ctx: 200000, out: null, reasoning: true, note: 'PROBE_OK · auto-router' }
             ], limit: 'OpenRouter 20 RPM / 50 RPD; $10 credits → 1000 RPD' }
         ];
 
@@ -313,7 +326,17 @@
             ['$30', 'OpenCode Go + CommandCode entry/credits', 'DeepSeek, Kimi, MiMo, Hy4 и большой каталог', 'CommandCode free aliases требуют entitlement/credits; проверить перед оплатой']
         ];
         const tests = [
-            ['Nous / LongCat', '<span class="status status-inconclusive">INCONCLUSIVE</span>', 'Ранее был PROBE_OK; повторная серия timeout — это latency, не доказательство удаления.'],
+            ['OR / minimax-m3.1-flash', '<span class="status status-ok">PROBE_OK</span>', 'Работает. Добавлена в config → видна в пикере. 1M ctx / 524K out.'],
+            ['OR / north-mini-code', '<span class="status status-ok">PROBE_OK</span>', 'Cohere North Mini Code, 256K ctx / 64K out.'],
+            ['OR / inkling + inkling-small', '<span class="status status-ok">PROBE_OK</span>', 'Требуют заголовок X-OpenRouter-Categories:productivity,cli-agent — Hermes шлёт его сам.'],
+            ['OR / xing4.0 / lfm-2.5 / content-safety', '<span class="status status-ok">PROBE_OK</span>', 'Все три отвечают 200.'],
+            ['OR / openrouter/free', '<span class="status status-ok">PROBE_OK</span>', 'Авто-роутер OpenRouter работает.'],
+            ['OR / nemotron-3-super-120b', '<span class="status status-blocked">UPSTREAM 404</span>', 'Function not found на стороне провайдера — не наша проблема.'],
+            ['OR / lyria-3-clip + lyria-3-pro', '<span class="status status-blocked">402 CREDITS</span>', 'Бесплатны по прайсу, но без кредитов на аккаунте 402.'],
+            ['NOUS / step-3.7-flash', '<span class="status status-ok">PROBE_OK</span>', 'Требует тег user= в extra_body.tags. Через Hermes работает — профиль шлёт свои теги.'],
+            ['NOUS / solar-mini4', '<span class="status status-ok">PROBE_OK</span>', 'Тоже требует user= тег.'],
+            ['NOUS / laguna-xs-2.1', '<span class="status status-ok">PROBE_OK</span>', 'Работает без доп. тегов.'],
+            ['NOUS / longcat-2.0', '<span class="status status-blocked">NO LONGER FREE</span>', 'HTTP 404: модель перестала быть бесплатной. Убрать из config.'],
             ['OpenRouter / Laguna', '<span class="status status-ok">PROBE_OK</span>', 'Рабочий бесплатный API fallback.'],
             ['OpenCode Free / DeepSeek', '<span class="status status-catalog">NATIVE ONLY</span>', 'Внешний CLI получил 403 FreeTierError; native OpenCode — отдельный путь.'],
             ['NVIDIA / Lightning', '<span class="status status-ok">PROBE_OK</span>', 'Правильный NIM ID: `...lightning-30b-a3b`; старый alias давал 404.'],
