@@ -34,7 +34,7 @@ PROVIDERS = [
         "id": "Nous Portal", "access": "api", "status": "working", "color": "#a78bfa",
         "limits": "RPM/TPM/RPD не раскрыты", "rpm": None, "rpd": None, "tpd": None,
         "card": False, "training": "no", "ctxCap": 1048576,
-        "note": "7 :free моделей. Часть требует тег user= в extra_body.tags.",
+        "note": "8 :free моделей (включая Ornith 1.5 122B). Часть требует тег user= в extra_body.tags.",
         "uptime": "97%",
     },
     {
@@ -297,7 +297,16 @@ FAMILIES = [
         ],
     },
     {
-        "id": "kimi-k3", "rank": 3, "name": "Kimi K3",
+        "id": "ornith-1.5-122b", "rank": 3, "name": "Ornith 1.5 122B",
+        "tasks": ["Кодинг", "Reasoning", "Tools", "Vision"], "family": "Ornith 1.5",
+        "ctx": 262144, "out": 262144, "reasoning": True,
+        "bench": {"swe": 84.5, "he": None, "aider": None, "livecode": None, "arena": None, "arenaRank": "TermBench 81.2 · SWE-Pro 76.9"},
+        "routes": [
+            {"p": "Nous Portal", "id": "ornith/ornith-1.5-122b:free", "status": "working", "type": "free", "src": "api"},
+        ],
+    },
+    {
+        "id": "kimi-k3", "rank": 4, "name": "Kimi K3",
         "tasks": ["Архитектура", "Planning", "Big Codebase"], "family": "Kimi K3",
         "ctx": 256000, "out": 32768, "reasoning": True,
         "bench": {"swe": 69.3, "he": 90.1, "aider": 74.2, "livecode": 64.5, "arena": 1655, "arenaRank": "open №2"},
@@ -578,12 +587,14 @@ FAMILIES = [
         ],
     },
 ]
+for _idx, _fam in enumerate(FAMILIES, 1):
+    _fam["rank"] = _idx
 
 # ------------------------------------------------------------------ paid plans
 PLANS = [
     {
         "name": "Nous Portal Free", "price": "$0", "kind": "Free tier",
-        "includes": "Все бесплатные модели Nous: LongCat 2.5, Laguna S/XS 2.1, Beam 501B, Step 3.7 Flash, Solar Mini4 + preview. Каталог портала — 248 моделей (325 с embeddings)",
+        "includes": "Все бесплатные модели Nous: Ornith 1.5 122B, LongCat 2.5, Laguna S/XS 2.1, Beam 501B, Step 3.7 Flash, Solar Mini4 + preview. Каталог портала — 248 моделей (325 с embeddings)",
         "allowance": "50 RPM / 500K TPM. Только free-модели — платные через портал недоступны",
         "tokens": "Без лимита токенов, но жёсткий RPM",
         "verdict": "Наш основной Nous-маршрут. Работает в Hermes", "score": 89,
@@ -736,6 +747,7 @@ RELEASES = [
     {"d": "2026-10-19", "n": "Clairic", "o": "Cloudflare", "ctx": "64K", "p": None, "k": "vision", "free": True},
     {"d": "2026-10-19", "n": "Mercury 3", "o": "Inception Labs", "ctx": "1M", "p": None, "k": "reasoning", "free": False},
     {"d": "2026-10-17", "n": "DeepSeek V4.1 Flash 1017", "o": "DeepSeek", "ctx": "1M", "p": "552B", "k": "open, reasoning, vision", "free": True},
+    {"d": "2026-10-16", "n": "Ornith 1.5 122B", "o": "Ornith AI", "ctx": "256K (1M YaRN)", "p": "122B MoE", "k": "open, reasoning, vision, MIT", "free": True},
     {"d": "2026-10-16", "n": "pplx-decider-v1.2 / flash-v1.2", "o": "Perplexity Labs", "ctx": "256K", "p": "27B / 4B", "k": "open, vision", "free": True},
     {"d": "2026-10-16", "n": "Beam", "o": "Reflection AI", "ctx": "1M", "p": "501B (23B active)", "k": "open, reasoning, Apache 2.0", "free": True},
     {"d": "2026-10-15", "n": "Muse Spark Open", "o": "Meta AI", "ctx": "1M", "p": "816B (42B active)", "k": "open, reasoning, vision", "free": True},
@@ -774,6 +786,7 @@ PROBES = [
     {"m": "openrouter/google/gemma-4-26b-a4b-it:free", "r": "ok", "t": "PROBE_OK", "n": "262K ctx."},
     {"m": "openrouter/dots-studio/dots-3-note-preview:free", "r": "ok", "t": "PROBE_OK", "n": "Preview, 512K ctx."},
     {"m": "openrouter/poolside/laguna-s-2.1:free", "r": "ok", "t": "PROBE_OK", "n": "Основной бесплатный fallback."},
+    {"m": "nous/ornith/ornith-1.5-122b:free", "r": "ok", "t": "PROBE_OK", "n": "262K ctx / 262K out, vision + tools, SWE-Verified 84.5%. Работает без user= тега."},
     {"m": "nous/meituan/longcat-2.5-preview:free", "r": "ok", "t": "PROBE_OK", "n": "1M ctx."},
     {"m": "nous/poolside/laguna-s-2.1:free", "r": "ok", "t": "PROBE_OK", "n": "Работает."},
     {"m": "nous/poolside/laguna-xs-2.1:free", "r": "ok", "t": "PROBE_OK", "n": "Работает."},
@@ -980,6 +993,7 @@ DATA = {
         "tasks": ["Кодинг", "Reasoning", "UI", "Vision", "Tools", "Fast Agent", "Stealth", "Long Context", "Планирование"],
         "rows": [
             {"name": "DeepSeek V4.1 Flash", "f": "deepseek-v4.1-flash", "v": [3, 3, 1, 2, 3, 2, 0, 1, 2]},
+            {"name": "Ornith 1.5 122B", "f": "ornith-1.5-122b", "v": [3, 3, 1, 2, 3, 2, 0, 2, 2]},
             {"name": "Kimi K3", "f": "kimi-k3", "v": [3, 3, 1, 0, 2, 1, 0, 2, 3]},
             {"name": "MiMo V2.6 Pro", "f": "mimo-v2.6-pro", "v": [3, 3, 3, 0, 2, 1, 0, 1, 2]},
             {"name": "MiMo V2.6 Flash", "f": "mimo-v2.6-flash", "v": [2, 2, 3, 0, 2, 3, 0, 1, 1]},

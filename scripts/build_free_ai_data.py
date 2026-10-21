@@ -64,7 +64,14 @@ try:
     for m in d.get("data", []):
         mid = str(m.get("id"))
         if mid.endswith(":free"):
-            nous_free.append({"id": mid, "ctx": None, "out": None, "tools": True, "name": mid})
+            params = m.get("supported_parameters")
+            nous_free.append({
+                "id": mid,
+                "ctx": m.get("context_length"),
+                "out": (m.get("top_provider") or {}).get("max_completion_tokens"),
+                "tools": bool("tools" in params) if isinstance(params, list) else True,
+                "name": m.get("name") or mid,
+            })
     nous_free.sort(key=lambda x: x["id"])
     print("nous free:", len(nous_free))
 except Exception as e:

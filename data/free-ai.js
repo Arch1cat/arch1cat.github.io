@@ -28,7 +28,7 @@ window.FREE_AI_DATA = {
    "card": false,
    "training": "no",
    "ctxCap": 1048576,
-   "note": "7 :free моделей. Часть требует тег user= в extra_body.tags.",
+   "note": "8 :free моделей (включая Ornith 1.5 122B). Часть требует тег user= в extra_body.tags.",
    "uptime": "97%"
   },
   {
@@ -627,8 +627,40 @@ window.FREE_AI_DATA = {
    ]
   },
   {
-   "id": "kimi-k3",
+   "id": "ornith-1.5-122b",
    "rank": 3,
+   "name": "Ornith 1.5 122B",
+   "tasks": [
+    "Кодинг",
+    "Reasoning",
+    "Tools",
+    "Vision"
+   ],
+   "family": "Ornith 1.5",
+   "ctx": 262144,
+   "out": 262144,
+   "reasoning": true,
+   "bench": {
+    "swe": 84.5,
+    "he": null,
+    "aider": null,
+    "livecode": null,
+    "arena": null,
+    "arenaRank": "TermBench 81.2 · SWE-Pro 76.9"
+   },
+   "routes": [
+    {
+     "p": "Nous Portal",
+     "id": "ornith/ornith-1.5-122b:free",
+     "status": "working",
+     "type": "free",
+     "src": "api"
+    }
+   ]
+  },
+  {
+   "id": "kimi-k3",
+   "rank": 4,
    "name": "Kimi K3",
    "tasks": [
     "Архитектура",
@@ -666,7 +698,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "mimo-v2.6-pro",
-   "rank": 4,
+   "rank": 5,
    "name": "MiMo V2.6 Pro",
    "tasks": [
     "Архитектура",
@@ -697,7 +729,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "mimo-v2.6-flash",
-   "rank": 5,
+   "rank": 6,
    "name": "MiMo V2.6 Flash",
    "tasks": [
     "UI",
@@ -729,7 +761,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "hy4-preview",
-   "rank": 6,
+   "rank": 7,
    "name": "Hy4 Preview",
    "tasks": [
     "Agent",
@@ -760,7 +792,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "glm-5.3-flash",
-   "rank": 7,
+   "rank": 8,
    "name": "GLM-5.3 Flash",
    "tasks": [
     "Fast Patch",
@@ -812,7 +844,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "nemotron-3.5-lightning",
-   "rank": 8,
+   "rank": 9,
    "name": "Nemotron 3.5 Lightning",
    "tasks": [
     "Fast Agent",
@@ -857,7 +889,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "nemotron-3-ultra",
-   "rank": 9,
+   "rank": 10,
    "name": "Nemotron 3 Ultra / Super VL",
    "tasks": [
     "Reasoning",
@@ -916,7 +948,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "laguna-s-2.1",
-   "rank": 10,
+   "rank": 11,
    "name": "Laguna S 2.1",
    "tasks": [
     "Coding",
@@ -961,7 +993,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "laguna-xs-2.1",
-   "rank": 11,
+   "rank": 12,
    "name": "Laguna XS 2.1",
    "tasks": [
     "Coding",
@@ -999,7 +1031,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "longcat-2.5",
-   "rank": 12,
+   "rank": 13,
    "name": "LongCat 2.5 Preview",
    "tasks": [
     "Long Context",
@@ -1037,7 +1069,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "step-3.7-flash",
-   "rank": 13,
+   "rank": 14,
    "name": "Step 3.7 Flash",
    "tasks": [
     "Кодинг",
@@ -1068,7 +1100,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "solar-mini4",
-   "rank": 14,
+   "rank": 15,
    "name": "Solar Mini4",
    "tasks": [
     "Кодинг",
@@ -1099,7 +1131,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "inkling",
-   "rank": 15,
+   "rank": 16,
    "name": "Inkling / Inkling Small",
    "tasks": [
     "Кодинг",
@@ -1137,7 +1169,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "gemma-4",
-   "rank": 16,
+   "rank": 17,
    "name": "Gemma 4 26B / 31B",
    "tasks": [
     "Reasoning",
@@ -1175,7 +1207,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "north-mini-code",
-   "rank": 17,
+   "rank": 18,
    "name": "North Mini Code",
    "tasks": [
     "Кодинг",
@@ -1206,7 +1238,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "xing-4.0",
-   "rank": 18,
+   "rank": 19,
    "name": "Xing 4.0 29B-A4B",
    "tasks": [
     "Reasoning",
@@ -1236,7 +1268,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "lfm-2.5",
-   "rank": 19,
+   "rank": 20,
    "name": "LFM 2.5 2.6B",
    "tasks": [
     "Fast Agent",
@@ -1266,7 +1298,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "qwen-3.8",
-   "rank": 20,
+   "rank": 21,
    "name": "Qwen 3.8 Max / Flash",
    "tasks": [
     "Reasoning",
@@ -1311,7 +1343,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "claude-opus-5.5",
-   "rank": 21,
+   "rank": 22,
    "name": "Claude Opus 5.5 / GPT-6.1 Sol / Grok 4.7",
    "tasks": [
     "Deep Review",
@@ -1363,7 +1395,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "space-bunny",
-   "rank": 22,
+   "rank": 23,
    "name": "Space Bunny / Ox Alpha",
    "tasks": [
     "Stealth",
@@ -1408,7 +1440,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "beam-pickle",
-   "rank": 23,
+   "rank": 24,
    "name": "Beam / Big Pickle / Cat Jam / Glyph",
    "tasks": [
     "Stealth",
@@ -1453,7 +1485,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "ddgw-free",
-   "rank": 24,
+   "rank": 25,
    "name": "DuckDuckGo Cloudflare Free",
    "tasks": [
     "Fast Agent",
@@ -1519,7 +1551,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "lyria-3",
-   "rank": 25,
+   "rank": 26,
    "name": "Lyria 3 Clip / Pro (audio)",
    "tasks": [
     "Audio",
@@ -1556,7 +1588,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "dots-3-note",
-   "rank": 26,
+   "rank": 27,
    "name": "Dots 3 Note Preview",
    "tasks": [
     "Notes",
@@ -1587,7 +1619,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "openrouter-free",
-   "rank": 27,
+   "rank": 28,
    "name": "OpenRouter / free (auto-router)",
    "tasks": [
     "Кодинг",
@@ -1618,7 +1650,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "llm7-free",
-   "rank": 28,
+   "rank": 29,
    "name": "LLM7.io free subset",
    "tasks": [
     "Кодинг",
@@ -1691,7 +1723,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "content-safety",
-   "rank": 29,
+   "rank": 30,
    "name": "Content Safety / Nemotron Nano",
    "tasks": [
     "Safety",
@@ -1732,7 +1764,7 @@ window.FREE_AI_DATA = {
    "name": "Nous Portal Free",
    "price": "$0",
    "kind": "Free tier",
-   "includes": "Все бесплатные модели Nous: LongCat 2.5, Laguna S/XS 2.1, Beam 501B, Step 3.7 Flash, Solar Mini4 + preview. Каталог портала — 248 моделей (325 с embeddings)",
+   "includes": "Все бесплатные модели Nous: Ornith 1.5 122B, LongCat 2.5, Laguna S/XS 2.1, Beam 501B, Step 3.7 Flash, Solar Mini4 + preview. Каталог портала — 248 моделей (325 с embeddings)",
    "allowance": "50 RPM / 500K TPM. Только free-модели — платные через портал недоступны",
    "tokens": "Без лимита токенов, но жёсткий RPM",
    "verdict": "Наш основной Nous-маршрут. Работает в Hermes",
@@ -3304,6 +3336,15 @@ window.FREE_AI_DATA = {
   },
   {
    "d": "2026-10-16",
+   "n": "Ornith 1.5 122B",
+   "o": "Ornith AI",
+   "ctx": "256K (1M YaRN)",
+   "p": "122B MoE",
+   "k": "open, reasoning, vision, MIT",
+   "free": true
+  },
+  {
+   "d": "2026-10-16",
    "n": "pplx-decider-v1.2 / flash-v1.2",
    "o": "Perplexity Labs",
    "ctx": "256K",
@@ -3584,6 +3625,12 @@ window.FREE_AI_DATA = {
    "n": "Основной бесплатный fallback."
   },
   {
+   "m": "nous/ornith/ornith-1.5-122b:free",
+   "r": "ok",
+   "t": "PROBE_OK",
+   "n": "262K ctx / 262K out, vision + tools, SWE-Verified 84.5%. Работает без user= тега."
+  },
+  {
    "m": "nous/meituan/longcat-2.5-preview:free",
    "r": "ok",
    "t": "PROBE_OK",
@@ -3767,15 +3814,15 @@ window.FREE_AI_DATA = {
  "ranking": [
   {
    "id": "Nous Portal",
-   "score": 75.9,
-   "working": 6,
+   "score": 77.9,
+   "working": 7,
    "catalog": 0,
    "blocked": 0,
-   "total": 6,
+   "total": 7,
    "wr": 100,
    "access": "api",
    "color": "#a78bfa",
-   "benchAvg": 49.7,
+   "benchAvg": 58.4,
    "ctxCap": 1048576,
    "rpm": null,
    "rpd": null,
@@ -3785,12 +3832,12 @@ window.FREE_AI_DATA = {
    "uptime": "97%",
    "status": "working",
    "limits": "RPM/TPM/RPD не раскрыты",
-   "note": "7 :free моделей. Часть требует тег user= в extra_body.tags.",
+   "note": "8 :free моделей (включая Ornith 1.5 122B). Часть требует тег user= в extra_body.tags.",
    "parts": {
     "Работоспособность": 40.0,
-    "Покрытие моделей": 9.8,
+    "Покрытие моделей": 10.6,
     "Контекст": 15.0,
-    "Бенчмарки": 7.1,
+    "Бенчмарки": 8.3,
     "Лимиты": 0,
     "Доступ": 4.0
    },
@@ -4880,6 +4927,21 @@ window.FREE_AI_DATA = {
     ]
    },
    {
+    "name": "Ornith 1.5 122B",
+    "f": "ornith-1.5-122b",
+    "v": [
+     3,
+     3,
+     1,
+     2,
+     3,
+     2,
+     0,
+     2,
+     2
+    ]
+   },
+   {
     "name": "Kimi K3",
     "f": "kimi-k3",
     "v": [
@@ -5273,7 +5335,7 @@ window.FREE_AI_DATA = {
   }
  ],
  "meta": {
-  "omnirouteTotal": 1289,
+  "omnirouteTotal": 1281,
   "omniroutePrefixes": {
    "auto": 45,
    "agy": 25,
@@ -5289,7 +5351,7 @@ window.FREE_AI_DATA = {
    "zc": 14,
    "cxa": 45,
    "unc": 1,
-   "aihorde": 162,
+   "aihorde": 154,
    "openrouter": 737
   },
   "openrouterLiveFree": 20,
