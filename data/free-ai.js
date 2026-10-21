@@ -1,5 +1,5 @@
 window.FREE_AI_DATA = {
- "snapshot": "2026-10-20",
+ "snapshot": "2026-10-21",
  "providers": [
   {
    "id": "OpenRouter",
@@ -5273,7 +5273,7 @@ window.FREE_AI_DATA = {
   }
  ],
  "meta": {
-  "omnirouteTotal": 1294,
+  "omnirouteTotal": 1289,
   "omniroutePrefixes": {
    "auto": 45,
    "agy": 25,
@@ -5289,10 +5289,10 @@ window.FREE_AI_DATA = {
    "zc": 14,
    "cxa": 45,
    "unc": 1,
-   "aihorde": 167,
+   "aihorde": 162,
    "openrouter": 737
   },
   "openrouterLiveFree": 20,
-  "nousLiveFree": 7
+  "nousLiveFree": 8
  }
 };

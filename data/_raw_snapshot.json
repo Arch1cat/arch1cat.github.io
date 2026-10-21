@@ -1,5 +1,5 @@
 {
- "snapshot": "2026-10-20",
+ "snapshot": "2026-10-21",
  "openrouter": [
   {
    "id": "cohere/north-mini-code:free",
@@ -158,6 +158,13 @@
    "name": "meituan/longcat-2.5-preview:free"
   },
   {
+   "id": "ornith/ornith-1.5-122b:free",
+   "ctx": null,
+   "out": null,
+   "tools": true,
+   "name": "ornith/ornith-1.5-122b:free"
+  },
+  {
    "id": "poolside/laguna-s-2.1:free",
    "ctx": null,
    "out": null,
@@ -194,7 +201,7 @@
   }
  ],
  "omniroute": {
-  "total": 1294,
+  "total": 1289,
   "prefixes": {
    "auto": 45,
    "agy": 25,
@@ -210,7 +217,7 @@
    "zc": 14,
    "cxa": 45,
    "unc": 1,
-   "aihorde": 167,
+   "aihorde": 162,
    "openrouter": 737
   },
   "noauth_free": [
