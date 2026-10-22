@@ -1,5 +1,5 @@
 {
- "snapshot": "2026-10-21",
+ "snapshot": "2026-10-22",
  "openrouter": [
   {
    "id": "cohere/north-mini-code:free",
@@ -121,6 +121,13 @@
    "name": "Poolside: Laguna XS 2.1 (free)"
   },
   {
+   "id": "recursive/flint-v1.0:free",
+   "ctx": 262144,
+   "out": 235929,
+   "tools": true,
+   "name": "Recursive: Flint (free)"
+  },
+  {
    "id": "thinkingmachines/inkling-small:free",
    "ctx": 1048576,
    "out": 262144,
@@ -188,7 +195,7 @@
   {
    "id": "stepfun/step-3.7-flash:free",
    "ctx": 262144,
-   "out": 230400,
+   "out": 256000,
    "tools": true,
    "name": "StepFun: Step 3.7 Flash"
   },
@@ -201,7 +208,7 @@
   }
  ],
  "omniroute": {
-  "total": 1281,
+  "total": 1303,
   "prefixes": {
    "auto": 45,
    "agy": 25,
@@ -217,7 +224,7 @@
    "zc": 14,
    "cxa": 45,
    "unc": 1,
-   "aihorde": 154,
+   "aihorde": 176,
    "openrouter": 737
   },
   "noauth_free": [
