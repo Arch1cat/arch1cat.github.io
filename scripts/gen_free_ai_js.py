@@ -27,7 +27,7 @@ PROVIDERS = [
         "id": "OpenRouter", "access": "api", "status": "working", "color": "#00f2fe",
         "limits": "20 RPM / 50 RPD (1000 RPD с $10 top-up)", "rpm": 20, "rpd": 50, "tpd": None,
         "card": False, "training": "no", "ctxCap": 1048576,
-        "note": "20 zero-price моделей прямо сейчас. Единственный ключ на десятки семейств.",
+        "note": f"{len(OR_LIVE)} zero-price моделей прямо сейчас. Единственный ключ на десятки семейств.",
         "uptime": "99.5%",
     },
     {
@@ -303,6 +303,15 @@ FAMILIES = [
         "bench": {"swe": 84.5, "he": None, "aider": None, "livecode": None, "arena": None, "arenaRank": "TermBench 81.2 · SWE-Pro 76.9"},
         "routes": [
             {"p": "Nous Portal", "id": "ornith/ornith-1.5-122b:free", "status": "working", "type": "free", "src": "api"},
+        ],
+    },
+    {
+        "id": "flint-v1.0", "rank": 4, "name": "Recursive Flint 1.0 (40B-A2.5B)",
+        "tasks": ["Кодинг", "Reasoning", "Tools", "Fast Agent"], "family": "Recursive Flint",
+        "ctx": 262144, "out": 235929, "reasoning": True,
+        "bench": {"swe": 74.2, "he": None, "aider": None, "livecode": None, "arena": None, "arenaRank": "SWE-Pro v2 89.7 · TermBench 54.9"},
+        "routes": [
+            {"p": "OpenRouter", "id": "recursive/flint-v1.0:free", "status": "working", "type": "free", "src": "api"},
         ],
     },
     {
@@ -643,7 +652,7 @@ PLANS = [
     },
     {
         "name": "OpenRouter (пополнение)", "price": "$10 разово", "kind": "Кредиты",
-        "includes": "Все 20 zero-price моделей без изменений + рост дневного лимита",
+        "includes": f"Все {len(OR_LIVE)} zero-price моделей без изменений + рост дневного лимита",
         "allowance": "50 RPD → 1000 RPD на free-моделях. Комиссия платформы 5.5%.",
         "tokens": "1000 запросов/день на всём free-пуле",
         "verdict": "Лучший апгрейд именно для бесплатного пула", "score": 95,
@@ -743,6 +752,7 @@ PLANS = [
 
 # ------------------------------------------------------------------ releases
 RELEASES = [
+    {"d": "2026-10-21", "n": "Recursive Flint 1.0", "o": "Recursive", "ctx": "256K", "p": "40B (2.5B active)", "k": "open, coding, reasoning, Apache 2.0", "free": True},
     {"d": "2026-10-19", "n": "MiniMax M3.1 Flash", "o": "MiniMax", "ctx": "1M", "p": None, "k": "reasoning, vision", "free": True},
     {"d": "2026-10-19", "n": "Clairic", "o": "Cloudflare", "ctx": "64K", "p": None, "k": "vision", "free": True},
     {"d": "2026-10-19", "n": "Mercury 3", "o": "Inception Labs", "ctx": "1M", "p": None, "k": "reasoning", "free": False},
@@ -777,6 +787,7 @@ RELEASES = [
 
 # ------------------------------------------------------------------ verified probes
 PROBES = [
+    {"m": "openrouter/recursive/flint-v1.0:free", "r": "ok", "t": "PROBE_OK", "n": "262K ctx / 236K out, 40B-A2.5B MoE, SWE-Verified 74.2%, ~108 tok/s."},
     {"m": "openrouter/minimax/minimax-m3.1-flash:free", "r": "ok", "t": "PROBE_OK", "n": "1M ctx / 524K out. Добавлена в config → видна в пикере."},
     {"m": "openrouter/cohere/north-mini-code:free", "r": "ok", "t": "PROBE_OK", "n": "256K ctx / 64K out."},
     {"m": "openrouter/thinkingmachines/inkling:free", "r": "ok", "t": "PROBE_OK", "n": "Нужен заголовок X-OpenRouter-Categories — Hermes шлёт его сам."},
@@ -994,6 +1005,7 @@ DATA = {
         "rows": [
             {"name": "DeepSeek V4.1 Flash", "f": "deepseek-v4.1-flash", "v": [3, 3, 1, 2, 3, 2, 0, 1, 2]},
             {"name": "Ornith 1.5 122B", "f": "ornith-1.5-122b", "v": [3, 3, 1, 2, 3, 2, 0, 2, 2]},
+            {"name": "Recursive Flint 1.0", "f": "flint-v1.0", "v": [3, 3, 1, 0, 3, 3, 0, 2, 2]},
             {"name": "Kimi K3", "f": "kimi-k3", "v": [3, 3, 1, 0, 2, 1, 0, 2, 3]},
             {"name": "MiMo V2.6 Pro", "f": "mimo-v2.6-pro", "v": [3, 3, 3, 0, 2, 1, 0, 1, 2]},
             {"name": "MiMo V2.6 Flash", "f": "mimo-v2.6-flash", "v": [2, 2, 3, 0, 2, 3, 0, 1, 1]},

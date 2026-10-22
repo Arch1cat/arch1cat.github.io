@@ -13,7 +13,7 @@ window.FREE_AI_DATA = {
    "card": false,
    "training": "no",
    "ctxCap": 1048576,
-   "note": "20 zero-price моделей прямо сейчас. Единственный ключ на десятки семейств.",
+   "note": "21 zero-price моделей прямо сейчас. Единственный ключ на десятки семейств.",
    "uptime": "99.5%"
   },
   {
@@ -659,8 +659,40 @@ window.FREE_AI_DATA = {
    ]
   },
   {
-   "id": "kimi-k3",
+   "id": "flint-v1.0",
    "rank": 4,
+   "name": "Recursive Flint 1.0 (40B-A2.5B)",
+   "tasks": [
+    "Кодинг",
+    "Reasoning",
+    "Tools",
+    "Fast Agent"
+   ],
+   "family": "Recursive Flint",
+   "ctx": 262144,
+   "out": 235929,
+   "reasoning": true,
+   "bench": {
+    "swe": 74.2,
+    "he": null,
+    "aider": null,
+    "livecode": null,
+    "arena": null,
+    "arenaRank": "SWE-Pro v2 89.7 · TermBench 54.9"
+   },
+   "routes": [
+    {
+     "p": "OpenRouter",
+     "id": "recursive/flint-v1.0:free",
+     "status": "working",
+     "type": "free",
+     "src": "api"
+    }
+   ]
+  },
+  {
+   "id": "kimi-k3",
+   "rank": 5,
    "name": "Kimi K3",
    "tasks": [
     "Архитектура",
@@ -698,7 +730,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "mimo-v2.6-pro",
-   "rank": 5,
+   "rank": 6,
    "name": "MiMo V2.6 Pro",
    "tasks": [
     "Архитектура",
@@ -729,7 +761,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "mimo-v2.6-flash",
-   "rank": 6,
+   "rank": 7,
    "name": "MiMo V2.6 Flash",
    "tasks": [
     "UI",
@@ -761,7 +793,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "hy4-preview",
-   "rank": 7,
+   "rank": 8,
    "name": "Hy4 Preview",
    "tasks": [
     "Agent",
@@ -792,7 +824,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "glm-5.3-flash",
-   "rank": 8,
+   "rank": 9,
    "name": "GLM-5.3 Flash",
    "tasks": [
     "Fast Patch",
@@ -844,7 +876,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "nemotron-3.5-lightning",
-   "rank": 9,
+   "rank": 10,
    "name": "Nemotron 3.5 Lightning",
    "tasks": [
     "Fast Agent",
@@ -889,7 +921,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "nemotron-3-ultra",
-   "rank": 10,
+   "rank": 11,
    "name": "Nemotron 3 Ultra / Super VL",
    "tasks": [
     "Reasoning",
@@ -948,7 +980,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "laguna-s-2.1",
-   "rank": 11,
+   "rank": 12,
    "name": "Laguna S 2.1",
    "tasks": [
     "Coding",
@@ -993,7 +1025,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "laguna-xs-2.1",
-   "rank": 12,
+   "rank": 13,
    "name": "Laguna XS 2.1",
    "tasks": [
     "Coding",
@@ -1031,7 +1063,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "longcat-2.5",
-   "rank": 13,
+   "rank": 14,
    "name": "LongCat 2.5 Preview",
    "tasks": [
     "Long Context",
@@ -1069,7 +1101,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "step-3.7-flash",
-   "rank": 14,
+   "rank": 15,
    "name": "Step 3.7 Flash",
    "tasks": [
     "Кодинг",
@@ -1100,7 +1132,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "solar-mini4",
-   "rank": 15,
+   "rank": 16,
    "name": "Solar Mini4",
    "tasks": [
     "Кодинг",
@@ -1131,7 +1163,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "inkling",
-   "rank": 16,
+   "rank": 17,
    "name": "Inkling / Inkling Small",
    "tasks": [
     "Кодинг",
@@ -1169,7 +1201,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "gemma-4",
-   "rank": 17,
+   "rank": 18,
    "name": "Gemma 4 26B / 31B",
    "tasks": [
     "Reasoning",
@@ -1207,7 +1239,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "north-mini-code",
-   "rank": 18,
+   "rank": 19,
    "name": "North Mini Code",
    "tasks": [
     "Кодинг",
@@ -1238,7 +1270,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "xing-4.0",
-   "rank": 19,
+   "rank": 20,
    "name": "Xing 4.0 29B-A4B",
    "tasks": [
     "Reasoning",
@@ -1268,7 +1300,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "lfm-2.5",
-   "rank": 20,
+   "rank": 21,
    "name": "LFM 2.5 2.6B",
    "tasks": [
     "Fast Agent",
@@ -1298,7 +1330,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "qwen-3.8",
-   "rank": 21,
+   "rank": 22,
    "name": "Qwen 3.8 Max / Flash",
    "tasks": [
     "Reasoning",
@@ -1343,7 +1375,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "claude-opus-5.5",
-   "rank": 22,
+   "rank": 23,
    "name": "Claude Opus 5.5 / GPT-6.1 Sol / Grok 4.7",
    "tasks": [
     "Deep Review",
@@ -1395,7 +1427,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "space-bunny",
-   "rank": 23,
+   "rank": 24,
    "name": "Space Bunny / Ox Alpha",
    "tasks": [
     "Stealth",
@@ -1440,7 +1472,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "beam-pickle",
-   "rank": 24,
+   "rank": 25,
    "name": "Beam / Big Pickle / Cat Jam / Glyph",
    "tasks": [
     "Stealth",
@@ -1485,7 +1517,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "ddgw-free",
-   "rank": 25,
+   "rank": 26,
    "name": "DuckDuckGo Cloudflare Free",
    "tasks": [
     "Fast Agent",
@@ -1551,7 +1583,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "lyria-3",
-   "rank": 26,
+   "rank": 27,
    "name": "Lyria 3 Clip / Pro (audio)",
    "tasks": [
     "Audio",
@@ -1588,7 +1620,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "dots-3-note",
-   "rank": 27,
+   "rank": 28,
    "name": "Dots 3 Note Preview",
    "tasks": [
     "Notes",
@@ -1619,7 +1651,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "openrouter-free",
-   "rank": 28,
+   "rank": 29,
    "name": "OpenRouter / free (auto-router)",
    "tasks": [
     "Кодинг",
@@ -1650,7 +1682,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "llm7-free",
-   "rank": 29,
+   "rank": 30,
    "name": "LLM7.io free subset",
    "tasks": [
     "Кодинг",
@@ -1723,7 +1755,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "content-safety",
-   "rank": 30,
+   "rank": 31,
    "name": "Content Safety / Nemotron Nano",
    "tasks": [
     "Safety",
@@ -1834,7 +1866,7 @@ window.FREE_AI_DATA = {
    "name": "OpenRouter (пополнение)",
    "price": "$10 разово",
    "kind": "Кредиты",
-   "includes": "Все 20 zero-price моделей без изменений + рост дневного лимита",
+   "includes": "Все 21 zero-price моделей без изменений + рост дневного лимита",
    "allowance": "50 RPD → 1000 RPD на free-моделях. Комиссия платформы 5.5%.",
    "tokens": "1000 запросов/день на всём free-пуле",
    "verdict": "Лучший апгрейд именно для бесплатного пула",
@@ -3299,6 +3331,15 @@ window.FREE_AI_DATA = {
  ],
  "releases": [
   {
+   "d": "2026-10-21",
+   "n": "Recursive Flint 1.0",
+   "o": "Recursive",
+   "ctx": "256K",
+   "p": "40B (2.5B active)",
+   "k": "open, coding, reasoning, Apache 2.0",
+   "free": true
+  },
+  {
    "d": "2026-10-19",
    "n": "MiniMax M3.1 Flash",
    "o": "MiniMax",
@@ -3570,6 +3611,12 @@ window.FREE_AI_DATA = {
   }
  ],
  "probes": [
+  {
+   "m": "openrouter/recursive/flint-v1.0:free",
+   "r": "ok",
+   "t": "PROBE_OK",
+   "n": "262K ctx / 236K out, 40B-A2.5B MoE, SWE-Verified 74.2%, ~108 tok/s."
+  },
   {
    "m": "openrouter/minimax/minimax-m3.1-flash:free",
    "r": "ok",
@@ -3844,6 +3891,37 @@ window.FREE_AI_DATA = {
    "place": 1
   },
   {
+   "id": "OpenRouter",
+   "score": 74.4,
+   "working": 13,
+   "catalog": 5,
+   "blocked": 2,
+   "total": 20,
+   "wr": 65,
+   "access": "api",
+   "color": "#00f2fe",
+   "benchAvg": 58.0,
+   "ctxCap": 1048576,
+   "rpm": 20,
+   "rpd": 50,
+   "tpd": null,
+   "card": false,
+   "training": "no",
+   "uptime": "99.5%",
+   "status": "working",
+   "limits": "20 RPM / 50 RPD (1000 RPD с $10 top-up)",
+   "note": "21 zero-price моделей прямо сейчас. Единственный ключ на десятки семейств.",
+   "parts": {
+    "Работоспособность": 26.0,
+    "Покрытие моделей": 17.9,
+    "Контекст": 15.0,
+    "Бенчмарки": 8.3,
+    "Лимиты": 3.2,
+    "Доступ": 4.0
+   },
+   "place": 2
+  },
+  {
    "id": "OmniRoute / auto",
    "score": 73.6,
    "working": 1,
@@ -3871,37 +3949,6 @@ window.FREE_AI_DATA = {
     "Бенчмарки": 9.6,
     "Лимиты": 0,
     "Доступ": 5.0
-   },
-   "place": 2
-  },
-  {
-   "id": "OpenRouter",
-   "score": 73.0,
-   "working": 12,
-   "catalog": 5,
-   "blocked": 2,
-   "total": 19,
-   "wr": 63,
-   "access": "api",
-   "color": "#00f2fe",
-   "benchAvg": 57.0,
-   "ctxCap": 1048576,
-   "rpm": 20,
-   "rpd": 50,
-   "tpd": null,
-   "card": false,
-   "training": "no",
-   "uptime": "99.5%",
-   "status": "working",
-   "limits": "20 RPM / 50 RPD (1000 RPD с $10 top-up)",
-   "note": "20 zero-price моделей прямо сейчас. Единственный ключ на десятки семейств.",
-   "parts": {
-    "Работоспособность": 25.3,
-    "Покрытие моделей": 17.4,
-    "Контекст": 15.0,
-    "Бенчмарки": 8.1,
-    "Лимиты": 3.2,
-    "Доступ": 4.0
    },
    "place": 3
   },
@@ -4936,6 +4983,21 @@ window.FREE_AI_DATA = {
      2,
      3,
      2,
+     0,
+     2,
+     2
+    ]
+   },
+   {
+    "name": "Recursive Flint 1.0",
+    "f": "flint-v1.0",
+    "v": [
+     3,
+     3,
+     1,
+     0,
+     3,
+     3,
      0,
      2,
      2
