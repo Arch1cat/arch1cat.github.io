@@ -1,5 +1,5 @@
 {
- "snapshot": "2026-10-22",
+ "snapshot": "2026-10-23",
  "openrouter": [
   {
    "id": "cohere/north-mini-code:free",
@@ -49,13 +49,6 @@
    "out": 8192,
    "tools": true,
    "name": "LiquidAI: LFM2.5-2.6B (free)"
-  },
-  {
-   "id": "minimax/minimax-m3.1-flash:free",
-   "ctx": 1000000,
-   "out": 524288,
-   "tools": true,
-   "name": "MiniMax: MiniMax M3.1 Flash (free)"
   },
   {
    "id": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
@@ -208,7 +201,7 @@
   }
  ],
  "omniroute": {
-  "total": 1303,
+  "total": 1292,
   "prefixes": {
    "auto": 45,
    "agy": 25,
@@ -224,7 +217,7 @@
    "zc": 14,
    "cxa": 45,
    "unc": 1,
-   "aihorde": 176,
+   "aihorde": 165,
    "openrouter": 737
   },
   "noauth_free": [
