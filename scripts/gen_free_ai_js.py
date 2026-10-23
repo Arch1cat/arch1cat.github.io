@@ -287,17 +287,7 @@ FAMILIES = [
         ],
     },
     {
-        "id": "minimax-m3.1-flash", "rank": 2, "name": "MiniMax M3.1 Flash",
-        "tasks": ["Кодинг", "Fast Agent", "Tools"], "family": "MiniMax M3",
-        "ctx": 1000000, "out": 524288, "reasoning": True,
-        "bench": {"swe": 61.8, "he": 85.4, "aider": 64.2, "livecode": 55.2, "arena": None, "arenaRank": "agent ~№13"},
-        "routes": [
-            {"p": "OpenRouter", "id": "minimax/minimax-m3.1-flash:free", "status": "working", "type": "free", "src": "api"},
-            {"p": "OpenCode Free", "id": "opencode/minimax-m3.1-flash-free", "status": "catalog", "type": "free", "src": "local"},
-        ],
-    },
-    {
-        "id": "ornith-1.5-122b", "rank": 3, "name": "Ornith 1.5 122B",
+        "id": "ornith-1.5-122b", "rank": 2, "name": "Ornith 1.5 122B",
         "tasks": ["Кодинг", "Reasoning", "Tools", "Vision"], "family": "Ornith 1.5",
         "ctx": 262144, "out": 262144, "reasoning": True,
         "bench": {"swe": 84.5, "he": None, "aider": None, "livecode": None, "arena": None, "arenaRank": "TermBench 81.2 · SWE-Pro 76.9"},
@@ -306,7 +296,7 @@ FAMILIES = [
         ],
     },
     {
-        "id": "flint-v1.0", "rank": 4, "name": "Recursive Flint 1.0 (40B-A2.5B)",
+        "id": "flint-v1.0", "rank": 3, "name": "Recursive Flint 1.0 (40B-A2.5B)",
         "tasks": ["Кодинг", "Reasoning", "Tools", "Fast Agent"], "family": "Recursive Flint",
         "ctx": 262144, "out": 235929, "reasoning": True,
         "bench": {"swe": 74.2, "he": None, "aider": None, "livecode": None, "arena": None, "arenaRank": "SWE-Pro v2 89.7 · TermBench 54.9"},
@@ -325,12 +315,21 @@ FAMILIES = [
         ],
     },
     {
-        "id": "mimo-v2.6-pro", "rank": 4, "name": "MiMo V2.6 Pro",
+        "id": "mimo-v2.6-pro", "rank": 5, "name": "MiMo V2.6 Pro",
         "tasks": ["Архитектура", "Reasoning", "CRM/UI"], "family": "MiMo V2.6",
         "ctx": 262144, "out": 65536, "reasoning": True,
         "bench": {"swe": 68.2, "he": 91.5, "aider": 72.8, "livecode": 63.7, "arena": 1626, "arenaRank": "agent ~№6"},
         "routes": [
             {"p": "Freebuff", "id": "freebuff/mimo/mimo-v2.6-pro", "status": "working", "type": "free", "src": "api"},
+        ],
+    },
+    {
+        "id": "minimax-m3.1-flash", "rank": 6, "name": "MiniMax M3.1 Flash",
+        "tasks": ["Кодинг", "Fast Agent", "Tools"], "family": "MiniMax M3",
+        "ctx": 1000000, "out": 524288, "reasoning": True,
+        "bench": {"swe": 61.8, "he": 85.4, "aider": 64.2, "livecode": 55.2, "arena": None, "arenaRank": "agent ~№13"},
+        "routes": [
+            {"p": "OpenCode Free", "id": "opencode/minimax-m3.1-flash-free", "status": "catalog", "type": "free", "src": "local"},
         ],
     },
     {
@@ -788,7 +787,6 @@ RELEASES = [
 # ------------------------------------------------------------------ verified probes
 PROBES = [
     {"m": "openrouter/recursive/flint-v1.0:free", "r": "ok", "t": "PROBE_OK", "n": "262K ctx / 236K out, 40B-A2.5B MoE, SWE-Verified 74.2%, ~108 tok/s."},
-    {"m": "openrouter/minimax/minimax-m3.1-flash:free", "r": "ok", "t": "PROBE_OK", "n": "1M ctx / 524K out. Добавлена в config → видна в пикере."},
     {"m": "openrouter/cohere/north-mini-code:free", "r": "ok", "t": "PROBE_OK", "n": "256K ctx / 64K out."},
     {"m": "openrouter/thinkingmachines/inkling:free", "r": "ok", "t": "PROBE_OK", "n": "Нужен заголовок X-OpenRouter-Categories — Hermes шлёт его сам."},
     {"m": "openrouter/xingchen-agi/xing4.0-29b-a4b:free", "r": "ok", "t": "PROBE_OK", "n": "262K ctx / 236K out."},
@@ -815,6 +813,7 @@ PROBES = [
     {"m": "omniroute/auto/cheap", "r": "ok", "t": "PROBE_OK", "n": "Дешёвый маршрут."},
     {"m": "omniroute/auto/offline", "r": "ok", "t": "PROBE_OK", "n": "Оффлайн-маршрут."},
     {"m": "nvidia/nemotron-3.5-lightning-30b-a3b", "r": "ok", "t": "PROBE_OK", "n": "Правильный NIM ID."},
+    {"m": "openrouter/minimax/minimax-m3.1-flash:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — промо-период :free завершился 22.10.2026 ($0.15/$0.60 за 1M)."},
     {"m": "openrouter/nvidia/nemotron-3-super-120b-a12b:free", "r": "bad", "t": "UPSTREAM 404", "n": "Function not found на стороне провайдера."},
     {"m": "openrouter/google/lyria-3-pro-preview", "r": "bad", "t": "402 CREDITS", "n": "Бесплатен по прайсу, но без кредитов — 402."},
     {"m": "nous/meituan/longcat-2.0:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — перестала быть бесплатной."},

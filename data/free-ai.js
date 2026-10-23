@@ -589,46 +589,8 @@ window.FREE_AI_DATA = {
    ]
   },
   {
-   "id": "minimax-m3.1-flash",
-   "rank": 2,
-   "name": "MiniMax M3.1 Flash",
-   "tasks": [
-    "Кодинг",
-    "Fast Agent",
-    "Tools"
-   ],
-   "family": "MiniMax M3",
-   "ctx": 1000000,
-   "out": 524288,
-   "reasoning": true,
-   "bench": {
-    "swe": 61.8,
-    "he": 85.4,
-    "aider": 64.2,
-    "livecode": 55.2,
-    "arena": null,
-    "arenaRank": "agent ~№13"
-   },
-   "routes": [
-    {
-     "p": "OpenRouter",
-     "id": "minimax/minimax-m3.1-flash:free",
-     "status": "working",
-     "type": "free",
-     "src": "api"
-    },
-    {
-     "p": "OpenCode Free",
-     "id": "opencode/minimax-m3.1-flash-free",
-     "status": "catalog",
-     "type": "free",
-     "src": "local"
-    }
-   ]
-  },
-  {
    "id": "ornith-1.5-122b",
-   "rank": 3,
+   "rank": 2,
    "name": "Ornith 1.5 122B",
    "tasks": [
     "Кодинг",
@@ -660,7 +622,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "flint-v1.0",
-   "rank": 4,
+   "rank": 3,
    "name": "Recursive Flint 1.0 (40B-A2.5B)",
    "tasks": [
     "Кодинг",
@@ -692,7 +654,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "kimi-k3",
-   "rank": 5,
+   "rank": 4,
    "name": "Kimi K3",
    "tasks": [
     "Архитектура",
@@ -730,7 +692,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "mimo-v2.6-pro",
-   "rank": 6,
+   "rank": 5,
    "name": "MiMo V2.6 Pro",
    "tasks": [
     "Архитектура",
@@ -756,6 +718,37 @@ window.FREE_AI_DATA = {
      "status": "working",
      "type": "free",
      "src": "api"
+    }
+   ]
+  },
+  {
+   "id": "minimax-m3.1-flash",
+   "rank": 6,
+   "name": "MiniMax M3.1 Flash",
+   "tasks": [
+    "Кодинг",
+    "Fast Agent",
+    "Tools"
+   ],
+   "family": "MiniMax M3",
+   "ctx": 1000000,
+   "out": 524288,
+   "reasoning": true,
+   "bench": {
+    "swe": 61.8,
+    "he": 85.4,
+    "aider": 64.2,
+    "livecode": 55.2,
+    "arena": null,
+    "arenaRank": "agent ~№13"
+   },
+   "routes": [
+    {
+     "p": "OpenCode Free",
+     "id": "opencode/minimax-m3.1-flash-free",
+     "status": "catalog",
+     "type": "free",
+     "src": "local"
     }
    ]
   },
@@ -3618,12 +3611,6 @@ window.FREE_AI_DATA = {
    "n": "262K ctx / 236K out, 40B-A2.5B MoE, SWE-Verified 74.2%, ~108 tok/s."
   },
   {
-   "m": "openrouter/minimax/minimax-m3.1-flash:free",
-   "r": "ok",
-   "t": "PROBE_OK",
-   "n": "1M ctx / 524K out. Добавлена в config → видна в пикере."
-  },
-  {
    "m": "openrouter/cohere/north-mini-code:free",
    "r": "ok",
    "t": "PROBE_OK",
@@ -3780,6 +3767,12 @@ window.FREE_AI_DATA = {
    "n": "Правильный NIM ID."
   },
   {
+   "m": "openrouter/minimax/minimax-m3.1-flash:free",
+   "r": "bad",
+   "t": "NO LONGER FREE",
+   "n": "HTTP 404 — промо-период :free завершился 22.10.2026 ($0.15/$0.60 за 1M)."
+  },
+  {
    "m": "openrouter/nvidia/nemotron-3-super-120b-a12b:free",
    "r": "bad",
    "t": "UPSTREAM 404",
@@ -3891,37 +3884,6 @@ window.FREE_AI_DATA = {
    "place": 1
   },
   {
-   "id": "OpenRouter",
-   "score": 74.4,
-   "working": 13,
-   "catalog": 5,
-   "blocked": 2,
-   "total": 20,
-   "wr": 65,
-   "access": "api",
-   "color": "#00f2fe",
-   "benchAvg": 58.0,
-   "ctxCap": 1048576,
-   "rpm": 20,
-   "rpd": 50,
-   "tpd": null,
-   "card": false,
-   "training": "no",
-   "uptime": "99.5%",
-   "status": "working",
-   "limits": "20 RPM / 50 RPD (1000 RPD с $10 top-up)",
-   "note": "20 zero-price моделей прямо сейчас. Единственный ключ на десятки семейств.",
-   "parts": {
-    "Работоспособность": 26.0,
-    "Покрытие моделей": 17.9,
-    "Контекст": 15.0,
-    "Бенчмарки": 8.3,
-    "Лимиты": 3.2,
-    "Доступ": 4.0
-   },
-   "place": 2
-  },
-  {
    "id": "OmniRoute / auto",
    "score": 73.6,
    "working": 1,
@@ -3949,6 +3911,37 @@ window.FREE_AI_DATA = {
     "Бенчмарки": 9.6,
     "Лимиты": 0,
     "Доступ": 5.0
+   },
+   "place": 2
+  },
+  {
+   "id": "OpenRouter",
+   "score": 73.2,
+   "working": 12,
+   "catalog": 5,
+   "blocked": 2,
+   "total": 19,
+   "wr": 63,
+   "access": "api",
+   "color": "#00f2fe",
+   "benchAvg": 57.8,
+   "ctxCap": 1048576,
+   "rpm": 20,
+   "rpd": 50,
+   "tpd": null,
+   "card": false,
+   "training": "no",
+   "uptime": "99.5%",
+   "status": "working",
+   "limits": "20 RPM / 50 RPD (1000 RPD с $10 top-up)",
+   "note": "20 zero-price моделей прямо сейчас. Единственный ключ на десятки семейств.",
+   "parts": {
+    "Работоспособность": 25.3,
+    "Покрытие моделей": 17.4,
+    "Контекст": 15.0,
+    "Бенчмарки": 8.3,
+    "Лимиты": 3.2,
+    "Доступ": 4.0
    },
    "place": 3
   },
