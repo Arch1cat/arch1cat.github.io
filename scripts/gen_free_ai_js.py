@@ -34,7 +34,7 @@ PROVIDERS = [
         "id": "Nous Portal", "access": "api", "status": "working", "color": "#a78bfa",
         "limits": "RPM/TPM/RPD не раскрыты", "rpm": None, "rpd": None, "tpd": None,
         "card": False, "training": "no", "ctxCap": 1048576,
-        "note": "8 :free моделей (включая Ornith 1.5 122B). Часть требует тег user= в extra_body.tags.",
+        "note": f"{len(NOUS_LIVE)} :free моделей (включая Ornith 1.5 122B). Часть требует тег user= в extra_body.tags.",
         "uptime": "97%",
     },
     {
@@ -413,7 +413,6 @@ FAMILIES = [
         "ctx": 1048576, "out": 65536, "reasoning": True,
         "bench": {"swe": 52.1, "he": 79.8, "aider": 54.6, "livecode": 46.3, "arena": None, "arenaRank": None},
         "routes": [
-            {"p": "Nous Portal", "id": "meituan/longcat-2.5-preview:free", "status": "working", "type": "free", "src": "api"},
             {"p": "OpenCode Free", "id": "opencode/longcat-2.5-preview-free", "status": "catalog", "type": "free", "src": "local"},
         ],
     },
@@ -602,7 +601,7 @@ for _idx, _fam in enumerate(FAMILIES, 1):
 PLANS = [
     {
         "name": "Nous Portal Free", "price": "$0", "kind": "Free tier",
-        "includes": "Все бесплатные модели Nous: Ornith 1.5 122B, LongCat 2.5, Laguna S/XS 2.1, Beam 501B, Step 3.7 Flash, Solar Mini4 + preview. Каталог портала — 248 моделей (325 с embeddings)",
+        "includes": "Все бесплатные модели Nous: Ornith 1.5 122B, Laguna S/XS 2.1, Beam 501B, Step 3.7 Flash, Solar Mini4 + preview. Каталог портала — 248 моделей (325 с embeddings)",
         "allowance": "50 RPM / 500K TPM. Только free-модели — платные через портал недоступны",
         "tokens": "Без лимита токенов, но жёсткий RPM",
         "verdict": "Наш основной Nous-маршрут. Работает в Hermes", "score": 89,
@@ -796,7 +795,6 @@ PROBES = [
     {"m": "openrouter/dots-studio/dots-3-note-preview:free", "r": "ok", "t": "PROBE_OK", "n": "Preview, 512K ctx."},
     {"m": "openrouter/poolside/laguna-s-2.1:free", "r": "ok", "t": "PROBE_OK", "n": "Основной бесплатный fallback."},
     {"m": "nous/ornith/ornith-1.5-122b:free", "r": "ok", "t": "PROBE_OK", "n": "262K ctx / 262K out, vision + tools, SWE-Verified 84.5%. Работает без user= тега."},
-    {"m": "nous/meituan/longcat-2.5-preview:free", "r": "ok", "t": "PROBE_OK", "n": "1M ctx."},
     {"m": "nous/poolside/laguna-s-2.1:free", "r": "ok", "t": "PROBE_OK", "n": "Работает."},
     {"m": "nous/poolside/laguna-xs-2.1:free", "r": "ok", "t": "PROBE_OK", "n": "Работает."},
     {"m": "nous/reflection/beam-1.0-501b-a23b:free", "r": "ok", "t": "PROBE_OK", "n": "501B open (Apache 2.0)."},
@@ -813,6 +811,7 @@ PROBES = [
     {"m": "omniroute/auto/cheap", "r": "ok", "t": "PROBE_OK", "n": "Дешёвый маршрут."},
     {"m": "omniroute/auto/offline", "r": "ok", "t": "PROBE_OK", "n": "Оффлайн-маршрут."},
     {"m": "nvidia/nemotron-3.5-lightning-30b-a3b", "r": "ok", "t": "PROBE_OK", "n": "Правильный NIM ID."},
+    {"m": "nous/meituan/longcat-2.5-preview:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — убрана из :free каталога Nous 27.10.2026 (переведена на платный meituan/longcat-2.0)."},
     {"m": "openrouter/minimax/minimax-m3.1-flash:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — промо-период :free завершился 22.10.2026 ($0.15/$0.60 за 1M)."},
     {"m": "openrouter/nvidia/nemotron-3-super-120b-a12b:free", "r": "bad", "t": "UPSTREAM 404", "n": "Function not found на стороне провайдера."},
     {"m": "openrouter/google/lyria-3-pro-preview", "r": "bad", "t": "402 CREDITS", "n": "Бесплатен по прайсу, но без кредитов — 402."},

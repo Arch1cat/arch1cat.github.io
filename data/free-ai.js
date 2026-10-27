@@ -28,7 +28,7 @@ window.FREE_AI_DATA = {
    "card": false,
    "training": "no",
    "ctxCap": 1048576,
-   "note": "8 :free моделей (включая Ornith 1.5 122B). Часть требует тег user= в extra_body.tags.",
+   "note": "7 :free моделей (включая Ornith 1.5 122B). Часть требует тег user= в extra_body.tags.",
    "uptime": "97%"
   },
   {
@@ -1077,13 +1077,6 @@ window.FREE_AI_DATA = {
    },
    "routes": [
     {
-     "p": "Nous Portal",
-     "id": "meituan/longcat-2.5-preview:free",
-     "status": "working",
-     "type": "free",
-     "src": "api"
-    },
-    {
      "p": "OpenCode Free",
      "id": "opencode/longcat-2.5-preview-free",
      "status": "catalog",
@@ -1789,7 +1782,7 @@ window.FREE_AI_DATA = {
    "name": "Nous Portal Free",
    "price": "$0",
    "kind": "Free tier",
-   "includes": "Все бесплатные модели Nous: Ornith 1.5 122B, LongCat 2.5, Laguna S/XS 2.1, Beam 501B, Step 3.7 Flash, Solar Mini4 + preview. Каталог портала — 248 моделей (325 с embeddings)",
+   "includes": "Все бесплатные модели Nous: Ornith 1.5 122B, Laguna S/XS 2.1, Beam 501B, Step 3.7 Flash, Solar Mini4 + preview. Каталог портала — 248 моделей (325 с embeddings)",
    "allowance": "50 RPM / 500K TPM. Только free-модели — платные через портал недоступны",
    "tokens": "Без лимита токенов, но жёсткий RPM",
    "verdict": "Наш основной Nous-маршрут. Работает в Hermes",
@@ -2002,7 +1995,7 @@ window.FREE_AI_DATA = {
    "price": 0,
    "quota": "50 RPM / 500K TPM · только free-модели",
    "tokM": 0,
-   "models": "LongCat 2.5 · Laguna S/XS · Beam 501B · Step 3.7 Flash · Solar Mini4",
+   "models": "Ornith 1.5 122B · Laguna S/XS · Beam 501B · Step 3.7 Flash · Solar Mini4",
    "tools": "Hermes, все OpenAI-клиенты",
    "ours": true,
    "src": "nousresearch.com",
@@ -2841,7 +2834,7 @@ window.FREE_AI_DATA = {
    "tok": "—",
    "card": "нет",
    "credit": "$0 ($10 → 1000 RPD)",
-   "models": "20 zero-price моделей: Nemotron 3 Ultra, MiniMax M3.1 Flash, Inkling, Laguna S/XS, Gemma 4",
+   "models": "20 zero-price моделей: Recursive Flint 1.0, Nemotron 3 Ultra, Inkling, Laguna S/XS, Gemma 4",
    "notes": "Квота общая на все :free модели",
    "src": "openrouter.ai",
    "keyless": false
@@ -3665,12 +3658,6 @@ window.FREE_AI_DATA = {
    "n": "262K ctx / 262K out, vision + tools, SWE-Verified 84.5%. Работает без user= тега."
   },
   {
-   "m": "nous/meituan/longcat-2.5-preview:free",
-   "r": "ok",
-   "t": "PROBE_OK",
-   "n": "1M ctx."
-  },
-  {
    "m": "nous/poolside/laguna-s-2.1:free",
    "r": "ok",
    "t": "PROBE_OK",
@@ -3767,6 +3754,12 @@ window.FREE_AI_DATA = {
    "n": "Правильный NIM ID."
   },
   {
+   "m": "nous/meituan/longcat-2.5-preview:free",
+   "r": "bad",
+   "t": "NO LONGER FREE",
+   "n": "HTTP 404 — убрана из :free каталога Nous 27.10.2026 (переведена на платный meituan/longcat-2.0)."
+  },
+  {
    "m": "openrouter/minimax/minimax-m3.1-flash:free",
    "r": "bad",
    "t": "NO LONGER FREE",
@@ -3854,15 +3847,15 @@ window.FREE_AI_DATA = {
  "ranking": [
   {
    "id": "Nous Portal",
-   "score": 77.9,
-   "working": 7,
+   "score": 77.4,
+   "working": 6,
    "catalog": 0,
    "blocked": 0,
-   "total": 7,
+   "total": 6,
    "wr": 100,
    "access": "api",
    "color": "#a78bfa",
-   "benchAvg": 58.4,
+   "benchAvg": 60.5,
    "ctxCap": 1048576,
    "rpm": null,
    "rpd": null,
@@ -3872,12 +3865,12 @@ window.FREE_AI_DATA = {
    "uptime": "97%",
    "status": "working",
    "limits": "RPM/TPM/RPD не раскрыты",
-   "note": "8 :free моделей (включая Ornith 1.5 122B). Часть требует тег user= в extra_body.tags.",
+   "note": "7 :free моделей (включая Ornith 1.5 122B). Часть требует тег user= в extra_body.tags.",
    "parts": {
     "Работоспособность": 40.0,
-    "Покрытие моделей": 10.6,
+    "Покрытие моделей": 9.8,
     "Контекст": 15.0,
-    "Бенчмарки": 8.3,
+    "Бенчмарки": 8.6,
     "Лимиты": 0,
     "Доступ": 4.0
    },

@@ -8,7 +8,7 @@ decodethefuture.org, mnfst/awesome-free-llm-apis, 0xzr/freellmpool, alibabacloud
 PLANS_MARKET = [
     # --- ours / already connected
     ("Nous Portal Free", 0, "50 RPM / 500K TPM · только free-модели", 0,
-     "LongCat 2.5 · Laguna S/XS · Beam 501B · Step 3.7 Flash · Solar Mini4", "Hermes, все OpenAI-клиенты", True, "nousresearch.com"),
+     "Ornith 1.5 122B · Laguna S/XS · Beam 501B · Step 3.7 Flash · Solar Mini4", "Hermes, все OpenAI-клиенты", True, "nousresearch.com"),
     ("Nous Portal Plus", 20, "$22 кредитов/мес · rollover $10 · 400 RPM / 4M TPM", 7.3,
      "Полный каталог портала: Kimi K3, GLM-5.3, MiniMax M3.1, DeepSeek V4.1, Nemotron 3.5", "Hermes, все OpenAI-клиенты", True, "nousresearch.com"),
     ("Nous Portal Super", 100, "$110 кредитов · rollover $50 · 800 RPM / 8M TPM", 36.7,
@@ -154,7 +154,7 @@ FREE_API = [
     ("NVIDIA NIM", "да", 40, 10000, "1B токенов/мес", "нет (телефон)", "$0",
      "nemotron-3-ultra-550b (1M ctx) · nemotron-3-super-120b (1M) · minimax-m3 · gemma-4-31b · + 92", "100+ моделей, лимит на модель. Лучший free-доступ к Nemotron", "build.nvidia.com"),
     ("OpenRouter", "да", 20, 50, "—", "нет", "$0 ($10 → 1000 RPD)",
-     "20 zero-price моделей: Nemotron 3 Ultra, MiniMax M3.1 Flash, Inkling, Laguna S/XS, Gemma 4", "Квота общая на все :free модели", "openrouter.ai"),
+     "20 zero-price моделей: Recursive Flint 1.0, Nemotron 3 Ultra, Inkling, Laguna S/XS, Gemma 4", "Квота общая на все :free модели", "openrouter.ai"),
     ("GitHub Models", "да (любой PAT)", 15, 150, "—", "нет", "$0",
      "22+ модели: GPT-5 · Grok 3 · Llama 3.1 405B · DeepSeek-R1 · Mistral", "Статус спорный: один источник пишет «retired July 2026». Проверяй в аккаунте", "github.com/marketplace/models"),
     ("Cohere", "да", "—", "1000/мес", "—", "нет", "$0",
