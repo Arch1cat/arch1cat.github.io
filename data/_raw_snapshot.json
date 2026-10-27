@@ -1,5 +1,5 @@
 {
- "snapshot": "2026-10-23",
+ "snapshot": "2026-10-27",
  "openrouter": [
   {
    "id": "cohere/north-mini-code:free",
@@ -151,13 +151,6 @@
    "name": "Meituan: LongCat 2.0"
   },
   {
-   "id": "meituan/longcat-2.5-preview:free",
-   "ctx": 1048576,
-   "out": 131072,
-   "tools": true,
-   "name": "Meituan: LongCat 2.5 Preview"
-  },
-  {
    "id": "ornith/ornith-1.5-122b:free",
    "ctx": 262144,
    "out": 262144,
@@ -201,7 +194,7 @@
   }
  ],
  "omniroute": {
-  "total": 1292,
+  "total": 1303,
   "prefixes": {
    "auto": 45,
    "agy": 25,
@@ -217,7 +210,7 @@
    "zc": 14,
    "cxa": 45,
    "unc": 1,
-   "aihorde": 165,
+   "aihorde": 176,
    "openrouter": 737
   },
   "noauth_free": [
