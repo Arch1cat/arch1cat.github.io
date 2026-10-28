@@ -3117,7 +3117,7 @@ window.FREE_AI_DATA = {
   {
    "n": "OmniRoute (локальный шлюз)",
    "signup": "У нас уже поднят: localhost:20128",
-   "quota": "Без квот и без карты · 1292 модели в 17 префиксах · no-auth пулы: ddgw (6), auto/* (4)",
+   "quota": "Без квот и без карты · 1287 моделей в 16 префиксах · no-auth пулы: ddgw (6), auto/* (4)",
    "models": "GPT-5.4 Mini · GPT-5.6 Luna · Claude Haiku 4.5 · Mistral Small 2603 · GPT-OSS 120B · Gemma4 31B · auto/best-free · auto/coding:free",
    "ctx": "до 1M",
    "note": "Это шлюз, а не тариф: раздаёт бесплатные пулы и маршрутит по качеству. Проверен read-only, конфиг не менялся.",
@@ -3768,8 +3768,8 @@ window.FREE_AI_DATA = {
   {
    "m": "openrouter/nvidia/nemotron-3-super-120b-a12b:free",
    "r": "bad",
-   "t": "UPSTREAM 404",
-   "n": "Function not found на стороне провайдера."
+   "t": "NO LONGER FREE",
+   "n": "Убрана из zero-price каталога OpenRouter 28.10.2026 (ранее возвращала UPSTREAM 404 Function not found)."
   },
   {
    "m": "openrouter/google/lyria-3-pro-preview",

@@ -813,7 +813,7 @@ PROBES = [
     {"m": "nvidia/nemotron-3.5-lightning-30b-a3b", "r": "ok", "t": "PROBE_OK", "n": "Правильный NIM ID."},
     {"m": "nous/meituan/longcat-2.5-preview:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — убрана из :free каталога Nous 27.10.2026 (переведена на платный meituan/longcat-2.0)."},
     {"m": "openrouter/minimax/minimax-m3.1-flash:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — промо-период :free завершился 22.10.2026 ($0.15/$0.60 за 1M)."},
-    {"m": "openrouter/nvidia/nemotron-3-super-120b-a12b:free", "r": "bad", "t": "UPSTREAM 404", "n": "Function not found на стороне провайдера."},
+    {"m": "openrouter/nvidia/nemotron-3-super-120b-a12b:free", "r": "bad", "t": "NO LONGER FREE", "n": "Убрана из zero-price каталога OpenRouter 28.10.2026 (ранее возвращала UPSTREAM 404 Function not found)."},
     {"m": "openrouter/google/lyria-3-pro-preview", "r": "bad", "t": "402 CREDITS", "n": "Бесплатен по прайсу, но без кредитов — 402."},
     {"m": "nous/meituan/longcat-2.0:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — перестала быть бесплатной."},
     {"m": "omniroute/oc/nemotron-3-ultra-free", "r": "bad", "t": "403 FreeTierError", "n": "OpenCode free — только из нативного OpenCode."},
@@ -830,7 +830,7 @@ PROBES = [
 
 # ------------------------------------------------------------------ tools (big free quotas, not per-token)
 TOOLS = [
-    {"n": "OmniRoute (локальный шлюз)", "signup": "У нас уже поднят: localhost:20128", "quota": "Без квот и без карты · 1292 модели в 17 префиксах · no-auth пулы: ddgw (6), auto/* (4)",
+    {"n": "OmniRoute (локальный шлюз)", "signup": "У нас уже поднят: localhost:20128", "quota": f"Без квот и без карты · {OMNI['total']} моделей в {len(OMNI['prefixes'])} префиксах · no-auth пулы: ddgw (6), auto/* (4)",
      "models": "GPT-5.4 Mini · GPT-5.6 Luna · Claude Haiku 4.5 · Mistral Small 2603 · GPT-OSS 120B · Gemma4 31B · auto/best-free · auto/coding:free",
      "ctx": "до 1M", "note": "Это шлюз, а не тариф: раздаёт бесплатные пулы и маршрутит по качеству. Проверен read-only, конфиг не менялся.",
      "score": 88, "badge": "У НАС ЕСТЬ"},
