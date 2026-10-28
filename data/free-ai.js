@@ -1,5 +1,5 @@
 window.FREE_AI_DATA = {
- "snapshot": "2026-10-27",
+ "snapshot": "2026-10-28",
  "providers": [
   {
    "id": "OpenRouter",
@@ -13,7 +13,7 @@ window.FREE_AI_DATA = {
    "card": false,
    "training": "no",
    "ctxCap": 1048576,
-   "note": "20 zero-price моделей прямо сейчас. Единственный ключ на десятки семейств.",
+   "note": "19 zero-price моделей прямо сейчас. Единственный ключ на десятки семейств.",
    "uptime": "99.5%"
   },
   {
@@ -1852,7 +1852,7 @@ window.FREE_AI_DATA = {
    "name": "OpenRouter (пополнение)",
    "price": "$10 разово",
    "kind": "Кредиты",
-   "includes": "Все 20 zero-price моделей без изменений + рост дневного лимита",
+   "includes": "Все 19 zero-price моделей без изменений + рост дневного лимита",
    "allowance": "50 RPD → 1000 RPD на free-моделях. Комиссия платформы 5.5%.",
    "tokens": "1000 запросов/день на всём free-пуле",
    "verdict": "Лучший апгрейд именно для бесплатного пула",
@@ -3927,7 +3927,7 @@ window.FREE_AI_DATA = {
    "uptime": "99.5%",
    "status": "working",
    "limits": "20 RPM / 50 RPD (1000 RPD с $10 top-up)",
-   "note": "20 zero-price моделей прямо сейчас. Единственный ключ на десятки семейств.",
+   "note": "19 zero-price моделей прямо сейчас. Единственный ключ на десятки семейств.",
    "parts": {
     "Работоспособность": 25.3,
     "Покрытие моделей": 17.4,
@@ -5383,7 +5383,7 @@ window.FREE_AI_DATA = {
   }
  ],
  "meta": {
-  "omnirouteTotal": 1303,
+  "omnirouteTotal": 1287,
   "omniroutePrefixes": {
    "auto": 45,
    "agy": 25,
@@ -5399,10 +5399,10 @@ window.FREE_AI_DATA = {
    "zc": 14,
    "cxa": 45,
    "unc": 1,
-   "aihorde": 176,
+   "aihorde": 160,
    "openrouter": 737
   },
-  "openrouterLiveFree": 20,
+  "openrouterLiveFree": 19,
   "nousLiveFree": 7
  }
 };

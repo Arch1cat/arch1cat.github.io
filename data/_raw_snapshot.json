@@ -1,5 +1,5 @@
 {
- "snapshot": "2026-10-27",
+ "snapshot": "2026-10-28",
  "openrouter": [
   {
    "id": "cohere/north-mini-code:free",
@@ -56,13 +56,6 @@
    "out": 65536,
    "tools": true,
    "name": "NVIDIA: Nemotron 3 Nano Omni (free)"
-  },
-  {
-   "id": "nvidia/nemotron-3-super-120b-a12b:free",
-   "ctx": 262144,
-   "out": 235929,
-   "tools": true,
-   "name": "NVIDIA: Nemotron 3 Super (free)"
   },
   {
    "id": "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -194,7 +187,7 @@
   }
  ],
  "omniroute": {
-  "total": 1303,
+  "total": 1287,
   "prefixes": {
    "auto": 45,
    "agy": 25,
@@ -210,7 +203,7 @@
    "zc": 14,
    "cxa": 45,
    "unc": 1,
-   "aihorde": 176,
+   "aihorde": 160,
    "openrouter": 737
   },
   "noauth_free": [
