@@ -815,7 +815,7 @@ PROBES = [
     {"m": "openrouter/minimax/minimax-m3.1-flash:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — промо-период :free завершился 22.10.2026 ($0.15/$0.60 за 1M)."},
     {"m": "openrouter/nvidia/nemotron-3-super-120b-a12b:free", "r": "bad", "t": "NO LONGER FREE", "n": "Убрана из zero-price каталога OpenRouter 28.10.2026 (ранее возвращала UPSTREAM 404 Function not found)."},
     {"m": "openrouter/google/lyria-3-pro-preview", "r": "bad", "t": "402 CREDITS", "n": "Бесплатен по прайсу, но без кредитов — 402."},
-    {"m": "nous/meituan/longcat-2.0:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — перестала быть бесплатной."},
+    {"m": "nous/meituan/longcat-2.0:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — убрана из :free каталога Nous 29.10.2026 (перестала быть бесплатной)."},
     {"m": "omniroute/oc/nemotron-3-ultra-free", "r": "bad", "t": "403 FreeTierError", "n": "OpenCode free — только из нативного OpenCode."},
     {"m": "omniroute/oc/mimo-v2.5-free", "r": "bad", "t": "401 NO CREDS", "n": "Нет credentials для opencode в OmniRoute."},
     {"m": "omniroute/cfp/deepseek-ai/deepseek-v4-flash-0731", "r": "bad", "t": "502 NO BROWSER", "n": "Cloudflare Playground: нет Playwright executable."},

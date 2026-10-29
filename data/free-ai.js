@@ -3781,7 +3781,7 @@ window.FREE_AI_DATA = {
    "m": "nous/meituan/longcat-2.0:free",
    "r": "bad",
    "t": "NO LONGER FREE",
-   "n": "HTTP 404 — перестала быть бесплатной."
+   "n": "HTTP 404 — убрана из :free каталога Nous 29.10.2026 (перестала быть бесплатной)."
   },
   {
    "m": "omniroute/oc/nemotron-3-ultra-free",
