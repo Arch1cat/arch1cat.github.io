@@ -1,5 +1,5 @@
 window.FREE_AI_DATA = {
- "snapshot": "2026-10-28",
+ "snapshot": "2026-10-29",
  "providers": [
   {
    "id": "OpenRouter",
@@ -28,7 +28,7 @@ window.FREE_AI_DATA = {
    "card": false,
    "training": "no",
    "ctxCap": 1048576,
-   "note": "7 :free моделей (включая Ornith 1.5 122B). Часть требует тег user= в extra_body.tags.",
+   "note": "6 :free моделей (включая Ornith 1.5 122B). Часть требует тег user= в extra_body.tags.",
    "uptime": "97%"
   },
   {
@@ -3117,7 +3117,7 @@ window.FREE_AI_DATA = {
   {
    "n": "OmniRoute (локальный шлюз)",
    "signup": "У нас уже поднят: localhost:20128",
-   "quota": "Без квот и без карты · 1287 моделей в 16 префиксах · no-auth пулы: ddgw (6), auto/* (4)",
+   "quota": "Без квот и без карты · 1293 моделей в 16 префиксах · no-auth пулы: ddgw (6), auto/* (4)",
    "models": "GPT-5.4 Mini · GPT-5.6 Luna · Claude Haiku 4.5 · Mistral Small 2603 · GPT-OSS 120B · Gemma4 31B · auto/best-free · auto/coding:free",
    "ctx": "до 1M",
    "note": "Это шлюз, а не тариф: раздаёт бесплатные пулы и маршрутит по качеству. Проверен read-only, конфиг не менялся.",
@@ -3865,7 +3865,7 @@ window.FREE_AI_DATA = {
    "uptime": "97%",
    "status": "working",
    "limits": "RPM/TPM/RPD не раскрыты",
-   "note": "7 :free моделей (включая Ornith 1.5 122B). Часть требует тег user= в extra_body.tags.",
+   "note": "6 :free моделей (включая Ornith 1.5 122B). Часть требует тег user= в extra_body.tags.",
    "parts": {
     "Работоспособность": 40.0,
     "Покрытие моделей": 9.8,
@@ -5383,7 +5383,7 @@ window.FREE_AI_DATA = {
   }
  ],
  "meta": {
-  "omnirouteTotal": 1287,
+  "omnirouteTotal": 1293,
   "omniroutePrefixes": {
    "auto": 45,
    "agy": 25,
@@ -5399,10 +5399,10 @@ window.FREE_AI_DATA = {
    "zc": 14,
    "cxa": 45,
    "unc": 1,
-   "aihorde": 160,
+   "aihorde": 166,
    "openrouter": 737
   },
   "openrouterLiveFree": 19,
-  "nousLiveFree": 7
+  "nousLiveFree": 6
  }
 };
