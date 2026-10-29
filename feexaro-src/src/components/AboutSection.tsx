@@ -10,9 +10,10 @@ export const AboutSection: React.FC = () => {
         <div className="lg:col-span-6 relative">
           <div className="relative rounded-card overflow-hidden border border-feexaro-border shadow-feexaro max-w-md mx-auto lg:max-w-none">
             <img
-              src="https://images.unsplash.com/photo-1581092335397-9583fe92d232?q=80&w=1000&auto=format&fit=crop"
-              alt="Сервісний інженер Feexaro за роботою"
+              src="assets/images/technician-about.jpg"
+              alt="Сервісний інженер Feexaro Харків за роботою"
               className="w-full h-[420px] sm:h-[480px] object-cover object-center"
+              onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'assets/images/66fbc5a35f5d42386fff65f2_Home1-About-Img.jpg'; }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-feexaro-navy/60 via-transparent to-transparent" />
           </div>

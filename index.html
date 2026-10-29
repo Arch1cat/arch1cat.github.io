@@ -1,525 +1,295 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="active-theory-v6">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <title>arch1cat — 影の道 Kage · Software Architect &amp; Creative Technologist</title>
-    <meta name="description" content="A five-chapter night walk through a Kyoto mountain temple. High-performance 3D WebGL architectures, autonomous AI systems, and precision telemetry rendered live in WebGL.">
-    <meta name="theme-color" content="#05070a">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>arch1cat · Creative Technologist &amp; Software Architect</title>
+    <meta name="description" content="Portfolio of arch1cat — high-performance 3D WebGL experiences, autonomous AI agent architectures, native Android Kotlin software, and real-time telemetry systems.">
+    <meta name="theme-color" content="#000000">
 
     <!-- Open Graph / Twitter -->
-    <meta property="og:title" content="arch1cat — 影の道 Kage · Software Architect">
-    <meta property="og:description" content="A five-chapter night walk through a Kyoto mountain temple. High-performance 3D WebGL architectures, autonomous AI systems, and precision telemetry.">
+    <meta property="og:title" content="arch1cat · Creative Technologist &amp; Software Architect">
+    <meta property="og:description" content="Award-grade 3D WebGL experiences, autonomous AI agents, native Android Kotlin software, and real-time telemetry systems.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://arch1cat.github.io/">
     <meta property="og:image" content="/og.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="arch1cat — 影の道 Kage · Software Architect">
-    <meta name="twitter:description" content="A five-chapter night walk through a Kyoto mountain temple. High-performance 3D WebGL architectures, autonomous AI systems, and precision telemetry.">
+    <meta name="twitter:title" content="arch1cat · Creative Technologist &amp; Software Architect">
+    <meta name="twitter:description" content="Award-grade 3D WebGL experiences, autonomous AI agents, native Android Kotlin software, and real-time telemetry systems.">
     <meta name="twitter:image" content="/og.png">
 
     <!-- Favicon -->
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2305070a'/%3E%3Ccircle cx='16' cy='17' r='8' fill='%23e0231c'/%3E%3Crect x='4' y='8' width='24' height='2.6' fill='%23dfe7e0'/%3E%3Crect x='7' y='13' width='18' height='2' fill='%23dfe7e0'/%3E%3C/svg%3E">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23000000'/%3E%3Cpath d='M18 44 V22 L26 30 H38 L46 22 V44 Q46 50 40 50 H24 Q18 50 18 44 Z M27 38 h3 v3 h-3 z M34 38 h3 v3 h-3 z' fill='%2300F2FE'/%3E%3C/svg%3E">
 
-    <!-- Fonts & Kage Stylesheet -->
-    <link rel="stylesheet" href="assets/kage/fonts.css">
-    <link rel="stylesheet" href="assets/css/kage-style.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <style>
-      /* Stolen Active Theory Radio Capsule — Kage Night Temple Edition */
-      .at-radio-kage {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        padding: 6px 14px;
-        border-radius: 9999px;
-        background: rgba(10, 14, 18, 0.82);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border: 1px solid rgba(224, 35, 28, 0.28);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
-        font-family: 'Onest', sans-serif;
-        transition: border-color 0.3s ease, box-shadow 0.3s ease;
-      }
-      .at-radio-kage:hover {
-        border-color: rgba(224, 35, 28, 0.65);
-        box-shadow: 0 0 20px rgba(224, 35, 28, 0.25);
-      }
-      .radio-btn {
-        background: none;
-        border: none;
-        color: rgba(223, 231, 224, 0.7);
-        font-size: 11px;
-        cursor: pointer;
-        padding: 0 3px;
-        transition: color 0.2s ease;
-      }
-      .radio-btn:hover {
-        color: #e0231c;
-      }
-      .eq-bar {
-        width: 2px;
-        background: #e0231c;
-        border-radius: 1px;
-        transition: height 0.08s ease;
-      }
-      .radio-ticker-wrap {
-        width: 170px;
-        overflow: hidden;
-        position: relative;
-        height: 16px;
-        mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-      }
-      .radio-ticker-text {
-        white-space: nowrap;
-        font-size: 11px;
-        color: rgba(223, 231, 224, 0.9);
-        letter-spacing: 0.02em;
-        transition: opacity 0.2s ease;
-      }
-      .radio-play-btn {
-        width: 22px;
-        height: 22px;
-        border-radius: 50%;
-        background: rgba(224, 35, 28, 0.18);
-        color: #dfe7e0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 9px;
-        border: 1px solid rgba(224, 35, 28, 0.4);
-        cursor: pointer;
-        transition: all 0.2s ease;
-      }
-      .radio-play-btn:hover {
-        background: #e0231c;
-        color: #fff;
-      }
-      @media (max-width: 768px) {
-        .at-radio-kage { display: none; }
-      }
-    </style>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- Three.js r170 Importmap -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+        }
+    }
+    </script>
 </head>
-<body>
+<body class="bg-black text-white selection:bg-cyan-500 selection:text-black overflow-hidden select-none">
 
-<!-- Three.js Canvas & Post-Processing Shaders -->
-<canvas id="gl" aria-hidden="true"></canvas>
-<div id="vignette"></div>
-<div id="grain"></div>
-<div class="cur-dot" id="cursor"></div>
+    <!-- 3D WebGL Canvas Layer -->
+    <div id="webgl-container" aria-label="Active Theory 3D WebGL Stage"></div>
+    <div class="grain-overlay" aria-hidden="true"></div>
+    <div class="vignette-overlay" aria-hidden="true"></div>
 
-<!-- ============================================================ preloader -->
-<div id="pre">
-  <div class="pre-in">
-    <div class="pre-mark">
-      <svg viewBox="0 0 44 44" fill="none" aria-hidden="true">
-        <circle cx="22" cy="24" r="9.5" stroke="#e0231c" stroke-width="1.2"/>
-        <path d="M6 12h32M9.5 17h25M22 8v28" stroke="#dfe7e0" stroke-width="1.2"/>
-      </svg>
+    <!-- Active Theory Iconic ASCII Sphere Preloader -->
+    <div id="ascii-preloader" class="fixed inset-0 z-50 bg-black flex flex-col items-center justify-center transition-opacity duration-700">
+        <div class="ascii-sphere font-mono text-cyan-400/80 leading-none whitespace-pre text-center tracking-tighter" id="ascii-canvas">
+//////////7///////5///////////
+////55////////////////////////
+/////////////////////7////////
+5/////////5/////7/////////////
+/////5////////////////////////
+///////7////////7//5/////////5
+5//5//////////////////5/////7/
+////5//////////<span class="text-white font-bold bg-cyan-950 px-1" id="ascii-pct">/ 75 /</span>//////////
+//////////////////////////////
+/////////5///////////////75///
+5///57/////////5//////////////
+///5////5///////5/////////////
+        </div>
+        <div class="mt-6 font-mono text-xs text-cyan-400/70 tracking-widest flex items-center gap-2">
+            <span class="inline-block w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+            <span>INITIALIZING WEBGL 2.0 &amp; ACTIVE THEORY RADIO...</span>
+        </div>
     </div>
-    <div class="pre-jp jp">影の道</div>
-    <div class="pre-bar"><i id="pre-fill"></i></div>
-    <div class="pre-meta">
-      <span>Raising the mountain sanctuary</span><b><span id="pre-pct">0</span>%</b>
+
+    <!-- Top Navigation Bar & Active Theory Radio Capsule -->
+    <header class="fixed top-0 left-0 right-0 z-30 flex items-center justify-between p-6 pointer-events-none">
+        <!-- Brand / Identity -->
+        <div class="pointer-events-auto flex items-center gap-3">
+            <a href="#" class="brand-link flex items-center gap-2.5 group">
+                <span class="w-8 h-8 rounded-full border border-cyan-500/40 bg-black/60 flex items-center justify-center text-cyan-400 shadow-[0_0_12px_rgba(0,242,254,0.3)] group-hover:border-cyan-400 transition-all">
+                    <svg width="18" height="18" viewBox="0 0 64 64"><path d="M18 44 V22 L26 30 H38 L46 22 V44 Q46 50 40 50 H24 Q18 50 18 44 Z M27 38 h3 v3 h-3 z M34 38 h3 v3 h-3 z" fill="currentColor"/></svg>
+                </span>
+                <div class="flex flex-col leading-none">
+                    <span class="font-mono text-xs font-bold tracking-wider text-white">ARCH1CAT</span>
+                    <span class="font-mono text-[9px] tracking-widest text-cyan-400/70">CHIEF ARCHITECT</span>
+                </div>
+            </a>
+        </div>
+
+        <!-- Center: Stolen Active Theory Radio Player -->
+        <div class="pointer-events-auto flex items-center gap-2">
+            <div id="at-radio-capsule" class="radio-capsule flex items-center gap-2 px-3 py-1.5 rounded-full border border-cyan-500/30 bg-black/75 backdrop-blur-xl shadow-[0_4px_24px_rgba(0,0,0,0.8)]">
+                <!-- Prev Button -->
+                <button id="radio-prev-btn" class="radio-btn text-cyan-400/70 hover:text-cyan-300 font-mono text-xs px-1 transition-colors" title="Previous Track">
+                    &lt;&lt;
+                </button>
+
+                <!-- Equalizer / Visualizer Bars -->
+                <div id="radio-eq-bars" class="flex items-end gap-[2px] h-3 px-1" title="Active Theory Sound Engine">
+                    <span class="eq-bar h-2"></span>
+                    <span class="eq-bar h-3"></span>
+                    <span class="eq-bar h-1"></span>
+                </div>
+
+                <!-- Marquee Ticker -->
+                <div class="radio-ticker-wrapper w-44 sm:w-56 overflow-hidden relative h-4">
+                    <div id="radio-ticker-text" class="radio-ticker font-mono text-[11px] text-cyan-300/90 whitespace-nowrap">
+                        01. Sergey Azbel - Themis
+                    </div>
+                </div>
+
+                <!-- Next Button -->
+                <button id="radio-next-btn" class="radio-btn text-cyan-400/70 hover:text-cyan-300 font-mono text-xs px-1 transition-colors" title="Next Track">
+                    &gt;&gt;
+                </button>
+
+                <!-- Play/Pause Button -->
+                <button id="radio-toggle-btn" class="ml-1 w-6 h-6 rounded-full bg-cyan-500/20 hover:bg-cyan-500/40 text-cyan-300 flex items-center justify-center text-[10px] transition-all" title="Play / Pause Radio">
+                    ▶
+                </button>
+
+                <!-- Mute / Unmute Button -->
+                <button id="radio-mute-btn" class="text-gray-400 hover:text-white text-xs px-1 transition-colors" title="Mute Audio">
+                    🔊
+                </button>
+            </div>
+        </div>
+
+        <!-- Right: Active Theory WORK — CONTACT Navigation Capsule + World Switcher -->
+        <div class="pointer-events-auto flex flex-col items-end gap-2">
+            <div class="flex items-center gap-2">
+                <a href="fixora/" class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-yellow-500/40 bg-yellow-500/10 hover:bg-yellow-500/25 text-yellow-300 font-mono text-xs font-bold transition-all" title="Fixora Kharkiv Prototype">
+                    <span>⚡ FIXORA</span>
+                </a>
+                <a href="rempobut/" class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-blue-500/40 bg-blue-500/10 hover:bg-blue-500/25 text-blue-300 font-mono text-xs font-bold transition-all" title="Feexaro Kharkiv Prototype">
+                    <span>🛠️ FEEXARO</span>
+                </a>
+                <a href="ai-matrix.html" class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-cyan-500/30 bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 font-mono text-xs font-bold transition-all" title="Free AI Universe Matrix">
+                    <span>⚡ AI UNIVERSE</span>
+                </a>
+                <div class="relative group">
+                    <nav class="nav-capsule flex items-center px-4 py-2 rounded-full border border-white/20 bg-black/70 backdrop-blur-xl font-mono text-xs tracking-wider text-gray-300 shadow-[0_4px_20px_rgba(0,0,0,0.6)]">
+                        <a href="#work" id="nav-work-btn" class="hover:text-cyan-400 transition-colors flex items-center gap-1.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
+                            <span>WORK</span>
+                        </a>
+                        <span class="mx-2.5 text-cyan-400/50">∿</span>
+                        <a href="#contact" id="nav-contact-btn" class="hover:text-cyan-400 transition-colors">CONTACT</a>
+                    </nav>
+                    <!-- Ambient Cyan Light Bleed Underneath (Signature Active Theory) -->
+                    <div class="ambient-glow-bleed"></div>
+                </div>
+            </div>
+
+            <!-- Active Theory World / Space Switcher (IM WORLD) -->
+            <div class="hidden sm:flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-black/60 backdrop-blur-md font-mono text-[10px] text-gray-400">
+                <button id="world-prev-btn" class="hover:text-cyan-400 transition-colors">&lt;&lt;</button>
+                <span class="text-white font-bold tracking-widest text-[9px]">IM WORLD</span>
+                <button id="world-next-btn" class="hover:text-cyan-400 transition-colors">&gt;&gt;</button>
+                <span class="text-cyan-400/80 ml-1 font-bold" id="world-index-num">5.</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Far Right Edge: Active Theory Vertical Scroll Slider Indicator -->
+    <div class="fixed right-3 top-1/2 -translate-y-1/2 z-30 pointer-events-auto hidden sm:flex flex-col items-center">
+        <div class="w-1.5 h-24 rounded-full bg-white/10 relative overflow-hidden border border-white/15">
+            <div id="right-scroll-thumb" class="w-full h-8 rounded-full bg-cyan-400 shadow-[0_0_10px_rgba(0,242,254,0.8)] transition-transform duration-200"></div>
+        </div>
     </div>
-  </div>
-</div>
 
-<!-- ============================================================ nav -->
-<header class="nav" id="nav">
-  <a class="brand" href="#top" data-cursor>
-    <svg viewBox="0 0 44 44" fill="none" aria-hidden="true">
-      <circle cx="22" cy="25" r="8.6" fill="#e0231c" fill-opacity=".9"/>
-      <path d="M5 13h34M9 18.4h26M22 8.5v27" stroke="#dfe7e0" stroke-width="1.5"/>
-      <path d="M14 35.5h16" stroke="#dfe7e0" stroke-width="1.2" stroke-opacity=".6"/>
-    </svg>
-    <span class="brand-tx"><b>ARCH1CAT</b><i>CHIEF SYSTEM ARCHITECT</i></span>
-  </a>
+    <!-- Left Column: Category Navigator (WHAT ARE YOU LOOKING FOR?) -->
+    <aside class="fixed left-6 top-1/2 -translate-y-1/2 z-20 pointer-events-none hidden md:block">
+        <div class="pointer-events-auto flex flex-col gap-2 max-w-xs">
+            <p class="font-mono text-[10px] tracking-widest text-gray-400 uppercase mb-3 flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
+                WHAT ARE YOU LOOKING FOR?
+            </p>
+            <button class="cat-filter-btn active text-left font-mono text-xs tracking-wider text-gray-400 hover:text-cyan-300 transition-all flex items-center gap-2 py-1" data-cat="ALL">
+                <span class="cat-arrow text-cyan-400 font-bold">-&gt;</span>
+                <span>ALL WORKS</span>
+            </button>
+            <button class="cat-filter-btn text-left font-mono text-xs tracking-wider text-gray-400 hover:text-cyan-300 transition-all flex items-center gap-2 py-1" data-cat="WEBSITES & CRM">
+                <span class="cat-arrow text-cyan-400 font-bold opacity-0">-&gt;</span>
+                <span>WEBSITES &amp; CRM</span>
+            </button>
+            <button class="cat-filter-btn text-left font-mono text-xs tracking-wider text-gray-400 hover:text-cyan-300 transition-all flex items-center gap-2 py-1" data-cat="3D EXPERIENCES & WEBGL">
+                <span class="cat-arrow text-cyan-400 font-bold opacity-0">-&gt;</span>
+                <span>3D EXPERIENCES &amp; WEBGL</span>
+            </button>
+            <button class="cat-filter-btn text-left font-mono text-xs tracking-wider text-gray-400 hover:text-cyan-300 transition-all flex items-center gap-2 py-1" data-cat="AUTONOMOUS AI AGENTS">
+                <span class="cat-arrow text-cyan-400 font-bold opacity-0">-&gt;</span>
+                <span>AUTONOMOUS AI AGENTS</span>
+            </button>
+            <button class="cat-filter-btn text-left font-mono text-xs tracking-wider text-gray-400 hover:text-cyan-300 transition-all flex items-center gap-2 py-1" data-cat="REALTIME GIS & TELEMETRY">
+                <span class="cat-arrow text-cyan-400 font-bold opacity-0">-&gt;</span>
+                <span>REALTIME GIS &amp; TELEMETRY</span>
+            </button>
+            <button class="cat-filter-btn text-left font-mono text-xs tracking-wider text-gray-400 hover:text-cyan-300 transition-all flex items-center gap-2 py-1" data-cat="MOBILE APPS (KOTLIN)">
+                <span class="cat-arrow text-cyan-400 font-bold opacity-0">-&gt;</span>
+                <span>MOBILE APPS (KOTLIN)</span>
+            </button>
+            <a href="ai-matrix.html" class="cat-filter-btn text-left font-mono text-xs tracking-wider text-cyan-400/80 hover:text-cyan-300 transition-all flex items-center gap-2 py-1 mt-2">
+                <span class="cat-arrow text-cyan-400 font-bold">-&gt;</span>
+                <span>FREE AI MATRIX ↗</span>
+            </a>
+        </div>
+    </aside>
 
-  <!-- Active Theory Radio Stolen Capsule (Kage Temple Edition) -->
-  <div class="at-radio-kage" id="kage-radio-capsule" title="Active Theory Radio · Kyoto Temple Edition">
-    <button id="radio-prev-btn" class="radio-btn" title="Previous Track">&lt;&lt;</button>
-    <div id="radio-eq-bars" style="display:flex; align-items:flex-end; gap:2px; height:12px;">
-      <span class="eq-bar" style="height:7px;"></span>
-      <span class="eq-bar" style="height:12px;"></span>
-      <span class="eq-bar" style="height:5px;"></span>
+    <!-- Bottom Left: Interactive AI Prompt / Search Capsule -->
+    <div class="fixed bottom-6 left-6 z-20 pointer-events-auto">
+        <div class="relative flex items-center">
+            <div class="search-capsule flex items-center gap-2.5 px-4 py-2.5 rounded-full border border-white/20 bg-black/75 backdrop-blur-xl shadow-[0_4px_24px_rgba(0,0,0,0.8)] focus-within:border-cyan-400 transition-all">
+                <span class="text-cyan-400 font-mono text-xs">?</span>
+                <input type="text" id="ai-search-input" placeholder="ASK ME ANYTHING..." class="bg-transparent border-none outline-none font-mono text-xs text-white placeholder-gray-500 w-44 sm:w-60">
+                <span class="font-mono text-[9px] text-gray-500 hidden sm:inline">[ENTER]</span>
+            </div>
+        </div>
     </div>
-    <div class="radio-ticker-wrap">
-      <div id="radio-ticker-text" class="radio-ticker-text">01. Sergey Azbel - Themis</div>
+
+    <!-- Center Bottom: Carousel Navigation Controls -->
+    <div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-20 pointer-events-auto flex items-center gap-3">
+        <button id="carousel-prev-btn" class="nav-control-btn px-4 py-2 rounded-full border border-white/15 bg-black/70 backdrop-blur-xl font-mono text-xs text-gray-300 hover:text-cyan-300 hover:border-cyan-400 transition-all flex items-center gap-2">
+            <span>&larr;</span> <span>PREV</span>
+        </button>
+        <div id="carousel-counter" class="font-mono text-xs text-cyan-400/80 px-2">
+            01 / 07
+        </div>
+        <button id="carousel-next-btn" class="nav-control-btn px-4 py-2 rounded-full border border-white/15 bg-black/70 backdrop-blur-xl font-mono text-xs text-gray-300 hover:text-cyan-300 hover:border-cyan-400 transition-all flex items-center gap-2">
+            <span>NEXT</span> <span>&rarr;</span>
+        </button>
     </div>
-    <button id="radio-next-btn" class="radio-btn" title="Next Track">&gt;&gt;</button>
-    <button id="radio-toggle-btn" class="radio-play-btn" title="Play/Pause">▶</button>
-    <button id="radio-mute-btn" class="radio-btn" title="Mute Audio">🔊</button>
-  </div>
 
-  <nav class="nav-links" id="navlinks">
-    <a class="nav-link" href="#gate" data-cursor><span>Sanmon</span><span class="alt">山門</span></a>
-    <a class="nav-link" href="#pathways" data-cursor><span>Works</span><span class="alt">庭園</span></a>
-    <a class="nav-link" href="#lessons" data-cursor><span>Craft</span><span class="alt">手業</span></a>
-    <a class="nav-link" href="#eternity" data-cursor><span>Signal</span><span class="alt">残光</span></a>
-    <a class="nav-link" href="3d-print/" data-cursor style="color:#ff5500;"><span>3D Print</span><span class="alt">造形</span></a>
-    <a class="nav-link" href="fixora/" data-cursor style="color:#ffcb05;"><span>Fixora</span><span class="alt">復旧</span></a>
-    <a class="nav-link" href="rempobut/" data-cursor style="color:#008cf0;"><span>Feexaro</span><span class="alt">修理</span></a>
-    <a class="nav-link" href="ai-matrix.html" data-cursor style="color:#e0231c;"><span>AI Matrix</span><span class="alt">宇宙</span></a>
-  </nav>
-  <button class="nav-burger" aria-label="Menu" data-cursor><i></i><i></i></button>
-</header>
-
-<div class="page" id="top">
-
-<!-- ============================================================ hero -->
-<section class="hero" id="hero" data-cam="0">
-  <div class="hero-top">
-    <div class="eyebrow" data-rv="fade"><span class="dot"></span> Chapter 00 — The Hidden Gate</div>
-    <h1 class="display h-hero">
-      <span class="mask-line"><span>Where stillness</span></span>
-      <span class="mask-line"><span>reveals the</span></span>
-      <span class="mask-line"><span>unseen.</span></span>
-    </h1>
-    <p class="hero-sub body" data-rv="up">Software as craft &amp; play. High-performance 3D WebGL architectures, autonomous AI multi-agent systems, and precision GIS telemetry.</p>
-  </div>
-
-  <div class="hero-spacer"></div>
-
-  <div class="hero-foot">
-    <div class="hero-cue" data-rv="fade"><span>Scroll down to enter the mountain</span><span class="track"><i></i></span></div>
-    <div class="chapters" id="chips">
-      <div class="chip" data-chip="0" data-rv="up" data-cursor><span class="num">01</span>
-        <span class="tx"><b>Thresholds</b><p>Discover the hidden gates that open on to deeper paths.</p></span></div>
-      <div class="chip" data-chip="1" data-rv="up" data-cursor><span class="num">02</span>
-        <span class="tx"><b>Still Gardens</b><p>Witness the courts where silence gently unfolds.</p></span></div>
-      <div class="chip" data-chip="2" data-rv="up" data-cursor><span class="num">03</span>
-        <span class="tx"><b>Sacred Craft</b><p>Embrace the hands and heritage that shape devotion.</p></span></div>
-      <div class="chip" data-chip="3" data-rv="up" data-cursor><span class="num">04</span>
-        <span class="tx"><b>Night Rituals</b><p>Explore the rites that awaken when the day is done.</p></span></div>
+    <!-- Bottom Right: Live Signal Status & Social Links -->
+    <div class="fixed bottom-6 right-6 z-20 pointer-events-auto hidden sm:flex items-center gap-4 font-mono text-xs text-gray-400">
+        <a href="https://x.com/Archi_____cat" target="_blank" rel="noopener noreferrer" class="hover:text-cyan-400 transition-colors">
+            X // @ARCHI_____CAT
+        </a>
+        <span class="text-gray-600">/</span>
+        <a href="https://github.com/l2bote4game" target="_blank" rel="noopener noreferrer" class="hover:text-cyan-400 transition-colors">
+            GITHUB // L2BOTE4GAME
+        </a>
     </div>
-  </div>
 
-  <a class="peek" href="#pathways" data-view="3" data-rv="fade" data-cursor aria-label="Preview: Sanmon, before the bell">
-    <span class="peek-fr" data-frame></span>
-    <span class="peek-play"><svg viewBox="0 0 22 22" fill="none"><path d="M8 5.6 16.4 11 8 16.4z" fill="#dfe7e0"/></svg></span>
-    <span class="peek-cap"><b class="jp">山門</b><i>Sanmon — before the bell</i></span>
-  </a>
+    <!-- Project Inspection Slide-Out Drawer (With Muffled Audio Effect) -->
+    <aside id="project-drawer" class="fixed top-0 right-0 bottom-0 w-full sm:w-[480px] z-40 bg-black/90 backdrop-blur-2xl border-l border-white/15 p-8 flex flex-col justify-between transform translate-x-full transition-transform duration-500 ease-out shadow-[0_0_50px_rgba(0,0,0,0.9)]">
+        <div>
+            <!-- Header & Close -->
+            <div class="flex items-center justify-between pb-6 border-b border-white/10 mb-8">
+                <span id="drawer-index" class="font-mono text-xs text-cyan-400 tracking-widest">// 01 · WEBSITES &amp; CRM</span>
+                <button id="drawer-close-btn" class="text-gray-400 hover:text-white font-mono text-xs px-2 py-1 rounded border border-white/10 hover:border-white/30 transition-all">
+                    ✕ CLOSE [ESC]
+                </button>
+            </div>
 
-  <div class="word-fb" aria-hidden="true">KAGE</div>
+            <!-- Content -->
+            <h2 id="drawer-title" class="font-sans font-black text-3xl sm:text-4xl text-white tracking-tight mb-2">
+                YOTEI CRM
+            </h2>
+            <p id="drawer-subtitle" class="font-mono text-xs text-cyan-400/90 mb-6">
+                Enterprise Real Estate Intelligence &amp; CRM
+            </p>
+            <p id="drawer-desc" class="font-sans text-sm text-gray-300 leading-relaxed mb-8">
+                Production proptech ecosystem. 3-level taxonomy, Mapbox GL clustering, automated Vitest QA verification gates, and bidirectional lead pipelines.
+            </p>
 
-  <div class="hero-side" data-rv="up">
-    <span class="v jp">影の道</span>
-  </div>
-</section>
+            <!-- Tags -->
+            <div class="mb-8">
+                <p class="font-mono text-[10px] text-gray-500 uppercase tracking-widest mb-3">ENGINEERING ARCHITECTURE</p>
+                <div id="drawer-tags" class="flex flex-wrap gap-2">
+                    <span class="tag-pill">Next.js 16</span>
+                    <span class="tag-pill">Turborepo</span>
+                    <span class="tag-pill">Mapbox GL</span>
+                </div>
+            </div>
+        </div>
 
-<!-- ============================================================ chapter I -->
-<section class="sec" id="gate" data-cam="1">
-  <div class="fg" data-fg="gate" aria-hidden="true">
-    <span class="fg-el fg-wall" data-fg-in="left">
-      <img crossorigin="anonymous" src="https://ublctyddhtbgaersvxxb.supabase.co/storage/v1/object/public/threeui-media/scene-images/35388445965f970fa28af333/temple-wall.webp" alt="" width="1536" height="884" loading="lazy" decoding="async">
-    </span>
-    <span class="fg-el fg-pine" data-fg-in="right">
-      <img crossorigin="anonymous" src="https://ublctyddhtbgaersvxxb.supabase.co/storage/v1/object/public/threeui-media/scene-images/35388445965f970fa28af333/pine-tree.webp" alt="" width="1024" height="1438" loading="lazy" decoding="async">
-    </span>
-    <span class="fg-el fg-grass" data-fg-in="up">
-      <img crossorigin="anonymous" src="https://ublctyddhtbgaersvxxb.supabase.co/storage/v1/object/public/threeui-media/scene-images/35388445965f970fa28af333/tall-grass.webp" alt="" width="1717" height="916" loading="lazy" decoding="async">
-    </span>
-  </div>
-  <div class="sec-head" data-rv="fade">
-    <span class="k"><b>01</b> — The Sanmon</span><span class="rule"></span><span class="k jp">山門</span>
-  </div>
-  <div class="gate-grid">
-    <h2 class="display h-sec" data-rv="up">Charred cypress, worn stone, one gate left open.</h2>
-    <div class="gate-copy">
-      <p class="lead" data-rv="up">Architecture begins where noise stops: a gate of cedar burned black, standing in its own weather. The soot is not decoration. It is how a system is engineered to survive a hundred harsh seasons, and the first thing this craft asks you to understand.</p>
-      <p class="body" data-rv="up">Climb the worn steps and the digital sanctuary lifts out of the mist, paper screens lit from inside like lanterns in the mountain cold. Above the eaves a vermilion moon holds its place, patient, half hidden. Nothing here is rushed. Strict taxonomies, deterministic pipelines, and zero-fluff code.</p>
-      <a class="arrowlink" href="#pathways" data-rv="fade" data-cursor>
-        <span>Enter the gardens</span>
-        <span class="ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
-      </a>
-    </div>
-  </div>
-  <div class="gate-stats" data-rv="up">
-    <div><b>08</b><span>Core Systems</span></div>
-    <div><b>100M+</b><span>Tokens Reasoned</span></div>
-    <div><b>1611</b><span>Foundations Raised</span></div>
-    <div><b>∞</b><span>Stillness &amp; Craft</span></div>
-  </div>
-</section>
+        <!-- Drawer Footer CTAs -->
+        <div class="pt-6 border-t border-white/10 flex flex-col gap-3">
+            <a id="drawer-live-link" href="https://yotei.com.ua/" target="_blank" rel="noopener noreferrer" class="cta-primary w-full text-center py-3 rounded-full bg-cyan-400 hover:bg-cyan-300 text-black font-mono text-xs font-bold tracking-wider transition-all shadow-[0_0_20px_rgba(0,242,254,0.4)]">
+                OPEN PRODUCTION APP ↗
+            </a>
+            <a id="drawer-source-link" href="https://github.com/l2bote4game" target="_blank" rel="noopener noreferrer" class="cta-secondary w-full text-center py-3 rounded-full border border-white/20 hover:border-cyan-400 text-gray-300 hover:text-white font-mono text-xs tracking-wider transition-all">
+                VIEW SOURCE REPOSITORY ↗
+            </a>
+        </div>
+    </aside>
 
-<!-- ============================================================ chapter II -->
-<section class="sec" id="pathways" data-cam="2">
-  <div class="fg" data-fg="pathways" aria-hidden="true">
-    <span class="fg-el fg-sakura fg-el--sway" data-fg-in="left">
-      <img crossorigin="anonymous" src="https://ublctyddhtbgaersvxxb.supabase.co/storage/v1/object/public/threeui-media/scene-images/35388445965f970fa28af333/sakura-branch.webp" alt="" width="1536" height="1024" loading="lazy" decoding="async">
-    </span>
-    <span class="fg-el fg-leaves fg-el--sway" data-fg-in="right">
-      <img crossorigin="anonymous" src="https://ublctyddhtbgaersvxxb.supabase.co/storage/v1/object/public/threeui-media/scene-images/35388445965f970fa28af333/maple-leaves.webp" alt="" width="1536" height="1024" loading="lazy" decoding="async">
-    </span>
-    <span class="fg-el fg-lantern" data-fg-in="up">
-      <img crossorigin="anonymous" src="https://ublctyddhtbgaersvxxb.supabase.co/storage/v1/object/public/threeui-media/scene-images/35388445965f970fa28af333/stone-lantern.webp" alt="" width="1024" height="1499" loading="lazy" decoding="async">
-    </span>
-    <span class="fg-el fg-bush" data-fg-in="up">
-      <img crossorigin="anonymous" src="https://ublctyddhtbgaersvxxb.supabase.co/storage/v1/object/public/threeui-media/scene-images/35388445965f970fa28af333/garden-bush.webp" alt="" width="1717" height="876" loading="lazy" decoding="async">
-    </span>
-  </div>
-  <div class="sec-head" data-rv="fade">
-    <span class="k"><b>02</b> — Still Gardens</span><span class="rule"></span><span class="k jp">庭園</span>
-  </div>
-  <div class="cards" id="cards">
-    <!-- Card 01: Yotei CRM -->
-    <article class="card" data-rv="up" data-view="0" data-cursor>
-      <div class="card-fr" data-frame>
-        <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
-        <i class="glow" style="--gx:80.2%; --gy:23.9%; --gr:22%; --gt:6.1s; --gt2:9.7s; --gc1:rgba(0,242,254,.50); --gc2:rgba(14,165,233,.24)"></i>
-        <div class="card-lab"><b>Yotei CRM</b><span class="jp">不動産</span></div>
-      </div>
-      <div class="card-meta"><span>Proptech Intelligence</span><span>yotei.com.ua ↗</span></div>
-    </article>
+    <!-- Custom Precision Cursor -->
+    <div id="cursor-dot" class="cursor-dot" aria-hidden="true"></div>
+    <div id="cursor-ring" class="cursor-ring" aria-hidden="true"></div>
 
-    <!-- Card 02: WARDOGS 3D -->
-    <article class="card" data-rv="up" data-view="1" data-cursor>
-      <div class="card-fr" data-frame>
-        <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
-        <i class="glow glow--flame" style="--gx:70.5%; --gy:47.2%; --gr:14%; --gt:3.7s; --gt2:5.3s; --gc1:rgba(16,185,129,.62); --gc2:rgba(5,150,105,.30)"></i>
-        <div class="card-lab"><b>WARDOGS 3D</b><span class="jp">弾道学</span></div>
-      </div>
-      <div class="card-meta"><span>Tactical GIS &amp; Ballistics</span><span>Live WebGL ↗</span></div>
-    </article>
-
-    <!-- Card 03: World Monitor -->
-    <article class="card" data-rv="up" data-view="2" data-cursor>
-      <div class="card-fr" data-frame>
-        <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
-        <i class="glow" style="--gx:48.0%; --gy:16.8%; --gr:20%; --gt:7.3s; --gt2:11.2s; --gc1:rgba(245,158,11,.52); --gc2:rgba(217,119,6,.24)"></i>
-        <div class="card-lab"><b>World Monitor</b><span class="jp">諜報</span></div>
-      </div>
-      <div class="card-meta"><span>OSINT Cyber Telemetry</span><span>GitHub ↗</span></div>
-    </article>
-
-    <!-- Card 04: VULCAN 3D Lab -->
-    <a href="3d-print/" class="card" data-rv="up" data-cursor style="text-decoration:none;">
-      <div class="card-fr" data-frame>
-        <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#ff5500" stroke-width="1.3"/></svg></span>
-        <i class="glow glow--flame" style="--gx:65.0%; --gy:35.0%; --gr:24%; --gt:4.2s; --gt2:6.8s; --gc1:rgba(255,85,0,.75); --gc2:rgba(245,158,11,.35)"></i>
-        <div class="card-lab"><b>VULCAN 3D</b><span class="jp" style="color:#ff5500;">造形</span></div>
-      </div>
-      <div class="card-meta"><span>3D-печать под заказ</span><span style="color:#ff5500;">Интерактивный Lab ↗</span></div>
-    </a>
-
-    <!-- Card 05: Feexaro Сервіс -->
-    <a href="rempobut/" class="card" data-rv="up" data-cursor style="text-decoration:none;">
-      <div class="card-fr" data-frame>
-        <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#008cf0" stroke-width="1.3"/></svg></span>
-        <i class="glow glow--azure" style="--gx:65.0%; --gy:35.0%; --gr:24%; --gt:4.2s; --gt2:6.8s; --gc1:rgba(0,140,240,.75); --gc2:rgba(4,31,57,.35)"></i>
-        <div class="card-lab"><b>Feexaro Сервіс</b><span class="jp" style="color:#008cf0;">修理</span></div>
-      </div>
-      <div class="card-meta"><span>Ремонт побутової техніки (Харків)</span><span style="color:#008cf0;">Корпоративний портал ↗</span></div>
-    </a>
-
-    <!-- Card 06: Fixora Харків -->
-    <a href="fixora/" class="card" data-rv="up" data-cursor style="text-decoration:none;">
-      <div class="card-fr" data-frame>
-        <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#ffcb05" stroke-width="1.3"/></svg></span>
-        <i class="glow glow--gold" style="--gx:50.0%; --gy:50.0%; --gr:26%; --gt:3.8s; --gt2:6.2s; --gc1:rgba(255,203,5,.85); --gc2:rgba(11,11,11,.4)"></i>
-        <div class="card-lab"><b style="color:#ffcb05;">Fixora Харків</b><span class="jp" style="color:#ffcb05;">復旧</span></div>
-      </div>
-      <div class="card-meta"><span>Ретро-едиторіал &amp; Інтерактив</span><span style="color:#ffcb05;">Відкрити прототип ↗</span></div>
-    </a>
-  </div>
-</section>
-
-<!-- ============================================================ chapter III -->
-<section class="sec" id="lessons" data-cam="3">
-  <div class="fg" data-fg="lessons" aria-hidden="true">
-    <span class="fg-el fg-wall fg-el--flip" data-fg-in="right">
-      <img crossorigin="anonymous" src="https://ublctyddhtbgaersvxxb.supabase.co/storage/v1/object/public/threeui-media/scene-images/35388445965f970fa28af333/temple-wall.webp" alt="" width="1536" height="884" loading="lazy" decoding="async">
-    </span>
-    <span class="fg-el fg-stones" data-fg-in="up">
-      <img crossorigin="anonymous" src="https://ublctyddhtbgaersvxxb.supabase.co/storage/v1/object/public/threeui-media/scene-images/35388445965f970fa28af333/basalt-stones.webp" alt="" width="1536" height="996" loading="lazy" decoding="async">
-    </span>
-    <span class="fg-el fg-grass" data-fg-in="up">
-      <img crossorigin="anonymous" src="https://ublctyddhtbgaersvxxb.supabase.co/storage/v1/object/public/threeui-media/scene-images/35388445965f970fa28af333/tall-grass.webp" alt="" width="1717" height="916" loading="lazy" decoding="async">
-    </span>
-  </div>
-  <div class="sec-head" data-rv="fade">
-    <span class="k"><b>03</b> — Sacred Craft</span><span class="rule"></span><span class="k jp">手業</span>
-  </div>
-  <div class="cur-head">
-    <h2 class="display h-sec" data-rv="up">Five disciplines. Relentless execution. One quiet mind.</h2>
-    <p class="body-lg" data-rv="up">Each discipline is an architecture, not a lecture. Built with strict types, rigorous QA verification gates, and deep multi-step CoT reasoning.</p>
-  </div>
-  <div class="cur" id="cur">
-    <div class="les" data-les="0" data-cursor>
-      <span class="k">01</span>
-      <h3>The Hidden Gate<em class="jp">山門</em></h3>
-      <p>Clean system architecture, zero-fluff data pipelines, and strict domain taxonomies.</p>
-      <span class="t">Architecture</span><i class="bar"></i>
-    </div>
-    <div class="les" data-les="1" data-cursor>
-      <span class="k">02</span>
-      <h3>Borrowed Scenery<em class="jp">借景</em></h3>
-      <p>Shakkei: high-end WebGL 3D shaders, real-time DEM raymarching, and spatial GIS.</p>
-      <span class="t">Three.js</span><i class="bar"></i>
-    </div>
-    <div class="les" data-les="2" data-cursor>
-      <span class="k">03</span>
-      <h3>Charred Cypress<em class="jp">焼杉</em></h3>
-      <p>Yakisugi: hardening codebases with automated Vitest QA gates to survive high load.</p>
-      <span class="t">Reliability</span><i class="bar"></i>
-    </div>
-    <div class="les" data-les="3" data-cursor>
-      <span class="k">04</span>
-      <h3>Lantern Light<em class="jp">灯籠</em></h3>
-      <p>Native Kotlin Android software: 2.4/5GHz RF diagnostics, compose UI, and passkeys.</p>
-      <span class="t">Kotlin</span><i class="bar"></i>
-    </div>
-    <div class="les" data-les="4" data-cursor>
-      <span class="k">05</span>
-      <h3>The Vermilion Moon<em class="jp">朱月</em></h3>
-      <p>Autonomous AI multi-agent orchestration, CoT planning, and real-time telemetry.</p>
-      <span class="t">AI Systems</span><i class="bar"></i>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================ chapter IV -->
-<section class="sec fin" id="eternity" data-cam="4">
-  <div class="fg" data-fg="eternity" aria-hidden="true">
-    <span class="fg-el fg-hill" data-fg-in="up">
-      <img crossorigin="anonymous" src="https://ublctyddhtbgaersvxxb.supabase.co/storage/v1/object/public/threeui-media/scene-images/35388445965f970fa28af333/hill.webp" alt="" width="1774" height="887" loading="lazy" decoding="async">
-    </span>
-    <span class="fg-el fg-ruins" data-fg-in="left">
-      <img crossorigin="anonymous" src="https://ublctyddhtbgaersvxxb.supabase.co/storage/v1/object/public/threeui-media/scene-images/35388445965f970fa28af333/shrine-ruins.webp" alt="" width="1536" height="1001" loading="lazy" decoding="async">
-    </span>
-    <span class="fg-el fg-grass" data-fg-in="up">
-      <img crossorigin="anonymous" src="https://ublctyddhtbgaersvxxb.supabase.co/storage/v1/object/public/threeui-media/scene-images/35388445965f970fa28af333/tall-grass.webp" alt="" width="1717" height="916" loading="lazy" decoding="async">
-    </span>
-    <span class="fg-el fg-sakura" data-fg-in="left">
-      <img crossorigin="anonymous" src="https://ublctyddhtbgaersvxxb.supabase.co/storage/v1/object/public/threeui-media/scene-images/35388445965f970fa28af333/sakura-branch.webp" alt="" width="1536" height="1024" loading="lazy" decoding="async">
-    </span>
-  </div>
-  <div class="eyebrow" data-rv="fade">Chapter 04 — Signal &amp; Telemetry</div>
-  <h2 class="display" data-rv="up">Afterlight</h2>
-  <p class="body-lg" data-rv="up">The gate does not close behind you. Open to high-stakes 3D WebGL experiences, autonomous AI agent architectures, and real-time systems engineering.</p>
-  <div style="display:flex; gap:16px; margin-top:24px; flex-wrap:wrap;">
-    <a class="cta" href="https://t.me/Archi_____cat" target="_blank" rel="noopener noreferrer" data-rv="fade" data-cursor>
-      <i></i><span>Telegram @Archi_____cat ↗</span>
-      <svg viewBox="0 0 14 14" fill="none" width="13" height="13"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg>
-    </a>
-    <a class="cta" href="https://x.com/Archi_____cat" target="_blank" rel="noopener noreferrer" data-rv="fade" data-cursor>
-      <i></i><span>X @Archi_____cat ↗</span>
-      <svg viewBox="0 0 14 14" fill="none" width="13" height="13"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg>
-    </a>
-  </div>
-</section>
-
-<!-- ============================================================ footer -->
-<footer class="foot" data-cam="5">
-  <div class="fg" data-fg="foot" aria-hidden="true">
-    <span class="fg-el fg-bush" data-fg-in="up">
-      <img crossorigin="anonymous" src="https://ublctyddhtbgaersvxxb.supabase.co/storage/v1/object/public/threeui-media/scene-images/35388445965f970fa28af333/garden-bush.webp" alt="" width="1717" height="876" loading="lazy" decoding="async">
-    </span>
-    <span class="fg-el fg-grass" data-fg-in="up">
-      <img crossorigin="anonymous" src="https://ublctyddhtbgaersvxxb.supabase.co/storage/v1/object/public/threeui-media/scene-images/35388445965f970fa28af333/tall-grass.webp" alt="" width="1717" height="916" loading="lazy" decoding="async">
-    </span>
-    <span class="fg-el fg-stones" data-fg-in="up">
-      <img crossorigin="anonymous" src="https://ublctyddhtbgaersvxxb.supabase.co/storage/v1/object/public/threeui-media/scene-images/35388445965f970fa28af333/basalt-stones.webp" alt="" width="1536" height="996" loading="lazy" decoding="async">
-    </span>
-  </div>
-  <div class="foot-grid">
-    <div class="foot-brand">
-      <svg viewBox="0 0 44 44" fill="none" width="34" height="34" aria-hidden="true">
-        <circle cx="22" cy="25" r="8.6" fill="#e0231c" fill-opacity=".9"/>
-        <path d="M5 13h34M9 18.4h26M22 8.5v27" stroke="#dfe7e0" stroke-width="1.5"/>
-      </svg>
-      <p>A five-chapter night walk through software craft, WebGL 2.0, and autonomous systems. Live Kyoto mountain sanctuary rendered live in WebGL.</p>
-    </div>
-    <div><h4>Navigation</h4><ul>
-      <li><a href="#gate" data-cursor>The Sanmon</a></li>
-      <li><a href="#pathways" data-cursor>Still Gardens</a></li>
-      <li><a href="#lessons" data-cursor>Sacred Craft</a></li>
-      <li><a href="#eternity" data-cursor>Afterlight</a></li>
-    </ul></div>
-    <div><h4>Core Systems</h4><ul>
-      <li><a href="rempobut/" data-cursor style="color:#008cf0;">Feexaro Сервіс ↗</a></li>
-      <li><a href="3d-print/" data-cursor style="color:#ff5500;">VULCAN 3D Studio ↗</a></li>
-      <li><a href="https://yotei.com.ua/" target="_blank" rel="noopener noreferrer" data-cursor>Yotei CRM ↗</a></li>
-      <li><a href="https://l2bote4game.github.io/wardogs-tactical-map/" target="_blank" rel="noopener noreferrer" data-cursor>WARDOGS 3D ↗</a></li>
-      <li><a href="https://github.com/l2bote4game/world-monitor" target="_blank" rel="noopener noreferrer" data-cursor>World Monitor ↗</a></li>
-      <li><a href="https://github.com/l2bote4game/openGym" target="_blank" rel="noopener noreferrer" data-cursor>openGym APK ↗</a></li>
-    </ul></div>
-    <div><h4>Signal</h4><ul>
-      <li><a href="https://t.me/Archi_____cat" target="_blank" rel="noopener noreferrer" data-cursor>Telegram @Archi_____cat</a></li>
-      <li><a href="https://x.com/Archi_____cat" target="_blank" rel="noopener noreferrer" data-cursor>X @Archi_____cat</a></li>
-      <li><a href="https://github.com/l2bote4game" target="_blank" rel="noopener noreferrer" data-cursor>GitHub @l2bote4game</a></li>
-    </ul></div>
-  </div>
-  <div class="foot-base">
-    <span>© 2026 arch1cat — 影の道 Kage</span>
-    <span class="jp">静けさは一つの技である</span>
-    <span>WebGL · Three.js · Kyoto Nocturne</span>
-  </div>
-</footer>
-
-</div><!-- /.page -->
-
-<div id="fg-sky" aria-hidden="true"></div>
-<div class="rail" id="rail"></div>
-
-<!-- Local Three.js Engine & Kage Kyoto Temple Runtime -->
-<script src="assets/kage/three.min.js"></script>
-<script src="assets/kage/kage-engine.js"></script>
-
-<!-- Active Theory Radio Stream Controller -->
-<script type="module">
-  import { radio } from './assets/js/audio-engine.js';
-
-  document.addEventListener('DOMContentLoaded', () => {
-    const toggleBtn = document.getElementById('radio-toggle-btn');
-    const prevBtn = document.getElementById('radio-prev-btn');
-    const nextBtn = document.getElementById('radio-next-btn');
-    const muteBtn = document.getElementById('radio-mute-btn');
-    const tickerText = document.getElementById('radio-ticker-text');
-    const eqBars = document.querySelectorAll('#radio-eq-bars .eq-bar');
-
-    radio.on('trackchange', ({ index, track }) => {
-      if (tickerText) {
-        tickerText.style.opacity = '0';
-        setTimeout(() => {
-          const num = (index + 1).toString().padStart(2, '0');
-          tickerText.textContent = `${num}. ${track.title}`;
-          tickerText.style.opacity = '1';
-        }, 150);
-      }
-    });
-
-    radio.on('playstate', ({ isPlaying }) => {
-      if (toggleBtn) {
-        toggleBtn.textContent = isPlaying ? '❚❚' : '▶';
-        toggleBtn.style.background = isPlaying ? '#e0231c' : 'rgba(224, 35, 28, 0.18)';
-        toggleBtn.style.color = isPlaying ? '#ffffff' : '#dfe7e0';
-      }
-    });
-
-    radio.on('mute', ({ isMuted }) => {
-      if (muteBtn) muteBtn.textContent = isMuted ? '🔇' : '🔊';
-    });
-
-    toggleBtn?.addEventListener('click', () => radio.togglePlay());
-    prevBtn?.addEventListener('click', () => radio.prev());
-    nextBtn?.addEventListener('click', () => radio.next());
-    muteBtn?.addEventListener('click', () => radio.toggleMute());
-
-    // Live Equalizer loop
-    const loopEq = () => {
-      requestAnimationFrame(loopEq);
-      const levels = radio.getEqualizerLevels();
-      if (eqBars.length >= 3) {
-        eqBars[0].style.height = `${Math.floor(levels[0] * 10 + 2)}px`;
-        eqBars[1].style.height = `${Math.floor(levels[1] * 12 + 3)}px`;
-        eqBars[2].style.height = `${Math.floor(levels[2] * 8 + 2)}px`;
-      }
-    };
-    loopEq();
-  });
-</script>
-
+    <!-- Scripts -->
+    <script type="module" src="assets/js/audio-engine.js"></script>
+    <script type="module" src="assets/js/three-scene.js"></script>
+    <script type="module" src="assets/js/ui.js"></script>
 </body>
 </html>

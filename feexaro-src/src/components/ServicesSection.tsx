@@ -18,7 +18,7 @@ const SERVICES: ServiceItem[] = [
     title: 'Ремонт пральних та сушильних машин',
     desc: 'Заміна підшипників барабана, зливних помп, нагрівальних ТЕНів, відновлення силових модулів інвертора.',
     price: 'від 350 ₴',
-    image: 'https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?q=80&w=800&auto=format&fit=crop',
+    image: 'assets/images/washer-modern.jpg',
     commonFaults: ['Гримить при віджимі', 'Не зливає воду', 'Не гріє воду', 'Помилка плати'],
   },
   {
@@ -27,7 +27,7 @@ const SERVICES: ServiceItem[] = [
     title: 'Ремонт холодильників та морозильників',
     desc: 'Усунення витоків у запіненій частині, заправка фреоном R600a, заміна інверторних компресорів, ремонт датчиків No Frost.',
     price: 'від 450 ₴',
-    image: 'https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=800&auto=format&fit=crop',
+    image: 'assets/images/fridge-modern.jpg',
     commonFaults: ['Не морозить камера', 'Намерзає лід', 'Пищить дисплей', 'Працює без зупинки'],
   },
   {
@@ -36,7 +36,7 @@ const SERVICES: ServiceItem[] = [
     title: 'Ремонт посудомийних машин',
     desc: 'Ліквідація протікань системи Aquastop (E15), чистка імпелерів, заміна циркуляційного насоса та теплового блоку.',
     price: 'від 400 ₴',
-    image: 'https://images.unsplash.com/photo-1585837575652-267c041d77d4?q=80&w=800&auto=format&fit=crop',
+    image: 'assets/images/dishwasher-modern.jpg',
     commonFaults: ['Вода в піддоні', 'Не сушить посуд', 'Не розчиняє таблетку', 'Помилка зливу'],
   },
   {
@@ -45,7 +45,7 @@ const SERVICES: ServiceItem[] = [
     title: 'Ремонт духових шаф та варильних поверхонь',
     desc: 'Відновлення сенсорних панелей керування, заміна індукційних конфорок, термостатів, петель та термостійкого скла.',
     price: 'від 380 ₴',
-    image: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?q=80&w=800&auto=format&fit=crop',
+    image: 'assets/images/cooktop-modern.jpg',
     commonFaults: ['Не гріє конфорка', 'Вибиває автомат', 'Блимає помилка', 'Не працює сенсор'],
   },
   {
@@ -54,17 +54,17 @@ const SERVICES: ServiceItem[] = [
     title: 'Чистка та ремонт бойлерів',
     desc: 'Промивання бака від накипу, заміна магнієвого анода, «сухих» та «мокрих» ТЕНів, запобіжних клапанів тиску.',
     price: 'від 300 ₴',
-    image: 'https://images.unsplash.com/photo-1507652313519-d4e9174996dd?q=80&w=800&auto=format&fit=crop',
+    image: 'assets/images/boiler-modern.jpg',
     commonFaults: ['Капає з-під кришки', 'Б’є струмом', 'Повільно гріє', 'Запах тухлої води'],
   },
   {
     number: '06 \\ 06',
-    category: 'КАВОМАШИНИ',
-    title: 'Сервісне обслуговування кавомашин',
-    desc: 'Глибока декальцинація, заміна ущільнювачів, перебирання заварювального вузла, налаштування помолу (DeLonghi, Jura, Saeco).',
-    price: 'від 350 ₴',
-    image: 'https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?q=80&w=800&auto=format&fit=crop',
-    commonFaults: ['Не меле зерна', 'Не тече кава', 'Вода в піддоні', 'Помилка заварника'],
+    category: 'ЕЛЕКТРОНІКА',
+    title: 'Ремонт електронних плат та модулів',
+    desc: 'Компонентний ремонт плат керування, перепрошивка процесорів, заміна реле, симісторів та силових ключів інвертора.',
+    price: 'від 450 ₴',
+    image: 'assets/images/board-modern.jpg',
+    commonFaults: ['Не вмикається прилад', 'Блимають усі лампочки', 'Зависає на програмі', 'Помилка пам’яті'],
   },
 ];
 
