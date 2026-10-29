@@ -1,428 +1,345 @@
 /* ============================================================
    ARCH1CAT — ui.js
-   Luxury UI Controller & Micro-Interactions
-   Features:
-   - Fast Title Card Reveal
-   - Dual-Theme Switcher (Lusion Void <-> Solar Titanium)
-   - Kyiv Station Telemetry: Clock, FPS
-   - 3D Liquid Pulse Trigger
-   - Bento Card 3D Tilt & Specular Cursor Sheen
-   - GitHub Live Telemetry with animated count-up
-   - Precision Cursor with magnetic hover states
-   - Chapter Rail Scroll Navigation
-   - Web Audio SFX integration
+   Active Theory V6 UI Orchestrator
+   - ASCII Sphere Preloader Dismissal
+   - Radio Marquee Ticker & Real-time Equalizer Loop
+   - Project Inspection Drawer with Acoustic Muffle Effect
+   - Spatial Carousel Controls & Category Filtering
+   - Custom Precision Holographic Cursor
    ============================================================ */
 
-const RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const FINE = window.matchMedia('(pointer: fine)').matches;
-const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
-const lerp = (a, b, t) => a + (b - a) * t;
+import { radio } from './audio-engine.js';
+import { stage, PROJECTS_DATA } from './three-scene.js';
 
-/* ------------------------------------------------------------
-   1. Title Card Boot Sequence
-   ------------------------------------------------------------ */
-(function titleCard() {
-    const overlay = document.getElementById('boot-overlay');
-    if (!overlay) return;
-    const done = () => {
-        if (document.body.style.overflow === 'hidden') document.body.style.overflow = '';
-        window.dispatchEvent(new CustomEvent('site:ready'));
-    };
-    if (RM || sessionStorage.getItem('arch1catDone')) {
-        overlay.remove();
-        done();
-        return;
-    }
-    document.body.style.overflow = 'hidden';
-    setTimeout(() => {
-        overlay.classList.add('boot-hide');
-        sessionStorage.setItem('arch1catDone', '1');
-        setTimeout(() => {
-            overlay.remove();
-            done();
-        }, 350);
-    }, 400);
-})();
+document.addEventListener('DOMContentLoaded', () => {
 
-/* ------------------------------------------------------------
-   2. Reveal on Scroll
-   ------------------------------------------------------------ */
-(function reveals() {
-    const els = document.querySelectorAll('.reveal');
-    if (RM) {
-        els.forEach((el) => el.classList.add('in'));
-        return;
-    }
-    const io = new IntersectionObserver((entries) => {
-        entries.forEach((e) => {
-            if (e.isIntersecting) {
-                e.target.classList.add('in');
-                io.unobserve(e.target);
-            }
-        });
-    }, { threshold: 0.12 });
-    els.forEach((el) => io.observe(el));
-})();
+    /* ------------------------------------------------------------
+       1. Active Theory ASCII Sphere Preloader
+       ------------------------------------------------------------ */
+    const preloader = document.getElementById('ascii-preloader');
+    const pctEl = document.getElementById('ascii-pct');
+    let progress = 0;
 
-/* ------------------------------------------------------------
-   3. Chapter Rail Navigation
-   ------------------------------------------------------------ */
-(function rail() {
-    const buttons = [...document.querySelectorAll('.rail-item')];
-    const MAP = { about: '#about', projects: '#projects', flagship: '#flagship', activity: '#activity' };
+    const loadTimer = setInterval(() => {
+        progress += Math.floor(Math.random() * 8) + 4;
+        if (progress > 100) progress = 100;
+        if (pctEl) pctEl.textContent = `/ ${progress} /`;
 
-    buttons.forEach((b) => b.addEventListener('click', () => {
-        if (window.__playSfx) window.__playSfx('click');
-        const target = document.querySelector(b.dataset.target);
-        if (target) target.scrollIntoView({ behavior: RM ? 'auto' : 'smooth' });
-    }));
-
-    window.addEventListener('chapterchange', (e) => {
-        const sel = MAP[e.detail?.name];
-        buttons.forEach((b) => b.classList.toggle('active', !!sel && b.dataset.target === sel));
-    });
-
-    const first = document.getElementById('about');
-    if (first) {
-        const io = new IntersectionObserver((entries) => {
-            entries.forEach((e) => {
-                if (e.isIntersecting) {
-                    buttons.forEach((b) => b.classList.toggle('active', b.dataset.target === '#about'));
-                    io.disconnect();
+        if (progress >= 100) {
+            clearInterval(loadTimer);
+            setTimeout(() => {
+                if (preloader) {
+                    preloader.style.opacity = '0';
+                    preloader.style.pointerEvents = 'none';
+                    setTimeout(() => preloader.remove(), 700);
                 }
+            }, 300);
+        }
+    }, 45);
+
+    /* ------------------------------------------------------------
+       2. Active Theory Radio Controls & Real-time Visualizer
+       ------------------------------------------------------------ */
+    const tickerText = document.getElementById('radio-ticker-text');
+    const toggleBtn = document.getElementById('radio-toggle-btn');
+    const prevBtn = document.getElementById('radio-prev-btn');
+    const nextBtn = document.getElementById('radio-next-btn');
+    const muteBtn = document.getElementById('radio-mute-btn');
+    const eqBars = document.querySelectorAll('#radio-eq-bars .eq-bar');
+
+    const updateTicker = (track, idx) => {
+        if (!tickerText) return;
+        tickerText.style.opacity = '0';
+        setTimeout(() => {
+            const num = (idx + 1).toString().padStart(2, '0');
+            tickerText.textContent = `${num}. ${track.title}`;
+            tickerText.style.opacity = '1';
+        }, 150);
+    };
+
+    radio.on('trackchange', ({ index, track }) => {
+        updateTicker(track, index);
+    });
+
+    radio.on('playstate', ({ isPlaying }) => {
+        if (toggleBtn) {
+            toggleBtn.textContent = isPlaying ? '❚❚' : '▶';
+            toggleBtn.classList.toggle('bg-cyan-400', isPlaying);
+            toggleBtn.classList.toggle('text-black', isPlaying);
+        }
+    });
+
+    radio.on('mute', ({ isMuted }) => {
+        if (muteBtn) {
+            muteBtn.textContent = isMuted ? '🔇' : '🔊';
+        }
+    });
+
+    toggleBtn?.addEventListener('click', () => radio.togglePlay());
+    prevBtn?.addEventListener('click', () => radio.prev());
+    nextBtn?.addEventListener('click', () => radio.next());
+    muteBtn?.addEventListener('click', () => radio.toggleMute());
+
+    // Initialize initial ticker title
+    const initTrack = radio.getCurrentTrack();
+    if (initTrack) updateTicker(initTrack, 0);
+
+    // Visualizer loop for equalizer bars
+    const updateEqualizer = () => {
+        requestAnimationFrame(updateEqualizer);
+        const levels = radio.getEqualizerLevels();
+        if (eqBars.length >= 3) {
+            eqBars[0].style.height = `${Math.floor(levels[0] * 12 + 3)}px`;
+            eqBars[1].style.height = `${Math.floor(levels[1] * 14 + 4)}px`;
+            eqBars[2].style.height = `${Math.floor(levels[2] * 10 + 2)}px`;
+        }
+    };
+    updateEqualizer();
+
+    /* ------------------------------------------------------------
+       3. Project Inspection Drawer & Muffled Audio Filter
+       ------------------------------------------------------------ */
+    const drawer = document.getElementById('project-drawer');
+    const drawerIndex = document.getElementById('drawer-index');
+    const drawerTitle = document.getElementById('drawer-title');
+    const drawerSubtitle = document.getElementById('drawer-subtitle');
+    const drawerDesc = document.getElementById('drawer-desc');
+    const drawerTags = document.getElementById('drawer-tags');
+    const drawerLiveLink = document.getElementById('drawer-live-link');
+    const drawerSourceLink = document.getElementById('drawer-source-link');
+    const drawerCloseBtn = document.getElementById('drawer-close-btn');
+
+    const openProjectDrawer = (proj) => {
+        if (!drawer || !proj) return;
+
+        if (drawerIndex) drawerIndex.textContent = `// ${proj.index} · ${proj.category}`;
+        if (drawerTitle) drawerTitle.textContent = proj.title;
+        if (drawerSubtitle) drawerSubtitle.textContent = proj.subtitle;
+        if (drawerDesc) drawerDesc.textContent = proj.desc;
+
+        if (drawerTags) {
+            drawerTags.innerHTML = '';
+            proj.tags.forEach(t => {
+                const span = document.createElement('span');
+                span.className = 'tag-pill';
+                span.textContent = t;
+                drawerTags.appendChild(span);
             });
-        }, { rootMargin: '-45% 0px -45% 0px' });
-        io.observe(first);
-    }
-})();
-
-/* ------------------------------------------------------------
-   4. Precision Cursor & Toast
-   ------------------------------------------------------------ */
-function spawnRipple(x, y) {
-    const r = document.createElement('div');
-    r.className = 'click-ripple';
-    r.style.left = x + 'px';
-    r.style.top = y + 'px';
-    document.body.appendChild(r);
-    setTimeout(() => r.remove(), 550);
-}
-
-function showToast(text, ms = 2200) {
-    const toast = document.getElementById('toast');
-    if (!toast) return;
-    toast.textContent = text;
-    toast.classList.add('show');
-    clearTimeout(showToast._t);
-    showToast._t = setTimeout(() => toast.classList.remove('show'), ms);
-}
-
-(function cursor() {
-    if (!FINE || RM) return;
-    document.documentElement.classList.add('cursor-on');
-    const dot = document.getElementById('cursor-dot');
-    const ring = document.getElementById('cursor-ring');
-    if (!dot || !ring) return;
-
-    let mx = window.innerWidth / 2;
-    let my = window.innerHeight / 2;
-    let rx = mx;
-    let ry = my;
-
-    window.addEventListener('pointermove', (e) => {
-        mx = e.clientX;
-        my = e.clientY;
-    }, { passive: true });
-
-    (function loop() {
-        rx = lerp(rx, mx, 0.2);
-        ry = lerp(ry, my, 0.2);
-        dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%, -50%)`;
-        ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
-        requestAnimationFrame(loop);
-    })();
-
-    const HOVER_SEL = 'a, button, .plate, .btn-archive, .stage-3d-badge, .icon-btn';
-    document.addEventListener('mouseover', (e) => {
-        const hit = !!e.target.closest(HOVER_SEL);
-        ring.classList.toggle('grow', hit);
-        if (hit && window.__playSfx) {
-            window.__playSfx('hover');
         }
-    });
 
-    window.addEventListener('pointerdown', (e) => {
-        spawnRipple(e.clientX, e.clientY);
-        if (window.__playSfx && e.target.closest('a, button, .btn-archive, .icon-btn')) {
-            window.__playSfx('click');
-        }
-    });
-})();
+        if (drawerLiveLink) drawerLiveLink.href = proj.url;
+        if (drawerSourceLink) drawerSourceLink.href = proj.source;
 
-/* ------------------------------------------------------------
-   5. Dual-Theme Switcher (Lusion Void <-> Solar Titanium)
-   ------------------------------------------------------------ */
-(function themeSwitch() {
-    const btn = document.getElementById('theme-toggle-btn');
-    const iconVoid = document.getElementById('theme-icon-void');
-    const iconTitanium = document.getElementById('theme-icon-titanium');
-    const meta = document.querySelector('meta[name="theme-color"]');
+        // Slide drawer in
+        drawer.classList.remove('translate-x-full');
 
-    const METAS = {
-        'lusion-void': '#05070B',
-        'solar-titanium': '#060709'
+        // Trigger Signature Active Theory Acoustic Muffle
+        radio.setMuffled(true);
+        radio.playSfx('ping');
     };
 
-    const TOASTS = {
-        'lusion-void': '💎 LUSION VOID ONLINE',
-        'solar-titanium': '⚡ SOLAR TITANIUM ONLINE'
+    const closeProjectDrawer = () => {
+        if (!drawer) return;
+        drawer.classList.add('translate-x-full');
+
+        // Restore un-muffled frequency
+        radio.setMuffled(false);
+        radio.playSfx('click');
     };
 
-    function paint(theme) {
-        iconVoid?.classList.toggle('hidden', theme !== 'lusion-void');
-        iconTitanium?.classList.toggle('hidden', theme !== 'solar-titanium');
-        meta?.setAttribute('content', METAS[theme] || '#05070B');
-    }
+    drawerCloseBtn?.addEventListener('click', closeProjectDrawer);
 
-    let cur = document.documentElement.getAttribute('data-theme') || 'lusion-void';
-    if (cur !== 'lusion-void' && cur !== 'solar-titanium') cur = 'lusion-void';
-    document.documentElement.setAttribute('data-theme', cur);
-    paint(cur);
-
-    btn?.addEventListener('click', () => {
-        const current = document.documentElement.getAttribute('data-theme') || 'lusion-void';
-        const next = current === 'lusion-void' ? 'solar-titanium' : 'lusion-void';
-
-        try { localStorage.setItem('arch_theme', next); } catch (_) {}
-        document.documentElement.setAttribute('data-theme', next);
-        paint(next);
-
-        if (window.__playSfx) window.__playSfx('theme');
-        window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
-        showToast(TOASTS[next] || TOASTS['lusion-void']);
-    });
-})();
-
-/* ------------------------------------------------------------
-   6. Kyiv Clock & Station Telemetry Panel
-   ------------------------------------------------------------ */
-(function stationPanel() {
-    const clock = document.getElementById('sp-clock');
-    const fpsEl = document.getElementById('sp-fps');
-
-    if (clock) {
-        const tick = () => {
-            try {
-                clock.textContent = new Date().toLocaleTimeString('uk-UA', {
-                    hour12: false,
-                    timeZone: 'Europe/Kyiv'
-                });
-            } catch (_) {
-                clock.textContent = new Date().toLocaleTimeString('uk-UA', { hour12: false });
-            }
-        };
-        tick();
-        setInterval(tick, 1000);
-    }
-
-    if (fpsEl) {
-        let last = performance.now();
-        let frames = 0;
-        let acc = 0;
-
-        (function fLoop(now) {
-            frames++;
-            acc += now - last;
-            last = now;
-            if (acc >= 500) {
-                fpsEl.textContent = Math.round(frames / (acc / 1000));
-                frames = 0;
-                acc = 0;
-            }
-            requestAnimationFrame(fLoop);
-        })(performance.now());
-    }
-})();
-
-/* ------------------------------------------------------------
-   7. Bento Card Tilt & Specular Sheen Tracking
-   ------------------------------------------------------------ */
-(function interactives() {
-    if (!FINE || RM) return;
-
-    const magnets = [...document.querySelectorAll('.magnetic')].map((el) => ({
-        el, tx: 0, ty: 0, cx: 0, cy: 0, hover: false
-    }));
-
-    const tilts = [...document.querySelectorAll('.tilt-plate')].map((el) => ({
-        el, rx: 0, ry: 0, crx: 0, cry: 0
-    }));
-
-    magnets.forEach((m) => {
-        m.el.addEventListener('pointerenter', () => { m.hover = true; });
-        m.el.addEventListener('pointerleave', () => { m.hover = false; });
+    // Listen to 3D raycast project clicks
+    window.addEventListener('project-select', (e) => {
+        openProjectDrawer(e.detail);
     });
 
-    window.addEventListener('pointermove', (e) => {
-        // Magnets
-        for (const m of magnets) {
-            const r = m.el.getBoundingClientRect();
-            const dx = e.clientX - (r.left + r.width / 2);
-            const dy = e.clientY - (r.top + r.height / 2);
-            const inside = e.target.closest && e.target.closest('.magnetic') === m.el;
-            const pull = inside ? 9 : 3;
-            m.tx = m.hover ? clamp(dx * 0.2, -pull, pull) : 0;
-            m.ty = m.hover ? clamp(dy * 0.2, -pull, pull) : 0;
+    // ESC to close drawer
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeProjectDrawer();
+        } else if (e.code === 'Space' && e.target.tagName !== 'INPUT') {
+            e.preventDefault();
+            radio.togglePlay();
+        } else if (e.key === 'ArrowRight' && e.target.tagName !== 'INPUT') {
+            radio.next();
+        } else if (e.key === 'ArrowLeft' && e.target.tagName !== 'INPUT') {
+            radio.prev();
         }
+    });
 
-        // Tilt Plates & Specular Sheen
-        for (const t of tilts) {
-            const r = t.el.getBoundingClientRect();
-            if (e.clientX < r.left - 60 || e.clientX > r.right + 60 ||
-                e.clientY < r.top - 60 || e.clientY > r.bottom + 60) {
-                t.crx = 0;
-                t.cry = 0;
-                continue;
-            }
+    /* ------------------------------------------------------------
+       4. Spatial Carousel Controls & Category Filtering
+       ------------------------------------------------------------ */
+    const prevProjBtn = document.getElementById('carousel-prev-btn');
+    const nextProjBtn = document.getElementById('carousel-next-btn');
+    const counterEl = document.getElementById('carousel-counter');
+    let currentProjIdx = 0;
 
-            const px = (e.clientX - r.left) / r.width;
-            const py = (e.clientY - r.top) / r.height;
-
-            t.crx = (py - 0.5) * -7;
-            t.cry = (px - 0.5) * 7;
-
-            // Update mouse coordinates for radial specular sheen highlight
-            t.el.style.setProperty('--mouse-x', `${(e.clientX - r.left).toFixed(1)}px`);
-            t.el.style.setProperty('--mouse-y', `${(e.clientY - r.top).toFixed(1)}px`);
+    const updateCarouselUI = (idx) => {
+        currentProjIdx = (idx + PROJECTS_DATA.length) % PROJECTS_DATA.length;
+        if (stage) stage.setActiveProject(currentProjIdx);
+        if (counterEl) {
+            const num = (currentProjIdx + 1).toString().padStart(2, '0');
+            const total = PROJECTS_DATA.length.toString().padStart(2, '0');
+            counterEl.textContent = `${num} / ${total}`;
         }
-    }, { passive: true });
+    };
 
-    (function loop() {
-        for (const m of magnets) {
-            m.cx = lerp(m.cx, m.tx, 0.16);
-            m.cy = lerp(m.cy, m.ty, 0.16);
-            if (Math.abs(m.cx) > 0.05 || Math.abs(m.cy) > 0.05 || m.hover) {
-                m.el.style.transform = `perspective(600px) translate(${m.cx.toFixed(2)}px, ${m.cy.toFixed(2)}px)`;
-            } else if (m.el.style.transform) {
-                m.el.style.transform = '';
-            }
-        }
-
-        for (const t of tilts) {
-            t.rx = lerp(t.rx, t.crx, 0.12);
-            t.ry = lerp(t.ry, t.cry, 0.12);
-            if (Math.abs(t.rx) > 0.06 || Math.abs(t.ry) > 0.06) {
-                t.el.style.transform = `perspective(1000px) rotateX(${t.rx.toFixed(2)}deg) rotateY(${t.ry.toFixed(2)}deg)`;
-            } else if (t.el.style.transform && !t.el.matches(':hover')) {
-                t.el.style.transform = '';
-            }
-        }
-        requestAnimationFrame(loop);
-    })();
-})();
-
-/* ------------------------------------------------------------
-   8. 3D Pulse & Ambient Audio Controller
-   ------------------------------------------------------------ */
-(function controls() {
-    const pulseBtn = document.getElementById('hero-pulse-btn');
-    const pulseCard = document.getElementById('hero-pulse-card');
-
-    pulseBtn?.addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (window.__triggerLiquidPulse) window.__triggerLiquidPulse();
+    prevProjBtn?.addEventListener('click', () => {
+        updateCarouselUI(currentProjIdx - 1);
+        radio.playSfx('click');
     });
 
-    pulseCard?.addEventListener('click', () => {
-        if (window.__triggerLiquidPulse) window.__triggerLiquidPulse();
+    nextProjBtn?.addEventListener('click', () => {
+        updateCarouselUI(currentProjIdx + 1);
+        radio.playSfx('click');
     });
 
-    const audioBtn = document.getElementById('audio-toggle-btn');
-    audioBtn?.addEventListener('click', () => {
-        if (!window.__deckAudio) return;
-        window.__deckAudio.toggle();
-        const playing = window.__deckAudio.isPlaying();
-        audioBtn.classList.toggle('active', playing);
-        if (window.__playSfx) window.__playSfx(playing ? 'theme' : 'click');
-        showToast(playing ? '▶ AMBIENT SYNTH ONLINE' : '❚❚ AMBIENT SYNTH PAUSED');
-    });
-})();
+    // Category Buttons
+    const catButtons = document.querySelectorAll('.cat-filter-btn');
+    catButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            catButtons.forEach(b => b.classList.remove('active'));
+            const target = e.currentTarget;
+            target.classList.add('active');
 
-/* ------------------------------------------------------------
-   9. GitHub Live Telemetry
-   ------------------------------------------------------------ */
-(function telemetry() {
-    const KEY = 'arch1cat_gh_luxury_v1';
-    const TTL = 60 * 60 * 1000;
-    const FALLBACK = { repos: 8, stars: 0, followers: 0 };
-    const starEls = {};
-    document.querySelectorAll('[data-star-repo]').forEach((el) => {
-        starEls[el.dataset.starRepo] = el;
-    });
+            const category = target.dataset.cat;
+            radio.playSfx('ping');
 
-    function render(d, animate) {
-        setCounter('#stat-repos', d.repos, animate, (v) => String(v).padStart(2, '0'));
-        setCounter('#stat-stars', d.stars, animate, (v) => '★★ ' + String(v).padStart(2, '0'));
-        setCounter('#stat-followers', d.followers, animate, (v) => String(v).padStart(2, '0'));
-        Object.entries(starEls).forEach(([repo, el]) => {
-            if (d.perRepo && d.perRepo[repo] > 0) {
-                el.textContent = `★ ${d.perRepo[repo]}`;
-                el.classList.remove('hidden');
+            if (category === 'ALL') {
+                updateCarouselUI(0);
+            } else {
+                const matchIndex = PROJECTS_DATA.findIndex(p => p.category === category);
+                if (matchIndex !== -1) {
+                    updateCarouselUI(matchIndex);
+                }
             }
         });
-    }
+    });
 
-    function setCounter(sel, target, animate, fmt) {
-        const el = document.querySelector(sel);
-        if (!el) return;
-        if (!animate || RM) { el.textContent = fmt(target); return; }
-        const start = performance.now();
-        const DUR = 1200;
+    /* ------------------------------------------------------------
+       5. Interactive Search / Prompt Capsule
+       ------------------------------------------------------------ */
+    const searchInput = document.getElementById('ai-search-input');
+    searchInput?.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            const query = searchInput.value.trim().toLowerCase();
+            if (!query) return;
 
-        (function tick(now) {
-            const p = clamp((now - start) / DUR, 0, 1);
-            const eased = 1 - Math.pow(1 - p, 3);
-            el.textContent = fmt(Math.round(target * eased));
-            if (p < 1) requestAnimationFrame(tick);
-        })(start);
-    }
+            const match = PROJECTS_DATA.find(p =>
+                p.title.toLowerCase().includes(query) ||
+                p.desc.toLowerCase().includes(query) ||
+                p.category.toLowerCase().includes(query) ||
+                p.tags.some(t => t.toLowerCase().includes(query))
+            );
 
-    async function fetchLive() {
-        const base = 'https://api.github.com';
-        const [user, ...repos] = await Promise.all([
-            fetch(base + '/users/l2bote4game').then((r) => r.json()),
-            ...['world-monitor', 'wifiscaner', 'media-meta-cleaner', 'cats-match3-game', 'openGym']
-                .map((n) => fetch(`${base}/repos/l2bote4game/${n}`).then((r) => r.json())),
-        ]);
+            if (match) {
+                const idx = PROJECTS_DATA.indexOf(match);
+                updateCarouselUI(idx);
+                openProjectDrawer(match);
+                searchInput.value = '';
+            } else {
+                searchInput.value = 'NO MATCH FOUND — TRY "CRM" OR "3D"';
+                setTimeout(() => { searchInput.value = ''; }, 2000);
+            }
+        }
+    });
 
-        const perRepo = {};
-        let stars = 0;
-        const NAMES = ['world-monitor', 'wifiscaner', 'media-meta-cleaner', 'cats-match3-game', 'openGym'];
-        repos.forEach((r, i) => {
-            const name = NAMES[i];
-            perRepo[name] = typeof r.stargazers_count === 'number' ? r.stargazers_count : 0;
-            stars += perRepo[name];
-        });
-        return {
-            repos: user.public_repos ?? FALLBACK.repos,
-            stars,
-            followers: user.followers ?? FALLBACK.followers,
-            perRepo
-        };
-    }
-
-    try {
-        const cached = JSON.parse(localStorage.getItem(KEY) || 'null');
-        if (cached && Date.now() - cached.t < TTL) {
-            render(cached.data, true);
+    /* ------------------------------------------------------------
+       6. URL Hash & Deep Linking
+       ------------------------------------------------------------ */
+    const checkHash = () => {
+        const hash = window.location.hash.slice(1);
+        if (!hash) return;
+        if (hash === 'contact') {
+            openContactDrawer();
             return;
         }
-    } catch (_) {}
+        const params = new URLSearchParams(hash);
+        const projId = params.get('project') || hash;
+        const match = PROJECTS_DATA.find(p => p.id === projId);
+        if (match) {
+            const idx = PROJECTS_DATA.indexOf(match);
+            updateCarouselUI(idx);
+            setTimeout(() => openProjectDrawer(match), 400);
+        }
+    };
 
-    fetchLive()
-        .then((data) => {
-            render(data, true);
-            try { localStorage.setItem(KEY, JSON.stringify({ t: Date.now(), data })); } catch (_) {}
-        })
-        .catch(() => render(FALLBACK, true));
-})();
+    const openContactDrawer = () => {
+        openProjectDrawer({
+            index: '00',
+            category: 'DIRECT SIGNAL',
+            title: 'CONTACT ARCH1CAT',
+            subtitle: 'Chief System & UX Architect · Creative Technologist',
+            desc: 'Available for high-stakes 3D WebGL experiences, autonomous multi-agent AI ecosystems, native Kotlin software, and real-time systems architecture.',
+            tags: ['Telegram: @Archi_____cat', 'X: @Archi_____cat', 'GitHub: l2bote4game'],
+            url: 'https://x.com/Archi_____cat',
+            source: 'https://github.com/l2bote4game'
+        });
+    };
+
+    document.getElementById('nav-contact-btn')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        openContactDrawer();
+    });
+
+    document.getElementById('nav-work-btn')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        closeProjectDrawer();
+        updateCarouselUI(0);
+    });
+
+    // Check on startup
+    setTimeout(checkHash, 500);
+
+    /* ------------------------------------------------------------
+       7. Custom Precision Cursor
+       ------------------------------------------------------------ */
+    const cursorDot = document.getElementById('cursor-dot');
+    const cursorRing = document.getElementById('cursor-ring');
+
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let ringX = mouseX;
+    let ringY = mouseY;
+
+    window.addEventListener('pointermove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        if (cursorDot) {
+            cursorDot.style.left = `${mouseX}px`;
+            cursorDot.style.top = `${mouseY}px`;
+        }
+    });
+
+    const animateCursor = () => {
+        requestAnimationFrame(animateCursor);
+        ringX += (mouseX - ringX) * 0.15;
+        ringY += (mouseY - ringY) * 0.15;
+        if (cursorRing) {
+            cursorRing.style.left = `${ringX}px`;
+            cursorRing.style.top = `${ringY}px`;
+        }
+    };
+    animateCursor();
+
+    // Hover scale effect on links & buttons
+    document.querySelectorAll('a, button, input').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            if (cursorRing) {
+                cursorRing.style.width = '48px';
+                cursorRing.style.height = '48px';
+                cursorRing.style.borderColor = 'rgba(0, 242, 254, 0.9)';
+            }
+            radio.playSfx('hover');
+        });
+        el.addEventListener('mouseleave', () => {
+            if (cursorRing) {
+                cursorRing.style.width = '32px';
+                cursorRing.style.height = '32px';
+                cursorRing.style.borderColor = 'rgba(0, 242, 254, 0.5)';
+            }
+        });
+    });
+});

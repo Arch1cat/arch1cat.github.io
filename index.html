@@ -1,55 +1,36 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="lusion-void">
+<html lang="en" data-theme="active-theory-v6">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>arch1cat — Software Engineer &amp; Creative Technologist</title>
-    <meta name="description" content="Portfolio of arch1cat — high-performance 3D WebGL experiences, autonomous AI agent architectures, native Android Kotlin software, and real-time systems.">
-    <meta name="theme-color" content="#05070B">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>arch1cat · Creative Technologist &amp; Software Architect</title>
+    <meta name="description" content="Portfolio of arch1cat — high-performance 3D WebGL experiences, autonomous AI agent architectures, native Android Kotlin software, and real-time telemetry systems.">
+    <meta name="theme-color" content="#000000">
 
     <!-- Open Graph / Twitter -->
-    <meta property="og:title" content="arch1cat — Software Engineer &amp; Creative Technologist">
-    <meta property="og:description" content="3D WebGL experiences, autonomous AI agent workflows, native Android Kotlin software, and real-time systems.">
+    <meta property="og:title" content="arch1cat · Creative Technologist &amp; Software Architect">
+    <meta property="og:description" content="Award-grade 3D WebGL experiences, autonomous AI agents, native Android Kotlin software, and real-time telemetry systems.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://arch1cat.github.io/">
     <meta property="og:image" content="/og.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="arch1cat — Software Engineer &amp; Creative Technologist">
-    <meta name="twitter:description" content="3D WebGL experiences, autonomous AI agent workflows, native Android Kotlin software, and real-time systems.">
+    <meta name="twitter:title" content="arch1cat · Creative Technologist &amp; Software Architect">
+    <meta name="twitter:description" content="Award-grade 3D WebGL experiences, autonomous AI agents, native Android Kotlin software, and real-time telemetry systems.">
     <meta name="twitter:image" content="/og.png">
 
-    <!-- Favicon: ember cat silhouette -->
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2305070B'/%3E%3Cpath d='M18 44 V22 L26 30 H38 L46 22 V44 Q46 50 40 50 H24 Q18 50 18 44 Z M27 38 h3 v3 h-3 z M34 38 h3 v3 h-3 z' fill='%2300F2FE'/%3E%3C/svg%3E">
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23000000'/%3E%3Cpath d='M18 44 V22 L26 30 H38 L46 22 V44 Q46 50 40 50 H24 Q18 50 18 44 Z M27 38 h3 v3 h-3 z M34 38 h3 v3 h-3 z' fill='%2300F2FE'/%3E%3C/svg%3E">
 
-    <!-- JSON-LD -->
-    <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"Person","name":"arch1cat","url":"https://arch1cat.github.io/","sameAs":["https://x.com/Archi_____cat","https://github.com/l2bote4game"],"jobTitle":"Software Engineer & Creative Technologist"}
-    </script>
-
-    <!-- Fonts -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@300..700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Theme initialization -->
-    <script>
-    try {
-        var t = localStorage.getItem('arch_theme');
-        var p = new URLSearchParams(location.search).get('theme');
-        if (p === 'solar-titanium' || p === 'lusion-void') t = p;
-        if (t === 'solar-titanium' || t === 'lusion-void') {
-            document.documentElement.setAttribute('data-theme', t);
-        } else {
-            document.documentElement.setAttribute('data-theme', 'lusion-void');
-        }
-    } catch (e) {
-        document.documentElement.setAttribute('data-theme', 'lusion-void');
-    }
-    </script>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="assets/css/style.css">
 
-    <!-- Three.js r170 pinned -->
+    <!-- Three.js r170 Importmap -->
     <script type="importmap">
     {
         "imports": {
@@ -59,354 +40,228 @@
     }
     </script>
 </head>
-<body>
+<body class="bg-black text-white selection:bg-cyan-500 selection:text-black overflow-hidden select-none">
 
-    <!-- 3D WebGL Background Canvas -->
-    <div id="webgl-container" aria-label="Interactive 3D Stage"></div>
-    <div class="grain" aria-hidden="true"></div>
-    <div class="vignette" aria-hidden="true"></div>
-    <div class="scanlines" aria-hidden="true"></div>
+    <!-- 3D WebGL Canvas Layer -->
+    <div id="webgl-container" aria-label="Active Theory 3D WebGL Stage"></div>
+    <div class="grain-overlay" aria-hidden="true"></div>
+    <div class="vignette-overlay" aria-hidden="true"></div>
 
-    <!-- Title Card Boot Sequence -->
-    <div id="boot-overlay" aria-hidden="true">
-        <div class="boot-inner">
-            <div class="boot-label">// PORTFOLIO — 2026</div>
-            <div class="boot-name">ARCH1CAT</div>
-            <div class="boot-line"></div>
+    <!-- Active Theory Iconic ASCII Sphere Preloader -->
+    <div id="ascii-preloader" class="fixed inset-0 z-50 bg-black flex flex-col items-center justify-center transition-opacity duration-700">
+        <div class="ascii-sphere font-mono text-cyan-400/80 leading-none whitespace-pre text-center tracking-tighter" id="ascii-canvas">
+//////////7///////5///////////
+////55////////////////////////
+/////////////////////7////////
+5/////////5/////7/////////////
+/////5////////////////////////
+///////7////////7//5/////////5
+5//5//////////////////5/////7/
+////5//////////<span class="text-white font-bold bg-cyan-950 px-1" id="ascii-pct">/ 75 /</span>//////////
+//////////////////////////////
+/////////5///////////////75///
+5///57/////////5//////////////
+///5////5///////5/////////////
+        </div>
+        <div class="mt-6 font-mono text-xs text-cyan-400/70 tracking-widest flex items-center gap-2">
+            <span class="inline-block w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+            <span>INITIALIZING WEBGL 2.0 &amp; ACTIVE THEORY RADIO...</span>
         </div>
     </div>
 
-    <!-- Fixed Header -->
-    <header class="site-header">
-        <div class="wrap header-inner">
-            <a href="#about" class="brand group">
-                <span class="brand-mark" aria-hidden="true">
-                    <svg width="22" height="22" viewBox="0 0 64 64"><path d="M18 44 V22 L26 30 H38 L46 22 V44 Q46 50 40 50 H24 Q18 50 18 44 Z M27 38 h3 v3 h-3 z M34 38 h3 v3 h-3 z" fill="var(--accent)"/></svg>
+    <!-- Top Navigation Bar & Active Theory Radio Capsule -->
+    <header class="fixed top-0 left-0 right-0 z-30 flex items-center justify-between p-6 pointer-events-none">
+        <!-- Brand / Identity -->
+        <div class="pointer-events-auto flex items-center gap-3">
+            <a href="#" class="brand-link flex items-center gap-2.5 group">
+                <span class="w-8 h-8 rounded-full border border-cyan-500/40 bg-black/60 flex items-center justify-center text-cyan-400 shadow-[0_0_12px_rgba(0,242,254,0.3)] group-hover:border-cyan-400 transition-all">
+                    <svg width="18" height="18" viewBox="0 0 64 64"><path d="M18 44 V22 L26 30 H38 L46 22 V44 Q46 50 40 50 H24 Q18 50 18 44 Z M27 38 h3 v3 h-3 z M34 38 h3 v3 h-3 z" fill="currentColor"/></svg>
                 </span>
-                <span class="flex flex-col leading-none">
-                    <span class="brand-name">ARCH1CAT</span>
-                    <span class="brand-sub">SOFTWARE ENGINEER &amp; CREATOR</span>
-                </span>
+                <div class="flex flex-col leading-none">
+                    <span class="font-mono text-xs font-bold tracking-wider text-white">ARCH1CAT</span>
+                    <span class="font-mono text-[9px] tracking-widest text-cyan-400/70">CHIEF ARCHITECT</span>
+                </div>
             </a>
+        </div>
 
-            <nav class="nav-links hidden md:flex items-center gap-2" aria-label="Sections">
-                <a href="#about">About</a>
-                <a href="#projects">Works</a>
-                <a href="#flagship">Flagship</a>
-                <a href="#activity">Signal</a>
-                <a href="ai-matrix.html" class="text-cyan-300">AI Universe</a>
-            </nav>
+        <!-- Center: Stolen Active Theory Radio Player -->
+        <div class="pointer-events-auto flex items-center gap-2">
+            <div id="at-radio-capsule" class="radio-capsule flex items-center gap-2 px-3 py-1.5 rounded-full border border-cyan-500/30 bg-black/75 backdrop-blur-xl shadow-[0_4px_24px_rgba(0,0,0,0.8)]">
+                <!-- Prev Button -->
+                <button id="radio-prev-btn" class="radio-btn text-cyan-400/70 hover:text-cyan-300 font-mono text-xs px-1 transition-colors" title="Previous Track">
+                    &lt;&lt;
+                </button>
 
-            <div class="flex items-center gap-2.5">
-                <div class="station-panel hidden sm:flex" aria-hidden="true">
-                    <span class="sp-item"><b class="sp-led"></b>KYIV</span>
-                    <span class="sp-item" id="sp-clock">--:--:--</span>
-                    <span class="sp-item"><span id="sp-fps">60</span> FPS</span>
+                <!-- Equalizer / Visualizer Bars -->
+                <div id="radio-eq-bars" class="flex items-end gap-[2px] h-3 px-1" title="Active Theory Sound Engine">
+                    <span class="eq-bar h-2"></span>
+                    <span class="eq-bar h-3"></span>
+                    <span class="eq-bar h-1"></span>
                 </div>
 
-                <!-- Ambient Audio Synth Toggle -->
-                <button id="audio-toggle-btn" class="icon-btn" title="Toggle ambient sound synth" aria-label="Toggle ambient sound">
-                    <div class="audio-bars">
-                        <span></span><span></span><span></span>
+                <!-- Marquee Ticker -->
+                <div class="radio-ticker-wrapper w-44 sm:w-56 overflow-hidden relative h-4">
+                    <div id="radio-ticker-text" class="radio-ticker font-mono text-[11px] text-cyan-300/90 whitespace-nowrap">
+                        01. Sergey Azbel - Themis
                     </div>
+                </div>
+
+                <!-- Next Button -->
+                <button id="radio-next-btn" class="radio-btn text-cyan-400/70 hover:text-cyan-300 font-mono text-xs px-1 transition-colors" title="Next Track">
+                    &gt;&gt;
                 </button>
 
-                <!-- Dual-Theme Switcher (Lusion Void <-> Solar Titanium) -->
-                <button id="theme-toggle-btn" class="icon-btn" title="Switch Theme (Lusion Void / Solar Titanium)" aria-label="Switch theme">
-                    <!-- Void Crystal Icon -->
-                    <svg id="theme-icon-void" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-                        <polyline points="2 17 12 22 22 17"></polyline>
-                        <polyline points="2 12 12 17 22 12"></polyline>
-                    </svg>
-                    <!-- Titanium Sun Icon -->
-                    <svg id="theme-icon-titanium" class="hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="4"></circle>
-                        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
-                    </svg>
+                <!-- Play/Pause Button -->
+                <button id="radio-toggle-btn" class="ml-1 w-6 h-6 rounded-full bg-cyan-500/20 hover:bg-cyan-500/40 text-cyan-300 flex items-center justify-center text-[10px] transition-all" title="Play / Pause Radio">
+                    ▶
                 </button>
 
-                <a href="https://x.com/Archi_____cat" target="_blank" rel="noopener noreferrer" class="icon-btn" title="X / Twitter" aria-label="X Twitter profile">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                </a>
-                <a href="https://github.com/l2bote4game" target="_blank" rel="noopener noreferrer" class="icon-btn" title="GitHub" aria-label="GitHub profile">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-                </a>
+                <!-- Mute / Unmute Button -->
+                <button id="radio-mute-btn" class="text-gray-400 hover:text-white text-xs px-1 transition-colors" title="Mute Audio">
+                    🔊
+                </button>
+            </div>
+        </div>
+
+        <!-- Right: Active Theory WORK — CONTACT Navigation Capsule + AI Universe -->
+        <div class="pointer-events-auto flex items-center gap-3">
+            <a href="ai-matrix.html" class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-cyan-500/30 bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 font-mono text-xs font-bold transition-all" title="Free AI Universe Matrix">
+                <span>⚡ AI UNIVERSE</span>
+            </a>
+            <div class="relative group">
+                <nav class="nav-capsule flex items-center px-4 py-2 rounded-full border border-white/20 bg-black/70 backdrop-blur-xl font-mono text-xs tracking-wider text-gray-300 shadow-[0_4px_20px_rgba(0,0,0,0.6)]">
+                    <a href="#work" id="nav-work-btn" class="hover:text-cyan-400 transition-colors">WORK</a>
+                    <span class="mx-2 text-gray-600">—</span>
+                    <a href="#contact" id="nav-contact-btn" class="hover:text-cyan-400 transition-colors">CONTACT</a>
+                </nav>
+                <!-- Ambient Cyan Light Bleed Underneath (Signature Active Theory) -->
+                <div class="ambient-glow-bleed"></div>
             </div>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="relative z-20">
+    <!-- Left Column: Category Navigator (WHAT ARE YOU LOOKING FOR?) -->
+    <aside class="fixed left-6 top-1/2 -translate-y-1/2 z-20 pointer-events-none hidden md:block">
+        <div class="pointer-events-auto flex flex-col gap-2 max-w-xs">
+            <p class="font-mono text-[10px] tracking-widest text-gray-400 uppercase mb-3 flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
+                WHAT ARE YOU LOOKING FOR?
+            </p>
+            <button class="cat-filter-btn active text-left font-mono text-xs tracking-wider text-gray-400 hover:text-cyan-300 transition-all flex items-center gap-2 py-1" data-cat="ALL">
+                <span class="cat-arrow text-cyan-400 font-bold">-&gt;</span>
+                <span>ALL WORKS</span>
+            </button>
+            <button class="cat-filter-btn text-left font-mono text-xs tracking-wider text-gray-400 hover:text-cyan-300 transition-all flex items-center gap-2 py-1" data-cat="WEBSITES & CRM">
+                <span class="cat-arrow text-cyan-400 font-bold opacity-0">-&gt;</span>
+                <span>WEBSITES &amp; CRM</span>
+            </button>
+            <button class="cat-filter-btn text-left font-mono text-xs tracking-wider text-gray-400 hover:text-cyan-300 transition-all flex items-center gap-2 py-1" data-cat="3D EXPERIENCES & WEBGL">
+                <span class="cat-arrow text-cyan-400 font-bold opacity-0">-&gt;</span>
+                <span>3D EXPERIENCES &amp; WEBGL</span>
+            </button>
+            <button class="cat-filter-btn text-left font-mono text-xs tracking-wider text-gray-400 hover:text-cyan-300 transition-all flex items-center gap-2 py-1" data-cat="AUTONOMOUS AI AGENTS">
+                <span class="cat-arrow text-cyan-400 font-bold opacity-0">-&gt;</span>
+                <span>AUTONOMOUS AI AGENTS</span>
+            </button>
+            <button class="cat-filter-btn text-left font-mono text-xs tracking-wider text-gray-400 hover:text-cyan-300 transition-all flex items-center gap-2 py-1" data-cat="REALTIME GIS & TELEMETRY">
+                <span class="cat-arrow text-cyan-400 font-bold opacity-0">-&gt;</span>
+                <span>REALTIME GIS &amp; TELEMETRY</span>
+            </button>
+            <button class="cat-filter-btn text-left font-mono text-xs tracking-wider text-gray-400 hover:text-cyan-300 transition-all flex items-center gap-2 py-1" data-cat="MOBILE APPS (KOTLIN)">
+                <span class="cat-arrow text-cyan-400 font-bold opacity-0">-&gt;</span>
+                <span>MOBILE APPS (KOTLIN)</span>
+            </button>
+            <a href="ai-matrix.html" class="cat-filter-btn text-left font-mono text-xs tracking-wider text-cyan-400/80 hover:text-cyan-300 transition-all flex items-center gap-2 py-1 mt-2">
+                <span class="cat-arrow text-cyan-400 font-bold">-&gt;</span>
+                <span>FREE AI MATRIX ↗</span>
+            </a>
+        </div>
+    </aside>
 
-        <!-- 00 PROLOGUE / HERO -->
-        <section id="about" class="relative section-pad min-h-screen flex items-center">
-            <div class="wrap pt-24">
-                <p class="mono-label mb-6 reveal">// FULLSTACK SOFTWARE ENGINEER &amp; CREATIVE TECHNOLOGIST</p>
-                <h1 class="hero-title mb-8">
-                    <span class="block">Software</span>
-                    <span class="block">as <em class="display-serif text-[color:var(--accent)]">craft</em> &amp; play.</span>
-                </h1>
-
-                <!-- 3D Interactive Stage Prompt & Status -->
-                <div class="flex flex-wrap items-center gap-4 mb-8">
-                    <div class="stage-3d-badge reveal" id="hero-pulse-card" title="Click to trigger 3D energy pulse">
-                        <span class="pulse-dot"></span>
-                        <span>3D STAGE ACTIVE · DRAG TO ORBIT</span>
-                        <button class="pulse-action-btn" id="hero-pulse-btn" type="button">⚡ PULSE</button>
-                    </div>
-                    <div class="status-chip reveal" style="--d:.1s">
-                        <span class="pulse-dot" style="background: #10B981; box-shadow: 0 0 8px #10B981;"></span>
-                        <span>AVAILABLE FOR HIGH-END 3D &amp; AI AGENT SYSTEMS</span>
-                    </div>
-                </div>
-
-                <p class="hero-sub mb-10 reveal" style="--d:.15s">
-                    Crafting high-performance 3D WebGL experiences, autonomous AI agent architectures, native Android Kotlin software, and real-time telemetry systems.
-                </p>
-
-                <div class="cta-row reveal" style="--d:.2s">
-                    <a href="#projects" class="btn-archive btn-primary magnetic">
-                        <span>EXPLORE WORKS ↳</span>
-                    </a>
-                    <a href="https://yotei.com.ua/" target="_blank" rel="noopener noreferrer" class="btn-archive magnetic">
-                        <span>YOTEI CRM ↗</span>
-                    </a>
-                    <a href="https://x.com/Archi_____cat" target="_blank" rel="noopener noreferrer" class="btn-archive magnetic">
-                        <span>X — @ARCHI_____CAT</span>
-                    </a>
-                    <a href="ai-matrix.html" class="px-8 py-4 rounded-xl border border-cyan-400/40 bg-cyan-400/10 text-cyan-200 font-bold text-sm hover:border-cyan-300 hover:bg-cyan-400/20 transition-all duration-300 inline-flex items-center gap-2">
-                        <i class="fa-solid fa-microchip"></i>
-                        <span>FREE AI UNIVERSE</span>
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <!-- 01 SELECTED WORKS (LUXURY BENTO GRID) -->
-        <section id="projects" class="relative section-pad">
-            <div class="wrap py-12">
-                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-14">
-                    <div>
-                        <p class="mono-label mb-3 reveal">// 01 — SELECTED WORKS</p>
-                        <h2 class="display-serif text-[clamp(2.8rem,6vw,4.8rem)] leading-none reveal">Featured engineering.</h2>
-                    </div>
-                    <p class="text-sm font-mono text-[color:var(--muted)]">Hover cards for 3D perspective</p>
-                </div>
-
-                <div class="bento-grid">
-                    <!-- BENTO 01: World Monitor (Featured, Large) -->
-                    <article class="plate plate-featured reveal tilt-plate" style="--d:.05s">
-                        <span class="star-badge hidden" data-star-repo="world-monitor"></span>
-                        <div>
-                            <span class="plate-index">001 // OSINT &amp; NETWORK TELEMETRY</span>
-                            <h3 class="plate-title">World Monitor</h3>
-                            <p class="plate-desc">
-                                Real-time global geopolitical, cyber defense, and network infrastructure telemetry dashboard. Features live geospatial node mapping, automated incident stream processing, and ultra-low latency edge aggregation.
-                            </p>
-                        </div>
-                        <div>
-                            <div class="tag-row mb-5">
-                                <span class="tag">TypeScript</span>
-                                <span class="tag">Cloudflare Workers</span>
-                                <span class="tag">Tauri</span>
-                                <span class="tag">Mapbox GL</span>
-                            </div>
-                            <a href="https://github.com/l2bote4game/world-monitor" target="_blank" rel="noopener noreferrer" class="source-link">VIEW SOURCE ↗</a>
-                        </div>
-                    </article>
-
-                    <!-- BENTO 02: openGym (Featured Side) -->
-                    <article class="plate plate-side reveal tilt-plate" style="--d:.12s">
-                        <span class="star-badge hidden" data-star-repo="openGym"></span>
-                        <div>
-                            <span class="plate-index">002 // PRODUCTION APP · v1.2.4</span>
-                            <h3 class="plate-title">openGym</h3>
-                            <p class="plate-desc">
-                                Self-hosted fitness &amp; body-weight progression suite. Production Android APK, WebAuthn passkey authentication, guided overload rules, and offline state synchronization.
-                            </p>
-                        </div>
-                        <div>
-                            <div class="tag-row mb-5">
-                                <span class="tag">React 19</span>
-                                <span class="tag">Capacitor 7</span>
-                                <span class="tag">Android APK</span>
-                                <span class="tag">Passkeys</span>
-                            </div>
-                            <div class="flex flex-wrap gap-2.5">
-                                <a href="https://github.com/l2bote4game/openGym" target="_blank" rel="noopener noreferrer" class="source-link">SOURCE ↗</a>
-                                <a href="https://github.com/l2bote4game/openGym/releases/tag/v1.2.4-android" target="_blank" rel="noopener noreferrer" class="source-link">DOWNLOAD APK ↗</a>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- BENTO 03: WiFi Scanner -->
-                    <article class="plate plate-third reveal tilt-plate" style="--d:.19s">
-                        <span class="star-badge hidden" data-star-repo="wifiscaner"></span>
-                        <div>
-                            <span class="plate-index">003 // ANDROID KOTLIN</span>
-                            <h3 class="plate-title">WiFi Scanner</h3>
-                            <p class="plate-desc">
-                                Native Android application for 2.4/5GHz Wi-Fi channel graphing, subnet IP discovery, and network latency diagnostics.
-                            </p>
-                        </div>
-                        <div>
-                            <div class="tag-row mb-5">
-                                <span class="tag">Kotlin</span>
-                                <span class="tag">Compose</span>
-                                <span class="tag">mDNS</span>
-                                <span class="tag">Coroutines</span>
-                            </div>
-                            <a href="https://github.com/l2bote4game/wifiscaner" target="_blank" rel="noopener noreferrer" class="source-link">VIEW SOURCE ↗</a>
-                        </div>
-                    </article>
-
-                    <!-- BENTO 04: Metadata Cleaner -->
-                    <article class="plate plate-third reveal tilt-plate" style="--d:.26s">
-                        <span class="star-badge hidden" data-star-repo="media-meta-cleaner"></span>
-                        <div>
-                            <span class="plate-index">004 // PRIVACY SUITE</span>
-                            <h3 class="plate-title">Metadata Cleaner</h3>
-                            <p class="plate-desc">
-                                Multi-threaded Python CLI &amp; GUI tool to strip EXIF data, GPS coordinates, camera serial footprints, and tags from photos and media streams.
-                            </p>
-                        </div>
-                        <div>
-                            <div class="tag-row mb-5">
-                                <span class="tag">Python 3</span>
-                                <span class="tag">Pillow</span>
-                                <span class="tag">FFmpeg</span>
-                                <span class="tag">Security</span>
-                            </div>
-                            <a href="https://github.com/l2bote4game/media-meta-cleaner" target="_blank" rel="noopener noreferrer" class="source-link">VIEW SOURCE ↗</a>
-                        </div>
-                    </article>
-
-                    <!-- BENTO 05: Cats Match-3 -->
-                    <article class="plate plate-third reveal tilt-plate" style="--d:.33s">
-                        <span class="star-badge hidden" data-star-repo="cats-match3-game"></span>
-                        <div>
-                            <span class="plate-index">005 // MOBILE GAME DEV</span>
-                            <h3 class="plate-title">Cats Match-3 Quest</h3>
-                            <p class="plate-desc">
-                                Mobile casual game featuring custom cascade match engine algorithms, shelter builder progression, and particle physics animations.
-                            </p>
-                        </div>
-                        <div>
-                            <div class="tag-row mb-5">
-                                <span class="tag">Kotlin</span>
-                                <span class="tag">Canvas</span>
-                                <span class="tag">Particle FX</span>
-                                <span class="tag">Game Loop</span>
-                            </div>
-                            <a href="https://github.com/l2bote4game/cats-match3-game" target="_blank" rel="noopener noreferrer" class="source-link">VIEW SOURCE ↗</a>
-                        </div>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <!-- 02 FLAGSHIP SHOWCASE (YOTEI) -->
-        <section id="flagship" class="relative section-pad">
-            <div class="wrap py-12">
-                <p class="mono-label mb-4 reveal">// 02 — FLAGSHIP INFRASTRUCTURE</p>
-                <h2 class="display-serif text-[clamp(2.8rem,6vw,4.8rem)] leading-none mb-14 reveal">The long build.</h2>
-
-                <div class="flagship-plate reveal">
-                    <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-10">
-                        <div class="max-w-2xl space-y-5">
-                            <span class="plate-index">Y—01 // REAL ESTATE INTELLIGENCE &amp; CRM</span>
-                            <h3 class="flagship-title">Yotei<span class="text-[color:var(--accent)]">.</span></h3>
-                            <p class="plate-desc" style="font-size: 1.05rem;">
-                                Next-generation real estate intelligence platform, high-speed property marketplace, and enterprise CRM system. Engineered with a strict 3-level domain taxonomy, real-time bidirectionally synchronized lead pipelines, Mapbox GL geospatial clusters, and automated Vitest QA verification gates.
-                            </p>
-                            <div class="tag-row">
-                                <span class="tag">yotei.com.ua</span>
-                                <span class="tag">Next.js Turborepo</span>
-                                <span class="tag">Supabase &amp; Prisma</span>
-                                <span class="tag">Real-Time CRM</span>
-                                <span class="tag">High Load Live</span>
-                            </div>
-                        </div>
-                        <div class="shrink-0">
-                            <a href="https://yotei.com.ua/" target="_blank" rel="noopener noreferrer" class="btn-archive btn-primary magnetic">
-                                <span>VISIT YOTEI.COM.UA ↗</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 03 SIGNAL & TELEMETRY -->
-        <section id="activity" class="relative section-pad">
-            <div class="wrap py-12">
-                <p class="mono-label mb-4 reveal">// 03 — TELEMETRY &amp; CRAFT</p>
-                <h2 class="display-serif text-[clamp(2.8rem,6vw,4.8rem)] leading-none mb-14 reveal">Signal from the desk.</h2>
-
-                <div class="signal-grid">
-                    <div class="reveal" style="--d:.1s">
-                        <div class="stats-grid">
-                            <div class="stat-block">
-                                <div class="stat-num" id="stat-repos">08</div>
-                                <div class="stat-label">PUBLIC REPOSITORIES</div>
-                            </div>
-                            <div class="stat-block">
-                                <div class="stat-num" id="stat-stars">★★ 00</div>
-                                <div class="stat-label">TOTAL STARS EARNED</div>
-                            </div>
-                            <div class="stat-block">
-                                <div class="stat-num" id="stat-followers">00</div>
-                                <div class="stat-label">COMMUNITY FOLLOWERS</div>
-                            </div>
-                            <div class="stat-block">
-                                <div class="stat-num">∞</div>
-                                <div class="stat-label">CURIOSITY &amp; CRAFT</div>
-                            </div>
-                        </div>
-                        <p class="fig-caption mt-5">LIVE TELEMETRY STREAM // GITHUB / L2BOTE4GAME</p>
-                    </div>
-
-                    <div class="reveal" style="--d:.2s">
-                        <div class="fig-frame overflow-x-auto">
-                            <img src="https://raw.githubusercontent.com/l2bote4game/l2bote4game/output/github-contribution-grid-snake-dark.svg"
-                                 alt="GitHub contribution grid snake" loading="lazy">
-                        </div>
-                        <p class="fig-caption mt-3">FIG. 03 — CONTINUOUS CONTRIBUTION FIELD</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Colophon / Footer -->
-    <footer class="relative z-20 border-t border-[color:var(--line)] py-12">
-        <div class="wrap flex flex-col sm:flex-row items-center justify-between gap-6">
-            <div class="flex items-center gap-3">
-                <span class="pulse-dot"></span>
-                <span class="text-xs font-mono text-gray-400">© 2026 arch1cat. Built with Three.js r170, WebGL 2.0 &amp; Web Audio API.</span>
-            </div>
-            <div class="flex items-center gap-6 text-xs font-mono text-gray-400">
-                <a href="https://x.com/Archi_____cat" target="_blank" rel="noopener noreferrer" class="hover:text-[color:var(--accent)] transition-colors">X — @Archi_____cat</a>
-                <a href="https://github.com/l2bote4game" target="_blank" rel="noopener noreferrer" class="hover:text-[color:var(--accent)] transition-colors">GitHub — l2bote4game</a>
-                <a href="https://yotei.com.ua/" target="_blank" rel="noopener noreferrer" class="hover:text-[color:var(--accent)] transition-colors">Yotei.com.ua ↗</a>
+    <!-- Bottom Left: Interactive AI Prompt / Search Capsule -->
+    <div class="fixed bottom-6 left-6 z-20 pointer-events-auto">
+        <div class="relative flex items-center">
+            <div class="search-capsule flex items-center gap-2.5 px-4 py-2.5 rounded-full border border-white/20 bg-black/75 backdrop-blur-xl shadow-[0_4px_24px_rgba(0,0,0,0.8)] focus-within:border-cyan-400 transition-all">
+                <span class="text-cyan-400 font-mono text-xs">?</span>
+                <input type="text" id="ai-search-input" placeholder="ASK ME ANYTHING..." class="bg-transparent border-none outline-none font-mono text-xs text-white placeholder-gray-500 w-44 sm:w-60">
+                <span class="font-mono text-[9px] text-gray-500 hidden sm:inline">[ENTER]</span>
             </div>
         </div>
-    </footer>
+    </div>
 
-    <!-- Chapter Rail Navigation -->
-    <nav id="chapter-rail" aria-label="Chapter navigation">
-        <button class="rail-item" data-target="#about"><span>00</span><span class="tick"></span></button>
-        <button class="rail-item" data-target="#projects"><span>01</span><span class="tick"></span></button>
-        <button class="rail-item" data-target="#flagship"><span>02</span><span class="tick"></span></button>
-        <button class="rail-item" data-target="#activity"><span>03</span><span class="tick"></span></button>
-    </nav>
+    <!-- Center Bottom: Carousel Navigation Controls -->
+    <div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-20 pointer-events-auto flex items-center gap-3">
+        <button id="carousel-prev-btn" class="nav-control-btn px-4 py-2 rounded-full border border-white/15 bg-black/70 backdrop-blur-xl font-mono text-xs text-gray-300 hover:text-cyan-300 hover:border-cyan-400 transition-all flex items-center gap-2">
+            <span>&larr;</span> <span>PREV</span>
+        </button>
+        <div id="carousel-counter" class="font-mono text-xs text-cyan-400/80 px-2">
+            01 / 07
+        </div>
+        <button id="carousel-next-btn" class="nav-control-btn px-4 py-2 rounded-full border border-white/15 bg-black/70 backdrop-blur-xl font-mono text-xs text-gray-300 hover:text-cyan-300 hover:border-cyan-400 transition-all flex items-center gap-2">
+            <span>NEXT</span> <span>&rarr;</span>
+        </button>
+    </div>
 
-    <!-- Custom Precision Cursor & Toast -->
-    <div id="cursor-dot" aria-hidden="true"></div>
-    <div id="cursor-ring" aria-hidden="true"></div>
-    <div id="toast" role="status"></div>
+    <!-- Bottom Right: Live Signal Status & Social Links -->
+    <div class="fixed bottom-6 right-6 z-20 pointer-events-auto hidden sm:flex items-center gap-4 font-mono text-xs text-gray-400">
+        <a href="https://x.com/Archi_____cat" target="_blank" rel="noopener noreferrer" class="hover:text-cyan-400 transition-colors">
+            X // @ARCHI_____CAT
+        </a>
+        <span class="text-gray-600">/</span>
+        <a href="https://github.com/l2bote4game" target="_blank" rel="noopener noreferrer" class="hover:text-cyan-400 transition-colors">
+            GITHUB // L2BOTE4GAME
+        </a>
+    </div>
 
+    <!-- Project Inspection Slide-Out Drawer (With Muffled Audio Effect) -->
+    <aside id="project-drawer" class="fixed top-0 right-0 bottom-0 w-full sm:w-[480px] z-40 bg-black/90 backdrop-blur-2xl border-l border-white/15 p-8 flex flex-col justify-between transform translate-x-full transition-transform duration-500 ease-out shadow-[0_0_50px_rgba(0,0,0,0.9)]">
+        <div>
+            <!-- Header & Close -->
+            <div class="flex items-center justify-between pb-6 border-b border-white/10 mb-8">
+                <span id="drawer-index" class="font-mono text-xs text-cyan-400 tracking-widest">// 01 · WEBSITES &amp; CRM</span>
+                <button id="drawer-close-btn" class="text-gray-400 hover:text-white font-mono text-xs px-2 py-1 rounded border border-white/10 hover:border-white/30 transition-all">
+                    ✕ CLOSE [ESC]
+                </button>
+            </div>
+
+            <!-- Content -->
+            <h2 id="drawer-title" class="font-sans font-black text-3xl sm:text-4xl text-white tracking-tight mb-2">
+                YOTEI CRM
+            </h2>
+            <p id="drawer-subtitle" class="font-mono text-xs text-cyan-400/90 mb-6">
+                Enterprise Real Estate Intelligence &amp; CRM
+            </p>
+            <p id="drawer-desc" class="font-sans text-sm text-gray-300 leading-relaxed mb-8">
+                Production proptech ecosystem. 3-level taxonomy, Mapbox GL clustering, automated Vitest QA verification gates, and bidirectional lead pipelines.
+            </p>
+
+            <!-- Tags -->
+            <div class="mb-8">
+                <p class="font-mono text-[10px] text-gray-500 uppercase tracking-widest mb-3">ENGINEERING ARCHITECTURE</p>
+                <div id="drawer-tags" class="flex flex-wrap gap-2">
+                    <span class="tag-pill">Next.js 16</span>
+                    <span class="tag-pill">Turborepo</span>
+                    <span class="tag-pill">Mapbox GL</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Drawer Footer CTAs -->
+        <div class="pt-6 border-t border-white/10 flex flex-col gap-3">
+            <a id="drawer-live-link" href="https://yotei.com.ua/" target="_blank" rel="noopener noreferrer" class="cta-primary w-full text-center py-3 rounded-full bg-cyan-400 hover:bg-cyan-300 text-black font-mono text-xs font-bold tracking-wider transition-all shadow-[0_0_20px_rgba(0,242,254,0.4)]">
+                OPEN PRODUCTION APP ↗
+            </a>
+            <a id="drawer-source-link" href="https://github.com/l2bote4game" target="_blank" rel="noopener noreferrer" class="cta-secondary w-full text-center py-3 rounded-full border border-white/20 hover:border-cyan-400 text-gray-300 hover:text-white font-mono text-xs tracking-wider transition-all">
+                VIEW SOURCE REPOSITORY ↗
+            </a>
+        </div>
+    </aside>
+
+    <!-- Custom Precision Cursor -->
+    <div id="cursor-dot" class="cursor-dot" aria-hidden="true"></div>
+    <div id="cursor-ring" class="cursor-ring" aria-hidden="true"></div>
+
+    <!-- Scripts -->
     <script type="module" src="assets/js/audio-engine.js"></script>
     <script type="module" src="assets/js/three-scene.js"></script>
     <script type="module" src="assets/js/ui.js"></script>
