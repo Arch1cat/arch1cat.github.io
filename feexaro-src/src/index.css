@@ -1,0 +1,126 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    color: #5a6872;
+    font-family: 'Open Sans', sans-serif;
+    background-color: #ffffff;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: #041f39;
+    font-family: 'Public Sans', sans-serif;
+  }
+}
+
+/* Authentic Feexaro Split Button */
+.feexaro-btn {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  border-radius: 9999px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.feexaro-btn-primary {
+  background-color: #041f39;
+  color: #ffffff;
+  padding-left: 24px;
+  padding-right: 6px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  font-family: 'Public Sans', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.feexaro-btn-primary:hover {
+  background-color: #072a4d;
+  box-shadow: 0 10px 25px -5px rgba(4, 31, 57, 0.25);
+  transform: translateY(-1px);
+}
+
+.feexaro-btn-icon-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #008cf0;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 14px;
+  transition: transform 0.3s ease;
+}
+
+.feexaro-btn-primary:hover .feexaro-btn-icon-circle {
+  transform: rotate(45deg);
+}
+
+/* Outline Feexaro Button */
+.feexaro-btn-outline {
+  border: 1.5px solid #041f39;
+  color: #041f39;
+  padding-left: 20px;
+  padding-right: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-family: 'Public Sans', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background-color: transparent;
+}
+
+.feexaro-btn-outline:hover {
+  background-color: #041f39;
+  color: #ffffff;
+}
+
+.feexaro-btn-outline-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #041f39;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 12px;
+  transition: all 0.3s ease;
+}
+
+.feexaro-btn-outline:hover .feexaro-btn-outline-icon {
+  background-color: #008cf0;
+  transform: rotate(45deg);
+}
+
+/* Feexaro Pill Badge */
+.feexaro-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 16px;
+  border-radius: 9999px;
+  border: 1px solid #041f39;
+  color: #041f39;
+  font-family: 'Public Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background-color: transparent;
+}
+
+.feexaro-badge-blue {
+  border-color: #008cf0;
+  color: #008cf0;
+  background-color: rgba(0, 140, 240, 0.08);
+}

@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <meta content="Fixora Харків — оперативний ремонт побутової техніки вдома. Пральні машини, холодильники, бойлери, посудомийки. Салтівка, Олексіївка, Центр, Холодна Гора. Виїзд за 45 хв!" name="description"/>
+  <meta content="#ffcb05" name="theme-color"/>
+  <title>Fixora Харків — Ремонт побутової техніки вдома | Виїзд за 45 хв</title>
+  
+  <link href="assets/images/favicon.png" rel="icon"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Manrope:wght@400;500;600;700;800&family=Russo+One&display=swap" rel="stylesheet">
+  
+  <link href="assets/vendor/swiper.css" rel="stylesheet"/>
+  <link href="assets/vendor/aos.css" rel="stylesheet"/>
+  <link href="assets/css/style.css?v=3" rel="stylesheet"/>
+  <link href="assets/css/redesign.css?v=3" rel="stylesheet"/>
+  
+  <style>
+    /* Cyrillic Display Font matching Ultra impact */
+    h1, h2, h3, .display, .brand span, .page-loader span, .note-card b, .marquee span, .gallery-heading span {
+      font-family: 'Dela Gothic One', Ultra, 'Russo One', Impact, sans-serif !important;
+      letter-spacing: -0.02em;
+      word-break: keep-all !important;
+      overflow-wrap: normal !important;
+      hyphens: none !important;
+    }
+    .type-char {
+      opacity: 1 !important;
+      filter: none !important;
+      transform: none !important;
+    }
+    .hero h1, .hero .display {
+      white-space: nowrap !important;
+    }
+    body {
+      font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    .back-home-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: #fff;
+      color: #0b0b0b;
+      font-size: 11px;
+      font-weight: 800;
+      border: 2px solid #0b0b0b;
+      border-radius: 999px;
+      box-shadow: 2px 3px 0 #0b0b0b;
+      text-transform: uppercase;
+      transition: transform 0.2s;
+    }
+    @media(max-width: 640px) {
+      .back-home-pill {
+        display: none !important;
+      }
+      .hero-line {
+        gap: 12px;
+      }
+      .hero-line:nth-child(2) {
+        flex-wrap: nowrap;
+        gap: 8px;
+        align-items: center;
+      }
+      .hero h1 {
+        font-size: clamp(34px, 10vw, 54px) !important;
+      }
+      .hero .display {
+        font-size: clamp(26px, 8.2vw, 44px) !important;
+      }
+      .hero-pill {
+        height: 64px !important;
+        flex: 1 !important;
+        max-width: 180px !important;
+      }
+      .hero-pill img {
+        object-position: center 30% !important;
+      }
+      .hero-stamp-v2 {
+        display: flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+        margin: 0 !important;
+      }
+      .hero-stamp-v2 > .hero-detail {
+        width: 50px !important;
+        height: 50px !important;
+        border-radius: 50% !important;
+        border: 2px solid #0b0b0b !important;
+        box-shadow: 2px 2px 0 #0b0b0b !important;
+      }
+      .hero-stamp-v2 > .object-icon {
+        width: 28px !important;
+        height: 28px !important;
+      }
+    }
+    .back-home-pill:hover {
+      transform: translate(-1px, -2px);
+      box-shadow: 4px 5px 0 #0b0b0b;
+      background: #ffcb05;
+    }
+  </style>
+
+  <script src="config/config.js?v=3"></script>
+  <script defer="" src="assets/vendor/swiper.js"></script>
+  <script defer="" src="assets/vendor/aos.js"></script>
+  <script defer="" src="assets/js/app.js?v=3"></script>
+  <script defer="" src="assets/js/redesign.js?v=3"></script>
+</head>
+<body data-page="home">
+  <a class="skip" href="#main">Перейти до змісту</a>
+  
+  <!-- Page Loader -->
+  <div aria-hidden="true" class="page-loader">
+    <img alt="Завантаження" class="illustration object-icon" decoding="async" height="640" src="assets/images/icon-gear.webp" width="640"/>
+    <span>РЕМОНТ ТЕХНІКИ<br/>ХАРКІВ У РУСІ.</span>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="container header-inner">
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <a aria-label="Головна" class="brand" href="index.html">
+          <img alt="Fixora" data-logo="" decoding="async" height="54" src="assets/images/brand-mark.webp" width="49"/>
+          <span>Fixora</span>
+        </a>
+        <a href="../" class="back-home-pill hidden sm:inline-flex">
+          ← arch1cat.site
+        </a>
+      </div>
+      
+      <div class="header-right">
+        <span class="header-note">Харків: Салтівка · Олексіївка · Центр · Холодна Гора</span>
+        <a class="button small" href="#contact">Викликати майстра</a>
+        <button aria-controls="menu" aria-expanded="false" aria-label="Відкрити меню" class="menu-toggle">
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Slide-out Menu -->
+  <div aria-label="Головне меню" aria-modal="true" class="menu" hidden="" id="menu" role="dialog">
+    <div class="menu-art toolbox-art">
+      <img alt="" class="illustration menu-illustration" decoding="async" height="640" src="assets/images/menu-toolbox.webp" width="640"/>
+    </div>
+    <nav>
+      <a href="index.html">Головна</a>
+      <a href="#services">Послуги ремонту</a>
+      <a href="#about">Чому Fixora</a>
+      <a href="#appliance-gallery">Вузли та деталі</a>
+      <a href="#home-map">Інтерактивна техніка</a>
+      <a href="#inside-story">Рентген машини</a>
+      <a href="#second-life">Стенд відновлення</a>
+      <a href="#questions">Часті питання</a>
+      <a href="#contact">Терміновий виклик</a>
+      <a href="../rempobut/" style="color: #ffcb05; font-size: 20px; margin-top: 10px;">→ Переглянути Feexaro Харків</a>
+    </nav>
+    <div class="menu-art tools-art">
+      <img alt="" class="illustration menu-illustration" decoding="async" height="640" src="assets/images/menu-tools.webp" width="640"/>
+    </div>
+    <p>ВАШ ДІМ У ХАРКОВІ. ЗНОВУ ВСЕ ПРАЦЮЄ.</p>
+    <a class="menu-email" data-email=""></a>
+  </div>
+
+  <main id="main">
+    <!-- Hero Section -->
+    <section class="hero yellow">
+      <div class="container">
+        <div class="hero-line">
+          <h1 data-reveal="">РЕМОНТ</h1>
+          <span class="hero-pill">
+            <img alt="Майстер Fixora ремонтує пральну машину" decoding="async" fetchpriority="high" height="1024" src="assets/images/hero.webp" width="1536"/>
+          </span>
+        </div>
+        <div class="hero-line">
+          <span class="display" data-reveal="">ТЕХНІКИ.</span>
+          <span class="hero-stamp hero-stamp-v2">
+            <img alt="" class="illustration object-icon" decoding="async" height="640" src="assets/images/icon-wrench.webp" width="640"/>
+            <img alt="Деталь барабана" class="hero-detail hero-detail-small" decoding="async" height="800" src="assets/images/laundry-drum.webp" width="1200"/>
+            <img alt="Холодильник" class="hero-detail hero-detail-extra" decoding="async" height="533" src="assets/images/journal-fridge-3.webp" width="800"/>
+            <img alt="Діагностика вузла" class="hero-detail" decoding="async" height="800" src="assets/images/hero-detail.webp" width="1200"/>
+          </span>
+        </div>
+        <div class="hero-line last">
+          <span class="display" data-reveal="">ХАРКІВ.</span>
+        </div>
+        <div class="hero-bottom">
+          <a class="button dark-button" href="#contact">Підібрати майстра поруч</a>
+          <p style="max-width: 440px; font-size: 15px; font-weight: 600; line-height: 1.4;">Терміновий виїзд інженера у будь-який район міста за 45 хвилин. Діагностика 0 грн при ремонті.</p>
+          <span class="hero-sign">Гарантія 12 місяців на бланку.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Marquee Ticker -->
+    <div aria-hidden="true" class="marquee">
+      <div>
+        <span>САЛТІВКА<img alt="" class="illustration object-icon" height="640" src="assets/images/icon-washer.webp" width="640"/></span>
+        <span>ОЛЕКСІЇВКА<img alt="" class="illustration object-icon" height="640" src="assets/images/icon-board.webp" width="640"/></span>
+        <span>ВИЇЗД ЗА 45 ХВ<img alt="" class="illustration object-icon" height="640" src="assets/images/icon-gear.webp" width="640"/></span>
+        <span>ХОЛОДНА ГОРА<img alt="" class="illustration object-icon" height="640" src="assets/images/icon-washer.webp" width="640"/></span>
+        <span>ПАВЛОВЕ ПОЛЕ<img alt="" class="illustration object-icon" height="640" src="assets/images/icon-board.webp" width="640"/></span>
+        <span>ГАРАНТІЯ 12 МІСЯЦІВ<img alt="" class="illustration object-icon" height="640" src="assets/images/icon-gear.webp" width="640"/></span>
+        <span>ЦЕНТР І ШЕВЧЕНКІВСЬКИЙ<img alt="" class="illustration object-icon" height="640" src="assets/images/icon-washer.webp" width="640"/></span>
+        <span>НОВІ БУДИНКИ<img alt="" class="illustration object-icon" height="640" src="assets/images/icon-board.webp" width="640"/></span>
+        <span>ОРИГІНАЛЬНІ ЗАПЧАСТИНИ<img alt="" class="illustration object-icon" height="640" src="assets/images/icon-gear.webp" width="640"/></span>
+      </div>
+    </div>
+
+    <!-- 3 Core Service Cards -->
+    <section class="section black" id="services">
+      <div class="container">
+        <div class="section-head">
+          <h2 data-reveal="">ТЕХНІКА ДАЛА <span style="white-space:nowrap;">ЗБІЙ?</span><br/>ПОЧНІТЬ ТУТ.</h2>
+          <p>Від ранкової кави до вечірнього прання. Миттєвий підбір майстра під ваш прилад у Харкові.</p>
+        </div>
+        <div class="service-grid">
+          <!-- Fridge Card -->
+          <a class="service-card" data-aos="fade-up" href="#contact">
+            <div class="service-card-top">
+              <img alt="" class="illustration object-icon" height="640" src="assets/images/icon-fridge.webp" width="640"/>
+              <span>Холодильне обладнання</span>
+            </div>
+            <h3>ТРИМАЙ<br/>ХОЛОД.</h3>
+            <p>Холодильники No Frost, морозильні камери, компресори, заправка R600a фреоном вдома.</p>
+            <div class="card-drawing">
+              <img alt="" class="illustration object-icon" height="640" src="assets/images/icon-fridge.webp" width="640"/>
+            </div>
+            <span class="round-link">
+              <svg aria-hidden="true" class="icon ui-icon" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6"></path></svg>
+            </span>
+          </a>
+
+          <!-- Washer Card -->
+          <a class="service-card" data-aos="fade-up" href="#contact">
+            <div class="service-card-top">
+              <img alt="" class="illustration object-icon" height="640" src="assets/images/icon-washer.webp" width="640"/>
+              <span>Прання та сушка</span>
+            </div>
+            <h3>ЧИСТИЙ<br/>ОБЕРТ.</h3>
+            <p>Пральні та сушильні машини. Заміна підшипників, помп, ТЕНів, усунення помилок плати.</p>
+            <div class="card-drawing">
+              <img alt="" class="illustration object-icon" height="640" src="assets/images/icon-washer.webp" width="640"/>
+            </div>
+            <span class="round-link">
+              <svg aria-hidden="true" class="icon ui-icon" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6"></path></svg>
+            </span>
+          </a>
+
+          <!-- Kitchen Card -->
+          <a class="service-card" data-aos="fade-up" href="#contact">
+            <div class="service-card-top">
+              <img alt="" class="illustration object-icon" height="640" src="assets/images/icon-oven.webp" width="640"/>
+              <span>Кухонна техніка</span>
+            </div>
+            <h3>ЧАС<br/>ГОТУВАТИ.</h3>
+            <p>Посудомийні машини, духові шафи, варильні поверхні, бойлери та проточні нагрівачі.</p>
+            <div class="card-drawing">
+              <img alt="" class="illustration object-icon" height="640" src="assets/images/icon-oven.webp" width="640"/>
+            </div>
+            <span class="round-link">
+              <svg aria-hidden="true" class="icon ui-icon" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6"></path></svg>
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section blue" id="about">
+      <div class="container">
+        <div class="about-grid">
+          <div>
+            <div class="section-head">
+              <h2 data-reveal="">МЕНШЕ СТРЕСУ.<br/>БІЛЬШЕ ТОЧНОСТІ.</h2>
+            </div>
+            <p class="large-copy">Поломка побутової техніки не повинна руйнувати плани вашої родини.</p>
+            <p><strong>Fixora Харків</strong> з'єднує харків'ян з атестованими профільними майстрами. Ми діагностуємо проблему, називаємо точну фіксовану вартість до початку робіт і привозимо оригінальні комплектуючі безпосередньо у ваш район.</p>
+            <a class="button" href="#contact">Описати поломку майстру</a>
+          </div>
+          <div class="about-art" data-aos="fade-up">
+            <img alt="Майстерня Fixora" class="illustration about-cutout" height="640" src="assets/images/workshop-cutout.webp" width="640"/>
+            <div class="note-card">
+              <b>Швидкий ремонт<br/>починається з ясності.</b>
+              <span>Ваш прилад. Чесна фіксована ціна.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Appliance Gallery (Orbit/Grid) -->
+    <section class="section black gallery-section" id="appliance-gallery">
+      <div class="container">
+        <div class="orbit-gallery">
+          <div class="gallery-heading">
+            <h2 data-reveal="">ЗБЛИЗЬКА.</h2>
+            <p>Кожен побутовий прилад.<br/>Виняткові інженерні вузли.</p>
+            <span>НАТИСНІТЬ ДЛЯ ДЕТАЛЕЙ</span>
+          </div>
+          <button aria-label="Мідні трубки та випарник холодильника" class="orbit-photo orbit-0" data-caption="Мідні трубки охолодження та випарник No Frost" data-lightbox="assets/images/fridge-coils.webp">
+            <img alt="Трубки" height="800" src="assets/images/fridge-coils.webp" width="1200"/>
+            <span>Трубки охолодження No Frost</span>
+          </button>
+          <button aria-label="Ремінь приводу барабана" class="orbit-photo orbit-1" data-caption="Поліклиновий ремінь приводу барабана пральної машини" data-lightbox="assets/images/laundry-belt.webp">
+            <img alt="Ремінь" height="800" src="assets/images/laundry-belt.webp" width="1200"/>
+            <span>Привідний ремінь барабана</span>
+          </button>
+          <button aria-label="Нагрівальний ТЕН духовки" class="orbit-photo orbit-2" data-caption="Нагрівальний контур ТЕН духовки та гриля" data-lightbox="assets/images/kitchen-element.webp">
+            <img alt="ТЕН" height="800" src="assets/images/kitchen-element.webp" width="1200"/>
+            <span>Нагрівальний ТЕН духовки</span>
+          </button>
+          <button aria-label="Магнітний ущільнювач дверей" class="orbit-photo orbit-3" data-caption="Антибактеріальний магнітний ущільнювач дверей холодильника" data-lightbox="assets/images/fridge-seal.webp">
+            <img alt="Ущільнювач" height="800" src="assets/images/fridge-seal.webp" width="1200"/>
+            <span>Ущільнювач контуру дверей</span>
+          </button>
+          <button aria-label="Перфорований барабан" class="orbit-photo orbit-4" data-caption="Перфорований барабан та хрестовина пральної машини" data-lightbox="assets/images/laundry-drum.webp">
+            <img alt="Барабан" height="800" src="assets/images/laundry-drum.webp" width="1200"/>
+            <span>Барабан та підшипниковий вузол</span>
+          </button>
+          <button aria-label="Коромисло розбризкувача" class="orbit-photo orbit-5" data-caption="Гідравлічне коромисло розпилювача посудомийної машини" data-lightbox="assets/images/kitchen-arm.webp">
+            <img alt="Розбризкувач" height="800" src="assets/images/kitchen-arm.webp" width="1200"/>
+            <span>Гідравліка посудомийки</span>
+          </button>
+          <button aria-label="Датчик температури NTC" class="orbit-photo orbit-6" data-caption="Високоточний термодатчик NTC та плата керування" data-lightbox="assets/images/fridge-sensor.webp">
+            <img alt="Датчик" height="800" src="assets/images/fridge-sensor.webp" width="1200"/>
+            <span>Датчик термостата та сенсори</span>
+          </button>
+          <button aria-label="Фільтр тонкої очистки зливу" class="orbit-photo orbit-7" data-caption="Зливний фільтр та крильчатка дренажного насоса" data-lightbox="assets/images/laundry-filter.webp">
+            <img alt="Фільтр" height="800" src="assets/images/laundry-filter.webp" width="1200"/>
+            <span>Зливний фільтр та насос</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Kitchen Map (Hotspots) -->
+    <section class="section yellow" id="home-map">
+      <div class="container">
+        <div class="section-head">
+          <h2 data-reveal="">ТЕХНІКА В ДОМІ.</h2>
+          <p>Наведіть або торкніться приладу на кухні. Оберіть свій пристрій для негайної діагностики.</p>
+        </div>
+        <div class="home-map-grid">
+          <div class="map-photo" data-aos="fade-up">
+            <img alt="Кухня харківської квартири з технікою" height="1024" src="assets/images/apartment.webp" width="1536"/>
+            <!-- Hotspots with percentage coords -->
+            <span class="hotspot active" data-hotspot="0" style="left:15%;top:48%"><span></span></span>
+            <span class="hotspot" data-hotspot="1" style="left:43%;top:66%"><span></span></span>
+            <span class="hotspot" data-hotspot="2" style="left:64%;top:66%"><span></span></span>
+            <span class="hotspot" data-hotspot="3" style="left:89%;top:65%"><span></span></span>
+          </div>
+          <div class="appliance-list">
+            <button class="active" data-spot="0">
+              <img alt="" class="illustration object-icon" height="640" src="assets/images/icon-fridge.webp" width="640"/>
+              <span><b>Холодильник</b><small>Не морозить, намерзає лід або гуде компресор.</small></span>
+              <svg aria-hidden="true" class="icon ui-icon" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6"></path></svg>
+            </button>
+            <button class="" data-spot="1">
+              <img alt="" class="illustration object-icon" height="640" src="assets/images/icon-oven.webp" width="640"/>
+              <span><b>Духова шафа та плита</b><small>Не вмикається конвекція, згорів ТЕН, збій сенсора.</small></span>
+              <svg aria-hidden="true" class="icon ui-icon" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6"></path></svg>
+            </button>
+            <button class="" data-spot="2">
+              <img alt="" class="illustration object-icon" height="640" src="assets/images/icon-pump.webp" width="640"/>
+              <span><b>Посудомийна машина</b><small>Залишає воду, помилка E15/E24, не розчиняє таблетку.</small></span>
+              <svg aria-hidden="true" class="icon ui-icon" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6"></path></svg>
+            </button>
+            <button class="" data-spot="3">
+              <img alt="" class="illustration object-icon" height="640" src="assets/images/icon-washer.webp" width="640"/>
+              <span><b>Пральна машина</b><small>Стукає на віджиманні, не крутить барабан, не зливає.</small></span>
+              <svg aria-hidden="true" class="icon ui-icon" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6"></path></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Washing Machine X-Ray Lens -->
+    <section class="section black" id="inside-story">
+      <div class="container">
+        <div class="split">
+          <div>
+            <div class="section-head">
+              <h2 data-reveal="">ПОГЛЯД<br/>ЗСЕРЕДИНИ.</h2>
+            </div>
+            <p class="large-copy">За люком ховається цілий інженерний світ.</p>
+            <p>Проведіть мишкою або пальцем по машині, щоб заглянути крізь корпус. Лінза показує стан барабана, помпи та електронного блоку.</p>
+            <button aria-pressed="false" class="button" id="xray-toggle">Показати устрій повністю</button>
+            <div class="part-labels">
+              <span><img alt="" class="illustration object-icon" height="640" src="assets/images/icon-gear.webp" width="640"/>Привід барабана</span>
+              <span><img alt="" class="illustration object-icon" height="640" src="assets/images/icon-pump.webp" width="640"/>Зливна помпа</span>
+              <span><img alt="" class="illustration object-icon" height="640" src="assets/images/icon-board.webp" width="640"/>Плата керування</span>
+            </div>
+          </div>
+          <div aria-label="Інтерактивний рентген пральної машини" class="xray" data-aos="fade-up" tabindex="0">
+            <img alt="Корпус пральної машини" height="1024" src="assets/images/washer.webp" width="1536"/>
+            <div class="xray-inside">
+              <img alt="Внутрішній вигляд бака, насоса та електроніки" height="1024" src="assets/images/inside.webp" width="1536"/>
+            </div>
+            <div class="lens-label">НАВЕДІТЬ ДЛЯ РЕНТГЕНУ</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Before / After Restoration Slider -->
+    <section class="section blue" id="second-life">
+      <div class="container">
+        <div class="section-head">
+          <h2 data-reveal="">ОДНА ДЕТАЛЬ.<br/>НОВЕ ЖИТТЯ.</h2>
+          <p>Порівняйте зношену помпу зі зламаною крильчаткою та новий оригінальний вузол. Потягніть повзунок.</p>
+        </div>
+        <div class="repair-bench" data-aos="fade-up">
+          <div class="comparison" style="--pos:50%">
+            <!-- After (restored) -->
+            <img alt="Нова помпа з цілою крильчаткою" height="1024" src="assets/images/fixed.webp" width="1536"/>
+            <!-- Before (broken, clipped) -->
+            <div class="comparison-before">
+              <img alt="Помпа зі зламаною крильчаткою" height="1024" src="assets/images/broken.webp" width="1536"/>
+            </div>
+            <span class="compare-label before-label">ДО · ЗНОШЕНА ДЕТАЛЬ</span>
+            <span class="compare-label after-label">ПІСЛЯ · НОВИЙ ВУЗОЛ</span>
+            <div class="compare-line">
+              <img alt="" class="illustration object-icon" height="640" src="assets/images/icon-gear.webp" width="640"/>
+            </div>
+            <input aria-label="Порівняти пошкоджену та відновлену помпу" max="100" min="0" type="range" value="50"/>
+          </div>
+          <div class="bench-caption">
+            <span><img alt="" class="illustration object-icon" height="640" src="assets/images/icon-wrench.webp" width="640"/> ВЕРСТАТ ДІАГНОСТИКИ ХАРКІВ</span>
+            <p>Часто поломка полягає лише в одній невеликій деталі вартістю кілька сотень гривень. Наші майстри міняють тільки те, що дійсно вийшло з ладу.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Swiper Slider: Parts of Appliances -->
+    <section class="section yellow" id="parts">
+      <div class="container">
+        <div class="section-head">
+          <h2 data-reveal="">МАЛЕНЬКІ ДЕТАЛІ.<br/>ВЕЛИКА РОБОТА.</h2>
+          <p>Познайомтеся з компонентами, що забезпечують затишок та безперебійну роботу вашого дому.</p>
+        </div>
+        <div class="slider-block" data-aos="fade-up">
+          <div class="swiper">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">
+                <article class="part-card">
+                  <span class="part-category">Механіка</span>
+                  <div class="part-illustration">
+                    <img alt="" class="illustration object-icon" height="640" src="assets/images/icon-gear.webp" width="640"/>
+                  </div>
+                  <h3>Інверторний двигун</h3>
+                  <p>Безщітковий привід, що обертає барабан на швидкостях до 1400 об/хв тихо та плавно.</p>
+                </article>
+              </div>
+              <div class="swiper-slide">
+                <article class="part-card">
+                  <span class="part-category">Гідравліка</span>
+                  <div class="part-illustration">
+                    <img alt="" class="illustration object-icon" height="640" src="assets/images/icon-pump.webp" width="640"/>
+                  </div>
+                  <h3>Дренажний насос</h3>
+                  <p>Швидко видаляє відпрацьовану воду через зливний патрубок після кожного циклу прання.</p>
+                </article>
+              </div>
+              <div class="swiper-slide">
+                <article class="part-card">
+                  <span class="part-category">Електроніка</span>
+                  <div class="part-illustration">
+                    <img alt="" class="illustration object-icon" height="640" src="assets/images/icon-board.webp" width="640"/>
+                  </div>
+                  <h3>Модуль керування</h3>
+                  <p>Мозок приладу з мікропроцесором, який контролює нагрів, час і безпеку циклу.</p>
+                </article>
+              </div>
+              <div class="swiper-slide">
+                <article class="part-card">
+                  <span class="part-category">Температура</span>
+                  <div class="part-illustration">
+                    <img alt="" class="illustration object-icon" height="640" src="assets/images/icon-oven.webp" width="640"/>
+                  </div>
+                  <h3>Трубчастий ТЕН</h3>
+                  <p>Трубчастий електронагрівач із керамічним покриттям проти накипу та жорсткої води.</p>
+                </article>
+              </div>
+              <div class="swiper-slide">
+                <article class="part-card">
+                  <span class="part-category">Охолодження</span>
+                  <div class="part-illustration">
+                    <img alt="" class="illustration object-icon" height="640" src="assets/images/icon-gear.webp" width="640"/>
+                  </div>
+                  <h3>Вентилятор No Frost</h3>
+                  <p>Циркуляційний кулер, що рівномірно розподіляє морозне повітря по полицях холодильника.</p>
+                </article>
+              </div>
+              <div class="swiper-slide">
+                <article class="part-card">
+                  <span class="part-category">Безпека</span>
+                  <div class="part-illustration">
+                    <img alt="" class="illustration object-icon" height="640" src="assets/images/icon-shield.webp" width="640"/>
+                  </div>
+                  <h3>Електронний замок люка</h3>
+                  <p>Блокує дверцята під час роботи та запобігає аварійному виливу гарячої води.</p>
+                </article>
+              </div>
+            </div>
+          </div>
+          <div class="slider-controls">
+            <button aria-label="Попередній слайд" class="prev">
+              <svg aria-hidden="true" class="icon ui-icon" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6"></path></svg>
+            </button>
+            <button aria-label="Наступний слайд" class="next">
+              <svg aria-hidden="true" class="icon ui-icon" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6"></path></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- More Life / Kitchen Cutout -->
+    <section class="section black" id="more-life">
+      <div class="container">
+        <div class="more-life-grid">
+          <div>
+            <h2 data-reveal="">БІЛЬШЕ ЖИТТЯ.<br/>МЕНШЕ ТУРБОТ.</h2>
+            <p class="large-copy">Вчасний ремонт продовжує життя техніки на роки.</p>
+            <p>Не поспішайте купувати новий дорогий прилад при першому збої. У 92% випадків заміна датчика, помпи чи прошивка плати повертають техніку до заводського стану за частину вартості нової.</p>
+            <div class="editorial-badges">
+              <div>
+                <img alt="" class="illustration" height="640" src="assets/images/icon-gear.webp" width="640"/>
+                <span><b>Майстри у вашому районі.</b><small>Чергування на Салтівці, Олексіївці, Центрі.</small></span>
+              </div>
+              <div>
+                <img alt="" class="illustration" height="640" src="assets/images/icon-shield.webp" width="640"/>
+                <span><b>Письмова гарантія.</b><small>Офіційний гарантійний акт на 12 місяців.</small></span>
+              </div>
+            </div>
+          </div>
+          <div class="more-life-art">
+            <img alt="Кухня" class="illustration" height="640" src="assets/images/kitchen-cutout.webp" width="640"/>
+            <span class="art-caption">ДБАЄМО ПРО ЗАТИШОК ХАРКІВСЬКИХ ОСЕЛЬ.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Real Life Scenarios (Kharkiv Stories Slider) -->
+    <section class="section blue" id="home-stories">
+      <div class="container">
+        <div class="section-head">
+          <h2 data-reveal="">РЕАЛЬНІ ВИПАДКИ.<br/>ХАРКІВ'ЯНИ РАДЯТЬ.</h2>
+          <p>Типові ситуації, з якими наші інженери справляються щодня.</p>
+        </div>
+        <div class="slider-block stories-slider" data-slides="2">
+          <div class="swiper">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">
+                <article class="story-card">
+                  <div class="story-avatar">
+                    <img alt="" class="illustration" height="640" src="assets/images/icon-washer.webp" width="640"/>
+                  </div>
+                  <h3>Салтівка: Прання зупинилось із водою.</h3>
+                  <p>Пральна машина LG зависла на середині програми з помилкою OE. Майстер приїхав через 40 хв на вул. Героїв Праці, вилучив монету з крильчатки помпи та повернув машину до ладу.</p>
+                  <div class="story-credit"><b>вул. Героїв Праці, Салтівка</b><span>Ремонт зливної помпи · 450 грн</span></div>
+                </article>
+              </div>
+              <div class="swiper-slide">
+                <article class="story-card">
+                  <div class="story-avatar">
+                    <img alt="" class="illustration" height="640" src="assets/images/icon-fridge.webp" width="640"/>
+                  </div>
+                  <h3>Олексіївка: Холодильник Samsung потеплішав.</h3>
+                  <p>У морозилці мінус є, а у верхній камері +14°C. Інженер виїхав на пр. Перемоги, діагностував перемерзання каналу No Frost, замінив датчик відтайки та налаштував заслінку.</p>
+                  <div class="story-credit"><b>пр. Перемоги, Олексіївка</b><span>Відновлення No Frost · 650 грн</span></div>
+                </article>
+              </div>
+              <div class="swiper-slide">
+                <article class="story-card">
+                  <div class="story-avatar">
+                    <img alt="" class="illustration" height="640" src="assets/images/icon-oven.webp" width="640"/>
+                  </div>
+                  <h3>Центр: Духовка вибиває автомат у щитку.</h3>
+                  <p>При спробі увімкнути режим конвекції спрацьовував автомат на лічильнику. Виїзд на вул. Сумську: пробій нижнього ТЕНу на корпус. Замінено на новий оригінальний ТЕН Bosch.</p>
+                  <div class="story-credit"><b>вул. Сумська, Шевченківський район</b><span>Заміна ТЕНу духовки · 550 грн</span></div>
+                </article>
+              </div>
+              <div class="swiper-slide">
+                <article class="story-card">
+                  <div class="story-avatar">
+                    <img alt="" class="illustration" height="640" src="assets/images/icon-pump.webp" width="640"/>
+                  </div>
+                  <h3>Холодна Гора: Посудомийка пищить помилкою E15.</h3>
+                  <p>Спрацював датчик аквастопу в піддоні посудомийної машини. Інженер локалізував мікротріщину ущільнювальної прокладки чаші та замінив ремкомплект за 1 годину.</p>
+                  <div class="story-credit"><b>Полтавський Шлях, Холодна Гора</b><span>Усунення витоку чаші · 600 грн</span></div>
+                </article>
+              </div>
+            </div>
+          </div>
+          <div class="slider-controls">
+            <button aria-label="Попередній кейс" class="prev">
+              <svg aria-hidden="true" class="icon ui-icon" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6"></path></svg>
+            </button>
+            <button aria-label="Наступний кейс" class="next">
+              <svg aria-hidden="true" class="icon ui-icon" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6"></path></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Accordion -->
+    <section class="section black" id="questions">
+      <div class="container">
+        <div class="split faq-split">
+          <div>
+            <div class="section-head">
+              <h2 data-reveal="">ЧАСТІ<br/>ПИТАННЯ.</h2>
+            </div>
+            <div class="faq-art">
+              <img alt="" class="illustration object-icon" height="640" src="assets/images/menu-toolbox.webp" width="640"/>
+              <img alt="" class="illustration object-icon" height="640" src="assets/images/icon-wrench.webp" width="640"/>
+            </div>
+            <p>Прозорі та чесні відповіді перед тим, як ви зробите виклик.</p>
+          </div>
+          <div class="accordion">
+            <details>
+              <summary>Скільки коштує виклик та діагностика майстра по Харкову?<svg aria-hidden="true" class="icon ui-icon" viewBox="0 0 24 24"><path d="M6 12h12M12 6v12"></path></svg></summary>
+              <div class="answer">
+                <p>При виконанні ремонту виїзд майстра у будь-який район Харкова та повна діагностика приладу — <strong>0 грн (безкоштовно)</strong>. Якщо ви вирішите відкласти ремонт після діагностики, оплачується лише стандартна перевірка 250 грн.</p>
+              </div>
+            </details>
+            <details>
+              <summary>Як швидко майстер може бути у мене вдома?<svg aria-hidden="true" class="icon ui-icon" viewBox="0 0 24 24"><path d="M6 12h12M12 6v12"></path></svg></summary>
+              <div class="answer">
+                <p>У кожному районі Харкова (Салтівка, Олексіївка, Павлове Поле, Холодна Гора, Нові Будинки, Центр) чергують наші мобільні інженери. Середній час прибуття після дзвінка складає <strong>від 40 до 60 хвилин</strong>.</p>
+              </div>
+            </details>
+            <details>
+              <summary>Чи надається письмова гарантія на ремонт та запчастини?<svg aria-hidden="true" class="icon ui-icon" viewBox="0 0 24 24"><path d="M6 12h12M12 6v12"></path></svg></summary>
+              <div class="answer">
+                <p>Так! Після перевірки працездатності техніки майстер виписує офіційний гарантійний талон сервісу Fixora з печаткою терміном <strong>від 3 до 12 місяців</strong> на виконану роботу та встановлені нові деталі.</p>
+              </div>
+            </details>
+            <details>
+              <summary>Хто підтверджує фінальну ціну робіт?<svg aria-hidden="true" class="icon ui-icon" viewBox="0 0 24 24"><path d="M6 12h12M12 6v12"></path></svg></summary>
+              <div class="answer">
+                <p>Майстер після огляду називає точну фіксовану вартість згідно з прайс-листом ДО початку будь-яких робіт. Жодних прихованих доплат після завершення ремонту немає.</p>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact & Enquiry Form -->
+    <section class="section yellow" id="contact">
+      <div class="container">
+        <div class="contact-grid">
+          <div>
+            <div class="section-head">
+              <h2 data-reveal="">ВИРІШИМО<br/>СЬОГОДНІ.</h2>
+            </div>
+            <p class="large-copy">Опишіть, що сталося з технікою.<br/>Майстер зв'яжеться з вами за 10 хв.</p>
+            <a class="email" data-email="">service@fixora-kharkiv.ua</a>
+            <div style="margin-top: 15px; font-size: 20px; font-weight: 800;">
+              📞 +38 (057) 750-20-26 <br/>
+              📱 +38 (050) 840-20-26
+            </div>
+            <div class="contact-icon">
+              <svg aria-hidden="true" class="icon ui-icon mail-icon" viewBox="0 0 24 24"><path d="M3 5h18v14H3z m0 0 9 8 9-8"></path></svg>
+            </div>
+            <p class="small-copy">Без зобов'язань. Безкоштовна консультація чергового інженера.</p>
+          </div>
+          
+          <form id="contact-form" onsubmit="event.preventDefault(); const s=document.querySelector('.form-status'); s.textContent='✓ Дякуємо! Вашу заявку прийнято. Майстер зателефонує вам протягом 10 хвилин!'; this.reset();">
+            <div class="form-row">
+              <label>Ваше ім'я*
+                <input autocomplete="name" maxlength="100" minlength="2" name="name" placeholder="Олександр або Наталія" required=""/>
+              </label>
+              <label>Номер телефону*
+                <input autocomplete="tel" maxlength="20" name="phone" placeholder="+38 (050) 000-00-00" required="" type="tel"/>
+              </label>
+            </div>
+            
+            <div class="form-row">
+              <label>Тип техніки*
+                <select name="service" required="">
+                  <option value="">Оберіть техніку</option>
+                  <option>Пральна машина</option>
+                  <option>Холодильник / Морозилка</option>
+                  <option>Бойлер / Водонагрівач</option>
+                  <option>Посудомийна машина</option>
+                  <option>Духова шафа / Варильна поверхня</option>
+                </select>
+              </label>
+              <label>Район Харкова*
+                <select name="district" required="">
+                  <option value="">Оберіть район</option>
+                  <option>Салтівка (всі мікрорайони)</option>
+                  <option>Олексіївка</option>
+                  <option>Павлове Поле</option>
+                  <option>Холодна Гора</option>
+                  <option>Центр / Шевченківський</option>
+                  <option>Нові Будинки</option>
+                  <option>Київський район</option>
+                  <option>Індустріальний (ХТЗ)</option>
+                  <option>Передмістя (Пісочин, Дергачі тощо)</option>
+                </select>
+              </label>
+            </div>
+            
+            <label>Марка приладу та що саме трапилося?
+              <textarea maxlength="5000" minlength="5" name="message" placeholder="Наприклад: Samsung EcoBubble, перестала зливати воду, показує код 5E..." required="" rows="3"></textarea>
+            </label>
+            
+            <label aria-hidden="true" class="hp">Не заповнювати
+              <input autocomplete="off" name="website_check" tabindex="-1"/>
+            </label>
+            
+            <label class="consent">
+              <input checked="" name="privacy_consent" required="" type="checkbox" value="1"/>
+              <span>Погоджуюсь на дзвінок чергового інженера та обробку контактних даних для узгодження виїзду.</span>
+            </label>
+            
+            <button class="button" type="submit">Надіслати заявку майстру</button>
+            <p aria-live="polite" class="form-status" role="status" style="font-weight: bold; color: #041f39; margin-top: 14px;"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Deep Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-top">
+        <a class="brand" href="index.html">
+          <img alt="" data-logo="" height="54" src="assets/images/brand-mark.webp" width="49"/>
+          <span data-company="">Fixora</span>
+        </a>
+        <h2>ЗНОВУ В РУСІ.<br/>ХАРКІВ.</h2>
+        <a class="button" href="#contact">Викликати майстра</a>
+      </div>
+      
+      <div class="footer-bottom">
+        <div>
+          <p data-disclaimer=""></p>
+          <div style="margin-top: 10px; font-weight: bold;">
+            📍 м. Харків, вул. Сумська, 102 | Графік: 08:00 – 21:00 щодня
+          </div>
+          <a class="email" data-email=""></a>
+        </div>
+        
+        <nav>
+          <strong>Послуги у Харкові</strong>
+          <a href="#services">Ремонт пральних машин</a>
+          <a href="#services">Ремонт холодильників No Frost</a>
+          <a href="#services">Ремонт посудомийних машин</a>
+          <a href="#services">Чистка та ремонт бойлерів</a>
+          <a href="#services">Ремонт духовок і плит</a>
+        </nav>
+        
+        <nav>
+          <strong>Навігація</strong>
+          <a href="../">Головна arch1cat.site</a>
+          <a href="../rempobut/">Прототип Feexaro Харків</a>
+          <a href="#about">Про сервіс</a>
+          <a href="#home-map">Інтерактивна кухня</a>
+          <a href="#questions">Питання та відповіді</a>
+        </nav>
+      </div>
+      
+      <div class="copyright">
+        <span>© <span data-year=""></span> Fixora Харків. Всі права захищено.</span>
+        <span>Швидкий ремонт побутової техніки вдома у Харкові.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Lightbox Dialog -->
+  <dialog class="gallery-dialog">
+    <button aria-label="Закрити" class="lightbox-close">
+      <svg aria-hidden="true" class="icon ui-icon" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"></path></svg>
+    </button>
+    <img alt="" height="800" src="" width="1200"/>
+    <p></p>
+  </dialog>
+</body>
+</html>

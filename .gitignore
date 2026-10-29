@@ -1,2 +1,5 @@
 __pycache__/
 *.pyc
+node_modules/
+feexaro-src/node_modules/
+cloner-template/
