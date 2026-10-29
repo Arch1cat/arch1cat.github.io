@@ -184,7 +184,28 @@ document.addEventListener('DOMContentLoaded', () => {
             const total = PROJECTS_DATA.length.toString().padStart(2, '0');
             counterEl.textContent = `${num} / ${total}`;
         }
+
+        // Update Active Theory World switcher index
+        const worldIndex = document.getElementById('world-index-num');
+        if (worldIndex) worldIndex.textContent = `${currentProjIdx + 1}.`;
+
+        // Update Right Edge Scroll Thumb
+        const thumb = document.getElementById('right-scroll-thumb');
+        if (thumb) {
+            const pct = currentProjIdx / (PROJECTS_DATA.length - 1);
+            thumb.style.transform = `translateY(${pct * 64}px)`;
+        }
     };
+
+    // World Switcher Buttons
+    document.getElementById('world-prev-btn')?.addEventListener('click', () => {
+        updateCarouselUI(currentProjIdx - 1);
+        radio.playSfx('click');
+    });
+    document.getElementById('world-next-btn')?.addEventListener('click', () => {
+        updateCarouselUI(currentProjIdx + 1);
+        radio.playSfx('click');
+    });
 
     prevProjBtn?.addEventListener('click', () => {
         updateCarouselUI(currentProjIdx - 1);
