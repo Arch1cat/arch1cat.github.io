@@ -994,20 +994,6 @@ window.FREE_AI_DATA = {
    },
    "routes": [
     {
-     "p": "OpenRouter",
-     "id": "poolside/laguna-s-2.1:free",
-     "status": "working",
-     "type": "free",
-     "src": "api"
-    },
-    {
-     "p": "Nous Portal",
-     "id": "poolside/laguna-s-2.1:free",
-     "status": "working",
-     "type": "free",
-     "src": "api"
-    },
-    {
      "p": "NiloVR",
      "id": "laguna-s-2.1",
      "status": "working",
@@ -1017,46 +1003,8 @@ window.FREE_AI_DATA = {
    ]
   },
   {
-   "id": "laguna-xs-2.1",
-   "rank": 13,
-   "name": "Laguna XS 2.1",
-   "tasks": [
-    "Coding",
-    "Patch",
-    "Fast Agent"
-   ],
-   "family": "Laguna",
-   "ctx": 262144,
-   "out": 32768,
-   "reasoning": true,
-   "bench": {
-    "swe": 47.2,
-    "he": 76.9,
-    "aider": 49.8,
-    "livecode": 42.4,
-    "arena": null,
-    "arenaRank": null
-   },
-   "routes": [
-    {
-     "p": "Nous Portal",
-     "id": "poolside/laguna-xs-2.1:free",
-     "status": "working",
-     "type": "free",
-     "src": "api"
-    },
-    {
-     "p": "OpenRouter",
-     "id": "poolside/laguna-xs-2.1:free",
-     "status": "catalog",
-     "type": "free",
-     "src": "api"
-    }
-   ]
-  },
-  {
    "id": "longcat-2.5",
-   "rank": 14,
+   "rank": 13,
    "name": "LongCat 2.5 Preview",
    "tasks": [
     "Long Context",
@@ -1087,7 +1035,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "step-3.7-flash",
-   "rank": 15,
+   "rank": 14,
    "name": "Step 3.7 Flash",
    "tasks": [
     "Кодинг",
@@ -1118,7 +1066,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "solar-mini4",
-   "rank": 16,
+   "rank": 15,
    "name": "Solar Mini4",
    "tasks": [
     "Кодинг",
@@ -1149,7 +1097,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "inkling",
-   "rank": 17,
+   "rank": 16,
    "name": "Inkling / Inkling Small",
    "tasks": [
     "Кодинг",
@@ -1187,7 +1135,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "gemma-4",
-   "rank": 18,
+   "rank": 17,
    "name": "Gemma 4 26B / 31B",
    "tasks": [
     "Reasoning",
@@ -1225,7 +1173,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "north-mini-code",
-   "rank": 19,
+   "rank": 18,
    "name": "North Mini Code",
    "tasks": [
     "Кодинг",
@@ -1256,7 +1204,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "xing-4.0",
-   "rank": 20,
+   "rank": 19,
    "name": "Xing 4.0 29B-A4B",
    "tasks": [
     "Reasoning",
@@ -1286,7 +1234,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "lfm-2.5",
-   "rank": 21,
+   "rank": 20,
    "name": "LFM 2.5 2.6B",
    "tasks": [
     "Fast Agent",
@@ -1316,7 +1264,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "qwen-3.8",
-   "rank": 22,
+   "rank": 21,
    "name": "Qwen 3.8 Max / Flash",
    "tasks": [
     "Reasoning",
@@ -1361,7 +1309,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "claude-opus-5.5",
-   "rank": 23,
+   "rank": 22,
    "name": "Claude Opus 5.5 / GPT-6.1 Sol / Grok 4.7",
    "tasks": [
     "Deep Review",
@@ -1413,7 +1361,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "space-bunny",
-   "rank": 24,
+   "rank": 23,
    "name": "Space Bunny / Ox Alpha",
    "tasks": [
     "Stealth",
@@ -1458,7 +1406,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "beam-pickle",
-   "rank": 25,
+   "rank": 24,
    "name": "Beam / Big Pickle / Cat Jam / Glyph",
    "tasks": [
     "Stealth",
@@ -1503,7 +1451,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "ddgw-free",
-   "rank": 26,
+   "rank": 25,
    "name": "DuckDuckGo Cloudflare Free",
    "tasks": [
     "Fast Agent",
@@ -1569,7 +1517,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "lyria-3",
-   "rank": 27,
+   "rank": 26,
    "name": "Lyria 3 Clip / Pro (audio)",
    "tasks": [
     "Audio",
@@ -1606,7 +1554,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "dots-3-note",
-   "rank": 28,
+   "rank": 27,
    "name": "Dots 3 Note Preview",
    "tasks": [
     "Notes",
@@ -1637,7 +1585,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "openrouter-free",
-   "rank": 29,
+   "rank": 28,
    "name": "OpenRouter / free (auto-router)",
    "tasks": [
     "Кодинг",
@@ -1668,7 +1616,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "llm7-free",
-   "rank": 30,
+   "rank": 29,
    "name": "LLM7.io free subset",
    "tasks": [
     "Кодинг",
@@ -1741,7 +1689,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "content-safety",
-   "rank": 31,
+   "rank": 30,
    "name": "Content Safety / Nemotron Nano",
    "tasks": [
     "Safety",
@@ -1782,7 +1730,7 @@ window.FREE_AI_DATA = {
    "name": "Nous Portal Free",
    "price": "$0",
    "kind": "Free tier",
-   "includes": "Все бесплатные модели Nous: Ornith 1.5 122B, Laguna S/XS 2.1, Beam 501B, Step 3.7 Flash, Solar Mini4 + preview. Каталог портала — 248 моделей (325 с embeddings)",
+   "includes": "Все бесплатные модели Nous: Ornith 1.5 122B, Beam 501B, Step 3.7 Flash, Solar Mini4 + preview. Каталог портала — 248 моделей (325 с embeddings)",
    "allowance": "50 RPM / 500K TPM. Только free-модели — платные через портал недоступны",
    "tokens": "Без лимита токенов, но жёсткий RPM",
    "verdict": "Наш основной Nous-маршрут. Работает в Hermes",
@@ -3646,28 +3594,10 @@ window.FREE_AI_DATA = {
    "n": "Preview, 512K ctx."
   },
   {
-   "m": "openrouter/poolside/laguna-s-2.1:free",
-   "r": "ok",
-   "t": "PROBE_OK",
-   "n": "Основной бесплатный fallback."
-  },
-  {
    "m": "nous/ornith/ornith-1.5-122b:free",
    "r": "ok",
    "t": "PROBE_OK",
    "n": "262K ctx / 262K out, vision + tools, SWE-Verified 84.5%. Работает без user= тега."
-  },
-  {
-   "m": "nous/poolside/laguna-s-2.1:free",
-   "r": "ok",
-   "t": "PROBE_OK",
-   "n": "Работает."
-  },
-  {
-   "m": "nous/poolside/laguna-xs-2.1:free",
-   "r": "ok",
-   "t": "PROBE_OK",
-   "n": "Работает."
   },
   {
    "m": "nous/reflection/beam-1.0-501b-a23b:free",
@@ -3752,6 +3682,30 @@ window.FREE_AI_DATA = {
    "r": "ok",
    "t": "PROBE_OK",
    "n": "Правильный NIM ID."
+  },
+  {
+   "m": "openrouter/poolside/laguna-s-2.1:free",
+   "r": "bad",
+   "t": "NO LONGER FREE",
+   "n": "HTTP 404 — убрана из zero-price каталога OpenRouter 02.11.2026 (no provider serves this model anymore)."
+  },
+  {
+   "m": "openrouter/poolside/laguna-xs-2.1:free",
+   "r": "bad",
+   "t": "NO LONGER FREE",
+   "n": "HTTP 404 — убрана из zero-price каталога OpenRouter 02.11.2026 (no provider serves this model anymore)."
+  },
+  {
+   "m": "nous/poolside/laguna-s-2.1:free",
+   "r": "bad",
+   "t": "NO LONGER FREE",
+   "n": "HTTP 404 — убрана из :free каталога Nous 02.11.2026."
+  },
+  {
+   "m": "nous/poolside/laguna-xs-2.1:free",
+   "r": "bad",
+   "t": "NO LONGER FREE",
+   "n": "HTTP 404 — убрана из :free каталога Nous 02.11.2026."
   },
   {
    "m": "nous/meituan/longcat-2.5-preview:free",
@@ -3847,15 +3801,15 @@ window.FREE_AI_DATA = {
  "ranking": [
   {
    "id": "Nous Portal",
-   "score": 77.4,
-   "working": 6,
+   "score": 79.1,
+   "working": 4,
    "catalog": 0,
    "blocked": 0,
-   "total": 6,
+   "total": 4,
    "wr": 100,
    "access": "api",
    "color": "#a78bfa",
-   "benchAvg": 60.5,
+   "benchAvg": 84.5,
    "ctxCap": 1048576,
    "rpm": null,
    "rpd": null,
@@ -3868,9 +3822,9 @@ window.FREE_AI_DATA = {
    "note": "4 :free моделей (включая Ornith 1.5 122B). Часть требует тег user= в extra_body.tags.",
    "parts": {
     "Работоспособность": 40.0,
-    "Покрытие моделей": 9.8,
+    "Покрытие моделей": 8.0,
     "Контекст": 15.0,
-    "Бенчмарки": 8.6,
+    "Бенчмарки": 12.1,
     "Лимиты": 0,
     "Доступ": 4.0
    },
@@ -3909,15 +3863,15 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "OpenRouter",
-   "score": 73.2,
-   "working": 12,
-   "catalog": 5,
+   "score": 73.0,
+   "working": 11,
+   "catalog": 4,
    "blocked": 2,
-   "total": 19,
-   "wr": 63,
+   "total": 17,
+   "wr": 65,
    "access": "api",
    "color": "#00f2fe",
-   "benchAvg": 57.8,
+   "benchAvg": 59.2,
    "ctxCap": 1048576,
    "rpm": 20,
    "rpd": 50,
@@ -3929,10 +3883,10 @@ window.FREE_AI_DATA = {
    "limits": "20 RPM / 50 RPD (1000 RPD с $10 top-up)",
    "note": "17 zero-price моделей прямо сейчас. Единственный ключ на десятки семейств.",
    "parts": {
-    "Работоспособность": 25.3,
-    "Покрытие моделей": 17.4,
+    "Работоспособность": 25.9,
+    "Покрытие моделей": 16.5,
     "Контекст": 15.0,
-    "Бенчмарки": 8.3,
+    "Бенчмарки": 8.5,
     "Лимиты": 3.2,
     "Доступ": 4.0
    },
