@@ -1,5 +1,5 @@
 {
- "snapshot": "2026-10-29",
+ "snapshot": "2026-11-02",
  "openrouter": [
   {
    "id": "cohere/north-mini-code:free",
@@ -93,20 +93,6 @@
    "name": "Free Models Router"
   },
   {
-   "id": "poolside/laguna-s-2.1:free",
-   "ctx": 262144,
-   "out": 32768,
-   "tools": true,
-   "name": "Poolside: Laguna S 2.1 (free)"
-  },
-  {
-   "id": "poolside/laguna-xs-2.1:free",
-   "ctx": 262144,
-   "out": 32768,
-   "tools": true,
-   "name": "Poolside: Laguna XS 2.1 (free)"
-  },
-  {
    "id": "recursive/flint-v1.0:free",
    "ctx": 262144,
    "out": 235929,
@@ -144,20 +130,6 @@
    "name": "Ornith: Ornith 1.5 122B"
   },
   {
-   "id": "poolside/laguna-s-2.1:free",
-   "ctx": 262144,
-   "out": 131072,
-   "tools": true,
-   "name": "Poolside: Laguna S 2.1"
-  },
-  {
-   "id": "poolside/laguna-xs-2.1:free",
-   "ctx": 262144,
-   "out": 32768,
-   "tools": true,
-   "name": "Poolside: Laguna XS 2.1"
-  },
-  {
    "id": "reflection/beam-1.0-501b-a23b:free",
    "ctx": 262144,
    "out": 131072,
@@ -180,7 +152,7 @@
   }
  ],
  "omniroute": {
-  "total": 1293,
+  "total": 1306,
   "prefixes": {
    "auto": 45,
    "agy": 25,
@@ -196,7 +168,7 @@
    "zc": 14,
    "cxa": 45,
    "unc": 1,
-   "aihorde": 166,
+   "aihorde": 179,
    "openrouter": 737
   },
   "noauth_free": [
