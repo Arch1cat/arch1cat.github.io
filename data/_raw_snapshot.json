@@ -1,5 +1,5 @@
 {
- "snapshot": "2026-11-02",
+ "snapshot": "2026-11-03",
  "openrouter": [
   {
    "id": "cohere/north-mini-code:free",
@@ -123,13 +123,6 @@
  ],
  "nous": [
   {
-   "id": "ornith/ornith-1.5-122b:free",
-   "ctx": 262144,
-   "out": 262144,
-   "tools": true,
-   "name": "Ornith: Ornith 1.5 122B"
-  },
-  {
    "id": "reflection/beam-1.0-501b-a23b:free",
    "ctx": 262144,
    "out": 131072,
@@ -152,7 +145,7 @@
   }
  ],
  "omniroute": {
-  "total": 1306,
+  "total": 1295,
   "prefixes": {
    "auto": 45,
    "agy": 25,
@@ -168,7 +161,7 @@
    "zc": 14,
    "cxa": 45,
    "unc": 1,
-   "aihorde": 179,
+   "aihorde": 168,
    "openrouter": 737
   },
   "noauth_free": [
