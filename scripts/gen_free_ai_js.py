@@ -34,7 +34,7 @@ PROVIDERS = [
         "id": "Nous Portal", "access": "api", "status": "working", "color": "#a78bfa",
         "limits": "RPM/TPM/RPD не раскрыты", "rpm": None, "rpd": None, "tpd": None,
         "card": False, "training": "no", "ctxCap": 1048576,
-        "note": f"{len(NOUS_LIVE)} :free моделей (включая Ornith 1.5 122B). Часть требует тег user= в extra_body.tags.",
+        "note": f"{len(NOUS_LIVE)} :free моделей (Beam 501B, Step 3.7 Flash, Solar Mini4). Часть требует тег user= в extra_body.tags.",
         "uptime": "97%",
     },
     {
@@ -284,15 +284,6 @@ FAMILIES = [
             {"p": "OpenCode Free", "id": "opencode/deepseek-v4.1-flash-free", "status": "catalog", "type": "free", "src": "local"},
             {"p": "NVIDIA NIM", "id": "deepseek-ai/deepseek-v4.1-flash", "status": "catalog", "type": "free", "src": "api"},
             {"p": "OmniRoute / auto", "id": "auto/coding:free", "status": "working", "type": "free", "src": "noauth"},
-        ],
-    },
-    {
-        "id": "ornith-1.5-122b", "rank": 2, "name": "Ornith 1.5 122B",
-        "tasks": ["Кодинг", "Reasoning", "Tools", "Vision"], "family": "Ornith 1.5",
-        "ctx": 262144, "out": 262144, "reasoning": True,
-        "bench": {"swe": 84.5, "he": None, "aider": None, "livecode": None, "arena": None, "arenaRank": "TermBench 81.2 · SWE-Pro 76.9"},
-        "routes": [
-            {"p": "Nous Portal", "id": "ornith/ornith-1.5-122b:free", "status": "working", "type": "free", "src": "api"},
         ],
     },
     {
@@ -589,7 +580,7 @@ for _idx, _fam in enumerate(FAMILIES, 1):
 PLANS = [
     {
         "name": "Nous Portal Free", "price": "$0", "kind": "Free tier",
-        "includes": "Все бесплатные модели Nous: Ornith 1.5 122B, Beam 501B, Step 3.7 Flash, Solar Mini4 + preview. Каталог портала — 248 моделей (325 с embeddings)",
+        "includes": "Все бесплатные модели Nous: Beam 501B, Step 3.7 Flash, Solar Mini4. Каталог портала — 248 моделей (325 с embeddings)",
         "allowance": "50 RPM / 500K TPM. Только free-модели — платные через портал недоступны",
         "tokens": "Без лимита токенов, но жёсткий RPM",
         "verdict": "Наш основной Nous-маршрут. Работает в Hermes", "score": 89,
@@ -781,7 +772,6 @@ PROBES = [
     {"m": "openrouter/openrouter/free", "r": "ok", "t": "PROBE_OK", "n": "Авто-роутер OpenRouter."},
     {"m": "openrouter/google/gemma-4-26b-a4b-it:free", "r": "ok", "t": "PROBE_OK", "n": "262K ctx."},
     {"m": "openrouter/dots-studio/dots-3-note-preview:free", "r": "ok", "t": "PROBE_OK", "n": "Preview, 512K ctx."},
-    {"m": "nous/ornith/ornith-1.5-122b:free", "r": "ok", "t": "PROBE_OK", "n": "262K ctx / 262K out, vision + tools, SWE-Verified 84.5%. Работает без user= тега."},
     {"m": "nous/reflection/beam-1.0-501b-a23b:free", "r": "ok", "t": "PROBE_OK", "n": "501B open (Apache 2.0)."},
     {"m": "nous/stepfun/step-3.7-flash:free", "r": "ok", "t": "PROBE_OK", "n": "Требует тег user= в extra_body.tags."},
     {"m": "nous/upstage/solar-mini4:free", "r": "ok", "t": "PROBE_OK", "n": "Тоже требует user= тег."},
@@ -796,6 +786,7 @@ PROBES = [
     {"m": "omniroute/auto/cheap", "r": "ok", "t": "PROBE_OK", "n": "Дешёвый маршрут."},
     {"m": "omniroute/auto/offline", "r": "ok", "t": "PROBE_OK", "n": "Оффлайн-маршрут."},
     {"m": "nvidia/nemotron-3.5-lightning-30b-a3b", "r": "ok", "t": "PROBE_OK", "n": "Правильный NIM ID."},
+    {"m": "nous/ornith/ornith-1.5-122b:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — промо-период :free на Nous завершился 03.11.2026 (переведена на платный ornith/ornith-1.5-122b, $0.16/$0.64 за 1M)."},
     {"m": "openrouter/poolside/laguna-s-2.1:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — убрана из zero-price каталога OpenRouter 02.11.2026 (no provider serves this model anymore)."},
     {"m": "openrouter/poolside/laguna-xs-2.1:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — убрана из zero-price каталога OpenRouter 02.11.2026 (no provider serves this model anymore)."},
     {"m": "nous/poolside/laguna-s-2.1:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — убрана из :free каталога Nous 02.11.2026."},
@@ -991,7 +982,6 @@ DATA = {
         "tasks": ["Кодинг", "Reasoning", "UI", "Vision", "Tools", "Fast Agent", "Stealth", "Long Context", "Планирование"],
         "rows": [
             {"name": "DeepSeek V4.1 Flash", "f": "deepseek-v4.1-flash", "v": [3, 3, 1, 2, 3, 2, 0, 1, 2]},
-            {"name": "Ornith 1.5 122B", "f": "ornith-1.5-122b", "v": [3, 3, 1, 2, 3, 2, 0, 2, 2]},
             {"name": "Recursive Flint 1.0", "f": "flint-v1.0", "v": [3, 3, 1, 0, 3, 3, 0, 2, 2]},
             {"name": "Kimi K3", "f": "kimi-k3", "v": [3, 3, 1, 0, 2, 1, 0, 2, 3]},
             {"name": "MiMo V2.6 Pro", "f": "mimo-v2.6-pro", "v": [3, 3, 3, 0, 2, 1, 0, 1, 2]},
