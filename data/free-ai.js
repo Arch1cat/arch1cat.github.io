@@ -1328,8 +1328,41 @@ window.FREE_AI_DATA = {
    ]
   },
   {
-   "id": "space-bunny",
+   "id": "crouton-alpha",
    "rank": 22,
+   "name": "Crouton Alpha (Stealth)",
+   "tasks": [
+    "Кодинг",
+    "Fast Agent",
+    "Tools",
+    "Vision",
+    "Stealth"
+   ],
+   "family": "Stealth",
+   "ctx": 1048576,
+   "out": 943718,
+   "reasoning": true,
+   "bench": {
+    "swe": null,
+    "he": null,
+    "aider": null,
+    "livecode": null,
+    "arena": null,
+    "arenaRank": null
+   },
+   "routes": [
+    {
+     "p": "OpenRouter",
+     "id": "stealth/crouton-alpha",
+     "status": "working",
+     "type": "stealth",
+     "src": "api"
+    }
+   ]
+  },
+  {
+   "id": "space-bunny",
+   "rank": 23,
    "name": "Space Bunny / Ox Alpha",
    "tasks": [
     "Stealth",
@@ -1374,7 +1407,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "beam-pickle",
-   "rank": 23,
+   "rank": 24,
    "name": "Beam / Big Pickle / Cat Jam / Glyph",
    "tasks": [
     "Stealth",
@@ -1419,7 +1452,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "ddgw-free",
-   "rank": 24,
+   "rank": 25,
    "name": "DuckDuckGo Cloudflare Free",
    "tasks": [
     "Fast Agent",
@@ -1485,7 +1518,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "lyria-3",
-   "rank": 25,
+   "rank": 26,
    "name": "Lyria 3 Clip / Pro (audio)",
    "tasks": [
     "Audio",
@@ -1522,7 +1555,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "dots-3-note",
-   "rank": 26,
+   "rank": 27,
    "name": "Dots 3 Note Preview",
    "tasks": [
     "Notes",
@@ -1553,7 +1586,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "openrouter-free",
-   "rank": 27,
+   "rank": 28,
    "name": "OpenRouter / free (auto-router)",
    "tasks": [
     "Кодинг",
@@ -1584,7 +1617,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "llm7-free",
-   "rank": 28,
+   "rank": 29,
    "name": "LLM7.io free subset",
    "tasks": [
     "Кодинг",
@@ -1657,7 +1690,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "content-safety",
-   "rank": 29,
+   "rank": 30,
    "name": "Content Safety / Nemotron Nano",
    "tasks": [
     "Safety",
@@ -3233,6 +3266,15 @@ window.FREE_AI_DATA = {
  ],
  "releases": [
   {
+   "d": "2026-11-03",
+   "n": "Crouton Alpha (Stealth)",
+   "o": "Stealth (OpenRouter)",
+   "ctx": "1M",
+   "p": null,
+   "k": "stealth, coding, reasoning, vision, audio, video, tools",
+   "free": true
+  },
+  {
    "d": "2026-10-21",
    "n": "Recursive Flint 1.0",
    "o": "Recursive",
@@ -3514,6 +3556,12 @@ window.FREE_AI_DATA = {
  ],
  "probes": [
   {
+   "m": "openrouter/stealth/crouton-alpha",
+   "r": "ok",
+   "t": "PROBE_OK",
+   "n": "1M ctx / 944K out, omnimodal (text/image/video/audio/file), mandatory reasoning, ~71 tok/s."
+  },
+  {
    "m": "openrouter/recursive/flint-v1.0:free",
    "r": "ok",
    "t": "PROBE_OK",
@@ -3768,6 +3816,37 @@ window.FREE_AI_DATA = {
  ],
  "ranking": [
   {
+   "id": "OpenRouter",
+   "score": 74.3,
+   "working": 12,
+   "catalog": 4,
+   "blocked": 2,
+   "total": 18,
+   "wr": 67,
+   "access": "api",
+   "color": "#00f2fe",
+   "benchAvg": 59.2,
+   "ctxCap": 1048576,
+   "rpm": 20,
+   "rpd": 50,
+   "tpd": null,
+   "card": false,
+   "training": "no",
+   "uptime": "99.5%",
+   "status": "working",
+   "limits": "20 RPM / 50 RPD (1000 RPD с $10 top-up)",
+   "note": "18 zero-price моделей прямо сейчас. Единственный ключ на десятки семейств.",
+   "parts": {
+    "Работоспособность": 26.7,
+    "Покрытие моделей": 17.0,
+    "Контекст": 15.0,
+    "Бенчмарки": 8.5,
+    "Лимиты": 3.2,
+    "Доступ": 4.0
+   },
+   "place": 1
+  },
+  {
    "id": "OmniRoute / auto",
    "score": 73.6,
    "working": 1,
@@ -3795,37 +3874,6 @@ window.FREE_AI_DATA = {
     "Бенчмарки": 9.6,
     "Лимиты": 0,
     "Доступ": 5.0
-   },
-   "place": 1
-  },
-  {
-   "id": "OpenRouter",
-   "score": 73.0,
-   "working": 11,
-   "catalog": 4,
-   "blocked": 2,
-   "total": 17,
-   "wr": 65,
-   "access": "api",
-   "color": "#00f2fe",
-   "benchAvg": 59.2,
-   "ctxCap": 1048576,
-   "rpm": 20,
-   "rpd": 50,
-   "tpd": null,
-   "card": false,
-   "training": "no",
-   "uptime": "99.5%",
-   "status": "working",
-   "limits": "20 RPM / 50 RPD (1000 RPD с $10 top-up)",
-   "note": "18 zero-price моделей прямо сейчас. Единственный ключ на десятки семейств.",
-   "parts": {
-    "Работоспособность": 25.9,
-    "Покрытие моделей": 16.5,
-    "Контекст": 15.0,
-    "Бенчмарки": 8.5,
-    "Лимиты": 3.2,
-    "Доступ": 4.0
    },
    "place": 2
   },
@@ -5179,6 +5227,21 @@ window.FREE_AI_DATA = {
      0,
      2,
      3
+    ]
+   },
+   {
+    "name": "Crouton Alpha (Stealth)",
+    "f": "crouton-alpha",
+    "v": [
+     2,
+     2,
+     1,
+     2,
+     3,
+     3,
+     3,
+     3,
+     1
     ]
    },
    {

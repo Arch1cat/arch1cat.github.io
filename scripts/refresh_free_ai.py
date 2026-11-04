@@ -133,6 +133,7 @@ if changed:
     g("add", "-A", "data", "ai-matrix.html")
     cm = g("commit", "-m", f"chore: daily refresh {today}")
     if "nothing to commit" not in (cm.stdout + cm.stderr):
+        g("pull", "--rebase", "origin", "main")
         ps = g("push", "origin", "main")
         report.append("push: " + ((ps.stdout or ps.stderr).strip().splitlines()[-1] if (ps.stdout or ps.stderr).strip() else "?"))
     else:

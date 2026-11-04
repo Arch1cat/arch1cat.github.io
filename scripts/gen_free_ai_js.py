@@ -484,7 +484,16 @@ FAMILIES = [
         ],
     },
     {
-        "id": "space-bunny", "rank": 22, "name": "Space Bunny / Ox Alpha",
+        "id": "crouton-alpha", "rank": 22, "name": "Crouton Alpha (Stealth)",
+        "tasks": ["Кодинг", "Fast Agent", "Tools", "Vision", "Stealth"], "family": "Stealth",
+        "ctx": 1048576, "out": 943718, "reasoning": True,
+        "bench": {"swe": None, "he": None, "aider": None, "livecode": None, "arena": None, "arenaRank": None},
+        "routes": [
+            {"p": "OpenRouter", "id": "stealth/crouton-alpha", "status": "working", "type": "stealth", "src": "api"},
+        ],
+    },
+    {
+        "id": "space-bunny", "rank": 23, "name": "Space Bunny / Ox Alpha",
         "tasks": ["Stealth", "Experiment", "Fast Agent"], "family": "Stealth",
         "ctx": 262144, "out": 32768, "reasoning": True,
         "bench": {"swe": None, "he": None, "aider": None, "livecode": None, "arena": None, "arenaRank": None},
@@ -729,6 +738,7 @@ PLANS = [
 
 # ------------------------------------------------------------------ releases
 RELEASES = [
+    {"d": "2026-11-03", "n": "Crouton Alpha (Stealth)", "o": "Stealth (OpenRouter)", "ctx": "1M", "p": None, "k": "stealth, coding, reasoning, vision, audio, video, tools", "free": True},
     {"d": "2026-10-21", "n": "Recursive Flint 1.0", "o": "Recursive", "ctx": "256K", "p": "40B (2.5B active)", "k": "open, coding, reasoning, Apache 2.0", "free": True},
     {"d": "2026-10-19", "n": "MiniMax M3.1 Flash", "o": "MiniMax", "ctx": "1M", "p": None, "k": "reasoning, vision", "free": True},
     {"d": "2026-10-19", "n": "Clairic", "o": "Cloudflare", "ctx": "64K", "p": None, "k": "vision", "free": True},
@@ -764,6 +774,7 @@ RELEASES = [
 
 # ------------------------------------------------------------------ verified probes
 PROBES = [
+    {"m": "openrouter/stealth/crouton-alpha", "r": "ok", "t": "PROBE_OK", "n": "1M ctx / 944K out, omnimodal (text/image/video/audio/file), mandatory reasoning, ~71 tok/s."},
     {"m": "openrouter/recursive/flint-v1.0:free", "r": "ok", "t": "PROBE_OK", "n": "262K ctx / 236K out, 40B-A2.5B MoE, SWE-Verified 74.2%, ~108 tok/s."},
     {"m": "openrouter/cohere/north-mini-code:free", "r": "ok", "t": "PROBE_OK", "n": "256K ctx / 64K out."},
     {"m": "openrouter/thinkingmachines/inkling:free", "r": "ok", "t": "PROBE_OK", "n": "Нужен заголовок X-OpenRouter-Categories — Hermes шлёт его сам."},
@@ -1002,6 +1013,7 @@ DATA = {
             {"name": "Solar Mini4", "f": "solar-mini4", "v": [1, 1, 0, 0, 1, 1, 0, 0, 0]},
             {"name": "DuckDuckGo Cloudflare", "f": "ddgw-free", "v": [1, 2, 0, 0, 1, 2, 0, 1, 0]},
             {"name": "Claude Opus 5.5 / GPT-6.1 / Grok", "f": "claude-opus-5.5", "v": [3, 3, 2, 2, 3, 2, 0, 2, 3]},
+            {"name": "Crouton Alpha (Stealth)", "f": "crouton-alpha", "v": [2, 2, 1, 2, 3, 3, 3, 3, 1]},
             {"name": "Space Bunny / Ox Alpha", "f": "space-bunny", "v": [0, 2, 0, 0, 1, 2, 3, 1, 0]},
             {"name": "Beam / Big Pickle", "f": "beam-pickle", "v": [1, 2, 0, 0, 1, 1, 3, 1, 0]},
             {"name": "LLM7.io free subset", "f": "llm7-free", "v": [2, 2, 1, 0, 2, 2, 0, 1, 0]},
