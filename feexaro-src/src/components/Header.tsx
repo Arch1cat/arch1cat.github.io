@@ -33,27 +33,20 @@ export const Header: React.FC = () => {
       {/* Main Header Bar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-8 py-3.5 sm:py-4 flex items-center justify-between">
         
-        {/* Brand Logo (Feexaro Wrench-House Concept) */}
-        <a href="#hero" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 rounded-xl bg-feexaro-navy flex items-center justify-center relative overflow-hidden group-hover:bg-feexaro-navy-dark transition-colors shadow-sm">
-            {/* Feexaro House & Wrench Iconic SVG */}
-            <svg viewBox="0 0 32 32" className="w-6 h-6" fill="none">
-              {/* House roof & wall */}
-              <path d="M16 4 L4 14 L8 14 L8 26 L24 26 L24 14 L28 14 Z" fill="#ffffff" />
-              {/* Electric blue wrench foundation */}
-              <path d="M7 16 C7 13 11 11 14 14 L18 18 C20 20 20 23 18 25 C16 27 13 27 11 25 L7 21 Z" fill="#008cf0" opacity="0.9" />
-              <circle cx="16" cy="18" r="2.5" fill="#041f39" />
-            </svg>
-          </div>
-          <div className="flex flex-col">
-            <span className="text-xl sm:text-2xl font-heading font-extrabold text-feexaro-navy tracking-tight leading-none">
-              Feexaro<span className="text-feexaro-blue">.</span>
-            </span>
-            <span className="text-[9px] font-heading font-semibold text-feexaro-gray tracking-wider uppercase mt-0.5">
-              РемПобут Сервіс Харків
-            </span>
-          </div>
-        </a>
+          {/* Brand Logo (TechnoVovk Concept) */}
+          <a href="#hero" className="flex items-center gap-3 group">
+            <div className="w-11 h-11 rounded-xl bg-black border border-amber-500/30 flex items-center justify-center relative overflow-hidden group-hover:border-amber-400 transition-colors shadow-sm">
+              <img src="assets/images/technovovk-logo.jpg" alt="ТехноVovk" className="w-full h-full object-cover" />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-xl sm:text-2xl font-heading font-extrabold text-feexaro-navy tracking-tight leading-none">
+                ТЕХНО<span className="text-amber-600">VOVK</span>
+              </span>
+              <span className="text-[9px] font-heading font-semibold text-feexaro-gray tracking-wider uppercase mt-0.5">
+                Сервісний центр · Харків
+              </span>
+            </div>
+          </a>
 
         {/* Desktop Navigation Links */}
         <nav className="hidden lg:flex items-center gap-8 text-[13px] font-heading font-bold uppercase tracking-wider text-feexaro-navy">
@@ -68,9 +61,19 @@ export const Header: React.FC = () => {
 
         {/* Right CTA Actions */}
         <div className="hidden sm:flex items-center gap-5">
+          {/* Google Maps link */}
+          <a
+            href="https://maps.app.goo.gl/ZJYEg6JSiCwZZdsa7"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-500/10 text-amber-600 border border-amber-500/20 hover:bg-amber-500/20 text-xs font-heading font-bold transition-colors"
+          >
+            <span>📍 пр. Героїв Харкова, 35</span>
+          </a>
+
           {/* Phone Call link with avatar circle */}
           <a
-            href="tel:+380577502026"
+            href="tel:+380638812785"
             className="flex items-center gap-2.5 text-feexaro-navy hover:text-feexaro-blue transition-colors"
           >
             <div className="w-9 h-9 rounded-full bg-feexaro-surface flex items-center justify-center text-feexaro-navy">
@@ -78,7 +81,7 @@ export const Header: React.FC = () => {
             </div>
             <div className="flex flex-col text-left">
               <span className="text-[10px] font-heading font-semibold text-feexaro-gray uppercase leading-tight">Гаряча лінія Харків</span>
-              <span className="text-xs sm:text-sm font-heading font-bold text-feexaro-navy">+38 (057) 750-20-26</span>
+              <span className="text-xs sm:text-sm font-heading font-bold text-feexaro-navy">063 881 2785</span>
             </div>
           </a>
 

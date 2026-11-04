@@ -42,23 +42,20 @@ export const Footer: React.FC = () => {
           {/* Col 1: Brand & About */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-feexaro-blue flex items-center justify-center text-white font-bold">
-                <svg viewBox="0 0 32 32" className="w-5 h-5" fill="none">
-                  <path d="M16 4 L4 14 L8 14 L8 26 L24 26 L24 14 L28 14 Z" fill="#ffffff" />
-                  <circle cx="16" cy="18" r="3" fill="#041f39" />
-                </svg>
+              <div className="w-10 h-10 rounded-xl bg-black border border-amber-500/40 overflow-hidden flex items-center justify-center">
+                <img src="assets/images/technovovk-logo.jpg" alt="ТехноVovk" className="w-full h-full object-cover" />
               </div>
               <span className="text-2xl font-heading font-extrabold text-white tracking-tight">
-                Feexaro<span className="text-feexaro-blue">.</span>
+                ТЕХНО<span className="text-amber-500">VOVK</span>
               </span>
             </div>
 
             <p className="text-xs text-slate-300 leading-relaxed font-body">
-              Спеціалізований сервісний центр із ремонту пральних машин, холодильників No Frost, посудомийок та бойлерів. Чергові інженери у кожному районі Харкова.
+              Сервісний центр ТЕХНОVOVK — ми працюємо! Щодня допомагаємо харків’янам ремонтувати побутову техніку замість того, щоб одразу купувати нову. Пральні машини, мікрохвильовки, пилососи, кавомашини, мультиварки, духовки та холодильники.
             </p>
 
-            <div className="pt-2 text-xs font-heading font-semibold text-feexaro-blue flex items-center gap-1.5">
-              <span>Працюємо з 2009 року в Харкові</span>
+            <div className="pt-2 text-xs font-heading font-semibold text-amber-400 flex items-center gap-1.5">
+              <span>📍 м. Харків, проспект Героїв Харкова, 35</span>
             </div>
             <div className="pt-1">
               <a href="../fixora/" className="text-xs text-amber-300 hover:underline font-heading font-bold">
@@ -117,27 +114,32 @@ export const Footer: React.FC = () => {
               <div className="flex items-start gap-2.5">
                 <Phone className="w-4 h-4 text-feexaro-blue shrink-0 mt-0.5" />
                 <div>
-                  <a href="tel:+380577502026" className="font-heading font-bold text-white hover:text-feexaro-blue transition-colors block">
-                    +38 (057) 750-20-26
+                  <a href="tel:+380638812785" className="font-heading font-bold text-white hover:text-feexaro-blue transition-colors block">
+                    +38 (063) 881-27-85
                   </a>
-                  <a href="tel:+380508402026" className="text-slate-400 hover:text-white transition-colors block mt-0.5">
-                    +38 (050) 840-20-26
-                  </a>
+                  <span className="text-slate-400 text-[11px] block mt-0.5">
+                    Графік: Пн-Сб 09:00 – 17:00
+                  </span>
                 </div>
               </div>
 
               <div className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-feexaro-blue shrink-0" />
-                <a href="mailto:service@feexaro-kharkiv.ua" className="hover:text-white transition-colors">
-                  service@feexaro-kharkiv.ua
+                <a href="mailto:service@technovovk.kh.ua" className="hover:text-white transition-colors">
+                  service@technovovk.kh.ua
                 </a>
               </div>
 
               <div className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-feexaro-blue shrink-0 mt-0.5" />
-                <span>
-                  м. Харків, вул. Сумська, 102 (виїзд майстрів у всі райони міста)
-                </span>
+                <a 
+                  href="https://maps.app.goo.gl/ZJYEg6JSiCwZZdsa7" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="hover:text-amber-400 transition-colors"
+                >
+                  м. Харків, проспект Героїв Харкова, 35 (61050) ↗
+                </a>
               </div>
             </div>
           </div>

@@ -61,7 +61,7 @@ export const BookingForm: React.FC = () => {
               </div>
               <div>
                 <div className="text-slate-400 uppercase text-[10px]">Термінова гаряча лінія</div>
-                <div className="text-base font-bold text-white">+38 (044) 334-58-92</div>
+                <div className="text-base font-bold text-white">+38 (063) 881-27-85</div>
               </div>
             </div>
           </div>
