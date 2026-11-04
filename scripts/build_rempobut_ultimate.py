@@ -1,0 +1,1416 @@
+import os
+
+html_content = '''<!DOCTYPE html>
+<html lang="uk" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>ТехноVovk Харків — Сервісний центр ремонту побутової техніки (пр. Героїв Харкова, 35)</title>
+  <meta name="description" content="Сервісний центр ТЕХНОVOVK у Харкові. Професійний ремонт пральних машин, холодильників No Frost, варильних поверхонь, кавомашин, духовок, пилососів. Виїзд майстра за 45 хв: 063 881 2785. Адреса: пр. Героїв Харкова, 35." />
+  
+  <link rel="icon" href="assets/images/technovovk-logo.jpg" type="image/jpeg" />
+  
+  <!-- Premium Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #07090e;
+      --bg-surface: #0d121d;
+      --bg-surface-elevated: #131b2b;
+      --bg-card: #0f1624;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-accent: rgba(249, 115, 22, 0.35);
+      --orange: #f97316;
+      --orange-bright: #fb923c;
+      --orange-glow: rgba(249, 115, 22, 0.28);
+      --cyan: #38bdf8;
+      --emerald: #10b981;
+      --amber: #f59e0b;
+      --text-1: #f8fafc;
+      --text-2: #cbd5e1;
+      --text-muted: #8492a6;
+      --font-display: 'Space Grotesk', -apple-system, sans-serif;
+      --font-body: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-1);
+      font-family: var(--font-body);
+      line-height: 1.55;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 10% 10%, rgba(249, 115, 22, 0.07) 0%, transparent 45%),
+        radial-gradient(circle at 90% 40%, rgba(56, 189, 248, 0.05) 0%, transparent 45%),
+        linear-gradient(to bottom, rgba(7, 9, 14, 0.98), rgba(7, 9, 14, 1));
+      background-attachment: fixed;
+    }
+
+    h1, h2, h3, h4, .font-heading {
+      font-family: var(--font-display);
+      letter-spacing: -0.025em;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 13px 26px;
+      border-radius: 9999px;
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      border: 1px solid transparent;
+      outline: none;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #ea580c, #f97316);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(234, 88, 12, 0.35);
+    }
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #f97316, #fb923c);
+      box-shadow: 0 6px 30px rgba(249, 115, 22, 0.55);
+      transform: translateY(-2px);
+    }
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.12);
+      color: #fff;
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--orange);
+      color: var(--orange-bright);
+      transform: translateY(-2px);
+    }
+    .btn-sm {
+      padding: 8px 18px;
+      font-size: 11px;
+    }
+
+    /* Top Bar */
+    .top-bar {
+      background: #05070b;
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+      padding: 8px 0;
+      position: relative;
+      z-index: 60;
+    }
+    .top-bar-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    /* Main Navigation Header */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(7, 9, 14, 0.9);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 0;
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .brand-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+    }
+    .brand-emblem {
+      height: 48px;
+      width: 48px;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #000;
+      flex-shrink: 0;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .brand-emblem img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .brand-meta span:first-child {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+    .brand-meta span:last-child {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--orange);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-top: 3px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover {
+      color: #fff;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 26px;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    .card:hover {
+      border-color: rgba(249, 115, 22, 0.35);
+      background: var(--bg-surface-elevated);
+      transform: translateY(-3px);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: rgba(249, 115, 22, 0.1);
+      border: 1px solid rgba(249, 115, 22, 0.25);
+      color: var(--orange-bright);
+    }
+    .badge-cyan {
+      background: rgba(56, 189, 248, 0.1);
+      border-color: rgba(56, 189, 248, 0.25);
+      color: var(--cyan);
+    }
+    .badge-emerald {
+      background: rgba(16, 185, 129, 0.1);
+      border-color: rgba(16, 185, 129, 0.25);
+      color: var(--emerald);
+    }
+
+    /* Hero Section */
+    .hero-section {
+      padding: 70px 0 80px;
+      position: relative;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .hero-title {
+      font-size: clamp(34px, 5.2vw, 58px);
+      font-weight: 900;
+      line-height: 1.08;
+      margin: 18px 0;
+      color: #fff;
+    }
+    .hero-desc {
+      font-size: 16px;
+      color: var(--text-2);
+      line-height: 1.65;
+      margin-bottom: 28px;
+      max-width: 600px;
+    }
+
+    /* Hero Quick Estimate Widget */
+    .hero-widget {
+      background: rgba(15, 22, 36, 0.95);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(249, 115, 22, 0.35);
+      border-radius: 24px;
+      padding: 30px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+    }
+    .hw-tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+      scrollbar-width: none;
+    }
+    .hw-tabs::-webkit-scrollbar { display: none; }
+    .hw-tab {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      border-radius: 9999px;
+      padding: 8px 16px;
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .hw-tab:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+    }
+    .hw-tab.active {
+      background: var(--orange);
+      border-color: var(--orange);
+      color: #fff;
+      box-shadow: 0 0 16px var(--orange-glow);
+    }
+
+    .hw-symptoms {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .hw-chip {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 8px 12px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .hw-chip:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+    .hw-chip.active {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: var(--cyan);
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .hw-readout {
+      border-top: 1px solid var(--border);
+      padding-top: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .hw-price {
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--orange-bright);
+    }
+
+    /* Pillars */
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      margin: 40px 0 0;
+    }
+    .pillar-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 22px;
+    }
+    .pillar-num {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    /* Section Styles */
+    .section {
+      padding: 80px 0;
+      position: relative;
+    }
+    .section-title {
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+    .section-desc {
+      color: var(--text-muted);
+      font-size: 15px;
+      max-width: 600px;
+      line-height: 1.6;
+    }
+
+    /* Filter Catalog */
+    .filter-tabs {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      margin: 32px 0 24px;
+      scrollbar-width: none;
+    }
+    .filter-tab {
+      padding: 8px 18px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .filter-tab:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
+    .filter-tab.active {
+      background: var(--orange);
+      color: #fff;
+      border-color: var(--orange);
+      box-shadow: 0 0 16px var(--orange-glow);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 24px;
+    }
+    .service-img-wrap {
+      height: 190px;
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 18px;
+      position: relative;
+    }
+    .service-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .card:hover .service-img-wrap img {
+      transform: scale(1.05);
+    }
+    .service-badge-price {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      background: rgba(7, 9, 14, 0.9);
+      backdrop-filter: blur(8px);
+      padding: 5px 12px;
+      border-radius: 8px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--orange-bright);
+      border: 1px solid rgba(249, 115, 22, 0.3);
+    }
+
+    /* Calculator */
+    .calculator-box {
+      background: linear-gradient(145deg, #0e1524, #080c14);
+      border: 1px solid rgba(249, 115, 22, 0.25);
+      border-radius: 28px;
+      padding: 38px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 40px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-label {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .form-select, .form-input {
+      width: 100%;
+      background: #141c2c;
+      border: 1px solid var(--border);
+      color: #fff;
+      padding: 13px 16px;
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-select:focus, .form-input:focus {
+      border-color: var(--orange);
+    }
+
+    .calc-bill {
+      background: rgba(249, 115, 22, 0.04);
+      border: 1px solid rgba(249, 115, 22, 0.2);
+      border-radius: 20px;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .calc-big-price {
+      font-family: var(--font-display);
+      font-size: 48px;
+      font-weight: 900;
+      color: var(--orange-bright);
+      line-height: 1;
+      margin: 12px 0 6px;
+    }
+
+    /* Districts Grid */
+    .districts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 14px;
+      margin-top: 24px;
+    }
+    .district-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.2s;
+    }
+    .district-card:hover {
+      border-color: rgba(56, 189, 248, 0.4);
+      background: rgba(56, 189, 248, 0.04);
+      transform: translateX(4px);
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(12px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      padding: 20px;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-card {
+      background: #0f1624;
+      border: 1px solid rgba(249, 115, 22, 0.4);
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8);
+      border-radius: 24px;
+      width: 100%;
+      max-width: 500px;
+      padding: 36px;
+      position: relative;
+    }
+    .modal-close {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      background: rgba(255, 255, 255, 0.08);
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-close:hover { background: rgba(255, 255, 255, 0.2); }
+
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .calculator-box { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .section { padding: 50px 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Super Top Bar with Google Maps Link & Hours -->
+  <div class="top-bar">
+    <div class="container top-bar-inner">
+      <div style="display:flex; align-items:center; gap:20px; flex-wrap:wrap;">
+        <span style="display:flex; align-items:center; gap:8px;">
+          <span style="width:7px; height:7px; border-radius:50%; background:var(--emerald); display:inline-block; box-shadow:0 0 8px var(--emerald);"></span>
+          <strong>Пн–Сб 09:00 – 17:00</strong> (Виїзди майстрів до 20:00)
+        </span>
+        <a href="https://maps.app.goo.gl/ZJYEg6JSiCwZZdsa7" target="_blank" rel="noopener noreferrer" style="color:var(--text-muted); text-decoration:none; display:flex; align-items:center; gap:6px;">
+          <span style="color:var(--orange);">📍</span>
+          <span>проспект Героїв Харкова, 35, Харків (61050)</span>
+          <span style="color:var(--orange);">↗</span>
+        </a>
+      </div>
+
+      <div style="display:flex; align-items:center; gap:16px;">
+        <a href="../fixora/" style="color:var(--amber); text-decoration:none; font-family:var(--font-mono); font-size:11px;">Жовтий прототип (Fixora) →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="#hero" class="brand-link">
+        <div class="brand-emblem">
+          <img src="assets/images/technovovk-logo.jpg" alt="ТехноVovk Logo" />
+        </div>
+        <div class="brand-meta">
+          <span>ТЕХНО<b style="color:var(--orange);">VOVK</b></span>
+          <span>СЕРВІСНИЙ ЦЕНТР · ХАРКІВ</span>
+        </div>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#hero">Головна</a>
+        <a href="#services">Послуги та прайс</a>
+        <a href="#calculator">Калькулятор цін</a>
+        <a href="#districts">Райони Харкова</a>
+        <a href="#about">Чому ремонт?</a>
+        <a href="#reviews">Відгуки</a>
+      </nav>
+
+      <div style="display:flex; align-items:center; gap:16px;">
+        <a href="tel:+380638812785" style="display:flex; flex-direction:column; align-items:flex-end; text-decoration:none;">
+          <span style="font-size:10px; font-family:var(--font-mono); color:var(--orange); text-transform:uppercase;">Гаряча лінія</span>
+          <span style="font-family:var(--font-display); font-size:16px; font-weight:800; color:#fff;">063 881 2785</span>
+        </a>
+        <button onclick="openBookingModal()" class="btn btn-primary btn-sm">
+          <span>Викликати майстра ↗</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Epic Hero Section with Embedded Interactive Quick Estimator -->
+  <section id="hero" class="hero-section">
+    <div class="container">
+      <div class="hero-grid">
+        
+        <div>
+          <div class="badge">
+            <span>СЕРВІСНИЙ ЦЕНТР ТЕХНОVOVK · ХАРКІВ</span>
+          </div>
+
+          <h1 class="hero-title">
+            Ремонтуємо замість <br/>
+            <span style="background:linear-gradient(135deg, #fff 40%, var(--orange-bright) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">купівлі нової.</span>
+          </h1>
+
+          <p class="hero-desc">
+            Щодня допомагаємо харків’янам відновлювати пральні машини, холодильники No Frost, варильні поверхні, кавомашини, духовки, мікрохвильовки та електроніку. Оперативний виїзд інженера у будь-який район Харкова за 45 хвилин або прийом у нашій майстерні.
+          </p>
+
+          <div style="display:flex; gap:14px; flex-wrap:wrap;">
+            <button onclick="openBookingModal()" class="btn btn-primary">
+              <span>Викликати майстра додому ↗</span>
+            </button>
+            <a href="#calculator" class="btn btn-secondary">
+              <span>Розрахувати вартість ↓</span>
+            </a>
+          </div>
+
+          <!-- Value Pillars -->
+          <div class="pillars-grid">
+            <div class="pillar-card">
+              <div class="pillar-num" style="color:var(--orange-bright);">0 ₴</div>
+              <div style="font-weight:700; font-size:13px;">Безкоштовна діагностика</div>
+              <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">При виконанні ремонту техніки</div>
+            </div>
+            <div class="pillar-card">
+              <div class="pillar-num" style="color:var(--cyan);">45 хв</div>
+              <div style="font-weight:700; font-size:13px;">Швидкий виїзд інженера</div>
+              <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">Майстри у всіх районах міста</div>
+            </div>
+            <div class="pillar-card">
+              <div class="pillar-num" style="color:var(--emerald);">12 міс</div>
+              <div style="font-weight:700; font-size:13px;">Письмова гарантія</div>
+              <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">Офіційний акт із печаткою</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero Fast Estimator Widget (Interactive) -->
+        <div>
+          <div class="hero-widget">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+              <span class="badge badge-cyan">ЕКСПРЕС-ПІДБІР РОБІТ</span>
+              <span style="font-size:11px; font-family:var(--font-mono); color:var(--text-muted);">Харків онлайн</span>
+            </div>
+            
+            <div style="font-size:13px; font-weight:700; color:#fff; margin-bottom:10px;">Оберіть прилад:</div>
+            <div class="hw-tabs" id="hw-device-tabs">
+              <button class="hw-tab active" data-hw="washer">Пральна машина</button>
+              <button class="hw-tab" data-hw="fridge">Холодильник</button>
+              <button class="hw-tab" data-hw="coffee">Кавомашина</button>
+              <button class="hw-tab" data-hw="cooktop">Духовка / Плита</button>
+              <button class="hw-tab" data-hw="microwave">Мікрохвильовка</button>
+            </div>
+
+            <div style="font-size:13px; font-weight:700; color:#fff; margin-bottom:10px;">Симптом поломки:</div>
+            <div class="hw-symptoms" id="hw-symptoms-box">
+              <!-- Filled via JS -->
+            </div>
+
+            <div class="hw-readout">
+              <div>
+                <div style="font-size:11px; font-family:var(--font-mono); color:var(--text-muted);">Орієнтовна вартість робіт:</div>
+                <div class="hw-price" id="hw-price-display">від 350 ₴</div>
+              </div>
+              <button onclick="bookFromHeroWidget()" class="btn btn-primary btn-sm">
+                <span>Викликати на цей ремонт ↗</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Filterable Services Catalog -->
+  <section id="services" class="section" style="border-top:1px solid var(--border);">
+    <div class="container">
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:16px;">
+        <div>
+          <div class="badge">КАТАЛОГ ПОСЛУГ ТА ПРАЙС-ЛИСТ</div>
+          <h2 class="section-title">Яку техніку ми ремонтуємо у Харкові</h2>
+          <p class="section-desc">Оригінальні комплектуючі, точні діагностичні прилади та виїзд майстра з повним комплектом деталей.</p>
+        </div>
+        <div style="font-family:var(--font-mono); font-size:12px; color:var(--emerald);">
+          ● Понад 8 000 запчастин у наявності на складі
+        </div>
+      </div>
+
+      <!-- Category Filter Tabs -->
+      <div class="filter-tabs" id="catalog-filters">
+        <button class="filter-tab active" data-filter="all">Всі прилади (10)</button>
+        <button class="filter-tab" data-filter="large">Велика техніка</button>
+        <button class="filter-tab" data-filter="kitchen">Кухонна техніка</button>
+        <button class="filter-tab" data-filter="small">Дрібні прилади</button>
+        <button class="filter-tab" data-filter="electronics">Електронні модулі</button>
+      </div>
+
+      <!-- Services Grid -->
+      <div class="services-grid" id="services-grid">
+        <!-- Rendered via JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Advanced Interactive Repair Cost Calculator -->
+  <section id="calculator" class="section" style="background:rgba(255,255,255,0.015); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+    <div class="container">
+      <div style="text-align:center; max-width:680px; margin:0 auto 36px;">
+        <div class="badge badge-emerald" style="margin-bottom:12px;">ПРОЗОРА ЦІНА ДО ПОЧАТКУ РОБІТ</div>
+        <h2 class="section-title">Калькулятор вартості ремонту</h2>
+        <p class="section-desc" style="margin:0 auto;">Сконфігуруйте параметри несправності та зафіксуйте точну вартість робіт з офіційною гарантією 12 місяців.</p>
+      </div>
+
+      <div class="calculator-box">
+        <div>
+          <div class="form-group">
+            <label class="form-label">1. Тип несправного приладу</label>
+            <select id="calc-device" class="form-select" onchange="runCalculation()">
+              <option value="washer">Пральна або сушильна машина</option>
+              <option value="fridge">Холодильник / Морозилка No Frost</option>
+              <option value="dishwasher">Посудомийна машина</option>
+              <option value="coffee">Кавомашина (зернова / капсульна)</option>
+              <option value="microwave">Мікрохвильова піч (НВЧ)</option>
+              <option value="cooktop">Духова шафа / Варильна плита</option>
+              <option value="boiler">Бойлер / Водонагрівач</option>
+              <option value="vacuum">Пилосос / Робот-пилосос</option>
+              <option value="board">Електронна плата керування</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">2. Категорія складності робіт</label>
+            <select id="calc-complexity" class="form-select" onchange="runCalculation()">
+              <option value="light">Базовий: заміна датчика, чистка, патрубок, замок</option>
+              <option value="medium" selected>Вузловий: заміна помпи, ТЕНу, клапана, термостата</option>
+              <option value="heavy">Капітальний: заміна підшипників, компресора, відновлення плати</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">3. Клас комплектуючих</label>
+            <select id="calc-parts" class="form-select" onchange="runCalculation()">
+              <option value="oem">Оригінальні деталі заводу виробника (OEM)</option>
+              <option value="analog">Сертифікований європейський аналог (Економ)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">4. Терміновість виїзду</label>
+            <select id="calc-urgency" class="form-select" onchange="runCalculation()">
+              <option value="std">Стандартний візит на зручний час</option>
+              <option value="urgent">Терміновий аварійний виїзд (до 45 хв)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Calculated Summary Box -->
+        <div class="calc-bill">
+          <div>
+            <span class="badge badge-cyan">РОЗРАХУНОК ТЕХНОВОВК</span>
+            <div style="font-size:12px; font-family:var(--font-mono); color:var(--text-muted); margin-top:10px;">Орієнтовна повна вартість:</div>
+            <div class="calc-big-price" id="calc-price-result">~650 ₴</div>
+
+            <div style="border-top:1px solid rgba(255,255,255,0.08); padding-top:16px; margin-top:16px; font-size:13px; line-height:1.8;">
+              <div style="display:flex; justify-content:space-between;">
+                <span style="color:var(--text-muted);">Робота інженера:</span>
+                <span id="bill-labor" style="font-weight:700;">350 ₴</span>
+              </div>
+              <div style="display:flex; justify-content:space-between;">
+                <span style="color:var(--text-muted);">Комплектуючі та вузли:</span>
+                <span id="bill-parts" style="font-weight:700;">від 300 ₴</span>
+              </div>
+              <div style="display:flex; justify-content:space-between;">
+                <span style="color:var(--text-muted);">Діагностика:</span>
+                <span style="color:var(--emerald); font-weight:700;">0 ₴ (БЕЗКОШТОВНО)</span>
+              </div>
+              <div style="display:flex; justify-content:space-between;">
+                <span style="color:var(--text-muted);">Письмова гарантія:</span>
+                <span style="font-weight:700;">12 місяців на бланку</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:24px;">
+            <button onclick="bookCalculatedQuote()" class="btn btn-primary" style="width:100%;">
+              <span>Зафіксувати ціну та викликати майстра ↗</span>
+            </button>
+            <div style="text-align:center; font-size:11px; color:var(--text-muted); margin-top:8px;">
+              Жодних непередбачених доплат після завершення ремонту
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Operational Districts in Kharkiv -->
+  <section id="districts" class="section">
+    <div class="container">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center;">
+        <div>
+          <div class="badge badge-cyan" style="margin-bottom:12px;">ПОКРИТТЯ ПО ХАРКОВУ</div>
+          <h2 class="section-title">Чергування майстрів у кожному районі міста</h2>
+          <p style="color:var(--text-2); font-size:15px; line-height:1.6; margin-bottom:20px;">
+            Головна майстерня розташована за адресою: <strong>проспект Героїв Харкова, 35 (61050)</strong>. Мобільні екіпажі чергують по ключових районах міста, що дозволяє інженеру прибувати за 30-45 хвилин після дзвінка.
+          </p>
+
+          <div class="districts-grid">
+            <div class="district-card">
+              <div><b>Салтівка</b><div style="font-size:11px; color:var(--text-muted);">Героїв Праці, Валентинівська, 602</div></div>
+              <span class="badge badge-emerald">~35 хв</span>
+            </div>
+            <div class="district-card">
+              <div><b>Олексіївка</b><div style="font-size:11px; color:var(--text-muted);">пр. Перемоги, Клочківська</div></div>
+              <span class="badge badge-emerald">~40 хв</span>
+            </div>
+            <div class="district-card">
+              <div><b>Центр & Шевченківський</b><div style="font-size:11px; color:var(--text-muted);">вул. Сумська, пр. Науки</div></div>
+              <span class="badge badge-emerald">~25 хв</span>
+            </div>
+            <div class="district-card">
+              <div><b>Холодна Гора & Баварія</b><div style="font-size:11px; color:var(--text-muted);">Полтавський Шлях</div></div>
+              <span class="badge badge-emerald">~35 хв</span>
+            </div>
+            <div class="district-card">
+              <div><b>Нові Будинки & ХТЗ</b><div style="font-size:11px; color:var(--text-muted);">пр. Героїв Харкова, Немишля</div></div>
+              <span class="badge badge-emerald">~25 хв</span>
+            </div>
+            <div class="district-card">
+              <div><b>Передмістя</b><div style="font-size:11px; color:var(--text-muted);">Пісочин, Дергачі, Покотилівка</div></div>
+              <span class="badge badge-cyan">~50 хв</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Google Maps Workshop Card -->
+        <div class="card" style="border-color:rgba(249,115,22,0.3); padding:32px;">
+          <div style="display:flex; align-items:center; gap:16px; margin-bottom:20px;">
+            <div style="width:52px; height:52px; border-radius:14px; background:#000; border:1px solid rgba(255,255,255,0.15); overflow:hidden; flex-shrink:0;">
+              <img src="assets/images/technovovk-logo.jpg" alt="ТехноVovk" style="width:100%; height:100%; object-fit:cover;" />
+            </div>
+            <div>
+              <h3 style="font-size:20px; font-weight:800;">Сервісний центр ТЕХНОVOVK</h3>
+              <div style="font-size:12px; color:var(--emerald); font-weight:700;">★ 5.0 на Google Maps · Офіційна точка</div>
+            </div>
+          </div>
+
+          <div style="background:rgba(255,255,255,0.03); border-radius:14px; padding:18px; margin-bottom:20px; font-size:13px; line-height:1.7;">
+            <div>📍 <strong>Адреса:</strong> проспект Героїв Харкова, 35, Харків (61050)</div>
+            <div>📞 <strong>Телефон:</strong> 063 881 2785</div>
+            <div>🕒 <strong>Графік роботи:</strong> Понеділок – Субота 09:00 – 17:00</div>
+            <div>🏠 <strong>Послуга:</strong> Терміновий виїзд додому + прийом у майстерні</div>
+          </div>
+
+          <a href="https://maps.app.goo.gl/ZJYEg6JSiCwZZdsa7" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="width:100%;">
+            <span>Відкрити точку на Google Maps ↗</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Philosophy: Why Repair Instead of Buying New -->
+  <section id="about" class="section" style="border-top:1px solid var(--border);">
+    <div class="container">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center;">
+        <div style="border-radius:24px; overflow:hidden; border:1px solid var(--border); max-height:460px;">
+          <img src="assets/images/technician-about.jpg" alt="Майстер ТехноVovk" style="width:100%; height:460px; object-fit:cover; display:block;" />
+        </div>
+
+        <div>
+          <div class="badge" style="margin-bottom:12px;">ФІЛОСОФІЯ СЕРВІСУ ТЕХНОВОВК</div>
+          <h2 class="section-title">Чому ремонт розумніший за купівлю нового приладу?</h2>
+          <p style="color:var(--text-2); font-size:15px; line-height:1.65; margin-bottom:18px;">
+            Сучасні холодильники, пралки та духові шафи побудовані з надійних модулів. Коли техніка раптово зупиняється, у 92% випадків з ладу виходить лише один зношений вузол: ТЕН, зливна помпа, пускове реле чи датчик температури.
+          </p>
+          <p style="color:var(--text-muted); font-size:14px; line-height:1.65; margin-bottom:24px;">
+            Заміна цієї конкретної деталі повертає приладу заводський робочий ресурс на роки наперед — за ціну, що складає лише 10-15% вартості нової техніки в магазині. Ми ніколи не нав'язуємо зайвих послуг: проводимо чесну діагностику та узгоджуємо прайс перед початком розбирання.
+          </p>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+            <div class="card" style="padding:18px;">
+              <div style="font-size:22px; font-weight:800; color:var(--orange-bright);">01</div>
+              <div style="font-weight:700; font-size:13px; margin:4px 0;">Без переплат</div>
+              <div style="font-size:11px; color:var(--text-muted);">Фіксуємо вартість робіт згідно з прайс-листом.</div>
+            </div>
+            <div class="card" style="padding:18px;">
+              <div style="font-size:22px; font-weight:800; color:var(--cyan);">02</div>
+              <div style="font-weight:700; font-size:13px; margin:4px 0;">Гарантія до 12 міс</div>
+              <div style="font-size:11px; color:var(--text-muted);">Письмовий гарантійний акт із печаткою майстерні.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Real Google Maps Reviews -->
+  <section id="reviews" class="section" style="background:rgba(255,255,255,0.015); border-top:1px solid var(--border);">
+    <div class="container">
+      <div style="text-align:center; max-width:600px; margin:0 auto 36px;">
+        <div class="badge badge-emerald" style="margin-bottom:10px;">ВІДГУКИ КЛІЄНТІВ У ХАРКОВІ</div>
+        <h2 class="section-title">Що кажуть про роботу ТехноVovk</h2>
+        <p class="section-desc" style="margin:0 auto;">Реальні відгуки харків'ян з Google Maps, чию техніку ми врятували від смітника.</p>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:20px;">
+        <div class="card">
+          <div style="color:var(--amber); margin-bottom:8px; font-size:14px;">★★★★★</div>
+          <p style="font-size:14px; color:#e2e8f0; line-height:1.6; margin-bottom:16px;">
+            «Пральна машина LG перестала зливати воду, зависла з повним баком якраз перед вихідними. Майстер приїхав через 40 хвилин на Салтівку, вилучив монету з крильчатки помпи і все полагодив. Швидко, чесно і за нормальною ціною. Дякую за роботу!»
+          </p>
+          <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border); padding-top:12px;">
+            <div><b>Олександр М.</b><div style="font-size:11px; color:var(--text-muted);">вул. Валентинівська, Салтівка</div></div>
+            <span class="badge badge-emerald">Ремонт помпи</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div style="color:var(--amber); margin-bottom:8px; font-size:14px;">★★★★★</div>
+          <p style="font-size:14px; color:#e2e8f0; line-height:1.6; margin-bottom:16px;">
+            «Холодильник Samsung No Frost перестав охолоджувати верхню камеру, хоча морозилка працювала. Інженер ТехноVovk оперативно приїхав на пр. Героїв Харкова, перевірив датчик відтайки, замінив за годину. Ціна точна за прайсом, надали талон на 12 місяців!»
+          </p>
+          <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border); padding-top:12px;">
+            <div><b>Вікторія Д.</b><div style="font-size:11px; color:var(--text-muted);">пр. Героїв Харкова</div></div>
+            <span class="badge badge-cyan">Датчик No Frost</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div style="color:var(--amber); margin-bottom:8px; font-size:14px;">★★★★★</div>
+          <p style="font-size:14px; color:#e2e8f0; line-height:1.6; margin-bottom:16px;">
+            «Здали кавомашину DeLonghi — перестала молоти зерна і протікала вода в піддон. Зробили повне ТО, декальцинацію та заміну кілець за 1 день. Працює як нова з магазину, кава знову ідеальна!»
+          </p>
+          <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border); padding-top:12px;">
+            <div><b>Сергій К.</b><div style="font-size:11px; color:var(--text-muted);">Олексіївка</div></div>
+            <span class="badge badge-emerald">ТО Кавомашини</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="contact" style="background:#05070c; border-top:1px solid var(--border); padding:60px 0 30px;">
+    <div class="container">
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:40px; margin-bottom:40px;">
+        
+        <div>
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
+            <div style="width:40px; height:40px; border-radius:10px; overflow:hidden; background:#000; border:1px solid rgba(255,255,255,0.15);">
+              <img src="assets/images/technovovk-logo.jpg" alt="" style="width:100%; height:100%; object-fit:cover;" />
+            </div>
+            <b style="font-family:var(--font-display); font-size:20px;">ТЕХНО<span style="color:var(--orange);">VOVK</span></b>
+          </div>
+          <p style="font-size:13px; color:var(--text-muted); line-height:1.6; margin-bottom:16px;">
+            Сервісний центр ремонту побутової техніки в Харкові. Офіційна письмова гарантія, сертифіковані інженери та виїзд майстра в усі райони міста.
+          </p>
+          <div style="font-family:var(--font-mono); font-size:12px; color:var(--emerald);">
+            ● Працюємо: Пн–Сб 09:00 – 17:00
+          </div>
+        </div>
+
+        <div>
+          <h4 style="font-size:13px; text-transform:uppercase; font-family:var(--font-mono); color:var(--orange-bright); margin-bottom:16px;">Контакти майстерні</h4>
+          <div style="font-size:13px; color:#cbd5e1; line-height:1.9;">
+            <div>📍 <strong>Адреса:</strong> проспект Героїв Харкова, 35 (61050)</div>
+            <div>📞 <strong>Телефон:</strong> <a href="tel:+380638812785" style="color:#fff; text-decoration:none; font-weight:700;">063 881 2785</a></div>
+            <div>🕒 <strong>Режим роботи:</strong> 09:00 – 17:00 (Виїзди до 20:00)</div>
+            <div>✉️ <strong>E-mail:</strong> service@technovovk.kh.ua</div>
+          </div>
+        </div>
+
+        <div>
+          <h4 style="font-size:13px; text-transform:uppercase; font-family:var(--font-mono); color:var(--cyan); margin-bottom:16px;">Швидкі посилання</h4>
+          <div style="display:flex; flex-direction:column; gap:8px; font-size:13px;">
+            <a href="#services" style="color:var(--text-muted); text-decoration:none;">Каталог техніки з цінами</a>
+            <a href="#calculator" style="color:var(--text-muted); text-decoration:none;">Онлайн-калькулятор ремонту</a>
+            <a href="#districts" style="color:var(--text-muted); text-decoration:none;">Райони виїзду інженерів</a>
+            <a href="https://maps.app.goo.gl/ZJYEg6JSiCwZZdsa7" target="_blank" rel="noopener noreferrer" style="color:var(--text-muted); text-decoration:none;">Точка на Google Maps ↗</a>
+            <a href="../fixora/" style="color:var(--amber); text-decoration:none;">Жовтий нео-бруталістський прототип →</a>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="border-top:1px solid var(--border); padding-top:20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; font-size:12px; color:var(--text-muted); font-family:var(--font-mono);">
+        <div>© 2026 Сервісний центр ТЕХНОVOVK. Всі права захищено. м. Харків, Україна.</div>
+        <div>Офіційний гарантійний талон на всі види робіт</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Booking Modal Window -->
+  <div class="modal-overlay" id="booking-modal">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeBookingModal()">✕</button>
+
+      <div style="margin-bottom:20px;">
+        <span class="badge badge-emerald">ОНЛАЙН ВИКЛИК МАЙСТРА</span>
+        <h3 style="font-size:22px; font-weight:800; margin-top:8px;">Заявка на виїзд інженера</h3>
+        <p style="font-size:12px; color:var(--text-muted); margin-top:4px;">Диспетчер зв'яжеться з вами протягом 3-5 хвилин для узгодження часу візиту.</p>
+      </div>
+
+      <form id="modal-form" onsubmit="handleFormSubmit(event)">
+        <div class="form-group">
+          <label class="form-label">Ваше ім'я</label>
+          <input type="text" id="m-name" class="form-input" placeholder="Олександр або Наталія" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Номер телефону</label>
+          <input type="tel" id="m-phone" class="form-input" placeholder="063 881 2785 або +380..." required />
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:14px;">
+          <div>
+            <label class="form-label">Тип техніки</label>
+            <select id="m-device" class="form-select">
+              <option>Пральна машина</option>
+              <option>Холодильник</option>
+              <option>Кавомашина</option>
+              <option>Мікрохвильовка</option>
+              <option>Пилосос</option>
+              <option>Мультиварка</option>
+              <option>Духова шафа / Плита</option>
+              <option>Бойлер</option>
+              <option>Електронна плата</option>
+            </select>
+          </div>
+          <div>
+            <label class="form-label">Район Харкова</label>
+            <select id="m-district" class="form-select">
+              <option>Салтівка</option>
+              <option>Олексіївка</option>
+              <option>Центр / Шевченківський</option>
+              <option>Холодна Гора</option>
+              <option>Павлове Поле</option>
+              <option>Нові Будинки / ХТЗ</option>
+              <option>Передмістя</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom:20px;">
+          <label class="form-label">Що саме трапилося? (за бажанням)</label>
+          <input type="text" id="m-issue" class="form-input" placeholder="Наприклад: не зливає воду, помилка на табло..." />
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width:100%; padding:14px;">
+          <span>Підтвердити виклик майстра ↗</span>
+        </button>
+
+        <div id="modal-success" style="display:none; text-align:center; padding:16px; margin-top:14px; background:rgba(16,185,129,0.15); border:1px solid var(--emerald); border-radius:12px; color:#fff; font-size:13px; font-weight:700;">
+          ✓ Заявку успішно прийнято! Диспетчер зв'язується з вами.
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Interactive JavaScript Engine -->
+  <script>
+    // 1. Services Catalog Data
+    const SERVICES = [
+      {
+        id: 'washer',
+        category: 'large',
+        title: 'Ремонт пральних та сушильних машин',
+        desc: 'Заміна підшипників барабана, зливних помп, нагрівальних ТЕНів, амортизаторів, ліквідація сильного шуму та вібрації.',
+        price: 'від 350 ₴',
+        time: '30-60 хв',
+        image: 'assets/images/washer-modern.jpg',
+        tags: ['Bosch', 'Samsung', 'LG', 'Whirlpool', 'Indesit']
+      },
+      {
+        id: 'fridge',
+        category: 'large',
+        title: 'Ремонт холодильників No Frost',
+        desc: 'Усунення витоків фреону R600a, заміна інверторних компресорів, датчиків відтайки, вентиляторів та блоків заслінок.',
+        price: 'від 450 ₴',
+        time: '45-90 хв',
+        image: 'assets/images/fridge-modern.jpg',
+        tags: ['Samsung', 'Liebherr', 'Bosch', 'Beko', 'Gorenje']
+      },
+      {
+        id: 'coffee',
+        category: 'small',
+        title: 'Ремонт та сервіс кавомашин',
+        desc: 'Професійна декальцинація, заміна кілець ущільнення, перебирання заварювального вузла, налаштування помолу та тиску.',
+        price: 'від 350 ₴',
+        time: '1-2 дні',
+        image: 'assets/images/coffee-modern.jpg',
+        tags: ['DeLonghi', 'Philips', 'Saeco', 'Jura', 'Krups']
+      },
+      {
+        id: 'microwave',
+        category: 'kitchen',
+        title: 'Ремонт мікрохвильових печей (НВЧ)',
+        desc: 'Заміна магнетрона, високовольтного конденсатора, діода, слюдяної пластини, відновлення сенсорних кнопок.',
+        price: 'від 250 ₴',
+        time: '30-45 хв',
+        image: 'assets/images/microwave-modern.jpg',
+        tags: ['Samsung', 'LG', 'Panasonic', 'Gorenje', 'Whirlpool']
+      },
+      {
+        id: 'vacuum',
+        category: 'small',
+        title: 'Ремонт пилососів та роботів-пилососів',
+        desc: 'Заміна турбіни двигуна, лідара, акумуляторів 18650, очищення плати після вологи, відновлення датчиків падіння.',
+        price: 'від 280 ₴',
+        time: '1 день',
+        image: 'assets/images/vacuum-modern.jpg',
+        tags: ['Xiaomi', 'Roborock', 'Dyson', 'Samsung', 'Rowenta']
+      },
+      {
+        id: 'multicooker',
+        category: 'kitchen',
+        title: 'Ремонт мультиварок та кухонних комбайнів',
+        desc: 'Заміна термозапобіжників, нагрівального елемента, клапанів пари, термодатчиків та блоків живлення.',
+        price: 'від 220 ₴',
+        time: '40 хв',
+        image: 'assets/images/multicooker-modern.jpg',
+        tags: ['Redmond', 'Moulinex', 'Philips', 'Tefal']
+      },
+      {
+        id: 'dishwasher',
+        category: 'large',
+        title: 'Ремонт посудомийних машин',
+        desc: 'Ліквідація протікань захисту Aquastop (E15), ремонт циркуляційної помпи, нагрівального проточного блоку.',
+        price: 'від 400 ₴',
+        time: '1 година',
+        image: 'assets/images/dishwasher-modern.jpg',
+        tags: ['Bosch', 'Siemens', 'Electrolux', 'Beko', 'Indesit']
+      },
+      {
+        id: 'cooktop',
+        category: 'kitchen',
+        title: 'Ремонт духових шаф та індукційних плит',
+        desc: 'Заміна конфорок, силових ключів IGBT, перемикачів режимів конвекції, датчиків температури та жаростійкого скла.',
+        price: 'від 380 ₴',
+        time: '1 година',
+        image: 'assets/images/cooktop-modern.jpg',
+        tags: ['Electrolux', 'Bosch', 'Gorenje', 'Hansa', 'Zanussi']
+      },
+      {
+        id: 'boiler',
+        category: 'large',
+        title: 'Чистка та ремонт бойлерів',
+        desc: 'Очищення бака від вапняного нальоту, заміна магнієвого анода, «сухих» та «мокрих» ТЕНів, запобіжних клапанів.',
+        price: 'від 300 ₴',
+        time: '1 година',
+        image: 'assets/images/boiler-modern.jpg',
+        tags: ['Atlantic', 'Ariston', 'Tesy', 'Garanterm', 'Thermex']
+      },
+      {
+        id: 'board',
+        category: 'electronics',
+        title: 'Ремонт електронних плат керування',
+        desc: 'Компонентний ремонт плат, перепрошивка процесорів, заміна симісторів, конденсаторів та силових драйверів інвертора.',
+        price: 'від 450 ₴',
+        time: '1 день',
+        image: 'assets/images/board-modern.jpg',
+        tags: ['Всі бренди', 'Діагностика осцилографом']
+      }
+    ];
+
+    // 2. Hero Quick Estimator Symptoms
+    const HERO_ESTIMATE_DATA = {
+      washer: [
+        { label: 'Гримить на віджимі', price: 'від 650 ₴' },
+        { label: 'Не зливає воду', price: 'від 350 ₴' },
+        { label: 'Не гріє воду', price: 'від 450 ₴' },
+        { label: 'Блимає помилка', price: 'від 400 ₴' }
+      ],
+      fridge: [
+        { label: 'Не морозить камера', price: 'від 550 ₴' },
+        { label: 'Працює без зупинки', price: 'від 650 ₴' },
+        { label: 'Намерзає лід No Frost', price: 'від 450 ₴' },
+        { label: 'Клацає і гасне', price: 'від 450 ₴' }
+      ],
+      coffee: [
+        { label: 'Не меле зерна', price: 'від 380 ₴' },
+        { label: 'Вода в піддоні', price: 'від 300 ₴' },
+        { label: 'Не тече кава', price: 'від 350 ₴' }
+      ],
+      cooktop: [
+        { label: 'Не гріє конфорка', price: 'від 380 ₴' },
+        { label: 'Вибиває автомат', price: 'від 400 ₴' },
+        { label: 'Не працює сенсор', price: 'від 450 ₴' }
+      ],
+      microwave: [
+        { label: 'Крутить, але не гріє', price: 'від 300 ₴' },
+        { label: 'Іскрить всередині', price: 'від 250 ₴' },
+        { label: 'Не крутить тарілку', price: 'від 220 ₴' }
+      ]
+    };
+
+    let activeHwKey = 'washer';
+    let activeHwSymptom = HERO_ESTIMATE_DATA.washer[0];
+
+    function initHeroWidget() {
+      const tabs = document.querySelectorAll('#hw-device-tabs .hw-tab');
+      tabs.forEach(tab => {
+        tab.onclick = () => {
+          tabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          activeHwKey = tab.dataset.hw;
+          renderHeroSymptoms();
+        };
+      });
+      renderHeroSymptoms();
+    }
+
+    function renderHeroSymptoms() {
+      const box = document.getElementById('hw-symptoms-box');
+      box.innerHTML = '';
+      const list = HERO_ESTIMATE_DATA[activeHwKey] || HERO_ESTIMATE_DATA.washer;
+      activeHwSymptom = list[0];
+
+      list.forEach((item, idx) => {
+        const chip = document.createElement('button');
+        chip.className = `hw-chip ${idx === 0 ? 'active' : ''}`;
+        chip.textContent = item.label;
+        chip.onclick = () => {
+          box.querySelectorAll('.hw-chip').forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          activeHwSymptom = item;
+          document.getElementById('hw-price-display').textContent = item.price;
+        };
+        box.appendChild(chip);
+      });
+
+      document.getElementById('hw-price-display').textContent = activeHwSymptom.price;
+    }
+
+    function bookFromHeroWidget() {
+      const devName = document.querySelector('#hw-device-tabs .hw-tab.active').textContent;
+      openBookingModal(`${devName}: ${activeHwSymptom.label} (${activeHwSymptom.price})`);
+    }
+
+    // 3. Render Services Catalog
+    function renderServices(filter = 'all') {
+      const grid = document.getElementById('services-grid');
+      grid.innerHTML = '';
+
+      const items = filter === 'all' 
+        ? SERVICES 
+        : SERVICES.filter(s => s.category === filter);
+
+      items.forEach(s => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <div class="service-img-wrap">
+            <img src="${s.image}" alt="${s.title}" />
+            <div class="service-badge-price">${s.price}</div>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <span class="badge" style="font-size:10px;">⏱️ ${s.time}</span>
+            <span style="font-size:11px; color:var(--emerald); font-weight:700;">✓ Деталі на складі</span>
+          </div>
+          <h3 style="font-size:18px; font-weight:800; margin-bottom:8px; line-height:1.3;">${s.title}</h3>
+          <p style="font-size:13px; color:var(--text-muted); line-height:1.6; margin-bottom:16px;">${s.desc}</p>
+          <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:20px;">
+            ${s.tags.map(t => `<span style="font-size:11px; padding:3px 8px; border-radius:6px; background:rgba(255,255,255,0.04); color:#cbd5e1;">${t}</span>`).join('')}
+          </div>
+          <button onclick="openBookingModal('${s.title}')" class="btn btn-secondary btn-sm" style="width:100%; justify-content:space-between;">
+            <span>Замовити ремонт</span>
+            <span>↗</span>
+          </button>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    document.querySelectorAll('#catalog-filters .filter-tab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#catalog-filters .filter-tab').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderServices(btn.dataset.filter);
+      });
+    });
+
+    // 4. Advanced Calculator Logic
+    function runCalculation() {
+      const dev = document.getElementById('calc-device').value;
+      const comp = document.getElementById('calc-complexity').value;
+      const parts = document.getElementById('calc-parts').value;
+      const urg = document.getElementById('calc-urgency').value;
+
+      let baseLabor = 350;
+      let baseParts = 300;
+
+      if (dev === 'fridge' || dev === 'dishwasher') baseLabor = 450;
+      if (dev === 'microwave') { baseLabor = 250; baseParts = 200; }
+      if (dev === 'boiler') { baseLabor = 300; baseParts = 350; }
+      if (dev === 'board') { baseLabor = 500; baseParts = 350; }
+
+      if (comp === 'light') { baseLabor *= 0.8; baseParts = 150; }
+      if (comp === 'heavy') { baseLabor *= 1.6; baseParts = 800; }
+
+      if (parts === 'oem') baseParts *= 1.35;
+      if (urg === 'urgent') baseLabor += 150;
+
+      const total = Math.round(baseLabor + baseParts);
+      document.getElementById('calc-price-result').textContent = `~${total} ₴`;
+      document.getElementById('bill-labor').textContent = `${Math.round(baseLabor)} ₴`;
+      document.getElementById('bill-parts').textContent = `від ${Math.round(baseParts)} ₴`;
+    }
+
+    function bookCalculatedQuote() {
+      const dev = document.getElementById('calc-device').selectedOptions[0].text;
+      const price = document.getElementById('calc-price-result').textContent;
+      openBookingModal(`${dev} (прораховано ${price})`);
+    }
+
+    // 5. Booking Modal Controls
+    function openBookingModal(prefillIssue = '') {
+      const m = document.getElementById('booking-modal');
+      m.classList.add('active');
+      if (prefillIssue) {
+        document.getElementById('m-issue').value = prefillIssue;
+      }
+    }
+
+    function closeBookingModal() {
+      document.getElementById('booking-modal').classList.remove('active');
+      document.getElementById('modal-success').style.display = 'none';
+    }
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      const s = document.getElementById('modal-success');
+      s.style.display = 'block';
+      setTimeout(() => {
+        closeBookingModal();
+        e.target.reset();
+      }, 2500);
+    }
+
+    // Init on Load
+    document.addEventListener('DOMContentLoaded', () => {
+      initHeroWidget();
+      renderServices('all');
+      runCalculation();
+    });
+  </script>
+
+</body>
+</html>
+'''
+
+with open('rempobut/index.html', 'w', encoding='utf-8') as f:
+    f.write(html_content)
+
+print('rempobut/index.html written with complete ultimate design!')
