@@ -1,5 +1,5 @@
 {
- "snapshot": "2026-11-03",
+ "snapshot": "2026-11-04",
  "openrouter": [
   {
    "id": "cohere/north-mini-code:free",
@@ -100,6 +100,13 @@
    "name": "Recursive: Flint (free)"
   },
   {
+   "id": "stealth/crouton-alpha",
+   "ctx": 1048576,
+   "out": 943718,
+   "tools": true,
+   "name": "Crouton Alpha"
+  },
+  {
    "id": "thinkingmachines/inkling-small:free",
    "ctx": 1048576,
    "out": 262144,
@@ -145,7 +152,7 @@
   }
  ],
  "omniroute": {
-  "total": 1295,
+  "total": 1294,
   "prefixes": {
    "auto": 45,
    "agy": 25,
@@ -161,7 +168,7 @@
    "zc": 14,
    "cxa": 45,
    "unc": 1,
-   "aihorde": 168,
+   "aihorde": 167,
    "openrouter": 737
   },
   "noauth_free": [
