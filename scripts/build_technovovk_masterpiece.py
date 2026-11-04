@@ -17,15 +17,15 @@ html_code = '''<!DOCTYPE html>
 
   <style>
     :root {
-      --bg: #07080c;
-      --bg-surface: #0e1017;
-      --bg-elevated: #151824;
-      --bg-card: #10131d;
+      --bg: #06070a;
+      --bg-surface: #0c0e15;
+      --bg-elevated: #121520;
+      --bg-card: #0f121c;
       --border: rgba(255, 255, 255, 0.08);
-      --border-accent: rgba(255, 107, 0, 0.4);
-      --orange: #ff6b00;
-      --orange-bright: #ff8522;
-      --orange-glow: rgba(255, 107, 0, 0.35);
+      --border-accent: rgba(255, 102, 0, 0.45);
+      --orange: #ff6600;
+      --orange-bright: #ff7e1e;
+      --orange-glow: rgba(255, 102, 0, 0.4);
       --silver: #e2e8f0;
       --muted: #8e9bb0;
       --emerald: #10b981;
@@ -43,9 +43,9 @@ html_code = '''<!DOCTYPE html>
       line-height: 1.55;
       overflow-x: hidden;
       background-image: 
-        radial-gradient(circle at 15% 15%, rgba(255, 107, 0, 0.09) 0%, transparent 45%),
-        radial-gradient(circle at 85% 35%, rgba(255, 133, 34, 0.06) 0%, transparent 50%),
-        linear-gradient(to bottom, #07080c, #07080c);
+        radial-gradient(circle at 15% 15%, rgba(255, 102, 0, 0.1) 0%, transparent 45%),
+        radial-gradient(circle at 85% 35%, rgba(255, 126, 30, 0.07) 0%, transparent 50%),
+        linear-gradient(to bottom, #06070a, #06070a);
       background-attachment: fixed;
     }
 
@@ -86,8 +86,8 @@ html_code = '''<!DOCTYPE html>
       box-shadow: 0 6px 24px rgba(255, 85, 0, 0.4);
     }
     .btn-orange:hover {
-      background: linear-gradient(135deg, #ff6b00, #ff9436);
-      box-shadow: 0 8px 32px rgba(255, 107, 0, 0.6);
+      background: linear-gradient(135deg, #ff6600, #ff8c2e);
+      box-shadow: 0 8px 32px rgba(255, 102, 0, 0.6);
       transform: translateY(-2px);
     }
     .btn-outline {
@@ -127,7 +127,7 @@ html_code = '''<!DOCTYPE html>
       position: sticky;
       top: 0;
       z-index: 50;
-      background: rgba(7, 8, 12, 0.92);
+      background: rgba(6, 7, 10, 0.94);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
       border-bottom: 1px solid var(--border);
@@ -183,8 +183,8 @@ html_code = '''<!DOCTYPE html>
       font-weight: 700;
       letter-spacing: 0.06em;
       text-transform: uppercase;
-      background: rgba(255, 107, 0, 0.12);
-      border: 1px solid rgba(255, 107, 0, 0.35);
+      background: rgba(255, 102, 0, 0.12);
+      border: 1px solid rgba(255, 102, 0, 0.35);
       color: var(--orange-bright);
     }
 
@@ -219,8 +219,8 @@ html_code = '''<!DOCTYPE html>
       position: relative;
       border-radius: 28px;
       overflow: hidden;
-      border: 1px solid rgba(255, 107, 0, 0.3);
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(255, 107, 0, 0.15);
+      border: 1px solid rgba(255, 102, 0, 0.35);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.85), 0 0 50px rgba(255, 102, 0, 0.2);
       background: #000;
     }
     .hero-visual-card img {
@@ -228,7 +228,7 @@ html_code = '''<!DOCTYPE html>
       height: 480px;
       object-fit: cover;
       display: block;
-      filter: contrast(1.05) brightness(0.95);
+      filter: contrast(1.06) brightness(0.96);
     }
     .hero-floating-badge {
       position: absolute;
@@ -414,7 +414,7 @@ html_code = '''<!DOCTYPE html>
     }
     .diag-symptom-row.active {
       border-color: var(--orange);
-      background: rgba(255, 107, 0, 0.08);
+      background: rgba(255, 102, 0, 0.08);
     }
 
     /* Catalog Services Grid */
@@ -444,7 +444,7 @@ html_code = '''<!DOCTYPE html>
       position: absolute;
       bottom: 12px;
       right: 12px;
-      background: rgba(7, 8, 12, 0.92);
+      background: rgba(6, 7, 10, 0.94);
       backdrop-filter: blur(8px);
       padding: 6px 14px;
       border-radius: 10px;
@@ -452,13 +452,13 @@ html_code = '''<!DOCTYPE html>
       font-size: 12px;
       font-weight: 800;
       color: var(--orange-bright);
-      border: 1px solid rgba(255, 107, 0, 0.35);
+      border: 1px solid rgba(255, 102, 0, 0.35);
     }
 
     /* Calculator Section */
     .calc-container {
       background: linear-gradient(145deg, #10131d, #080a0f);
-      border: 1px solid rgba(255, 107, 0, 0.3);
+      border: 1px solid rgba(255, 102, 0, 0.3);
       border-radius: 30px;
       padding: 44px;
       display: grid;
@@ -494,8 +494,8 @@ html_code = '''<!DOCTYPE html>
     }
 
     .calc-bill-card {
-      background: rgba(255, 107, 0, 0.04);
-      border: 1px solid rgba(255, 107, 0, 0.22);
+      background: rgba(255, 102, 0, 0.04);
+      border: 1px solid rgba(255, 102, 0, 0.22);
       border-radius: 24px;
       padding: 32px;
       display: flex;
@@ -529,9 +529,52 @@ html_code = '''<!DOCTYPE html>
       transition: all 0.2s;
     }
     .district-pill:hover {
-      border-color: rgba(255, 107, 0, 0.4);
-      background: rgba(255, 107, 0, 0.05);
+      border-color: rgba(255, 102, 0, 0.4);
+      background: rgba(255, 102, 0, 0.05);
       transform: translateX(4px);
+    }
+
+    /* Route Planner Elements */
+    .route-mode-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 7px 15px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .route-mode-btn:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
+    .route-mode-btn.active {
+      background: var(--orange);
+      border-color: var(--orange);
+      color: #fff;
+      box-shadow: 0 0 12px var(--orange-glow);
+    }
+
+    .quick-route-chip {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      color: var(--silver);
+      padding: 5px 12px;
+      border-radius: 8px;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .quick-route-chip:hover {
+      background: rgba(255, 102, 0, 0.15);
+      border-color: var(--orange);
+      color: #fff;
+    }
+    .quick-route-chip.active {
+      background: rgba(255, 102, 0, 0.22);
+      border-color: var(--orange);
+      color: var(--orange-bright);
+      font-weight: 700;
     }
 
     /* Modal */
@@ -549,7 +592,7 @@ html_code = '''<!DOCTYPE html>
     .modal-backdrop.active { display: flex; }
     .modal-window {
       background: #0f121b;
-      border: 1px solid rgba(255, 107, 0, 0.4);
+      border: 1px solid rgba(255, 102, 0, 0.4);
       box-shadow: 0 35px 80px rgba(0, 0, 0, 0.85);
       border-radius: 26px;
       width: 100%;
@@ -592,10 +635,10 @@ html_code = '''<!DOCTYPE html>
           <span style="width:7px; height:7px; border-radius:50%; background:var(--emerald); box-shadow:0 0 8px var(--emerald);"></span>
           <strong>Пн–Сб 09:00 – 17:00</strong> (Виїзди інженерів до 20:00)
         </span>
-        <a href="https://maps.app.goo.gl/ZJYEg6JSiCwZZdsa7" target="_blank" rel="noopener noreferrer" style="color:var(--muted); text-decoration:none; display:flex; align-items:center; gap:6px;">
+        <a href="#workshop" style="color:var(--silver); text-decoration:none; display:flex; align-items:center; gap:6px;">
           <span style="color:var(--orange);">●</span>
           <span>проспект Героїв Харкова, 35, Харків (61050)</span>
-          <span style="color:var(--orange);">↗</span>
+          <span style="color:var(--orange);">↓</span>
         </a>
       </div>
 
@@ -619,7 +662,7 @@ html_code = '''<!DOCTYPE html>
         <a href="#services">Послуги та прайс</a>
         <a href="#calculator">Калькулятор цін</a>
         <a href="#districts">Райони міста</a>
-        <a href="#workshop">Майстерня на карті</a>
+        <a href="#workshop">Майстерня та карта</a>
         <a href="#reviews">Відгуки</a>
       </nav>
 
@@ -759,7 +802,7 @@ html_code = '''<!DOCTYPE html>
         <!-- Live Changing Device Photo -->
         <div class="diag-img-container">
           <img id="diag-display-img" src="assets/images/washer-modern.jpg" alt="Пральна машина" />
-          <div style="position:absolute; bottom:14px; left:14px; background:rgba(7,8,12,0.9); padding:6px 14px; border-radius:10px; border:1px solid rgba(255,255,255,0.1); font-family:var(--font-mono); font-size:12px; font-weight:700;">
+          <div style="position:absolute; bottom:14px; left:14px; background:rgba(6,7,10,0.92); padding:6px 14px; border-radius:10px; border:1px solid rgba(255,255,255,0.1); font-family:var(--font-mono); font-size:12px; font-weight:700;">
             <span id="diag-display-caption">Пральні машини</span>
           </div>
         </div>
@@ -1083,11 +1126,11 @@ html_code = '''<!DOCTYPE html>
               </div>
               <div style="display:flex; justify-content:space-between;">
                 <span style="color:var(--muted);">Діагностика:</span>
-                <span style="color:var(--emerald); font-weight:700;">0 ₴ (БЕЗКОШТОВНО)</span>
+                <span style="color:var(--emerald); font-weight:700;">0 ₴ (ЗНИЖКА 100% ПРИ РЕМОНТІ)</span>
               </div>
               <div style="display:flex; justify-content:space-between;">
                 <span style="color:var(--muted);">Офіційна гарантія:</span>
-                <span style="font-weight:700;">12 місяців</span>
+                <span style="font-weight:700;">12 місяців на бланку</span>
               </div>
             </div>
           </div>
@@ -1108,63 +1151,202 @@ html_code = '''<!DOCTYPE html>
   <!-- Kharkiv City Operational Districts -->
   <section id="districts" class="section" style="border-top:1px solid var(--border);">
     <div class="container">
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center;">
-        <div>
-          <div class="tag-badge" style="margin-bottom:12px;">ОПЕРАТИВНИЙ ВИЇЗД</div>
-          <h2 class="section-title">Майстри чергують у кожному районі Харкова</h2>
-          <p style="color:var(--silver); font-size:15px; line-height:1.65; margin-bottom:20px;">
-            Центральна майстерня: <strong>проспект Героїв Харкова, 35 (61050)</strong>. Мобільні екіпажі чергують на лініях зв'язку, що забезпечує прибуття майстра з необхідними запчастинами за 30-45 хвилин.
-          </p>
+      <div class="section-header" style="max-width:760px; margin-bottom:32px;">
+        <div class="tag-badge" style="margin-bottom:12px;">ОПЕРАТИВНИЙ ВИЇЗД ПО МІСТУ</div>
+        <h2 class="section-title">Майстри чергують у кожному районі Харкова</h2>
+        <p class="section-desc">
+          Мобільні екіпажі чергують по ключових магістралях міста. Майстер прибуває з необхідними інструментами та запчастинами за 30-45 хвилин після звернення.
+        </p>
+      </div>
 
-          <div class="districts-grid">
-            <div class="district-pill">
-              <div><b>Салтівка</b><div style="font-size:11px; color:var(--muted);">Героїв Праці, Валентинівська, 602</div></div>
-              <span class="tag-badge" style="font-size:10px;">~35 хв</span>
-            </div>
-            <div class="district-pill">
-              <div><b>Олексіївка</b><div style="font-size:11px; color:var(--muted);">пр. Перемоги, Клочківська</div></div>
-              <span class="tag-badge" style="font-size:10px;">~40 хв</span>
-            </div>
-            <div class="district-pill">
-              <div><b>Центр & Шевченківський</b><div style="font-size:11px; color:var(--muted);">вул. Сумська, пр. Науки</div></div>
-              <span class="tag-badge" style="font-size:10px;">~25 хв</span>
-            </div>
-            <div class="district-pill">
-              <div><b>Холодна Гора & Баварія</b><div style="font-size:11px; color:var(--muted);">Полтавський Шлях</div></div>
-              <span class="tag-badge" style="font-size:10px;">~35 хв</span>
-            </div>
-            <div class="district-pill">
-              <div><b>Нові Будинки & ХТЗ</b><div style="font-size:11px; color:var(--muted);">пр. Героїв Харкова, Немишля</div></div>
-              <span class="tag-badge" style="font-size:10px;">~25 хв</span>
-            </div>
-            <div class="district-pill">
-              <div><b>Передмістя</b><div style="font-size:11px; color:var(--muted);">Пісочин, Дергачі, Покотилівка</div></div>
-              <span class="tag-badge" style="font-size:10px;">~50 хв</span>
-            </div>
-          </div>
+      <div class="districts-grid" style="margin-top:0;">
+        <div class="district-pill">
+          <div><b>Салтівка</b><div style="font-size:11px; color:var(--muted);">Героїв Праці, Валентинівська, 602 м/р</div></div>
+          <span class="tag-badge" style="font-size:10px;">~35 хв</span>
         </div>
+        <div class="district-pill">
+          <div><b>Олексіївка</b><div style="font-size:11px; color:var(--muted);">пр. Перемоги, Клочківська, Олексіївський ринок</div></div>
+          <span class="tag-badge" style="font-size:10px;">~40 хв</span>
+        </div>
+        <div class="district-pill">
+          <div><b>Центр & Шевченківський</b><div style="font-size:11px; color:var(--muted);">вул. Сумська, пр. Науки, Держпром</div></div>
+          <span class="tag-badge" style="font-size:10px;">~25 хв</span>
+        </div>
+        <div class="district-pill">
+          <div><b>Холодна Гора & Баварія</b><div style="font-size:11px; color:var(--muted);">Полтавський Шлях, Залютине</div></div>
+          <span class="tag-badge" style="font-size:10px;">~35 хв</span>
+        </div>
+        <div class="district-pill">
+          <div><b>Нові Будинки & ХТЗ</b><div style="font-size:11px; color:var(--muted);">пр. Героїв Харкова, Немишля, Рогань</div></div>
+          <span class="tag-badge" style="font-size:10px;">~25 хв</span>
+        </div>
+        <div class="district-pill">
+          <div><b>Передмістя Харкова</b><div style="font-size:11px; color:var(--muted);">Пісочин, Дергачі, Покотилівка, Солоницівка</div></div>
+          <span class="tag-badge" style="font-size:10px;">~50 хв</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        <!-- Google Maps Workshop Card -->
-        <div id="workshop" class="card" style="border-color:rgba(255,107,0,0.35); padding:36px;">
-          <div style="display:flex; align-items:center; gap:16px; margin-bottom:20px;">
-            <img src="assets/images/technovovk-full-logo.jpg" alt="ТехноVovk" style="height:60px; width:auto; border-radius:10px;" />
-            <div>
-              <h3 style="font-size:20px; font-weight:800;">Сервісний центр ТЕХНОВОВК</h3>
-              <div style="font-size:12px; color:var(--emerald); font-weight:700;">★ 5.0 на картах Google · Офіційна точка</div>
-            </div>
-          </div>
-
-          <div style="background:rgba(255,255,255,0.03); border-radius:16px; padding:20px; margin-bottom:24px; font-size:13px; line-height:1.8;">
-            <div>📍 <strong>Адреса:</strong> м. Харків, проспект Героїв Харкова, 35 (61050)</div>
-            <div>📞 <strong>Телефон:</strong> 063 881 2785</div>
-            <div>🕒 <strong>Графік роботи:</strong> Понеділок – Субота 09:00 – 17:00</div>
-            <div>🏠 <strong>Формат:</strong> Терміновий виїзд додому + прийом техніки в майстерні</div>
-          </div>
-
-          <a href="https://maps.app.goo.gl/ZJYEg6JSiCwZZdsa7" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="width:100%;">
-            <span>Відкрити маршрут на картах Google ↗</span>
+  <!-- Dedicated Epic Google Maps & Interactive Route Planner -->
+  <section id="workshop" class="section" style="border-top:1px solid var(--border); background:rgba(255,102,0,0.015);">
+    <div class="container">
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:20px; margin-bottom:32px;">
+        <div>
+          <div class="tag-badge" style="margin-bottom:12px;">НАВІГАТОР & ЛОКАЦІЯ</div>
+          <h2 class="section-title">Сервісний центр ТЕХНОВОВК на карті Харкова</h2>
+          <p class="section-desc">м. Харків, проспект Героїв Харкова, 35 (61050). Прокладіть маршрут зі свого району прямо на карті нижче.</p>
+        </div>
+        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+          <a id="external-route-btn" href="https://maps.app.goo.gl/ZJYEg6JSiCwZZdsa7" target="_blank" rel="noopener noreferrer" class="btn btn-orange btn-sm">
+            <span>Відкрити в додатку Google Maps ↗</span>
+          </a>
+          <a href="tel:+380638812785" class="btn btn-outline btn-sm">
+            <span>📞 063 881 2785</span>
           </a>
         </div>
+      </div>
+
+      <!-- Interactive Route Builder Console Card -->
+      <div class="card" style="margin-bottom:28px; padding:24px 28px; border-color:rgba(255,102,0,0.35);">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; margin-bottom:16px;">
+          <div style="font-family:var(--font-display); font-size:17px; font-weight:800; display:flex; align-items:center; gap:8px;">
+            <span style="color:var(--orange-bright);">Маршрут до майстерні:</span>
+            <span>Оберіть ваш район або введіть адресу</span>
+          </div>
+          <div style="display:flex; gap:6px;" id="route-mode-toggles">
+            <button class="route-mode-btn active" data-mode="d" onclick="setRouteMode('d')">🚗 На автомобілі</button>
+            <button class="route-mode-btn" data-mode="r" onclick="setRouteMode('r')">🚊 Громадським транспортом</button>
+            <button class="route-mode-btn" data-mode="w" onclick="setRouteMode('w')">🚶 Пішки</button>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-bottom:16px;">
+          <div style="position:relative; flex:1; min-width:280px;">
+            <input type="text" id="route-start-input" class="form-input" style="padding-left:40px;" placeholder="Введіть ваш район або вулицю в Харкові (напр. Салтівка, вул. Валентинівська)..." value="Салтівка, Харків" />
+            <span style="position:absolute; left:14px; top:50%; transform:translateY(-50%); color:var(--orange-bright); font-size:16px;">📍</span>
+          </div>
+          <button onclick="buildRouteFromInput()" class="btn btn-orange" style="padding:13px 26px; white-space:nowrap;">
+            <span>Прокласти маршрут на карті ↗</span>
+          </button>
+          <button onclick="resetToOverview()" class="btn btn-outline" style="padding:13px 20px; white-space:nowrap;">
+            <span>Скинути до мітки</span>
+          </button>
+        </div>
+
+        <!-- Quick District Selector Chips -->
+        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+          <span style="font-size:11px; font-family:var(--font-mono); color:var(--muted); text-transform:uppercase;">Швидкий маршрут:</span>
+          <button class="quick-route-chip active" onclick="selectQuickRoute('Салтівка, Харків', '14 хв на авто · 7.2 км')">Салтівка (~14 хв)</button>
+          <button class="quick-route-chip" onclick="selectQuickRoute('Олексіївка, Харків', '18 хв на авто · 8.9 км')">Олексіївка (~18 хв)</button>
+          <button class="quick-route-chip" onclick="selectQuickRoute('Майдан Конституції, Харків', '5 хв на авто · 1.5 км')">Центр (~5 хв)</button>
+          <button class="quick-route-chip" onclick="selectQuickRoute('Холодна Гора, Харків', '12 хв на авто · 5.8 км')">Холодна Гора (~12 хв)</button>
+          <button class="quick-route-chip" onclick="selectQuickRoute('Нові Будинки, Харків', '10 хв на авто · 4.6 км')">Нові Будинки (~10 хв)</button>
+          <button class="quick-route-chip" onclick="selectQuickRoute('ХТЗ, Харків', '14 хв на авто · 8.1 км')">ХТЗ (~14 хв)</button>
+        </div>
+
+        <!-- Route Status Bar -->
+        <div style="margin-top:16px; padding:12px 18px; border-radius:12px; background:rgba(255,102,0,0.08); border:1px solid rgba(255,102,0,0.25); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; font-size:13px;">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <span style="color:var(--orange-bright); font-weight:800;" id="route-dist-label">~14 хв на авто (7.2 км)</span>
+            <span style="color:var(--silver);">— прямий доїзд по пр. Героїв Харкова до будинку 35</span>
+          </div>
+          <a id="route-google-link" href="https://www.google.com/maps/dir/?api=1&origin=Салтівка,+Харків&destination=Сервісний+центр+ТЕХНОVOVK,+проспект+Героїв+Харкова,+35,+Харків&travelmode=driving" target="_blank" rel="noopener noreferrer" style="color:var(--orange-bright); font-weight:700; text-decoration:none;">
+            Відкрити живий GPS-навігатор Google ↗
+          </a>
+        </div>
+      </div>
+
+      <!-- Map & Navigation Details 2-Column Split -->
+      <div style="display:grid; grid-template-columns:1.2fr 0.8fr; gap:32px; align-items:start;">
+        
+        <!-- Live Google Map Frame -->
+        <div class="card" style="padding:0; overflow:hidden; border-color:rgba(255,102,0,0.35); box-shadow:0 25px 60px rgba(0,0,0,0.7);">
+          <div style="position:relative; width:100%; height:500px; background:#000;">
+            <iframe 
+              id="workshop-map-iframe"
+              title="Сервісний центр ТЕХНОВОВК на картах Google" 
+              src="https://maps.google.com/maps?saddr=%D0%A1%D0%B0%D0%BB%D1%82%D1%96%D0%B2%D0%BA%D0%B0%2C%20%D0%A5%D0%B0%D1%80%D0%BA%D1%96%D0%B2&daddr=%D0%BF%D1%80%D0%BE%D1%81%D0%BF%D0%B5%D0%BA%D1%82%20%D0%93%D0%B5%D1%80%D0%BE%D1%97%D0%B2%20%D0%A5%D0%B0%D1%80%D0%BA%D0%BE%D0%B2%D0%B0%2C%2035%2C%20%D0%A5%D0%B0%D1%80%D0%BA%D1%96%D0%B2&dirflg=d&output=embed" 
+              width="100%" 
+              height="100%" 
+              style="border:0; filter:contrast(1.05) brightness(0.95);" 
+              allowfullscreen="" 
+              loading="lazy" 
+              referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+            
+            <!-- Live Location Overlay Capsule -->
+            <div style="position:absolute; bottom:16px; left:16px; background:rgba(6,7,10,0.94); backdrop-filter:blur(12px); border:1px solid rgba(255,102,0,0.4); padding:10px 18px; border-radius:14px; display:flex; align-items:center; gap:10px;">
+              <span style="width:8px; height:8px; border-radius:50%; background:var(--emerald); box-shadow:0 0 10px var(--emerald);"></span>
+              <span style="font-family:var(--font-mono); font-size:12px; font-weight:700; color:#fff;">Фініш: пр. Героїв Харкова, 35 · Майстерня ТЕХНОВОВК</span>
+            </div>
+          </div>
+
+          <!-- Bottom Landmark Strip (Zero Coordinates) -->
+          <div style="padding:16px 24px; background:#080a10; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; font-size:13px; border-top:1px solid var(--border);">
+            <div style="color:var(--silver); display:flex; align-items:center; gap:8px;">
+              <span style="color:var(--orange-bright);">📍</span>
+              <strong>проспект Героїв Харкова, 35</strong>
+              <span style="color:var(--muted); font-size:12px;">(будівля Делярова, фасадний вхід поруч із зупинкою)</span>
+            </div>
+            <div style="color:var(--emerald); font-weight:700; font-size:12px; font-family:var(--font-mono); display:flex; align-items:center; gap:6px;">
+              <span>✓</span>
+              <span>Безкоштовний паркінг перед дверима</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Navigation Tips Cards -->
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          
+          <!-- Metro -->
+          <div class="card" style="padding:22px;">
+            <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
+              <div style="width:36px; height:36px; border-radius:10px; background:rgba(255,102,0,0.15); border:1px solid rgba(255,102,0,0.3); display:flex; align-items:center; justify-content:center; color:var(--orange-bright); font-weight:900; font-family:var(--font-display);">M</div>
+              <h3 style="font-size:16px; font-weight:800;">Як дістатися на метро (пішки 7–8 хв)</h3>
+            </div>
+            <div style="font-size:13px; color:var(--muted); line-height:1.65;">
+              <p>• <strong>Метро «Захисників України»</strong> (зелена гілка) — вихід у бік Кінного ринку / пр. Героїв Харкова. Пройти 650 метрів униз проспектом (повз Універмаг Харків).</p>
+              <p style="margin-top:6px;">• <strong>Метро «Майдан Конституції»</strong> (червона гілка) — 1.4 км або 2 зупинки трамваєм №6 у бік Салтівки.</p>
+            </div>
+          </div>
+
+          <!-- Car & Parking -->
+          <div class="card" style="padding:22px;">
+            <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
+              <div style="width:36px; height:36px; border-radius:10px; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.3); display:flex; align-items:center; justify-content:center; color:var(--emerald); font-weight:900; font-family:var(--font-display);">P</div>
+              <h3 style="font-size:16px; font-weight:800;">На автомобілі та зона паркування</h3>
+            </div>
+            <div style="font-size:13px; color:var(--muted); line-height:1.65;">
+              <p>Прямий фасадний заїзд із проспекту Героїв Харкова. Безпосередньо біля входу розташована <strong>безкоштовна паркувальна зона</strong> для зручного вивантаження важкої техніки (пралок, варильних панелей, духовок).</p>
+            </div>
+          </div>
+
+          <!-- Public Transit -->
+          <div class="card" style="padding:22px;">
+            <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
+              <div style="width:36px; height:36px; border-radius:10px; background:rgba(56,189,248,0.15); border:1px solid rgba(56,189,248,0.3); display:flex; align-items:center; justify-content:center; color:#38bdf8; font-weight:900; font-family:var(--font-display);">Т</div>
+              <h3 style="font-size:16px; font-weight:800;">Громадським транспортом</h3>
+            </div>
+            <div style="font-size:13px; color:var(--muted); line-height:1.65;">
+              <p>• <strong>Трамваї:</strong> №6, №8, №27 (зупинка «пл. Захисників України» або «вул. Руставелі»).</p>
+              <p style="margin-top:4px;">• <strong>Маршрутки:</strong> міські маршрути вздовж пр. Героїв Харкова.</p>
+            </div>
+          </div>
+
+          <!-- Courier pickup callout -->
+          <div style="background:linear-gradient(135deg, rgba(255,102,0,0.12), rgba(255,102,0,0.03)); border:1px solid rgba(255,102,0,0.3); border-radius:18px; padding:18px 22px; display:flex; justify-content:space-between; align-items:center; gap:16px;">
+            <div>
+              <div style="font-weight:800; font-size:14px; color:#fff;">Немає змоги привезти самостійно?</div>
+              <div style="font-size:12px; color:var(--muted); margin-top:2px;">Наш інженер або кур'єр забере техніку прямо з дому!</div>
+            </div>
+            <button onclick="openModal('Виклик кур\'єра / забір техніки')" class="btn btn-orange btn-sm" style="white-space:nowrap;">
+              <span>Замовити забір ↗</span>
+            </button>
+          </div>
+
+        </div>
+
       </div>
     </div>
   </section>
@@ -1249,7 +1431,7 @@ html_code = '''<!DOCTYPE html>
             <a href="#services" style="color:var(--muted); text-decoration:none;">Каталог послуг з прайсом</a>
             <a href="#calculator" style="color:var(--muted); text-decoration:none;">Онлайн-калькулятор вартості</a>
             <a href="#districts" style="color:var(--muted); text-decoration:none;">Райони чергування інженерів</a>
-            <a href="https://maps.app.goo.gl/ZJYEg6JSiCwZZdsa7" target="_blank" rel="noopener noreferrer" style="color:var(--muted); text-decoration:none;">Точка на Google Maps ↗</a>
+            <a href="#workshop" style="color:var(--muted); text-decoration:none;">Майстерня та карта проїзду ↗</a>
           </div>
         </div>
 
@@ -1395,7 +1577,7 @@ html_code = '''<!DOCTYPE html>
         symptoms: [
           { name: 'Вода не нагрівається', cause: 'Перегорання ТЕНу або спрацювання аварійного термозахисту', price: 'від 350 ₴' },
           { name: 'Протікає вода знизу бака', cause: 'Знос фланцевої прокладки або руйнування анода', price: 'від 300 ₴' },
-          { name: 'Б\'є струмом через воду', cause: 'Руйнування ізоляційної оболонки мокрого ТЕНу', price: 'від 400 ₴' }
+          { name: "Б'є струмом через воду", cause: "Руйнування ізоляційної оболонки мокрого ТЕНу", price: "від 400 ₴" }
         ]
       }
     };
@@ -1487,7 +1669,59 @@ html_code = '''<!DOCTYPE html>
       openModal(`${devText} (прораховано ${sum})`);
     }
 
-    // 3. Modal Actions
+    // 3. Interactive Route Planner
+    let currentRouteMode = 'd';
+    const DEST_ADDRESS = 'проспект Героїв Харкова, 35, Харків';
+    const DEFAULT_MAP_URL = 'https://maps.google.com/maps?q=' + encodeURIComponent('Сервісний центр ТЕХНОVOVK, проспект Героїв Харкова, 35, Харків, 61050') + '&t=&z=16&ie=UTF8&iwloc=&output=embed';
+
+    function setRouteMode(mode) {
+      currentRouteMode = mode;
+      document.querySelectorAll('#route-mode-toggles .route-mode-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.mode === mode);
+      });
+      buildRouteFromInput();
+    }
+
+    function selectQuickRoute(address, timeEst) {
+      document.getElementById('route-start-input').value = address;
+      document.querySelectorAll('.quick-route-chip').forEach(c => c.classList.remove('active'));
+      if (event && event.target) event.target.classList.add('active');
+      document.getElementById('route-dist-label').textContent = timeEst;
+      buildRoute(address);
+    }
+
+    function buildRouteFromInput() {
+      const start = document.getElementById('route-start-input').value.trim();
+      if (!start) return;
+      buildRoute(start);
+    }
+
+    function buildRoute(origin) {
+      const modeFlag = currentRouteMode === 'r' ? 'r' : (currentRouteMode === 'w' ? 'w' : 'd');
+      const embedUrl = `https://maps.google.com/maps?saddr=${encodeURIComponent(origin)}&daddr=${encodeURIComponent(DEST_ADDRESS)}&dirflg=${modeFlag}&output=embed`;
+      
+      const iframe = document.getElementById('workshop-map-iframe');
+      if (iframe) iframe.src = embedUrl;
+
+      const travelModeParam = currentRouteMode === 'r' ? 'transit' : (currentRouteMode === 'w' ? 'walking' : 'driving');
+      const directLink = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent('Сервісний центр ТЕХНОVOVK, проспект Героїв Харкова, 35, Харків')}&travelmode=${travelModeParam}`;
+      
+      const linkElem = document.getElementById('route-google-link');
+      if (linkElem) linkElem.href = directLink;
+
+      const extBtn = document.getElementById('external-route-btn');
+      if (extBtn) extBtn.href = directLink;
+    }
+
+    function resetToOverview() {
+      const iframe = document.getElementById('workshop-map-iframe');
+      if (iframe) iframe.src = DEFAULT_MAP_URL;
+      document.getElementById('route-start-input').value = '';
+      document.getElementById('route-dist-label').textContent = 'Точка на карті: пр. Героїв Харкова, 35';
+      document.querySelectorAll('.quick-route-chip').forEach(c => c.classList.remove('active'));
+    }
+
+    // 4. Modal Actions
     function openModal(prefill = '') {
       document.getElementById('order-modal').classList.add('active');
       if (prefill) {
@@ -1524,4 +1758,4 @@ html_code = '''<!DOCTYPE html>
 with open('rempobut/index.html', 'w', encoding='utf-8') as f:
     f.write(html_code)
 
-print('Masterpiece rempobut/index.html generated successfully!')
+print('rempobut/index.html generated with live interactive route builder!')
