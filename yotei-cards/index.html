@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-  <title>YOTEI — Візитки</title>
+  <title>YOTEI — Візитки та Конструктор</title>
 
   <!-- INSTANT ZERO-FOUC SCALE SCRIPT (Runs at 0ms in <head> BEFORE <body> renders) -->
   <script>
@@ -44,7 +44,6 @@
       }
     }
 
-    /* Prevent any image from bursting out before Tailwind finishes */
     img {
       max-width: 100%;
       height: auto;
@@ -153,7 +152,6 @@
       transform-origin: top left;
     }
 
-    /* Card dimensions (90x50 mm ratio = 1.8:1) */
     .card-canvas-h {
       width: 450px !important;
       height: 250px !important;
@@ -161,7 +159,6 @@
       overflow: hidden;
     }
 
-    /* Vertical card (50x90 mm ratio) */
     .card-canvas-v {
       width: 250px !important;
       height: 450px !important;
@@ -169,13 +166,51 @@
       overflow: hidden;
     }
 
-    /* Hover zoom hint on card faces */
     .zoomable-card {
       cursor: zoom-in;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
     .zoomable-card:hover {
       box-shadow: 0 20px 40px -8px rgba(37, 99, 235, 0.35), 0 0 0 1.5px rgba(56, 189, 248, 0.45);
+    }
+
+    /* ================= INTERACTIVE CONSTRUCTOR STUDIO STYLES ================= */
+    #builder-front-canvas, #builder-back-canvas {
+      touch-action: none;
+      user-select: none;
+    }
+    #builder-front-canvas *, #builder-back-canvas * {
+      cursor: grab;
+    }
+    #builder-front-canvas *:active, #builder-back-canvas *:active {
+      cursor: grabbing;
+    }
+    .builder-selected-el {
+      outline: 2px dashed #38bdf8 !important;
+      outline-offset: 2px !important;
+      filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.5));
+    }
+    .snap-guide-x {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 1px;
+      background: #38bdf8;
+      pointer-events: none;
+      z-index: 9999;
+      display: none;
+    }
+    .snap-guide-y {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      height: 1px;
+      background: #38bdf8;
+      pointer-events: none;
+      z-index: 9999;
+      display: none;
     }
 
     @media print {
@@ -207,25 +242,30 @@
   <!-- ================= STREAMLINED STICKY NAVIGATION ================= -->
   <header class="no-print sticky top-0 z-40 border-b border-slate-800/80 bg-[#090b10]/95 backdrop-blur-md">
     <div class="max-w-7xl mx-auto px-2.5 sm:px-5 py-2.5">
-      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-2">
         
-        <!-- Left: 2 Main Category Tabs + Favorites -->
-        <div class="grid grid-cols-3 sm:flex items-center bg-slate-900/90 p-1 rounded-xl border border-slate-800 gap-1 w-full md:w-auto">
-          <button onclick="setCategory('personal')" id="tab-personal" class="category-tab px-2.5 sm:px-4 py-2 rounded-lg text-[11px] sm:text-xs font-bold transition-all text-white bg-blue-600 shadow-sm text-center truncate">
+        <!-- Left: Category & Constructor Tabs -->
+        <div class="flex flex-wrap items-center bg-slate-900/90 p-1 rounded-xl border border-slate-800 gap-1 w-full lg:w-auto">
+          <button onclick="setCategory('personal')" id="tab-personal" class="category-tab flex-1 sm:flex-initial px-2.5 sm:px-3.5 py-2 rounded-lg text-[11px] sm:text-xs font-bold transition-all text-white bg-blue-600 shadow-sm text-center truncate">
             👤 Персональні (46)
           </button>
-          <button onclick="setCategory('brand')" id="tab-brand" class="category-tab px-2.5 sm:px-4 py-2 rounded-lg text-[11px] sm:text-xs font-semibold transition-all text-slate-400 hover:text-white text-center truncate">
+          <button onclick="setCategory('brand')" id="tab-brand" class="category-tab flex-1 sm:flex-initial px-2.5 sm:px-3.5 py-2 rounded-lg text-[11px] sm:text-xs font-semibold transition-all text-slate-400 hover:text-white text-center truncate">
             🏛️ Брендові (44)
           </button>
-          <button onclick="setCategory('fav')" id="tab-fav" class="category-tab px-2 sm:px-3.5 py-2 rounded-lg text-[11px] sm:text-xs font-semibold transition-all text-amber-400 hover:text-amber-300 text-center truncate">
+          <button onclick="setCategory('builder')" id="tab-builder" class="category-tab flex-1 sm:flex-initial px-2.5 sm:px-4 py-2 rounded-lg text-[11px] sm:text-xs font-bold transition-all text-emerald-400 hover:text-white bg-emerald-500/10 border border-emerald-500/30 text-center truncate">
+            🛠️ Конструктор
+          </button>
+          <button onclick="setCategory('custom')" id="tab-custom" class="category-tab px-2.5 sm:px-3 py-2 rounded-lg text-[11px] sm:text-xs font-semibold transition-all text-cyan-400 hover:text-cyan-300 text-center truncate">
+            🎨 Створені (<span id="custom-count">0</span>)
+          </button>
+          <button onclick="setCategory('fav')" id="tab-fav" class="category-tab px-2.5 sm:px-3 py-2 rounded-lg text-[11px] sm:text-xs font-semibold transition-all text-amber-400 hover:text-amber-300 text-center truncate">
             ⭐ Обрані (<span id="fav-count">0</span>)
           </button>
         </div>
 
         <!-- Right: View Mode + Global Zoom Controls + Print -->
-        <div class="flex items-center justify-between md:justify-end gap-2 w-full md:w-auto">
+        <div id="gallery-controls-bar" class="flex items-center justify-between lg:justify-end gap-2 w-full lg:w-auto">
           
-          <!-- Both Sides vs 3D Flip -->
           <div class="flex items-center bg-slate-900/90 p-1 rounded-xl border border-slate-800 text-[11px] sm:text-xs">
             <button onclick="setViewMode('both')" id="btn-mode-both" class="px-2.5 sm:px-3 py-1.5 rounded-lg font-bold bg-slate-800 text-blue-400">
               Лице + Зворот
@@ -235,7 +275,7 @@
             </button>
           </div>
 
-          <!-- Global Zoom Adjuster (Works on PC & Mobile) -->
+          <!-- Global Zoom Adjuster -->
           <div class="flex items-center bg-slate-900/90 p-1 rounded-xl border border-slate-800 text-xs space-x-1">
             <button onclick="adjustPageZoom(-0.12)" class="w-7 h-7 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold flex items-center justify-center" title="Зменшити всі візитки">−</button>
             <span id="page-zoom-label" class="px-1 font-mono text-[11px] text-slate-300">100%</span>
@@ -251,8 +291,388 @@
     </div>
   </header>
 
+  <!-- ================= INTERACTIVE CONSTRUCTOR STUDIO VIEW ================= -->
+  <section id="builder-studio-section" class="no-print hidden max-w-7xl mx-auto px-2.5 sm:px-5 py-4 sm:py-6 w-full flex-1">
+    
+    <!-- Top Studio Bar: Load Existing Card or Preset + Save New Card -->
+    <div class="bg-[#0f131c] border border-slate-800 rounded-2xl p-3 sm:p-4 mb-4 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
+      <div class="flex flex-wrap items-center gap-2 flex-1">
+        <span class="text-xs font-extrabold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
+          <span>🛠️</span> <span>Конструктор візиток та лого:</span>
+        </span>
+        <select id="builder-template-select" onchange="if(this.value) loadCardIntoBuilder(this.value)" class="bg-slate-900 text-slate-100 text-xs rounded-xl px-3 py-2 border border-slate-700 focus:outline-none focus:border-blue-500 max-w-xs sm:max-w-sm">
+          <option value="">— Оберіть готовий макет для редагування (#P01..#B44) —</option>
+<option value="P01">#P01 — Yotei Reflex Blue Executive (#043f88)</option>
+<option value="P02">#P02 — Yotei Brand Gradient & Ice Blue</option>
+<option value="P03">#P03 — White & Reflex Blue Architectural Frame</option>
+<option value="P04">#P04 — Yotei Brand Diagonal Split</option>
+<option value="P05">#P05 — Brand Medallion on Reflex Blue</option>
+<option value="P06">#P06 — Swiss Brand Blue Grid (#043f88)</option>
+<option value="P07">#P07 — Vertical Brand Blue Flagship (50×90)</option>
+<option value="P08">#P08 — Dual-Tone Brand Horizon Band</option>
+<option value="P09">#P09 — Brand Blue Bento Services Matrix</option>
+<option value="P10">#P10 — Founder's Manifesto & Executive Quote</option>
+<option value="P11">#P11 — Architectural CAD Blueprint & Stamp</option>
+<option value="P12">#P12 — VIP Property Deal Memo (З пам’яткою об’єкта)</option>
+<option value="P13">#P13 — PropTech Digital Boarding Pass</option>
+<option value="P14">#P14 — Brand Ribbon & Giant Bleed Typography</option>
+<option value="P15">#P15 — Executive Minimal Front & Omnichannel Hub Back</option>
+<option value="P16">#P16 — Mount Yotei Topographic Summit</option>
+<option value="P17">#P17 — 3-Plane Diagonal Chevron Cascade</option>
+<option value="P18">#P18 — Architectural Arch Portal</option>
+<option value="P19">#P19 — Center-Stage Portrait & Deal Pipeline</option>
+<option value="P20">#P20 — Studio Window & Mondrian 3-Block Grid</option>
+<option value="P21">#P21 — Cinematic Dock & Typographic Poster</option>
+<option value="P22">#P22 — Executive Tabular & Appointment Card</option>
+<option value="P23">#P23 — Right 45° Diagonal Portrait & Inverse Split</option>
+<option value="P24">#P24 — Sidebar Spine & Numbered Index Table</option>
+<option value="P25">#P25 — Forbes B&W + Reflex Blue & Central Pill Island</option>
+<option value="P26">#P26 — Editorial Masthead & Executive Fact-Sheet</option>
+<option value="P27">#P27 — Right Medallion & Twin Circles Back</option>
+<option value="P28">#P28 — AM × YOTEI Monogram & Horizon Straddle</option>
+<option value="P29">#P29 — Obsidian & Gold Executive</option>
+<option value="P30">#P30 — Forbes Monochrome Light</option>
+<option value="P31">#P31 — Forbes Monochrome Noir</option>
+<option value="P32">#P32 — Warm Alabaster & Terracotta Bronze</option>
+<option value="P33">#P33 — Royal Sapphire CEO</option>
+<option value="P34">#P34 — Architectural Gallery Frame</option>
+<option value="P35">#P35 — British Racing Green & Gold</option>
+<option value="P36">#P36 — Right-Aligned Executive Split</option>
+<option value="P37">#P37 — Dark Medallion Executive</option>
+<option value="P38">#P38 — Pure White Zen Medallion</option>
+<option value="P39">#P39 — Swiss Bauhaus Architectural Grid</option>
+<option value="P40">#P40 — Titanium & Brushed Silver</option>
+<option value="P41">#P41 — Bordeaux Private Wealth</option>
+<option value="P42">#P42 — Architectural Warm Stone & Band</option>
+<option value="P43">#P43 — Vertical Executive Obsidian (50×90)</option>
+<option value="P44">#P44 — Vertical Forbes Monochrome (50×90)</option>
+<option value="P45">#P45 — Espresso & Warm Sand</option>
+<option value="P46">#P46 — Minimalist Cobalt Line</option>
+<option value="B01">#B01 — Pantone Reflex Blue Canonical (#043f88)</option>
+<option value="B02">#B02 — Yotei Brand Gradient Flagship</option>
+<option value="B03">#B03 — Reflex Blue & White 50/50 Split</option>
+<option value="B04">#B04 — Brand Blue Double Architectural Frame</option>
+<option value="B05">#B05 — Giant Watermark on Brand Blue</option>
+<option value="B06">#B06 — Swiss Brand Blue Bauhaus Grid</option>
+<option value="B07">#B07 — Vertical Reflex Blue Monolith (50×90)</option>
+<option value="B08">#B08 — Deep Brand Navy & Ice Blue Glow</option>
+<option value="B09">#B09 — Yotei 4-Pillar Services Matrix</option>
+<option value="B10">#B10 — Client Property Passport (Картка об’єкта на перегляді)</option>
+<option value="B11">#B11 — Focal Point Radar (Y⊙TEI)</option>
+<option value="B12">#B12 — Modernist Skyscraper Facade Grid</option>
+<option value="B13">#B13 — Golden Ratio Fibonacci Grid (1.618)</option>
+<option value="B14">#B14 — 3-Panel Architectural Triptych</option>
+<option value="B15">#B15 — Horizontal Brand Dock & Panoramic Ribbon</option>
+<option value="B16">#B16 — Floating Crest & Giant Bleed Band</option>
+<option value="B17">#B17 — Official Brand Seal & Registry</option>
+<option value="B18">#B18 — Asymmetric L-Portal & Corner Block</option>
+<option value="B19">#B19 — Horizon Equator Split & Straddle QR</option>
+<option value="B20">#B20 — Building Directory Ledger & Spine</option>
+<option value="B21">#B21 — Penthouse Key-Card (Ваш ключ до нерухомості)</option>
+<option value="B22">#B22 — 45° Diagonal Slash Contrast</option>
+<option value="B23">#B23 — Stadium Pill Capsule Island</option>
+<option value="B24">#B24 — Swiss Asymmetric Cross Grid</option>
+<option value="B25">#B25 — Grand Architectural Archway Portal</option>
+<option value="B26">#B26 — Double Spine & 3-Step Client Concierge</option>
+<option value="B27">#B27 — Pure Zen White (Canonical Master)</option>
+<option value="B28">#B28 — Deep Obsidian Noir</option>
+<option value="B29">#B29 — Royal Sapphire Flagship</option>
+<option value="B30">#B30 — Champagne Gold & Obsidian</option>
+<option value="B31">#B31 — Warm Alabaster & Terracotta Bronze</option>
+<option value="B32">#B32 — British Racing Green & Gold</option>
+<option value="B33">#B33 — Yin-Yang 50/50 Monochrome Split</option>
+<option value="B34">#B34 — Terracotta Signature Earth</option>
+<option value="B35">#B35 — Giant Architectural Emblem Crop</option>
+<option value="B36">#B36 — Titanium & Brushed Silver</option>
+<option value="B37">#B37 — Architectural Gallery Frame</option>
+<option value="B38">#B38 — Bordeaux & Gold Private Wealth</option>
+<option value="B39">#B39 — Swiss Bauhaus Grid</option>
+<option value="B40">#B40 — Hokkaido Sunrise Horizon</option>
+<option value="B41">#B41 — Vertical Monolith Obsidian (50×90)</option>
+<option value="B42">#B42 — Vertical Pure Zen White (50×90)</option>
+<option value="B43">#B43 — Midnight Cobalt & Electric Line</option>
+<option value="B44">#B44 — The Pure Symbol (Minimalist Luxury)</option>
+
+        </select>
+        <button onclick="loadLogoDecomposedPreset()" class="px-3 py-2 rounded-xl text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/40 transition-all">
+          🧩 Розбірний Логотип YOTEI
+        </button>
+        <button onclick="loadBlankBuilderPreset('#043f88')" class="px-3 py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-all">
+          🟦 Чистий фірмовий (#043f88)
+        </button>
+        <button onclick="loadBlankBuilderPreset('#ffffff')" class="px-3 py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-all">
+          ⬜ Чистий білий
+        </button>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-2">
+        <input id="builder-card-name" type="text" placeholder="Назва нового макета..." value="Мій авторський варіант YOTEI" class="bg-slate-900 text-white text-xs rounded-xl px-3 py-2 border border-slate-700 w-48 sm:w-56 focus:outline-none focus:border-emerald-500" />
+        <button onclick="saveBuilderCardToGallery()" class="px-4 py-2 rounded-xl text-xs font-extrabold bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg transition-all flex items-center gap-1.5">
+          <span>💾</span> <span>Зберегти у галерею</span>
+        </button>
+        <button onclick="printBuilderCard()" class="px-3 py-2 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-white border border-slate-700">
+          🖨️ Друк
+        </button>
+      </div>
+    </div>
+
+    <!-- Main 3-Zone Studio Grid: [ Left: Ready Elements Library ] [ Center: Dual Interactive Canvases ] [ Right: Selected Element Inspector ] -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
+
+      <!-- LEFT COLUMN (3 cols): READY-MADE ELEMENTS LIBRARY -->
+      <div class="lg:col-span-3 bg-[#0f131c] border border-slate-800 rounded-2xl p-3.5 space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+          <h3 class="text-xs font-extrabold uppercase tracking-wider text-white">➕ Готові елементи</h3>
+          <div class="flex items-center bg-slate-900 p-0.5 rounded-lg border border-slate-800 text-[10px]">
+            <button onclick="setBuilderTargetSide('front')" id="btarg-front" class="px-2 py-1 rounded-md font-bold bg-blue-600 text-white">На Лице</button>
+            <button onclick="setBuilderTargetSide('back')" id="btarg-back" class="px-2 py-1 rounded-md font-medium text-slate-400">На Зворот</button>
+          </div>
+        </div>
+
+        <!-- 1. Logos & Decomposed Vector Parts -->
+        <div>
+          <p class="text-[10px] font-bold uppercase tracking-wider text-blue-400 mb-1.5">Логотипи та деталі YOTEI (SVG)</p>
+          <div class="grid grid-cols-2 gap-1.5">
+            <button onclick="addBuilderElement('logo_symbol')" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-left text-[11px] font-semibold text-slate-200 flex items-center gap-1.5">
+              <span>🔵</span> <span>Емблема (Ціла)</span>
+            </button>
+            <button onclick="addBuilderElement('logo_text')" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-left text-[11px] font-semibold text-slate-200 flex items-center gap-1.5">
+              <span>🔤</span> <span>Текст Y⊙TEI</span>
+            </button>
+            <button onclick="addBuilderElement('logo_symbol_parts')" class="col-span-2 p-2 rounded-xl bg-blue-950/50 hover:bg-blue-900/60 border border-blue-500/30 text-left text-[11px] font-bold text-blue-300 flex items-center gap-1.5">
+              <span>🧩</span> <span>Розбити емблему на 4 рухомі деталі</span>
+            </button>
+            <button onclick="addBuilderElement('logo_text_parts')" class="col-span-2 p-2 rounded-xl bg-blue-950/50 hover:bg-blue-900/60 border border-blue-500/30 text-left text-[11px] font-bold text-blue-300 flex items-center gap-1.5">
+              <span>🧩</span> <span>Розбити літери Y-⊙-T-E-I окремо</span>
+            </button>
+            <button onclick="addBuilderElement('logo_full_h')" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-left text-[11px] font-semibold text-slate-200 flex items-center gap-1.5">
+              <span>🏛️</span> <span>Повний (Гор.)</span>
+            </button>
+            <button onclick="addBuilderElement('watermark')" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-left text-[11px] font-semibold text-slate-200 flex items-center gap-1.5">
+              <span>🌊</span> <span>Водяний знак</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 2. Studio Portraits of Anton -->
+        <div>
+          <p class="text-[10px] font-bold uppercase tracking-wider text-blue-400 mb-1.5">Портрети Антона</p>
+          <div class="grid grid-cols-2 gap-1.5">
+            <button onclick="addBuilderElement('portrait_cutout')" class="col-span-2 p-2 rounded-xl bg-emerald-950/40 hover:bg-emerald-900/50 border border-emerald-500/30 text-left text-[11px] font-bold text-emerald-300 flex items-center gap-1.5">
+              <span>👤</span> <span>Портрет без фону (Cutout PNG)</span>
+            </button>
+            <button onclick="addBuilderElement('portrait_brand')" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-left text-[11px] font-semibold text-slate-200">
+              🟦 Фірмовий синій
+            </button>
+            <button onclick="addBuilderElement('portrait_dark')" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-left text-[11px] font-semibold text-slate-200">
+              ⬛ Темний студійний
+            </button>
+            <button onclick="addBuilderElement('portrait_light')" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-left text-[11px] font-semibold text-slate-200">
+              ⬜ Світлий студійний
+            </button>
+            <button onclick="addBuilderElement('portrait_circle')" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-left text-[11px] font-semibold text-slate-200">
+              ⭕ У медальйоні
+            </button>
+          </div>
+        </div>
+
+        <!-- 3. Contacts, QR & Shapes -->
+        <div>
+          <p class="text-[10px] font-bold uppercase tracking-wider text-blue-400 mb-1.5">Контакти, QR та Фігури</p>
+          <div class="grid grid-cols-2 gap-1.5">
+            <button onclick="addBuilderElement('qr')" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-left text-[11px] font-semibold text-slate-200">
+              📱 QR yotei.com.ua
+            </button>
+            <button onclick="addBuilderElement('name')" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-left text-[11px] font-semibold text-slate-200">
+              ✍️ Антон Мурашкін
+            </button>
+            <button onclick="addBuilderElement('role')" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-left text-[11px] font-semibold text-slate-200">
+              💼 Посада CEO
+            </button>
+            <button onclick="addBuilderElement('phone')" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-left text-[11px] font-semibold text-slate-200">
+              📞 Телефон
+            </button>
+            <button onclick="addBuilderElement('site')" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-left text-[11px] font-semibold text-slate-200">
+              🌐 yotei.com.ua
+            </button>
+            <button onclick="addBuilderElement('socials')" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-left text-[11px] font-semibold text-slate-200">
+              💬 Соцмережі
+            </button>
+            <button onclick="addBuilderElement('services')" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-left text-[11px] font-semibold text-slate-200">
+              📋 5 напрямків
+            </button>
+            <button onclick="addBuilderElement('custom_text')" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-left text-[11px] font-semibold text-slate-200">
+              ➕ Свій текст
+            </button>
+            <button onclick="addBuilderElement('rect_block')" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-left text-[11px] font-semibold text-slate-200">
+              ▭ Кольорова плашка
+            </button>
+            <button onclick="addBuilderElement('frame_box')" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-left text-[11px] font-semibold text-slate-200">
+              ▢ Рамка-контур
+            </button>
+            <button onclick="addBuilderElement('line_h')" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-left text-[11px] font-semibold text-slate-200">
+              ➖ Лінія-розділювач
+            </button>
+            <button onclick="addBuilderElement('circle_dot')" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-left text-[11px] font-semibold text-slate-200">
+              ⭕ Акцентне коло
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- CENTER COLUMN (6 cols): INTERACTIVE DRAG & DROP CANVASES (FRONT & BACK) -->
+      <div class="lg:col-span-6 bg-[#0f131c] border border-slate-800 rounded-2xl p-3.5 sm:p-5 flex flex-col items-center space-y-6">
+        
+        <div class="w-full flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-2.5">
+          <span class="text-xs font-bold text-slate-300">💡 Клікніть на будь-який елемент (текст, лого, деталь емблеми, фото) і перетягуйте мишкою або пальцем</span>
+          <div class="flex items-center gap-1.5">
+            <button onclick="builderUndo()" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-200 border border-slate-700" title="Скасувати (Ctrl+Z)">↩️ Назад</button>
+            <button onclick="duplicateSelectedEl()" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-200 border border-slate-700">📋 Копія</button>
+            <button onclick="deleteSelectedEl()" class="px-2.5 py-1 rounded-lg bg-rose-600/20 hover:bg-rose-600 text-xs font-bold text-rose-300 hover:text-white border border-rose-500/30">🗑️ Видалити</button>
+          </div>
+        </div>
+
+        <!-- FRONT CANVAS -->
+        <div class="flex flex-col items-center">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="px-2 py-0.5 rounded bg-blue-600/20 text-blue-400 text-[10px] font-bold uppercase tracking-widest border border-blue-500/30">Лицьова сторона (Front)</span>
+            <button onclick="setBuilderTargetSide('front')" class="text-[11px] text-slate-400 hover:text-white underline">Робити активною для додавання</button>
+          </div>
+          <div class="card-scale-shell-h">
+            <div class="card-scale-inner-h">
+              <div id="builder-front-wrapper" class="card-canvas-h bg-white relative">
+                <div class="snap-guide-x" id="snap-x-front"></div>
+                <div class="snap-guide-y" id="snap-y-front"></div>
+                <div id="builder-front-canvas" class="w-full h-full relative overflow-hidden"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BACK CANVAS -->
+        <div class="flex flex-col items-center">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="px-2 py-0.5 rounded bg-indigo-600/20 text-indigo-400 text-[10px] font-bold uppercase tracking-widest border border-indigo-500/30">Зворотна сторона (Back)</span>
+            <button onclick="setBuilderTargetSide('back')" class="text-[11px] text-slate-400 hover:text-white underline">Робити активною для додавання</button>
+          </div>
+          <div class="card-scale-shell-h">
+            <div class="card-scale-inner-h">
+              <div id="builder-back-wrapper" class="card-canvas-h bg-[#043f88] relative">
+                <div class="snap-guide-x" id="snap-x-back"></div>
+                <div class="snap-guide-y" id="snap-y-back"></div>
+                <div id="builder-back-canvas" class="w-full h-full relative overflow-hidden"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT COLUMN (3 cols): COLOR, SIZE, TEXT & BACKGROUND INSPECTOR -->
+      <div class="lg:col-span-3 bg-[#0f131c] border border-slate-800 rounded-2xl p-3.5 space-y-4">
+        <div class="border-b border-slate-800 pb-2">
+          <h3 class="text-xs font-extrabold uppercase tracking-wider text-white">🎨 Налаштування елемента</h3>
+          <p id="selected-el-tag" class="text-[11px] font-mono text-blue-400 mt-0.5 truncate">Оберіть елемент на візитці...</p>
+        </div>
+
+        <!-- What to Color Selector -->
+        <div>
+          <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Що перефарбовуємо:</label>
+          <div class="grid grid-cols-3 gap-1 bg-slate-900 p-1 rounded-xl border border-slate-800 text-[10px]">
+            <button onclick="setColorTargetMode('fg')" id="ctarg-fg" class="py-1.5 rounded-lg font-bold bg-blue-600 text-white">Елемент/Лого</button>
+            <button onclick="setColorTargetMode('bg')" id="ctarg-bg" class="py-1.5 rounded-lg font-medium text-slate-400">Фон блоку</button>
+            <button onclick="setColorTargetMode('card')" id="ctarg-card" class="py-1.5 rounded-lg font-medium text-slate-400">Весь фон</button>
+          </div>
+        </div>
+
+        <!-- Brand Color Swatches + Custom Picker -->
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Фірмова палітра YOTEI та кольори:</span>
+            <input type="color" id="custom-color-picker" oninput="applyInspectorColor(this.value)" value="#043f88" class="w-7 h-6 rounded cursor-pointer bg-transparent border-0" title="Вибрати будь-який колір" />
+          </div>
+          <div class="grid grid-cols-6 gap-1.5">
+            <button onclick="applyInspectorColor('#043f88')" class="h-7 rounded-lg border border-white/20 shadow-sm" style="background:#043f88" title="Yotei Reflex Blue #043f88"></button>
+            <button onclick="applyInspectorColor('#03336d')" class="h-7 rounded-lg border border-white/20 shadow-sm" style="background:#03336d" title="Brand 700 #03336d"></button>
+            <button onclick="applyInspectorColor('#022753')" class="h-7 rounded-lg border border-white/20 shadow-sm" style="background:#022753" title="Brand 600 #022753"></button>
+            <button onclick="applyInspectorColor('#011c3c')" class="h-7 rounded-lg border border-white/20 shadow-sm" style="background:#011c3c" title="Deep Navy #011c3c"></button>
+            <button onclick="applyInspectorColor('#054fad')" class="h-7 rounded-lg border border-white/20 shadow-sm" style="background:#054fad" title="Cobalt Accent #054fad"></button>
+            <button onclick="applyInspectorColor('#78a9e6')" class="h-7 rounded-lg border border-white/20 shadow-sm" style="background:#78a9e6" title="Ice Blue #78a9e6"></button>
+            <button onclick="applyInspectorColor('#ffffff')" class="h-7 rounded-lg border border-slate-600 shadow-sm" style="background:#ffffff" title="Pure White #ffffff"></button>
+            <button onclick="applyInspectorColor('#f8f9fa')" class="h-7 rounded-lg border border-slate-600 shadow-sm" style="background:#f8f9fa" title="Surface Light #f8f9fa"></button>
+            <button onclick="applyInspectorColor('#0b0d11')" class="h-7 rounded-lg border border-white/20 shadow-sm" style="background:#0b0d11" title="Obsidian Black #0b0d11"></button>
+            <button onclick="applyInspectorColor('#d4af37')" class="h-7 rounded-lg border border-white/20 shadow-sm" style="background:#d4af37" title="Champagne Gold #d4af37"></button>
+            <button onclick="applyInspectorColor('#9e4725')" class="h-7 rounded-lg border border-white/20 shadow-sm" style="background:#9e4725" title="Terracotta #9e4725"></button>
+            <button onclick="applyInspectorColor('#071a12')" class="h-7 rounded-lg border border-white/20 shadow-sm" style="background:#071a12" title="Emerald Green #071a12"></button>
+          </div>
+        </div>
+
+        <!-- Ready Card Background Gradients -->
+        <div>
+          <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Градієнти фону активної сторони:</span>
+          <div class="grid grid-cols-2 gap-1.5 text-[10px] font-bold">
+            <button onclick="applyCardGradient('linear-gradient(135deg, #043f88 0%, #011c3c 100%)')" class="p-2 rounded-lg text-white border border-white/15" style="background:linear-gradient(135deg, #043f88 0%, #011c3c 100%)">Yotei Gradient</button>
+            <button onclick="applyCardGradient('linear-gradient(135deg, #054fad 0%, #022753 100%)')" class="p-2 rounded-lg text-white border border-white/15" style="background:linear-gradient(135deg, #054fad 0%, #022753 100%)">Royal Cobalt</button>
+            <button onclick="applyCardGradient('linear-gradient(135deg, #ffffff 0%, #eef4fc 100%)')" class="p-2 rounded-lg text-[#043f88] border border-slate-400" style="background:linear-gradient(135deg, #ffffff 0%, #eef4fc 100%)">Ice Alabaster</button>
+            <button onclick="applyCardGradient('linear-gradient(135deg, #11151c 0%, #06080b 100%)')" class="p-2 rounded-lg text-amber-300 border border-white/15" style="background:linear-gradient(135deg, #11151c 0%, #06080b 100%)">Obsidian Noir</button>
+          </div>
+        </div>
+
+        <!-- Size / Scale, Rotation, Opacity Sliders -->
+        <div class="space-y-2.5 pt-1 border-t border-slate-800">
+          <div>
+            <div class="flex justify-between text-[11px] mb-1">
+              <span class="text-slate-400 font-semibold">Розмір (Масштаб):</span>
+              <span id="insp-scale-lbl" class="font-mono text-blue-400">100%</span>
+            </div>
+            <input type="range" id="insp-scale" min="0.2" max="3.0" step="0.05" value="1.0" oninput="updateSelectedTransform()" class="w-full accent-blue-500" />
+          </div>
+
+          <div>
+            <div class="flex justify-between text-[11px] mb-1">
+              <span class="text-slate-400 font-semibold">Поворот (Кут):</span>
+              <span id="insp-rot-lbl" class="font-mono text-blue-400">0°</span>
+            </div>
+            <input type="range" id="insp-rot" min="-180" max="180" step="1" value="0" oninput="updateSelectedTransform()" class="w-full accent-blue-500" />
+          </div>
+
+          <div>
+            <div class="flex justify-between text-[11px] mb-1">
+              <span class="text-slate-400 font-semibold">Прозорість:</span>
+              <span id="insp-op-lbl" class="font-mono text-blue-400">100%</span>
+            </div>
+            <input type="range" id="insp-op" min="0.05" max="1.0" step="0.05" value="1.0" oninput="updateSelectedOpacity(this.value)" class="w-full accent-blue-500" />
+          </div>
+        </div>
+
+        <!-- Text Editing & Font Controls -->
+        <div class="space-y-2 pt-2 border-t border-slate-800">
+          <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400">Текст обраного елемента:</label>
+          <textarea id="insp-text" rows="2" oninput="updateSelectedText(this.value)" placeholder="Виберіть текстовий блок..." class="w-full bg-slate-900 text-white text-xs rounded-xl p-2 border border-slate-700 focus:outline-none focus:border-blue-500"></textarea>
+          <div class="grid grid-cols-3 gap-1 text-[10px]">
+            <button onclick="setSelectedFont('Plus Jakarta Sans, sans-serif')" class="py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-200 font-sans">Jakarta</button>
+            <button onclick="setSelectedFont('Unbounded, sans-serif')" class="py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-200 font-display">Unbounded</button>
+            <button onclick="setSelectedFont('JetBrains Mono, monospace')" class="py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-200 font-mono">Mono</button>
+          </div>
+        </div>
+
+        <!-- Layer Order Controls -->
+        <div class="grid grid-cols-2 gap-1.5 pt-2 border-t border-slate-800 text-[11px] font-semibold">
+          <button onclick="shiftSelectedLayer(10)" class="py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300">⬆️ На передній план</button>
+          <button onclick="shiftSelectedLayer(-10)" class="py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300">⬇️ На задній план</button>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
   <!-- ================= MAIN CARDS CONTAINER ================= -->
-  <main class="max-w-7xl mx-auto px-2.5 sm:px-5 py-4 sm:py-7 flex-1 w-full">
+  <main id="gallery-main-section" class="max-w-7xl mx-auto px-2.5 sm:px-5 py-4 sm:py-7 flex-1 w-full">
+    
+    <!-- Custom Saved Cards Container (Injected dynamically at the very top!) -->
+    <div id="custom-cards-grid" class="space-y-5 sm:space-y-7 mb-7 empty:mb-0"></div>
+
     <div id="cards-grid" class="space-y-5 sm:space-y-7">
 
     <div id="card-P01" class="card-item bg-[#0f131c] border border-slate-800/80 rounded-2xl p-3 sm:p-5 transition-all hover:border-slate-700 scroll-mt-24" 
@@ -268,6 +688,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P01')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P01', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -508,6 +932,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P02')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P02', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -742,6 +1170,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P03')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P03', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -952,6 +1384,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P04')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P04', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -1178,6 +1614,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P05')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P05', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -1396,6 +1836,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P06')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P06', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -1624,6 +2068,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P07')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P07', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -1838,6 +2286,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P08')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P08', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -2066,6 +2518,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P09')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P09', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -2312,6 +2768,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P10')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P10', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -2538,6 +2998,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P11')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P11', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -2754,6 +3218,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P12')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P12', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -2994,6 +3462,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P13')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P13', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -3252,6 +3724,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P14')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P14', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -3480,6 +3956,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P15')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P15', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -3734,6 +4214,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P16')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P16', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -3970,6 +4454,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P17')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P17', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -4200,6 +4688,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P18')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P18', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -4444,6 +4936,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P19')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P19', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -4704,6 +5200,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P20')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P20', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -4964,6 +5464,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P21')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P21', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -5186,6 +5690,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P22')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P22', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -5450,6 +5958,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P23')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P23', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -5678,6 +6190,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P24')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P24', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -5906,6 +6422,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P25')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P25', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -6130,6 +6650,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P26')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P26', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -6388,6 +6912,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P27')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P27', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -6604,6 +7132,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P28')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P28', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -6860,6 +7392,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P29')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P29', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -7092,6 +7628,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P30')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P30', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -7320,6 +7860,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P31')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P31', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -7552,6 +8096,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P32')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P32', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -7782,6 +8330,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P33')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P33', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -8018,6 +8570,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P34')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P34', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -8232,6 +8788,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P35')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P35', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -8464,6 +9024,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P36')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P36', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -8684,6 +9248,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P37')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P37', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -8896,6 +9464,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P38')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P38', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -9112,6 +9684,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P39')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P39', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -9334,6 +9910,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P40')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P40', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -9560,6 +10140,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P41')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P41', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -9782,6 +10366,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P42')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P42', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -10000,6 +10588,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P43')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P43', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -10214,6 +10806,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P44')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P44', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -10428,6 +11024,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P45')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P45', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -10652,6 +11252,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('P46')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('P46', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -10886,6 +11490,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B01')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B01', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -11084,6 +11692,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B02')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B02', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -11278,6 +11890,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B03')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B03', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -11462,6 +12078,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B04')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B04', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -11646,6 +12266,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B05')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B05', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -11864,6 +12488,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B06')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B06', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -12062,6 +12690,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B07')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B07', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -12250,6 +12882,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B08')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B08', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -12448,6 +13084,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B09')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B09', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -12690,6 +13330,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B10')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B10', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -12926,6 +13570,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B11')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B11', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -13164,6 +13812,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B12')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B12', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -13374,6 +14026,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B13')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B13', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -13606,6 +14262,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B14')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B14', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -13828,6 +14488,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B15')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B15', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -14050,6 +14714,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B16')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B16', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -14238,6 +14906,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B17')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B17', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -14432,6 +15104,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B18')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B18', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -14660,6 +15336,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B19')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B19', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -14820,6 +15500,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B20')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B20', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -15014,6 +15698,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B21')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B21', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -15222,6 +15910,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B22')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B22', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -15424,6 +16116,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B23')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B23', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -15610,6 +16306,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B24')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B24', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -15814,6 +16514,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B25')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B25', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -15978,6 +16682,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B26')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B26', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -16190,6 +16898,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B27')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B27', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -16384,6 +17096,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B28')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B28', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -16582,6 +17298,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B29')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B29', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -16780,6 +17500,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B30')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B30', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -16978,6 +17702,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B31')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B31', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -17176,6 +17904,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B32')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B32', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -17374,6 +18106,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B33')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B33', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -17558,6 +18294,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B34')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B34', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -17756,6 +18496,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B35')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B35', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -17974,6 +18718,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B36')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B36', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -18172,6 +18920,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B37')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B37', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -18352,6 +19104,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B38')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B38', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -18550,6 +19306,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B39')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B39', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -18748,6 +19508,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B40')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B40', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -18946,6 +19710,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B41')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B41', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -19134,6 +19902,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B42')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B42', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -19322,6 +20094,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B43')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B43', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -19520,6 +20296,10 @@
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openCardInBuilder('B44')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 transition-all flex items-center space-x-1" title="Редагувати кольори та рухати елементи в конструкторі">
+            <span>✏️</span>
+            <span class="hidden sm:inline">В конструктор</span>
+          </button>
           <button onclick="openZoomModal('B44', 'both')" class="no-print px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 transition-all flex items-center space-x-1">
             <span>🔍</span>
             <span>Збільшити</span>
@@ -19669,9 +20449,9 @@
     
     </div>
 
-    <!-- Empty Favorites Message -->
+    <!-- Empty Favorites / Custom Message -->
     <div id="empty-fav-msg" class="hidden text-center py-16">
-      <p class="text-slate-400 text-sm">Ви ще не обрали жодної візитки. Натисніть <strong>«☆ Обрати»</strong> біля варіантів, які сподобались.</p>
+      <p class="text-slate-400 text-sm">У цьому розділі поки порожньо. Оберіть візитки кнопкою <strong>«☆ Обрати»</strong> або створіть власну у <strong>«🛠️ Конструкторі»</strong>.</p>
     </div>
   </main>
 
@@ -19680,10 +20460,10 @@
     
     <!-- Modal Top Controls Bar -->
     <div class="max-w-6xl w-full mx-auto bg-slate-900/95 border border-slate-800 rounded-2xl px-3 sm:px-5 py-2.5 flex flex-wrap items-center justify-between gap-2 shadow-2xl z-20">
-      <div class="flex items-center space-x-2.5 min-w-0">
+      <div class="flex items-center space-x-2 min-w-0">
         <button onclick="stepZoomCard(-1)" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold border border-slate-700" title="Попередня візитка (←)">←</button>
         <span id="zoom-card-id" class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-blue-600 text-white">#P01</span>
-        <h3 id="zoom-card-title" class="text-xs sm:text-sm font-bold text-white truncate max-w-[160px] sm:max-w-xs">Title</h3>
+        <h3 id="zoom-card-title" class="text-xs sm:text-sm font-bold text-white truncate max-w-[140px] sm:max-w-xs">Title</h3>
         <button onclick="stepZoomCard(1)" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold border border-slate-700" title="Наступна візитка (→)">→</button>
       </div>
 
@@ -19694,21 +20474,20 @@
         <button onclick="setZoomSide('both')" id="ztab-both" class="px-2.5 py-1 rounded-lg font-medium text-slate-400 hover:text-white">Обидві</button>
       </div>
 
-      <!-- Zoom Scale Controls + Close -->
+      <!-- Zoom Scale Controls + Edit + Close -->
       <div class="flex items-center space-x-1.5">
         <button onclick="changeModalZoom(-0.2)" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-bold flex items-center justify-center border border-slate-700" title="Зменшити">−</button>
         <button onclick="resetModalZoom()" id="modal-zoom-val" class="px-2 h-8 rounded-lg bg-slate-950 text-blue-400 font-mono text-xs font-bold border border-slate-800">150%</button>
         <button onclick="changeModalZoom(0.2)" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-bold flex items-center justify-center border border-slate-700" title="Збільшити">+</button>
-        <button onclick="toggleFavoriteFromModal()" id="modal-fav-btn" class="px-3 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-400 text-xs font-bold border border-slate-700">☆</button>
-        <button onclick="closeZoomModal()" class="px-3 h-8 rounded-lg bg-rose-600/20 hover:bg-rose-600 text-rose-300 hover:text-white text-xs font-bold border border-rose-500/30">✕ Закрити</button>
+        <button onclick="var cid=activeZoomId; closeZoomModal(); openCardInBuilder(cid);" class="px-2.5 h-8 rounded-lg bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white text-xs font-bold border border-emerald-500/30">✏️ Редагувати</button>
+        <button onclick="toggleFavoriteFromModal()" id="modal-fav-btn" class="px-2.5 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-400 text-xs font-bold border border-slate-700">☆</button>
+        <button onclick="closeZoomModal()" class="px-3 h-8 rounded-lg bg-rose-600/20 hover:bg-rose-600 text-rose-300 hover:text-white text-xs font-bold border border-rose-500/30">✕</button>
       </div>
     </div>
 
-    <!-- Modal Center Viewport (Scrollable/Pannable for high zoom) -->
+    <!-- Modal Center Viewport -->
     <div id="zoom-stage" class="flex-1 w-full overflow-auto flex items-center justify-center p-4 my-2" onclick="if(event.target === this) closeZoomModal()">
-      <div id="zoom-content" class="flex flex-col lg:flex-row items-center justify-center gap-8 transition-all duration-150">
-        <!-- Populated dynamically -->
-      </div>
+      <div id="zoom-content" class="flex flex-col lg:flex-row items-center justify-center gap-8 transition-all duration-150"></div>
     </div>
 
     <!-- Modal Bottom Hint -->
@@ -19717,10 +20496,21 @@
     </div>
   </div>
 
+  <!-- Toast Notification -->
+  <div id="studio-toast" class="fixed bottom-5 right-5 z-50 hidden bg-emerald-600 text-white px-4 py-2.5 rounded-xl shadow-2xl text-xs font-bold border border-emerald-400/40"></div>
+
   <script>
     let currentCategory = 'personal';
     let currentViewMode = 'both';
     let favorites = new Set(JSON.parse(localStorage.getItem('yotei_fav_cards') || '[]'));
+    let customCards = JSON.parse(localStorage.getItem('yotei_custom_cards_v1') || '[]');
+
+    function showToast(msg) {
+      const t = document.getElementById('studio-toast');
+      t.textContent = msg;
+      t.classList.remove('hidden');
+      setTimeout(() => t.classList.add('hidden'), 2800);
+    }
 
     // Global Page Zoom Adjuster
     function adjustPageZoom(delta) {
@@ -19728,6 +20518,667 @@
       const lbl = document.getElementById('page-zoom-label');
       if (lbl) lbl.textContent = Math.round(window.__userZoom * 100) + '%';
       __calcCardScale();
+    }
+
+    // ================= CUSTOM SAVED CARDS ENGINE =================
+    function renderCustomCardsGallery() {
+      const container = document.getElementById('custom-cards-grid');
+      document.getElementById('custom-count').textContent = customCards.length;
+      if (!customCards.length) {
+        container.innerHTML = '';
+        return;
+      }
+      container.innerHTML = customCards.map(c => `
+        <div id="card-${c.id}" class="card-item bg-[#101827] border-2 border-emerald-500/40 rounded-2xl p-3 sm:p-5 transition-all scroll-mt-24"
+             data-id="${c.id}" data-category="custom" data-title="${c.title}" data-vertical="false">
+          <div class="flex flex-wrap items-center justify-between pb-3 mb-4 border-b border-slate-800/80 gap-2">
+            <div class="flex items-center space-x-2 min-w-0 flex-1">
+              <span class="px-2.5 py-1 rounded-md text-xs font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+                #${c.id} • СТВОРЕНО В КОНСТРУКТОРІ
+              </span>
+              <h2 class="text-xs sm:text-base font-bold text-white truncate">${c.title}</h2>
+            </div>
+            <div class="flex items-center space-x-1.5 sm:space-x-2">
+              <button onclick="openCardInBuilder('${c.id}')" class="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30">✏️ Редагувати</button>
+              <button onclick="openZoomModal('${c.id}', 'both')" class="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30">🔍 Збільшити</button>
+              <button onclick="toggleFavorite('${c.id}')" id="fav-btn-${c.id}" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700">
+                <span id="fav-icon-${c.id}">☆</span> <span id="fav-label-${c.id}">Обрати</span>
+              </button>
+              <button onclick="deleteCustomCard('${c.id}')" class="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-rose-600/20 hover:bg-rose-600 text-rose-300 hover:text-white border border-rose-500/30" title="Видалити">🗑️</button>
+            </div>
+          </div>
+          <div class="both-view-wrapper flex flex-col lg:flex-row items-center justify-center gap-4 sm:gap-6 lg:gap-8 w-full">
+            <div class="flex flex-col items-center">
+              <span class="text-[10px] font-semibold uppercase tracking-widest text-slate-400 mb-1.5">Лицьова сторона</span>
+              <div class="card-scale-shell-h zoomable-card" onclick="openZoomModal('${c.id}', 'front')">
+                <div class="card-scale-inner-h">
+                  <div id="front-src-${c.id}" class="card-canvas-h relative">${c.front_html}</div>
+                </div>
+              </div>
+            </div>
+            <div class="flex flex-col items-center">
+              <span class="text-[10px] font-semibold uppercase tracking-widest text-slate-400 mb-1.5">Зворотна сторона</span>
+              <div class="card-scale-shell-h zoomable-card" onclick="openZoomModal('${c.id}', 'back')">
+                <div class="card-scale-inner-h">
+                  <div id="back-src-${c.id}" class="card-canvas-h relative">${c.back_html}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+      updateFavUI();
+    }
+
+    function deleteCustomCard(id) {
+      customCards = customCards.filter(c => c.id !== id);
+      localStorage.setItem('yotei_custom_cards_v1', JSON.stringify(customCards));
+      renderCustomCardsGallery();
+      applyFilters();
+      showToast('Макет видалено');
+    }
+
+    // ================= INTERACTIVE CONSTRUCTOR STUDIO ENGINE =================
+    let builderTargetSide = 'front';
+    let colorTargetMode = 'fg'; // 'fg' | 'bg' | 'card'
+    let selectedBuilderEl = null;
+    let builderHistory = [];
+
+    const YOTEI_SYMBOL_PATHS = [
+      { name: 'Зовнішнє кільце', d: 'M 42.93 2.0 C 54.312 2.0 64.569 6.519 71.955 13.993 79.341 21.379 83.948 31.634 83.948 42.931 83.948 54.315 79.341 64.567 71.955 71.956 64.569 79.341 54.312 83.946 42.93 83.946 31.633 83.946 21.379 79.341 13.992 71.956 6.519 64.567 2.0 54.315 2.0 42.931 2.0 31.634 6.519 21.379 13.992 13.993 21.379 6.519 31.633 2.0 42.93 2.0 M 71.087 14.861 C 63.872 7.649 53.965 3.217 42.93 3.217 31.98 3.217 22.074 7.649 14.862 14.861 7.648 21.988 3.217 31.981 3.217 42.931 3.217 53.966 7.648 63.873 14.862 71.088 22.074 78.3 31.98 82.731 42.93 82.731 53.965 82.731 63.872 78.3 71.087 71.088 78.299 63.873 82.729 53.966 82.729 42.931 82.729 31.981 78.299 21.988 71.087 14.861' },
+      { name: 'Центральна вісь', d: 'M 40.323 55.619 H 45.625 V 30.33 H 40.323 Z' },
+      { name: 'Верхня дуга', d: 'M 25.55 20.598 C 26.159 24.334 27.897 27.723 30.503 30.244 33.718 33.459 38.064 35.458 42.93 35.458 47.885 35.458 52.229 33.459 55.444 30.244 58.052 27.723 59.788 24.334 60.396 20.598 H 65.524 C 64.917 25.725 62.57 30.331 59.007 33.807 54.924 37.979 49.274 40.498 42.93 40.498 36.673 40.498 31.026 37.979 26.941 33.807 23.378 30.331 21.031 25.725 20.423 20.598 Z' },
+      { name: 'Нижня дуга (Гора Йотей)', d: 'M 25.55 65.352 C 26.159 61.614 27.897 58.225 30.503 55.619 33.718 52.49 38.064 50.491 42.93 50.491 47.885 50.491 52.229 52.49 55.444 55.619 58.052 58.225 59.788 61.614 60.396 65.352 H 65.524 C 64.917 60.137 62.57 55.53 59.007 52.055 54.924 47.971 49.274 45.451 42.93 45.451 36.673 45.451 31.026 47.971 26.941 52.055 23.378 55.53 21.031 60.137 20.423 65.352 Z' }
+    ];
+
+    const YOTEI_WORDMARK_PATHS = [
+      { name: 'Літера Y', d: 'M 4.955 14.163 C 4.955 28.503 26.853 28.503 26.853 14.163 H 29.721 C 29.721 21.205 24.421 27.201 17.382 27.896 V 40.236 H 14.427 V 27.896 C 7.388 27.201 2.0 21.205 2.0 14.163 Z', color: '#ffffff' },
+      { name: 'Кільце O', d: 'M 46.492 38.15 C 52.575 38.15 57.442 33.195 57.442 27.202 57.442 21.118 52.575 16.251 46.492 16.251 40.497 16.251 35.544 21.118 35.544 27.202 35.544 33.195 40.497 38.15 46.492 38.15 M 46.492 41.018 C 38.846 41.018 32.589 34.848 32.589 27.202 32.589 19.553 38.846 13.296 46.492 13.296 54.14 13.296 60.397 19.553 60.397 27.202 60.397 34.848 54.14 41.018 46.492 41.018', color: '#ffffff' },
+      { name: 'Точка в O (⊙)', d: 'M 46.492 23.635 C 48.405 23.635 49.969 25.201 49.969 27.114 49.969 29.024 48.405 30.59 46.492 30.59 44.581 30.59 43.016 29.024 43.016 27.114 43.016 25.201 44.581 23.635 46.492 23.635', color: '#78a9e6' },
+      { name: 'Літера T', d: 'M 63.873 17.031 V 14.163 H 85.859 V 17.031 H 76.3 V 40.236 H 73.432 V 17.031 Z', color: '#ffffff' },
+      { name: 'Літера E', d: 'M 101.588 38.15 C 105.064 38.15 108.366 36.411 110.363 33.629 H 113.839 C 111.494 38.15 106.8 41.018 101.588 41.018 93.939 41.018 87.683 34.848 87.683 27.202 87.683 19.553 93.939 13.296 101.588 13.296 109.234 13.296 115.404 19.553 115.404 27.202 V 28.678 H 97.415 V 25.723 H 112.45 C 111.669 20.334 107.061 16.251 101.588 16.251 95.505 16.251 90.637 21.118 90.637 27.115 90.55 33.108 95.505 38.15 101.588 38.15', color: '#ffffff' },
+      { name: 'Літера I', d: 'M 120.357 14.163 H 123.312 V 40.149 H 120.357 Z', color: '#ffffff' },
+      { name: 'Крапка над I', d: 'M 121.836 2.0 C 123.749 2.0 125.312 3.476 125.312 5.476 125.312 7.386 123.749 8.952 121.836 8.952 119.923 8.952 118.36 7.386 118.36 5.476 118.36 3.476 119.923 2.0 121.836 2.0', color: '#78a9e6' }
+    ];
+
+    function pushBuilderHistory() {
+      const f = document.getElementById('builder-front-canvas').innerHTML;
+      const b = document.getElementById('builder-back-canvas').innerHTML;
+      builderHistory.push({ f, b });
+      if (builderHistory.length > 25) builderHistory.shift();
+    }
+
+    function builderUndo() {
+      if (!builderHistory.length) return;
+      const prev = builderHistory.pop();
+      clearBuilderSelection();
+      document.getElementById('builder-front-canvas').innerHTML = prev.f;
+      document.getElementById('builder-back-canvas').innerHTML = prev.b;
+      showToast('Скасовано останню дію');
+    }
+
+    function setBuilderTargetSide(side) {
+      builderTargetSide = side;
+      document.getElementById('btarg-front').className = side === 'front' ? 'px-2 py-1 rounded-md font-bold bg-blue-600 text-white' : 'px-2 py-1 rounded-md font-medium text-slate-400';
+      document.getElementById('btarg-back').className = side === 'back' ? 'px-2 py-1 rounded-md font-bold bg-blue-600 text-white' : 'px-2 py-1 rounded-md font-medium text-slate-400';
+    }
+
+    function setColorTargetMode(mode) {
+      colorTargetMode = mode;
+      ['fg', 'bg', 'card'].forEach(m => {
+        const btn = document.getElementById('ctarg-' + m);
+        btn.className = (m === mode) ? 'py-1.5 rounded-lg font-bold bg-blue-600 text-white' : 'py-1.5 rounded-lg font-medium text-slate-400';
+      });
+    }
+
+    function clearBuilderSelection() {
+      if (selectedBuilderEl) {
+        selectedBuilderEl.classList.remove('builder-selected-el');
+        selectedBuilderEl = null;
+      }
+      document.getElementById('selected-el-tag').textContent = 'Оберіть елемент на візитці...';
+      document.getElementById('insp-text').value = '';
+    }
+
+    function selectBuilderElement(el, side) {
+      if (!el || el.id === 'builder-front-canvas' || el.id === 'builder-back-canvas') return;
+      if (selectedBuilderEl) selectedBuilderEl.classList.remove('builder-selected-el');
+      selectedBuilderEl = el;
+      selectedBuilderEl.classList.add('builder-selected-el');
+      if (side) setBuilderTargetSide(side);
+
+      const tag = el.getAttribute('data-part-name') || el.tagName.toLowerCase();
+      document.getElementById('selected-el-tag').textContent = 'Обрано: ' + tag;
+
+      const sc = parseFloat(el.getAttribute('data-scale') || '1');
+      const rot = parseFloat(el.getAttribute('data-rot') || '0');
+      document.getElementById('insp-scale').value = sc;
+      document.getElementById('insp-scale-lbl').textContent = Math.round(sc * 100) + '%';
+      document.getElementById('insp-rot').value = rot;
+      document.getElementById('insp-rot-lbl').textContent = Math.round(rot) + '°';
+
+      if (el.children.length === 0 && el.textContent.trim().length > 0 && el.tagName !== 'SVG' && el.tagName !== 'PATH') {
+        document.getElementById('insp-text').value = el.textContent.trim();
+      } else {
+        document.getElementById('insp-text').value = '';
+      }
+    }
+
+    function applyElementTransform(el) {
+      const dx = parseFloat(el.getAttribute('data-dx') || '0');
+      const dy = parseFloat(el.getAttribute('data-dy') || '0');
+      const sc = parseFloat(el.getAttribute('data-scale') || '1');
+      const rot = parseFloat(el.getAttribute('data-rot') || '0');
+      el.style.transform = `translate(${dx.toFixed(1)}px, ${dy.toFixed(1)}px) rotate(${rot}deg) scale(${sc})`;
+    }
+
+    function updateSelectedTransform() {
+      if (!selectedBuilderEl) return;
+      const sc = parseFloat(document.getElementById('insp-scale').value || '1');
+      const rot = parseFloat(document.getElementById('insp-rot').value || '0');
+      selectedBuilderEl.setAttribute('data-scale', sc);
+      selectedBuilderEl.setAttribute('data-rot', rot);
+      document.getElementById('insp-scale-lbl').textContent = Math.round(sc * 100) + '%';
+      document.getElementById('insp-rot-lbl').textContent = Math.round(rot) + '°';
+      applyElementTransform(selectedBuilderEl);
+    }
+
+    function updateSelectedOpacity(val) {
+      if (!selectedBuilderEl) return;
+      selectedBuilderEl.style.opacity = val;
+      document.getElementById('insp-op-lbl').textContent = Math.round(val * 100) + '%';
+    }
+
+    function updateSelectedText(val) {
+      if (!selectedBuilderEl) return;
+      if (selectedBuilderEl.tagName !== 'SVG' && selectedBuilderEl.tagName !== 'IMG') {
+        selectedBuilderEl.textContent = val;
+      }
+    }
+
+    function setSelectedFont(fontFam) {
+      if (!selectedBuilderEl) return;
+      selectedBuilderEl.style.fontFamily = fontFam;
+    }
+
+    function shiftSelectedLayer(delta) {
+      if (!selectedBuilderEl) return;
+      const cur = parseInt(selectedBuilderEl.style.zIndex || '20', 10);
+      selectedBuilderEl.style.zIndex = Math.max(1, cur + delta);
+    }
+
+    function duplicateSelectedEl() {
+      if (!selectedBuilderEl) return;
+      pushBuilderHistory();
+      const clone = selectedBuilderEl.cloneNode(true);
+      clone.classList.remove('builder-selected-el');
+      const dx = parseFloat(clone.getAttribute('data-dx') || '0') + 14;
+      const dy = parseFloat(clone.getAttribute('data-dy') || '0') + 14;
+      clone.setAttribute('data-dx', dx);
+      clone.setAttribute('data-dy', dy);
+      applyElementTransform(clone);
+      selectedBuilderEl.parentElement.appendChild(clone);
+      selectBuilderElement(clone, builderTargetSide);
+      showToast('Елемент скопійовано');
+    }
+
+    function deleteSelectedEl() {
+      if (!selectedBuilderEl) return;
+      pushBuilderHistory();
+      const el = selectedBuilderEl;
+      clearBuilderSelection();
+      el.remove();
+    }
+
+    function applyInspectorColor(hex) {
+      document.getElementById('custom-color-picker').value = hex;
+      pushBuilderHistory();
+
+      if (colorTargetMode === 'card') {
+        const targetCanvas = document.getElementById('builder-' + builderTargetSide + '-canvas');
+        const rootCard = targetCanvas.firstElementChild;
+        if (rootCard && rootCard.classList.contains('w-full') && rootCard.classList.contains('h-full')) {
+          rootCard.style.background = hex;
+          rootCard.style.backgroundColor = hex;
+        } else {
+          targetCanvas.style.background = hex;
+          targetCanvas.style.backgroundColor = hex;
+        }
+        return;
+      }
+
+      if (!selectedBuilderEl) {
+        showToast('Спочатку клікніть на елемент на візитці');
+        return;
+      }
+
+      if (colorTargetMode === 'bg') {
+        selectedBuilderEl.style.background = hex;
+        selectedBuilderEl.style.backgroundColor = hex;
+        return;
+      }
+
+      // 'fg': Color text, SVG, or decomposed path
+      const tag = selectedBuilderEl.tagName.toUpperCase();
+      if (tag === 'PATH' || tag === 'CIRCLE' || tag === 'RECT') {
+        selectedBuilderEl.setAttribute('fill', hex);
+        selectedBuilderEl.style.fill = hex;
+      } else if (tag === 'SVG') {
+        selectedBuilderEl.style.color = hex;
+        selectedBuilderEl.querySelectorAll('path, circle, g').forEach(p => {
+          p.setAttribute('fill', hex);
+          p.style.fill = hex;
+        });
+      } else {
+        selectedBuilderEl.style.color = hex;
+        selectedBuilderEl.style.borderColor = hex;
+        selectedBuilderEl.querySelectorAll('svg, path, circle, g').forEach(p => {
+          p.style.color = hex;
+          p.setAttribute('fill', hex);
+        });
+      }
+    }
+
+    function applyCardGradient(gradCss) {
+      pushBuilderHistory();
+      const targetCanvas = document.getElementById('builder-' + builderTargetSide + '-canvas');
+      const rootCard = targetCanvas.firstElementChild;
+      if (rootCard && rootCard.classList.contains('w-full') && rootCard.classList.contains('h-full')) {
+        rootCard.style.background = gradCss;
+      } else {
+        targetCanvas.style.background = gradCss;
+      }
+    }
+
+    // Add Ready-Made Elements onto active Builder Canvas
+    function addBuilderElement(type) {
+      pushBuilderHistory();
+      const canvas = document.getElementById('builder-' + builderTargetSide + '-canvas');
+      const wrapper = document.createElement('div');
+      wrapper.style.position = 'absolute';
+      wrapper.style.left = '155px';
+      wrapper.style.top = '85px';
+      wrapper.style.zIndex = '40';
+      wrapper.setAttribute('data-dx', '0');
+      wrapper.setAttribute('data-dy', '0');
+      wrapper.setAttribute('data-scale', '1');
+      wrapper.setAttribute('data-rot', '0');
+
+      if (type === 'logo_symbol') {
+        wrapper.setAttribute('data-part-name', 'Емблема YOTEI');
+        wrapper.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 89.948 89.946" width="64" height="64" style="color:#ffffff"><g fill="currentColor">${YOTEI_SYMBOL_PATHS.map(p => `<path d="${p.d}"/>`).join('')}</g></svg>`;
+      } else if (type === 'logo_text') {
+        wrapper.setAttribute('data-part-name', 'Вордмарк YOTEI');
+        wrapper.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 131.312 47.018" width="135" height="46" style="color:#ffffff"><g fill="currentColor">${YOTEI_WORDMARK_PATHS.map(p => `<path d="${p.d}"/>`).join('')}</g></svg>`;
+      } else if (type === 'logo_symbol_parts') {
+        // Add 4 separate independent draggable SVG layers for the YOTEI Symbol!
+        // pointer-events:none on box/svg + pointer-events:auto on path so clicks hit the exact ink of each part!
+        YOTEI_SYMBOL_PATHS.forEach((part, idx) => {
+          const partEl = document.createElement('div');
+          partEl.style.position = 'absolute';
+          partEl.style.left = '180px';
+          partEl.style.top = '42px';
+          partEl.style.zIndex = String(45 + idx);
+          partEl.style.pointerEvents = 'none';
+          partEl.setAttribute('data-dx', '0');
+          partEl.setAttribute('data-dy', '0');
+          partEl.setAttribute('data-scale', '1');
+          partEl.setAttribute('data-rot', '0');
+          partEl.setAttribute('data-part-name', 'Емблема: ' + part.name);
+          const col = idx === 1 ? '#78a9e6' : '#ffffff';
+          partEl.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 89.948 89.946" width="90" height="90" style="color:${col}; overflow:visible; pointer-events:none;"><path d="${part.d}" fill="${col}" style="pointer-events:auto; cursor:grab;"/></svg>`;
+          canvas.appendChild(partEl);
+          selectBuilderElement(partEl, builderTargetSide);
+        });
+        showToast('Додано 4 окремі рухомі деталі емблеми YOTEI!');
+        return;
+      } else if (type === 'logo_text_parts') {
+        // Add 7 separate independent draggable SVG layers for Y-O-⊙-T-E-I-dot!
+        YOTEI_WORDMARK_PATHS.forEach((part, idx) => {
+          const partEl = document.createElement('div');
+          partEl.style.position = 'absolute';
+          partEl.style.left = '150px';
+          partEl.style.top = '142px';
+          partEl.style.zIndex = String(50 + idx);
+          partEl.style.pointerEvents = 'none';
+          partEl.setAttribute('data-dx', '0');
+          partEl.setAttribute('data-dy', '0');
+          partEl.setAttribute('data-scale', '1');
+          partEl.setAttribute('data-rot', '0');
+          partEl.setAttribute('data-part-name', part.name);
+          partEl.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 131.312 47.018" width="150" height="52" style="color:${part.color}; overflow:visible; pointer-events:none;"><path d="${part.d}" fill="${part.color}" style="pointer-events:auto; cursor:grab;"/></svg>`;
+          canvas.appendChild(partEl);
+          selectBuilderElement(partEl, builderTargetSide);
+        });
+        showToast('Додано окремі рухомі літери Y-⊙-T-E-I!');
+        return;
+      } else if (type === 'logo_full_h') {
+        wrapper.setAttribute('data-part-name', 'Повний логотип YOTEI');
+        wrapper.style.display = 'flex';
+        wrapper.style.alignItems = 'center';
+        wrapper.style.gap = '10px';
+        wrapper.innerHTML = `
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 89.948 89.946" width="44" height="44" style="color:#ffffff"><g fill="currentColor">${YOTEI_SYMBOL_PATHS.map(p => `<path d="${p.d}"/>`).join('')}</g></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 131.312 47.018" width="110" height="38" style="color:#ffffff"><g fill="currentColor">${YOTEI_WORDMARK_PATHS.map(p => `<path d="${p.d}"/>`).join('')}</g></svg>
+        `;
+      } else if (type === 'watermark') {
+        wrapper.setAttribute('data-part-name', 'Водяний знак YOTEI');
+        wrapper.style.left = '240px';
+        wrapper.style.top = '-20px';
+        wrapper.style.opacity = '0.08';
+        wrapper.style.zIndex = '5';
+        wrapper.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 89.948 89.946" width="260" height="260" style="color:#ffffff"><g fill="currentColor">${YOTEI_SYMBOL_PATHS.map(p => `<path d="${p.d}"/>`).join('')}</g></svg>`;
+      } else if (type === 'portrait_cutout') {
+        wrapper.setAttribute('data-part-name', 'Портрет без фону (Cutout)');
+        wrapper.style.left = '15px';
+        wrapper.style.top = '10px';
+        wrapper.innerHTML = `<img src="assets/anton-portrait-cutout.png" style="width:170px; height:240px; object-fit:contain; display:block;" />`;
+      } else if (type === 'portrait_brand') {
+        wrapper.setAttribute('data-part-name', 'Портрет Studio Brand');
+        wrapper.style.left = '0px';
+        wrapper.style.top = '0px';
+        wrapper.innerHTML = `<img src="assets/anton-studio-brand.png" style="width:175px; height:250px; object-fit:cover; display:block;" />`;
+      } else if (type === 'portrait_dark') {
+        wrapper.setAttribute('data-part-name', 'Портрет Studio Dark');
+        wrapper.style.left = '0px';
+        wrapper.style.top = '0px';
+        wrapper.innerHTML = `<img src="assets/anton-studio-dark.png" style="width:175px; height:250px; object-fit:cover; display:block;" />`;
+      } else if (type === 'portrait_light') {
+        wrapper.setAttribute('data-part-name', 'Портрет Studio Light');
+        wrapper.style.left = '0px';
+        wrapper.style.top = '0px';
+        wrapper.innerHTML = `<img src="assets/anton-studio-light.png" style="width:175px; height:250px; object-fit:cover; display:block;" />`;
+      } else if (type === 'portrait_circle') {
+        wrapper.setAttribute('data-part-name', 'Портрет у медальйоні');
+        wrapper.style.left = '30px';
+        wrapper.style.top = '50px';
+        wrapper.innerHTML = `<div style="width:120px; height:120px; border-radius:9999px; overflow:hidden; border:2.5px solid #78a9e6; box-shadow:0 10px 25px rgba(0,0,0,0.4);"><img src="assets/anton-studio-brand.png" style="width:100%; height:100%; object-fit:cover; object-position:top;" /></div>`;
+      } else if (type === 'qr') {
+        wrapper.setAttribute('data-part-name', 'QR-код yotei.com.ua');
+        wrapper.innerHTML = `<img src="assets/qr-yotei-site.png" class="qr-box" />`;
+      } else if (type === 'name') {
+        wrapper.setAttribute('data-part-name', "Ім'я керівника");
+        wrapper.style.color = '#ffffff';
+        wrapper.style.fontWeight = '900';
+        wrapper.style.fontSize = '18px';
+        wrapper.style.letterSpacing = '0.02em';
+        wrapper.textContent = 'АНТОН МУРАШКІН';
+      } else if (type === 'role') {
+        wrapper.setAttribute('data-part-name', 'Посада');
+        wrapper.style.color = '#78a9e6';
+        wrapper.style.fontWeight = '700';
+        wrapper.style.fontSize = '9px';
+        wrapper.style.letterSpacing = '0.18em';
+        wrapper.style.textTransform = 'uppercase';
+        wrapper.textContent = 'ЗАСНОВНИК ТА КЕРІВНИК YOTEI';
+      } else if (type === 'phone') {
+        wrapper.setAttribute('data-part-name', 'Телефон');
+        wrapper.style.color = '#ffffff';
+        wrapper.style.fontWeight = '800';
+        wrapper.style.fontSize = '13px';
+        wrapper.style.fontFamily = '"JetBrains Mono", monospace';
+        wrapper.textContent = '+380 99 522 4472';
+      } else if (type === 'site') {
+        wrapper.setAttribute('data-part-name', 'Сайт');
+        wrapper.style.color = '#78a9e6';
+        wrapper.style.fontWeight = '800';
+        wrapper.style.fontSize = '11px';
+        wrapper.style.letterSpacing = '0.15em';
+        wrapper.textContent = 'YOTEI.COM.UA';
+      } else if (type === 'socials') {
+        wrapper.setAttribute('data-part-name', 'Соцмережі');
+        wrapper.style.color = '#e2e8f0';
+        wrapper.style.fontWeight = '600';
+        wrapper.style.fontSize = '9px';
+        wrapper.textContent = 'X: @Antonio_Yotei  •  TikTok: @Antonio_Murashkin';
+      } else if (type === 'services') {
+        wrapper.setAttribute('data-part-name', 'Блок напрямків');
+        wrapper.style.color = '#ffffff';
+        wrapper.style.fontSize = '8.5px';
+        wrapper.style.lineHeight = '1.55';
+        wrapper.style.fontWeight = '600';
+        wrapper.innerHTML = `<div>• Купівля • Продаж • Оренда нерухомості</div><div>• Інвестиції та комерційна нерухомість</div><div>• Юридично безпечні угоди • єОселя</div>`;
+      } else if (type === 'custom_text') {
+        wrapper.setAttribute('data-part-name', 'Текстовий блок');
+        wrapper.style.color = '#ffffff';
+        wrapper.style.fontWeight = '800';
+        wrapper.style.fontSize = '14px';
+        wrapper.textContent = 'НОВИЙ ТЕКСТ';
+      } else if (type === 'rect_block') {
+        wrapper.setAttribute('data-part-name', 'Кольорова плашка');
+        wrapper.style.width = '180px';
+        wrapper.style.height = '90px';
+        wrapper.style.backgroundColor = '#022753';
+        wrapper.style.borderRadius = '6px';
+        wrapper.style.zIndex = '10';
+      } else if (type === 'frame_box') {
+        wrapper.setAttribute('data-part-name', 'Архітектурна рамка');
+        wrapper.style.left = '14px';
+        wrapper.style.top = '14px';
+        wrapper.style.width = '422px';
+        wrapper.style.height = '222px';
+        wrapper.style.border = '1.5px solid #78a9e6';
+        wrapper.style.pointerEvents = 'auto';
+        wrapper.style.zIndex = '15';
+      } else if (type === 'line_h') {
+        wrapper.setAttribute('data-part-name', 'Лінія-розділювач');
+        wrapper.style.width = '180px';
+        wrapper.style.height = '2px';
+        wrapper.style.backgroundColor = '#78a9e6';
+      } else if (type === 'circle_dot') {
+        wrapper.setAttribute('data-part-name', 'Акцентне коло');
+        wrapper.style.width = '24px';
+        wrapper.style.height = '24px';
+        wrapper.style.borderRadius = '9999px';
+        wrapper.style.backgroundColor = '#78a9e6';
+      }
+
+      canvas.appendChild(wrapper);
+      selectBuilderElement(wrapper, builderTargetSide);
+    }
+
+    // Load ANY existing card (#P01..#B44 or #C01..) into the Builder
+    function loadCardIntoBuilder(cid) {
+      const fSrc = document.getElementById('front-src-' + cid);
+      const bSrc = document.getElementById('back-src-' + cid);
+      const cardItem = document.getElementById('card-' + cid);
+      if (!fSrc || !bSrc) return;
+
+      pushBuilderHistory();
+      clearBuilderSelection();
+      document.getElementById('builder-front-canvas').innerHTML = fSrc.innerHTML;
+      document.getElementById('builder-back-canvas').innerHTML = bSrc.innerHTML;
+
+      const title = cardItem ? cardItem.getAttribute('data-title') : cid;
+      document.getElementById('builder-card-name').value = title + ' (Кастом)';
+      document.getElementById('builder-template-select').value = cid;
+      showToast('Завантажено макет #' + cid + ' у конструктор!');
+    }
+
+    function openCardInBuilder(cid) {
+      setCategory('builder');
+      loadCardIntoBuilder(cid);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function loadBlankBuilderPreset(bgHex) {
+      pushBuilderHistory();
+      clearBuilderSelection();
+      const textCol = bgHex === '#ffffff' ? '#043f88' : '#ffffff';
+      const subCol = bgHex === '#ffffff' ? '#054fad' : '#78a9e6';
+      document.getElementById('builder-front-canvas').innerHTML = `
+        <div class="w-full h-full relative overflow-hidden" style="background:${bgHex};"></div>
+      `;
+      document.getElementById('builder-back-canvas').innerHTML = `
+        <div class="w-full h-full relative overflow-hidden" style="background:${bgHex === '#ffffff' ? '#043f88' : '#011c3c'};"></div>
+      `;
+      builderTargetSide = 'front';
+      addBuilderElement('logo_symbol');
+      selectedBuilderEl.style.color = textCol;
+      selectedBuilderEl.style.left = '193px';
+      selectedBuilderEl.style.top = '50px';
+      addBuilderElement('logo_text');
+      selectedBuilderEl.style.color = textCol;
+      selectedBuilderEl.style.left = '157px';
+      selectedBuilderEl.style.top = '128px';
+      addBuilderElement('site');
+      selectedBuilderEl.style.color = subCol;
+      selectedBuilderEl.style.left = '175px';
+      selectedBuilderEl.style.top = '195px';
+
+      builderTargetSide = 'back';
+      addBuilderElement('qr');
+      selectedBuilderEl.style.left = '55px';
+      selectedBuilderEl.style.top = '88px';
+      addBuilderElement('name');
+      selectedBuilderEl.style.left = '160px';
+      selectedBuilderEl.style.top = '85px';
+      addBuilderElement('role');
+      selectedBuilderEl.style.left = '160px';
+      selectedBuilderEl.style.top = '115px';
+      addBuilderElement('phone');
+      selectedBuilderEl.style.left = '160px';
+      selectedBuilderEl.style.top = '142px';
+      builderTargetSide = 'front';
+      showToast('Створено чисту базу з елементами YOTEI!');
+    }
+
+    function loadLogoDecomposedPreset() {
+      pushBuilderHistory();
+      clearBuilderSelection();
+      document.getElementById('builder-front-canvas').innerHTML = `
+        <div class="w-full h-full relative overflow-hidden" style="background:linear-gradient(135deg, #043f88 0%, #011c3c 100%);"></div>
+      `;
+      document.getElementById('builder-back-canvas').innerHTML = `
+        <div class="w-full h-full relative overflow-hidden" style="background:#ffffff;"></div>
+      `;
+      builderTargetSide = 'front';
+      addBuilderElement('logo_symbol_parts');
+      addBuilderElement('logo_text_parts');
+
+      builderTargetSide = 'back';
+      addBuilderElement('qr');
+      selectedBuilderEl.style.left = '55px';
+      selectedBuilderEl.style.top = '88px';
+      addBuilderElement('name');
+      selectedBuilderEl.style.color = '#043f88';
+      selectedBuilderEl.style.left = '155px';
+      selectedBuilderEl.style.top = '78px';
+      addBuilderElement('role');
+      selectedBuilderEl.style.color = '#054fad';
+      selectedBuilderEl.style.left = '155px';
+      selectedBuilderEl.style.top = '106px';
+      addBuilderElement('phone');
+      selectedBuilderEl.style.color = '#011c3c';
+      selectedBuilderEl.style.left = '155px';
+      selectedBuilderEl.style.top = '132px';
+      addBuilderElement('site');
+      selectedBuilderEl.style.color = '#043f88';
+      selectedBuilderEl.style.left = '155px';
+      selectedBuilderEl.style.top = '160px';
+
+      builderTargetSide = 'front';
+      document.getElementById('builder-card-name').value = 'Кастомний Логотип YOTEI';
+      showToast('Логотип розбито на окремі деталі! Клікайте та рухайте кожну літеру чи дугу.');
+    }
+
+    // Pointer Drag-and-Drop Handler for Both Builder Canvases
+    function setupBuilderCanvasInteractions(canvasId, side) {
+      const canvas = document.getElementById(canvasId);
+      const snapX = document.getElementById('snap-x-' + side);
+      const snapY = document.getElementById('snap-y-' + side);
+      let draggingEl = null;
+      let startX = 0, startY = 0;
+      let origDx = 0, origDy = 0;
+
+      canvas.addEventListener('pointerdown', function(e) {
+        let target = e.target;
+        if (target === canvas) {
+          clearBuilderSelection();
+          return;
+        }
+        // If user clicked a full-bleed background container, don't drag the whole card background
+        if (target.parentElement === canvas && target.classList.contains('w-full') && target.classList.contains('h-full') && e.target === target) {
+          selectBuilderElement(target, side);
+          return;
+        }
+        // Climb up if inside a small wrapper or pick exact draggable node
+        while (target && target.parentElement && target.parentElement !== canvas && !target.hasAttribute('data-part-name') && target.tagName !== 'IMG' && target.tagName !== 'SVG' && target.tagName !== 'H3' && target.tagName !== 'P' && target.tagName !== 'SPAN') {
+          if (target.parentElement.classList.contains('w-full') && target.parentElement.classList.contains('h-full')) break;
+          target = target.parentElement;
+        }
+        if (!target || target === canvas) return;
+
+        e.stopPropagation();
+        pushBuilderHistory();
+        selectBuilderElement(target, side);
+
+        draggingEl = target;
+        startX = e.clientX;
+        startY = e.clientY;
+        origDx = parseFloat(draggingEl.getAttribute('data-dx') || '0');
+        origDy = parseFloat(draggingEl.getAttribute('data-dy') || '0');
+        draggingEl.setPointerCapture(e.pointerId);
+      });
+
+      canvas.addEventListener('pointermove', function(e) {
+        if (!draggingEl) return;
+        const scale = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--card-scale') || '1');
+        const dx = origDx + (e.clientX - startX) / scale;
+        const dy = origDy + (e.clientY - startY) / scale;
+
+        draggingEl.setAttribute('data-dx', dx.toFixed(1));
+        draggingEl.setAttribute('data-dy', dy.toFixed(1));
+        applyElementTransform(draggingEl);
+
+        // Snap center guide display
+        const cRect = canvas.getBoundingClientRect();
+        const eRect = draggingEl.getBoundingClientRect();
+        const elCenterX = (eRect.left + eRect.width / 2 - cRect.left) / scale;
+        const elCenterY = (eRect.top + eRect.height / 2 - cRect.top) / scale;
+        if (snapX) snapX.style.display = Math.abs(elCenterX - 225) < 6 ? 'block' : 'none';
+        if (snapY) snapY.style.display = Math.abs(elCenterY - 125) < 6 ? 'block' : 'none';
+      });
+
+      function endDrag() {
+        draggingEl = null;
+        if (snapX) snapX.style.display = 'none';
+        if (snapY) snapY.style.display = 'none';
+      }
+      canvas.addEventListener('pointerup', endDrag);
+      canvas.addEventListener('pointercancel', endDrag);
+    }
+
+    setupBuilderCanvasInteractions('builder-front-canvas', 'front');
+    setupBuilderCanvasInteractions('builder-back-canvas', 'back');
+
+    function saveBuilderCardToGallery() {
+      clearBuilderSelection();
+      const nameInput = document.getElementById('builder-card-name');
+      const title = (nameInput.value || 'Мій авторський варіант YOTEI').trim();
+      const fHtml = document.getElementById('builder-front-canvas').innerHTML;
+      const bHtml = document.getElementById('builder-back-canvas').innerHTML;
+      const newId = 'C' + String(customCards.length + 1).padStart(2, '0');
+
+      const newCard = {
+        id: newId,
+        title: title,
+        front_html: fHtml,
+        back_html: bHtml
+      };
+      customCards.unshift(newCard);
+      localStorage.setItem('yotei_custom_cards_v1', JSON.stringify(customCards));
+      favorites.add(newId);
+      localStorage.setItem('yotei_fav_cards', JSON.stringify(Array.from(favorites)));
+
+      renderCustomCardsGallery();
+      setCategory('custom');
+      showToast('Збережено макет #' + newId + ' у розділ «🎨 Створені» та «⭐ Обрані»!');
+    }
+
+    function printBuilderCard() {
+      clearBuilderSelection();
+      window.print();
     }
 
     // ================= FULL-SCREEN ZOOM MODAL LOGIC =================
@@ -19741,7 +21192,6 @@
       const cardW = isVertical ? 250 : 450;
       const cardH = isVertical ? 450 : 250;
       if (vw < 640) {
-        // On mobile phone: fit 94% of screen width cleanly, or allow zooming up to 2.0x!
         return Math.min(1.4, (vw - 24) / cardW);
       }
       if (sideMode === 'both') {
@@ -19867,7 +21317,6 @@
       }
     }
 
-    // Mouse wheel zoom inside modal & keyboard navigation
     document.getElementById('zoom-stage').addEventListener('wheel', function(e) {
       if (!activeZoomId) return;
       e.preventDefault();
@@ -19920,18 +21369,38 @@
 
     function setCategory(cat) {
       currentCategory = cat;
-      ['personal', 'brand', 'fav'].forEach(c => {
+      const builderSec = document.getElementById('builder-studio-section');
+      const gallerySec = document.getElementById('gallery-main-section');
+      const controlsBar = document.getElementById('gallery-controls-bar');
+
+      ['personal', 'brand', 'builder', 'custom', 'fav'].forEach(c => {
         const tab = document.getElementById('tab-' + c);
         if (!tab) return;
         if (c === cat) {
           tab.classList.add('bg-blue-600', 'text-white', 'font-bold');
-          tab.classList.remove('text-slate-400', 'text-amber-400');
+          tab.classList.remove('text-slate-400', 'text-amber-400', 'text-emerald-400', 'text-cyan-400', 'bg-emerald-500/10');
         } else {
           tab.classList.remove('bg-blue-600', 'text-white', 'font-bold');
-          tab.classList.add(c === 'fav' ? 'text-amber-400' : 'text-slate-400');
+          if (c === 'fav') tab.classList.add('text-amber-400');
+          else if (c === 'builder') tab.classList.add('text-emerald-400', 'bg-emerald-500/10');
+          else if (c === 'custom') tab.classList.add('text-cyan-400');
+          else tab.classList.add('text-slate-400');
         }
       });
-      applyFilters();
+
+      if (cat === 'builder') {
+        builderSec.classList.remove('hidden');
+        gallerySec.classList.add('hidden');
+        controlsBar.classList.add('hidden');
+        if (!document.getElementById('builder-front-canvas').innerHTML.trim()) {
+          loadCardIntoBuilder('P01');
+        }
+      } else {
+        builderSec.classList.add('hidden');
+        gallerySec.classList.remove('hidden');
+        controlsBar.classList.remove('hidden');
+        applyFilters();
+      }
     }
 
     function applyFilters() {
@@ -19943,6 +21412,8 @@
         let show = false;
         if (currentCategory === 'fav') {
           show = favorites.has(id);
+        } else if (currentCategory === 'custom') {
+          show = (cat === 'custom');
         } else {
           show = (cat === currentCategory);
         }
@@ -19951,7 +21422,7 @@
       });
 
       const emptyMsg = document.getElementById('empty-fav-msg');
-      if (currentCategory === 'fav' && visibleCount === 0) {
+      if ((currentCategory === 'fav' || currentCategory === 'custom') && visibleCount === 0) {
         emptyMsg.classList.remove('hidden');
       } else {
         emptyMsg.classList.add('hidden');
@@ -20009,6 +21480,7 @@
     }
 
     // Initialize on load
+    renderCustomCardsGallery();
     updateFavUI();
     setCategory('personal');
   </script>
