@@ -34,7 +34,7 @@ PROVIDERS = [
         "id": "Nous Portal", "access": "api", "status": "working", "color": "#a78bfa",
         "limits": "RPM/TPM/RPD не раскрыты", "rpm": None, "rpd": None, "tpd": None,
         "card": False, "training": "no", "ctxCap": 1048576,
-        "note": f"{len(NOUS_LIVE)} :free моделей (Beam 501B, Step 3.7 Flash, Solar Mini4). Часть требует тег user= в extra_body.tags.",
+        "note": f"{len(NOUS_LIVE)} :free моделей (LongCat 2.5, Beam 501B, Step 3.7 Flash, Solar Mini4). Часть требует тег user= в extra_body.tags.",
         "uptime": "97%",
     },
     {
@@ -387,11 +387,12 @@ FAMILIES = [
         ],
     },
     {
-        "id": "longcat-2.5", "rank": 12, "name": "LongCat 2.5 Preview",
+        "id": "longcat-2.5", "rank": 12, "name": "LongCat 2.5",
         "tasks": ["Long Context", "Reasoning", "Coding"], "family": "LongCat",
-        "ctx": 1048576, "out": 65536, "reasoning": True,
+        "ctx": 1048576, "out": 131072, "reasoning": True,
         "bench": {"swe": 52.1, "he": 79.8, "aider": 54.6, "livecode": 46.3, "arena": None, "arenaRank": None},
         "routes": [
+            {"p": "Nous Portal", "id": "meituan/longcat-2.5:free", "status": "working", "type": "free", "src": "api"},
             {"p": "OpenCode Free", "id": "opencode/longcat-2.5-preview-free", "status": "catalog", "type": "free", "src": "local"},
         ],
     },
@@ -411,16 +412,6 @@ FAMILIES = [
         "bench": {"swe": None, "he": None, "aider": None, "livecode": None, "arena": None, "arenaRank": None},
         "routes": [
             {"p": "Nous Portal", "id": "upstage/solar-mini4:free", "status": "working", "type": "free", "src": "api"},
-        ],
-    },
-    {
-        "id": "inkling", "rank": 15, "name": "Inkling / Inkling Small",
-        "tasks": ["Кодинг", "Reasoning", "Fast Agent"], "family": "Thinking Machines",
-        "ctx": 1048576, "out": 262144, "reasoning": True,
-        "bench": {"swe": 63.1, "he": 86.7, "aider": 66.2, "livecode": 57.8, "arena": None, "arenaRank": "WebDev 1600+"},
-        "routes": [
-            {"p": "OpenRouter", "id": "thinkingmachines/inkling:free", "status": "working", "type": "free", "src": "api"},
-            {"p": "OpenRouter", "id": "thinkingmachines/inkling-small:free", "status": "working", "type": "free", "src": "api"},
         ],
     },
     {
@@ -589,7 +580,7 @@ for _idx, _fam in enumerate(FAMILIES, 1):
 PLANS = [
     {
         "name": "Nous Portal Free", "price": "$0", "kind": "Free tier",
-        "includes": "Все бесплатные модели Nous: Beam 501B, Step 3.7 Flash, Solar Mini4. Каталог портала — 248 моделей (325 с embeddings)",
+        "includes": "Все бесплатные модели Nous: LongCat 2.5, Beam 501B, Step 3.7 Flash, Solar Mini4. Каталог портала — 248 моделей (325 с embeddings)",
         "allowance": "50 RPM / 500K TPM. Только free-модели — платные через портал недоступны",
         "tokens": "Без лимита токенов, но жёсткий RPM",
         "verdict": "Наш основной Nous-маршрут. Работает в Hermes", "score": 89,
@@ -774,10 +765,10 @@ RELEASES = [
 
 # ------------------------------------------------------------------ verified probes
 PROBES = [
+    {"m": "nous/meituan/longcat-2.5:free", "r": "ok", "t": "PROBE_OK", "n": "1M ctx / 131K out, tools, возвращена в :free каталог Nous 05.11.2026."},
     {"m": "openrouter/stealth/crouton-alpha", "r": "ok", "t": "PROBE_OK", "n": "1M ctx / 944K out, omnimodal (text/image/video/audio/file), mandatory reasoning, ~71 tok/s."},
     {"m": "openrouter/recursive/flint-v1.0:free", "r": "ok", "t": "PROBE_OK", "n": "262K ctx / 236K out, 40B-A2.5B MoE, SWE-Verified 74.2%, ~108 tok/s."},
     {"m": "openrouter/cohere/north-mini-code:free", "r": "ok", "t": "PROBE_OK", "n": "256K ctx / 64K out."},
-    {"m": "openrouter/thinkingmachines/inkling:free", "r": "ok", "t": "PROBE_OK", "n": "Нужен заголовок X-OpenRouter-Categories — Hermes шлёт его сам."},
     {"m": "openrouter/xingchen-agi/xing4.0-29b-a4b:free", "r": "ok", "t": "PROBE_OK", "n": "262K ctx / 236K out."},
     {"m": "openrouter/liquid/lfm-2.5-2.6b:free", "r": "ok", "t": "PROBE_OK", "n": "65K ctx."},
     {"m": "openrouter/openrouter/free", "r": "ok", "t": "PROBE_OK", "n": "Авто-роутер OpenRouter."},
@@ -797,6 +788,8 @@ PROBES = [
     {"m": "omniroute/auto/cheap", "r": "ok", "t": "PROBE_OK", "n": "Дешёвый маршрут."},
     {"m": "omniroute/auto/offline", "r": "ok", "t": "PROBE_OK", "n": "Оффлайн-маршрут."},
     {"m": "nvidia/nemotron-3.5-lightning-30b-a3b", "r": "ok", "t": "PROBE_OK", "n": "Правильный NIM ID."},
+    {"m": "openrouter/thinkingmachines/inkling:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — промо-период :free на OpenRouter завершился 05.11.2026 (переведена на платный thinkingmachines/inkling)."},
+    {"m": "openrouter/thinkingmachines/inkling-small:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — промо-период :free на OpenRouter завершился 05.11.2026 (переведена на платный thinkingmachines/inkling-small)."},
     {"m": "nous/ornith/ornith-1.5-122b:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — промо-период :free на Nous завершился 03.11.2026 (переведена на платный ornith/ornith-1.5-122b, $0.16/$0.64 за 1M)."},
     {"m": "openrouter/poolside/laguna-s-2.1:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — убрана из zero-price каталога OpenRouter 02.11.2026 (no provider serves this model anymore)."},
     {"m": "openrouter/poolside/laguna-xs-2.1:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — убрана из zero-price каталога OpenRouter 02.11.2026 (no provider serves this model anymore)."},
@@ -1003,8 +996,7 @@ DATA = {
             {"name": "Nemotron 3.5 Lightning", "f": "nemotron-3.5-lightning", "v": [2, 2, 0, 1, 3, 3, 0, 2, 1]},
             {"name": "Nemotron 3 Ultra / Super VL", "f": "nemotron-3-ultra", "v": [2, 3, 1, 3, 2, 1, 0, 2, 1]},
             {"name": "Laguna S 2.1", "f": "laguna-s-2.1", "v": [2, 1, 0, 0, 1, 1, 0, 1, 0]},
-            {"name": "LongCat 2.5 Preview", "f": "longcat-2.5", "v": [2, 2, 0, 0, 1, 1, 0, 3, 1]},
-            {"name": "Inkling / Inkling Small", "f": "inkling", "v": [3, 3, 1, 1, 2, 2, 0, 3, 1]},
+            {"name": "LongCat 2.5", "f": "longcat-2.5", "v": [2, 2, 0, 0, 1, 1, 0, 3, 1]},
             {"name": "Gemma 4 26B / 31B", "f": "gemma-4", "v": [1, 2, 0, 0, 1, 1, 0, 1, 0]},
             {"name": "North Mini Code", "f": "north-mini-code", "v": [3, 1, 0, 0, 2, 2, 0, 1, 0]},
             {"name": "Xing 4.0 29B-A4B", "f": "xing-4.0", "v": [1, 2, 0, 0, 1, 1, 0, 1, 0]},
