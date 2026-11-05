@@ -1,5 +1,5 @@
 window.FREE_AI_DATA = {
- "snapshot": "2026-11-04",
+ "snapshot": "2026-11-05",
  "providers": [
   {
    "id": "OpenRouter",
@@ -13,7 +13,7 @@ window.FREE_AI_DATA = {
    "card": false,
    "training": "no",
    "ctxCap": 1048576,
-   "note": "18 zero-price моделей прямо сейчас. Единственный ключ на десятки семейств.",
+   "note": "16 zero-price моделей прямо сейчас. Единственный ключ на десятки семейств.",
    "uptime": "99.5%"
   },
   {
@@ -28,7 +28,7 @@ window.FREE_AI_DATA = {
    "card": false,
    "training": "no",
    "ctxCap": 1048576,
-   "note": "3 :free моделей (Beam 501B, Step 3.7 Flash, Solar Mini4). Часть требует тег user= в extra_body.tags.",
+   "note": "4 :free моделей (Beam 501B, Step 3.7 Flash, Solar Mini4). Часть требует тег user= в extra_body.tags.",
    "uptime": "97%"
   },
   {
@@ -1801,7 +1801,7 @@ window.FREE_AI_DATA = {
    "name": "OpenRouter (пополнение)",
    "price": "$10 разово",
    "kind": "Кредиты",
-   "includes": "Все 18 zero-price моделей без изменений + рост дневного лимита",
+   "includes": "Все 16 zero-price моделей без изменений + рост дневного лимита",
    "allowance": "50 RPD → 1000 RPD на free-моделях. Комиссия платформы 5.5%.",
    "tokens": "1000 запросов/день на всём free-пуле",
    "verdict": "Лучший апгрейд именно для бесплатного пула",
@@ -3066,7 +3066,7 @@ window.FREE_AI_DATA = {
   {
    "n": "OmniRoute (локальный шлюз)",
    "signup": "У нас уже поднят: localhost:20128",
-   "quota": "Без квот и без карты · 1294 моделей в 16 префиксах · no-auth пулы: ddgw (6), auto/* (4)",
+   "quota": "Без квот и без карты · 1300 моделей в 16 префиксах · no-auth пулы: ddgw (6), auto/* (4)",
    "models": "GPT-5.4 Mini · GPT-5.6 Luna · Claude Haiku 4.5 · Mistral Small 2603 · GPT-OSS 120B · Gemma4 31B · auto/best-free · auto/coding:free",
    "ctx": "до 1M",
    "note": "Это шлюз, а не тариф: раздаёт бесплатные пулы и маршрутит по качеству. Проверен read-only, конфиг не менялся.",
@@ -3835,7 +3835,7 @@ window.FREE_AI_DATA = {
    "uptime": "99.5%",
    "status": "working",
    "limits": "20 RPM / 50 RPD (1000 RPD с $10 top-up)",
-   "note": "18 zero-price моделей прямо сейчас. Единственный ключ на десятки семейств.",
+   "note": "16 zero-price моделей прямо сейчас. Единственный ключ на десятки семейств.",
    "parts": {
     "Работоспособность": 26.7,
     "Покрытие моделей": 17.0,
@@ -3990,7 +3990,7 @@ window.FREE_AI_DATA = {
    "uptime": "97%",
    "status": "working",
    "limits": "RPM/TPM/RPD не раскрыты",
-   "note": "3 :free моделей (Beam 501B, Step 3.7 Flash, Solar Mini4). Часть требует тег user= в extra_body.tags.",
+   "note": "4 :free моделей (Beam 501B, Step 3.7 Flash, Solar Mini4). Часть требует тег user= в extra_body.tags.",
    "parts": {
     "Работоспособность": 40.0,
     "Покрытие моделей": 6.9,
@@ -5353,12 +5353,12 @@ window.FREE_AI_DATA = {
   }
  ],
  "meta": {
-  "omnirouteTotal": 1294,
+  "omnirouteTotal": 1300,
   "omniroutePrefixes": {
    "auto": 45,
    "agy": 25,
-   "no-think": 63,
-   "antigravity": 19,
+   "no-think": 65,
+   "antigravity": 23,
    "dva": 110,
    "oc": 10,
    "ddgw": 6,
@@ -5372,7 +5372,7 @@ window.FREE_AI_DATA = {
    "aihorde": 167,
    "openrouter": 737
   },
-  "openrouterLiveFree": 18,
-  "nousLiveFree": 3
+  "openrouterLiveFree": 16,
+  "nousLiveFree": 4
  }
 };

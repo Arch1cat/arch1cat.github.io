@@ -1,5 +1,5 @@
 {
- "snapshot": "2026-11-04",
+ "snapshot": "2026-11-05",
  "openrouter": [
   {
    "id": "cohere/north-mini-code:free",
@@ -107,20 +107,6 @@
    "name": "Crouton Alpha"
   },
   {
-   "id": "thinkingmachines/inkling-small:free",
-   "ctx": 1048576,
-   "out": 262144,
-   "tools": true,
-   "name": "Thinking Machines: Inkling Small (free)"
-  },
-  {
-   "id": "thinkingmachines/inkling:free",
-   "ctx": 1048576,
-   "out": 262144,
-   "tools": true,
-   "name": "Thinking Machines: Inkling (free)"
-  },
-  {
    "id": "xingchen-agi/xing4.0-29b-a4b:free",
    "ctx": 262144,
    "out": 235929,
@@ -129,6 +115,13 @@
   }
  ],
  "nous": [
+  {
+   "id": "meituan/longcat-2.5:free",
+   "ctx": 1048576,
+   "out": 131072,
+   "tools": true,
+   "name": "Meituan: LongCat 2.5"
+  },
   {
    "id": "reflection/beam-1.0-501b-a23b:free",
    "ctx": 262144,
@@ -152,12 +145,12 @@
   }
  ],
  "omniroute": {
-  "total": 1294,
+  "total": 1300,
   "prefixes": {
    "auto": 45,
    "agy": 25,
-   "no-think": 63,
-   "antigravity": 19,
+   "no-think": 65,
+   "antigravity": 23,
    "dva": 110,
    "oc": 10,
    "ddgw": 6,
