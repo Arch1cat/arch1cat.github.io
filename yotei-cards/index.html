@@ -245,27 +245,33 @@
 
       </div>
 
-      <!-- Sub-filter bar for Personal Cards + Figma SVG Downloads & Live Text Edit -->
+      <!-- Sub-filter bar for Personal Cards + Canva PDF / 300 DPI PNG Downloads -->
       <div id="personal-subfilters" class="flex flex-wrap items-center justify-between gap-2 mt-2 pt-2 border-t border-slate-800/80">
         <div class="flex flex-wrap items-center gap-1.5">
           <span class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-amber-500/25 text-amber-300 border border-amber-500/40">
             👑 Еталонна візитка: Калашников Микита Ігорович (#29 Gold Master)
           </span>
+          <button onclick="toggleLiveEditMode()" id="btn-live-edit" class="px-2 py-1 rounded-lg text-[11px] font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/40 transition-all">
+            ✏️ Редагувати текст
+          </button>
         </div>
 
         <div class="flex flex-wrap items-center gap-1.5">
-          <button onclick="toggleLiveEditMode()" id="btn-live-edit" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/40 transition-all">
-            ✏️ Редагувати текст руками: ВИМК
-          </button>
-          <a href="assets/figma/yotei-nikita-both-figma.svg" download="yotei-nikita-both-figma.svg" class="px-3 py-1 rounded-lg text-[11px] font-bold bg-purple-600 hover:bg-purple-500 text-white border border-purple-400 shadow-md transition-all flex items-center space-x-1.5">
+          <a href="assets/canva/yotei-nikita-canva.pdf" download="yotei-nikita-canva.pdf" class="px-3 py-1 rounded-lg text-[11px] font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-md transition-all flex items-center space-x-1">
+            <span>📄</span>
+            <span>PDF для Canva (50×90 мм)</span>
+          </a>
+          <a href="assets/canva/yotei-nikita-front.png" download="yotei-nikita-front-300dpi.png" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-blue-600 hover:bg-blue-500 text-white shadow-md transition-all flex items-center space-x-1">
+            <span>🖼️</span>
+            <span>Лице PNG (300 DPI)</span>
+          </a>
+          <a href="assets/canva/yotei-nikita-back.png" download="yotei-nikita-back-300dpi.png" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-blue-600 hover:bg-blue-500 text-white shadow-md transition-all flex items-center space-x-1">
+            <span>🖼️</span>
+            <span>Зворот PNG (300 DPI)</span>
+          </a>
+          <a href="assets/figma/yotei-nikita-both-figma.svg" download="yotei-nikita-both-figma.svg" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-purple-600 hover:bg-purple-500 text-white shadow-md transition-all flex items-center space-x-1">
             <span>🎨</span>
-            <span>Скачати SVG для Figma (2 сторони)</span>
-          </a>
-          <a href="assets/figma/yotei-nikita-front-figma.svg" download="yotei-nikita-front-figma.svg" class="px-2 py-1 rounded-lg text-[11px] font-semibold bg-slate-900 hover:bg-purple-600 text-slate-300 hover:text-white border border-slate-800 transition-all">
-            Лице SVG
-          </a>
-          <a href="assets/figma/yotei-nikita-back-figma.svg" download="yotei-nikita-back-figma.svg" class="px-2 py-1 rounded-lg text-[11px] font-semibold bg-slate-900 hover:bg-purple-600 text-slate-300 hover:text-white border border-slate-800 transition-all">
-            Зворот SVG
+            <span>SVG для Figma</span>
           </a>
         </div>
       </div>
