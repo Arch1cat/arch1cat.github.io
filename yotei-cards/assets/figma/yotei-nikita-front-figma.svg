@@ -34,9 +34,9 @@
     <text id="Text_Role" x="250" y="314" text-anchor="middle" fill="#f5d77f" font-family="Inter" font-size="17" font-weight="700">АГЕНТ З НЕРУХОМОСТІ</text>
 
     <!-- Services Text (NO BOX, NO STARS, pure floating typography) -->
-    <text id="Service_1" x="250" y="510" text-anchor="middle" fill="#ffffff" font-family="Inter" font-size="19" font-weight="700">Купівля та продаж нерухомості</text>
+    <text id="Service_1" x="250" y="510" text-anchor="middle" fill="#ffffff" font-family="Inter" font-size="19" font-weight="700">Купівля-продаж та оренда</text>
     <text id="Service_2" x="250" y="560" text-anchor="middle" fill="#ffffff" font-family="Inter" font-size="19" font-weight="700">Комерційна нерухомість</text>
-    <text id="Service_3" x="250" y="610" text-anchor="middle" fill="#ffffff" font-family="Inter" font-size="19" font-weight="700">Держпрограми, єОселя</text>
+    <text id="Service_3" x="250" y="610" text-anchor="middle" fill="#ffffff" font-family="Inter" font-size="19" font-weight="700">Держпрограми та іпотека</text>
     <text id="Service_4" x="250" y="660" text-anchor="middle" fill="#ffffff" font-family="Inter" font-size="19" font-weight="700">Супровід угод</text>
 
     <!-- Bottom Divider & Gold YOTEI Logo -->
