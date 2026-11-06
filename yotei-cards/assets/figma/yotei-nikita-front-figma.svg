@@ -33,8 +33,7 @@
     <text id="Text_Name" x="250" y="278" text-anchor="middle" fill="#ffffff" font-family="Inter" font-size="30" font-weight="900">Микита Калашніков</text>
     <text id="Text_Role" x="250" y="314" text-anchor="middle" fill="#f5d77f" font-family="Inter" font-size="17" font-weight="700">АГЕНТ З НЕРУХОМОСТІ</text>
 
-    <!-- Services Frame & Text (NO STARS, larger & bold) -->
-    <rect x="32" y="460" width="436" height="230" rx="14" fill="#f5d77f" fill-opacity="0.03" stroke="#f5d77f" stroke-opacity="0.22" stroke-width="1.5"/>
+    <!-- Services Text (NO BOX, NO STARS, pure floating typography) -->
     <text id="Service_1" x="250" y="510" text-anchor="middle" fill="#ffffff" font-family="Inter" font-size="19" font-weight="700">Купівля та продаж нерухомості</text>
     <text id="Service_2" x="250" y="560" text-anchor="middle" fill="#ffffff" font-family="Inter" font-size="19" font-weight="700">Комерційна нерухомість</text>
     <text id="Service_3" x="250" y="610" text-anchor="middle" fill="#ffffff" font-family="Inter" font-size="19" font-weight="700">Держпрограми, єОселя</text>
