@@ -280,10 +280,75 @@
 
   <!-- ================= MAIN CARDS CONTAINER ================= -->
   <main class="max-w-7xl mx-auto px-2.5 sm:px-5 py-4 sm:py-7 flex-1 w-full">
+
+    <!-- Dedicated Artistic QR Showcase (Screenshots 3 & 4 Style) -->
+    <div id="artistic-qr-showcase" class="mb-7 p-4 sm:p-6 bg-gradient-to-b from-[#0b1528] to-[#070e1c] border border-amber-500/30 rounded-2xl shadow-2xl">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-amber-500/20">
+        <div>
+          <div class="flex items-center space-x-2">
+            <span class="text-lg">🎨</span>
+            <h2 class="text-sm sm:text-base font-extrabold text-amber-200 tracking-wide uppercase">Художні макети QR-кодів із емблемою YOTEI</h2>
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">✓ 100% Скануються</span>
+          </div>
+          <p class="text-xs text-slate-400 mt-1">Окремі варіанти QR-коду (стиль мікро-точок Google та люксових медальйонів зі скріншотів 3 та 4). Кожен веде на профіль агента <code class="text-amber-300">yotei.com.ua/agents/3</code>.</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+        <!-- QR Item 1 -->
+        <div class="bg-[#050a14] border border-amber-500/30 rounded-xl p-3 flex flex-col items-center text-center group hover:border-amber-400 transition-all">
+          <div class="w-full aspect-square rounded-lg overflow-hidden border border-amber-500/20 p-2 bg-[#051020] flex items-center justify-center">
+            <img src="assets/artistic_qr/qr-art-01-dotmatrix-gold.png" alt="Dot-Matrix Gold" class="w-full h-full object-contain cursor-zoom-in" onclick="openArtisticQRModal('assets/artistic_qr/qr-art-01-dotmatrix-gold.png', 'Google Dot-Matrix Gold')"/>
+          </div>
+          <div class="text-[11px] font-bold text-amber-200 mt-2">#1 Google Dot-Matrix</div>
+          <div class="text-[9.5px] text-slate-400 mt-0.5">Круглі мікро-точки + емблема YOTEI</div>
+          <a href="assets/artistic_qr/qr-art-01-dotmatrix-gold.png" download="qr-art-01-dotmatrix-gold.png" class="mt-2.5 w-full py-1 text-[10px] font-bold rounded bg-amber-500/20 hover:bg-amber-500 text-amber-300 hover:text-slate-950 border border-amber-500/30 transition-all flex items-center justify-center space-x-1">
+            <span>📥</span><span>HD 1024px</span>
+          </a>
+        </div>
+
+        <!-- QR Item 2 -->
+        <div class="bg-[#050a14] border border-amber-500/30 rounded-xl p-3 flex flex-col items-center text-center group hover:border-amber-400 transition-all">
+          <div class="w-full aspect-square rounded-lg overflow-hidden border border-amber-500/20 p-2 bg-[#030a16] flex items-center justify-center">
+            <img src="assets/artistic_qr/qr-art-02-luxury-medallion.png" alt="Luxury Medallion" class="w-full h-full object-contain cursor-zoom-in" onclick="openArtisticQRModal('assets/artistic_qr/qr-art-02-luxury-medallion.png', 'Luxury Pillow Medallion')"/>
+          </div>
+          <div class="text-[11px] font-bold text-amber-200 mt-2">#2 Luxury Pillow Grid</div>
+          <div class="text-[9.5px] text-slate-400 mt-0.5">М'які подушкові модулі Сапфір</div>
+          <a href="assets/artistic_qr/qr-art-02-luxury-medallion.png" download="qr-art-02-luxury-medallion.png" class="mt-2.5 w-full py-1 text-[10px] font-bold rounded bg-amber-500/20 hover:bg-amber-500 text-amber-300 hover:text-slate-950 border border-amber-500/30 transition-all flex items-center justify-center space-x-1">
+            <span>📥</span><span>HD 1024px</span>
+          </a>
+        </div>
+
+        <!-- QR Item 3 -->
+        <div class="bg-[#050a14] border border-amber-500/30 rounded-xl p-3 flex flex-col items-center text-center group hover:border-amber-400 transition-all">
+          <div class="w-full aspect-square rounded-lg overflow-hidden border border-amber-500/20 p-2 bg-[#071224] flex items-center justify-center">
+            <img src="assets/artistic_qr/qr-art-03-cyber-precision.png" alt="Cyber Precision" class="w-full h-full object-contain cursor-zoom-in" onclick="openArtisticQRModal('assets/artistic_qr/qr-art-03-cyber-precision.png', 'Cyber Precision')"/>
+          </div>
+          <div class="text-[11px] font-bold text-amber-200 mt-2">#3 Cyber Micro-Grid</div>
+          <div class="text-[9.5px] text-slate-400 mt-0.5">Високоточна технічна мікро-сітка</div>
+          <a href="assets/artistic_qr/qr-art-03-cyber-precision.png" download="qr-art-03-cyber-precision.png" class="mt-2.5 w-full py-1 text-[10px] font-bold rounded bg-amber-500/20 hover:bg-amber-500 text-amber-300 hover:text-slate-950 border border-amber-500/30 transition-all flex items-center justify-center space-x-1">
+            <span>📥</span><span>HD 1024px</span>
+          </a>
+        </div>
+
+        <!-- QR Item 4 -->
+        <div class="bg-[#050a14] border border-amber-500/30 rounded-xl p-3 flex flex-col items-center text-center group hover:border-amber-400 transition-all">
+          <div class="w-full aspect-square rounded-lg overflow-hidden border border-amber-500/20 p-2 bg-[#faf8f2] flex items-center justify-center">
+            <img src="assets/artistic_qr/qr-art-04-high-contrast-gold.png" alt="High Contrast Gold" class="w-full h-full object-contain cursor-zoom-in" onclick="openArtisticQRModal('assets/artistic_qr/qr-art-04-high-contrast-gold.png', 'Champagne Contrast')"/>
+          </div>
+          <div class="text-[11px] font-bold text-amber-200 mt-2">#4 Champagne Contrast</div>
+          <div class="text-[9.5px] text-slate-400 mt-0.5">Світлий фон + тепле золото</div>
+          <a href="assets/artistic_qr/qr-art-04-high-contrast-gold.png" download="qr-art-04-high-contrast-gold.png" class="mt-2.5 w-full py-1 text-[10px] font-bold rounded bg-amber-500/20 hover:bg-amber-500 text-amber-300 hover:text-slate-950 border border-amber-500/30 transition-all flex items-center justify-center space-x-1">
+            <span>📥</span><span>HD 1024px</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
     <div id="cards-grid" class="space-y-5 sm:space-y-7">
 
     <div id="card-P01" class="card-item bg-[#0f131c] border border-slate-800/80 rounded-2xl p-3 sm:p-5 transition-all hover:border-slate-700 scroll-mt-24" 
-         data-id="P01" data-category="personal" data-person="nikita" data-series="master_single" data-title="Калашников Микита Ігорович · Master Gold (#29)" data-vertical="true">
+         data-id="P01" data-category="personal" data-person="nikita" data-series="master_single" data-title="Микита Калашніков · Master Gold & Artistic Dot QR" data-vertical="true">
       
       <!-- Card Header -->
       <div class="flex flex-wrap items-center justify-between pb-3 mb-4 border-b border-slate-800/80 gap-2">
@@ -291,7 +356,7 @@
           <span class="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md text-[11px] sm:text-xs font-mono font-bold bg-blue-500/15 text-blue-400 border border-blue-500/30 flex-shrink-0">
             #P01
           </span>
-          <h2 class="text-xs sm:text-base font-bold text-white truncate">Калашников Микита Ігорович · Master Gold (#29)</h2>
+          <h2 class="text-xs sm:text-base font-bold text-white truncate">Микита Калашніков · Master Gold & Artistic Dot QR</h2>
         </div>
 
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
@@ -333,39 +398,27 @@
     <div style="width:250px; height:450px; box-sizing:border-box; padding:18px; background:linear-gradient(170deg, #0a1c36 0%, #051020 55%, #030a16 100%); color:#ffffff; font-family:'Inter',sans-serif; position:relative; overflow:hidden; display:flex; flex-direction:column; justify-content:space-between; border:1px solid rgba(243,210,122,0.45);">
       <div style="display:flex; flex-direction:column; align-items:center; width:100%;">
         
-    <div style="width:92px; height:92px; border-radius:50%; padding:2.5px; background:linear-gradient(135deg, #f5d77f, #c5a04e); box-shadow:0 0 18px rgba(245,215,127,0.48); flex-shrink:0;">
-      <img src="assets/nikita-studio-crop.png" alt="КАЛАШНИКОВ МИКИТА ІГОРОВИЧ" style="width:100%; height:100%; object-fit:cover; object-position:top; border-radius:50%; display:block;" />
+    <div style="width:96px; height:96px; border-radius:50%; padding:2.5px; background:linear-gradient(135deg, #f5d77f, #c5a04e); box-shadow:0 0 20px rgba(245,215,127,0.48); flex-shrink:0;">
+      <img src="assets/nikita-studio-crop.png" alt="Микита Калашніков" style="width:100%; height:100%; object-fit:cover; object-position:top; border-radius:50%; display:block;" />
     </div>
     
         
-    <div style="text-align:center; margin-top:9px;">
-      <div style="font-size:13.5px; font-weight:900; color:#ffffff; text-transform:uppercase; letter-spacing:0.03em; line-height:1.18;">КАЛАШНИКОВ<br/>МИКИТА ІГОРОВИЧ</div>
-      <div style="font-size:7.5px; font-weight:700; color:#f5d77f; text-transform:uppercase; letter-spacing:0.16em; margin-top:4px; line-height:1.2;">АГЕНТ З НЕРУХОМОСТІ</div>
+    <div style="text-align:center; margin-top:10px;">
+      <div style="font-size:15px; font-weight:900; color:#ffffff; letter-spacing:0.02em; line-height:1.2;">Микита Калашніков</div>
+      <div style="font-size:8.5px; font-weight:700; color:#f5d77f; text-transform:uppercase; letter-spacing:0.18em; margin-top:4.5px; line-height:1.2;">Агент з нерухомості</div>
     </div>
     
       </div>
       
-    <div style="width:100%; margin:auto 0; padding-left:8px; box-sizing:border-box; display:flex; flex-direction:column; gap:6.5px;">
-      <div style="display:flex; align-items:center; gap:7.5px; font-size:7.5px; color:#ffffff; font-weight:600; line-height:1.35;">
-              <svg width="8.5" height="8.5" viewBox="0 0 24 24" fill="#f5d77f" style="flex-shrink:0; display:block; filter:drop-shadow(0 0 3px rgba(245,215,127,0.5));">
-      <path d="M12 2l2.92 6.26L22 9.27l-5 5.14 1.18 7.09L12 18.07l-6.18 3.43L7 14.41 2 9.27l7.08-1.01L12 2z"/>
-    </svg><span>Купівля та Продаж нерухомості</span>
-            </div><div style="display:flex; align-items:center; gap:7.5px; font-size:7.5px; color:#ffffff; font-weight:600; line-height:1.35;">
-              <svg width="8.5" height="8.5" viewBox="0 0 24 24" fill="#f5d77f" style="flex-shrink:0; display:block; filter:drop-shadow(0 0 3px rgba(245,215,127,0.5));">
-      <path d="M12 2l2.92 6.26L22 9.27l-5 5.14 1.18 7.09L12 18.07l-6.18 3.43L7 14.41 2 9.27l7.08-1.01L12 2z"/>
-    </svg><span>Оренда</span>
-            </div><div style="display:flex; align-items:center; gap:7.5px; font-size:7.5px; color:#ffffff; font-weight:600; line-height:1.35;">
-              <svg width="8.5" height="8.5" viewBox="0 0 24 24" fill="#f5d77f" style="flex-shrink:0; display:block; filter:drop-shadow(0 0 3px rgba(245,215,127,0.5));">
-      <path d="M12 2l2.92 6.26L22 9.27l-5 5.14 1.18 7.09L12 18.07l-6.18 3.43L7 14.41 2 9.27l7.08-1.01L12 2z"/>
-    </svg><span>Комерційна Нерухомість</span>
-            </div><div style="display:flex; align-items:center; gap:7.5px; font-size:7.5px; color:#ffffff; font-weight:600; line-height:1.35;">
-              <svg width="8.5" height="8.5" viewBox="0 0 24 24" fill="#f5d77f" style="flex-shrink:0; display:block; filter:drop-shadow(0 0 3px rgba(245,215,127,0.5));">
-      <path d="M12 2l2.92 6.26L22 9.27l-5 5.14 1.18 7.09L12 18.07l-6.18 3.43L7 14.41 2 9.27l7.08-1.01L12 2z"/>
-    </svg><span>Держпрограми</span>
-            </div><div style="display:flex; align-items:center; gap:7.5px; font-size:7.5px; color:#ffffff; font-weight:600; line-height:1.35;">
-              <svg width="8.5" height="8.5" viewBox="0 0 24 24" fill="#f5d77f" style="flex-shrink:0; display:block; filter:drop-shadow(0 0 3px rgba(245,215,127,0.5));">
-      <path d="M12 2l2.92 6.26L22 9.27l-5 5.14 1.18 7.09L12 18.07l-6.18 3.43L7 14.41 2 9.27l7.08-1.01L12 2z"/>
-    </svg><span>єОселя</span>
+    <div style="width:100%; margin:auto 0; padding:10px 14px; box-sizing:border-box; display:flex; flex-direction:column; gap:8.5px; border-top:1px solid rgba(243,210,122,0.18); border-bottom:1px solid rgba(243,210,122,0.18); background:rgba(245,215,127,0.025); border-radius:8px;">
+      <div style="font-size:9.5px; color:#ffffff; font-weight:700; line-height:1.45; text-align:center; letter-spacing:0.01em;">
+              Купівля та продаж нерухомості
+            </div><div style="font-size:9.5px; color:#ffffff; font-weight:700; line-height:1.45; text-align:center; letter-spacing:0.01em;">
+              Комерційна нерухомість
+            </div><div style="font-size:9.5px; color:#ffffff; font-weight:700; line-height:1.45; text-align:center; letter-spacing:0.01em;">
+              Держпрограми, єОселя
+            </div><div style="font-size:9.5px; color:#ffffff; font-weight:700; line-height:1.45; text-align:center; letter-spacing:0.01em;">
+              Супровід угод
             </div>
     </div>
     
@@ -409,22 +462,15 @@
                   
     <div style="width:250px; height:450px; box-sizing:border-box; padding:18px; background:linear-gradient(170deg, #030a16 0%, #051020 48%, #0a1c36 100%); color:#ffffff; font-family:'Inter',sans-serif; position:relative; overflow:hidden; display:flex; flex-direction:column; justify-content:space-between; align-items:center; text-align:center; border:1px solid rgba(243,210,122,0.45);">
       
-    <div style="display:flex; flex-direction:column; align-items:center; width:100%; margin-top:6px;">
-      <div style="width:190px; height:190px; display:flex; align-items:center; justify-content:center; filter:drop-shadow(0 10px 24px rgba(0,0,0,0.65));">
-        <img src="assets/qr-nikita-gold-medallion.png" alt="YOTEI Gold Logo QR" style="width:100%; height:100%; object-fit:contain; display:block;" />
-      </div>
-    </div>
-    
-      
-    <div style="display:flex; flex-direction:column; align-items:center; text-align:center; margin:auto 0;">
+    <div style="width:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding-bottom:8px; border-bottom:1px solid rgba(243,210,122,0.28);">
       <div style="display:inline-flex; align-items:center; justify-content:center; gap:2.5px;">
-      <svg width="17" height="17" style="flex-shrink:0; display:block;" fill="#f5d77f" viewBox="1.8 1.8 82.4 82.4">
+      <svg width="22" height="22" style="flex-shrink:0; display:block;" fill="#f5d77f" viewBox="1.8 1.8 82.4 82.4">
         <path d="M 42.93 2.0 C 54.312 2.0 64.569 6.519 71.955 13.993 79.341 21.379 83.948 31.634 83.948 42.931 83.948 54.315 79.341 64.567 71.955 71.956 64.569 79.341 54.312 83.946 42.93 83.946 31.633 83.946 21.379 79.341 13.992 71.956 6.519 64.567 2.0 54.315 2.0 42.931 2.0 31.634 6.519 21.379 13.992 13.993 21.379 6.519 31.633 2.0 42.93 2.0 M 71.087 14.861 C 63.872 7.649 53.965 3.217 42.93 3.217 31.98 3.217 22.074 7.649 14.862 14.861 7.648 21.988 3.217 31.981 3.217 42.931 3.217 53.966 7.648 63.873 14.862 71.088 22.074 78.3 31.98 82.731 42.93 82.731 53.965 82.731 63.872 78.3 71.087 71.088 78.299 63.873 82.729 53.966 82.729 42.931 82.729 31.981 78.299 21.988 71.087 14.861" />
         <path d="M 40.323 55.619 H 45.625 V 30.33 H 40.323 Z" />
         <path d="M 25.55 20.598 C 26.159 24.334 27.897 27.723 30.503 30.244 33.718 33.459 38.064 35.458 42.93 35.458 47.885 35.458 52.229 33.459 55.444 30.244 58.052 27.723 59.788 24.334 60.396 20.598 H 65.524 C 64.917 25.725 62.57 30.331 59.007 33.807 54.924 37.979 49.274 40.498 42.93 40.498 36.673 40.498 31.026 37.979 26.941 33.807 23.378 30.331 21.031 25.725 20.423 20.598 Z" />
         <path d="M 25.55 65.352 C 26.159 61.614 27.897 58.225 30.503 55.619 33.718 52.49 38.064 50.491 42.93 50.491 47.885 50.491 52.229 52.49 55.444 55.619 58.052 58.225 59.788 61.614 60.396 65.352 H 65.524 C 64.917 60.137 62.57 55.53 59.007 52.055 54.924 47.971 49.274 45.451 42.93 45.451 36.673 45.451 31.026 47.971 26.941 52.055 23.378 55.53 21.031 60.137 20.423 65.352 Z" />
       </svg>
-      <svg width="38" height="12" style="flex-shrink:0; display:block;" fill="#f5d77f" viewBox="1.8 1.8 123.8 39.5">
+      <svg width="48" height="15" style="flex-shrink:0; display:block;" fill="#f5d77f" viewBox="1.8 1.8 123.8 39.5">
         <path d="M 101.588 38.15 C 105.064 38.15 108.366 36.411 110.363 33.629 H 113.839 C 111.494 38.15 106.8 41.018 101.588 41.018 93.939 41.018 87.683 34.848 87.683 27.202 87.683 19.553 93.939 13.296 101.588 13.296 109.234 13.296 115.404 19.553 115.404 27.202 V 28.678 H 97.415 V 25.723 H 112.45 C 111.669 20.334 107.061 16.251 101.588 16.251 95.505 16.251 90.637 21.118 90.637 27.115 90.55 33.108 95.505 38.15 101.588 38.15" />
         <path d="M 46.492 38.15 C 52.575 38.15 57.442 33.195 57.442 27.202 57.442 21.118 52.575 16.251 46.492 16.251 40.497 16.251 35.544 21.118 35.544 27.202 35.544 33.195 40.497 38.15 46.492 38.15 M 46.492 41.018 C 38.846 41.018 32.589 34.848 32.589 27.202 32.589 19.553 38.846 13.296 46.492 13.296 54.14 13.296 60.397 19.553 60.397 27.202 60.397 34.848 54.14 41.018 46.492 41.018" />
         <path d="M 63.873 17.031 V 14.163 H 85.859 V 17.031 H 76.3 V 40.236 H 73.432 V 17.031 Z" />
@@ -434,13 +480,20 @@
         <path d="M 121.836 2.0 C 123.749 2.0 125.312 3.476 125.312 5.476 125.312 7.386 123.749 8.952 121.836 8.952 119.923 8.952 118.36 7.386 118.36 5.476 118.36 3.476 119.923 2.0 121.836 2.0" />
       </svg>
     </div>
-      <div style="font-size:6.2px; font-weight:800; text-transform:uppercase; letter-spacing:0.22em; color:#f5d77f; margin-top:3px;">REAL ESTATE</div>
+      <div style="font-size:7px; font-weight:800; text-transform:uppercase; letter-spacing:0.24em; color:#f5d77f; margin-top:4px; line-height:1.1;">REAL ESTATE</div>
+    </div>
+    
+      
+    <div style="width:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; margin:auto 0;">
+      <div style="width:196px; height:196px; border-radius:12px; padding:3px; background:rgba(245,215,127,0.12); border:1px solid rgba(243,210,122,0.35); box-shadow:0 8px 24px rgba(0,0,0,0.65); display:flex; align-items:center; justify-content:center;">
+        <img src="assets/qr-nikita-artistic-dotmatrix.png" alt="YOTEI Artistic Dot-Matrix QR" style="width:100%; height:100%; object-fit:contain; border-radius:8px; display:block;" />
+      </div>
     </div>
     
       
     <div style="width:100%; border-top:1px solid rgba(243,210,122,0.28); padding-top:10px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
-      <div style="font-size:12px; font-weight:900; font-family:'JetBrains Mono',monospace; color:#f5d77f; letter-spacing:0.03em; line-height:1.25;">+38 (068) 632-94-04</div>
-      <div style="font-size:9px; font-weight:800; color:#f5d77f; letter-spacing:0.1em; text-transform:lowercase; margin-top:4px; line-height:1.2;">yotei.com.ua</div>
+      <div style="font-size:12.5px; font-weight:900; font-family:'JetBrains Mono',monospace; color:#f5d77f; letter-spacing:0.03em; line-height:1.25;">+38 (068) 632-94-04</div>
+      <div style="font-size:9.5px; font-weight:800; color:#f5d77f; letter-spacing:0.1em; text-transform:lowercase; margin-top:4px; line-height:1.2;">yotei.com.ua</div>
     </div>
     
     </div>
@@ -461,39 +514,27 @@
     <div style="width:250px; height:450px; box-sizing:border-box; padding:18px; background:linear-gradient(170deg, #0a1c36 0%, #051020 55%, #030a16 100%); color:#ffffff; font-family:'Inter',sans-serif; position:relative; overflow:hidden; display:flex; flex-direction:column; justify-content:space-between; border:1px solid rgba(243,210,122,0.45);">
       <div style="display:flex; flex-direction:column; align-items:center; width:100%;">
         
-    <div style="width:92px; height:92px; border-radius:50%; padding:2.5px; background:linear-gradient(135deg, #f5d77f, #c5a04e); box-shadow:0 0 18px rgba(245,215,127,0.48); flex-shrink:0;">
-      <img src="assets/nikita-studio-crop.png" alt="КАЛАШНИКОВ МИКИТА ІГОРОВИЧ" style="width:100%; height:100%; object-fit:cover; object-position:top; border-radius:50%; display:block;" />
+    <div style="width:96px; height:96px; border-radius:50%; padding:2.5px; background:linear-gradient(135deg, #f5d77f, #c5a04e); box-shadow:0 0 20px rgba(245,215,127,0.48); flex-shrink:0;">
+      <img src="assets/nikita-studio-crop.png" alt="Микита Калашніков" style="width:100%; height:100%; object-fit:cover; object-position:top; border-radius:50%; display:block;" />
     </div>
     
         
-    <div style="text-align:center; margin-top:9px;">
-      <div style="font-size:13.5px; font-weight:900; color:#ffffff; text-transform:uppercase; letter-spacing:0.03em; line-height:1.18;">КАЛАШНИКОВ<br/>МИКИТА ІГОРОВИЧ</div>
-      <div style="font-size:7.5px; font-weight:700; color:#f5d77f; text-transform:uppercase; letter-spacing:0.16em; margin-top:4px; line-height:1.2;">АГЕНТ З НЕРУХОМОСТІ</div>
+    <div style="text-align:center; margin-top:10px;">
+      <div style="font-size:15px; font-weight:900; color:#ffffff; letter-spacing:0.02em; line-height:1.2;">Микита Калашніков</div>
+      <div style="font-size:8.5px; font-weight:700; color:#f5d77f; text-transform:uppercase; letter-spacing:0.18em; margin-top:4.5px; line-height:1.2;">Агент з нерухомості</div>
     </div>
     
       </div>
       
-    <div style="width:100%; margin:auto 0; padding-left:8px; box-sizing:border-box; display:flex; flex-direction:column; gap:6.5px;">
-      <div style="display:flex; align-items:center; gap:7.5px; font-size:7.5px; color:#ffffff; font-weight:600; line-height:1.35;">
-              <svg width="8.5" height="8.5" viewBox="0 0 24 24" fill="#f5d77f" style="flex-shrink:0; display:block; filter:drop-shadow(0 0 3px rgba(245,215,127,0.5));">
-      <path d="M12 2l2.92 6.26L22 9.27l-5 5.14 1.18 7.09L12 18.07l-6.18 3.43L7 14.41 2 9.27l7.08-1.01L12 2z"/>
-    </svg><span>Купівля та Продаж нерухомості</span>
-            </div><div style="display:flex; align-items:center; gap:7.5px; font-size:7.5px; color:#ffffff; font-weight:600; line-height:1.35;">
-              <svg width="8.5" height="8.5" viewBox="0 0 24 24" fill="#f5d77f" style="flex-shrink:0; display:block; filter:drop-shadow(0 0 3px rgba(245,215,127,0.5));">
-      <path d="M12 2l2.92 6.26L22 9.27l-5 5.14 1.18 7.09L12 18.07l-6.18 3.43L7 14.41 2 9.27l7.08-1.01L12 2z"/>
-    </svg><span>Оренда</span>
-            </div><div style="display:flex; align-items:center; gap:7.5px; font-size:7.5px; color:#ffffff; font-weight:600; line-height:1.35;">
-              <svg width="8.5" height="8.5" viewBox="0 0 24 24" fill="#f5d77f" style="flex-shrink:0; display:block; filter:drop-shadow(0 0 3px rgba(245,215,127,0.5));">
-      <path d="M12 2l2.92 6.26L22 9.27l-5 5.14 1.18 7.09L12 18.07l-6.18 3.43L7 14.41 2 9.27l7.08-1.01L12 2z"/>
-    </svg><span>Комерційна Нерухомість</span>
-            </div><div style="display:flex; align-items:center; gap:7.5px; font-size:7.5px; color:#ffffff; font-weight:600; line-height:1.35;">
-              <svg width="8.5" height="8.5" viewBox="0 0 24 24" fill="#f5d77f" style="flex-shrink:0; display:block; filter:drop-shadow(0 0 3px rgba(245,215,127,0.5));">
-      <path d="M12 2l2.92 6.26L22 9.27l-5 5.14 1.18 7.09L12 18.07l-6.18 3.43L7 14.41 2 9.27l7.08-1.01L12 2z"/>
-    </svg><span>Держпрограми</span>
-            </div><div style="display:flex; align-items:center; gap:7.5px; font-size:7.5px; color:#ffffff; font-weight:600; line-height:1.35;">
-              <svg width="8.5" height="8.5" viewBox="0 0 24 24" fill="#f5d77f" style="flex-shrink:0; display:block; filter:drop-shadow(0 0 3px rgba(245,215,127,0.5));">
-      <path d="M12 2l2.92 6.26L22 9.27l-5 5.14 1.18 7.09L12 18.07l-6.18 3.43L7 14.41 2 9.27l7.08-1.01L12 2z"/>
-    </svg><span>єОселя</span>
+    <div style="width:100%; margin:auto 0; padding:10px 14px; box-sizing:border-box; display:flex; flex-direction:column; gap:8.5px; border-top:1px solid rgba(243,210,122,0.18); border-bottom:1px solid rgba(243,210,122,0.18); background:rgba(245,215,127,0.025); border-radius:8px;">
+      <div style="font-size:9.5px; color:#ffffff; font-weight:700; line-height:1.45; text-align:center; letter-spacing:0.01em;">
+              Купівля та продаж нерухомості
+            </div><div style="font-size:9.5px; color:#ffffff; font-weight:700; line-height:1.45; text-align:center; letter-spacing:0.01em;">
+              Комерційна нерухомість
+            </div><div style="font-size:9.5px; color:#ffffff; font-weight:700; line-height:1.45; text-align:center; letter-spacing:0.01em;">
+              Держпрограми, єОселя
+            </div><div style="font-size:9.5px; color:#ffffff; font-weight:700; line-height:1.45; text-align:center; letter-spacing:0.01em;">
+              Супровід угод
             </div>
     </div>
     
@@ -526,22 +567,15 @@
                   
     <div style="width:250px; height:450px; box-sizing:border-box; padding:18px; background:linear-gradient(170deg, #030a16 0%, #051020 48%, #0a1c36 100%); color:#ffffff; font-family:'Inter',sans-serif; position:relative; overflow:hidden; display:flex; flex-direction:column; justify-content:space-between; align-items:center; text-align:center; border:1px solid rgba(243,210,122,0.45);">
       
-    <div style="display:flex; flex-direction:column; align-items:center; width:100%; margin-top:6px;">
-      <div style="width:190px; height:190px; display:flex; align-items:center; justify-content:center; filter:drop-shadow(0 10px 24px rgba(0,0,0,0.65));">
-        <img src="assets/qr-nikita-gold-medallion.png" alt="YOTEI Gold Logo QR" style="width:100%; height:100%; object-fit:contain; display:block;" />
-      </div>
-    </div>
-    
-      
-    <div style="display:flex; flex-direction:column; align-items:center; text-align:center; margin:auto 0;">
+    <div style="width:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding-bottom:8px; border-bottom:1px solid rgba(243,210,122,0.28);">
       <div style="display:inline-flex; align-items:center; justify-content:center; gap:2.5px;">
-      <svg width="17" height="17" style="flex-shrink:0; display:block;" fill="#f5d77f" viewBox="1.8 1.8 82.4 82.4">
+      <svg width="22" height="22" style="flex-shrink:0; display:block;" fill="#f5d77f" viewBox="1.8 1.8 82.4 82.4">
         <path d="M 42.93 2.0 C 54.312 2.0 64.569 6.519 71.955 13.993 79.341 21.379 83.948 31.634 83.948 42.931 83.948 54.315 79.341 64.567 71.955 71.956 64.569 79.341 54.312 83.946 42.93 83.946 31.633 83.946 21.379 79.341 13.992 71.956 6.519 64.567 2.0 54.315 2.0 42.931 2.0 31.634 6.519 21.379 13.992 13.993 21.379 6.519 31.633 2.0 42.93 2.0 M 71.087 14.861 C 63.872 7.649 53.965 3.217 42.93 3.217 31.98 3.217 22.074 7.649 14.862 14.861 7.648 21.988 3.217 31.981 3.217 42.931 3.217 53.966 7.648 63.873 14.862 71.088 22.074 78.3 31.98 82.731 42.93 82.731 53.965 82.731 63.872 78.3 71.087 71.088 78.299 63.873 82.729 53.966 82.729 42.931 82.729 31.981 78.299 21.988 71.087 14.861" />
         <path d="M 40.323 55.619 H 45.625 V 30.33 H 40.323 Z" />
         <path d="M 25.55 20.598 C 26.159 24.334 27.897 27.723 30.503 30.244 33.718 33.459 38.064 35.458 42.93 35.458 47.885 35.458 52.229 33.459 55.444 30.244 58.052 27.723 59.788 24.334 60.396 20.598 H 65.524 C 64.917 25.725 62.57 30.331 59.007 33.807 54.924 37.979 49.274 40.498 42.93 40.498 36.673 40.498 31.026 37.979 26.941 33.807 23.378 30.331 21.031 25.725 20.423 20.598 Z" />
         <path d="M 25.55 65.352 C 26.159 61.614 27.897 58.225 30.503 55.619 33.718 52.49 38.064 50.491 42.93 50.491 47.885 50.491 52.229 52.49 55.444 55.619 58.052 58.225 59.788 61.614 60.396 65.352 H 65.524 C 64.917 60.137 62.57 55.53 59.007 52.055 54.924 47.971 49.274 45.451 42.93 45.451 36.673 45.451 31.026 47.971 26.941 52.055 23.378 55.53 21.031 60.137 20.423 65.352 Z" />
       </svg>
-      <svg width="38" height="12" style="flex-shrink:0; display:block;" fill="#f5d77f" viewBox="1.8 1.8 123.8 39.5">
+      <svg width="48" height="15" style="flex-shrink:0; display:block;" fill="#f5d77f" viewBox="1.8 1.8 123.8 39.5">
         <path d="M 101.588 38.15 C 105.064 38.15 108.366 36.411 110.363 33.629 H 113.839 C 111.494 38.15 106.8 41.018 101.588 41.018 93.939 41.018 87.683 34.848 87.683 27.202 87.683 19.553 93.939 13.296 101.588 13.296 109.234 13.296 115.404 19.553 115.404 27.202 V 28.678 H 97.415 V 25.723 H 112.45 C 111.669 20.334 107.061 16.251 101.588 16.251 95.505 16.251 90.637 21.118 90.637 27.115 90.55 33.108 95.505 38.15 101.588 38.15" />
         <path d="M 46.492 38.15 C 52.575 38.15 57.442 33.195 57.442 27.202 57.442 21.118 52.575 16.251 46.492 16.251 40.497 16.251 35.544 21.118 35.544 27.202 35.544 33.195 40.497 38.15 46.492 38.15 M 46.492 41.018 C 38.846 41.018 32.589 34.848 32.589 27.202 32.589 19.553 38.846 13.296 46.492 13.296 54.14 13.296 60.397 19.553 60.397 27.202 60.397 34.848 54.14 41.018 46.492 41.018" />
         <path d="M 63.873 17.031 V 14.163 H 85.859 V 17.031 H 76.3 V 40.236 H 73.432 V 17.031 Z" />
@@ -551,13 +585,20 @@
         <path d="M 121.836 2.0 C 123.749 2.0 125.312 3.476 125.312 5.476 125.312 7.386 123.749 8.952 121.836 8.952 119.923 8.952 118.36 7.386 118.36 5.476 118.36 3.476 119.923 2.0 121.836 2.0" />
       </svg>
     </div>
-      <div style="font-size:6.2px; font-weight:800; text-transform:uppercase; letter-spacing:0.22em; color:#f5d77f; margin-top:3px;">REAL ESTATE</div>
+      <div style="font-size:7px; font-weight:800; text-transform:uppercase; letter-spacing:0.24em; color:#f5d77f; margin-top:4px; line-height:1.1;">REAL ESTATE</div>
+    </div>
+    
+      
+    <div style="width:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; margin:auto 0;">
+      <div style="width:196px; height:196px; border-radius:12px; padding:3px; background:rgba(245,215,127,0.12); border:1px solid rgba(243,210,122,0.35); box-shadow:0 8px 24px rgba(0,0,0,0.65); display:flex; align-items:center; justify-content:center;">
+        <img src="assets/qr-nikita-artistic-dotmatrix.png" alt="YOTEI Artistic Dot-Matrix QR" style="width:100%; height:100%; object-fit:contain; border-radius:8px; display:block;" />
+      </div>
     </div>
     
       
     <div style="width:100%; border-top:1px solid rgba(243,210,122,0.28); padding-top:10px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
-      <div style="font-size:12px; font-weight:900; font-family:'JetBrains Mono',monospace; color:#f5d77f; letter-spacing:0.03em; line-height:1.25;">+38 (068) 632-94-04</div>
-      <div style="font-size:9px; font-weight:800; color:#f5d77f; letter-spacing:0.1em; text-transform:lowercase; margin-top:4px; line-height:1.2;">yotei.com.ua</div>
+      <div style="font-size:12.5px; font-weight:900; font-family:'JetBrains Mono',monospace; color:#f5d77f; letter-spacing:0.03em; line-height:1.25;">+38 (068) 632-94-04</div>
+      <div style="font-size:9.5px; font-weight:800; color:#f5d77f; letter-spacing:0.1em; text-transform:lowercase; margin-top:4px; line-height:1.2;">yotei.com.ua</div>
     </div>
     
     </div>
@@ -22436,6 +22477,28 @@
       `;
     }
 
+    function openArtisticQRModal(src, title) {
+      const modal = document.getElementById('zoom-modal');
+      const content = document.getElementById('zoom-content');
+      if (!modal || !content) return;
+
+      document.getElementById('zoom-card-id').textContent = 'QR';
+      document.getElementById('zoom-card-title').textContent = title;
+
+      content.innerHTML = `
+        <div class="flex flex-col items-center justify-center p-6 bg-[#050a14] border border-amber-500/40 rounded-2xl shadow-2xl">
+          <img src="${src}" alt="${title}" style="width:360px; height:360px; max-width:85vw; max-height:65vh; border-radius:14px; border:2px solid #f5d77f; box-shadow:0 0 40px rgba(245,215,127,0.35); object-fit:contain;"/>
+          <div class="mt-4 flex items-center space-x-3">
+            <a href="${src}" download="${title.toLowerCase().replace(/\s+/g, '-')}.png" class="px-4 py-2 rounded-xl text-xs font-extrabold bg-gradient-to-r from-amber-500 to-amber-400 text-slate-950 shadow-lg hover:from-amber-400 hover:to-amber-300 transition-all flex items-center space-x-1.5">
+              <span>📥</span><span>Завантажити HD оригінал (1024×1024 px)</span>
+            </a>
+          </div>
+        </div>
+      `;
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
     function renderZoomModal() {
       if (!activeZoomId) return;
       const item = document.getElementById('card-' + activeZoomId);
@@ -22580,6 +22643,10 @@
       const subBar = document.getElementById('personal-subfilters');
       if (subBar) {
         subBar.style.display = (cat === 'personal') ? 'flex' : 'none';
+      }
+      const qrShowcase = document.getElementById('artistic-qr-showcase');
+      if (qrShowcase) {
+        qrShowcase.style.display = (cat === 'personal') ? 'block' : 'none';
       }
       ['personal', 'brand', 'fav'].forEach(c => {
         const tab = document.getElementById('tab-' + c);
