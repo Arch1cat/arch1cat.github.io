@@ -443,7 +443,16 @@ FAMILIES = [
         ],
     },
     {
-        "id": "lfm-2.5", "rank": 19, "name": "LFM 2.5 2.6B",
+        "id": "lfm-3-1.7b", "rank": 19, "name": "LFM3 1.7B",
+        "tasks": ["Fast Agent", "Tools", "Reasoning", "Edge"], "family": "Liquid LFM3",
+        "ctx": 262144, "out": 8192, "reasoning": True,
+        "bench": {"swe": 43.4, "he": None, "aider": None, "livecode": 73.5, "arena": None, "arenaRank": "BFCL V4 71.4 · IFEval 96.7"},
+        "routes": [
+            {"p": "OpenRouter", "id": "liquid/lfm-3-1.7b:free", "status": "working", "type": "free", "src": "api"},
+        ],
+    },
+    {
+        "id": "lfm-2.5", "rank": 20, "name": "LFM 2.5 2.6B",
         "tasks": ["Fast Agent", "Edge"], "family": "Liquid",
         "ctx": 65536, "out": 8192, "reasoning": False,
         "bench": {"swe": 38.2, "he": 68.4, "aider": 41.7, "livecode": 35.9, "arena": None, "arenaRank": None},
@@ -563,12 +572,11 @@ FAMILIES = [
         ],
     },
     {
-        "id": "content-safety", "rank": 29, "name": "Content Safety / Nemotron Nano",
-        "tasks": ["Safety", "Classification"], "family": "Specialized",
-        "ctx": 128000, "out": 8192, "reasoning": False,
+        "id": "content-safety", "rank": 29, "name": "Nemotron 3 Nano Omni 30B-A3B",
+        "tasks": ["Reasoning", "Tools", "Fast Agent"], "family": "Specialized",
+        "ctx": 256000, "out": 65536, "reasoning": True,
         "bench": {"swe": None, "he": None, "aider": None, "livecode": None, "arena": None, "arenaRank": None},
         "routes": [
-            {"p": "OpenRouter", "id": "nvidia/nemotron-3.5-content-safety:free", "status": "working", "type": "free", "src": "api"},
             {"p": "OpenRouter", "id": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free", "status": "working", "type": "free", "src": "api"},
         ],
     },
@@ -729,6 +737,7 @@ PLANS = [
 
 # ------------------------------------------------------------------ releases
 RELEASES = [
+    {"d": "2026-11-06", "n": "LFM3 1.7B", "o": "Liquid AI", "ctx": "256K", "p": "1.73B", "k": "open, reasoning, tools, edge, SWE 43.4% / LCB 73.5%", "free": True},
     {"d": "2026-11-03", "n": "Crouton Alpha (Stealth)", "o": "Stealth (OpenRouter)", "ctx": "1M", "p": None, "k": "stealth, coding, reasoning, vision, audio, video, tools", "free": True},
     {"d": "2026-10-21", "n": "Recursive Flint 1.0", "o": "Recursive", "ctx": "256K", "p": "40B (2.5B active)", "k": "open, coding, reasoning, Apache 2.0", "free": True},
     {"d": "2026-10-19", "n": "MiniMax M3.1 Flash", "o": "MiniMax", "ctx": "1M", "p": None, "k": "reasoning, vision", "free": True},
@@ -765,6 +774,7 @@ RELEASES = [
 
 # ------------------------------------------------------------------ verified probes
 PROBES = [
+    {"m": "openrouter/liquid/lfm-3-1.7b:free", "r": "ok", "t": "PROBE_OK", "n": "262K ctx / 8K out, 1.73B tri-hybrid, mandatory reasoning, tools, SWE-Verified 43.4% / LiveCodeBench v6 73.5%."},
     {"m": "nous/meituan/longcat-2.5:free", "r": "ok", "t": "PROBE_OK", "n": "1M ctx / 131K out, tools, возвращена в :free каталог Nous 05.11.2026."},
     {"m": "openrouter/stealth/crouton-alpha", "r": "ok", "t": "PROBE_OK", "n": "1M ctx / 944K out, omnimodal (text/image/video/audio/file), mandatory reasoning, ~71 tok/s."},
     {"m": "openrouter/recursive/flint-v1.0:free", "r": "ok", "t": "PROBE_OK", "n": "262K ctx / 236K out, 40B-A2.5B MoE, SWE-Verified 74.2%, ~108 tok/s."},
@@ -788,6 +798,7 @@ PROBES = [
     {"m": "omniroute/auto/cheap", "r": "ok", "t": "PROBE_OK", "n": "Дешёвый маршрут."},
     {"m": "omniroute/auto/offline", "r": "ok", "t": "PROBE_OK", "n": "Оффлайн-маршрут."},
     {"m": "nvidia/nemotron-3.5-lightning-30b-a3b", "r": "ok", "t": "PROBE_OK", "n": "Правильный NIM ID."},
+    {"m": "openrouter/nvidia/nemotron-3.5-content-safety:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — убрана из zero-price каталога OpenRouter 07.11.2026 (переведена на платный nvidia/nemotron-3.5-content-safety)."},
     {"m": "openrouter/thinkingmachines/inkling:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — промо-период :free на OpenRouter завершился 05.11.2026 (переведена на платный thinkingmachines/inkling)."},
     {"m": "openrouter/thinkingmachines/inkling-small:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — промо-период :free на OpenRouter завершился 05.11.2026 (переведена на платный thinkingmachines/inkling-small)."},
     {"m": "nous/ornith/ornith-1.5-122b:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — промо-период :free на Nous завершился 03.11.2026 (переведена на платный ornith/ornith-1.5-122b, $0.16/$0.64 за 1M)."},
@@ -1009,6 +1020,7 @@ DATA = {
             {"name": "Space Bunny / Ox Alpha", "f": "space-bunny", "v": [0, 2, 0, 0, 1, 2, 3, 1, 0]},
             {"name": "Beam / Big Pickle", "f": "beam-pickle", "v": [1, 2, 0, 0, 1, 1, 3, 1, 0]},
             {"name": "LLM7.io free subset", "f": "llm7-free", "v": [2, 2, 1, 0, 2, 2, 0, 1, 0]},
+            {"name": "LFM3 1.7B", "f": "lfm-3-1.7b", "v": [1, 2, 0, 0, 2, 2, 0, 1, 0]},
             {"name": "LFM 2.5 2.6B", "f": "lfm-2.5", "v": [0, 0, 0, 0, 0, 1, 0, 0, 0]},
         ],
     },

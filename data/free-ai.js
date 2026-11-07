@@ -1170,8 +1170,40 @@ window.FREE_AI_DATA = {
    ]
   },
   {
-   "id": "lfm-2.5",
+   "id": "lfm-3-1.7b",
    "rank": 18,
+   "name": "LFM3 1.7B",
+   "tasks": [
+    "Fast Agent",
+    "Tools",
+    "Reasoning",
+    "Edge"
+   ],
+   "family": "Liquid LFM3",
+   "ctx": 262144,
+   "out": 8192,
+   "reasoning": true,
+   "bench": {
+    "swe": 43.4,
+    "he": null,
+    "aider": null,
+    "livecode": 73.5,
+    "arena": null,
+    "arenaRank": "BFCL V4 71.4 · IFEval 96.7"
+   },
+   "routes": [
+    {
+     "p": "OpenRouter",
+     "id": "liquid/lfm-3-1.7b:free",
+     "status": "working",
+     "type": "free",
+     "src": "api"
+    }
+   ]
+  },
+  {
+   "id": "lfm-2.5",
+   "rank": 19,
    "name": "LFM 2.5 2.6B",
    "tasks": [
     "Fast Agent",
@@ -1201,7 +1233,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "qwen-3.8",
-   "rank": 19,
+   "rank": 20,
    "name": "Qwen 3.8 Max / Flash",
    "tasks": [
     "Reasoning",
@@ -1246,7 +1278,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "claude-opus-5.5",
-   "rank": 20,
+   "rank": 21,
    "name": "Claude Opus 5.5 / GPT-6.1 Sol / Grok 4.7",
    "tasks": [
     "Deep Review",
@@ -1298,7 +1330,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "crouton-alpha",
-   "rank": 21,
+   "rank": 22,
    "name": "Crouton Alpha (Stealth)",
    "tasks": [
     "Кодинг",
@@ -1331,7 +1363,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "space-bunny",
-   "rank": 22,
+   "rank": 23,
    "name": "Space Bunny / Ox Alpha",
    "tasks": [
     "Stealth",
@@ -1376,7 +1408,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "beam-pickle",
-   "rank": 23,
+   "rank": 24,
    "name": "Beam / Big Pickle / Cat Jam / Glyph",
    "tasks": [
     "Stealth",
@@ -1421,7 +1453,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "ddgw-free",
-   "rank": 24,
+   "rank": 25,
    "name": "DuckDuckGo Cloudflare Free",
    "tasks": [
     "Fast Agent",
@@ -1487,7 +1519,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "lyria-3",
-   "rank": 25,
+   "rank": 26,
    "name": "Lyria 3 Clip / Pro (audio)",
    "tasks": [
     "Audio",
@@ -1524,7 +1556,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "dots-3-note",
-   "rank": 26,
+   "rank": 27,
    "name": "Dots 3 Note Preview",
    "tasks": [
     "Notes",
@@ -1555,7 +1587,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "openrouter-free",
-   "rank": 27,
+   "rank": 28,
    "name": "OpenRouter / free (auto-router)",
    "tasks": [
     "Кодинг",
@@ -1586,7 +1618,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "llm7-free",
-   "rank": 28,
+   "rank": 29,
    "name": "LLM7.io free subset",
    "tasks": [
     "Кодинг",
@@ -1659,16 +1691,17 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "content-safety",
-   "rank": 29,
-   "name": "Content Safety / Nemotron Nano",
+   "rank": 30,
+   "name": "Nemotron 3 Nano Omni 30B-A3B",
    "tasks": [
-    "Safety",
-    "Classification"
+    "Reasoning",
+    "Tools",
+    "Fast Agent"
    ],
    "family": "Specialized",
-   "ctx": 128000,
-   "out": 8192,
-   "reasoning": false,
+   "ctx": 256000,
+   "out": 65536,
+   "reasoning": true,
    "bench": {
     "swe": null,
     "he": null,
@@ -1678,13 +1711,6 @@ window.FREE_AI_DATA = {
     "arenaRank": null
    },
    "routes": [
-    {
-     "p": "OpenRouter",
-     "id": "nvidia/nemotron-3.5-content-safety:free",
-     "status": "working",
-     "type": "free",
-     "src": "api"
-    },
     {
      "p": "OpenRouter",
      "id": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
@@ -3235,6 +3261,15 @@ window.FREE_AI_DATA = {
  ],
  "releases": [
   {
+   "d": "2026-11-06",
+   "n": "LFM3 1.7B",
+   "o": "Liquid AI",
+   "ctx": "256K",
+   "p": "1.73B",
+   "k": "open, reasoning, tools, edge, SWE 43.4% / LCB 73.5%",
+   "free": true
+  },
+  {
    "d": "2026-11-03",
    "n": "Crouton Alpha (Stealth)",
    "o": "Stealth (OpenRouter)",
@@ -3525,6 +3560,12 @@ window.FREE_AI_DATA = {
  ],
  "probes": [
   {
+   "m": "openrouter/liquid/lfm-3-1.7b:free",
+   "r": "ok",
+   "t": "PROBE_OK",
+   "n": "262K ctx / 8K out, 1.73B tri-hybrid, mandatory reasoning, tools, SWE-Verified 43.4% / LiveCodeBench v6 73.5%."
+  },
+  {
    "m": "nous/meituan/longcat-2.5:free",
    "r": "ok",
    "t": "PROBE_OK",
@@ -3661,6 +3702,12 @@ window.FREE_AI_DATA = {
    "r": "ok",
    "t": "PROBE_OK",
    "n": "Правильный NIM ID."
+  },
+  {
+   "m": "openrouter/nvidia/nemotron-3.5-content-safety:free",
+   "r": "bad",
+   "t": "NO LONGER FREE",
+   "n": "HTTP 404 — убрана из zero-price каталога OpenRouter 07.11.2026 (переведена на платный nvidia/nemotron-3.5-content-safety)."
   },
   {
    "m": "openrouter/thinkingmachines/inkling:free",
@@ -3860,7 +3907,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "OpenRouter",
-   "score": 71.6,
+   "score": 71.4,
    "working": 10,
    "catalog": 4,
    "blocked": 2,
@@ -3868,7 +3915,7 @@ window.FREE_AI_DATA = {
    "wr": 62,
    "access": "api",
    "color": "#00f2fe",
-   "benchAvg": 58.5,
+   "benchAvg": 57.2,
    "ctxCap": 1048576,
    "rpm": 20,
    "rpd": 50,
@@ -3883,7 +3930,7 @@ window.FREE_AI_DATA = {
     "Работоспособность": 25.0,
     "Покрытие моделей": 16.0,
     "Контекст": 15.0,
-    "Бенчмарки": 8.4,
+    "Бенчмарки": 8.2,
     "Лимиты": 3.2,
     "Доступ": 4.0
    },
@@ -5247,6 +5294,21 @@ window.FREE_AI_DATA = {
      2,
      2,
      1,
+     0,
+     2,
+     2,
+     0,
+     1,
+     0
+    ]
+   },
+   {
+    "name": "LFM3 1.7B",
+    "f": "lfm-3-1.7b",
+    "v": [
+     1,
+     2,
+     0,
      0,
      2,
      2,
