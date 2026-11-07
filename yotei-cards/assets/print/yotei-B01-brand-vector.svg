@@ -6,14 +6,14 @@
     <foreignObject x="10.00" y="10.00" width="450" height="250">
       <div xmlns="http://www.w3.org/1999/xhtml">
     <div style="width:450px; height:250px; box-sizing:border-box; background:radial-gradient(ellipse at 50% 45%, #E2D8C4 0%, #DDD2BC 58%, #D4C7B0 100%); position:relative; overflow:hidden; font-family:'Montserrat','Plus Jakarta Sans','Inter',sans-serif; text-align:center;">
-      <!-- Top Header (compact, crisp position y=20px, deep espresso-charcoal) -->
-      <div style="position:absolute; top:20px; left:0; right:0; font-size:8.6px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; line-height:1; z-index:1; background:linear-gradient(90deg, #120904 0%, #1C0F08 30%, #4E3827 50%, #1C0F08 70%, #120904 100%);-webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; color:#180D06;">
+      <!-- Top Header (compact, crisp position y=18px, deep espresso-charcoal, zero bottom clipping) -->
+      <div style="position:absolute; top:18px; left:0; right:0; font-size:8.6px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; z-index:1; background:linear-gradient(90deg, #120904 0%, #1C0F08 30%, #4E3827 50%, #1C0F08 70%, #120904 100%);-webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; color:#180D06;line-height:1.45; padding:2px 4px;">
         АГЕНЦІЯ НЕРУХОМОСТІ
       </div>
 
-      <!-- Center Stacked YOTEI Emblem (36x36) + Wordmark (74x23.8) — warm champagne-taupe & mocha-bronze from prototype -->
+      <!-- Center Stacked YOTEI Emblem (36x36) + Wordmark (74x25.6) — expanded viewBox & overflow:visible so bottom curves of 'o' and 'e' never clip -->
       <div style="position:absolute; top:88px; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:1;">
-        <svg width="36" height="36" viewBox="1.5 1.5 83.0 83.0" shape-rendering="geometricPrecision" style="display:block;">
+        <svg width="36" height="36" viewBox="0 0 86 86" shape-rendering="geometricPrecision" style="display:block; overflow:visible;">
           <defs>
             <linearGradient id="brandFrontSymGrad" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stop-color="#BEA487"/>
@@ -30,7 +30,7 @@
 
           </g>
         </svg>
-        <svg width="74" height="23.8" viewBox="1.5 1.5 124.4 40.0" shape-rendering="geometricPrecision" style="display:block; margin-top:11.5px;">
+        <svg width="74" height="25.6" viewBox="0 0 127 44" shape-rendering="geometricPrecision" style="display:block; margin-top:11px; overflow:visible;">
           <defs>
             <linearGradient id="brandFrontWordGrad" x1="0%" y1="0%" x2="100%" y2="20%">
               <stop offset="0%" stop-color="#A6886B"/>
@@ -52,8 +52,8 @@
         </svg>
       </div>
 
-      <!-- Bottom Website URL (lifted cleanly at bottom=23px, deep espresso-charcoal) -->
-      <div style="position:absolute; bottom:23px; left:0; right:0; font-size:8.6px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; line-height:1; z-index:1; background:linear-gradient(90deg, #120904 0%, #1C0F08 30%, #4E3827 50%, #1C0F08 70%, #120904 100%);-webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; color:#180D06;">
+      <!-- Bottom Website URL (lifted cleanly at bottom=21px with generous line-height & padding so bottom never clips) -->
+      <div style="position:absolute; bottom:21px; left:0; right:0; font-size:8.6px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; z-index:1; background:linear-gradient(90deg, #120904 0%, #1C0F08 30%, #4E3827 50%, #1C0F08 70%, #120904 100%);-webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; color:#180D06;line-height:1.45; padding:2px 4px;">
         YOTEI.COM.UA
       </div>
     </div>
@@ -67,7 +67,7 @@
       <div xmlns="http://www.w3.org/1999/xhtml">
     <div style="width:450px; height:250px; box-sizing:border-box; background:radial-gradient(ellipse at 50% 45%, #E2D8C4 0%, #DDD2BC 58%, #D4C7B0 100%); position:relative; overflow:hidden; font-family:'Montserrat','Plus Jakarta Sans','Inter',sans-serif; text-align:center;">
       <!-- Centered QR Code Block -->
-      <div style="position:absolute; top:42px; left:50%; transform:translateX(-50%); display:flex; align-items:center; justify-content:center;">
+      <div style="position:absolute; top:40px; left:50%; transform:translateX(-50%); display:flex; align-items:center; justify-content:center;">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="134" height="134" shape-rendering="geometricPrecision" style="display:block;">
       <defs>
         <linearGradient id="brandQrGrad" gradientUnits="userSpaceOnUse" x1="60" y1="940" x2="940" y2="60">
@@ -82,7 +82,7 @@
         <path fill-rule="evenodd" d="M 0.00 0.00 h 189.19 v 189.19 h -189.19 Z M 27.03 27.03 v 135.14 h 135.14 v -135.14 Z"/><rect x="54.05" y="54.05" width="81.08" height="81.08"/><path fill-rule="evenodd" d="M 810.81 0.00 h 189.19 v 189.19 h -189.19 Z M 837.84 27.03 v 135.14 h 135.14 v -135.14 Z"/><rect x="864.86" y="54.05" width="81.08" height="81.08"/><path fill-rule="evenodd" d="M 0.00 810.81 h 189.19 v 189.19 h -189.19 Z M 27.03 837.84 v 135.14 h 135.14 v -135.14 Z"/><rect x="54.05" y="864.86" width="81.08" height="81.08"/>
       </g>
       <!-- Center Stacked YOTEI Emblem + 'yotei' Wordmark Directly in the Exact Center of QR (y=382..618 -> center=500.0, NO outer circle border!) -->
-      <svg x="423" y="382" width="154" height="154" viewBox="1.5 1.5 83.0 83.0" fill="url(#brandQrGrad)" stroke="url(#brandQrGrad)" stroke-width="0.5">
+      <svg x="423" y="382" width="154" height="154" viewBox="0 0 86 86" overflow="visible" fill="url(#brandQrGrad)" stroke="url(#brandQrGrad)" stroke-width="0.5">
         
 <path fill-rule="evenodd" d="M 42.974 1.823 A 41.15 41.15 0 1 1 42.974 84.123 A 41.15 41.15 0 1 1 42.974 1.823 Z M 42.974 4.323 A 38.65 38.65 0 1 0 42.974 81.623 A 38.65 38.65 0 1 0 42.974 4.323 Z" />
 <path d="M 40.323 55.619 H 45.625 V 30.33 H 40.323 Z" />
@@ -90,7 +90,7 @@
 <path d="M 25.55 65.352 C 26.159 61.614 27.897 58.225 30.503 55.619 33.718 52.49 38.064 50.491 42.93 50.491 47.885 50.491 52.229 52.49 55.444 55.619 58.052 58.225 59.788 61.614 60.396 65.352 H 65.524 C 64.917 60.137 62.57 55.53 59.007 52.055 54.924 47.971 49.274 45.451 42.93 45.451 36.673 45.451 31.026 47.971 26.941 52.055 23.378 55.53 21.031 60.137 20.423 65.352 Z" />
 
       </svg>
-      <svg x="396" y="552" width="208" height="66.8" viewBox="1.5 1.5 124.4 40.0" fill="url(#brandQrGrad)" stroke="url(#brandQrGrad)" stroke-width="1.25" stroke-linejoin="round">
+      <svg x="396" y="550" width="208" height="72" viewBox="0 0 127 44" overflow="visible" fill="url(#brandQrGrad)" stroke="url(#brandQrGrad)" stroke-width="1.25" stroke-linejoin="round">
         
 <path d="M 101.588 38.15 C 105.064 38.15 108.366 36.411 110.363 33.629 H 113.839 C 111.494 38.15 106.8 41.018 101.588 41.018 93.939 41.018 87.683 34.848 87.683 27.202 87.683 19.553 93.939 13.296 101.588 13.296 109.234 13.296 115.404 19.553 115.404 27.202 V 28.678 H 97.415 V 25.723 H 112.45 C 111.669 20.334 107.061 16.251 101.588 16.251 95.505 16.251 90.637 21.118 90.637 27.115 90.55 33.108 95.505 38.15 101.588 38.15" />
 <path d="M 46.492 38.15 C 52.575 38.15 57.442 33.195 57.442 27.202 57.442 21.118 52.575 16.251 46.492 16.251 40.497 16.251 35.544 21.118 35.544 27.202 35.544 33.195 40.497 38.15 46.492 38.15 M 46.492 41.018 C 38.846 41.018 32.589 34.848 32.589 27.202 32.589 19.553 38.846 13.296 46.492 13.296 54.14 13.296 60.397 19.553 60.397 27.202 60.397 34.848 54.14 41.018 46.492 41.018" />
@@ -104,8 +104,8 @@
     </svg>
       </div>
 
-      <!-- Bottom Two-Line Contact Block -->
-      <div style="position:absolute; bottom:21px; left:0; right:0; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#261509; font-size:9.3px; font-weight:500; line-height:1.45; letter-spacing:0.02em; font-variant-numeric:tabular-nums;">
+      <!-- Bottom Two-Line Contact Block (generous line-height & padding-bottom so descenders 'р', 'у', 'д', ',' never clip) -->
+      <div style="position:absolute; bottom:20px; left:0; right:0; padding-bottom:2px; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#261509; font-size:9.3px; font-weight:500; line-height:1.5; letter-spacing:0.02em; font-variant-numeric:tabular-nums;">
         <div>ТЕЛ: +38 075 210 0098</div>
         <div>пр-т Науки, буд. 36</div>
       </div>
