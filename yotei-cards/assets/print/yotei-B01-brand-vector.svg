@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="194mm" height="54mm" viewBox="0 0 956.00 270.00">
+  <!-- Page 1: Front (with 2mm bleed) -->
+  <g transform="translate(0, 0)">
+    <rect width="470.00" height="270.00" fill="#EBE2CF"/>
+    <foreignObject x="10.00" y="10.00" width="450" height="250">
+      <div xmlns="http://www.w3.org/1999/xhtml">
+    <div style="width:450px; height:250px; box-sizing:border-box; background:radial-gradient(ellipse at 50% 45%, #F3ECDD 0%, #EBE2CF 60%, #E3D9C4 100%); position:relative; overflow:hidden; font-family:'Montserrat','Plus Jakarta Sans','Inter',sans-serif; text-align:center;">
+      <!-- Subtle architectural rectilinear watermark on the right half -->
+      <svg width="210" height="250" viewBox="0 0 210 250" fill="none" style="position:absolute; right:0; top:0; pointer-events:none; opacity:0.028;">
+        <rect x="42" y="24" width="68" height="226" fill="#5A422E"/>
+        <rect x="118" y="58" width="56" height="192" fill="#5A422E"/>
+        <rect x="12" y="88" width="44" height="162" fill="#5A422E"/>
+      </svg>
+
+      <!-- Top Header (compact, crisp position y=20px) -->
+      <div style="position:absolute; top:20px; left:0; right:0; font-size:8.6px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; line-height:1; z-index:1; background:linear-gradient(90deg, #160F0A 0%, #261A11 22%, #9A7452 50%, #261A11 78%, #160F0A 100%);-webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; color:#24180E;">
+        АГЕНЦІЯ НЕРУХОМОСТІ
+      </div>
+
+      <!-- Center Stacked YOTEI Emblem (36x36) + Wordmark (74x23.8) — slightly smaller & optically centered -->
+      <div style="position:absolute; top:88px; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:1;">
+        <svg width="36" height="36" viewBox="1.5 1.5 83.0 83.0" shape-rendering="geometricPrecision" style="display:block;">
+          <defs>
+            <linearGradient id="brandFrontSymGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#B68E6B"/>
+              <stop offset="55%" stop-color="#9B7554"/>
+              <stop offset="100%" stop-color="#7D5B3E"/>
+            </linearGradient>
+          </defs>
+          <g fill="url(#brandFrontSymGrad)" stroke="url(#brandFrontSymGrad)" stroke-width="0.55">
+            
+<path fill-rule="evenodd" d="M 42.974 1.823 A 41.15 41.15 0 1 1 42.974 84.123 A 41.15 41.15 0 1 1 42.974 1.823 Z M 42.974 4.323 A 38.65 38.65 0 1 0 42.974 81.623 A 38.65 38.65 0 1 0 42.974 4.323 Z" />
+<path d="M 40.323 55.619 H 45.625 V 30.33 H 40.323 Z" />
+<path d="M 25.55 20.598 C 26.159 24.334 27.897 27.723 30.503 30.244 33.718 33.459 38.064 35.458 42.93 35.458 47.885 35.458 52.229 33.459 55.444 30.244 58.052 27.723 59.788 24.334 60.396 20.598 H 65.524 C 64.917 25.725 62.57 30.331 59.007 33.807 54.924 37.979 49.274 40.498 42.93 40.498 36.673 40.498 31.026 37.979 26.941 33.807 23.378 30.331 21.031 25.725 20.423 20.598 Z" />
+<path d="M 25.55 65.352 C 26.159 61.614 27.897 58.225 30.503 55.619 33.718 52.49 38.064 50.491 42.93 50.491 47.885 50.491 52.229 52.49 55.444 55.619 58.052 58.225 59.788 61.614 60.396 65.352 H 65.524 C 64.917 60.137 62.57 55.53 59.007 52.055 54.924 47.971 49.274 45.451 42.93 45.451 36.673 45.451 31.026 47.971 26.941 52.055 23.378 55.53 21.031 60.137 20.423 65.352 Z" />
+
+          </g>
+        </svg>
+        <svg width="74" height="23.8" viewBox="1.5 1.5 124.4 40.0" shape-rendering="geometricPrecision" style="display:block; margin-top:11.5px;">
+          <defs>
+            <linearGradient id="brandFrontWordGrad" x1="0%" y1="0%" x2="100%" y2="20%">
+              <stop offset="0%" stop-color="#A57E5B"/>
+              <stop offset="45%" stop-color="#8A6445"/>
+              <stop offset="100%" stop-color="#583D26"/>
+            </linearGradient>
+          </defs>
+          <g fill="url(#brandFrontWordGrad)" stroke="url(#brandFrontWordGrad)" stroke-width="1.05" stroke-linejoin="round">
+            
+<path d="M 101.588 38.15 C 105.064 38.15 108.366 36.411 110.363 33.629 H 113.839 C 111.494 38.15 106.8 41.018 101.588 41.018 93.939 41.018 87.683 34.848 87.683 27.202 87.683 19.553 93.939 13.296 101.588 13.296 109.234 13.296 115.404 19.553 115.404 27.202 V 28.678 H 97.415 V 25.723 H 112.45 C 111.669 20.334 107.061 16.251 101.588 16.251 95.505 16.251 90.637 21.118 90.637 27.115 90.55 33.108 95.505 38.15 101.588 38.15" />
+<path d="M 46.492 38.15 C 52.575 38.15 57.442 33.195 57.442 27.202 57.442 21.118 52.575 16.251 46.492 16.251 40.497 16.251 35.544 21.118 35.544 27.202 35.544 33.195 40.497 38.15 46.492 38.15 M 46.492 41.018 C 38.846 41.018 32.589 34.848 32.589 27.202 32.589 19.553 38.846 13.296 46.492 13.296 54.14 13.296 60.397 19.553 60.397 27.202 60.397 34.848 54.14 41.018 46.492 41.018" />
+<path d="M 63.873 17.031 V 14.163 H 85.859 V 17.031 H 76.3 V 40.236 H 73.432 V 17.031 Z" />
+<path d="M 120.357 14.163 H 123.312 V 40.149 H 120.357 Z" />
+<path d="M 4.955 14.163 C 4.955 28.503 26.853 28.503 26.853 14.163 H 29.721 C 29.721 21.205 24.421 27.201 17.382 27.896 V 40.236 H 14.427 V 27.896 C 7.388 27.201 2.0 21.205 2.0 14.163 Z" />
+<path d="M 46.492 23.635 C 48.405 23.635 49.969 25.201 49.969 27.114 49.969 29.024 48.405 30.59 46.492 30.59 44.581 30.59 43.016 29.024 43.016 27.114 43.016 25.201 44.581 23.635 46.492 23.635" />
+<path d="M 121.836 2.0 C 123.749 2.0 125.312 3.476 125.312 5.476 125.312 7.386 123.749 8.952 121.836 8.952 119.923 8.952 118.36 7.386 118.36 5.476 118.36 3.476 119.923 2.0 121.836 2.0" />
+
+          </g>
+        </svg>
+      </div>
+
+      <!-- Bottom Website URL (lifted cleanly at bottom=23px, compact matching scale) -->
+      <div style="position:absolute; bottom:23px; left:0; right:0; font-size:8.6px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; line-height:1; z-index:1; background:linear-gradient(90deg, #160F0A 0%, #261A11 22%, #9A7452 50%, #261A11 78%, #160F0A 100%);-webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; color:#24180E;">
+        YOTEI.COM.UA
+      </div>
+    </div>
+    </div>
+    </foreignObject>
+  </g>
+  <!-- Page 2: Back (with 2mm bleed) -->
+  <g transform="translate(486.00, 0)">
+    <rect width="470.00" height="270.00" fill="#EBE2CF"/>
+    <foreignObject x="10.00" y="10.00" width="450" height="250">
+      <div xmlns="http://www.w3.org/1999/xhtml">
+    <div style="width:450px; height:250px; box-sizing:border-box; background:radial-gradient(ellipse at 50% 45%, #F3ECDD 0%, #EBE2CF 60%, #E3D9C4 100%); position:relative; overflow:hidden; font-family:'Montserrat','Plus Jakarta Sans','Inter',sans-serif; text-align:center;">
+      <!-- Centered QR Code Block -->
+      <div style="position:absolute; top:42px; left:50%; transform:translateX(-50%); display:flex; align-items:center; justify-content:center;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="134" height="134" shape-rendering="geometricPrecision" style="display:block;">
+      <defs>
+        <linearGradient id="brandQrGrad" gradientUnits="userSpaceOnUse" x1="60" y1="940" x2="940" y2="60">
+          <stop offset="0%" stop-color="#1E1006"/>
+          <stop offset="38%" stop-color="#3B2210"/>
+          <stop offset="72%" stop-color="#745134"/>
+          <stop offset="100%" stop-color="#A37A54"/>
+        </linearGradient>
+        <linearGradient id="badgeRingGrad" gradientUnits="userSpaceOnUse" x1="360" y1="640" x2="640" y2="360">
+          <stop offset="0%" stop-color="#3B2312"/>
+          <stop offset="50%" stop-color="#7A5739"/>
+          <stop offset="100%" stop-color="#9E7652"/>
+        </linearGradient>
+      </defs>
+      <g fill="url(#brandQrGrad)">
+        <rect x="333.33" y="0.00" width="151.92" height="30.70"/><rect x="545.45" y="0.00" width="30.70" height="30.70"/><rect x="606.06" y="0.00" width="91.31" height="30.70"/><rect x="727.27" y="0.00" width="30.70" height="30.70"/><rect x="242.42" y="30.30" width="61.01" height="30.70"/><rect x="333.33" y="30.30" width="30.70" height="30.70"/><rect x="515.15" y="30.30" width="30.70" height="30.70"/><rect x="606.06" y="30.30" width="61.01" height="30.70"/><rect x="242.42" y="60.61" width="30.70" height="30.70"/><rect x="333.33" y="60.61" width="61.01" height="30.70"/><rect x="484.85" y="60.61" width="30.70" height="30.70"/><rect x="575.76" y="60.61" width="30.70" height="30.70"/><rect x="636.36" y="60.61" width="30.70" height="30.70"/><rect x="727.27" y="60.61" width="30.70" height="30.70"/><rect x="242.42" y="90.91" width="30.70" height="30.70"/><rect x="303.03" y="90.91" width="182.22" height="30.70"/><rect x="545.45" y="90.91" width="61.01" height="30.70"/><rect x="636.36" y="90.91" width="121.61" height="30.70"/><rect x="242.42" y="121.21" width="121.61" height="30.70"/><rect x="393.94" y="121.21" width="30.70" height="30.70"/><rect x="484.85" y="121.21" width="121.61" height="30.70"/><rect x="636.36" y="121.21" width="121.61" height="30.70"/><rect x="242.42" y="151.52" width="30.70" height="30.70"/><rect x="363.64" y="151.52" width="61.01" height="30.70"/><rect x="515.15" y="151.52" width="61.01" height="30.70"/><rect x="606.06" y="151.52" width="30.70" height="30.70"/><rect x="727.27" y="151.52" width="30.70" height="30.70"/><rect x="242.42" y="181.82" width="30.70" height="30.70"/><rect x="303.03" y="181.82" width="30.70" height="30.70"/><rect x="363.64" y="181.82" width="30.70" height="30.70"/><rect x="424.24" y="181.82" width="30.70" height="30.70"/><rect x="484.85" y="181.82" width="30.70" height="30.70"/><rect x="545.45" y="181.82" width="30.70" height="30.70"/><rect x="606.06" y="181.82" width="30.70" height="30.70"/><rect x="666.67" y="181.82" width="30.70" height="30.70"/><rect x="727.27" y="181.82" width="30.70" height="30.70"/><rect x="333.33" y="212.12" width="30.70" height="30.70"/><rect x="424.24" y="212.12" width="61.01" height="30.70"/><rect x="545.45" y="212.12" width="30.70" height="30.70"/><rect x="666.67" y="212.12" width="30.70" height="30.70"/><rect x="60.61" y="242.42" width="30.70" height="30.70"/><rect x="151.52" y="242.42" width="151.92" height="30.70"/><rect x="363.64" y="242.42" width="30.70" height="30.70"/><rect x="424.24" y="242.42" width="121.61" height="30.70"/><rect x="575.76" y="242.42" width="30.70" height="30.70"/><rect x="636.36" y="242.42" width="151.92" height="30.70"/><rect x="818.18" y="242.42" width="151.92" height="30.70"/><rect x="0.00" y="272.73" width="61.01" height="30.70"/><rect x="90.91" y="272.73" width="61.01" height="30.70"/><rect x="242.42" y="272.73" width="91.31" height="30.70"/><rect x="363.64" y="272.73" width="212.52" height="30.70"/><rect x="606.06" y="272.73" width="91.31" height="30.70"/><rect x="727.27" y="272.73" width="121.61" height="30.70"/><rect x="878.79" y="272.73" width="61.01" height="30.70"/><rect x="969.70" y="272.73" width="30.70" height="30.70"/><rect x="90.91" y="303.03" width="151.92" height="30.70"/><rect x="303.03" y="303.03" width="61.01" height="30.70"/><rect x="393.94" y="303.03" width="151.92" height="30.70"/><rect x="727.27" y="303.03" width="30.70" height="30.70"/><rect x="787.88" y="303.03" width="121.61" height="30.70"/><rect x="969.70" y="303.03" width="30.70" height="30.70"/><rect x="30.30" y="333.33" width="91.31" height="30.70"/><rect x="212.12" y="333.33" width="91.31" height="30.70"/><rect x="333.33" y="333.33" width="61.01" height="30.70"/><rect x="424.24" y="333.33" width="30.70" height="30.70"/><rect x="484.85" y="333.33" width="30.70" height="30.70"/><rect x="545.45" y="333.33" width="30.70" height="30.70"/><rect x="606.06" y="333.33" width="61.01" height="30.70"/><rect x="696.97" y="333.33" width="91.31" height="30.70"/><rect x="818.18" y="333.33" width="30.70" height="30.70"/><rect x="878.79" y="333.33" width="30.70" height="30.70"/><rect x="939.39" y="333.33" width="30.70" height="30.70"/><rect x="60.61" y="363.64" width="30.70" height="30.70"/><rect x="181.82" y="363.64" width="30.70" height="30.70"/><rect x="242.42" y="363.64" width="30.70" height="30.70"/><rect x="303.03" y="363.64" width="30.70" height="30.70"/><rect x="636.36" y="363.64" width="30.70" height="30.70"/><rect x="727.27" y="363.64" width="30.70" height="30.70"/><rect x="787.88" y="363.64" width="91.31" height="30.70"/><rect x="939.39" y="363.64" width="30.70" height="30.70"/><rect x="121.21" y="393.94" width="30.70" height="30.70"/><rect x="212.12" y="393.94" width="91.31" height="30.70"/><rect x="333.33" y="393.94" width="30.70" height="30.70"/><rect x="636.36" y="393.94" width="30.70" height="30.70"/><rect x="696.97" y="393.94" width="61.01" height="30.70"/><rect x="787.88" y="393.94" width="151.92" height="30.70"/><rect x="969.70" y="393.94" width="30.70" height="30.70"/><rect x="30.30" y="424.24" width="61.01" height="30.70"/><rect x="121.21" y="424.24" width="30.70" height="30.70"/><rect x="181.82" y="424.24" width="30.70" height="30.70"/><rect x="242.42" y="424.24" width="61.01" height="30.70"/><rect x="696.97" y="424.24" width="61.01" height="30.70"/><rect x="818.18" y="424.24" width="30.70" height="30.70"/><rect x="878.79" y="424.24" width="30.70" height="30.70"/><rect x="969.70" y="424.24" width="30.70" height="30.70"/><rect x="90.91" y="454.55" width="30.70" height="30.70"/><rect x="272.73" y="454.55" width="61.01" height="30.70"/><rect x="666.67" y="454.55" width="91.31" height="30.70"/><rect x="787.88" y="454.55" width="151.92" height="30.70"/><rect x="121.21" y="484.85" width="121.61" height="30.70"/><rect x="272.73" y="484.85" width="91.31" height="30.70"/><rect x="666.67" y="484.85" width="30.70" height="30.70"/><rect x="818.18" y="484.85" width="121.61" height="30.70"/><rect x="969.70" y="484.85" width="30.70" height="30.70"/><rect x="0.00" y="515.15" width="61.01" height="30.70"/><rect x="90.91" y="515.15" width="61.01" height="30.70"/><rect x="242.42" y="515.15" width="30.70" height="30.70"/><rect x="303.03" y="515.15" width="61.01" height="30.70"/><rect x="636.36" y="515.15" width="30.70" height="30.70"/><rect x="696.97" y="515.15" width="30.70" height="30.70"/><rect x="909.09" y="515.15" width="61.01" height="30.70"/><rect x="60.61" y="545.45" width="61.01" height="30.70"/><rect x="151.52" y="545.45" width="61.01" height="30.70"/><rect x="272.73" y="545.45" width="30.70" height="30.70"/><rect x="333.33" y="545.45" width="30.70" height="30.70"/><rect x="696.97" y="545.45" width="30.70" height="30.70"/><rect x="757.58" y="545.45" width="61.01" height="30.70"/><rect x="848.48" y="545.45" width="151.92" height="30.70"/><rect x="60.61" y="575.76" width="91.31" height="30.70"/><rect x="303.03" y="575.76" width="30.70" height="30.70"/><rect x="666.67" y="575.76" width="61.01" height="30.70"/><rect x="757.58" y="575.76" width="30.70" height="30.70"/><rect x="878.79" y="575.76" width="30.70" height="30.70"/><rect x="939.39" y="575.76" width="30.70" height="30.70"/><rect x="0.00" y="606.06" width="30.70" height="30.70"/><rect x="60.61" y="606.06" width="30.70" height="30.70"/><rect x="181.82" y="606.06" width="30.70" height="30.70"/><rect x="242.42" y="606.06" width="61.01" height="30.70"/><rect x="696.97" y="606.06" width="151.92" height="30.70"/><rect x="939.39" y="606.06" width="61.01" height="30.70"/><rect x="30.30" y="636.36" width="61.01" height="30.70"/><rect x="212.12" y="636.36" width="30.70" height="30.70"/><rect x="272.73" y="636.36" width="91.31" height="30.70"/><rect x="393.94" y="636.36" width="30.70" height="30.70"/><rect x="454.55" y="636.36" width="30.70" height="30.70"/><rect x="515.15" y="636.36" width="30.70" height="30.70"/><rect x="575.76" y="636.36" width="91.31" height="30.70"/><rect x="727.27" y="636.36" width="61.01" height="30.70"/><rect x="818.18" y="636.36" width="30.70" height="30.70"/><rect x="878.79" y="636.36" width="61.01" height="30.70"/><rect x="969.70" y="636.36" width="30.70" height="30.70"/><rect x="0.00" y="666.67" width="61.01" height="30.70"/><rect x="90.91" y="666.67" width="212.52" height="30.70"/><rect x="393.94" y="666.67" width="61.01" height="30.70"/><rect x="515.15" y="666.67" width="121.61" height="30.70"/><rect x="727.27" y="666.67" width="151.92" height="30.70"/><rect x="939.39" y="666.67" width="61.01" height="30.70"/><rect x="60.61" y="696.97" width="30.70" height="30.70"/><rect x="121.21" y="696.97" width="30.70" height="30.70"/><rect x="272.73" y="696.97" width="61.01" height="30.70"/><rect x="363.64" y="696.97" width="91.31" height="30.70"/><rect x="545.45" y="696.97" width="30.70" height="30.70"/><rect x="606.06" y="696.97" width="61.01" height="30.70"/><rect x="696.97" y="696.97" width="61.01" height="30.70"/><rect x="818.18" y="696.97" width="30.70" height="30.70"/><rect x="878.79" y="696.97" width="30.70" height="30.70"/><rect x="939.39" y="696.97" width="30.70" height="30.70"/><rect x="0.00" y="727.27" width="61.01" height="30.70"/><rect x="121.21" y="727.27" width="91.31" height="30.70"/><rect x="242.42" y="727.27" width="30.70" height="30.70"/><rect x="303.03" y="727.27" width="30.70" height="30.70"/><rect x="393.94" y="727.27" width="30.70" height="30.70"/><rect x="484.85" y="727.27" width="30.70" height="30.70"/><rect x="606.06" y="727.27" width="61.01" height="30.70"/><rect x="727.27" y="727.27" width="151.92" height="30.70"/><rect x="242.42" y="757.58" width="30.70" height="30.70"/><rect x="303.03" y="757.58" width="30.70" height="30.70"/><rect x="393.94" y="757.58" width="30.70" height="30.70"/><rect x="454.55" y="757.58" width="30.70" height="30.70"/><rect x="515.15" y="757.58" width="30.70" height="30.70"/><rect x="575.76" y="757.58" width="61.01" height="30.70"/><rect x="696.97" y="757.58" width="61.01" height="30.70"/><rect x="848.48" y="757.58" width="61.01" height="30.70"/><rect x="939.39" y="757.58" width="61.01" height="30.70"/><rect x="242.42" y="787.88" width="61.01" height="30.70"/><rect x="393.94" y="787.88" width="91.31" height="30.70"/><rect x="545.45" y="787.88" width="61.01" height="30.70"/><rect x="636.36" y="787.88" width="121.61" height="30.70"/><rect x="787.88" y="787.88" width="30.70" height="30.70"/><rect x="848.48" y="787.88" width="30.70" height="30.70"/><rect x="909.09" y="787.88" width="30.70" height="30.70"/><rect x="969.70" y="787.88" width="30.70" height="30.70"/><rect x="242.42" y="818.18" width="30.70" height="30.70"/><rect x="303.03" y="818.18" width="30.70" height="30.70"/><rect x="515.15" y="818.18" width="121.61" height="30.70"/><rect x="666.67" y="818.18" width="30.70" height="30.70"/><rect x="727.27" y="818.18" width="30.70" height="30.70"/><rect x="848.48" y="818.18" width="61.01" height="30.70"/><rect x="939.39" y="818.18" width="61.01" height="30.70"/><rect x="303.03" y="848.48" width="30.70" height="30.70"/><rect x="454.55" y="848.48" width="454.95" height="30.70"/><rect x="272.73" y="878.79" width="30.70" height="30.70"/><rect x="333.33" y="878.79" width="61.01" height="30.70"/><rect x="424.24" y="878.79" width="61.01" height="30.70"/><rect x="515.15" y="878.79" width="61.01" height="30.70"/><rect x="606.06" y="878.79" width="30.70" height="30.70"/><rect x="666.67" y="878.79" width="61.01" height="30.70"/><rect x="757.58" y="878.79" width="30.70" height="30.70"/><rect x="818.18" y="878.79" width="61.01" height="30.70"/><rect x="939.39" y="878.79" width="30.70" height="30.70"/><rect x="242.42" y="909.09" width="61.01" height="30.70"/><rect x="363.64" y="909.09" width="30.70" height="30.70"/><rect x="484.85" y="909.09" width="121.61" height="30.70"/><rect x="696.97" y="909.09" width="61.01" height="30.70"/><rect x="848.48" y="909.09" width="30.70" height="30.70"/><rect x="909.09" y="909.09" width="91.31" height="30.70"/><rect x="333.33" y="939.39" width="61.01" height="30.70"/><rect x="424.24" y="939.39" width="30.70" height="30.70"/><rect x="606.06" y="939.39" width="61.01" height="30.70"/><rect x="727.27" y="939.39" width="30.70" height="30.70"/><rect x="787.88" y="939.39" width="30.70" height="30.70"/><rect x="272.73" y="969.70" width="91.31" height="30.70"/><rect x="424.24" y="969.70" width="91.31" height="30.70"/><rect x="575.76" y="969.70" width="61.01" height="30.70"/><rect x="696.97" y="969.70" width="61.01" height="30.70"/><rect x="787.88" y="969.70" width="30.70" height="30.70"/><rect x="848.48" y="969.70" width="30.70" height="30.70"/><rect x="909.09" y="969.70" width="30.70" height="30.70"/><rect x="969.70" y="969.70" width="30.70" height="30.70"/>
+        <path fill-rule="evenodd" d="M 0.00 0.00 h 212.12 v 212.12 h -212.12 Z M 30.30 30.30 v 151.52 h 151.52 v -151.52 Z"/><rect x="60.61" y="60.61" width="90.91" height="90.91"/><path fill-rule="evenodd" d="M 787.88 0.00 h 212.12 v 212.12 h -212.12 Z M 818.18 30.30 v 151.52 h 151.52 v -151.52 Z"/><rect x="848.48" y="60.61" width="90.91" height="90.91"/><path fill-rule="evenodd" d="M 0.00 787.88 h 212.12 v 212.12 h -212.12 Z M 30.30 818.18 v 151.52 h 151.52 v -151.52 Z"/><rect x="60.61" y="848.48" width="90.91" height="90.91"/>
+      </g>
+      <!-- True 1:1 Circular Center Badge inside the 9x9 module square clearing -->
+      <circle cx="500" cy="500" r="126" fill="#EFE7D6" stroke="url(#badgeRingGrad)" stroke-width="6.5"/>
+      <!-- Snugly fitted stacked YOTEI emblem (top) + wide bold 'yotei' wordmark (bottom) inside the circle -->
+      <svg x="458" y="394" width="84" height="84" viewBox="1.5 1.5 83.0 83.0" fill="#4A321F" stroke="#4A321F" stroke-width="0.6">
+        
+<path fill-rule="evenodd" d="M 42.974 1.823 A 41.15 41.15 0 1 1 42.974 84.123 A 41.15 41.15 0 1 1 42.974 1.823 Z M 42.974 4.323 A 38.65 38.65 0 1 0 42.974 81.623 A 38.65 38.65 0 1 0 42.974 4.323 Z" />
+<path d="M 40.323 55.619 H 45.625 V 30.33 H 40.323 Z" />
+<path d="M 25.55 20.598 C 26.159 24.334 27.897 27.723 30.503 30.244 33.718 33.459 38.064 35.458 42.93 35.458 47.885 35.458 52.229 33.459 55.444 30.244 58.052 27.723 59.788 24.334 60.396 20.598 H 65.524 C 64.917 25.725 62.57 30.331 59.007 33.807 54.924 37.979 49.274 40.498 42.93 40.498 36.673 40.498 31.026 37.979 26.941 33.807 23.378 30.331 21.031 25.725 20.423 20.598 Z" />
+<path d="M 25.55 65.352 C 26.159 61.614 27.897 58.225 30.503 55.619 33.718 52.49 38.064 50.491 42.93 50.491 47.885 50.491 52.229 52.49 55.444 55.619 58.052 58.225 59.788 61.614 60.396 65.352 H 65.524 C 64.917 60.137 62.57 55.53 59.007 52.055 54.924 47.971 49.274 45.451 42.93 45.451 36.673 45.451 31.026 47.971 26.941 52.055 23.378 55.53 21.031 60.137 20.423 65.352 Z" />
+
+      </svg>
+      <svg x="409" y="492" width="182" height="58.5" viewBox="1.5 1.5 124.4 40.0" fill="#3B2616" stroke="#3B2616" stroke-width="1.35" stroke-linejoin="round">
+        
+<path d="M 101.588 38.15 C 105.064 38.15 108.366 36.411 110.363 33.629 H 113.839 C 111.494 38.15 106.8 41.018 101.588 41.018 93.939 41.018 87.683 34.848 87.683 27.202 87.683 19.553 93.939 13.296 101.588 13.296 109.234 13.296 115.404 19.553 115.404 27.202 V 28.678 H 97.415 V 25.723 H 112.45 C 111.669 20.334 107.061 16.251 101.588 16.251 95.505 16.251 90.637 21.118 90.637 27.115 90.55 33.108 95.505 38.15 101.588 38.15" />
+<path d="M 46.492 38.15 C 52.575 38.15 57.442 33.195 57.442 27.202 57.442 21.118 52.575 16.251 46.492 16.251 40.497 16.251 35.544 21.118 35.544 27.202 35.544 33.195 40.497 38.15 46.492 38.15 M 46.492 41.018 C 38.846 41.018 32.589 34.848 32.589 27.202 32.589 19.553 38.846 13.296 46.492 13.296 54.14 13.296 60.397 19.553 60.397 27.202 60.397 34.848 54.14 41.018 46.492 41.018" />
+<path d="M 63.873 17.031 V 14.163 H 85.859 V 17.031 H 76.3 V 40.236 H 73.432 V 17.031 Z" />
+<path d="M 120.357 14.163 H 123.312 V 40.149 H 120.357 Z" />
+<path d="M 4.955 14.163 C 4.955 28.503 26.853 28.503 26.853 14.163 H 29.721 C 29.721 21.205 24.421 27.201 17.382 27.896 V 40.236 H 14.427 V 27.896 C 7.388 27.201 2.0 21.205 2.0 14.163 Z" />
+<path d="M 46.492 23.635 C 48.405 23.635 49.969 25.201 49.969 27.114 49.969 29.024 48.405 30.59 46.492 30.59 44.581 30.59 43.016 29.024 43.016 27.114 43.016 25.201 44.581 23.635 46.492 23.635" />
+<path d="M 121.836 2.0 C 123.749 2.0 125.312 3.476 125.312 5.476 125.312 7.386 123.749 8.952 121.836 8.952 119.923 8.952 118.36 7.386 118.36 5.476 118.36 3.476 119.923 2.0 121.836 2.0" />
+
+      </svg>
+    </svg>
+      </div>
+
+      <!-- Bottom Two-Line Contact Block -->
+      <div style="position:absolute; bottom:21px; left:0; right:0; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#382515; font-size:9.3px; font-weight:500; line-height:1.45; letter-spacing:0.02em; font-variant-numeric:tabular-nums;">
+        <div>ТЕЛ: +38 075 210 0098</div>
+        <div>пр-т Науки, буд. 36</div>
+      </div>
+    </div>
+    </div>
+    </foreignObject>
+  </g>
+</svg>

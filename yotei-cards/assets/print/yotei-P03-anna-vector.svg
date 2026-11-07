@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="94mm" height="54mm" viewBox="0 0 470.00 270.00">
+  <rect width="100%" height="100%" fill="#0A4580"/>
+  <foreignObject x="10.00" y="10.00" width="450" height="250">
+    <div xmlns="http://www.w3.org/1999/xhtml">
+    <div style="width:450px; height:250px; box-sizing:border-box; background:#0A4580; color:#FFFFFF; position:relative; overflow:hidden;">
+      <!-- Top-Center Horizontal YOTEI REAL ESTATE Lockup (1:1 reference coordinates: Emblem x=158..203 y=22.3..67.3; yotei x=218..291.5 y=30.3..53.3; REAL ESTATE x=225..287 y=60.5..66.5) -->
+      <svg width="45" height="45" viewBox="1.8 1.8 82.4 82.4" shape-rendering="geometricPrecision" fill="#FFFFFF" style="position:absolute; left:158px; top:22.3px; display:block;">
+        
+<path d="M 42.93 2.0 C 54.312 2.0 64.569 6.519 71.955 13.993 79.341 21.379 83.948 31.634 83.948 42.931 83.948 54.315 79.341 64.567 71.955 71.956 64.569 79.341 54.312 83.946 42.93 83.946 31.633 83.946 21.379 79.341 13.992 71.956 6.519 64.567 2.0 54.315 2.0 42.931 2.0 31.634 6.519 21.379 13.992 13.993 21.379 6.519 31.633 2.0 42.93 2.0 M 71.087 14.861 C 63.872 7.649 53.965 3.217 42.93 3.217 31.98 3.217 22.074 7.649 14.862 14.861 7.648 21.988 3.217 31.981 3.217 42.931 3.217 53.966 7.648 63.873 14.862 71.088 22.074 78.3 31.98 82.731 42.93 82.731 53.965 82.731 63.872 78.3 71.087 71.088 78.299 63.873 82.729 53.966 82.729 42.931 82.729 31.981 78.299 21.988 71.087 14.861" />
+<path d="M 40.323 55.619 H 45.625 V 30.33 H 40.323 Z" />
+<path d="M 25.55 20.598 C 26.159 24.334 27.897 27.723 30.503 30.244 33.718 33.459 38.064 35.458 42.93 35.458 47.885 35.458 52.229 33.459 55.444 30.244 58.052 27.723 59.788 24.334 60.396 20.598 H 65.524 C 64.917 25.725 62.57 30.331 59.007 33.807 54.924 37.979 49.274 40.498 42.93 40.498 36.673 40.498 31.026 37.979 26.941 33.807 23.378 30.331 21.031 25.725 20.423 20.598 Z" />
+<path d="M 25.55 65.352 C 26.159 61.614 27.897 58.225 30.503 55.619 33.718 52.49 38.064 50.491 42.93 50.491 47.885 50.491 52.229 52.49 55.444 55.619 58.052 58.225 59.788 61.614 60.396 65.352 H 65.524 C 64.917 60.137 62.57 55.53 59.007 52.055 54.924 47.971 49.274 45.451 42.93 45.451 36.673 45.451 31.026 47.971 26.941 52.055 23.378 55.53 21.031 60.137 20.423 65.352 Z" />
+
+      </svg>
+      <svg width="73.5" height="23.0" viewBox="1.8 1.8 123.8 39.5" shape-rendering="geometricPrecision" fill="#FFFFFF" style="position:absolute; left:218px; top:30.3px; display:block;">
+        
+<path d="M 101.588 38.15 C 105.064 38.15 108.366 36.411 110.363 33.629 H 113.839 C 111.494 38.15 106.8 41.018 101.588 41.018 93.939 41.018 87.683 34.848 87.683 27.202 87.683 19.553 93.939 13.296 101.588 13.296 109.234 13.296 115.404 19.553 115.404 27.202 V 28.678 H 97.415 V 25.723 H 112.45 C 111.669 20.334 107.061 16.251 101.588 16.251 95.505 16.251 90.637 21.118 90.637 27.115 90.55 33.108 95.505 38.15 101.588 38.15" />
+<path d="M 46.492 38.15 C 52.575 38.15 57.442 33.195 57.442 27.202 57.442 21.118 52.575 16.251 46.492 16.251 40.497 16.251 35.544 21.118 35.544 27.202 35.544 33.195 40.497 38.15 46.492 38.15 M 46.492 41.018 C 38.846 41.018 32.589 34.848 32.589 27.202 32.589 19.553 38.846 13.296 46.492 13.296 54.14 13.296 60.397 19.553 60.397 27.202 60.397 34.848 54.14 41.018 46.492 41.018" />
+<path d="M 63.873 17.031 V 14.163 H 85.859 V 17.031 H 76.3 V 40.236 H 73.432 V 17.031 Z" />
+<path d="M 120.357 14.163 H 123.312 V 40.149 H 120.357 Z" />
+<path d="M 4.955 14.163 C 4.955 28.503 26.853 28.503 26.853 14.163 H 29.721 C 29.721 21.205 24.421 27.201 17.382 27.896 V 40.236 H 14.427 V 27.896 C 7.388 27.201 2.0 21.205 2.0 14.163 Z" />
+<path d="M 46.492 23.635 C 48.405 23.635 49.969 25.201 49.969 27.114 49.969 29.024 48.405 30.59 46.492 30.59 44.581 30.59 43.016 29.024 43.016 27.114 43.016 25.201 44.581 23.635 46.492 23.635" />
+<path d="M 121.836 2.0 C 123.749 2.0 125.312 3.476 125.312 5.476 125.312 7.386 123.749 8.952 121.836 8.952 119.923 8.952 118.36 7.386 118.36 5.476 118.36 3.476 119.923 2.0 121.836 2.0" />
+
+      </svg>
+      <div style="position:absolute; left:225px; top:59.8px; font-family:'Times New Roman','Cormorant Garamond',Georgia,serif; font-size:8.1px; font-weight:400; text-transform:uppercase; letter-spacing:0.155em; color:#FFFFFF; line-height:1; white-space:nowrap;">
+        REAL ESTATE
+      </div>
+
+      <!-- Left Column: Seamless White QR Code (91x91 at x=28, y=91) + Monospace Contacts (x=28, y=214 & y=224.5) -->
+      <div style="position:absolute; left:28px; top:91px;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29" width="91" height="91" shape-rendering="crispEdges" style="display:block;"><path d="M0 0h7v1h-7ZM10 0h1v1h-1ZM14 0h1v1h-1ZM18 0h2v1h-2ZM22 0h7v1h-7ZM0 1h1v1h-1ZM6 1h1v1h-1ZM9 1h1v1h-1ZM13 1h1v1h-1ZM18 1h3v1h-3ZM22 1h1v1h-1ZM28 1h1v1h-1ZM0 2h1v1h-1ZM2 2h3v1h-3ZM6 2h1v1h-1ZM8 2h1v1h-1ZM11 2h1v1h-1ZM15 2h1v1h-1ZM20 2h1v1h-1ZM22 2h1v1h-1ZM24 2h3v1h-3ZM28 2h1v1h-1ZM0 3h1v1h-1ZM2 3h3v1h-3ZM6 3h1v1h-1ZM9 3h1v1h-1ZM12 3h2v1h-2ZM16 3h1v1h-1ZM18 3h2v1h-2ZM22 3h1v1h-1ZM24 3h3v1h-3ZM28 3h1v1h-1ZM0 4h1v1h-1ZM2 4h3v1h-3ZM6 4h1v1h-1ZM9 4h1v1h-1ZM12 4h2v1h-2ZM16 4h1v1h-1ZM18 4h2v1h-2ZM22 4h1v1h-1ZM24 4h3v1h-3ZM28 4h1v1h-1ZM0 5h1v1h-1ZM6 5h1v1h-1ZM10 5h3v1h-3ZM14 5h7v1h-7ZM22 5h1v1h-1ZM28 5h1v1h-1ZM0 6h7v1h-7ZM8 6h1v1h-1ZM10 6h1v1h-1ZM12 6h1v1h-1ZM14 6h1v1h-1ZM16 6h1v1h-1ZM18 6h1v1h-1ZM20 6h1v1h-1ZM22 6h7v1h-7ZM8 7h1v1h-1ZM11 7h1v1h-1ZM15 7h1v1h-1ZM17 7h2v1h-2ZM20 7h1v1h-1ZM0 8h3v1h-3ZM4 8h5v1h-5ZM12 8h1v1h-1ZM16 8h2v1h-2ZM19 8h4v1h-4ZM26 8h1v1h-1ZM3 9h1v1h-1ZM5 9h1v1h-1ZM9 9h1v1h-1ZM11 9h3v1h-3ZM15 9h2v1h-2ZM21 9h2v1h-2ZM25 9h1v1h-1ZM28 9h1v1h-1ZM0 10h1v1h-1ZM2 10h2v1h-2ZM5 10h3v1h-3ZM10 10h3v1h-3ZM14 10h4v1h-4ZM23 10h2v1h-2ZM26 10h3v1h-3ZM3 11h1v1h-1ZM5 11h1v1h-1ZM7 11h1v1h-1ZM9 11h2v1h-2ZM12 11h3v1h-3ZM16 11h2v1h-2ZM19 11h1v1h-1ZM27 11h1v1h-1ZM1 12h1v1h-1ZM5 12h4v1h-4ZM10 12h2v1h-2ZM14 12h2v1h-2ZM17 12h1v1h-1ZM20 12h1v1h-1ZM22 12h1v1h-1ZM25 12h1v1h-1ZM27 12h2v1h-2ZM0 13h1v1h-1ZM3 13h1v1h-1ZM5 13h1v1h-1ZM10 13h2v1h-2ZM14 13h2v1h-2ZM17 13h2v1h-2ZM20 13h3v1h-3ZM25 13h1v1h-1ZM28 13h1v1h-1ZM0 14h5v1h-5ZM6 14h2v1h-2ZM13 14h1v1h-1ZM21 14h1v1h-1ZM24 14h2v1h-2ZM27 14h2v1h-2ZM0 15h1v1h-1ZM3 15h1v1h-1ZM8 15h2v1h-2ZM11 15h1v1h-1ZM15 15h1v1h-1ZM17 15h1v1h-1ZM19 15h4v1h-4ZM25 15h1v1h-1ZM27 15h1v1h-1ZM2 16h5v1h-5ZM8 16h1v1h-1ZM12 16h1v1h-1ZM16 16h2v1h-2ZM21 16h3v1h-3ZM25 16h1v1h-1ZM27 16h2v1h-2ZM8 17h2v1h-2ZM11 17h3v1h-3ZM15 17h4v1h-4ZM20 17h3v1h-3ZM25 17h2v1h-2ZM28 17h1v1h-1ZM0 18h1v1h-1ZM2 18h5v1h-5ZM9 18h4v1h-4ZM14 18h5v1h-5ZM20 18h1v1h-1ZM22 18h2v1h-2ZM27 18h2v1h-2ZM1 19h1v1h-1ZM3 19h1v1h-1ZM7 19h2v1h-2ZM10 19h1v1h-1ZM12 19h3v1h-3ZM16 19h3v1h-3ZM20 19h1v1h-1ZM22 19h1v1h-1ZM24 19h2v1h-2ZM27 19h1v1h-1ZM0 20h1v1h-1ZM4 20h5v1h-5ZM10 20h2v1h-2ZM14 20h2v1h-2ZM17 20h8v1h-8ZM8 21h1v1h-1ZM10 21h2v1h-2ZM14 21h2v1h-2ZM19 21h2v1h-2ZM24 21h1v1h-1ZM26 21h3v1h-3ZM0 22h7v1h-7ZM8 22h3v1h-3ZM13 22h1v1h-1ZM17 22h1v1h-1ZM19 22h2v1h-2ZM22 22h1v1h-1ZM24 22h2v1h-2ZM27 22h2v1h-2ZM0 23h1v1h-1ZM6 23h1v1h-1ZM8 23h1v1h-1ZM10 23h2v1h-2ZM15 23h1v1h-1ZM17 23h4v1h-4ZM24 23h2v1h-2ZM0 24h1v1h-1ZM2 24h3v1h-3ZM6 24h1v1h-1ZM8 24h1v1h-1ZM10 24h1v1h-1ZM12 24h1v1h-1ZM16 24h3v1h-3ZM20 24h5v1h-5ZM27 24h1v1h-1ZM0 25h1v1h-1ZM2 25h3v1h-3ZM6 25h1v1h-1ZM9 25h1v1h-1ZM11 25h3v1h-3ZM15 25h4v1h-4ZM23 25h2v1h-2ZM26 25h1v1h-1ZM0 26h1v1h-1ZM2 26h3v1h-3ZM6 26h1v1h-1ZM8 26h1v1h-1ZM11 26h2v1h-2ZM14 26h3v1h-3ZM19 26h1v1h-1ZM23 26h3v1h-3ZM28 26h1v1h-1ZM0 27h1v1h-1ZM6 27h1v1h-1ZM8 27h1v1h-1ZM10 27h1v1h-1ZM12 27h3v1h-3ZM16 27h2v1h-2ZM19 27h2v1h-2ZM22 27h1v1h-1ZM27 27h1v1h-1ZM0 28h7v1h-7ZM8 28h4v1h-4ZM14 28h3v1h-3ZM18 28h4v1h-4ZM25 28h1v1h-1ZM27 28h2v1h-2Z" fill="#FFFFFF"/></svg>
+      </div>
+      <div style="position:absolute; left:28px; top:213.5px; font-family:'Roboto Mono',monospace; font-size:7.25px; font-weight:400; color:#FFFFFF; letter-spacing:0.01em; line-height:1; white-space:pre;">+380 99 176 81 67</div>
+      <div style="position:absolute; left:28px; top:224.2px; font-family:'Roboto Mono',monospace; font-size:7.25px; font-weight:700; color:#FFFFFF; letter-spacing:0.01em; text-transform:uppercase; line-height:1; white-space:pre;">YOTEI.COM.UA</div>
+
+      <!-- Right Column: Agent Name (Montserrat Regular 400 at x=248, y=87.5 -> top of glyphs at y=91) + 4 Bulleted Services (Open Sans Regular 400 at x=248, y=120.5) -->
+      <div style="position:absolute; left:248px; top:87.5px; font-family:'Montserrat',sans-serif; font-size:21.0px; font-weight:400; color:#FFFFFF; letter-spacing:0.012em; line-height:1; white-space:nowrap;">
+        Анна Колісник
+      </div>
+      <div style="position:absolute; left:248px; top:120.5px; width:185px; display:flex; flex-direction:column; gap:0px;">
+        
+        <div style="position:relative; padding-left:7px; font-family:'Open Sans',sans-serif; font-size:9.65px; font-weight:400; color:#FFFFFF; line-height:12.2px; letter-spacing:0.004em; text-align:left;">
+          <span style="position:absolute; left:0; top:4.9px; width:2.1px; height:2.1px; border-radius:50%; background:#FFFFFF;"></span>
+          Підбір нерухомості
+        </div>
+        
+        <div style="position:relative; padding-left:7px; font-family:'Open Sans',sans-serif; font-size:9.65px; font-weight:400; color:#FFFFFF; line-height:12.2px; letter-spacing:0.004em; text-align:left;">
+          <span style="position:absolute; left:0; top:4.9px; width:2.1px; height:2.1px; border-radius:50%; background:#FFFFFF;"></span>
+          Допомога у продажу та здачі<br/>квартир в оренду
+        </div>
+        
+        <div style="position:relative; padding-left:7px; font-family:'Open Sans',sans-serif; font-size:9.65px; font-weight:400; color:#FFFFFF; line-height:12.2px; letter-spacing:0.004em; text-align:left;">
+          <span style="position:absolute; left:0; top:4.9px; width:2.1px; height:2.1px; border-radius:50%; background:#FFFFFF;"></span>
+          Консультації з питань нерухомості
+        </div>
+        
+        <div style="position:relative; padding-left:7px; font-family:'Open Sans',sans-serif; font-size:9.65px; font-weight:400; color:#FFFFFF; line-height:12.2px; letter-spacing:0.004em; text-align:left;">
+          <span style="position:absolute; left:0; top:4.9px; width:2.1px; height:2.1px; border-radius:50%; background:#FFFFFF;"></span>
+          Індивідуальний підхід до кожного<br/>клієнта
+        </div>
+        
+      </div>
+    </div>
+    </div>
+  </foreignObject>
+</svg>
