@@ -1,5 +1,5 @@
 {
- "snapshot": "2026-11-05",
+ "snapshot": "2026-11-07",
  "openrouter": [
   {
    "id": "cohere/north-mini-code:free",
@@ -51,6 +51,13 @@
    "name": "LiquidAI: LFM2.5-2.6B (free)"
   },
   {
+   "id": "liquid/lfm-3-1.7b:free",
+   "ctx": 262144,
+   "out": 8192,
+   "tools": true,
+   "name": "LiquidAI: LFM3-1.7B (free)"
+  },
+  {
    "id": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
    "ctx": 256000,
    "out": 65536,
@@ -63,13 +70,6 @@
    "out": 65536,
    "tools": true,
    "name": "NVIDIA: Nemotron 3 Ultra (free)"
-  },
-  {
-   "id": "nvidia/nemotron-3.5-content-safety:free",
-   "ctx": 128000,
-   "out": 8192,
-   "tools": false,
-   "name": "NVIDIA: Nemotron 3.5 Content Safety (free)"
   },
   {
    "id": "nvidia/nemotron-3.5-lightning:free",
@@ -120,7 +120,7 @@
    "ctx": 1048576,
    "out": 131072,
    "tools": true,
-   "name": "Meituan: LongCat 2.5"
+   "name": "LongCat-2.5:Free"
   },
   {
    "id": "reflection/beam-1.0-501b-a23b:free",
@@ -145,12 +145,12 @@
   }
  ],
  "omniroute": {
-  "total": 1300,
+  "total": 1301,
   "prefixes": {
    "auto": 45,
-   "agy": 25,
-   "no-think": 65,
-   "antigravity": 23,
+   "agy": 30,
+   "no-think": 63,
+   "antigravity": 20,
    "dva": 110,
    "oc": 10,
    "ddgw": 6,
@@ -161,7 +161,7 @@
    "zc": 14,
    "cxa": 45,
    "unc": 1,
-   "aihorde": 167,
+   "aihorde": 168,
    "openrouter": 737
   },
   "noauth_free": [
