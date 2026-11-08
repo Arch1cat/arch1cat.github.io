@@ -7,46 +7,33 @@
       <div xmlns="http://www.w3.org/1999/xhtml">
     <div style="width:450px; height:250px; box-sizing:border-box; background:#F5F2EB; position:relative; overflow:hidden; font-family:'Montserrat',sans-serif; text-align:center;">
       <!-- Top Header (exact prototype position y=21px, airy letter-spacing 0.09em + rich readable gold sheen) -->
-      <div style="position:absolute; top:21px; left:0; right:0; font-size:8.8px; font-weight:700; text-transform:uppercase; letter-spacing:0.09em; z-index:1; background:linear-gradient(92deg, #3E2916 0%, #5C3F24 18%, #8E6B39 35%, #C99E56 46%, #F0CE88 51%, #C99E56 56%, #8E6B39 67%, #5C3F24 82%, #3E2916 100%);-webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; color:#5C3F24;line-height:1.45; padding:2px 4px;">
+      <div style="position:absolute; top:21px; left:0; right:0; font-size:8.8px; font-weight:700; text-transform:uppercase; letter-spacing:0.09em; z-index:1; background:linear-gradient(92deg, #5C4537 0%, #8E725C 20%, #C9AA8F 42%, #E5CDB7 51%, #C9AA8F 60%, #8E725C 80%, #5C4537 100%);-webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; color:#7A5E47;line-height:1.45; padding:2px 4px;">
         АГЕНЦІЯ НЕРУХОМОСТІ
       </div>
 
-      <!-- Center Stacked YOTEI Emblem (40x40) + Wordmark (74x24.5) with snug ~2px gap + rich readable gold sheen -->
+      <!-- Center Stacked YOTEI Emblem (40x40) + Wordmark (74x24.5) with snug ~2px gap + rich readable gold sheen (monolithic Boolean union glyph with zero layer overlaps) -->
       <div style="position:absolute; top:85px; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:1;">
         <svg width="40" height="40" viewBox="0 0 86 86" shape-rendering="geometricPrecision" style="display:block; overflow:visible;">
           <defs>
-            <linearGradient id="richGoldEmblem" x1="10%" y1="10%" x2="90%" y2="90%">
-              <stop offset="0%" stop-color="#5C3F24"/>
-              <stop offset="25%" stop-color="#8E6B39"/>
-              <stop offset="48%" stop-color="#D4AA62"/>
-              <stop offset="52%" stop-color="#F2D296"/>
-              <stop offset="58%" stop-color="#D4AA62"/>
-              <stop offset="78%" stop-color="#8E6B39"/>
-              <stop offset="100%" stop-color="#5C3F24"/>
+            <linearGradient id="brandBalancedGold" x1="10%" y1="10%" x2="90%" y2="90%">
+              <stop offset="0%" stop-color="#5C4537"/>
+              <stop offset="25%" stop-color="#8E725C"/>
+              <stop offset="45%" stop-color="#C9AA8F"/>
+              <stop offset="52%" stop-color="#E5CDB7"/>
+              <stop offset="60%" stop-color="#C9AA8F"/>
+              <stop offset="80%" stop-color="#8E725C"/>
+              <stop offset="100%" stop-color="#5C4537"/>
             </linearGradient>
           </defs>
-          <g fill="url(#richGoldEmblem)" stroke="url(#richGoldEmblem)" stroke-width="0.35">
+          <g fill="url(#brandBalancedGold)" stroke="none">
             
 <path fill-rule="evenodd" d="M 42.974 1.55 A 41.424 41.424 0 1 1 42.974 84.398 A 41.424 41.424 0 1 1 42.974 1.55 Z M 42.974 4.598 A 38.375 38.375 0 1 0 42.974 81.35 A 38.375 38.375 0 1 0 42.974 4.598 Z" />
-<path d="M 40.323 55.619 H 45.625 V 30.33 H 40.323 Z" />
-<path d="M 25.55 20.598 C 26.159 24.334 27.897 27.723 30.503 30.244 33.718 33.459 38.064 35.458 42.93 35.458 47.885 35.458 52.229 33.459 55.444 30.244 58.052 27.723 59.788 24.334 60.396 20.598 H 65.524 C 64.917 25.725 62.57 30.331 59.007 33.807 54.924 37.979 49.274 40.498 42.93 40.498 36.673 40.498 31.026 37.979 26.941 33.807 23.378 30.331 21.031 25.725 20.423 20.598 Z" />
-<path d="M 25.55 65.352 C 26.159 61.614 27.897 58.225 30.503 55.619 33.718 52.49 38.064 50.491 42.93 50.491 47.885 50.491 52.229 52.49 55.444 55.619 58.052 58.225 59.788 61.614 60.396 65.352 H 65.524 C 64.917 60.137 62.57 55.53 59.007 52.055 54.924 47.971 49.274 45.451 42.93 45.451 36.673 45.451 31.026 47.971 26.941 52.055 23.378 55.53 21.031 60.137 20.423 65.352 Z" />
+<path d="M 40.32 35.26 L 38.78 34.96 L 37.57 34.61 L 36.20 34.10 L 34.89 33.48 L 33.64 32.76 L 32.45 31.93 L 31.33 31.02 L 30.28 30.02 L 29.44 29.11 L 28.55 27.96 L 27.86 26.92 L 27.16 25.64 L 26.56 24.30 L 26.14 23.10 L 25.80 21.86 L 25.55 20.60 L 20.51 20.60 L 20.44 20.72 L 20.50 21.15 L 20.90 23.25 L 21.37 24.88 L 21.95 26.46 L 22.56 27.79 L 23.35 29.25 L 24.14 30.48 L 25.13 31.82 L 26.51 33.38 L 27.54 34.40 L 28.46 35.22 L 30.26 36.60 L 32.02 37.69 L 33.87 38.61 L 35.03 39.08 L 36.02 39.42 L 38.05 39.97 L 40.32 40.35 L 40.32 45.60 L 38.45 45.89 L 36.60 46.34 L 34.80 46.95 L 33.08 47.69 L 31.44 48.57 L 29.88 49.58 L 28.26 50.84 L 26.76 52.23 L 25.36 53.77 L 24.23 55.25 L 23.34 56.65 L 22.45 58.30 L 21.71 60.03 L 21.06 62.04 L 20.80 63.08 L 20.56 64.36 L 20.44 65.22 L 20.50 65.35 L 25.55 65.35 L 25.85 63.88 L 26.20 62.66 L 26.63 61.47 L 27.24 60.14 L 27.95 58.86 L 28.76 57.65 L 29.54 56.66 L 30.53 55.59 L 31.60 54.63 L 32.74 53.76 L 33.95 52.97 L 35.23 52.28 L 36.56 51.69 L 37.75 51.28 L 38.97 50.94 L 40.32 50.69 L 40.32 55.62 L 45.62 55.62 L 45.62 50.69 L 47.58 51.10 L 49.38 51.69 L 50.34 52.10 L 51.44 52.66 L 52.33 53.18 L 53.35 53.86 L 54.32 54.61 L 55.24 55.42 L 55.97 56.16 L 56.78 57.12 L 57.52 58.12 L 58.09 59.00 L 58.59 59.91 L 59.14 61.05 L 59.53 62.02 L 59.92 63.23 L 60.18 64.26 L 60.39 65.31 L 60.57 65.35 L 65.40 65.35 L 65.51 65.26 L 65.28 63.76 L 64.95 62.29 L 64.53 60.87 L 64.02 59.48 L 63.42 58.15 L 62.63 56.68 L 61.86 55.45 L 60.87 54.12 L 59.36 52.41 L 57.57 50.73 L 55.94 49.49 L 54.03 48.30 L 51.98 47.29 L 50.02 46.56 L 47.98 46.00 L 46.72 45.76 L 45.62 45.60 L 45.62 40.34 L 47.55 40.04 L 49.40 39.58 L 50.99 39.05 L 52.71 38.32 L 54.35 37.45 L 55.90 36.45 L 57.37 35.32 L 58.73 34.08 L 60.03 32.73 L 61.23 31.29 L 62.40 29.57 L 63.31 27.94 L 64.09 26.23 L 64.72 24.44 L 65.20 22.59 L 65.51 20.68 L 65.40 20.60 L 60.56 20.60 L 60.39 20.64 L 60.18 21.70 L 59.86 22.93 L 59.52 23.94 L 59.13 24.92 L 58.58 26.05 L 58.07 26.96 L 57.38 28.00 L 56.75 28.82 L 55.93 29.74 L 54.91 30.68 L 53.79 31.54 L 52.72 32.25 L 51.49 32.96 L 50.29 33.56 L 49.03 34.09 L 47.74 34.54 L 46.40 34.92 L 45.62 35.10 L 45.62 30.33 L 40.32 30.33 L 40.32 35.26 Z" />
 
           </g>
         </svg>
         <svg width="74" height="24.5" viewBox="0 0 127 44" shape-rendering="geometricPrecision" style="display:block; margin-top:2px; overflow:visible;">
-          <defs>
-            <linearGradient id="richGoldWord" x1="10%" y1="10%" x2="90%" y2="90%">
-              <stop offset="0%" stop-color="#4E331A"/>
-              <stop offset="25%" stop-color="#7D5B2C"/>
-              <stop offset="48%" stop-color="#C99E56"/>
-              <stop offset="52%" stop-color="#EDCC8E"/>
-              <stop offset="58%" stop-color="#C99E56"/>
-              <stop offset="78%" stop-color="#7D5B2C"/>
-              <stop offset="100%" stop-color="#4E331A"/>
-            </linearGradient>
-          </defs>
-          <g fill="url(#richGoldWord)" stroke="url(#richGoldWord)" stroke-width="0.85" stroke-linejoin="round">
+          <g fill="url(#brandBalancedGold)" stroke="url(#brandBalancedGold)" stroke-width="0.85" stroke-linejoin="round">
             
 <path d="M 101.588 38.15 C 105.064 38.15 108.366 36.411 110.363 33.629 H 113.839 C 111.494 38.15 106.8 41.018 101.588 41.018 93.939 41.018 87.683 34.848 87.683 27.202 87.683 19.553 93.939 13.296 101.588 13.296 109.234 13.296 115.404 19.553 115.404 27.202 V 28.678 H 97.415 V 25.723 H 112.45 C 111.669 20.334 107.061 16.251 101.588 16.251 95.505 16.251 90.637 21.118 90.637 27.115 90.55 33.108 95.505 38.15 101.588 38.15" />
 <path d="M 46.492 38.15 C 52.575 38.15 57.442 33.195 57.442 27.202 57.442 21.118 52.575 16.251 46.492 16.251 40.497 16.251 35.544 21.118 35.544 27.202 35.544 33.195 40.497 38.15 46.492 38.15 M 46.492 41.018 C 38.846 41.018 32.589 34.848 32.589 27.202 32.589 19.553 38.846 13.296 46.492 13.296 54.14 13.296 60.397 19.553 60.397 27.202 60.397 34.848 54.14 41.018 46.492 41.018" />
@@ -61,7 +48,7 @@
       </div>
 
       <!-- Bottom Website URL (exact prototype position bottom=23px, letter-spacing 0.10em + rich readable gold sheen) -->
-      <div style="position:absolute; bottom:23px; left:0; right:0; font-size:8.8px; font-weight:700; text-transform:uppercase; letter-spacing:0.10em; z-index:1; background:linear-gradient(92deg, #3E2916 0%, #5C3F24 18%, #8E6B39 35%, #C99E56 46%, #F0CE88 51%, #C99E56 56%, #8E6B39 67%, #5C3F24 82%, #3E2916 100%);-webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; color:#5C3F24;line-height:1.45; padding:2px 4px;">
+      <div style="position:absolute; bottom:23px; left:0; right:0; font-size:8.8px; font-weight:700; text-transform:uppercase; letter-spacing:0.10em; z-index:1; background:linear-gradient(92deg, #5C4537 0%, #8E725C 20%, #C9AA8F 42%, #E5CDB7 51%, #C9AA8F 60%, #8E725C 80%, #5C4537 100%);-webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; color:#7A5E47;line-height:1.45; padding:2px 4px;">
         YOTEI.COM.UA
       </div>
     </div>
@@ -93,9 +80,7 @@
       <svg x="423" y="382" width="154" height="154" viewBox="0 0 86 86" overflow="visible" fill="#4B3322" stroke="none">
         
 <path fill-rule="evenodd" d="M 42.974 1.55 A 41.424 41.424 0 1 1 42.974 84.398 A 41.424 41.424 0 1 1 42.974 1.55 Z M 42.974 4.598 A 38.375 38.375 0 1 0 42.974 81.35 A 38.375 38.375 0 1 0 42.974 4.598 Z" />
-<path d="M 40.323 55.619 H 45.625 V 30.33 H 40.323 Z" />
-<path d="M 25.55 20.598 C 26.159 24.334 27.897 27.723 30.503 30.244 33.718 33.459 38.064 35.458 42.93 35.458 47.885 35.458 52.229 33.459 55.444 30.244 58.052 27.723 59.788 24.334 60.396 20.598 H 65.524 C 64.917 25.725 62.57 30.331 59.007 33.807 54.924 37.979 49.274 40.498 42.93 40.498 36.673 40.498 31.026 37.979 26.941 33.807 23.378 30.331 21.031 25.725 20.423 20.598 Z" />
-<path d="M 25.55 65.352 C 26.159 61.614 27.897 58.225 30.503 55.619 33.718 52.49 38.064 50.491 42.93 50.491 47.885 50.491 52.229 52.49 55.444 55.619 58.052 58.225 59.788 61.614 60.396 65.352 H 65.524 C 64.917 60.137 62.57 55.53 59.007 52.055 54.924 47.971 49.274 45.451 42.93 45.451 36.673 45.451 31.026 47.971 26.941 52.055 23.378 55.53 21.031 60.137 20.423 65.352 Z" />
+<path d="M 40.32 35.26 L 38.78 34.96 L 37.57 34.61 L 36.20 34.10 L 34.89 33.48 L 33.64 32.76 L 32.45 31.93 L 31.33 31.02 L 30.28 30.02 L 29.44 29.11 L 28.55 27.96 L 27.86 26.92 L 27.16 25.64 L 26.56 24.30 L 26.14 23.10 L 25.80 21.86 L 25.55 20.60 L 20.51 20.60 L 20.44 20.72 L 20.50 21.15 L 20.90 23.25 L 21.37 24.88 L 21.95 26.46 L 22.56 27.79 L 23.35 29.25 L 24.14 30.48 L 25.13 31.82 L 26.51 33.38 L 27.54 34.40 L 28.46 35.22 L 30.26 36.60 L 32.02 37.69 L 33.87 38.61 L 35.03 39.08 L 36.02 39.42 L 38.05 39.97 L 40.32 40.35 L 40.32 45.60 L 38.45 45.89 L 36.60 46.34 L 34.80 46.95 L 33.08 47.69 L 31.44 48.57 L 29.88 49.58 L 28.26 50.84 L 26.76 52.23 L 25.36 53.77 L 24.23 55.25 L 23.34 56.65 L 22.45 58.30 L 21.71 60.03 L 21.06 62.04 L 20.80 63.08 L 20.56 64.36 L 20.44 65.22 L 20.50 65.35 L 25.55 65.35 L 25.85 63.88 L 26.20 62.66 L 26.63 61.47 L 27.24 60.14 L 27.95 58.86 L 28.76 57.65 L 29.54 56.66 L 30.53 55.59 L 31.60 54.63 L 32.74 53.76 L 33.95 52.97 L 35.23 52.28 L 36.56 51.69 L 37.75 51.28 L 38.97 50.94 L 40.32 50.69 L 40.32 55.62 L 45.62 55.62 L 45.62 50.69 L 47.58 51.10 L 49.38 51.69 L 50.34 52.10 L 51.44 52.66 L 52.33 53.18 L 53.35 53.86 L 54.32 54.61 L 55.24 55.42 L 55.97 56.16 L 56.78 57.12 L 57.52 58.12 L 58.09 59.00 L 58.59 59.91 L 59.14 61.05 L 59.53 62.02 L 59.92 63.23 L 60.18 64.26 L 60.39 65.31 L 60.57 65.35 L 65.40 65.35 L 65.51 65.26 L 65.28 63.76 L 64.95 62.29 L 64.53 60.87 L 64.02 59.48 L 63.42 58.15 L 62.63 56.68 L 61.86 55.45 L 60.87 54.12 L 59.36 52.41 L 57.57 50.73 L 55.94 49.49 L 54.03 48.30 L 51.98 47.29 L 50.02 46.56 L 47.98 46.00 L 46.72 45.76 L 45.62 45.60 L 45.62 40.34 L 47.55 40.04 L 49.40 39.58 L 50.99 39.05 L 52.71 38.32 L 54.35 37.45 L 55.90 36.45 L 57.37 35.32 L 58.73 34.08 L 60.03 32.73 L 61.23 31.29 L 62.40 29.57 L 63.31 27.94 L 64.09 26.23 L 64.72 24.44 L 65.20 22.59 L 65.51 20.68 L 65.40 20.60 L 60.56 20.60 L 60.39 20.64 L 60.18 21.70 L 59.86 22.93 L 59.52 23.94 L 59.13 24.92 L 58.58 26.05 L 58.07 26.96 L 57.38 28.00 L 56.75 28.82 L 55.93 29.74 L 54.91 30.68 L 53.79 31.54 L 52.72 32.25 L 51.49 32.96 L 50.29 33.56 L 49.03 34.09 L 47.74 34.54 L 46.40 34.92 L 45.62 35.10 L 45.62 30.33 L 40.32 30.33 L 40.32 35.26 Z" />
 
       </svg>
       <svg x="396" y="550" width="208" height="72" viewBox="0 0 127 44" overflow="visible" fill="#4B3322" stroke="#4B3322" stroke-width="1.1" stroke-linejoin="round">
