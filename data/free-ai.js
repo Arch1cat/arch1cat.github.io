@@ -621,8 +621,41 @@ window.FREE_AI_DATA = {
    ]
   },
   {
-   "id": "kimi-k3",
+   "id": "inkling-2-small",
    "rank": 3,
+   "name": "Inkling 2 Small (594B-A17B)",
+   "tasks": [
+    "Кодинг",
+    "Reasoning",
+    "Vision",
+    "Tools",
+    "Long Context"
+   ],
+   "family": "Thinking Machines",
+   "ctx": 1048576,
+   "out": 131072,
+   "reasoning": true,
+   "bench": {
+    "swe": 72.1,
+    "he": null,
+    "aider": null,
+    "livecode": null,
+    "arena": 1653,
+    "arenaRank": "SWE-Pro v2 86.3 · DeepSWE 72.1 · AA 30.6"
+   },
+   "routes": [
+    {
+     "p": "OpenRouter",
+     "id": "thinkingmachines/inkling-2-small:free",
+     "status": "working",
+     "type": "free",
+     "src": "api"
+    }
+   ]
+  },
+  {
+   "id": "kimi-k3",
+   "rank": 4,
    "name": "Kimi K3",
    "tasks": [
     "Архитектура",
@@ -660,7 +693,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "mimo-v2.6-pro",
-   "rank": 4,
+   "rank": 5,
    "name": "MiMo V2.6 Pro",
    "tasks": [
     "Архитектура",
@@ -691,7 +724,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "minimax-m3.1-flash",
-   "rank": 5,
+   "rank": 6,
    "name": "MiniMax M3.1 Flash",
    "tasks": [
     "Кодинг",
@@ -722,7 +755,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "mimo-v2.6-flash",
-   "rank": 6,
+   "rank": 7,
    "name": "MiMo V2.6 Flash",
    "tasks": [
     "UI",
@@ -754,7 +787,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "hy4-preview",
-   "rank": 7,
+   "rank": 8,
    "name": "Hy4 Preview",
    "tasks": [
     "Agent",
@@ -785,7 +818,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "glm-5.3-flash",
-   "rank": 8,
+   "rank": 9,
    "name": "GLM-5.3 Flash",
    "tasks": [
     "Fast Patch",
@@ -837,7 +870,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "nemotron-3.5-lightning",
-   "rank": 9,
+   "rank": 10,
    "name": "Nemotron 3.5 Lightning",
    "tasks": [
     "Fast Agent",
@@ -882,7 +915,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "nemotron-3-ultra",
-   "rank": 10,
+   "rank": 11,
    "name": "Nemotron 3 Ultra / Super VL",
    "tasks": [
     "Reasoning",
@@ -941,7 +974,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "laguna-s-2.1",
-   "rank": 11,
+   "rank": 12,
    "name": "Laguna S 2.1",
    "tasks": [
     "Coding",
@@ -972,7 +1005,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "longcat-2.5",
-   "rank": 12,
+   "rank": 13,
    "name": "LongCat 2.5",
    "tasks": [
     "Long Context",
@@ -1010,7 +1043,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "step-3.7-flash",
-   "rank": 13,
+   "rank": 14,
    "name": "Step 3.7 Flash",
    "tasks": [
     "Кодинг",
@@ -1041,7 +1074,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "solar-mini4",
-   "rank": 14,
+   "rank": 15,
    "name": "Solar Mini4",
    "tasks": [
     "Кодинг",
@@ -1072,7 +1105,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "gemma-4",
-   "rank": 15,
+   "rank": 16,
    "name": "Gemma 4 26B / 31B",
    "tasks": [
     "Reasoning",
@@ -1110,7 +1143,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "north-mini-code",
-   "rank": 16,
+   "rank": 17,
    "name": "North Mini Code",
    "tasks": [
     "Кодинг",
@@ -1141,7 +1174,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "xing-4.0",
-   "rank": 17,
+   "rank": 18,
    "name": "Xing 4.0 29B-A4B",
    "tasks": [
     "Reasoning",
@@ -1171,7 +1204,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "lfm-3-1.7b",
-   "rank": 18,
+   "rank": 19,
    "name": "LFM3 1.7B",
    "tasks": [
     "Fast Agent",
@@ -1203,7 +1236,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "lfm-2.5",
-   "rank": 19,
+   "rank": 20,
    "name": "LFM 2.5 2.6B",
    "tasks": [
     "Fast Agent",
@@ -1233,7 +1266,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "qwen-3.8",
-   "rank": 20,
+   "rank": 21,
    "name": "Qwen 3.8 Max / Flash",
    "tasks": [
     "Reasoning",
@@ -1278,7 +1311,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "claude-opus-5.5",
-   "rank": 21,
+   "rank": 22,
    "name": "Claude Opus 5.5 / GPT-6.1 Sol / Grok 4.7",
    "tasks": [
     "Deep Review",
@@ -1324,39 +1357,6 @@ window.FREE_AI_DATA = {
      "id": "freebuff/google/gemini-3.8-flash",
      "status": "working",
      "type": "free",
-     "src": "api"
-    }
-   ]
-  },
-  {
-   "id": "crouton-alpha",
-   "rank": 22,
-   "name": "Crouton Alpha (Stealth)",
-   "tasks": [
-    "Кодинг",
-    "Fast Agent",
-    "Tools",
-    "Vision",
-    "Stealth"
-   ],
-   "family": "Stealth",
-   "ctx": 1048576,
-   "out": 943718,
-   "reasoning": true,
-   "bench": {
-    "swe": null,
-    "he": null,
-    "aider": null,
-    "livecode": null,
-    "arena": null,
-    "arenaRank": null
-   },
-   "routes": [
-    {
-     "p": "OpenRouter",
-     "id": "stealth/crouton-alpha",
-     "status": "working",
-     "type": "stealth",
      "src": "api"
     }
    ]
@@ -3261,6 +3261,15 @@ window.FREE_AI_DATA = {
  ],
  "releases": [
   {
+   "d": "2026-11-07",
+   "n": "Inkling 2 Small",
+   "o": "Thinking Machines Lab",
+   "ctx": "1M",
+   "p": "594B (17B active)",
+   "k": "open (Apache 2.0 soon), coding, reasoning, vision, SWE-Pro v2 86.3% / DeepSWE 72.1%",
+   "free": true
+  },
+  {
    "d": "2026-11-06",
    "n": "LFM3 1.7B",
    "o": "Liquid AI",
@@ -3271,12 +3280,12 @@ window.FREE_AI_DATA = {
   },
   {
    "d": "2026-11-03",
-   "n": "Crouton Alpha (Stealth)",
-   "o": "Stealth (OpenRouter)",
+   "n": "Muse Ember (ex-Crouton Alpha)",
+   "o": "Meta AI",
    "ctx": "1M",
    "p": null,
-   "k": "stealth, coding, reasoning, vision, audio, video, tools",
-   "free": true
+   "k": "coding, reasoning, vision, audio, video, tools (stealth ended 10.11)",
+   "free": false
   },
   {
    "d": "2026-10-21",
@@ -3560,6 +3569,12 @@ window.FREE_AI_DATA = {
  ],
  "probes": [
   {
+   "m": "openrouter/thinkingmachines/inkling-2-small:free",
+   "r": "ok",
+   "t": "PROBE_OK",
+   "n": "1M ctx / 131K out, 594B-A17B MoE, vision + tools + mandatory reasoning, SWE-Pro v2 86.3% / DeepSWE 72.1% / Code Arena 1653, ~87 tok/s."
+  },
+  {
    "m": "openrouter/liquid/lfm-3-1.7b:free",
    "r": "ok",
    "t": "PROBE_OK",
@@ -3570,12 +3585,6 @@ window.FREE_AI_DATA = {
    "r": "ok",
    "t": "PROBE_OK",
    "n": "1M ctx / 131K out, tools, возвращена в :free каталог Nous 05.11.2026."
-  },
-  {
-   "m": "openrouter/stealth/crouton-alpha",
-   "r": "ok",
-   "t": "PROBE_OK",
-   "n": "1M ctx / 944K out, omnimodal (text/image/video/audio/file), mandatory reasoning, ~71 tok/s."
   },
   {
    "m": "openrouter/recursive/flint-v1.0:free",
@@ -3702,6 +3711,12 @@ window.FREE_AI_DATA = {
    "r": "ok",
    "t": "PROBE_OK",
    "n": "Правильный NIM ID."
+  },
+  {
+   "m": "openrouter/stealth/crouton-alpha",
+   "r": "bad",
+   "t": "NO LONGER FREE",
+   "n": "HTTP 404 — stealth-период завершился 10.11.2026; модель раскрыта как платная Meta Muse Ember (meta/muse-ember, $0.10/$0.50 за 1M)."
   },
   {
    "m": "openrouter/nvidia/nemotron-3.5-content-safety:free",
@@ -3907,7 +3922,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "OpenRouter",
-   "score": 71.4,
+   "score": 71.5,
    "working": 10,
    "catalog": 4,
    "blocked": 2,
@@ -3915,7 +3930,7 @@ window.FREE_AI_DATA = {
    "wr": 62,
    "access": "api",
    "color": "#00f2fe",
-   "benchAvg": 57.2,
+   "benchAvg": 58.4,
    "ctxCap": 1048576,
    "rpm": 20,
    "rpd": 50,
@@ -3930,7 +3945,7 @@ window.FREE_AI_DATA = {
     "Работоспособность": 25.0,
     "Покрытие моделей": 16.0,
     "Контекст": 15.0,
-    "Бенчмарки": 8.2,
+    "Бенчмарки": 8.3,
     "Лимиты": 3.2,
     "Доступ": 4.0
    },
@@ -4973,6 +4988,21 @@ window.FREE_AI_DATA = {
     ]
    },
    {
+    "name": "Inkling 2 Small",
+    "f": "inkling-2-small",
+    "v": [
+     3,
+     3,
+     2,
+     3,
+     3,
+     2,
+     0,
+     3,
+     2
+    ]
+   },
+   {
     "name": "Kimi K3",
     "f": "kimi-k3",
     "v": [
@@ -5240,21 +5270,6 @@ window.FREE_AI_DATA = {
      0,
      2,
      3
-    ]
-   },
-   {
-    "name": "Crouton Alpha (Stealth)",
-    "f": "crouton-alpha",
-    "v": [
-     2,
-     2,
-     1,
-     2,
-     3,
-     3,
-     3,
-     3,
-     1
     ]
    },
    {

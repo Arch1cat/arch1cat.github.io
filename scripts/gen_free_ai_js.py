@@ -287,12 +287,21 @@ FAMILIES = [
         ],
     },
     {
-        "id": "flint-v1.0", "rank": 3, "name": "Recursive Flint 1.0 (40B-A2.5B)",
+        "id": "flint-v1.0", "rank": 2, "name": "Recursive Flint 1.0 (40B-A2.5B)",
         "tasks": ["Кодинг", "Reasoning", "Tools", "Fast Agent"], "family": "Recursive Flint",
         "ctx": 262144, "out": 235929, "reasoning": True,
         "bench": {"swe": 74.2, "he": None, "aider": None, "livecode": None, "arena": None, "arenaRank": "SWE-Pro v2 89.7 · TermBench 54.9"},
         "routes": [
             {"p": "OpenRouter", "id": "recursive/flint-v1.0:free", "status": "working", "type": "free", "src": "api"},
+        ],
+    },
+    {
+        "id": "inkling-2-small", "rank": 3, "name": "Inkling 2 Small (594B-A17B)",
+        "tasks": ["Кодинг", "Reasoning", "Vision", "Tools", "Long Context"], "family": "Thinking Machines",
+        "ctx": 1048576, "out": 131072, "reasoning": True,
+        "bench": {"swe": 72.1, "he": None, "aider": None, "livecode": None, "arena": 1653, "arenaRank": "SWE-Pro v2 86.3 · DeepSWE 72.1 · AA 30.6"},
+        "routes": [
+            {"p": "OpenRouter", "id": "thinkingmachines/inkling-2-small:free", "status": "working", "type": "free", "src": "api"},
         ],
     },
     {
@@ -481,15 +490,6 @@ FAMILIES = [
             {"p": "Freebuff", "id": "freebuff/openai/gpt-6.1-sol", "status": "working", "type": "free", "src": "api"},
             {"p": "Freebuff", "id": "freebuff/x-ai/grok-4.7", "status": "working", "type": "free", "src": "api"},
             {"p": "Freebuff", "id": "freebuff/google/gemini-3.8-flash", "status": "working", "type": "free", "src": "api"},
-        ],
-    },
-    {
-        "id": "crouton-alpha", "rank": 22, "name": "Crouton Alpha (Stealth)",
-        "tasks": ["Кодинг", "Fast Agent", "Tools", "Vision", "Stealth"], "family": "Stealth",
-        "ctx": 1048576, "out": 943718, "reasoning": True,
-        "bench": {"swe": None, "he": None, "aider": None, "livecode": None, "arena": None, "arenaRank": None},
-        "routes": [
-            {"p": "OpenRouter", "id": "stealth/crouton-alpha", "status": "working", "type": "stealth", "src": "api"},
         ],
     },
     {
@@ -737,8 +737,9 @@ PLANS = [
 
 # ------------------------------------------------------------------ releases
 RELEASES = [
+    {"d": "2026-11-07", "n": "Inkling 2 Small", "o": "Thinking Machines Lab", "ctx": "1M", "p": "594B (17B active)", "k": "open (Apache 2.0 soon), coding, reasoning, vision, SWE-Pro v2 86.3% / DeepSWE 72.1%", "free": True},
     {"d": "2026-11-06", "n": "LFM3 1.7B", "o": "Liquid AI", "ctx": "256K", "p": "1.73B", "k": "open, reasoning, tools, edge, SWE 43.4% / LCB 73.5%", "free": True},
-    {"d": "2026-11-03", "n": "Crouton Alpha (Stealth)", "o": "Stealth (OpenRouter)", "ctx": "1M", "p": None, "k": "stealth, coding, reasoning, vision, audio, video, tools", "free": True},
+    {"d": "2026-11-03", "n": "Muse Ember (ex-Crouton Alpha)", "o": "Meta AI", "ctx": "1M", "p": None, "k": "coding, reasoning, vision, audio, video, tools (stealth ended 10.11)", "free": False},
     {"d": "2026-10-21", "n": "Recursive Flint 1.0", "o": "Recursive", "ctx": "256K", "p": "40B (2.5B active)", "k": "open, coding, reasoning, Apache 2.0", "free": True},
     {"d": "2026-10-19", "n": "MiniMax M3.1 Flash", "o": "MiniMax", "ctx": "1M", "p": None, "k": "reasoning, vision", "free": True},
     {"d": "2026-10-19", "n": "Clairic", "o": "Cloudflare", "ctx": "64K", "p": None, "k": "vision", "free": True},
@@ -774,9 +775,9 @@ RELEASES = [
 
 # ------------------------------------------------------------------ verified probes
 PROBES = [
+    {"m": "openrouter/thinkingmachines/inkling-2-small:free", "r": "ok", "t": "PROBE_OK", "n": "1M ctx / 131K out, 594B-A17B MoE, vision + tools + mandatory reasoning, SWE-Pro v2 86.3% / DeepSWE 72.1% / Code Arena 1653, ~87 tok/s."},
     {"m": "openrouter/liquid/lfm-3-1.7b:free", "r": "ok", "t": "PROBE_OK", "n": "262K ctx / 8K out, 1.73B tri-hybrid, mandatory reasoning, tools, SWE-Verified 43.4% / LiveCodeBench v6 73.5%."},
     {"m": "nous/meituan/longcat-2.5:free", "r": "ok", "t": "PROBE_OK", "n": "1M ctx / 131K out, tools, возвращена в :free каталог Nous 05.11.2026."},
-    {"m": "openrouter/stealth/crouton-alpha", "r": "ok", "t": "PROBE_OK", "n": "1M ctx / 944K out, omnimodal (text/image/video/audio/file), mandatory reasoning, ~71 tok/s."},
     {"m": "openrouter/recursive/flint-v1.0:free", "r": "ok", "t": "PROBE_OK", "n": "262K ctx / 236K out, 40B-A2.5B MoE, SWE-Verified 74.2%, ~108 tok/s."},
     {"m": "openrouter/cohere/north-mini-code:free", "r": "ok", "t": "PROBE_OK", "n": "256K ctx / 64K out."},
     {"m": "openrouter/xingchen-agi/xing4.0-29b-a4b:free", "r": "ok", "t": "PROBE_OK", "n": "262K ctx / 236K out."},
@@ -798,6 +799,7 @@ PROBES = [
     {"m": "omniroute/auto/cheap", "r": "ok", "t": "PROBE_OK", "n": "Дешёвый маршрут."},
     {"m": "omniroute/auto/offline", "r": "ok", "t": "PROBE_OK", "n": "Оффлайн-маршрут."},
     {"m": "nvidia/nemotron-3.5-lightning-30b-a3b", "r": "ok", "t": "PROBE_OK", "n": "Правильный NIM ID."},
+    {"m": "openrouter/stealth/crouton-alpha", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — stealth-период завершился 10.11.2026; модель раскрыта как платная Meta Muse Ember (meta/muse-ember, $0.10/$0.50 за 1M)."},
     {"m": "openrouter/nvidia/nemotron-3.5-content-safety:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — убрана из zero-price каталога OpenRouter 07.11.2026 (переведена на платный nvidia/nemotron-3.5-content-safety)."},
     {"m": "openrouter/thinkingmachines/inkling:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — промо-период :free на OpenRouter завершился 05.11.2026 (переведена на платный thinkingmachines/inkling)."},
     {"m": "openrouter/thinkingmachines/inkling-small:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — промо-период :free на OpenRouter завершился 05.11.2026 (переведена на платный thinkingmachines/inkling-small)."},
@@ -998,6 +1000,7 @@ DATA = {
         "rows": [
             {"name": "DeepSeek V4.1 Flash", "f": "deepseek-v4.1-flash", "v": [3, 3, 1, 2, 3, 2, 0, 1, 2]},
             {"name": "Recursive Flint 1.0", "f": "flint-v1.0", "v": [3, 3, 1, 0, 3, 3, 0, 2, 2]},
+            {"name": "Inkling 2 Small", "f": "inkling-2-small", "v": [3, 3, 2, 3, 3, 2, 0, 3, 2]},
             {"name": "Kimi K3", "f": "kimi-k3", "v": [3, 3, 1, 0, 2, 1, 0, 2, 3]},
             {"name": "MiMo V2.6 Pro", "f": "mimo-v2.6-pro", "v": [3, 3, 3, 0, 2, 1, 0, 1, 2]},
             {"name": "MiMo V2.6 Flash", "f": "mimo-v2.6-flash", "v": [2, 2, 3, 0, 2, 3, 0, 1, 1]},
@@ -1016,7 +1019,6 @@ DATA = {
             {"name": "Solar Mini4", "f": "solar-mini4", "v": [1, 1, 0, 0, 1, 1, 0, 0, 0]},
             {"name": "DuckDuckGo Cloudflare", "f": "ddgw-free", "v": [1, 2, 0, 0, 1, 2, 0, 1, 0]},
             {"name": "Claude Opus 5.5 / GPT-6.1 / Grok", "f": "claude-opus-5.5", "v": [3, 3, 2, 2, 3, 2, 0, 2, 3]},
-            {"name": "Crouton Alpha (Stealth)", "f": "crouton-alpha", "v": [2, 2, 1, 2, 3, 3, 3, 3, 1]},
             {"name": "Space Bunny / Ox Alpha", "f": "space-bunny", "v": [0, 2, 0, 0, 1, 2, 3, 1, 0]},
             {"name": "Beam / Big Pickle", "f": "beam-pickle", "v": [1, 2, 0, 0, 1, 1, 3, 1, 0]},
             {"name": "LLM7.io free subset", "f": "llm7-free", "v": [2, 2, 1, 0, 2, 2, 0, 1, 0]},
