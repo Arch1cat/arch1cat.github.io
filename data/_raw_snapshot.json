@@ -1,6 +1,13 @@
 {
- "snapshot": "2026-11-10",
+ "snapshot": "2026-11-11",
  "openrouter": [
+  {
+   "id": "baidu/ernie-5.5-flash-preview:free",
+   "ctx": 1024000,
+   "out": 921600,
+   "tools": true,
+   "name": "Baidu: ERNIE-5.5-Flash-Preview (free)"
+  },
   {
    "id": "cohere/north-mini-code:free",
    "ctx": 256000,
@@ -105,13 +112,6 @@
    "out": 131072,
    "tools": true,
    "name": "Thinking Machines: Inkling 2 Small (free)"
-  },
-  {
-   "id": "xingchen-agi/xing4.0-29b-a4b:free",
-   "ctx": 262144,
-   "out": 235929,
-   "tools": true,
-   "name": "XingChen: Xing4.0 29B A4B (free)"
   }
  ],
  "nous": [
@@ -121,13 +121,6 @@
    "out": 131072,
    "tools": true,
    "name": "LongCat-2.5:Free"
-  },
-  {
-   "id": "reflection/beam-1.0-501b-a23b:free",
-   "ctx": 262144,
-   "out": 131072,
-   "tools": true,
-   "name": "Reflection: Beam 1.0 501B A23B"
   },
   {
    "id": "stepfun/step-3.7-flash:free",
@@ -145,12 +138,12 @@
   }
  ],
  "omniroute": {
-  "total": 1300,
+  "total": 1306,
   "prefixes": {
    "auto": 45,
-   "agy": 30,
+   "agy": 33,
    "no-think": 63,
-   "antigravity": 20,
+   "antigravity": 23,
    "dva": 110,
    "oc": 10,
    "ddgw": 6,
