@@ -34,7 +34,7 @@ PROVIDERS = [
         "id": "Nous Portal", "access": "api", "status": "working", "color": "#a78bfa",
         "limits": "RPM/TPM/RPD не раскрыты", "rpm": None, "rpd": None, "tpd": None,
         "card": False, "training": "no", "ctxCap": 1048576,
-        "note": f"{len(NOUS_LIVE)} :free моделей (LongCat 2.5, Beam 501B, Step 3.7 Flash, Solar Mini4). Часть требует тег user= в extra_body.tags.",
+        "note": f"{len(NOUS_LIVE)} :free моделей (LongCat 2.5, Step 3.7 Flash, Solar Mini4). Часть требует тег user= в extra_body.tags.",
         "uptime": "97%",
     },
     {
@@ -305,7 +305,16 @@ FAMILIES = [
         ],
     },
     {
-        "id": "kimi-k3", "rank": 4, "name": "Kimi K3",
+        "id": "ernie-5.5-flash", "rank": 4, "name": "ERNIE 5.5 Flash Preview (280B-A14B)",
+        "tasks": ["Кодинг", "Reasoning", "Tools", "Long Context", "Fast Agent"], "family": "ERNIE 5.5",
+        "ctx": 1024000, "out": 921600, "reasoning": True,
+        "bench": {"swe": 71.2, "he": None, "aider": None, "livecode": None, "arena": None, "arenaRank": "DeepSWE 71.2 · TermBench 4.0 46.5 · MCP-Atlas 84.6"},
+        "routes": [
+            {"p": "OpenRouter", "id": "baidu/ernie-5.5-flash-preview:free", "status": "working", "type": "free", "src": "api"},
+        ],
+    },
+    {
+        "id": "kimi-k3", "rank": 5, "name": "Kimi K3",
         "tasks": ["Архитектура", "Planning", "Big Codebase"], "family": "Kimi K3",
         "ctx": 256000, "out": 32768, "reasoning": True,
         "bench": {"swe": 69.3, "he": 90.1, "aider": 74.2, "livecode": 64.5, "arena": 1655, "arenaRank": "open №2"},
@@ -443,15 +452,6 @@ FAMILIES = [
         ],
     },
     {
-        "id": "xing-4.0", "rank": 18, "name": "Xing 4.0 29B-A4B",
-        "tasks": ["Reasoning", "Multilingual"], "family": "Xing",
-        "ctx": 262144, "out": 235929, "reasoning": True,
-        "bench": {"swe": 54.3, "he": 81.6, "aider": 58.2, "livecode": 50.4, "arena": None, "arenaRank": None},
-        "routes": [
-            {"p": "OpenRouter", "id": "xingchen-agi/xing4.0-29b-a4b:free", "status": "working", "type": "free", "src": "api"},
-        ],
-    },
-    {
         "id": "lfm-3-1.7b", "rank": 19, "name": "LFM3 1.7B",
         "tasks": ["Fast Agent", "Tools", "Reasoning", "Edge"], "family": "Liquid LFM3",
         "ctx": 262144, "out": 8192, "reasoning": True,
@@ -509,7 +509,6 @@ FAMILIES = [
         "ctx": 262144, "out": 32768, "reasoning": True,
         "bench": {"swe": None, "he": None, "aider": None, "livecode": None, "arena": None, "arenaRank": None},
         "routes": [
-            {"p": "Nous Portal", "id": "reflection/beam-1.0-501b-a23b:free", "status": "working", "type": "free", "src": "api"},
             {"p": "OpenCode Free", "id": "opencode/beam-free", "status": "catalog", "type": "free", "src": "local"},
             {"p": "OpenCode Free", "id": "opencode/big-pickle", "status": "catalog", "type": "free", "src": "local"},
         ],
@@ -588,7 +587,7 @@ for _idx, _fam in enumerate(FAMILIES, 1):
 PLANS = [
     {
         "name": "Nous Portal Free", "price": "$0", "kind": "Free tier",
-        "includes": "Все бесплатные модели Nous: LongCat 2.5, Beam 501B, Step 3.7 Flash, Solar Mini4. Каталог портала — 248 моделей (325 с embeddings)",
+        "includes": "Все бесплатные модели Nous: LongCat 2.5, Step 3.7 Flash, Solar Mini4. Каталог портала — 248 моделей (325 с embeddings)",
         "allowance": "50 RPM / 500K TPM. Только free-модели — платные через портал недоступны",
         "tokens": "Без лимита токенов, но жёсткий RPM",
         "verdict": "Наш основной Nous-маршрут. Работает в Hermes", "score": 89,
@@ -737,8 +736,10 @@ PLANS = [
 
 # ------------------------------------------------------------------ releases
 RELEASES = [
+    {"d": "2026-11-11", "n": "ERNIE 5.5 Flash Preview", "o": "Baidu", "ctx": "1M", "p": "280B (14B active)", "k": "open (Apache 2.0 soon), coding, reasoning, tools, DeepSWE 71.2% / TermBench 4.0 46.5%", "free": True},
     {"d": "2026-11-07", "n": "Inkling 2 Small", "o": "Thinking Machines Lab", "ctx": "1M", "p": "594B (17B active)", "k": "open (Apache 2.0 soon), coding, reasoning, vision, SWE-Pro v2 86.3% / DeepSWE 72.1%", "free": True},
     {"d": "2026-11-06", "n": "LFM3 1.7B", "o": "Liquid AI", "ctx": "256K", "p": "1.73B", "k": "open, reasoning, tools, edge, SWE 43.4% / LCB 73.5%", "free": True},
+    {"d": "2026-11-05", "n": "ERNIE 5.5 Flash Base", "o": "Baidu", "ctx": "1M", "p": "280B (14B active)", "k": "open, pretrain base (33.5T tokens), HumanEval+ 82.3%", "free": True},
     {"d": "2026-11-03", "n": "Muse Ember (ex-Crouton Alpha)", "o": "Meta AI", "ctx": "1M", "p": None, "k": "coding, reasoning, vision, audio, video, tools (stealth ended 10.11)", "free": False},
     {"d": "2026-10-21", "n": "Recursive Flint 1.0", "o": "Recursive", "ctx": "256K", "p": "40B (2.5B active)", "k": "open, coding, reasoning, Apache 2.0", "free": True},
     {"d": "2026-10-19", "n": "MiniMax M3.1 Flash", "o": "MiniMax", "ctx": "1M", "p": None, "k": "reasoning, vision", "free": True},
@@ -775,17 +776,16 @@ RELEASES = [
 
 # ------------------------------------------------------------------ verified probes
 PROBES = [
+    {"m": "openrouter/baidu/ernie-5.5-flash-preview:free", "r": "ok", "t": "PROBE_OK", "n": "1M ctx / 921K out, 280B-A14B MoE, mandatory reasoning + tools, DeepSWE 71.2% / Terminal-Bench 4.0 46.5%, >200 tok/s."},
     {"m": "openrouter/thinkingmachines/inkling-2-small:free", "r": "ok", "t": "PROBE_OK", "n": "1M ctx / 131K out, 594B-A17B MoE, vision + tools + mandatory reasoning, SWE-Pro v2 86.3% / DeepSWE 72.1% / Code Arena 1653, ~87 tok/s."},
     {"m": "openrouter/liquid/lfm-3-1.7b:free", "r": "ok", "t": "PROBE_OK", "n": "262K ctx / 8K out, 1.73B tri-hybrid, mandatory reasoning, tools, SWE-Verified 43.4% / LiveCodeBench v6 73.5%."},
     {"m": "nous/meituan/longcat-2.5:free", "r": "ok", "t": "PROBE_OK", "n": "1M ctx / 131K out, tools, возвращена в :free каталог Nous 05.11.2026."},
     {"m": "openrouter/recursive/flint-v1.0:free", "r": "ok", "t": "PROBE_OK", "n": "262K ctx / 236K out, 40B-A2.5B MoE, SWE-Verified 74.2%, ~108 tok/s."},
     {"m": "openrouter/cohere/north-mini-code:free", "r": "ok", "t": "PROBE_OK", "n": "256K ctx / 64K out."},
-    {"m": "openrouter/xingchen-agi/xing4.0-29b-a4b:free", "r": "ok", "t": "PROBE_OK", "n": "262K ctx / 236K out."},
     {"m": "openrouter/liquid/lfm-2.5-2.6b:free", "r": "ok", "t": "PROBE_OK", "n": "65K ctx."},
     {"m": "openrouter/openrouter/free", "r": "ok", "t": "PROBE_OK", "n": "Авто-роутер OpenRouter."},
     {"m": "openrouter/google/gemma-4-26b-a4b-it:free", "r": "ok", "t": "PROBE_OK", "n": "262K ctx."},
     {"m": "openrouter/dots-studio/dots-3-note-preview:free", "r": "ok", "t": "PROBE_OK", "n": "Preview, 512K ctx."},
-    {"m": "nous/reflection/beam-1.0-501b-a23b:free", "r": "ok", "t": "PROBE_OK", "n": "501B open (Apache 2.0)."},
     {"m": "nous/stepfun/step-3.7-flash:free", "r": "ok", "t": "PROBE_OK", "n": "Требует тег user= в extra_body.tags."},
     {"m": "nous/upstage/solar-mini4:free", "r": "ok", "t": "PROBE_OK", "n": "Тоже требует user= тег."},
     {"m": "omniroute/ddgw/gpt-5.4-mini", "r": "ok", "t": "PROBE_OK", "n": "Без подключения и без ключа!"},
@@ -799,6 +799,8 @@ PROBES = [
     {"m": "omniroute/auto/cheap", "r": "ok", "t": "PROBE_OK", "n": "Дешёвый маршрут."},
     {"m": "omniroute/auto/offline", "r": "ok", "t": "PROBE_OK", "n": "Оффлайн-маршрут."},
     {"m": "nvidia/nemotron-3.5-lightning-30b-a3b", "r": "ok", "t": "PROBE_OK", "n": "Правильный NIM ID."},
+    {"m": "openrouter/xingchen-agi/xing4.0-29b-a4b:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — убрана из каталога OpenRouter 11.11.2026 (no provider serves this model anymore)."},
+    {"m": "nous/reflection/beam-1.0-501b-a23b:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — промо-период :free на Nous завершился 11.11.2026 (переведена на платный reflection/beam-1.0-501b-a23b, $0.30/$1.00 за 1M)."},
     {"m": "openrouter/stealth/crouton-alpha", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — stealth-период завершился 10.11.2026; модель раскрыта как платная Meta Muse Ember (meta/muse-ember, $0.10/$0.50 за 1M)."},
     {"m": "openrouter/nvidia/nemotron-3.5-content-safety:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — убрана из zero-price каталога OpenRouter 07.11.2026 (переведена на платный nvidia/nemotron-3.5-content-safety)."},
     {"m": "openrouter/thinkingmachines/inkling:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — промо-период :free на OpenRouter завершился 05.11.2026 (переведена на платный thinkingmachines/inkling)."},
@@ -1001,6 +1003,7 @@ DATA = {
             {"name": "DeepSeek V4.1 Flash", "f": "deepseek-v4.1-flash", "v": [3, 3, 1, 2, 3, 2, 0, 1, 2]},
             {"name": "Recursive Flint 1.0", "f": "flint-v1.0", "v": [3, 3, 1, 0, 3, 3, 0, 2, 2]},
             {"name": "Inkling 2 Small", "f": "inkling-2-small", "v": [3, 3, 2, 3, 3, 2, 0, 3, 2]},
+            {"name": "ERNIE 5.5 Flash Preview", "f": "ernie-5.5-flash", "v": [3, 3, 2, 0, 3, 3, 0, 3, 2]},
             {"name": "Kimi K3", "f": "kimi-k3", "v": [3, 3, 1, 0, 2, 1, 0, 2, 3]},
             {"name": "MiMo V2.6 Pro", "f": "mimo-v2.6-pro", "v": [3, 3, 3, 0, 2, 1, 0, 1, 2]},
             {"name": "MiMo V2.6 Flash", "f": "mimo-v2.6-flash", "v": [2, 2, 3, 0, 2, 3, 0, 1, 1]},
@@ -1013,7 +1016,6 @@ DATA = {
             {"name": "LongCat 2.5", "f": "longcat-2.5", "v": [2, 2, 0, 0, 1, 1, 0, 3, 1]},
             {"name": "Gemma 4 26B / 31B", "f": "gemma-4", "v": [1, 2, 0, 0, 1, 1, 0, 1, 0]},
             {"name": "North Mini Code", "f": "north-mini-code", "v": [3, 1, 0, 0, 2, 2, 0, 1, 0]},
-            {"name": "Xing 4.0 29B-A4B", "f": "xing-4.0", "v": [1, 2, 0, 0, 1, 1, 0, 1, 0]},
             {"name": "Qwen 3.8 Max / Flash", "f": "qwen-3.8", "v": [2, 3, 1, 1, 2, 2, 0, 1, 2]},
             {"name": "Step 3.7 Flash", "f": "step-3.7-flash", "v": [2, 2, 0, 0, 1, 2, 0, 1, 1]},
             {"name": "Solar Mini4", "f": "solar-mini4", "v": [1, 1, 0, 0, 1, 1, 0, 0, 0]},

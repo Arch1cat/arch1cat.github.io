@@ -28,7 +28,7 @@ window.FREE_AI_DATA = {
    "card": false,
    "training": "no",
    "ctxCap": 1048576,
-   "note": "3 :free моделей (LongCat 2.5, Beam 501B, Step 3.7 Flash, Solar Mini4). Часть требует тег user= в extra_body.tags.",
+   "note": "3 :free моделей (LongCat 2.5, Step 3.7 Flash, Solar Mini4). Часть требует тег user= в extra_body.tags.",
    "uptime": "97%"
   },
   {
@@ -654,8 +654,41 @@ window.FREE_AI_DATA = {
    ]
   },
   {
-   "id": "kimi-k3",
+   "id": "ernie-5.5-flash",
    "rank": 4,
+   "name": "ERNIE 5.5 Flash Preview (280B-A14B)",
+   "tasks": [
+    "Кодинг",
+    "Reasoning",
+    "Tools",
+    "Long Context",
+    "Fast Agent"
+   ],
+   "family": "ERNIE 5.5",
+   "ctx": 1024000,
+   "out": 921600,
+   "reasoning": true,
+   "bench": {
+    "swe": 71.2,
+    "he": null,
+    "aider": null,
+    "livecode": null,
+    "arena": null,
+    "arenaRank": "DeepSWE 71.2 · TermBench 4.0 46.5 · MCP-Atlas 84.6"
+   },
+   "routes": [
+    {
+     "p": "OpenRouter",
+     "id": "baidu/ernie-5.5-flash-preview:free",
+     "status": "working",
+     "type": "free",
+     "src": "api"
+    }
+   ]
+  },
+  {
+   "id": "kimi-k3",
+   "rank": 5,
    "name": "Kimi K3",
    "tasks": [
     "Архитектура",
@@ -693,7 +726,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "mimo-v2.6-pro",
-   "rank": 5,
+   "rank": 6,
    "name": "MiMo V2.6 Pro",
    "tasks": [
     "Архитектура",
@@ -724,7 +757,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "minimax-m3.1-flash",
-   "rank": 6,
+   "rank": 7,
    "name": "MiniMax M3.1 Flash",
    "tasks": [
     "Кодинг",
@@ -755,7 +788,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "mimo-v2.6-flash",
-   "rank": 7,
+   "rank": 8,
    "name": "MiMo V2.6 Flash",
    "tasks": [
     "UI",
@@ -787,7 +820,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "hy4-preview",
-   "rank": 8,
+   "rank": 9,
    "name": "Hy4 Preview",
    "tasks": [
     "Agent",
@@ -818,7 +851,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "glm-5.3-flash",
-   "rank": 9,
+   "rank": 10,
    "name": "GLM-5.3 Flash",
    "tasks": [
     "Fast Patch",
@@ -870,7 +903,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "nemotron-3.5-lightning",
-   "rank": 10,
+   "rank": 11,
    "name": "Nemotron 3.5 Lightning",
    "tasks": [
     "Fast Agent",
@@ -915,7 +948,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "nemotron-3-ultra",
-   "rank": 11,
+   "rank": 12,
    "name": "Nemotron 3 Ultra / Super VL",
    "tasks": [
     "Reasoning",
@@ -974,7 +1007,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "laguna-s-2.1",
-   "rank": 12,
+   "rank": 13,
    "name": "Laguna S 2.1",
    "tasks": [
     "Coding",
@@ -1005,7 +1038,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "longcat-2.5",
-   "rank": 13,
+   "rank": 14,
    "name": "LongCat 2.5",
    "tasks": [
     "Long Context",
@@ -1043,7 +1076,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "step-3.7-flash",
-   "rank": 14,
+   "rank": 15,
    "name": "Step 3.7 Flash",
    "tasks": [
     "Кодинг",
@@ -1074,7 +1107,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "solar-mini4",
-   "rank": 15,
+   "rank": 16,
    "name": "Solar Mini4",
    "tasks": [
     "Кодинг",
@@ -1105,7 +1138,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "gemma-4",
-   "rank": 16,
+   "rank": 17,
    "name": "Gemma 4 26B / 31B",
    "tasks": [
     "Reasoning",
@@ -1143,7 +1176,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "north-mini-code",
-   "rank": 17,
+   "rank": 18,
    "name": "North Mini Code",
    "tasks": [
     "Кодинг",
@@ -1166,36 +1199,6 @@ window.FREE_AI_DATA = {
     {
      "p": "OpenRouter",
      "id": "cohere/north-mini-code:free",
-     "status": "working",
-     "type": "free",
-     "src": "api"
-    }
-   ]
-  },
-  {
-   "id": "xing-4.0",
-   "rank": 18,
-   "name": "Xing 4.0 29B-A4B",
-   "tasks": [
-    "Reasoning",
-    "Multilingual"
-   ],
-   "family": "Xing",
-   "ctx": 262144,
-   "out": 235929,
-   "reasoning": true,
-   "bench": {
-    "swe": 54.3,
-    "he": 81.6,
-    "aider": 58.2,
-    "livecode": 50.4,
-    "arena": null,
-    "arenaRank": null
-   },
-   "routes": [
-    {
-     "p": "OpenRouter",
-     "id": "xingchen-agi/xing4.0-29b-a4b:free",
      "status": "working",
      "type": "free",
      "src": "api"
@@ -1428,13 +1431,6 @@ window.FREE_AI_DATA = {
     "arenaRank": null
    },
    "routes": [
-    {
-     "p": "Nous Portal",
-     "id": "reflection/beam-1.0-501b-a23b:free",
-     "status": "working",
-     "type": "free",
-     "src": "api"
-    },
     {
      "p": "OpenCode Free",
      "id": "opencode/beam-free",
@@ -1726,7 +1722,7 @@ window.FREE_AI_DATA = {
    "name": "Nous Portal Free",
    "price": "$0",
    "kind": "Free tier",
-   "includes": "Все бесплатные модели Nous: LongCat 2.5, Beam 501B, Step 3.7 Flash, Solar Mini4. Каталог портала — 248 моделей (325 с embeddings)",
+   "includes": "Все бесплатные модели Nous: LongCat 2.5, Step 3.7 Flash, Solar Mini4. Каталог портала — 248 моделей (325 с embeddings)",
    "allowance": "50 RPM / 500K TPM. Только free-модели — платные через портал недоступны",
    "tokens": "Без лимита токенов, но жёсткий RPM",
    "verdict": "Наш основной Nous-маршрут. Работает в Hermes",
@@ -1939,7 +1935,7 @@ window.FREE_AI_DATA = {
    "price": 0,
    "quota": "50 RPM / 500K TPM · только free-модели",
    "tokM": 0,
-   "models": "LongCat 2.5 · Beam 501B · Step 3.7 Flash · Solar Mini4",
+   "models": "LongCat 2.5 · Step 3.7 Flash · Solar Mini4",
    "tools": "Hermes, все OpenAI-клиенты",
    "ours": true,
    "src": "nousresearch.com",
@@ -2778,7 +2774,7 @@ window.FREE_AI_DATA = {
    "tok": "—",
    "card": "нет",
    "credit": "$0 ($10 → 1000 RPD)",
-   "models": "16 zero-price моделей: Recursive Flint 1.0, Nemotron 3 Ultra, Gemma 4, North Mini Code, Crouton Alpha",
+   "models": "16 zero-price моделей: Recursive Flint 1.0, Inkling 2 Small, ERNIE 5.5 Flash Preview, Nemotron 3 Ultra, Gemma 4, North Mini Code",
    "notes": "Квота общая на все :free модели",
    "src": "openrouter.ai",
    "keyless": false
@@ -3261,6 +3257,15 @@ window.FREE_AI_DATA = {
  ],
  "releases": [
   {
+   "d": "2026-11-11",
+   "n": "ERNIE 5.5 Flash Preview",
+   "o": "Baidu",
+   "ctx": "1M",
+   "p": "280B (14B active)",
+   "k": "open (Apache 2.0 soon), coding, reasoning, tools, DeepSWE 71.2% / TermBench 4.0 46.5%",
+   "free": true
+  },
+  {
    "d": "2026-11-07",
    "n": "Inkling 2 Small",
    "o": "Thinking Machines Lab",
@@ -3276,6 +3281,15 @@ window.FREE_AI_DATA = {
    "ctx": "256K",
    "p": "1.73B",
    "k": "open, reasoning, tools, edge, SWE 43.4% / LCB 73.5%",
+   "free": true
+  },
+  {
+   "d": "2026-11-05",
+   "n": "ERNIE 5.5 Flash Base",
+   "o": "Baidu",
+   "ctx": "1M",
+   "p": "280B (14B active)",
+   "k": "open, pretrain base (33.5T tokens), HumanEval+ 82.3%",
    "free": true
   },
   {
@@ -3569,6 +3583,12 @@ window.FREE_AI_DATA = {
  ],
  "probes": [
   {
+   "m": "openrouter/baidu/ernie-5.5-flash-preview:free",
+   "r": "ok",
+   "t": "PROBE_OK",
+   "n": "1M ctx / 921K out, 280B-A14B MoE, mandatory reasoning + tools, DeepSWE 71.2% / Terminal-Bench 4.0 46.5%, >200 tok/s."
+  },
+  {
    "m": "openrouter/thinkingmachines/inkling-2-small:free",
    "r": "ok",
    "t": "PROBE_OK",
@@ -3599,12 +3619,6 @@ window.FREE_AI_DATA = {
    "n": "256K ctx / 64K out."
   },
   {
-   "m": "openrouter/xingchen-agi/xing4.0-29b-a4b:free",
-   "r": "ok",
-   "t": "PROBE_OK",
-   "n": "262K ctx / 236K out."
-  },
-  {
    "m": "openrouter/liquid/lfm-2.5-2.6b:free",
    "r": "ok",
    "t": "PROBE_OK",
@@ -3627,12 +3641,6 @@ window.FREE_AI_DATA = {
    "r": "ok",
    "t": "PROBE_OK",
    "n": "Preview, 512K ctx."
-  },
-  {
-   "m": "nous/reflection/beam-1.0-501b-a23b:free",
-   "r": "ok",
-   "t": "PROBE_OK",
-   "n": "501B open (Apache 2.0)."
   },
   {
    "m": "nous/stepfun/step-3.7-flash:free",
@@ -3711,6 +3719,18 @@ window.FREE_AI_DATA = {
    "r": "ok",
    "t": "PROBE_OK",
    "n": "Правильный NIM ID."
+  },
+  {
+   "m": "openrouter/xingchen-agi/xing4.0-29b-a4b:free",
+   "r": "bad",
+   "t": "NO LONGER FREE",
+   "n": "HTTP 404 — убрана из каталога OpenRouter 11.11.2026 (no provider serves this model anymore)."
+  },
+  {
+   "m": "nous/reflection/beam-1.0-501b-a23b:free",
+   "r": "bad",
+   "t": "NO LONGER FREE",
+   "n": "HTTP 404 — промо-период :free на Nous завершился 11.11.2026 (переведена на платный reflection/beam-1.0-501b-a23b, $0.30/$1.00 за 1M)."
   },
   {
    "m": "openrouter/stealth/crouton-alpha",
@@ -3859,37 +3879,6 @@ window.FREE_AI_DATA = {
  ],
  "ranking": [
   {
-   "id": "Nous Portal",
-   "score": 74.4,
-   "working": 4,
-   "catalog": 0,
-   "blocked": 0,
-   "total": 4,
-   "wr": 100,
-   "access": "api",
-   "color": "#a78bfa",
-   "benchAvg": 52.1,
-   "ctxCap": 1048576,
-   "rpm": null,
-   "rpd": null,
-   "tpd": null,
-   "card": false,
-   "training": "no",
-   "uptime": "97%",
-   "status": "working",
-   "limits": "RPM/TPM/RPD не раскрыты",
-   "note": "3 :free моделей (LongCat 2.5, Beam 501B, Step 3.7 Flash, Solar Mini4). Часть требует тег user= в extra_body.tags.",
-   "parts": {
-    "Работоспособность": 40.0,
-    "Покрытие моделей": 8.0,
-    "Контекст": 15.0,
-    "Бенчмарки": 7.4,
-    "Лимиты": 0,
-    "Доступ": 4.0
-   },
-   "place": 1
-  },
-  {
    "id": "OmniRoute / auto",
    "score": 73.6,
    "working": 1,
@@ -3918,11 +3907,42 @@ window.FREE_AI_DATA = {
     "Лимиты": 0,
     "Доступ": 5.0
    },
+   "place": 1
+  },
+  {
+   "id": "Nous Portal",
+   "score": 73.4,
+   "working": 3,
+   "catalog": 0,
+   "blocked": 0,
+   "total": 3,
+   "wr": 100,
+   "access": "api",
+   "color": "#a78bfa",
+   "benchAvg": 52.1,
+   "ctxCap": 1048576,
+   "rpm": null,
+   "rpd": null,
+   "tpd": null,
+   "card": false,
+   "training": "no",
+   "uptime": "97%",
+   "status": "working",
+   "limits": "RPM/TPM/RPD не раскрыты",
+   "note": "3 :free моделей (LongCat 2.5, Step 3.7 Flash, Solar Mini4). Часть требует тег user= в extra_body.tags.",
+   "parts": {
+    "Работоспособность": 40.0,
+    "Покрытие моделей": 6.9,
+    "Контекст": 15.0,
+    "Бенчмарки": 7.4,
+    "Лимиты": 0,
+    "Доступ": 4.0
+   },
    "place": 2
   },
   {
    "id": "OpenRouter",
-   "score": 71.5,
+   "score": 71.7,
    "working": 10,
    "catalog": 4,
    "blocked": 2,
@@ -3930,7 +3950,7 @@ window.FREE_AI_DATA = {
    "wr": 62,
    "access": "api",
    "color": "#00f2fe",
-   "benchAvg": 58.4,
+   "benchAvg": 59.7,
    "ctxCap": 1048576,
    "rpm": 20,
    "rpd": 50,
@@ -3945,7 +3965,7 @@ window.FREE_AI_DATA = {
     "Работоспособность": 25.0,
     "Покрытие моделей": 16.0,
     "Контекст": 15.0,
-    "Бенчмарки": 8.3,
+    "Бенчмарки": 8.5,
     "Лимиты": 3.2,
     "Доступ": 4.0
    },
@@ -5003,6 +5023,21 @@ window.FREE_AI_DATA = {
     ]
    },
    {
+    "name": "ERNIE 5.5 Flash Preview",
+    "f": "ernie-5.5-flash",
+    "v": [
+     3,
+     3,
+     2,
+     0,
+     3,
+     3,
+     0,
+     3,
+     2
+    ]
+   },
+   {
     "name": "Kimi K3",
     "f": "kimi-k3",
     "v": [
@@ -5177,21 +5212,6 @@ window.FREE_AI_DATA = {
      0,
      2,
      2,
-     0,
-     1,
-     0
-    ]
-   },
-   {
-    "name": "Xing 4.0 29B-A4B",
-    "f": "xing-4.0",
-    "v": [
-     1,
-     2,
-     0,
-     0,
-     1,
-     1,
      0,
      1,
      0
