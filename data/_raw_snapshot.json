@@ -1,6 +1,13 @@
 {
- "snapshot": "2026-11-11",
+ "snapshot": "2026-11-13",
  "openrouter": [
+  {
+   "id": "apodex/apodex-1.1-mini:free",
+   "ctx": 262144,
+   "out": 235929,
+   "tools": true,
+   "name": "Apodex: Apodex 1.1 Mini (free)"
+  },
   {
    "id": "baidu/ernie-5.5-flash-preview:free",
    "ctx": 1024000,
@@ -100,6 +107,13 @@
    "name": "Free Models Router"
   },
   {
+   "id": "particle-ai/particle-1:free",
+   "ctx": 1048576,
+   "out": 131072,
+   "tools": true,
+   "name": "Particle AI: Particle-1 (free)"
+  },
+  {
    "id": "recursive/flint-v1.0:free",
    "ctx": 262144,
    "out": 235929,
@@ -138,12 +152,12 @@
   }
  ],
  "omniroute": {
-  "total": 1306,
+  "total": 1317,
   "prefixes": {
    "auto": 45,
-   "agy": 33,
+   "agy": 39,
    "no-think": 63,
-   "antigravity": 23,
+   "antigravity": 29,
    "dva": 110,
    "oc": 10,
    "ddgw": 6,
@@ -154,7 +168,7 @@
    "zc": 14,
    "cxa": 45,
    "unc": 1,
-   "aihorde": 167,
+   "aihorde": 166,
    "openrouter": 737
   },
   "noauth_free": [
