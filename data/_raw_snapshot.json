@@ -1,13 +1,6 @@
 {
- "snapshot": "2026-11-13",
+ "snapshot": "2026-11-14",
  "openrouter": [
-  {
-   "id": "apodex/apodex-1.1-mini:free",
-   "ctx": 262144,
-   "out": 235929,
-   "tools": true,
-   "name": "Apodex: Apodex 1.1 Mini (free)"
-  },
   {
    "id": "baidu/ernie-5.5-flash-preview:free",
    "ctx": 1024000,
@@ -58,11 +51,11 @@
    "name": "Google: Lyria 3 Pro Preview"
   },
   {
-   "id": "liquid/lfm-2.5-2.6b:free",
-   "ctx": 65536,
-   "out": 8192,
+   "id": "inclusionai/ling-3.2-flash:free",
+   "ctx": 1048576,
+   "out": 262144,
    "tools": true,
-   "name": "LiquidAI: LFM2.5-2.6B (free)"
+   "name": "inclusionAI: Ling 3.2 Flash (free)"
   },
   {
    "id": "liquid/lfm-3-1.7b:free",
@@ -152,7 +145,7 @@
   }
  ],
  "omniroute": {
-  "total": 1317,
+  "total": 1307,
   "prefixes": {
    "auto": 45,
    "agy": 39,
@@ -168,7 +161,7 @@
    "zc": 14,
    "cxa": 45,
    "unc": 1,
-   "aihorde": 166,
+   "aihorde": 156,
    "openrouter": 737
   },
   "noauth_free": [
