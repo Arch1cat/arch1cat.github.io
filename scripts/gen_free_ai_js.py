@@ -433,7 +433,25 @@ FAMILIES = [
         ],
     },
     {
-        "id": "gemma-4", "rank": 16, "name": "Gemma 4 26B / 31B",
+        "id": "particle-1", "rank": 15, "name": "Particle-1",
+        "tasks": ["Кодинг", "Reasoning", "Vision", "Tools", "Fast Agent"], "family": "Particle AI",
+        "ctx": 1048576, "out": 131072, "reasoning": True,
+        "bench": {"swe": None, "he": None, "aider": None, "livecode": None, "arena": None, "arenaRank": None},
+        "routes": [
+            {"p": "OpenRouter", "id": "particle-ai/particle-1:free", "status": "working", "type": "free", "src": "api"},
+        ],
+    },
+    {
+        "id": "ling-3.2-flash", "rank": 16, "name": "Ling 3.2 Flash",
+        "tasks": ["Reasoning", "Vision", "Tools", "Long Context"], "family": "inclusionAI Ling",
+        "ctx": 1048576, "out": 262144, "reasoning": True,
+        "bench": {"swe": None, "he": None, "aider": None, "livecode": None, "arena": None, "arenaRank": None},
+        "routes": [
+            {"p": "OpenRouter", "id": "inclusionai/ling-3.2-flash:free", "status": "working", "type": "free", "src": "api"},
+        ],
+    },
+    {
+        "id": "gemma-4", "rank": 17, "name": "Gemma 4 26B / 31B",
         "tasks": ["Reasoning", "Multilingual", "Fast Agent"], "family": "Gemma 4",
         "ctx": 262144, "out": 32768, "reasoning": True,
         "bench": {"swe": 60.2, "he": 84.9, "aider": 63.1, "livecode": 54.1, "arena": None, "arenaRank": None},
@@ -458,15 +476,6 @@ FAMILIES = [
         "bench": {"swe": 43.4, "he": None, "aider": None, "livecode": 73.5, "arena": None, "arenaRank": "BFCL V4 71.4 · IFEval 96.7"},
         "routes": [
             {"p": "OpenRouter", "id": "liquid/lfm-3-1.7b:free", "status": "working", "type": "free", "src": "api"},
-        ],
-    },
-    {
-        "id": "lfm-2.5", "rank": 20, "name": "LFM 2.5 2.6B",
-        "tasks": ["Fast Agent", "Edge"], "family": "Liquid",
-        "ctx": 65536, "out": 8192, "reasoning": False,
-        "bench": {"swe": 38.2, "he": 68.4, "aider": 41.7, "livecode": 35.9, "arena": None, "arenaRank": None},
-        "routes": [
-            {"p": "OpenRouter", "id": "liquid/lfm-2.5-2.6b:free", "status": "working", "type": "free", "src": "api"},
         ],
     },
     {
@@ -736,11 +745,13 @@ PLANS = [
 
 # ------------------------------------------------------------------ releases
 RELEASES = [
+    {"d": "2026-11-13", "n": "Ling 3.2 Flash", "o": "inclusionAI", "ctx": "1M", "p": None, "k": "hybrid reasoning, vision (до 200 изображений), tools, 262K max output", "free": True},
     {"d": "2026-11-11", "n": "ERNIE 5.5 Flash Preview", "o": "Baidu", "ctx": "1M", "p": "280B (14B active)", "k": "open (Apache 2.0 soon), coding, reasoning, tools, DeepSWE 71.2% / TermBench 4.0 46.5%", "free": True},
     {"d": "2026-11-07", "n": "Inkling 2 Small", "o": "Thinking Machines Lab", "ctx": "1M", "p": "594B (17B active)", "k": "open (Apache 2.0 soon), coding, reasoning, vision, SWE-Pro v2 86.3% / DeepSWE 72.1%", "free": True},
     {"d": "2026-11-06", "n": "LFM3 1.7B", "o": "Liquid AI", "ctx": "256K", "p": "1.73B", "k": "open, reasoning, tools, edge, SWE 43.4% / LCB 73.5%", "free": True},
     {"d": "2026-11-05", "n": "ERNIE 5.5 Flash Base", "o": "Baidu", "ctx": "1M", "p": "280B (14B active)", "k": "open, pretrain base (33.5T tokens), HumanEval+ 82.3%", "free": True},
     {"d": "2026-11-03", "n": "Muse Ember (ex-Crouton Alpha)", "o": "Meta AI", "ctx": "1M", "p": None, "k": "coding, reasoning, vision, audio, video, tools (stealth ended 10.11)", "free": False},
+    {"d": "2026-10-28", "n": "Particle-1", "o": "Particle AI", "ctx": "1M", "p": None, "k": "agentic coding (post-train DeepSeek V4.1 Flash), reasoning, vision, tools, 172 tok/s", "free": True},
     {"d": "2026-10-21", "n": "Recursive Flint 1.0", "o": "Recursive", "ctx": "256K", "p": "40B (2.5B active)", "k": "open, coding, reasoning, Apache 2.0", "free": True},
     {"d": "2026-10-19", "n": "MiniMax M3.1 Flash", "o": "MiniMax", "ctx": "1M", "p": None, "k": "reasoning, vision", "free": True},
     {"d": "2026-10-19", "n": "Clairic", "o": "Cloudflare", "ctx": "64K", "p": None, "k": "vision", "free": True},
@@ -776,13 +787,14 @@ RELEASES = [
 
 # ------------------------------------------------------------------ verified probes
 PROBES = [
+    {"m": "openrouter/inclusionai/ling-3.2-flash:free", "r": "ok", "t": "PROBE_OK", "n": "1M ctx / 262K out, hybrid reasoning (отключаемый) + vision (до 200 изображений) + tools."},
+    {"m": "openrouter/particle-ai/particle-1:free", "r": "ok", "t": "PROBE_OK", "n": "1M ctx / 131K out, agentic coding (post-train DeepSeek V4.1 Flash), vision + tools + reasoning, ~172 tok/s."},
     {"m": "openrouter/baidu/ernie-5.5-flash-preview:free", "r": "ok", "t": "PROBE_OK", "n": "1M ctx / 921K out, 280B-A14B MoE, mandatory reasoning + tools, DeepSWE 71.2% / Terminal-Bench 4.0 46.5%, >200 tok/s."},
     {"m": "openrouter/thinkingmachines/inkling-2-small:free", "r": "ok", "t": "PROBE_OK", "n": "1M ctx / 131K out, 594B-A17B MoE, vision + tools + mandatory reasoning, SWE-Pro v2 86.3% / DeepSWE 72.1% / Code Arena 1653, ~87 tok/s."},
     {"m": "openrouter/liquid/lfm-3-1.7b:free", "r": "ok", "t": "PROBE_OK", "n": "262K ctx / 8K out, 1.73B tri-hybrid, mandatory reasoning, tools, SWE-Verified 43.4% / LiveCodeBench v6 73.5%."},
     {"m": "nous/meituan/longcat-2.5:free", "r": "ok", "t": "PROBE_OK", "n": "1M ctx / 131K out, tools, возвращена в :free каталог Nous 05.11.2026."},
     {"m": "openrouter/recursive/flint-v1.0:free", "r": "ok", "t": "PROBE_OK", "n": "262K ctx / 236K out, 40B-A2.5B MoE, SWE-Verified 74.2%, ~108 tok/s."},
     {"m": "openrouter/cohere/north-mini-code:free", "r": "ok", "t": "PROBE_OK", "n": "256K ctx / 64K out."},
-    {"m": "openrouter/liquid/lfm-2.5-2.6b:free", "r": "ok", "t": "PROBE_OK", "n": "65K ctx."},
     {"m": "openrouter/openrouter/free", "r": "ok", "t": "PROBE_OK", "n": "Авто-роутер OpenRouter."},
     {"m": "openrouter/google/gemma-4-26b-a4b-it:free", "r": "ok", "t": "PROBE_OK", "n": "262K ctx."},
     {"m": "openrouter/dots-studio/dots-3-note-preview:free", "r": "ok", "t": "PROBE_OK", "n": "Preview, 512K ctx."},
@@ -799,6 +811,8 @@ PROBES = [
     {"m": "omniroute/auto/cheap", "r": "ok", "t": "PROBE_OK", "n": "Дешёвый маршрут."},
     {"m": "omniroute/auto/offline", "r": "ok", "t": "PROBE_OK", "n": "Оффлайн-маршрут."},
     {"m": "nvidia/nemotron-3.5-lightning-30b-a3b", "r": "ok", "t": "PROBE_OK", "n": "Правильный NIM ID."},
+    {"m": "openrouter/liquid/lfm-2.5-2.6b:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — убрана из каталога OpenRouter 14.11.2026 (no provider serves this model anymore)."},
+    {"m": "openrouter/apodex/apodex-1.1-mini:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — убрана из каталога OpenRouter 14.11.2026 (no provider serves this model anymore)."},
     {"m": "openrouter/xingchen-agi/xing4.0-29b-a4b:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — убрана из каталога OpenRouter 11.11.2026 (no provider serves this model anymore)."},
     {"m": "nous/reflection/beam-1.0-501b-a23b:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — промо-период :free на Nous завершился 11.11.2026 (переведена на платный reflection/beam-1.0-501b-a23b, $0.30/$1.00 за 1M)."},
     {"m": "openrouter/stealth/crouton-alpha", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — stealth-период завершился 10.11.2026; модель раскрыта как платная Meta Muse Ember (meta/muse-ember, $0.10/$0.50 за 1M)."},
@@ -1019,13 +1033,14 @@ DATA = {
             {"name": "Qwen 3.8 Max / Flash", "f": "qwen-3.8", "v": [2, 3, 1, 1, 2, 2, 0, 1, 2]},
             {"name": "Step 3.7 Flash", "f": "step-3.7-flash", "v": [2, 2, 0, 0, 1, 2, 0, 1, 1]},
             {"name": "Solar Mini4", "f": "solar-mini4", "v": [1, 1, 0, 0, 1, 1, 0, 0, 0]},
+            {"name": "Particle-1", "f": "particle-1", "v": [3, 2, 1, 2, 3, 3, 0, 3, 2]},
+            {"name": "Ling 3.2 Flash", "f": "ling-3.2-flash", "v": [2, 3, 1, 3, 3, 2, 0, 3, 2]},
             {"name": "DuckDuckGo Cloudflare", "f": "ddgw-free", "v": [1, 2, 0, 0, 1, 2, 0, 1, 0]},
             {"name": "Claude Opus 5.5 / GPT-6.1 / Grok", "f": "claude-opus-5.5", "v": [3, 3, 2, 2, 3, 2, 0, 2, 3]},
             {"name": "Space Bunny / Ox Alpha", "f": "space-bunny", "v": [0, 2, 0, 0, 1, 2, 3, 1, 0]},
             {"name": "Beam / Big Pickle", "f": "beam-pickle", "v": [1, 2, 0, 0, 1, 1, 3, 1, 0]},
             {"name": "LLM7.io free subset", "f": "llm7-free", "v": [2, 2, 1, 0, 2, 2, 0, 1, 0]},
             {"name": "LFM3 1.7B", "f": "lfm-3-1.7b", "v": [1, 2, 0, 0, 2, 2, 0, 1, 0]},
-            {"name": "LFM 2.5 2.6B", "f": "lfm-2.5", "v": [0, 0, 0, 0, 0, 1, 0, 0, 0]},
         ],
     },
     "presets": [

@@ -154,7 +154,7 @@ FREE_API = [
     ("NVIDIA NIM", "да", 40, 10000, "1B токенов/мес", "нет (телефон)", "$0",
      "nemotron-3-ultra-550b (1M ctx) · nemotron-3-super-120b (1M) · minimax-m3 · gemma-4-31b · + 92", "100+ моделей, лимит на модель. Лучший free-доступ к Nemotron", "build.nvidia.com"),
     ("OpenRouter", "да", 20, 50, "—", "нет", "$0 ($10 → 1000 RPD)",
-     "16 zero-price моделей: Recursive Flint 1.0, Inkling 2 Small, ERNIE 5.5 Flash Preview, Nemotron 3 Ultra, Gemma 4, North Mini Code", "Квота общая на все :free модели", "openrouter.ai"),
+     "17 zero-price моделей: Recursive Flint 1.0, Inkling 2 Small, ERNIE 5.5 Flash Preview, Ling 3.2 Flash, Particle-1, Nemotron 3 Ultra, Gemma 4, North Mini Code", "Квота общая на все :free модели", "openrouter.ai"),
     ("GitHub Models", "да (любой PAT)", 15, 150, "—", "нет", "$0",
      "22+ модели: GPT-5 · Grok 3 · Llama 3.1 405B · DeepSeek-R1 · Mistral", "Статус спорный: один источник пишет «retired July 2026». Проверяй в аккаунте", "github.com/marketplace/models"),
     ("Cohere", "да", "—", "1000/мес", "—", "нет", "$0",

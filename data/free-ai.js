@@ -1137,8 +1137,73 @@ window.FREE_AI_DATA = {
    ]
   },
   {
-   "id": "gemma-4",
+   "id": "particle-1",
    "rank": 17,
+   "name": "Particle-1",
+   "tasks": [
+    "Кодинг",
+    "Reasoning",
+    "Vision",
+    "Tools",
+    "Fast Agent"
+   ],
+   "family": "Particle AI",
+   "ctx": 1048576,
+   "out": 131072,
+   "reasoning": true,
+   "bench": {
+    "swe": null,
+    "he": null,
+    "aider": null,
+    "livecode": null,
+    "arena": null,
+    "arenaRank": null
+   },
+   "routes": [
+    {
+     "p": "OpenRouter",
+     "id": "particle-ai/particle-1:free",
+     "status": "working",
+     "type": "free",
+     "src": "api"
+    }
+   ]
+  },
+  {
+   "id": "ling-3.2-flash",
+   "rank": 18,
+   "name": "Ling 3.2 Flash",
+   "tasks": [
+    "Reasoning",
+    "Vision",
+    "Tools",
+    "Long Context"
+   ],
+   "family": "inclusionAI Ling",
+   "ctx": 1048576,
+   "out": 262144,
+   "reasoning": true,
+   "bench": {
+    "swe": null,
+    "he": null,
+    "aider": null,
+    "livecode": null,
+    "arena": null,
+    "arenaRank": null
+   },
+   "routes": [
+    {
+     "p": "OpenRouter",
+     "id": "inclusionai/ling-3.2-flash:free",
+     "status": "working",
+     "type": "free",
+     "src": "api"
+    }
+   ]
+  },
+  {
+   "id": "gemma-4",
+   "rank": 19,
    "name": "Gemma 4 26B / 31B",
    "tasks": [
     "Reasoning",
@@ -1176,7 +1241,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "north-mini-code",
-   "rank": 18,
+   "rank": 20,
    "name": "North Mini Code",
    "tasks": [
     "Кодинг",
@@ -1207,7 +1272,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "lfm-3-1.7b",
-   "rank": 19,
+   "rank": 21,
    "name": "LFM3 1.7B",
    "tasks": [
     "Fast Agent",
@@ -1238,38 +1303,8 @@ window.FREE_AI_DATA = {
    ]
   },
   {
-   "id": "lfm-2.5",
-   "rank": 20,
-   "name": "LFM 2.5 2.6B",
-   "tasks": [
-    "Fast Agent",
-    "Edge"
-   ],
-   "family": "Liquid",
-   "ctx": 65536,
-   "out": 8192,
-   "reasoning": false,
-   "bench": {
-    "swe": 38.2,
-    "he": 68.4,
-    "aider": 41.7,
-    "livecode": 35.9,
-    "arena": null,
-    "arenaRank": null
-   },
-   "routes": [
-    {
-     "p": "OpenRouter",
-     "id": "liquid/lfm-2.5-2.6b:free",
-     "status": "working",
-     "type": "free",
-     "src": "api"
-    }
-   ]
-  },
-  {
    "id": "qwen-3.8",
-   "rank": 21,
+   "rank": 22,
    "name": "Qwen 3.8 Max / Flash",
    "tasks": [
     "Reasoning",
@@ -1314,7 +1349,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "claude-opus-5.5",
-   "rank": 22,
+   "rank": 23,
    "name": "Claude Opus 5.5 / GPT-6.1 Sol / Grok 4.7",
    "tasks": [
     "Deep Review",
@@ -1366,7 +1401,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "space-bunny",
-   "rank": 23,
+   "rank": 24,
    "name": "Space Bunny / Ox Alpha",
    "tasks": [
     "Stealth",
@@ -1411,7 +1446,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "beam-pickle",
-   "rank": 24,
+   "rank": 25,
    "name": "Beam / Big Pickle / Cat Jam / Glyph",
    "tasks": [
     "Stealth",
@@ -1449,7 +1484,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "ddgw-free",
-   "rank": 25,
+   "rank": 26,
    "name": "DuckDuckGo Cloudflare Free",
    "tasks": [
     "Fast Agent",
@@ -1515,7 +1550,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "lyria-3",
-   "rank": 26,
+   "rank": 27,
    "name": "Lyria 3 Clip / Pro (audio)",
    "tasks": [
     "Audio",
@@ -1552,7 +1587,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "dots-3-note",
-   "rank": 27,
+   "rank": 28,
    "name": "Dots 3 Note Preview",
    "tasks": [
     "Notes",
@@ -1583,7 +1618,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "openrouter-free",
-   "rank": 28,
+   "rank": 29,
    "name": "OpenRouter / free (auto-router)",
    "tasks": [
     "Кодинг",
@@ -1614,7 +1649,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "llm7-free",
-   "rank": 29,
+   "rank": 30,
    "name": "LLM7.io free subset",
    "tasks": [
     "Кодинг",
@@ -1687,7 +1722,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "content-safety",
-   "rank": 30,
+   "rank": 31,
    "name": "Nemotron 3 Nano Omni 30B-A3B",
    "tasks": [
     "Reasoning",
@@ -2774,7 +2809,7 @@ window.FREE_AI_DATA = {
    "tok": "—",
    "card": "нет",
    "credit": "$0 ($10 → 1000 RPD)",
-   "models": "16 zero-price моделей: Recursive Flint 1.0, Inkling 2 Small, ERNIE 5.5 Flash Preview, Nemotron 3 Ultra, Gemma 4, North Mini Code",
+   "models": "17 zero-price моделей: Recursive Flint 1.0, Inkling 2 Small, ERNIE 5.5 Flash Preview, Ling 3.2 Flash, Particle-1, Nemotron 3 Ultra, Gemma 4, North Mini Code",
    "notes": "Квота общая на все :free модели",
    "src": "openrouter.ai",
    "keyless": false
@@ -3257,6 +3292,15 @@ window.FREE_AI_DATA = {
  ],
  "releases": [
   {
+   "d": "2026-11-13",
+   "n": "Ling 3.2 Flash",
+   "o": "inclusionAI",
+   "ctx": "1M",
+   "p": null,
+   "k": "hybrid reasoning, vision (до 200 изображений), tools, 262K max output",
+   "free": true
+  },
+  {
    "d": "2026-11-11",
    "n": "ERNIE 5.5 Flash Preview",
    "o": "Baidu",
@@ -3300,6 +3344,15 @@ window.FREE_AI_DATA = {
    "p": null,
    "k": "coding, reasoning, vision, audio, video, tools (stealth ended 10.11)",
    "free": false
+  },
+  {
+   "d": "2026-10-28",
+   "n": "Particle-1",
+   "o": "Particle AI",
+   "ctx": "1M",
+   "p": null,
+   "k": "agentic coding (post-train DeepSeek V4.1 Flash), reasoning, vision, tools, 172 tok/s",
+   "free": true
   },
   {
    "d": "2026-10-21",
@@ -3583,6 +3636,18 @@ window.FREE_AI_DATA = {
  ],
  "probes": [
   {
+   "m": "openrouter/inclusionai/ling-3.2-flash:free",
+   "r": "ok",
+   "t": "PROBE_OK",
+   "n": "1M ctx / 262K out, hybrid reasoning (отключаемый) + vision (до 200 изображений) + tools."
+  },
+  {
+   "m": "openrouter/particle-ai/particle-1:free",
+   "r": "ok",
+   "t": "PROBE_OK",
+   "n": "1M ctx / 131K out, agentic coding (post-train DeepSeek V4.1 Flash), vision + tools + reasoning, ~172 tok/s."
+  },
+  {
    "m": "openrouter/baidu/ernie-5.5-flash-preview:free",
    "r": "ok",
    "t": "PROBE_OK",
@@ -3617,12 +3682,6 @@ window.FREE_AI_DATA = {
    "r": "ok",
    "t": "PROBE_OK",
    "n": "256K ctx / 64K out."
-  },
-  {
-   "m": "openrouter/liquid/lfm-2.5-2.6b:free",
-   "r": "ok",
-   "t": "PROBE_OK",
-   "n": "65K ctx."
   },
   {
    "m": "openrouter/openrouter/free",
@@ -3719,6 +3778,18 @@ window.FREE_AI_DATA = {
    "r": "ok",
    "t": "PROBE_OK",
    "n": "Правильный NIM ID."
+  },
+  {
+   "m": "openrouter/liquid/lfm-2.5-2.6b:free",
+   "r": "bad",
+   "t": "NO LONGER FREE",
+   "n": "HTTP 404 — убрана из каталога OpenRouter 14.11.2026 (no provider serves this model anymore)."
+  },
+  {
+   "m": "openrouter/apodex/apodex-1.1-mini:free",
+   "r": "bad",
+   "t": "NO LONGER FREE",
+   "n": "HTTP 404 — убрана из каталога OpenRouter 14.11.2026 (no provider serves this model anymore)."
   },
   {
    "m": "openrouter/xingchen-agi/xing4.0-29b-a4b:free",
@@ -3910,6 +3981,37 @@ window.FREE_AI_DATA = {
    "place": 1
   },
   {
+   "id": "OpenRouter",
+   "score": 73.4,
+   "working": 11,
+   "catalog": 4,
+   "blocked": 2,
+   "total": 17,
+   "wr": 65,
+   "access": "api",
+   "color": "#00f2fe",
+   "benchAvg": 61.5,
+   "ctxCap": 1048576,
+   "rpm": 20,
+   "rpd": 50,
+   "tpd": null,
+   "card": false,
+   "training": "no",
+   "uptime": "99.5%",
+   "status": "working",
+   "limits": "20 RPM / 50 RPD (1000 RPD с $10 top-up)",
+   "note": "17 zero-price моделей прямо сейчас. Единственный ключ на десятки семейств.",
+   "parts": {
+    "Работоспособность": 25.9,
+    "Покрытие моделей": 16.5,
+    "Контекст": 15.0,
+    "Бенчмарки": 8.8,
+    "Лимиты": 3.2,
+    "Доступ": 4.0
+   },
+   "place": 2
+  },
+  {
    "id": "Nous Portal",
    "score": 73.4,
    "working": 3,
@@ -3936,37 +4038,6 @@ window.FREE_AI_DATA = {
     "Контекст": 15.0,
     "Бенчмарки": 7.4,
     "Лимиты": 0,
-    "Доступ": 4.0
-   },
-   "place": 2
-  },
-  {
-   "id": "OpenRouter",
-   "score": 71.7,
-   "working": 10,
-   "catalog": 4,
-   "blocked": 2,
-   "total": 16,
-   "wr": 62,
-   "access": "api",
-   "color": "#00f2fe",
-   "benchAvg": 59.7,
-   "ctxCap": 1048576,
-   "rpm": 20,
-   "rpd": 50,
-   "tpd": null,
-   "card": false,
-   "training": "no",
-   "uptime": "99.5%",
-   "status": "working",
-   "limits": "20 RPM / 50 RPD (1000 RPD с $10 top-up)",
-   "note": "17 zero-price моделей прямо сейчас. Единственный ключ на десятки семейств.",
-   "parts": {
-    "Работоспособность": 25.0,
-    "Покрытие моделей": 16.0,
-    "Контекст": 15.0,
-    "Бенчмарки": 8.5,
-    "Лимиты": 3.2,
     "Доступ": 4.0
    },
    "place": 3
@@ -5263,6 +5334,36 @@ window.FREE_AI_DATA = {
     ]
    },
    {
+    "name": "Particle-1",
+    "f": "particle-1",
+    "v": [
+     3,
+     2,
+     1,
+     2,
+     3,
+     3,
+     0,
+     3,
+     2
+    ]
+   },
+   {
+    "name": "Ling 3.2 Flash",
+    "f": "ling-3.2-flash",
+    "v": [
+     2,
+     3,
+     1,
+     3,
+     3,
+     2,
+     0,
+     3,
+     2
+    ]
+   },
+   {
     "name": "DuckDuckGo Cloudflare",
     "f": "ddgw-free",
     "v": [
@@ -5349,21 +5450,6 @@ window.FREE_AI_DATA = {
      2,
      0,
      1,
-     0
-    ]
-   },
-   {
-    "name": "LFM 2.5 2.6B",
-    "f": "lfm-2.5",
-    "v": [
-     0,
-     0,
-     0,
-     0,
-     0,
-     1,
-     0,
-     0,
      0
     ]
    }
