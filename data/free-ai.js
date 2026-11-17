@@ -1,5 +1,5 @@
 window.FREE_AI_DATA = {
- "snapshot": "2026-11-14",
+ "snapshot": "2026-11-17",
  "providers": [
   {
    "id": "OpenRouter",
@@ -28,7 +28,7 @@ window.FREE_AI_DATA = {
    "card": false,
    "training": "no",
    "ctxCap": 1048576,
-   "note": "3 :free моделей (LongCat 2.5, Step 3.7 Flash, Solar Mini4). Часть требует тег user= в extra_body.tags.",
+   "note": "4 :free моделей (LongCat 2.5, Step 3.7 Flash, Solar Mini4). Часть требует тег user= в extra_body.tags.",
    "uptime": "97%"
   },
   {
@@ -3092,7 +3092,7 @@ window.FREE_AI_DATA = {
   {
    "n": "OmniRoute (локальный шлюз)",
    "signup": "У нас уже поднят: localhost:20128",
-   "quota": "Без квот и без карты · 1307 моделей в 16 префиксах · no-auth пулы: ddgw (6), auto/* (4)",
+   "quota": "Без квот и без карты · 1304 моделей в 16 префиксах · no-auth пулы: ddgw (6), auto/* (4)",
    "models": "GPT-5.4 Mini · GPT-5.6 Luna · Claude Haiku 4.5 · Mistral Small 2603 · GPT-OSS 120B · Gemma4 31B · auto/best-free · auto/coding:free",
    "ctx": "до 1M",
    "note": "Это шлюз, а не тариф: раздаёт бесплатные пулы и маршрутит по качеству. Проверен read-only, конфиг не менялся.",
@@ -4031,7 +4031,7 @@ window.FREE_AI_DATA = {
    "uptime": "97%",
    "status": "working",
    "limits": "RPM/TPM/RPD не раскрыты",
-   "note": "3 :free моделей (LongCat 2.5, Step 3.7 Flash, Solar Mini4). Часть требует тег user= в extra_body.tags.",
+   "note": "4 :free моделей (LongCat 2.5, Step 3.7 Flash, Solar Mini4). Часть требует тег user= в extra_body.tags.",
    "parts": {
     "Работоспособность": 40.0,
     "Покрытие моделей": 6.9,
@@ -5502,12 +5502,12 @@ window.FREE_AI_DATA = {
   }
  ],
  "meta": {
-  "omnirouteTotal": 1307,
+  "omnirouteTotal": 1304,
   "omniroutePrefixes": {
    "auto": 45,
-   "agy": 39,
+   "agy": 42,
    "no-think": 63,
-   "antigravity": 29,
+   "antigravity": 32,
    "dva": 110,
    "oc": 10,
    "ddgw": 6,
@@ -5518,10 +5518,10 @@ window.FREE_AI_DATA = {
    "zc": 14,
    "cxa": 45,
    "unc": 1,
-   "aihorde": 156,
+   "aihorde": 147,
    "openrouter": 737
   },
   "openrouterLiveFree": 17,
-  "nousLiveFree": 3
+  "nousLiveFree": 4
  }
 };
