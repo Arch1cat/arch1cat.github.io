@@ -8,7 +8,7 @@ decodethefuture.org, mnfst/awesome-free-llm-apis, 0xzr/freellmpool, alibabacloud
 PLANS_MARKET = [
     # --- ours / already connected
     ("Nous Portal Free", 0, "50 RPM / 500K TPM · только free-модели", 0,
-     "LongCat 2.5 · Step 3.7 Flash · Solar Mini4", "Hermes, все OpenAI-клиенты", True, "nousresearch.com"),
+     "Hy4 Flash · LongCat 2.5 · Step 3.7 Flash · Solar Mini4", "Hermes, все OpenAI-клиенты", True, "nousresearch.com"),
     ("Nous Portal Plus", 20, "$22 кредитов/мес · rollover $10 · 400 RPM / 4M TPM", 7.3,
      "Полный каталог портала: Kimi K3, GLM-5.3, MiniMax M3.1, DeepSeek V4.1, Nemotron 3.5", "Hermes, все OpenAI-клиенты", True, "nousresearch.com"),
     ("Nous Portal Super", 100, "$110 кредитов · rollover $50 · 800 RPM / 8M TPM", 36.7,
