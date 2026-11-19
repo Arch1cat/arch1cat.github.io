@@ -28,7 +28,7 @@ window.FREE_AI_DATA = {
    "card": false,
    "training": "no",
    "ctxCap": 1048576,
-   "note": "5 :free моделей (Hy4 Flash, LongCat 2.5, Step 3.7 Flash, Solar Mini4). Часть требует тег user= в extra_body.tags.",
+   "note": "5 :free моделей (Qwen4 Max, Hy4 Flash, LongCat 2.5, Step 3.7 Flash, Solar Mini4). Часть требует тег user= в extra_body.tags.",
    "uptime": "97%"
   },
   {
@@ -1075,8 +1075,41 @@ window.FREE_AI_DATA = {
    ]
   },
   {
-   "id": "hy4-flash",
+   "id": "qwen-4-max",
    "rank": 15,
+   "name": "Qwen4 Max",
+   "tasks": [
+    "Кодинг",
+    "Reasoning",
+    "Vision",
+    "Tools",
+    "Long Context"
+   ],
+   "family": "Qwen4",
+   "ctx": 1000000,
+   "out": 131072,
+   "reasoning": true,
+   "bench": {
+    "swe": null,
+    "he": null,
+    "aider": null,
+    "livecode": null,
+    "arena": null,
+    "arenaRank": null
+   },
+   "routes": [
+    {
+     "p": "Nous Portal",
+     "id": "qwen/qwen4-max:free",
+     "status": "working",
+     "type": "free",
+     "src": "api"
+    }
+   ]
+  },
+  {
+   "id": "hy4-flash",
+   "rank": 16,
    "name": "Hy4 Flash",
    "tasks": [
     "Кодинг",
@@ -1109,7 +1142,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "step-3.7-flash",
-   "rank": 16,
+   "rank": 17,
    "name": "Step 3.7 Flash",
    "tasks": [
     "Кодинг",
@@ -1140,7 +1173,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "solar-mini4",
-   "rank": 17,
+   "rank": 18,
    "name": "Solar Mini4",
    "tasks": [
     "Кодинг",
@@ -1171,7 +1204,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "particle-1",
-   "rank": 18,
+   "rank": 19,
    "name": "Particle-1",
    "tasks": [
     "Кодинг",
@@ -1204,7 +1237,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "ling-3.2-flash",
-   "rank": 19,
+   "rank": 20,
    "name": "Ling 3.2 Flash",
    "tasks": [
     "Reasoning",
@@ -1236,7 +1269,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "gemma-4",
-   "rank": 20,
+   "rank": 21,
    "name": "Gemma 4 26B / 31B",
    "tasks": [
     "Reasoning",
@@ -1274,7 +1307,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "north-mini-code",
-   "rank": 21,
+   "rank": 22,
    "name": "North Mini Code",
    "tasks": [
     "Кодинг",
@@ -1305,7 +1338,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "lfm-3-1.7b",
-   "rank": 22,
+   "rank": 23,
    "name": "LFM3 1.7B",
    "tasks": [
     "Fast Agent",
@@ -1337,7 +1370,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "qwen-3.8",
-   "rank": 23,
+   "rank": 24,
    "name": "Qwen 3.8 Max / Flash",
    "tasks": [
     "Reasoning",
@@ -1382,7 +1415,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "claude-opus-5.5",
-   "rank": 24,
+   "rank": 25,
    "name": "Claude Opus 5.5 / GPT-6.1 Sol / Grok 4.7",
    "tasks": [
     "Deep Review",
@@ -1434,7 +1467,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "space-bunny",
-   "rank": 25,
+   "rank": 26,
    "name": "Space Bunny / Ox Alpha",
    "tasks": [
     "Stealth",
@@ -1479,7 +1512,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "beam-pickle",
-   "rank": 26,
+   "rank": 27,
    "name": "Beam / Big Pickle / Cat Jam / Glyph",
    "tasks": [
     "Stealth",
@@ -1517,7 +1550,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "ddgw-free",
-   "rank": 27,
+   "rank": 28,
    "name": "DuckDuckGo Cloudflare Free",
    "tasks": [
     "Fast Agent",
@@ -1583,7 +1616,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "lyria-3",
-   "rank": 28,
+   "rank": 29,
    "name": "Lyria 3 Clip / Pro (audio)",
    "tasks": [
     "Audio",
@@ -1620,7 +1653,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "dots-3-note",
-   "rank": 29,
+   "rank": 30,
    "name": "Dots 3 Note Preview",
    "tasks": [
     "Notes",
@@ -1651,7 +1684,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "openrouter-free",
-   "rank": 30,
+   "rank": 31,
    "name": "OpenRouter / free (auto-router)",
    "tasks": [
     "Кодинг",
@@ -1682,7 +1715,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "llm7-free",
-   "rank": 31,
+   "rank": 32,
    "name": "LLM7.io free subset",
    "tasks": [
     "Кодинг",
@@ -1755,7 +1788,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "content-safety",
-   "rank": 32,
+   "rank": 33,
    "name": "Nemotron 3 Nano Omni 30B-A3B",
    "tasks": [
     "Reasoning",
@@ -1790,7 +1823,7 @@ window.FREE_AI_DATA = {
    "name": "Nous Portal Free",
    "price": "$0",
    "kind": "Free tier",
-   "includes": "Все бесплатные модели Nous: Hy4 Flash, LongCat 2.5, Step 3.7 Flash, Solar Mini4. Каталог портала — 248 моделей (325 с embeddings)",
+   "includes": "Все бесплатные модели Nous: Qwen4 Max, Hy4 Flash, LongCat 2.5, Step 3.7 Flash, Solar Mini4. Каталог портала — 248 моделей (325 с embeddings)",
    "allowance": "50 RPM / 500K TPM. Только free-модели — платные через портал недоступны",
    "tokens": "Без лимита токенов, но жёсткий RPM",
    "verdict": "Наш основной Nous-маршрут. Работает в Hermes",
@@ -3326,6 +3359,15 @@ window.FREE_AI_DATA = {
  "releases": [
   {
    "d": "2026-11-16",
+   "n": "Qwen4 Max",
+   "o": "Alibaba Qwen",
+   "ctx": "1M",
+   "p": null,
+   "k": "flagship, hybrid reasoning (low/high/xhigh/none), vision + video, tools, 131K max output",
+   "free": true
+  },
+  {
+   "d": "2026-11-16",
    "n": "Hy4 Flash",
    "o": "Tencent",
    "ctx": "1M",
@@ -3678,6 +3720,12 @@ window.FREE_AI_DATA = {
  ],
  "probes": [
   {
+   "m": "nous/qwen/qwen4-max:free",
+   "r": "ok",
+   "t": "PROBE_OK",
+   "n": "1M ctx / 131K out, flagship Qwen4 (text+image+video, tools, hybrid reasoning), отвечает 200 OK с тегом user= и без него."
+  },
+  {
    "m": "nous/tencent/hy4-flash:free",
    "r": "ok",
    "t": "PROBE_OK",
@@ -3999,11 +4047,11 @@ window.FREE_AI_DATA = {
  "ranking": [
   {
    "id": "Nous Portal",
-   "score": 74.4,
-   "working": 4,
+   "score": 75.4,
+   "working": 5,
    "catalog": 0,
    "blocked": 0,
-   "total": 4,
+   "total": 5,
    "wr": 100,
    "access": "api",
    "color": "#a78bfa",
@@ -4017,10 +4065,10 @@ window.FREE_AI_DATA = {
    "uptime": "97%",
    "status": "working",
    "limits": "RPM/TPM/RPD не раскрыты",
-   "note": "5 :free моделей (Hy4 Flash, LongCat 2.5, Step 3.7 Flash, Solar Mini4). Часть требует тег user= в extra_body.tags.",
+   "note": "5 :free моделей (Qwen4 Max, Hy4 Flash, LongCat 2.5, Step 3.7 Flash, Solar Mini4). Часть требует тег user= в extra_body.tags.",
    "parts": {
     "Работоспособность": 40.0,
-    "Покрытие моделей": 8.0,
+    "Покрытие моделей": 8.9,
     "Контекст": 15.0,
     "Бенчмарки": 7.4,
     "Лимиты": 0,
@@ -5304,6 +5352,21 @@ window.FREE_AI_DATA = {
      0,
      3,
      1
+    ]
+   },
+   {
+    "name": "Qwen4 Max",
+    "f": "qwen-4-max",
+    "v": [
+     3,
+     3,
+     2,
+     3,
+     3,
+     2,
+     0,
+     3,
+     2
     ]
    },
    {
