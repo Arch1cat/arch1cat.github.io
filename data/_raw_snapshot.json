@@ -1,5 +1,5 @@
 {
- "snapshot": "2026-11-19",
+ "snapshot": "2026-11-20",
  "openrouter": [
   {
    "id": "baidu/ernie-5.5-flash-preview:free",
@@ -7,13 +7,6 @@
    "out": 921600,
    "tools": true,
    "name": "Baidu: ERNIE-5.5-Flash-Preview (free)"
-  },
-  {
-   "id": "cohere/north-mini-code:free",
-   "ctx": 256000,
-   "out": 64000,
-   "tools": true,
-   "name": "Cohere: North Mini Code (free)"
   },
   {
    "id": "dots-studio/dots-3-note-preview:free",
@@ -112,13 +105,6 @@
    "out": 235929,
    "tools": true,
    "name": "Recursive: Flint (free)"
-  },
-  {
-   "id": "thinkingmachines/inkling-2-small:free",
-   "ctx": 1048576,
-   "out": 131072,
-   "tools": true,
-   "name": "Thinking Machines: Inkling 2 Small (free)"
   }
  ],
  "nous": [
@@ -159,7 +145,7 @@
   }
  ],
  "omniroute": {
-  "total": 1332,
+  "total": 1331,
   "prefixes": {
    "auto": 45,
    "agy": 46,
@@ -175,7 +161,7 @@
    "zc": 14,
    "cxa": 45,
    "unc": 1,
-   "aihorde": 167,
+   "aihorde": 166,
    "openrouter": 737
   },
   "noauth_free": [
