@@ -621,41 +621,8 @@ window.FREE_AI_DATA = {
    ]
   },
   {
-   "id": "inkling-2-small",
-   "rank": 3,
-   "name": "Inkling 2 Small (594B-A17B)",
-   "tasks": [
-    "Кодинг",
-    "Reasoning",
-    "Vision",
-    "Tools",
-    "Long Context"
-   ],
-   "family": "Thinking Machines",
-   "ctx": 1048576,
-   "out": 131072,
-   "reasoning": true,
-   "bench": {
-    "swe": 72.1,
-    "he": null,
-    "aider": null,
-    "livecode": null,
-    "arena": 1653,
-    "arenaRank": "SWE-Pro v2 86.3 · DeepSWE 72.1 · AA 30.6"
-   },
-   "routes": [
-    {
-     "p": "OpenRouter",
-     "id": "thinkingmachines/inkling-2-small:free",
-     "status": "working",
-     "type": "free",
-     "src": "api"
-    }
-   ]
-  },
-  {
    "id": "ernie-5.5-flash",
-   "rank": 4,
+   "rank": 3,
    "name": "ERNIE 5.5 Flash Preview (280B-A14B)",
    "tasks": [
     "Кодинг",
@@ -688,7 +655,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "kimi-k3",
-   "rank": 5,
+   "rank": 4,
    "name": "Kimi K3",
    "tasks": [
     "Архитектура",
@@ -726,7 +693,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "mimo-v2.6-pro",
-   "rank": 6,
+   "rank": 5,
    "name": "MiMo V2.6 Pro",
    "tasks": [
     "Архитектура",
@@ -757,7 +724,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "minimax-m3.1-flash",
-   "rank": 7,
+   "rank": 6,
    "name": "MiniMax M3.1 Flash",
    "tasks": [
     "Кодинг",
@@ -788,7 +755,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "mimo-v2.6-flash",
-   "rank": 8,
+   "rank": 7,
    "name": "MiMo V2.6 Flash",
    "tasks": [
     "UI",
@@ -820,7 +787,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "hy4-preview",
-   "rank": 9,
+   "rank": 8,
    "name": "Hy4 Preview",
    "tasks": [
     "Agent",
@@ -851,7 +818,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "glm-5.3-flash",
-   "rank": 10,
+   "rank": 9,
    "name": "GLM-5.3 Flash",
    "tasks": [
     "Fast Patch",
@@ -903,7 +870,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "nemotron-3.5-lightning",
-   "rank": 11,
+   "rank": 10,
    "name": "Nemotron 3.5 Lightning",
    "tasks": [
     "Fast Agent",
@@ -948,7 +915,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "nemotron-3-ultra",
-   "rank": 12,
+   "rank": 11,
    "name": "Nemotron 3 Ultra / Super VL",
    "tasks": [
     "Reasoning",
@@ -1007,7 +974,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "laguna-s-2.1",
-   "rank": 13,
+   "rank": 12,
    "name": "Laguna S 2.1",
    "tasks": [
     "Coding",
@@ -1038,7 +1005,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "longcat-2.5",
-   "rank": 14,
+   "rank": 13,
    "name": "LongCat 2.5",
    "tasks": [
     "Long Context",
@@ -1076,7 +1043,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "qwen-4-max",
-   "rank": 15,
+   "rank": 14,
    "name": "Qwen4 Max",
    "tasks": [
     "Кодинг",
@@ -1109,7 +1076,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "hy4-flash",
-   "rank": 16,
+   "rank": 15,
    "name": "Hy4 Flash",
    "tasks": [
     "Кодинг",
@@ -1142,7 +1109,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "step-3.7-flash",
-   "rank": 17,
+   "rank": 16,
    "name": "Step 3.7 Flash",
    "tasks": [
     "Кодинг",
@@ -1173,7 +1140,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "solar-mini4",
-   "rank": 18,
+   "rank": 17,
    "name": "Solar Mini4",
    "tasks": [
     "Кодинг",
@@ -1204,7 +1171,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "particle-1",
-   "rank": 19,
+   "rank": 18,
    "name": "Particle-1",
    "tasks": [
     "Кодинг",
@@ -1237,7 +1204,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "ling-3.2-flash",
-   "rank": 20,
+   "rank": 19,
    "name": "Ling 3.2 Flash",
    "tasks": [
     "Reasoning",
@@ -1269,7 +1236,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "gemma-4",
-   "rank": 21,
+   "rank": 20,
    "name": "Gemma 4 26B / 31B",
    "tasks": [
     "Reasoning",
@@ -1306,39 +1273,8 @@ window.FREE_AI_DATA = {
    ]
   },
   {
-   "id": "north-mini-code",
-   "rank": 22,
-   "name": "North Mini Code",
-   "tasks": [
-    "Кодинг",
-    "Fast Patch",
-    "Tools"
-   ],
-   "family": "Cohere North",
-   "ctx": 256000,
-   "out": 64000,
-   "reasoning": true,
-   "bench": {
-    "swe": 58.8,
-    "he": 84.1,
-    "aider": 62.4,
-    "livecode": 55.6,
-    "arena": null,
-    "arenaRank": null
-   },
-   "routes": [
-    {
-     "p": "OpenRouter",
-     "id": "cohere/north-mini-code:free",
-     "status": "working",
-     "type": "free",
-     "src": "api"
-    }
-   ]
-  },
-  {
    "id": "lfm-3-1.7b",
-   "rank": 23,
+   "rank": 21,
    "name": "LFM3 1.7B",
    "tasks": [
     "Fast Agent",
@@ -1370,7 +1306,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "qwen-3.8",
-   "rank": 24,
+   "rank": 22,
    "name": "Qwen 3.8 Max / Flash",
    "tasks": [
     "Reasoning",
@@ -1415,7 +1351,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "claude-opus-5.5",
-   "rank": 25,
+   "rank": 23,
    "name": "Claude Opus 5.5 / GPT-6.1 Sol / Grok 4.7",
    "tasks": [
     "Deep Review",
@@ -1467,7 +1403,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "space-bunny",
-   "rank": 26,
+   "rank": 24,
    "name": "Space Bunny / Ox Alpha",
    "tasks": [
     "Stealth",
@@ -1512,7 +1448,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "beam-pickle",
-   "rank": 27,
+   "rank": 25,
    "name": "Beam / Big Pickle / Cat Jam / Glyph",
    "tasks": [
     "Stealth",
@@ -1550,7 +1486,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "ddgw-free",
-   "rank": 28,
+   "rank": 26,
    "name": "DuckDuckGo Cloudflare Free",
    "tasks": [
     "Fast Agent",
@@ -1616,7 +1552,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "lyria-3",
-   "rank": 29,
+   "rank": 27,
    "name": "Lyria 3 Clip / Pro (audio)",
    "tasks": [
     "Audio",
@@ -1653,7 +1589,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "dots-3-note",
-   "rank": 30,
+   "rank": 28,
    "name": "Dots 3 Note Preview",
    "tasks": [
     "Notes",
@@ -1684,7 +1620,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "openrouter-free",
-   "rank": 31,
+   "rank": 29,
    "name": "OpenRouter / free (auto-router)",
    "tasks": [
     "Кодинг",
@@ -1715,7 +1651,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "llm7-free",
-   "rank": 32,
+   "rank": 30,
    "name": "LLM7.io free subset",
    "tasks": [
     "Кодинг",
@@ -1788,7 +1724,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "content-safety",
-   "rank": 33,
+   "rank": 31,
    "name": "Nemotron 3 Nano Omni 30B-A3B",
    "tasks": [
     "Reasoning",
@@ -3750,12 +3686,6 @@ window.FREE_AI_DATA = {
    "n": "1M ctx / 921K out, 280B-A14B MoE, mandatory reasoning + tools, DeepSWE 71.2% / Terminal-Bench 4.0 46.5%, >200 tok/s."
   },
   {
-   "m": "openrouter/thinkingmachines/inkling-2-small:free",
-   "r": "ok",
-   "t": "PROBE_OK",
-   "n": "1M ctx / 131K out, 594B-A17B MoE, vision + tools + mandatory reasoning, SWE-Pro v2 86.3% / DeepSWE 72.1% / Code Arena 1653, ~87 tok/s."
-  },
-  {
    "m": "openrouter/liquid/lfm-3-1.7b:free",
    "r": "ok",
    "t": "PROBE_OK",
@@ -3772,12 +3702,6 @@ window.FREE_AI_DATA = {
    "r": "ok",
    "t": "PROBE_OK",
    "n": "262K ctx / 236K out, 40B-A2.5B MoE, SWE-Verified 74.2%, ~108 tok/s."
-  },
-  {
-   "m": "openrouter/cohere/north-mini-code:free",
-   "r": "ok",
-   "t": "PROBE_OK",
-   "n": "256K ctx / 64K out."
   },
   {
    "m": "openrouter/openrouter/free",
@@ -3874,6 +3798,18 @@ window.FREE_AI_DATA = {
    "r": "ok",
    "t": "PROBE_OK",
    "n": "Правильный NIM ID."
+  },
+  {
+   "m": "openrouter/thinkingmachines/inkling-2-small:free",
+   "r": "bad",
+   "t": "NO LONGER FREE",
+   "n": "HTTP 404 — промо-период :free на OpenRouter завершился 20.11.2026 (переведена на платный thinkingmachines/inkling-2-small, $0.30/$1.00 за 1M)."
+  },
+  {
+   "m": "openrouter/cohere/north-mini-code:free",
+   "r": "bad",
+   "t": "NO LONGER FREE",
+   "n": "HTTP 404 — убрана из каталога OpenRouter 20.11.2026 (no provider serves this model anymore)."
   },
   {
    "m": "openrouter/liquid/lfm-2.5-2.6b:free",
@@ -4108,37 +4044,6 @@ window.FREE_AI_DATA = {
    "place": 2
   },
   {
-   "id": "OpenRouter",
-   "score": 73.4,
-   "working": 11,
-   "catalog": 4,
-   "blocked": 2,
-   "total": 17,
-   "wr": 65,
-   "access": "api",
-   "color": "#00f2fe",
-   "benchAvg": 61.5,
-   "ctxCap": 1048576,
-   "rpm": 20,
-   "rpd": 50,
-   "tpd": null,
-   "card": false,
-   "training": "no",
-   "uptime": "99.5%",
-   "status": "working",
-   "limits": "20 RPM / 50 RPD (1000 RPD с $10 top-up)",
-   "note": "15 zero-price моделей прямо сейчас. Единственный ключ на десятки семейств.",
-   "parts": {
-    "Работоспособность": 25.9,
-    "Покрытие моделей": 16.5,
-    "Контекст": 15.0,
-    "Бенчмарки": 8.8,
-    "Лимиты": 3.2,
-    "Доступ": 4.0
-   },
-   "place": 3
-  },
-  {
    "id": "Freebuff",
    "score": 71.4,
    "working": 12,
@@ -4165,6 +4070,37 @@ window.FREE_AI_DATA = {
     "Контекст": 3.8,
     "Бенчмарки": 9.7,
     "Лимиты": 0,
+    "Доступ": 4.0
+   },
+   "place": 3
+  },
+  {
+   "id": "OpenRouter",
+   "score": 70.4,
+   "working": 9,
+   "catalog": 4,
+   "blocked": 2,
+   "total": 15,
+   "wr": 60,
+   "access": "api",
+   "color": "#00f2fe",
+   "benchAvg": 60.7,
+   "ctxCap": 1048576,
+   "rpm": 20,
+   "rpd": 50,
+   "tpd": null,
+   "card": false,
+   "training": "no",
+   "uptime": "99.5%",
+   "status": "working",
+   "limits": "20 RPM / 50 RPD (1000 RPD с $10 top-up)",
+   "note": "15 zero-price моделей прямо сейчас. Единственный ключ на десятки семейств.",
+   "parts": {
+    "Работоспособность": 24.0,
+    "Покрытие моделей": 15.5,
+    "Контекст": 15.0,
+    "Бенчмарки": 8.7,
+    "Лимиты": 3.2,
     "Доступ": 4.0
    },
    "place": 4
@@ -5175,21 +5111,6 @@ window.FREE_AI_DATA = {
     ]
    },
    {
-    "name": "Inkling 2 Small",
-    "f": "inkling-2-small",
-    "v": [
-     3,
-     3,
-     2,
-     3,
-     3,
-     2,
-     0,
-     3,
-     2
-    ]
-   },
-   {
     "name": "ERNIE 5.5 Flash Preview",
     "f": "ernie-5.5-flash",
     "v": [
@@ -5394,21 +5315,6 @@ window.FREE_AI_DATA = {
      0,
      1,
      1,
-     0,
-     1,
-     0
-    ]
-   },
-   {
-    "name": "North Mini Code",
-    "f": "north-mini-code",
-    "v": [
-     3,
-     1,
-     0,
-     0,
-     2,
-     2,
      0,
      1,
      0

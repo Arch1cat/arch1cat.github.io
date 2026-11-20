@@ -296,15 +296,6 @@ FAMILIES = [
         ],
     },
     {
-        "id": "inkling-2-small", "rank": 3, "name": "Inkling 2 Small (594B-A17B)",
-        "tasks": ["Кодинг", "Reasoning", "Vision", "Tools", "Long Context"], "family": "Thinking Machines",
-        "ctx": 1048576, "out": 131072, "reasoning": True,
-        "bench": {"swe": 72.1, "he": None, "aider": None, "livecode": None, "arena": 1653, "arenaRank": "SWE-Pro v2 86.3 · DeepSWE 72.1 · AA 30.6"},
-        "routes": [
-            {"p": "OpenRouter", "id": "thinkingmachines/inkling-2-small:free", "status": "working", "type": "free", "src": "api"},
-        ],
-    },
-    {
         "id": "ernie-5.5-flash", "rank": 4, "name": "ERNIE 5.5 Flash Preview (280B-A14B)",
         "tasks": ["Кодинг", "Reasoning", "Tools", "Long Context", "Fast Agent"], "family": "ERNIE 5.5",
         "ctx": 1024000, "out": 921600, "reasoning": True,
@@ -476,15 +467,6 @@ FAMILIES = [
         "routes": [
             {"p": "OpenRouter", "id": "google/gemma-4-26b-a4b-it:free", "status": "working", "type": "free", "src": "api"},
             {"p": "OpenRouter", "id": "google/gemma-4-31b-it:free", "status": "catalog", "type": "free", "src": "api"},
-        ],
-    },
-    {
-        "id": "north-mini-code", "rank": 17, "name": "North Mini Code",
-        "tasks": ["Кодинг", "Fast Patch", "Tools"], "family": "Cohere North",
-        "ctx": 256000, "out": 64000, "reasoning": True,
-        "bench": {"swe": 58.8, "he": 84.1, "aider": 62.4, "livecode": 55.6, "arena": None, "arenaRank": None},
-        "routes": [
-            {"p": "OpenRouter", "id": "cohere/north-mini-code:free", "status": "working", "type": "free", "src": "api"},
         ],
     },
     {
@@ -812,11 +794,9 @@ PROBES = [
     {"m": "openrouter/inclusionai/ling-3.2-flash:free", "r": "ok", "t": "PROBE_OK", "n": "1M ctx / 262K out, hybrid reasoning (отключаемый) + vision (до 200 изображений) + tools."},
     {"m": "openrouter/particle-ai/particle-1:free", "r": "ok", "t": "PROBE_OK", "n": "1M ctx / 131K out, agentic coding (post-train DeepSeek V4.1 Flash), vision + tools + reasoning, ~172 tok/s."},
     {"m": "openrouter/baidu/ernie-5.5-flash-preview:free", "r": "ok", "t": "PROBE_OK", "n": "1M ctx / 921K out, 280B-A14B MoE, mandatory reasoning + tools, DeepSWE 71.2% / Terminal-Bench 4.0 46.5%, >200 tok/s."},
-    {"m": "openrouter/thinkingmachines/inkling-2-small:free", "r": "ok", "t": "PROBE_OK", "n": "1M ctx / 131K out, 594B-A17B MoE, vision + tools + mandatory reasoning, SWE-Pro v2 86.3% / DeepSWE 72.1% / Code Arena 1653, ~87 tok/s."},
     {"m": "openrouter/liquid/lfm-3-1.7b:free", "r": "ok", "t": "PROBE_OK", "n": "262K ctx / 8K out, 1.73B tri-hybrid, mandatory reasoning, tools, SWE-Verified 43.4% / LiveCodeBench v6 73.5%."},
     {"m": "nous/meituan/longcat-2.5:free", "r": "ok", "t": "PROBE_OK", "n": "1M ctx / 131K out, tools, возвращена в :free каталог Nous 05.11.2026."},
     {"m": "openrouter/recursive/flint-v1.0:free", "r": "ok", "t": "PROBE_OK", "n": "262K ctx / 236K out, 40B-A2.5B MoE, SWE-Verified 74.2%, ~108 tok/s."},
-    {"m": "openrouter/cohere/north-mini-code:free", "r": "ok", "t": "PROBE_OK", "n": "256K ctx / 64K out."},
     {"m": "openrouter/openrouter/free", "r": "ok", "t": "PROBE_OK", "n": "Авто-роутер OpenRouter."},
     {"m": "openrouter/google/gemma-4-26b-a4b-it:free", "r": "ok", "t": "PROBE_OK", "n": "262K ctx."},
     {"m": "openrouter/dots-studio/dots-3-note-preview:free", "r": "ok", "t": "PROBE_OK", "n": "Preview, 512K ctx."},
@@ -833,6 +813,8 @@ PROBES = [
     {"m": "omniroute/auto/cheap", "r": "ok", "t": "PROBE_OK", "n": "Дешёвый маршрут."},
     {"m": "omniroute/auto/offline", "r": "ok", "t": "PROBE_OK", "n": "Оффлайн-маршрут."},
     {"m": "nvidia/nemotron-3.5-lightning-30b-a3b", "r": "ok", "t": "PROBE_OK", "n": "Правильный NIM ID."},
+    {"m": "openrouter/thinkingmachines/inkling-2-small:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — промо-период :free на OpenRouter завершился 20.11.2026 (переведена на платный thinkingmachines/inkling-2-small, $0.30/$1.00 за 1M)."},
+    {"m": "openrouter/cohere/north-mini-code:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — убрана из каталога OpenRouter 20.11.2026 (no provider serves this model anymore)."},
     {"m": "openrouter/liquid/lfm-2.5-2.6b:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — убрана из каталога OpenRouter 14.11.2026 (no provider serves this model anymore)."},
     {"m": "openrouter/apodex/apodex-1.1-mini:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — убрана из каталога OpenRouter 14.11.2026 (no provider serves this model anymore)."},
     {"m": "openrouter/xingchen-agi/xing4.0-29b-a4b:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — убрана из каталога OpenRouter 11.11.2026 (no provider serves this model anymore)."},
@@ -1038,7 +1020,6 @@ DATA = {
         "rows": [
             {"name": "DeepSeek V4.1 Flash", "f": "deepseek-v4.1-flash", "v": [3, 3, 1, 2, 3, 2, 0, 1, 2]},
             {"name": "Recursive Flint 1.0", "f": "flint-v1.0", "v": [3, 3, 1, 0, 3, 3, 0, 2, 2]},
-            {"name": "Inkling 2 Small", "f": "inkling-2-small", "v": [3, 3, 2, 3, 3, 2, 0, 3, 2]},
             {"name": "ERNIE 5.5 Flash Preview", "f": "ernie-5.5-flash", "v": [3, 3, 2, 0, 3, 3, 0, 3, 2]},
             {"name": "Kimi K3", "f": "kimi-k3", "v": [3, 3, 1, 0, 2, 1, 0, 2, 3]},
             {"name": "MiMo V2.6 Pro", "f": "mimo-v2.6-pro", "v": [3, 3, 3, 0, 2, 1, 0, 1, 2]},
@@ -1053,7 +1034,6 @@ DATA = {
             {"name": "Qwen4 Max", "f": "qwen-4-max", "v": [3, 3, 2, 3, 3, 2, 0, 3, 2]},
             {"name": "Hy4 Flash", "f": "hy4-flash", "v": [2, 3, 1, 2, 3, 3, 0, 3, 2]},
             {"name": "Gemma 4 26B / 31B", "f": "gemma-4", "v": [1, 2, 0, 0, 1, 1, 0, 1, 0]},
-            {"name": "North Mini Code", "f": "north-mini-code", "v": [3, 1, 0, 0, 2, 2, 0, 1, 0]},
             {"name": "Qwen 3.8 Max / Flash", "f": "qwen-3.8", "v": [2, 3, 1, 1, 2, 2, 0, 1, 2]},
             {"name": "Step 3.7 Flash", "f": "step-3.7-flash", "v": [2, 2, 0, 0, 1, 2, 0, 1, 1]},
             {"name": "Solar Mini4", "f": "solar-mini4", "v": [1, 1, 0, 0, 1, 1, 0, 0, 0]},
