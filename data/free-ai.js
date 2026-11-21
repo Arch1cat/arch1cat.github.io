@@ -1,5 +1,5 @@
 window.FREE_AI_DATA = {
- "snapshot": "2026-11-20",
+ "snapshot": "2026-11-21",
  "providers": [
   {
    "id": "OpenRouter",
@@ -13,7 +13,7 @@ window.FREE_AI_DATA = {
    "card": false,
    "training": "no",
    "ctxCap": 1048576,
-   "note": "15 zero-price моделей прямо сейчас. Единственный ключ на десятки семейств.",
+   "note": "14 zero-price моделей прямо сейчас. Единственный ключ на десятки семейств.",
    "uptime": "99.5%"
   },
   {
@@ -1829,7 +1829,7 @@ window.FREE_AI_DATA = {
    "name": "OpenRouter (пополнение)",
    "price": "$10 разово",
    "kind": "Кредиты",
-   "includes": "Все 15 zero-price моделей без изменений + рост дневного лимита",
+   "includes": "Все 14 zero-price моделей без изменений + рост дневного лимита",
    "allowance": "50 RPD → 1000 RPD на free-моделях. Комиссия платформы 5.5%.",
    "tokens": "1000 запросов/день на всём free-пуле",
    "verdict": "Лучший апгрейд именно для бесплатного пула",
@@ -3094,7 +3094,7 @@ window.FREE_AI_DATA = {
   {
    "n": "OmniRoute (локальный шлюз)",
    "signup": "У нас уже поднят: localhost:20128",
-   "quota": "Без квот и без карты · 1331 моделей в 16 префиксах · no-auth пулы: ddgw (6), auto/* (4)",
+   "quota": "Без квот и без карты · 1329 моделей в 16 префиксах · no-auth пулы: ddgw (6), auto/* (4)",
    "models": "GPT-5.4 Mini · GPT-5.6 Luna · Claude Haiku 4.5 · Mistral Small 2603 · GPT-OSS 120B · Gemma4 31B · auto/best-free · auto/coding:free",
    "ctx": "до 1M",
    "note": "Это шлюз, а не тариф: раздаёт бесплатные пулы и маршрутит по качеству. Проверен read-only, конфиг не менялся.",
@@ -4094,7 +4094,7 @@ window.FREE_AI_DATA = {
    "uptime": "99.5%",
    "status": "working",
    "limits": "20 RPM / 50 RPD (1000 RPD с $10 top-up)",
-   "note": "15 zero-price моделей прямо сейчас. Единственный ключ на десятки семейств.",
+   "note": "14 zero-price моделей прямо сейчас. Единственный ключ на десятки семейств.",
    "parts": {
     "Работоспособность": 24.0,
     "Покрытие моделей": 15.5,
@@ -5534,7 +5534,7 @@ window.FREE_AI_DATA = {
   }
  ],
  "meta": {
-  "omnirouteTotal": 1331,
+  "omnirouteTotal": 1329,
   "omniroutePrefixes": {
    "auto": 45,
    "agy": 46,
@@ -5550,10 +5550,10 @@ window.FREE_AI_DATA = {
    "zc": 14,
    "cxa": 45,
    "unc": 1,
-   "aihorde": 166,
+   "aihorde": 164,
    "openrouter": 737
   },
-  "openrouterLiveFree": 15,
+  "openrouterLiveFree": 14,
   "nousLiveFree": 5
  }
 };
