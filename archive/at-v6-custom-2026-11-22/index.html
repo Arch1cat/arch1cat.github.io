@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>arch1cat · Creative Systems &amp; 3D WebGL Architecture (/work)</title>
+  <meta name="description" content="arch1cat (Kerya) — Chief System & UX Architect. Interactive 3D WebGL2 showcase of enterprise Cloudflare Workers/D1 ecosystems, tactical 3D GIS, OSINT telemetry, and autonomous AI." />
+  <meta property="og:title" content="arch1cat · Creative Systems & 3D WebGL Architecture" />
+  <meta property="og:description" content="Interactive WebGL2 showcase: Yotei CRM, WARDOGS 3D, World Monitor, TechnoVovk, Frontier AI Matrix & Native Kotlin." />
+  <meta property="og:image" content="og.png" />
+  <meta name="theme-color" content="#000000" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23050810'/%3E%3Ccircle cx='16' cy='16' r='9' fill='none' stroke='%233df5ff' stroke-width='2'/%3E%3Ccircle cx='16' cy='16' r='3' fill='%238b5cf6'/%3E%3C/svg%3E" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/at-v6/css/stage.css" />
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+  <main id="Stage" aria-label="arch1cat Interactive 3D Portfolio Stage">
+    <canvas id="stage-canvas"></canvas>
+
+    <!-- Screen-Reader & Keyboard Mirror -->
+    <div class="GLA11y" aria-live="polite">
+      <div id="gl-a11y-work"></div>
+    </div>
+
+    <!-- Preloader: Solar Cyan/Cobalt Arcs + Circular '/' Matrix -->
+    <div id="loader-view" role="status" aria-label="Loading 3D Stage">
+      <canvas id="loader-gl-canvas"></canvas>
+      <div class="loader-center-orb">
+        <pre id="loader-slash-matrix">////////////////////////////</pre>
+        <span id="loader-percent">//0</span>
+      </div>
+    </div>
+
+    <!-- Top-Right Shader Capsule NavUI -->
+    <header id="nav-ui">
+      <canvas id="nav-shader-canvas" width="330" height="86"></canvas>
+      <nav class="nav-items-row" aria-label="Primary Navigation">
+        <button type="button" id="nav-work-btn" class="nav-btn">WORK</button>
+        <button type="button" id="nav-audio-btn" class="nav-btn" aria-label="Toggle Ambient Synth Radio">AUDIO</button>
+        <button type="button" id="nav-lang-btn" class="nav-btn" aria-label="Switch Language EN/UA">EN</button>
+        <button type="button" id="nav-contact-btn" class="nav-btn">CONTACT</button>
+      </nav>
+    </header>
+
+    <!-- Top-Right MusicPlayerDOM (Active Theory 8-Track Radio + 480Hz Muffle) -->
+    <aside id="music-player-dom" aria-label="Music Player">
+      <button type="button" id="music-prev-btn" class="music-step-btn" aria-label="Previous Track">&lt;&lt;</button>
+      <div class="music-marquee-viewport">
+        <div class="music-marquee-track">
+          <span id="music-track-a">01. SERGEY AZBEL - THEMIS   //   </span>
+          <span id="music-track-b">01. SERGEY AZBEL - THEMIS   //   </span>
+        </div>
+      </div>
+      <button type="button" id="music-next-btn" class="music-step-btn" aria-label="Next Track">&gt;&gt;</button>
+    </aside>
+
+    <!-- Bottom-Left ChatDOM (Conversational Filter UI + Case Study Readout) -->
+    <section id="chat-dom" aria-label="Project Filter and Architect AI Terminal">
+      <div id="chat-browse-mode">
+        <h1 id="chat-prompt-header">WHAT ARE YOU LOOKING FOR?</h1>
+        <div id="chat-filters-list" role="group" aria-label="Project Categories"></div>
+        <div id="chat-ai-reply">
+          <span id="chat-thinking-dots" style="display:none;">...</span>
+          <span id="chat-reply-text"></span>
+        </div>
+      </div>
+
+      <div id="chat-detail-mode">
+        <h2 id="det-title">YOTEI CRM</h2>
+        <div id="det-meta">2026 / PROPTECH</div>
+        <p id="det-body"></p>
+        <a id="det-live-link" class="det-action-link" href="https://yotei.com.ua/" target="_blank" rel="noopener noreferrer">-&gt; LAUNCH LIVE PROJECT ↗</a>
+        <a id="det-source-link" class="det-action-link" href="https://github.com/l2bote4game" target="_blank" rel="noopener noreferrer">-&gt; SOURCE / ARCHITECTURE ↗</a>
+        <button type="button" id="det-close-btn">&lt;- CLOSE</button>
+      </div>
+
+      <div id="chat-input-pill">
+        <textarea id="chat-textarea" rows="1" placeholder="ASK ME ANYTHING..." aria-label="Ask arch1cat AI"></textarea>
+      </div>
+    </section>
+
+    <!-- WorkDetail Center Launch & Scroll Cue -->
+    <div id="detail-center-hud">
+      <a id="detail-launch-btn" href="https://yotei.com.ua/" target="_blank" rel="noopener noreferrer">[ ⛶ OPEN LIVE SYSTEM ↗ ]</a>
+      <span id="detail-scroll-cue">SCROLL OR ESC TO CLOSE</span>
+    </div>
+
+    <!-- CleanRoom // THE LAB -> Quick Sandbox Dock -->
+    <div id="lab-dock" aria-label="Interactive Lab Prototypes">
+      <a class="lab-pill" href="ai-matrix.html" target="_blank" rel="noopener noreferrer">FRONTIER AI MATRIX ↗</a>
+      <a class="lab-pill" href="yotei-cards/" target="_blank" rel="noopener noreferrer">YOTEI GOLD FOIL LAB ↗</a>
+      <a class="lab-pill" href="3d-print/" target="_blank" rel="noopener noreferrer">VULCAN 3D PRINT ↗</a>
+      <a class="lab-pill" href="rempobut/" target="_blank" rel="noopener noreferrer">TECHNOVOVK PORTAL ↗</a>
+    </div>
+
+    <!-- Fullscreen Frosted ContactUI Modal -->
+    <section id="contact-ui" aria-label="Direct Contact Overlay">
+      <div class="contact-grid">
+        <div>
+          <div id="contact-title">DIRECT SIGNAL · ARCH1CAT</div>
+          <div id="contact-sub">LEAD SYSTEM &amp; UX ARCHITECT · CLOUDFLARE EDGE · 3D WEBGL · AUTONOMOUS AI</div>
+        </div>
+
+        <div class="contact-hubs-row">
+          <span class="hub-code" data-hub-code="HRK">HRK</span>
+          <svg class="globe-svg" viewBox="0 0 120 120" fill="none" aria-hidden="true">
+            <circle cx="60" cy="60" r="52" stroke-width="1.2" />
+            <ellipse cx="60" cy="60" rx="28" ry="52" stroke-width="1" />
+            <ellipse cx="60" cy="60" rx="52" ry="22" stroke-width="1" />
+            <line x1="8" y1="60" x2="112" y2="60" stroke-width="0.9" />
+            <line x1="60" y1="8" x2="60" y2="112" stroke-width="0.9" />
+          </svg>
+          <span class="hub-code" data-hub-code="KYIV">KYIV</span>
+          <svg class="globe-svg" viewBox="0 0 120 120" fill="none" aria-hidden="true">
+            <circle cx="60" cy="60" r="46" stroke-dasharray="4 6" stroke-width="1.2" />
+            <polygon points="60,14 71,49 106,60 71,71 60,106 49,71 14,60 49,49" stroke-width="1.1" />
+            <circle cx="60" cy="60" r="9" stroke-width="1.2" />
+          </svg>
+          <span class="hub-code" data-hub-code="EDGE">EDGE</span>
+        </div>
+
+        <div class="contact-links-row">
+          <a class="contact-link" href="https://t.me/Archi_____cat" target="_blank" rel="noopener noreferrer">TELEGRAM · @Archi_____cat ↗</a>
+          <a class="contact-link" href="https://github.com/l2bote4game" target="_blank" rel="noopener noreferrer">GITHUB · l2bote4game ↗</a>
+          <a class="contact-link" href="https://yotei.com.ua/" target="_blank" rel="noopener noreferrer">FLAGSHIP · yotei.com.ua ↗</a>
+          <button type="button" id="contact-copy-btn" class="contact-link">COPY DIRECT TG HANDLE</button>
+        </div>
+
+        <div class="sync-qr-box">
+          <div class="qr-quiet-pad">
+            <svg width="84" height="84" viewBox="0 0 21 21" fill="#050811" aria-hidden="true">
+              <path d="M0 0h7v7H0V0zm1 1v5h5V1H1zm1 1h3v3H2V2zm12-2h7v7h-7V0zm1 1v5h5V1h-5zm1 1h3v3h-3V2zM0 14h7v7H0v-7zm1 1v5h5v-5H1zm1 1h3v3H2v-3zm8-14h1v1H8V0zm2 0h2v1h-2V0zm-2 2h2v2H8V2zm3 1h2v2h-2V3zM8 5h1v2H8V5zm2 1h3v1h-3V6zM0 8h2v2H0V8zm3 0h3v1H3V8zm4 0h2v2H7V8zm3 0h1v3h-1V8zm2 1h3v2h-3V9zm4-1h2v2h-2V8zm3 0h2v1h-2V8zM1 11h2v2H1v-2zm4-1h2v2H5v-2zm3 1h2v2H8v-2zm4 1h2v2h-2v-2zm3-1h2v2h-2v-2zm3 1h3v2h-3v-2zM8 14h2v2H8v-2zm3 1h2v2h-2v-2zm3-1h3v2h-3v-2zm4 1h2v2h-2v-2zM8 17h1v2H8v-2zm2 1h3v2h-3v-2zm4-1h2v3h-2v-3zm3 1h3v3h-3v-3zM8 20h2v1H8v-1zm5 0h2v1h-2v-1z"/>
+            </svg>
+          </div>
+          <span id="contact-sync-label">[ MOBILE SYNC ]</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Trackless Right-Edge Scrollbar Pill -->
+    <div id="scroll-pill-track" aria-hidden="true">
+      <div id="scroll-pill-thumb"></div>
+    </div>
+  </main>
+
+  <script type="module" src="assets/at-v6/core/app.js"></script>
+</body>
+</html>

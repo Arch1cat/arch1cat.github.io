@@ -1,0 +1,26 @@
+{
+  "links": [
+    {
+      "title": "Telegram",
+      "url": "https://t.me/Archi_____cat",
+      "id": "c-tg"
+    },
+    {
+      "title": "GitHub",
+      "url": "https://github.com/l2bote4game",
+      "id": "c-gh"
+    },
+    {
+      "title": "Yotei CRM",
+      "url": "https://yotei.com.ua/",
+      "id": "c-yotei"
+    },
+    {
+      "title": "X",
+      "url": "https://x.com/",
+      "id": "c-x"
+    }
+  ],
+  "globalType": "contact",
+  "id": "arch1cat-contact"
+}

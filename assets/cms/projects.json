@@ -1,0 +1,332 @@
+[
+  {
+    "id": "arch1cat-01",
+    "name": "Yotei CRM",
+    "slug": "yotei-crm",
+    "description": "Enterprise Proptech & Real Estate SaaS CRM engineered with 1:1 RealtSoft parity, 3-tier district taxonomy, Cloudflare Workers, distributed D1 SQL, R2 object storage, KV edge caching, and multilingual UK/RU/EN architecture.",
+    "clientName": "Yotei Proptech",
+    "completionDate": "2026-10-04T12:00:00.000Z",
+    "projectLogo": {
+      "id": "logo-yotei-crm",
+      "filename": "yotei-crm-logo.png",
+      "mimeType": "image/png",
+      "width": 400,
+      "height": 200,
+      "url": "assets/cms/media/yotei-crm-logo.png"
+    },
+    "video": {
+      "id": "vid-yotei-crm",
+      "thumbnail": "assets/cms/media/yotei-crm.jpg",
+      "filename": "yotei-crm.mp4",
+      "mimeType": "video/mp4",
+      "url": "assets/cms/media/yotei-crm.mp4"
+    },
+    "uiColor": "00f2fe",
+    "tags": "Website",
+    "priority": 1,
+    "projectURL": "https://yotei.com.ua/",
+    "caseStudyURL": "https://github.com/l2bote4game",
+    "createdAt": "2026-10-04T12:00:00.000Z",
+    "updatedAt": "2026-10-04T12:00:00.000Z"
+  },
+  {
+    "id": "arch1cat-02",
+    "name": "WARDOGS 3D",
+    "slug": "wardogs-3d",
+    "description": "Real-time 3D military-tactical GIS simulator featuring sub-meter DEM elevation raymarching, 360-degree viewshed occlusion analysis, MIL-dot optics, and parabolic artillery ballistics at 60 FPS.",
+    "clientName": "Tactical GIS",
+    "completionDate": "2026-09-15T12:00:00.000Z",
+    "projectLogo": {
+      "id": "logo-wardogs-3d",
+      "filename": "wardogs-3d-logo.png",
+      "mimeType": "image/png",
+      "width": 400,
+      "height": 200,
+      "url": "assets/cms/media/wardogs-3d-logo.png"
+    },
+    "video": {
+      "id": "vid-wardogs-3d",
+      "thumbnail": "assets/cms/media/wardogs-3d.jpg",
+      "filename": "wardogs-3d.mp4",
+      "mimeType": "video/mp4",
+      "url": "assets/cms/media/wardogs-3d.mp4"
+    },
+    "uiColor": "10b981",
+    "tags": "XR, AI",
+    "priority": 2,
+    "projectURL": "https://l2bote4game.github.io/wardogs-tactical-map/",
+    "caseStudyURL": "https://github.com/l2bote4game/wardogs-tactical-map",
+    "createdAt": "2026-09-15T12:00:00.000Z",
+    "updatedAt": "2026-09-15T12:00:00.000Z"
+  },
+  {
+    "id": "arch1cat-03",
+    "name": "TechnoVovk",
+    "slug": "technovovk",
+    "description": "High-conversion commercial engineering portal for Kharkiv appliance repair center with live Google Maps car and transit route planning, dynamic fault cost calculator, and dual brand themes (TechnoVovk & Fixora).",
+    "clientName": "Kharkiv Service",
+    "completionDate": "2026-11-04T12:00:00.000Z",
+    "projectLogo": {
+      "id": "logo-technovovk",
+      "filename": "technovovk-logo.png",
+      "mimeType": "image/png",
+      "width": 400,
+      "height": 200,
+      "url": "assets/cms/media/technovovk-logo.png"
+    },
+    "video": {
+      "id": "vid-technovovk",
+      "thumbnail": "assets/cms/media/technovovk.jpg",
+      "filename": "technovovk.mp4",
+      "mimeType": "video/mp4",
+      "url": "assets/cms/media/technovovk.mp4"
+    },
+    "uiColor": "ff7e1e",
+    "tags": "Website",
+    "priority": 3,
+    "projectURL": "rempobut/",
+    "caseStudyURL": "fixora/",
+    "createdAt": "2026-11-04T12:00:00.000Z",
+    "updatedAt": "2026-11-04T12:00:00.000Z"
+  },
+  {
+    "id": "arch1cat-04",
+    "name": "World Monitor",
+    "slug": "world-monitor",
+    "description": "Global geopolitical and cyber threat telemetry suite aggregating live satellite orbital passes, RF spectrum anomalies, automated AI incident triage, and low-latency edge stream synchronization.",
+    "clientName": "Global OSINT",
+    "completionDate": "2026-08-20T12:00:00.000Z",
+    "projectLogo": {
+      "id": "logo-world-monitor",
+      "filename": "world-monitor-logo.png",
+      "mimeType": "image/png",
+      "width": 400,
+      "height": 200,
+      "url": "assets/cms/media/world-monitor-logo.png"
+    },
+    "video": {
+      "id": "vid-world-monitor",
+      "thumbnail": "assets/cms/media/world-monitor.jpg",
+      "filename": "world-monitor.mp4",
+      "mimeType": "video/mp4",
+      "url": "assets/cms/media/world-monitor.mp4"
+    },
+    "uiColor": "8b5cf6",
+    "tags": "Multiplayer, XR, AI",
+    "priority": 4,
+    "projectURL": "https://github.com/l2bote4game/world-monitor",
+    "caseStudyURL": "https://github.com/l2bote4game/world-monitor",
+    "createdAt": "2026-08-20T12:00:00.000Z",
+    "updatedAt": "2026-08-20T12:00:00.000Z"
+  },
+  {
+    "id": "arch1cat-05",
+    "name": "Yotei Foil Lab",
+    "slug": "yotei-foil-lab",
+    "description": "Interactive luxury print showroom and commercial CMYK prepress engine (#B01, #B02, #P01-#P05) with calibrated ivory stocks, hot-stamped gold foil specular physics, and seamless vector QR geometry.",
+    "clientName": "Aladdin Prepress",
+    "completionDate": "2026-11-09T12:00:00.000Z",
+    "projectLogo": {
+      "id": "logo-yotei-foil-lab",
+      "filename": "yotei-foil-lab-logo.png",
+      "mimeType": "image/png",
+      "width": 400,
+      "height": 200,
+      "url": "assets/cms/media/yotei-foil-lab-logo.png"
+    },
+    "video": {
+      "id": "vid-yotei-foil-lab",
+      "thumbnail": "assets/cms/media/yotei-foil-lab.jpg",
+      "filename": "yotei-foil-lab.mp4",
+      "mimeType": "video/mp4",
+      "url": "assets/cms/media/yotei-foil-lab.mp4"
+    },
+    "uiColor": "e6c694",
+    "tags": "Installation",
+    "priority": 5,
+    "projectURL": "yotei-cards/",
+    "caseStudyURL": "https://github.com/Arch1cat/arch1cat.github.io",
+    "createdAt": "2026-11-09T12:00:00.000Z",
+    "updatedAt": "2026-11-09T12:00:00.000Z"
+  },
+  {
+    "id": "arch1cat-06",
+    "name": "Vulcan 3D Lab",
+    "slug": "vulcan-3d-lab",
+    "description": "Interactive 3D additive manufacturing studio with live Three.js mesh inspection viewport, engineering polymer selector (ABS, PETG, Nylon, Carbon-Fiber), and automated batch cost estimation.",
+    "clientName": "Additive Mfg",
+    "completionDate": "2026-10-29T12:00:00.000Z",
+    "projectLogo": {
+      "id": "logo-vulcan-3d-lab",
+      "filename": "vulcan-3d-lab-logo.png",
+      "mimeType": "image/png",
+      "width": 400,
+      "height": 200,
+      "url": "assets/cms/media/vulcan-3d-lab-logo.png"
+    },
+    "video": {
+      "id": "vid-vulcan-3d-lab",
+      "thumbnail": "assets/cms/media/vulcan-3d-lab.jpg",
+      "filename": "vulcan-3d-lab.mp4",
+      "mimeType": "video/mp4",
+      "url": "assets/cms/media/vulcan-3d-lab.mp4"
+    },
+    "uiColor": "f97316",
+    "tags": "Installation, XR",
+    "priority": 6,
+    "projectURL": "3d-print/",
+    "caseStudyURL": "https://github.com/Arch1cat/arch1cat.github.io",
+    "createdAt": "2026-10-29T12:00:00.000Z",
+    "updatedAt": "2026-10-29T12:00:00.000Z"
+  },
+  {
+    "id": "arch1cat-07",
+    "name": "Frontier AI Matrix",
+    "slug": "frontier-ai-matrix",
+    "description": "Daily automated frontier LLM intelligence radar comparing normalized tokens-per-day quotas, coding & reasoning benchmarks, rate-limit ceilings, and multi-provider routing matrices.",
+    "clientName": "Hermes Research",
+    "completionDate": "2026-10-20T12:00:00.000Z",
+    "projectLogo": {
+      "id": "logo-frontier-ai-matrix",
+      "filename": "frontier-ai-matrix-logo.png",
+      "mimeType": "image/png",
+      "width": 400,
+      "height": 200,
+      "url": "assets/cms/media/frontier-ai-matrix-logo.png"
+    },
+    "video": {
+      "id": "vid-frontier-ai-matrix",
+      "thumbnail": "assets/cms/media/frontier-ai-matrix.jpg",
+      "filename": "frontier-ai-matrix.mp4",
+      "mimeType": "video/mp4",
+      "url": "assets/cms/media/frontier-ai-matrix.mp4"
+    },
+    "uiColor": "38bdf8",
+    "tags": "XR, AI, Website",
+    "priority": 7,
+    "projectURL": "ai-matrix.html",
+    "caseStudyURL": "https://github.com/Arch1cat/arch1cat.github.io",
+    "createdAt": "2026-10-20T12:00:00.000Z",
+    "updatedAt": "2026-10-20T12:00:00.000Z"
+  },
+  {
+    "id": "arch1cat-08",
+    "name": "OpenGym APK",
+    "slug": "opengym-apk",
+    "description": "Self-hosted progressive strength training platform packaged for Android with biometric WebAuthn passkeys, algorithmic overload curves, and resilient local-first synchronization.",
+    "clientName": "Android Suite",
+    "completionDate": "2025-12-10T12:00:00.000Z",
+    "projectLogo": {
+      "id": "logo-opengym-apk",
+      "filename": "opengym-apk-logo.png",
+      "mimeType": "image/png",
+      "width": 400,
+      "height": 200,
+      "url": "assets/cms/media/opengym-apk-logo.png"
+    },
+    "video": {
+      "id": "vid-opengym-apk",
+      "thumbnail": "assets/cms/media/opengym-apk.jpg",
+      "filename": "opengym-apk.mp4",
+      "mimeType": "video/mp4",
+      "url": "assets/cms/media/opengym-apk.mp4"
+    },
+    "uiColor": "ec4899",
+    "tags": "Multiplayer",
+    "priority": 8,
+    "projectURL": "https://github.com/l2bote4game/openGym",
+    "caseStudyURL": "https://github.com/l2bote4game/openGym",
+    "createdAt": "2025-12-10T12:00:00.000Z",
+    "updatedAt": "2025-12-10T12:00:00.000Z"
+  },
+  {
+    "id": "arch1cat-09",
+    "name": "WiFi RF Scanner",
+    "slug": "wifi-rf-scanner",
+    "description": "Native Kotlin & Jetpack Compose RF spectrum analyzer for real-time 2.4/5GHz channel interference graphing, mDNS service discovery, and sub-millisecond LAN subnet sweeps.",
+    "clientName": "Native Kotlin",
+    "completionDate": "2025-11-18T12:00:00.000Z",
+    "projectLogo": {
+      "id": "logo-wifi-rf-scanner",
+      "filename": "wifi-rf-scanner-logo.png",
+      "mimeType": "image/png",
+      "width": 400,
+      "height": 200,
+      "url": "assets/cms/media/wifi-rf-scanner-logo.png"
+    },
+    "video": {
+      "id": "vid-wifi-rf-scanner",
+      "thumbnail": "assets/cms/media/wifi-rf-scanner.jpg",
+      "filename": "wifi-rf-scanner.mp4",
+      "mimeType": "video/mp4",
+      "url": "assets/cms/media/wifi-rf-scanner.mp4"
+    },
+    "uiColor": "a855f7",
+    "tags": "Installation",
+    "priority": 9,
+    "projectURL": "https://github.com/l2bote4game/wifiscaner",
+    "caseStudyURL": "https://github.com/l2bote4game/wifiscaner",
+    "createdAt": "2025-11-18T12:00:00.000Z",
+    "updatedAt": "2025-11-18T12:00:00.000Z"
+  },
+  {
+    "id": "arch1cat-10",
+    "name": "Metadata Cleaner",
+    "slug": "metadata-cleaner",
+    "description": "Zero-trace cryptographic media sanitizer stripping GPS coordinates, device serial signatures, and container metadata across batch image and video streams via multi-threaded FFmpeg workers.",
+    "clientName": "OPSEC Pipeline",
+    "completionDate": "2025-10-05T12:00:00.000Z",
+    "projectLogo": {
+      "id": "logo-metadata-cleaner",
+      "filename": "metadata-cleaner-logo.png",
+      "mimeType": "image/png",
+      "width": 400,
+      "height": 200,
+      "url": "assets/cms/media/metadata-cleaner-logo.png"
+    },
+    "video": {
+      "id": "vid-metadata-cleaner",
+      "thumbnail": "assets/cms/media/metadata-cleaner.jpg",
+      "filename": "metadata-cleaner.mp4",
+      "mimeType": "video/mp4",
+      "url": "assets/cms/media/metadata-cleaner.mp4"
+    },
+    "uiColor": "06b6d4",
+    "tags": "XR, AI",
+    "priority": 10,
+    "projectURL": "https://github.com/l2bote4game/media-meta-cleaner",
+    "caseStudyURL": "https://github.com/l2bote4game/media-meta-cleaner",
+    "createdAt": "2025-10-05T12:00:00.000Z",
+    "updatedAt": "2025-10-05T12:00:00.000Z"
+  },
+  {
+    "id": "arch1cat-11",
+    "name": "Cats Match-3",
+    "slug": "cats-match-3",
+    "description": "Custom native Kotlin mobile puzzle game engine featuring deterministic cascade solvers, spring physics micro-interactions, shelter meta-progression, and hardware-accelerated particle emitters.",
+    "clientName": "Kotlin Game Engine",
+    "completionDate": "2025-09-12T12:00:00.000Z",
+    "projectLogo": {
+      "id": "logo-cats-match-3",
+      "filename": "cats-match-3-logo.png",
+      "mimeType": "image/png",
+      "width": 400,
+      "height": 200,
+      "url": "assets/cms/media/cats-match-3-logo.png"
+    },
+    "video": {
+      "id": "vid-cats-match-3",
+      "thumbnail": "assets/cms/media/cats-match-3.jpg",
+      "filename": "cats-match-3.mp4",
+      "mimeType": "video/mp4",
+      "url": "assets/cms/media/cats-match-3.mp4"
+    },
+    "uiColor": "f43f5e",
+    "tags": "Game",
+    "priority": 11,
+    "projectURL": "https://github.com/l2bote4game/cats-match3-game",
+    "caseStudyURL": "https://github.com/l2bote4game/cats-match3-game",
+    "createdAt": "2025-09-12T12:00:00.000Z",
+    "updatedAt": "2025-09-12T12:00:00.000Z"
+  }
+]
