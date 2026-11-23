@@ -1,5 +1,5 @@
 {
- "snapshot": "2026-11-21",
+ "snapshot": "2026-11-23",
  "openrouter": [
   {
    "id": "baidu/ernie-5.5-flash-preview:free",
@@ -7,6 +7,13 @@
    "out": 921600,
    "tools": true,
    "name": "Baidu: ERNIE-5.5-Flash-Preview (free)"
+  },
+  {
+   "id": "dots-studio/dots-3-note-preview:free",
+   "ctx": 512000,
+   "out": 460800,
+   "tools": true,
+   "name": "Dots Studio: Dots3-Note Preview (free)"
   },
   {
    "id": "google/gemma-4-26b-a4b-it:free",
@@ -113,32 +120,32 @@
    "ctx": 1000000,
    "out": 131072,
    "tools": true,
-   "name": "Qwen: Qwen4 Max"
+   "name": "Qwen: Qwen4 Max (free)"
   },
   {
    "id": "stepfun/step-3.7-flash:free",
-   "ctx": 262144,
-   "out": 256000,
+   "ctx": 256000,
+   "out": 230400,
    "tools": true,
-   "name": "StepFun: Step 3.7 Flash"
+   "name": "StepFun: Step 3.7 Flash (free)"
   },
   {
    "id": "tencent/hy4-flash:free",
    "ctx": 1048576,
    "out": 65536,
    "tools": true,
-   "name": "Tencent: Hy4 flash"
+   "name": "Tencent: Hy4 flash (free)"
   },
   {
    "id": "upstage/solar-mini4:free",
    "ctx": 524288,
    "out": 131072,
    "tools": true,
-   "name": "Upstage: Solar Mini 4"
+   "name": "Upstage: Solar Mini 4 (free)"
   }
  ],
  "omniroute": {
-  "total": 1329,
+  "total": 1332,
   "prefixes": {
    "auto": 45,
    "agy": 46,
@@ -154,7 +161,7 @@
    "zc": 14,
    "cxa": 45,
    "unc": 1,
-   "aihorde": 164,
+   "aihorde": 167,
    "openrouter": 737
   },
   "noauth_free": [
