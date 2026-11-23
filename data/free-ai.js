@@ -1588,8 +1588,39 @@ window.FREE_AI_DATA = {
    ]
   },
   {
-   "id": "openrouter-free",
+   "id": "dots-3-note",
    "rank": 28,
+   "name": "Dots 3 Note Preview",
+   "tasks": [
+    "Notes",
+    "Reasoning",
+    "Fast Agent"
+   ],
+   "family": "Dots",
+   "ctx": 512000,
+   "out": 460800,
+   "reasoning": true,
+   "bench": {
+    "swe": 59.6,
+    "he": 85.3,
+    "aider": 63.9,
+    "livecode": 56.7,
+    "arena": null,
+    "arenaRank": null
+   },
+   "routes": [
+    {
+     "p": "OpenRouter",
+     "id": "dots-studio/dots-3-note-preview:free",
+     "status": "working",
+     "type": "preview",
+     "src": "api"
+    }
+   ]
+  },
+  {
+   "id": "openrouter-free",
+   "rank": 29,
    "name": "OpenRouter / free (auto-router)",
    "tasks": [
     "Кодинг",
@@ -1620,7 +1651,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "llm7-free",
-   "rank": 29,
+   "rank": 30,
    "name": "LLM7.io free subset",
    "tasks": [
     "Кодинг",
@@ -1693,7 +1724,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "content-safety",
-   "rank": 30,
+   "rank": 31,
    "name": "Nemotron 3 Nano Omni 30B-A3B",
    "tasks": [
     "Reasoning",
@@ -3685,6 +3716,12 @@ window.FREE_AI_DATA = {
    "n": "262K ctx."
   },
   {
+   "m": "openrouter/dots-studio/dots-3-note-preview:free",
+   "r": "ok",
+   "t": "PROBE_OK",
+   "n": "Preview, 512K ctx / 460K out, reasoning + tools (возвращена в :free каталог OpenRouter 23.11.2026 через AtlasCloud)."
+  },
+  {
    "m": "nous/stepfun/step-3.7-flash:free",
    "r": "ok",
    "t": "PROBE_OK",
@@ -3761,12 +3798,6 @@ window.FREE_AI_DATA = {
    "r": "ok",
    "t": "PROBE_OK",
    "n": "Правильный NIM ID."
-  },
-  {
-   "m": "openrouter/dots-studio/dots-3-note-preview:free",
-   "r": "bad",
-   "t": "NO LONGER FREE",
-   "n": "HTTP 404 — убрана из каталога OpenRouter 21.11.2026 (no provider serves this model anymore)."
   },
   {
    "m": "openrouter/thinkingmachines/inkling-2-small:free",
@@ -4045,15 +4076,15 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "OpenRouter",
-   "score": 68.7,
-   "working": 8,
+   "score": 70.4,
+   "working": 9,
    "catalog": 4,
    "blocked": 2,
-   "total": 14,
-   "wr": 57,
+   "total": 15,
+   "wr": 60,
    "access": "api",
    "color": "#00f2fe",
-   "benchAvg": 60.8,
+   "benchAvg": 60.7,
    "ctxCap": 1048576,
    "rpm": 20,
    "rpd": 50,
@@ -4065,8 +4096,8 @@ window.FREE_AI_DATA = {
    "limits": "20 RPM / 50 RPD (1000 RPD с $10 top-up)",
    "note": "15 zero-price моделей прямо сейчас. Единственный ключ на десятки семейств.",
    "parts": {
-    "Работоспособность": 22.9,
-    "Покрытие моделей": 15.0,
+    "Работоспособность": 24.0,
+    "Покрытие моделей": 15.5,
     "Контекст": 15.0,
     "Бенчмарки": 8.7,
     "Лимиты": 3.2,
