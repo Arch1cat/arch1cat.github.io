@@ -1,5 +1,5 @@
 {
- "snapshot": "2026-11-23",
+ "snapshot": "2026-11-24",
  "openrouter": [
   {
    "id": "baidu/ernie-5.5-flash-preview:free",
@@ -116,13 +116,6 @@
    "name": "LongCat-2.5:Free"
   },
   {
-   "id": "qwen/qwen4-max:free",
-   "ctx": 1000000,
-   "out": 131072,
-   "tools": true,
-   "name": "Qwen: Qwen4 Max (free)"
-  },
-  {
    "id": "stepfun/step-3.7-flash:free",
    "ctx": 256000,
    "out": 230400,
@@ -145,7 +138,7 @@
   }
  ],
  "omniroute": {
-  "total": 1332,
+  "total": 1331,
   "prefixes": {
    "auto": 45,
    "agy": 46,
@@ -161,7 +154,7 @@
    "zc": 14,
    "cxa": 45,
    "unc": 1,
-   "aihorde": 167,
+   "aihorde": 166,
    "openrouter": 737
   },
   "noauth_free": [
