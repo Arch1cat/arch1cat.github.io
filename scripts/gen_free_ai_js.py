@@ -34,7 +34,7 @@ PROVIDERS = [
         "id": "Nous Portal", "access": "api", "status": "working", "color": "#a78bfa",
         "limits": "RPM/TPM/RPD не раскрыты", "rpm": None, "rpd": None, "tpd": None,
         "card": False, "training": "no", "ctxCap": 1048576,
-        "note": f"{len(NOUS_LIVE)} :free моделей (Qwen4 Max, Hy4 Flash, LongCat 2.5, Step 3.7 Flash, Solar Mini4). Часть требует тег user= в extra_body.tags.",
+        "note": f"{len(NOUS_LIVE)} :free моделей (Hy4 Flash, LongCat 2.5, Step 3.7 Flash, Solar Mini4). Часть требует тег user= в extra_body.tags.",
         "uptime": "97%",
     },
     {
@@ -406,15 +406,6 @@ FAMILIES = [
         ],
     },
     {
-        "id": "qwen-4-max", "rank": 13, "name": "Qwen4 Max",
-        "tasks": ["Кодинг", "Reasoning", "Vision", "Tools", "Long Context"], "family": "Qwen4",
-        "ctx": 1000000, "out": 131072, "reasoning": True,
-        "bench": {"swe": None, "he": None, "aider": None, "livecode": None, "arena": None, "arenaRank": None},
-        "routes": [
-            {"p": "Nous Portal", "id": "qwen/qwen4-max:free", "status": "working", "type": "free", "src": "api"},
-        ],
-    },
-    {
         "id": "hy4-flash", "rank": 13, "name": "Hy4 Flash",
         "tasks": ["Кодинг", "Reasoning", "Vision", "Tools", "Fast Agent"], "family": "Hy4",
         "ctx": 1048576, "out": 65536, "reasoning": True,
@@ -596,7 +587,7 @@ for _idx, _fam in enumerate(FAMILIES, 1):
 PLANS = [
     {
         "name": "Nous Portal Free", "price": "$0", "kind": "Free tier",
-        "includes": "Все бесплатные модели Nous: Qwen4 Max, Hy4 Flash, LongCat 2.5, Step 3.7 Flash, Solar Mini4. Каталог портала — 248 моделей (325 с embeddings)",
+        "includes": "Все бесплатные модели Nous: Hy4 Flash, LongCat 2.5, Step 3.7 Flash, Solar Mini4. Каталог портала — 248 моделей (325 с embeddings)",
         "allowance": "50 RPM / 500K TPM. Только free-модели — платные через портал недоступны",
         "tokens": "Без лимита токенов, но жёсткий RPM",
         "verdict": "Наш основной Nous-маршрут. Работает в Hermes", "score": 89,
@@ -789,7 +780,6 @@ RELEASES = [
 
 # ------------------------------------------------------------------ verified probes
 PROBES = [
-    {"m": "nous/qwen/qwen4-max:free", "r": "ok", "t": "PROBE_OK", "n": "1M ctx / 131K out, flagship Qwen4 (text+image+video, tools, hybrid reasoning), отвечает 200 OK с тегом user= и без него."},
     {"m": "nous/tencent/hy4-flash:free", "r": "ok", "t": "PROBE_OK", "n": "1M ctx / 65K out, hybrid reasoning + vision + tools, отвечает 200 OK с тегом user= и без него."},
     {"m": "openrouter/inclusionai/ling-3.2-flash:free", "r": "ok", "t": "PROBE_OK", "n": "1M ctx / 262K out, hybrid reasoning (отключаемый) + vision (до 200 изображений) + tools."},
     {"m": "openrouter/particle-ai/particle-1:free", "r": "ok", "t": "PROBE_OK", "n": "1M ctx / 131K out, agentic coding (post-train DeepSeek V4.1 Flash), vision + tools + reasoning, ~172 tok/s."},
@@ -813,6 +803,7 @@ PROBES = [
     {"m": "omniroute/auto/cheap", "r": "ok", "t": "PROBE_OK", "n": "Дешёвый маршрут."},
     {"m": "omniroute/auto/offline", "r": "ok", "t": "PROBE_OK", "n": "Оффлайн-маршрут."},
     {"m": "nvidia/nemotron-3.5-lightning-30b-a3b", "r": "ok", "t": "PROBE_OK", "n": "Правильный NIM ID."},
+    {"m": "nous/qwen/qwen4-max:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — промо-период :free на Nous завершился 24.11.2026 (переведена на платный qwen/qwen4-max, $1.425/$4.275 за 1M)."},
     {"m": "openrouter/thinkingmachines/inkling-2-small:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — промо-период :free на OpenRouter завершился 20.11.2026 (переведена на платный thinkingmachines/inkling-2-small, $0.30/$1.00 за 1M)."},
     {"m": "openrouter/cohere/north-mini-code:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — убрана из каталога OpenRouter 20.11.2026 (no provider serves this model anymore)."},
     {"m": "openrouter/liquid/lfm-2.5-2.6b:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — убрана из каталога OpenRouter 14.11.2026 (no provider serves this model anymore)."},
@@ -1031,7 +1022,6 @@ DATA = {
             {"name": "Nemotron 3 Ultra / Super VL", "f": "nemotron-3-ultra", "v": [2, 3, 1, 3, 2, 1, 0, 2, 1]},
             {"name": "Laguna S 2.1", "f": "laguna-s-2.1", "v": [2, 1, 0, 0, 1, 1, 0, 1, 0]},
             {"name": "LongCat 2.5", "f": "longcat-2.5", "v": [2, 2, 0, 0, 1, 1, 0, 3, 1]},
-            {"name": "Qwen4 Max", "f": "qwen-4-max", "v": [3, 3, 2, 3, 3, 2, 0, 3, 2]},
             {"name": "Hy4 Flash", "f": "hy4-flash", "v": [2, 3, 1, 2, 3, 3, 0, 3, 2]},
             {"name": "Gemma 4 26B / 31B", "f": "gemma-4", "v": [1, 2, 0, 0, 1, 1, 0, 1, 0]},
             {"name": "Qwen 3.8 Max / Flash", "f": "qwen-3.8", "v": [2, 3, 1, 1, 2, 2, 0, 1, 2]},
