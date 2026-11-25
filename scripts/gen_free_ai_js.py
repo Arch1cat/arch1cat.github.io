@@ -34,7 +34,7 @@ PROVIDERS = [
         "id": "Nous Portal", "access": "api", "status": "working", "color": "#a78bfa",
         "limits": "RPM/TPM/RPD не раскрыты", "rpm": None, "rpd": None, "tpd": None,
         "card": False, "training": "no", "ctxCap": 1048576,
-        "note": f"{len(NOUS_LIVE)} :free моделей (Hy4 Flash, LongCat 2.5, Step 3.7 Flash, Solar Mini4). Часть требует тег user= в extra_body.tags.",
+        "note": f"{len(NOUS_LIVE)} :free моделей (Hy4 Flash, Step 3.7 Flash, Solar Mini4). Часть требует тег user= в extra_body.tags.",
         "uptime": "97%",
     },
     {
@@ -401,7 +401,6 @@ FAMILIES = [
         "ctx": 1048576, "out": 131072, "reasoning": True,
         "bench": {"swe": 52.1, "he": 79.8, "aider": 54.6, "livecode": 46.3, "arena": None, "arenaRank": None},
         "routes": [
-            {"p": "Nous Portal", "id": "meituan/longcat-2.5:free", "status": "working", "type": "free", "src": "api"},
             {"p": "OpenCode Free", "id": "opencode/longcat-2.5-preview-free", "status": "catalog", "type": "free", "src": "local"},
         ],
     },
@@ -538,15 +537,6 @@ FAMILIES = [
         ],
     },
     {
-        "id": "dots-3-note", "rank": 26, "name": "Dots 3 Note Preview",
-        "tasks": ["Notes", "Reasoning", "Fast Agent"], "family": "Dots",
-        "ctx": 512000, "out": 460800, "reasoning": True,
-        "bench": {"swe": 59.6, "he": 85.3, "aider": 63.9, "livecode": 56.7, "arena": None, "arenaRank": None},
-        "routes": [
-            {"p": "OpenRouter", "id": "dots-studio/dots-3-note-preview:free", "status": "working", "type": "preview", "src": "api"},
-        ],
-    },
-    {
         "id": "openrouter-free", "rank": 27, "name": "OpenRouter / free (auto-router)",
         "tasks": ["Кодинг", "Reasoning", "Fast Agent"], "family": "OpenRouter",
         "ctx": 200000, "out": 32768, "reasoning": True,
@@ -587,7 +577,7 @@ for _idx, _fam in enumerate(FAMILIES, 1):
 PLANS = [
     {
         "name": "Nous Portal Free", "price": "$0", "kind": "Free tier",
-        "includes": "Все бесплатные модели Nous: Hy4 Flash, LongCat 2.5, Step 3.7 Flash, Solar Mini4. Каталог портала — 248 моделей (325 с embeddings)",
+        "includes": "Все бесплатные модели Nous: Hy4 Flash, Step 3.7 Flash, Solar Mini4. Каталог портала — 248 моделей (325 с embeddings)",
         "allowance": "50 RPM / 500K TPM. Только free-модели — платные через портал недоступны",
         "tokens": "Без лимита токенов, но жёсткий RPM",
         "verdict": "Наш основной Nous-маршрут. Работает в Hermes", "score": 89,
@@ -785,11 +775,9 @@ PROBES = [
     {"m": "openrouter/particle-ai/particle-1:free", "r": "ok", "t": "PROBE_OK", "n": "1M ctx / 131K out, agentic coding (post-train DeepSeek V4.1 Flash), vision + tools + reasoning, ~172 tok/s."},
     {"m": "openrouter/baidu/ernie-5.5-flash-preview:free", "r": "ok", "t": "PROBE_OK", "n": "1M ctx / 921K out, 280B-A14B MoE, mandatory reasoning + tools, DeepSWE 71.2% / Terminal-Bench 4.0 46.5%, >200 tok/s."},
     {"m": "openrouter/liquid/lfm-3-1.7b:free", "r": "ok", "t": "PROBE_OK", "n": "262K ctx / 8K out, 1.73B tri-hybrid, mandatory reasoning, tools, SWE-Verified 43.4% / LiveCodeBench v6 73.5%."},
-    {"m": "nous/meituan/longcat-2.5:free", "r": "ok", "t": "PROBE_OK", "n": "1M ctx / 131K out, tools, возвращена в :free каталог Nous 05.11.2026."},
     {"m": "openrouter/recursive/flint-v1.0:free", "r": "ok", "t": "PROBE_OK", "n": "262K ctx / 236K out, 40B-A2.5B MoE, SWE-Verified 74.2%, ~108 tok/s."},
     {"m": "openrouter/openrouter/free", "r": "ok", "t": "PROBE_OK", "n": "Авто-роутер OpenRouter."},
     {"m": "openrouter/google/gemma-4-26b-a4b-it:free", "r": "ok", "t": "PROBE_OK", "n": "262K ctx."},
-    {"m": "openrouter/dots-studio/dots-3-note-preview:free", "r": "ok", "t": "PROBE_OK", "n": "Preview, 512K ctx / 460K out, reasoning + tools (возвращена в :free каталог OpenRouter 23.11.2026 через AtlasCloud)."},
     {"m": "nous/stepfun/step-3.7-flash:free", "r": "ok", "t": "PROBE_OK", "n": "Требует тег user= в extra_body.tags."},
     {"m": "nous/upstage/solar-mini4:free", "r": "ok", "t": "PROBE_OK", "n": "Тоже требует user= тег."},
     {"m": "omniroute/ddgw/gpt-5.4-mini", "r": "ok", "t": "PROBE_OK", "n": "Без подключения и без ключа!"},
@@ -803,6 +791,8 @@ PROBES = [
     {"m": "omniroute/auto/cheap", "r": "ok", "t": "PROBE_OK", "n": "Дешёвый маршрут."},
     {"m": "omniroute/auto/offline", "r": "ok", "t": "PROBE_OK", "n": "Оффлайн-маршрут."},
     {"m": "nvidia/nemotron-3.5-lightning-30b-a3b", "r": "ok", "t": "PROBE_OK", "n": "Правильный NIM ID."},
+    {"m": "openrouter/dots-studio/dots-3-note-preview:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — убрана из каталога OpenRouter 25.11.2026 (no provider serves this model anymore)."},
+    {"m": "nous/meituan/longcat-2.5:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — убрана из :free каталога Nous 25.11.2026 (This model is no longer available)."},
     {"m": "nous/qwen/qwen4-max:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — промо-период :free на Nous завершился 24.11.2026 (переведена на платный qwen/qwen4-max, $1.425/$4.275 за 1M)."},
     {"m": "openrouter/thinkingmachines/inkling-2-small:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — промо-период :free на OpenRouter завершился 20.11.2026 (переведена на платный thinkingmachines/inkling-2-small, $0.30/$1.00 за 1M)."},
     {"m": "openrouter/cohere/north-mini-code:free", "r": "bad", "t": "NO LONGER FREE", "n": "HTTP 404 — убрана из каталога OpenRouter 20.11.2026 (no provider serves this model anymore)."},

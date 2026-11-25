@@ -28,7 +28,7 @@ window.FREE_AI_DATA = {
    "card": false,
    "training": "no",
    "ctxCap": 1048576,
-   "note": "3 :free моделей (Hy4 Flash, LongCat 2.5, Step 3.7 Flash, Solar Mini4). Часть требует тег user= в extra_body.tags.",
+   "note": "3 :free моделей (Hy4 Flash, Step 3.7 Flash, Solar Mini4). Часть требует тег user= в extra_body.tags.",
    "uptime": "97%"
   },
   {
@@ -1026,13 +1026,6 @@ window.FREE_AI_DATA = {
    },
    "routes": [
     {
-     "p": "Nous Portal",
-     "id": "meituan/longcat-2.5:free",
-     "status": "working",
-     "type": "free",
-     "src": "api"
-    },
-    {
      "p": "OpenCode Free",
      "id": "opencode/longcat-2.5-preview-free",
      "status": "catalog",
@@ -1555,39 +1548,8 @@ window.FREE_AI_DATA = {
    ]
   },
   {
-   "id": "dots-3-note",
-   "rank": 27,
-   "name": "Dots 3 Note Preview",
-   "tasks": [
-    "Notes",
-    "Reasoning",
-    "Fast Agent"
-   ],
-   "family": "Dots",
-   "ctx": 512000,
-   "out": 460800,
-   "reasoning": true,
-   "bench": {
-    "swe": 59.6,
-    "he": 85.3,
-    "aider": 63.9,
-    "livecode": 56.7,
-    "arena": null,
-    "arenaRank": null
-   },
-   "routes": [
-    {
-     "p": "OpenRouter",
-     "id": "dots-studio/dots-3-note-preview:free",
-     "status": "working",
-     "type": "preview",
-     "src": "api"
-    }
-   ]
-  },
-  {
    "id": "openrouter-free",
-   "rank": 28,
+   "rank": 27,
    "name": "OpenRouter / free (auto-router)",
    "tasks": [
     "Кодинг",
@@ -1618,7 +1580,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "llm7-free",
-   "rank": 29,
+   "rank": 28,
    "name": "LLM7.io free subset",
    "tasks": [
     "Кодинг",
@@ -1691,7 +1653,7 @@ window.FREE_AI_DATA = {
   },
   {
    "id": "content-safety",
-   "rank": 30,
+   "rank": 29,
    "name": "Nemotron 3 Nano Omni 30B-A3B",
    "tasks": [
     "Reasoning",
@@ -1726,7 +1688,7 @@ window.FREE_AI_DATA = {
    "name": "Nous Portal Free",
    "price": "$0",
    "kind": "Free tier",
-   "includes": "Все бесплатные модели Nous: Hy4 Flash, LongCat 2.5, Step 3.7 Flash, Solar Mini4. Каталог портала — 248 моделей (325 с embeddings)",
+   "includes": "Все бесплатные модели Nous: Hy4 Flash, Step 3.7 Flash, Solar Mini4. Каталог портала — 248 моделей (325 с embeddings)",
    "allowance": "50 RPM / 500K TPM. Только free-модели — платные через портал недоступны",
    "tokens": "Без лимита токенов, но жёсткий RPM",
    "verdict": "Наш основной Nous-маршрут. Работает в Hermes",
@@ -3653,12 +3615,6 @@ window.FREE_AI_DATA = {
    "n": "262K ctx / 8K out, 1.73B tri-hybrid, mandatory reasoning, tools, SWE-Verified 43.4% / LiveCodeBench v6 73.5%."
   },
   {
-   "m": "nous/meituan/longcat-2.5:free",
-   "r": "ok",
-   "t": "PROBE_OK",
-   "n": "1M ctx / 131K out, tools, возвращена в :free каталог Nous 05.11.2026."
-  },
-  {
    "m": "openrouter/recursive/flint-v1.0:free",
    "r": "ok",
    "t": "PROBE_OK",
@@ -3675,12 +3631,6 @@ window.FREE_AI_DATA = {
    "r": "ok",
    "t": "PROBE_OK",
    "n": "262K ctx."
-  },
-  {
-   "m": "openrouter/dots-studio/dots-3-note-preview:free",
-   "r": "ok",
-   "t": "PROBE_OK",
-   "n": "Preview, 512K ctx / 460K out, reasoning + tools (возвращена в :free каталог OpenRouter 23.11.2026 через AtlasCloud)."
   },
   {
    "m": "nous/stepfun/step-3.7-flash:free",
@@ -3759,6 +3709,18 @@ window.FREE_AI_DATA = {
    "r": "ok",
    "t": "PROBE_OK",
    "n": "Правильный NIM ID."
+  },
+  {
+   "m": "openrouter/dots-studio/dots-3-note-preview:free",
+   "r": "bad",
+   "t": "NO LONGER FREE",
+   "n": "HTTP 404 — убрана из каталога OpenRouter 25.11.2026 (no provider serves this model anymore)."
+  },
+  {
+   "m": "nous/meituan/longcat-2.5:free",
+   "r": "bad",
+   "t": "NO LONGER FREE",
+   "n": "HTTP 404 — убрана из :free каталога Nous 25.11.2026 (This model is no longer available)."
   },
   {
    "m": "nous/qwen/qwen4-max:free",
@@ -3949,37 +3911,6 @@ window.FREE_AI_DATA = {
  ],
  "ranking": [
   {
-   "id": "Nous Portal",
-   "score": 74.4,
-   "working": 4,
-   "catalog": 0,
-   "blocked": 0,
-   "total": 4,
-   "wr": 100,
-   "access": "api",
-   "color": "#a78bfa",
-   "benchAvg": 52.1,
-   "ctxCap": 1048576,
-   "rpm": null,
-   "rpd": null,
-   "tpd": null,
-   "card": false,
-   "training": "no",
-   "uptime": "97%",
-   "status": "working",
-   "limits": "RPM/TPM/RPD не раскрыты",
-   "note": "3 :free моделей (Hy4 Flash, LongCat 2.5, Step 3.7 Flash, Solar Mini4). Часть требует тег user= в extra_body.tags.",
-   "parts": {
-    "Работоспособность": 40.0,
-    "Покрытие моделей": 8.0,
-    "Контекст": 15.0,
-    "Бенчмарки": 7.4,
-    "Лимиты": 0,
-    "Доступ": 4.0
-   },
-   "place": 1
-  },
-  {
    "id": "OmniRoute / auto",
    "score": 73.6,
    "working": 1,
@@ -4008,7 +3939,7 @@ window.FREE_AI_DATA = {
     "Лимиты": 0,
     "Доступ": 5.0
    },
-   "place": 2
+   "place": 1
   },
   {
    "id": "Freebuff",
@@ -4039,19 +3970,19 @@ window.FREE_AI_DATA = {
     "Лимиты": 0,
     "Доступ": 4.0
    },
-   "place": 3
+   "place": 2
   },
   {
    "id": "OpenRouter",
-   "score": 70.4,
-   "working": 9,
+   "score": 68.7,
+   "working": 8,
    "catalog": 4,
    "blocked": 2,
-   "total": 15,
-   "wr": 60,
+   "total": 14,
+   "wr": 57,
    "access": "api",
    "color": "#00f2fe",
-   "benchAvg": 60.7,
+   "benchAvg": 60.8,
    "ctxCap": 1048576,
    "rpm": 20,
    "rpd": 50,
@@ -4063,14 +3994,14 @@ window.FREE_AI_DATA = {
    "limits": "20 RPM / 50 RPD (1000 RPD с $10 top-up)",
    "note": "14 zero-price моделей прямо сейчас. Единственный ключ на десятки семейств.",
    "parts": {
-    "Работоспособность": 24.0,
-    "Покрытие моделей": 15.5,
+    "Работоспособность": 22.9,
+    "Покрытие моделей": 15.0,
     "Контекст": 15.0,
     "Бенчмарки": 8.7,
     "Лимиты": 3.2,
     "Доступ": 4.0
    },
-   "place": 4
+   "place": 3
   },
   {
    "id": "OmniRoute / ddgw",
@@ -4101,7 +4032,7 @@ window.FREE_AI_DATA = {
     "Лимиты": 0,
     "Доступ": 5.0
    },
-   "place": 5
+   "place": 4
   },
   {
    "id": "LLM7.io",
@@ -4129,6 +4060,37 @@ window.FREE_AI_DATA = {
     "Покрытие моделей": 10.6,
     "Контекст": 3.8,
     "Бенчмарки": 7.9,
+    "Лимиты": 0,
+    "Доступ": 4.0
+   },
+   "place": 5
+  },
+  {
+   "id": "Nous Portal",
+   "score": 65.9,
+   "working": 3,
+   "catalog": 0,
+   "blocked": 0,
+   "total": 3,
+   "wr": 100,
+   "access": "api",
+   "color": "#a78bfa",
+   "benchAvg": null,
+   "ctxCap": 1048576,
+   "rpm": null,
+   "rpd": null,
+   "tpd": null,
+   "card": false,
+   "training": "no",
+   "uptime": "97%",
+   "status": "working",
+   "limits": "RPM/TPM/RPD не раскрыты",
+   "note": "3 :free моделей (Hy4 Flash, Step 3.7 Flash, Solar Mini4). Часть требует тег user= в extra_body.tags.",
+   "parts": {
+    "Работоспособность": 40.0,
+    "Покрытие моделей": 6.9,
+    "Контекст": 15.0,
+    "Бенчмарки": 0,
     "Лимиты": 0,
     "Доступ": 4.0
    },
