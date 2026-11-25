@@ -1,5 +1,5 @@
 {
- "snapshot": "2026-11-24",
+ "snapshot": "2026-11-25",
  "openrouter": [
   {
    "id": "baidu/ernie-5.5-flash-preview:free",
@@ -7,13 +7,6 @@
    "out": 921600,
    "tools": true,
    "name": "Baidu: ERNIE-5.5-Flash-Preview (free)"
-  },
-  {
-   "id": "dots-studio/dots-3-note-preview:free",
-   "ctx": 512000,
-   "out": 460800,
-   "tools": true,
-   "name": "Dots Studio: Dots3-Note Preview (free)"
   },
   {
    "id": "google/gemma-4-26b-a4b-it:free",
@@ -109,13 +102,6 @@
  ],
  "nous": [
   {
-   "id": "meituan/longcat-2.5:free",
-   "ctx": 1048576,
-   "out": 131072,
-   "tools": true,
-   "name": "LongCat-2.5:Free"
-  },
-  {
    "id": "stepfun/step-3.7-flash:free",
    "ctx": 256000,
    "out": 230400,
@@ -138,7 +124,7 @@
   }
  ],
  "omniroute": {
-  "total": 1331,
+  "total": 1289,
   "prefixes": {
    "auto": 45,
    "agy": 46,
@@ -154,7 +140,7 @@
    "zc": 14,
    "cxa": 45,
    "unc": 1,
-   "aihorde": 166,
+   "aihorde": 124,
    "openrouter": 737
   },
   "noauth_free": [
